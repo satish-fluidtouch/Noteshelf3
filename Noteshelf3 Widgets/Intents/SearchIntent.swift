@@ -14,7 +14,7 @@ struct SearchIntent : AppIntent {
     static var title: LocalizedStringResource = "Search"
     static var openAppWhenRun: Bool = true
     func perform() async throws -> some IntentResult {
-        FTWidgetActionController.shared.performAction(action: .search)
+        FTWidgetActionController.shared.performAction(action: FTNotebookCreateWidgetActionType.search)
         return .result()
     }
 }

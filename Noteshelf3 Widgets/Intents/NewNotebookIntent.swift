@@ -13,7 +13,7 @@ struct NewNotebookIntent : AppIntent {
     static var title: LocalizedStringResource = "New Notebook"
     static var openAppWhenRun: Bool = true
     func perform() async throws -> some IntentResult {
-        FTWidgetActionController.shared.performAction(action: .newNotebook)
+        FTWidgetActionController.shared.performAction(action: FTNotebookCreateWidgetActionType.newNotebook)
         return .result()
     }
 }

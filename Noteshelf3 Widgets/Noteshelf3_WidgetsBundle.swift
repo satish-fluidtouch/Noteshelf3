@@ -15,6 +15,7 @@ struct Noteshelf3_WidgetsBundle: WidgetBundle {
         NotebookCreation_Widget()
         FTPinnedWidget()
         FTQuickNoteCreateWidget()
+        FTPinnedNotebookOptionsWidget()
     }
 }
 

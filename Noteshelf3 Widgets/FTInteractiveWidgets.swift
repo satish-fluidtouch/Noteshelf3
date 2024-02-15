@@ -159,6 +159,26 @@ struct FTPinnedWidget: Widget {
     }
 }
 
+struct FTPinnedNotebookOptionsWidget: Widget {
+    let kind: String = "InteractiveWidgets"
+
+    var body: some WidgetConfiguration {
+        IntentConfiguration(kind: kind, intent: FTPinnedIntentConfigurationIntent.self, provider: FTPinnedTimelineProvider()) { entry in
+            if #available(iOS 17.0, *) {
+                FTPinnedNotebookOptionsWidgetView(entry: entry)
+                    .containerBackground(.clear, for: .widget)
+            } else {
+                FTPinnedNotebookOptionsWidgetView(entry: entry)
+                    .padding()
+                    .background()
+            }
+        }
+        .supportedFamilies([.systemMedium])
+        .configurationDisplayName("Notebook")
+        .description(" Get quick access to one of your notebooks.")
+    }
+}
+
 struct FTQuickNoteCreateWidget: Widget {
     let kind: String = "QuickNoteCreationWidget"
 

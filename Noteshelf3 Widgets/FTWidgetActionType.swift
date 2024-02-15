@@ -1,5 +1,5 @@
 //
-//  FTWidgetActionType.swift
+//  FTNotebookCreateWidgetActionType.swift
 //  Noteshelf3
 //
 //  Created by Ramakrishna on 08/02/24.
@@ -8,7 +8,11 @@
 
 import Foundation
 
-public enum FTWidgetActionType {
+protocol FTWidgetActionType {
+    var iconName: String { get }
+}
+
+public enum FTNotebookCreateWidgetActionType: FTWidgetActionType {
     case quickNote
     case newNotebook
     case audioNote
@@ -62,5 +66,27 @@ public enum FTWidgetActionType {
             isSystemIcon = false
         }
         return isSystemIcon
+    }
+}
+
+public enum FTPinndedWidgetActionType: FTWidgetActionType {
+    case pen
+    case audio
+    case openAI
+    case text
+
+    var iconName : String {
+        let iconName: String
+        switch self {
+        case .pen:
+            iconName = "pinned_pen"
+        case .audio:
+            iconName = "pinned_audio"
+        case .openAI:
+            iconName = "pinned_openAI"
+        case .text:
+            iconName = "pinned_text"
+        }
+        return iconName
     }
 }

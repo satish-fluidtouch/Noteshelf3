@@ -13,7 +13,7 @@ struct AudioNoteIntent : AppIntent {
     static var title: LocalizedStringResource = "Audio Note"
     static var openAppWhenRun: Bool = true
     func perform() async throws -> some IntentResult {
-        FTWidgetActionController.shared.performAction(action: .audioNote)
+        FTWidgetActionController.shared.performAction(action: FTNotebookCreateWidgetActionType.audioNote)
         return .result()
     }
 }

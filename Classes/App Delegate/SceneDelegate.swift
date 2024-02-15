@@ -162,16 +162,26 @@ class SceneDelegate: FTSceneDelegate {
     func performWidgetActionIfRequired() {
         if let widgetActionType = FTWidgetActionController.shared.actionToExecute {
             switch widgetActionType {
-            case .quickNote:
+            case FTNotebookCreateWidgetActionType.quickNote:
                 createAQuickNote()
-            case .newNotebook:
+            case FTNotebookCreateWidgetActionType.newNotebook:
                 createNewNotebook()
-            case .audioNote:
+            case FTNotebookCreateWidgetActionType.audioNote:
                 createAudioNote()
-            case .scan:
+            case FTNotebookCreateWidgetActionType.scan:
                 startScan()
-            case .search:
+            case FTNotebookCreateWidgetActionType.search:
                 startSearch()
+            case FTPinndedWidgetActionType.pen:
+                alertForPen()
+            case FTPinndedWidgetActionType.audio:
+                alertForAudio()
+            case FTPinndedWidgetActionType.openAI:
+                alertForAI()
+            case FTPinndedWidgetActionType.text:
+                alertForText()
+            default:
+                break
             }
             FTWidgetActionController.shared.resetWidgetAction()
         }
@@ -235,6 +245,18 @@ extension SceneDelegate {
     }
     func startScan() {
         self.showAlertForIntentWith(title: "Scan Doc", message: "Initiates the scanner to immediately start scanning and importing documents.")
+    }
+    func alertForPen() {
+        self.showAlertForIntentWith(title: "Pen", message: "Initiates pen stuff")
+    }
+    func alertForAudio() {
+        self.showAlertForIntentWith(title: "Audio", message: "Initiates audio stuff")
+    }
+    func alertForAI() {
+        self.showAlertForIntentWith(title: "AI", message: "Initiates AI stuff")
+    }
+    func alertForText() {
+        self.showAlertForIntentWith(title: "Text", message: "Initiates text stuff")
     }
     func showAlertForIntentWith(title: String, message: String) {
         if let handlingController = window?.rootViewController as? FTIntentHandlingProtocol {

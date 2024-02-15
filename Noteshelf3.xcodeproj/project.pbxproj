@@ -2048,6 +2048,9 @@
 		E7485B7E2B7CDFE500EE9BF2 /* FTQuickNoteCreateWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7485B7C2B7CD8DE00EE9BF2 /* FTQuickNoteCreateWidget.swift */; };
 		E75705D92AF5104900699764 /* FTFavoriteShortcutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75705D82AF5104900699764 /* FTFavoriteShortcutController.swift */; };
 		E75705DB2AF51E8F00699764 /* FTFavoriteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75705DA2AF51E8F00699764 /* FTFavoriteEditViewController.swift */; };
+		E759A9672B7DE3F500B97F29 /* FTPinnedNotebookOptionsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E759A9662B7DE3F500B97F29 /* FTPinnedNotebookOptionsWidget.swift */; };
+		E759A9692B7DE93B00B97F29 /* FTPinnedIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E759A9682B7DE93B00B97F29 /* FTPinnedIntents.swift */; };
+		E759A96A2B7E1AD600B97F29 /* FTPinnedIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E759A9682B7DE93B00B97F29 /* FTPinnedIntents.swift */; };
 		E75A6EAE2AFCAB770039D25D /* FTFavoritePresetColorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A6EAD2AFCAB770039D25D /* FTFavoritePresetColorsView.swift */; };
 		E75A6EB02AFCAC580039D25D /* FTFavoritePresetsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A6EAF2AFCAC580039D25D /* FTFavoritePresetsViewModel.swift */; };
 		E75A6EB22AFCC2820039D25D /* FTFavoriteColorGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A6EB12AFCC2820039D25D /* FTFavoriteColorGridView.swift */; };
@@ -4419,6 +4422,8 @@
 		E75516E2274F90B600401F45 /* FTExportDataFailedItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTExportDataFailedItemCell.xib; sourceTree = "<group>"; };
 		E75705D82AF5104900699764 /* FTFavoriteShortcutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoriteShortcutController.swift; sourceTree = "<group>"; };
 		E75705DA2AF51E8F00699764 /* FTFavoriteEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoriteEditViewController.swift; sourceTree = "<group>"; };
+		E759A9662B7DE3F500B97F29 /* FTPinnedNotebookOptionsWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPinnedNotebookOptionsWidget.swift; sourceTree = "<group>"; };
+		E759A9682B7DE93B00B97F29 /* FTPinnedIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPinnedIntents.swift; sourceTree = "<group>"; };
 		E75A6EAD2AFCAB770039D25D /* FTFavoritePresetColorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritePresetColorsView.swift; sourceTree = "<group>"; };
 		E75A6EAF2AFCAC580039D25D /* FTFavoritePresetsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritePresetsViewModel.swift; sourceTree = "<group>"; };
 		E75A6EB12AFCC2820039D25D /* FTFavoriteColorGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoriteColorGridView.swift; sourceTree = "<group>"; };
@@ -9165,6 +9170,7 @@
 				97C453412B735A0100251C73 /* FTInteractiveWidgets.swift */,
 				97C4535B2B74AF0D00251C73 /* FTWidgetActionType.swift */,
 				E7485B7C2B7CD8DE00EE9BF2 /* FTQuickNoteCreateWidget.swift */,
+				E759A9662B7DE3F500B97F29 /* FTPinnedNotebookOptionsWidget.swift */,
 			);
 			path = "Noteshelf3 Widgets";
 			sourceTree = "<group>";
@@ -9177,6 +9183,7 @@
 				97C4534A2B73722C00251C73 /* NewNotebookIntent.swift */,
 				97C4534E2B73723D00251C73 /* AudioNoteIntent.swift */,
 				97C453522B73725000251C73 /* ScanIntent.swift */,
+				E759A9682B7DE93B00B97F29 /* FTPinnedIntents.swift */,
 			);
 			path = Intents;
 			sourceTree = "<group>";
@@ -12983,6 +12990,7 @@
 				97C4535E2B74AF0D00251C73 /* FTWidgetActionType.swift in Sources */,
 				97CFD9D32B7B9EBC007949B2 /* Colors.swift in Sources */,
 				97C453552B73725000251C73 /* ScanIntent.swift in Sources */,
+				E759A9692B7DE93B00B97F29 /* FTPinnedIntents.swift in Sources */,
 				97C453442B735A0100251C73 /* FTInteractiveWidgets.swift in Sources */,
 				97C453312B70F27C00251C73 /* SearchIntent.swift in Sources */,
 				97C453512B73723D00251C73 /* AudioNoteIntent.swift in Sources */,
@@ -12992,6 +13000,7 @@
 				97C453492B73721400251C73 /* QuickNoteIntent.swift in Sources */,
 				97C4534D2B73722C00251C73 /* NewNotebookIntent.swift in Sources */,
 				5219823B2B7B9BC1004ABDCC /* PinnedIntentDefinition.intentdefinition in Sources */,
+				E759A9672B7DE3F500B97F29 /* FTPinnedNotebookOptionsWidget.swift in Sources */,
 				97C453212B70E40500251C73 /* FTPinnedNotebookWidget.swift in Sources */,
 				5206098F2B7CA14400487CBC /* ColorThief.swift in Sources */,
 				97C4531F2B70E40500251C73 /* Noteshelf3_WidgetsBundle.swift in Sources */,
@@ -13285,6 +13294,7 @@
 				BAF390A02859ADF00067CA9F /* FTNewSettingsConstant.swift in Sources */,
 				098F61332B306DC300BB0E16 /* FTPDFPageCacheFactory.swift in Sources */,
 				BAF390A12859ADF00067CA9F /* FTBetaAlertHandler.swift in Sources */,
+				E759A96A2B7E1AD600B97F29 /* FTPinnedIntents.swift in Sources */,
 				BAF390A32859ADF00067CA9F /* FTTheme.swift in Sources */,
 				BAF390A42859ADF00067CA9F /* FTPlannerDiaryTrackerTemplateFormat.swift in Sources */,
 				E7BD929F2AB42C1000176039 /* FTNotebookInfoToastView.swift in Sources */,

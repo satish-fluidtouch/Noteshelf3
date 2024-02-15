@@ -13,7 +13,7 @@ struct QuickNoteIntent : AppIntent {
     static var title: LocalizedStringResource = "Quick Note"
     static var openAppWhenRun: Bool = true
     func perform() async throws -> some IntentResult {
-        FTWidgetActionController.shared.performAction(action: .quickNote)
+        FTWidgetActionController.shared.performAction(action: FTNotebookCreateWidgetActionType.quickNote)
         return .result()
     }
 }

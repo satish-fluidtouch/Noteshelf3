@@ -14,7 +14,7 @@ struct ScanIntent : AppIntent {
     static var title: LocalizedStringResource = "Scan"
     static var openAppWhenRun: Bool = true
     func perform() async throws -> some IntentResult {
-        FTWidgetActionController.shared.performAction(action: .scan)
+        FTWidgetActionController.shared.performAction(action: FTNotebookCreateWidgetActionType.scan)
         return .result()
     }
 }

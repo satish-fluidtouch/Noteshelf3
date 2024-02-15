@@ -35,7 +35,7 @@ struct NotebookCreation_WidgetsEntryView : View {
             }
         }
     }
-    private func optionViewForType(_ type : FTWidgetActionType, intent: any AppIntent) -> some View {
+    private func optionViewForType(_ type : FTNotebookCreateWidgetActionType, intent: any AppIntent) -> some View {
         Button(intent: intent) {
             actionViewForType(type)
         }
@@ -69,7 +69,7 @@ struct NotebookCreation_WidgetsEntryView : View {
             }
         }
     }
-    private func actionViewForType(_ type : FTWidgetActionType) -> some View {
+    private func actionViewForType(_ type : FTNotebookCreateWidgetActionType) -> some View {
         return HStack(alignment: .center, spacing:10) {
             if type.hasASystemIcon {
                 Image(systemName: type.iconName)
