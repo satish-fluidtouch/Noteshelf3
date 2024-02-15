@@ -39,7 +39,7 @@ extension FTENPublishManager {
     
     @objc func updateSyncRecord(forShelfItemAtURL url: URL, withDeleteOption shouldDeletePageRecords: Bool, andAccountType accountType: EvernoteAccountType) {
         self.executeBlock { 
-            let semaphore = DispatchSemaphore(value: 0);
+//            let semaphore = DispatchSemaphore(value: 0);
             
             DispatchQueue.global().async {
                 func openDocument(pin: String?) {
@@ -55,8 +55,8 @@ extension FTENPublishManager {
                                 pageDictionary["lastUpdated"] = page.lastUpdated;
                                 pages.append(pageDictionary);
                             }
-                            FTCLSLog("EN: sema signal");
-                            semaphore.signal();
+//                            FTCLSLog("EN: sema signal");
+//                            semaphore.signal();
                             
                             self.createSyncRecords(forShelfItemWithDocumentUUID: doc.documentUUID, ofPages: pages, withDeleteOption: shouldDeletePageRecords, andAccountType: accountType);
                             FTNoteshelfDocumentManager.shared.closeDocument(document: doc,
@@ -64,8 +64,8 @@ extension FTENPublishManager {
                                                                             onCompletion: nil);
                         }
                         else {
-                            FTCLSLog("EN: sema signal");
-                            semaphore.signal();
+//                            FTCLSLog("EN: sema signal");
+//                            semaphore.signal();
                             runInMainThread {
                                 UIAlertController.showAlert(withTitle: "", message: NSLocalizedString("FailedToOpenDocumentUnexpectedError", comment: "Failed to open the document due to unexpected error"), from: Application.keyWindow?.visibleViewController, withCompletionHandler: nil);
                             }
@@ -89,8 +89,8 @@ extension FTENPublishManager {
                     openDocument(pin: nil);
                 }
             };
-            FTCLSLog("EN: sema wait");
-            _ = semaphore.wait(timeout: DispatchTime.distantFuture);
+//            FTCLSLog("EN: sema wait");
+//            _ = semaphore.wait(timeout: DispatchTime.distantFuture);
         };
     }
     
