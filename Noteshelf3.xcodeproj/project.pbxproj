@@ -2064,6 +2064,8 @@
 		E760233C2A4F003E00B16084 /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E760233A2A4EFBA100B16084 /* UIApplication+Extension.swift */; };
 		E760A1F92A7B904200E9CF51 /* FTShelfTagsViewController_MacExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E760A1F82A7B904200E9CF51 /* FTShelfTagsViewController_MacExtension.swift */; };
 		E762186F2A4D809D004A8428 /* FTShelfBaseHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E762186E2A4D809D004A8428 /* FTShelfBaseHostingController.swift */; };
+		E76244102B7F38920045DA75 /* FTRootViewController_WidgetActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E762440F2B7F38920045DA75 /* FTRootViewController_WidgetActions.swift */; };
+		E76244122B7F3CA80045DA75 /* FTShelfSplitViewController+WidgetActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76244112B7F3CA80045DA75 /* FTShelfSplitViewController+WidgetActions.swift */; };
 		E7654DF02966A8AA00E0F7A7 /* FTGlobalSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7654DEF2966A8AA00E0F7A7 /* FTGlobalSettingsController.swift */; };
 		E76CEDC22A93605C00E4E22F /* FTRecentSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76CEDC02A93605C00E4E22F /* FTRecentSectionHeader.xib */; };
 		E76CEDC32A93605C00E4E22F /* FTRecentSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76CEDC12A93605C00E4E22F /* FTRecentSectionHeader.swift */; };
@@ -4439,6 +4441,8 @@
 		E760233A2A4EFBA100B16084 /* UIApplication+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
 		E760A1F82A7B904200E9CF51 /* FTShelfTagsViewController_MacExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfTagsViewController_MacExtension.swift; sourceTree = "<group>"; };
 		E762186E2A4D809D004A8428 /* FTShelfBaseHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfBaseHostingController.swift; sourceTree = "<group>"; };
+		E762440F2B7F38920045DA75 /* FTRootViewController_WidgetActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTRootViewController_WidgetActions.swift; sourceTree = "<group>"; };
+		E76244112B7F3CA80045DA75 /* FTShelfSplitViewController+WidgetActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTShelfSplitViewController+WidgetActions.swift"; sourceTree = "<group>"; };
 		E762F6E4272FA5C700F46DCE /* FTQuickNoteSaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTQuickNoteSaveViewController.swift; sourceTree = "<group>"; };
 		E76383F6269710C5000EECDA /* FTTextAnnotationViewController_MenuHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTextAnnotationViewController_MenuHandler.swift; sourceTree = "<group>"; };
 		E765250B27574F9600ABBAEC /* FTBackUpOptionsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTBackUpOptionsFooterView.swift; sourceTree = "<group>"; };
@@ -6768,6 +6772,7 @@
 				09CDCB682A58320B000340FB /* FTSceneDelegate.swift */,
 				09CDCAB42A4AB653000340FB /* Mac Catalyst Toolbar */,
 				09668A061EC5720B00E042F4 /* FTRootViewController.swift */,
+				E762440F2B7F38920045DA75 /* FTRootViewController_WidgetActions.swift */,
 				095A20E22341ED14002B4236 /* FTRootViewCOntroller_ImportAction.swift */,
 				BA57454122F9875300310882 /* FTAppIntentHandler.swift */,
 				BAF1DAB322D7662700D0555F /* App Configuration */,
@@ -9744,6 +9749,7 @@
 			children = (
 				97F60C0B291E11450050C3F3 /* Sidebar */,
 				97F60C0A291E10150050C3F3 /* Shelf */,
+				E76244112B7F3CA80045DA75 /* FTShelfSplitViewController+WidgetActions.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -13233,6 +13239,7 @@
 				09DBD52A2A7D255B00987ED1 /* FTFormSheetTransitionDelegate.swift in Sources */,
 				BAF390682859ADF00067CA9F /* FTTileMap.swift in Sources */,
 				E7B8DA95287FF62600F0AE78 /* FTPenShortcutView.swift in Sources */,
+				E76244122B7F3CA80045DA75 /* FTShelfSplitViewController+WidgetActions.swift in Sources */,
 				BAF390692859ADF00067CA9F /* FTShapeControllerBuilder.swift in Sources */,
 				97C4535C2B74AF0D00251C73 /* FTWidgetActionType.swift in Sources */,
 				BAF3906A2859ADF00067CA9F /* FTShapeParallelogramResizing.swift in Sources */,
@@ -13791,6 +13798,7 @@
 				1449D16429F8256C00C7EC49 /* FTShelfHomeTopSectionModel.swift in Sources */,
 				BAF392342859ADF00067CA9F /* FTAudioPlayerController.m in Sources */,
 				BAF392352859ADF00067CA9F /* FTPDFRenderViewController+Finder.swift in Sources */,
+				E76244102B7F38920045DA75 /* FTRootViewController_WidgetActions.swift in Sources */,
 				098C09ED2B0616FC0072C3C9 /* FTFileCacheManager.swift in Sources */,
 				BAF392362859ADF00067CA9F /* FTPDFPagePublishRequest.swift in Sources */,
 				97C5A22E29F1032600B8E251 /* FTSidebarItemContextualMenuVM.swift in Sources */,

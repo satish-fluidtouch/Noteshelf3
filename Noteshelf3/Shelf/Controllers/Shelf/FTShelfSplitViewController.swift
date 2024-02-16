@@ -39,6 +39,7 @@ protocol FTShelfPresentable {
 //    func shelfItems(_ sortOrder: FTShelfSortOrder, parent: FTGroupItemProtocol?, searchKey: String?, onCompletion completionBlock: @escaping (([FTShelfItemProtocol]) -> Void))
     func didTapOnUpgradeNow()
     func presentIAPScreen()
+    func handleWidgetAction(for type: FTWidgetActionType)
 }
 
 class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {

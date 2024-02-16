@@ -162,16 +162,6 @@ class SceneDelegate: FTSceneDelegate {
     func performWidgetActionIfRequired() {
         if let widgetActionType = FTWidgetActionController.shared.actionToExecute {
             switch widgetActionType {
-            case FTNotebookCreateWidgetActionType.quickNote:
-                createAQuickNote()
-            case FTNotebookCreateWidgetActionType.newNotebook:
-                createNewNotebook()
-            case FTNotebookCreateWidgetActionType.audioNote:
-                createAudioNote()
-            case FTNotebookCreateWidgetActionType.scan:
-                startScan()
-            case FTNotebookCreateWidgetActionType.search:
-                startSearch()
             case FTPinndedWidgetActionType.pen:
                 alertForPen()
             case FTPinndedWidgetActionType.audio:
@@ -181,7 +171,10 @@ class SceneDelegate: FTSceneDelegate {
             case FTPinndedWidgetActionType.text:
                 alertForText()
             default:
-                break
+                if let intentHandler = self.window?.rootViewController as? FTIntentHandlingProtocol {
+                    let handler = FTAppIntentHandler(with: intentHandler)
+                    handler.handleWidgetAction(for: widgetActionType)
+                }
             }
             FTWidgetActionController.shared.resetWidgetAction()
         }
@@ -231,21 +224,6 @@ extension URL {
     }
 }
 extension SceneDelegate {
-    func startSearch() {
-        self.showAlertForIntentWith(title: "Search", message: "Initiates search with the search bar active and keyboard ready for keyword entry.")
-    }
-    func createAQuickNote() {
-        self.showAlertForIntentWith(title: "Quick Note", message: "Creates a blank note for immediate note-taking.")
-    }
-    func createNewNotebook() {
-        self.showAlertForIntentWith(title: "New Notebook", message: "Displays options for customizing cover and paper style to create a new notebook.")
-    }
-    func createAudioNote() {
-        self.showAlertForIntentWith(title: "Audio Note", message: "Instantly starts recording audio in a new notebook.")
-    }
-    func startScan() {
-        self.showAlertForIntentWith(title: "Scan Doc", message: "Initiates the scanner to immediately start scanning and importing documents.")
-    }
     func alertForPen() {
         self.showAlertForIntentWith(title: "Pen", message: "Initiates pen stuff")
     }

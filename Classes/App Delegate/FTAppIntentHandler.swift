@@ -87,6 +87,7 @@ protocol FTIntentHandlingProtocol: UIUserActivityRestoring {
     func showPinnedWidgetAlert()
     func showQuickNoteWidgetAlert()
     func showAlertWith(title : String,message : String)
+    func handleWidgetAction(type: FTWidgetActionType)
 }
 
 
@@ -254,6 +255,10 @@ final class FTAppIntentHandler {
     }
     func showAlertForIntentWith(title : String,message : String) {
         intentHandler?.showAlertWith(title: title, message: message)
+    }
+
+    func handleWidgetAction(for type: FTWidgetActionType) {
+        intentHandler?.handleWidgetAction(type: type)
     }
 }
 

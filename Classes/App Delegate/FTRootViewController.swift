@@ -21,12 +21,13 @@ protocol FTOpenCloseDocumentProtocol : NSObjectProtocol {
 private var currentRetryCount = 1
 private var maxRetryCount = 5
 
+// Variables or functions marked as internal are intended for file extensions convenience, not for outside access.
 class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewControllerSupportsScene {
 
     var addedObserverOnScene: Bool = false;
 
     weak var docuemntViewController : FTDocumentViewController?;
-    fileprivate var rootContentViewController: FTShelfPresentable?;
+    internal var rootContentViewController: FTShelfPresentable?;
     fileprivate var isFirstTime = true;
     fileprivate var isOpeningDocument = false;
 
@@ -468,7 +469,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         }
     }
 
-    private func closeAnyActiveOpenedBook(completion: @escaping () -> Void) {
+    internal func closeAnyActiveOpenedBook(completion: @escaping () -> Void) {
 
         self.updateProvider { () -> Void in
 
