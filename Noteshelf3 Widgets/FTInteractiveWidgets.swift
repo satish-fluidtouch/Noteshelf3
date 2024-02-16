@@ -203,8 +203,8 @@ private extension URLComponents {
         self.path = "/"
         let param1 = URLQueryItem(name: "intent", value: type)
         self.queryItems = [param1]
-        if let entry {
-            self.queryItems?.append(URLQueryItem(name: "relativePath", value: type))
+        if let entry = entry as? FTPinnedBookEntry {
+            self.queryItems?.append(URLQueryItem(name: "relativePath", value: entry.relativePath))
         }
     }
 }

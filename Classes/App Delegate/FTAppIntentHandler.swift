@@ -85,7 +85,6 @@ protocol FTIntentHandlingProtocol: UIUserActivityRestoring {
     func startNS2ToNS3Migration()
     func showPremiumUpgradeScreen()
     func showPinnedWidgetAlert()
-    func showQuickNoteWidgetAlert()
     func openPinnedBook(with relativePath: String)
     func showAlertWith(title : String,message : String)
     func handleWidgetAction(type: FTWidgetActionType)
