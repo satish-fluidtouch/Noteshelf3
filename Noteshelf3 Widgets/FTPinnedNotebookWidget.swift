@@ -18,13 +18,21 @@ struct FTPinnedWidgetView : View {
                 bottomView(entry: entry)
             }
         }.overlay(alignment: .topLeading) {
-            Image(uiImage: UIImage(contentsOfFile: entry.coverImage) ?? UIImage(named: "coverImage1")!)
+            Image(uiImage: imageFrom(entry: entry))
                 .resizable()
                 .scaledToFit()
                 .frame(width: 44,height: 60)
                 .padding(.top, 20)
                 .padding(.leading, 24)
         }
+    }
+    
+    private func imageFrom(entry : FTPinnedBookEntry) -> UIImage {
+        var image = UIImage(named: "noCover")!
+        if entry.hasCover {
+            image = UIImage(contentsOfFile: entry.coverImage) ?? image
+        }
+        return image
     }
 }
 struct topView: View {
@@ -36,13 +44,15 @@ struct topView: View {
             Color(uiColor: color)
         }.frame(width: 160, height: 48)
             .onAppear {
-                color = adaptiveColorFromImage()
+                color = entry.hasCover ? adaptiveColorFromImage() : UIColor(hexString: "#E06E51")
             }
             .overlay {
-                if color.isLightColor() {
-                    Color.black.opacity(0.2)
-                } else {
-                    Color.white.opacity(0.2)
+                if entry.hasCover {
+                    if color.isLightColor() {
+                        Color.black.opacity(0.2)
+                    } else {
+                        Color.white.opacity(0.2)
+                    }
                 }
             }
     }

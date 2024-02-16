@@ -17,6 +17,7 @@ struct FTPinnedBookEntry: TimelineEntry {
     let time: String
     let coverImage: String
     let relativePath: String
+    let hasCover: Bool
 }
 struct FTPinnedTimelineProvider: IntentTimelineProvider {
     typealias Entry = FTPinnedBookEntry
@@ -26,13 +27,13 @@ struct FTPinnedTimelineProvider: IntentTimelineProvider {
     
     func placeholder(in context: Context) -> FTPinnedBookEntry {
         
-        return FTPinnedBookEntry(date: Date(), name: "PlaceHolder", time: "5:00PM", coverImage: "coverImage1", relativePath: "")
+        return FTPinnedBookEntry(date: Date(), name: "PlaceHolder", time: "5:00PM", coverImage: "coverImage1", relativePath: "", hasCover: false)
     }
 
     func getSnapshot(for configuration: FTPinnedIntentConfigurationIntent,
                      in context: Context,
                      completion: @escaping (FTPinnedBookEntry) -> ()) {
-        let entry = FTPinnedBookEntry(date: Date(), name: "Notebook 1", time: "5:00PM", coverImage: "coverImage1", relativePath: "")
+        let entry = FTPinnedBookEntry(date: Date(), name: "Notebook 1", time: "5:00PM", coverImage: "coverImage1", relativePath: "", hasCover: false)
         completion(entry)
     }
 
@@ -40,13 +41,13 @@ struct FTPinnedTimelineProvider: IntentTimelineProvider {
                      in context: Context,
                      completion: @escaping (Timeline<FTPinnedBookEntry>) -> ()) {
         Task {
-            let entry = FTPinnedBookEntry(date: Date(), name: configuration.Books?.displayString ?? "Notebook 1", time: configuration.Books?.time ?? "5:00 PM", coverImage: configuration.Books?.coverImage ?? "coverImage1", relativePath: configuration.Books?.relativePath ?? "")
+            let entry = FTPinnedBookEntry(date: Date(), name: configuration.Books?.displayString ?? "Notebook 1", time: configuration.Books?.time ?? "5:00 PM", coverImage: configuration.Books?.coverImage ?? "coverImage1", relativePath: configuration.Books?.relativePath ?? "", hasCover: configuration.Books?.hasCover?.boolValue ?? false)
             executeTimelineCompletion(completion, timelineEntry: entry)
         }
     }
     
     private func showEmptyState(completion: @escaping (Timeline<FTPinnedBookEntry>) -> ()) {
-        let entry = FTPinnedBookEntry(date: Date(), name: "Empty State", time: "6:00 PM", coverImage: "", relativePath: "")
+        let entry = FTPinnedBookEntry(date: Date(), name: "Empty State", time: "6:00 PM", coverImage: "", relativePath: "", hasCover: false)
 
         
         // Trigger completion & next fetch happens 15 minutes later

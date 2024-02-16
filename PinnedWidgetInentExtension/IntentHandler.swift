@@ -28,6 +28,7 @@ class IntentHandler: INExtension, FTPinnedIntentConfigurationIntentHandling {
             pinnedItem.coverImage = eachItem.coverImageName
             pinnedItem.time = eachItem.createdTime
             pinnedItem.relativePath = eachItem.relativePath
+            pinnedItem.hasCover = NSNumber(booleanLiteral: eachItem.hasCover)
             items.append(pinnedItem)
         }
         let collection = INObjectCollection(items: items)
@@ -54,9 +55,10 @@ class IntentHandler: INExtension, FTPinnedIntentConfigurationIntentHandling {
                     let coverImage : String
                     let metaDataPlistUrl = eachNotebookUrl.appendingPathComponent("Metadata/Properties.plist")
                     relativePath = _relativePath(for: metaDataPlistUrl)
+                    let isCover = hasCover(for: eachNotebookUrl.path(percentEncoded: false))
                     coverImage = eachNotebookUrl.appending(path:"cover-shelf-image.png").path(percentEncoded: false);
                     time = timeFromDate(currentDate: eachNotebookUrl.fileCreationDate)
-                    let book = FTPinnedMockData(relativePath: relativePath, createdTime: time, coverImageName: coverImage)
+                    let book = FTPinnedMockData(relativePath: relativePath, createdTime: time, coverImageName: coverImage, hasCover: isCover)
                     notebooks.append(book)
                 }
 
@@ -73,6 +75,21 @@ class IntentHandler: INExtension, FTPinnedIntentConfigurationIntentHandling {
             }
         }
         return relativePath
+    }
+    
+    private func hasCover(for notebookPath: String) -> Bool {
+        var hasCover = false
+        let docPlist = notebookPath.appending("Document.plist")
+        do {
+            let url = URL(fileURLWithPath: docPlist)
+            let dict = try NSDictionary(contentsOf: url, error: ())
+            if let pagesArray = dict["pages"] as? [NSDictionary], let firstPage = pagesArray.first {
+                hasCover = firstPage["isCover"] as? Bool ?? false
+            }
+        } catch {
+            return hasCover
+        }
+        return hasCover
     }
     
     private func timeFromDate(currentDate: Date) -> String {
@@ -97,11 +114,13 @@ struct FTPinnedMockData {
     let relativePath: String
     let createdTime: String
     let coverImageName: String
+    let hasCover: Bool
     
-    init(relativePath: String, createdTime: String, coverImageName: String) {
+    init(relativePath: String, createdTime: String, coverImageName: String, hasCover: Bool) {
         self.relativePath = relativePath
         self.createdTime = createdTime
         self.coverImageName = coverImageName
+        self.hasCover = hasCover
     }
     
     static let mockData: [[String: String]] = [
