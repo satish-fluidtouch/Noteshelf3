@@ -195,7 +195,7 @@ final class FTAppIntentHandler {
                         intentHandler?.showPinnedWidgetAlert()
                     }               
                 } else if queryitem.value == NS3LaunchIntent.quickNote.rawValue {
-                    intentHandler?.showQuickNoteWidgetAlert()
+                    intentHandler?.handleWidgetAction(type: FTNotebookCreateWidgetActionType.quickNote)
                 } else {
                     intentHandler?.showPremiumUpgradeScreen()
                 }
