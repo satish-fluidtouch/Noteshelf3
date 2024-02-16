@@ -158,15 +158,9 @@ struct FTPinnedNotebookOptionsWidget: Widget {
 
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: FTPinnedIntentConfigurationIntent.self, provider: FTPinnedTimelineProvider()) { entry in
-            if #available(iOS 17.0, *) {
-                FTPinnedNotebookOptionsWidgetView(entry: entry)
-                    .containerBackground(.clear, for: .widget)
-                    .widgetURL(URLComponents(type: "pinnedWidget")?.url)
-            } else {
-                FTPinnedNotebookOptionsWidgetView(entry: entry)
-                    .padding()
-                    .background()
-            }
+            FTPinnedNotebookOptionsWidgetView(entry: entry)
+                .containerBackground(.clear, for: .widget)
+//                .widgetURL(URLComponents(type: "pinnedWidget", entry: entry)?.url)
         }
         .supportedFamilies([.systemMedium])
         .configurationDisplayName("Notebook")

@@ -67,13 +67,17 @@ public enum FTNotebookCreateWidgetActionType: FTWidgetActionType {
         }
         return isSystemIcon
     }
+
+    public var relativePath: String {
+        return ""
+    }
 }
 
 public enum FTPinndedWidgetActionType: FTWidgetActionType {
-    case pen
-    case audio
-    case openAI
-    case text
+    case pen(String)
+    case audio(String)
+    case openAI(String)
+    case text(String)
 
     var iconName : String {
         let iconName: String
@@ -88,5 +92,26 @@ public enum FTPinndedWidgetActionType: FTWidgetActionType {
             iconName = "pinned_text"
         }
         return iconName
+    }
+
+    public var relativePath: String {
+        get {
+            switch self {
+            case .pen(let path), .audio(let path), .openAI(let path), .text(let path):
+                return path
+            }
+        }
+        set {
+            switch self {
+            case .pen:
+                self = .pen(newValue)
+            case .audio:
+                self = .audio(newValue)
+            case .openAI:
+                self = .openAI(newValue)
+            case .text:
+                self = .text(newValue)
+            }
+        }
     }
 }

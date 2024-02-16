@@ -161,21 +161,10 @@ class SceneDelegate: FTSceneDelegate {
     }
     func performWidgetActionIfRequired() {
         if let widgetActionType = FTWidgetActionController.shared.actionToExecute {
-            switch widgetActionType {
-            case FTPinndedWidgetActionType.pen:
-                alertForPen()
-            case FTPinndedWidgetActionType.audio:
-                alertForAudio()
-            case FTPinndedWidgetActionType.openAI:
-                alertForAI()
-            case FTPinndedWidgetActionType.text:
-                alertForText()
-            default:
                 if let intentHandler = self.window?.rootViewController as? FTIntentHandlingProtocol {
                     let handler = FTAppIntentHandler(with: intentHandler)
                     handler.handleWidgetAction(for: widgetActionType)
                 }
-            }
             FTWidgetActionController.shared.resetWidgetAction()
         }
     }
