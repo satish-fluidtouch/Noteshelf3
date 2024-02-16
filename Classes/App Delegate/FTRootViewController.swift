@@ -554,16 +554,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         }
     }
     
-    func showQuickNoteWidgetAlert() {
-        let alertController = UIAlertController(title: "",
-                                                message: "This creates quick note",
-                                                preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "OK".localized, style: .cancel, handler: { _ in
-        })
-        alertController.addAction(cancelAction)
-        self.present(alertController, animated: true, completion: nil)
-    }
-
     func showPinnedWidgetAlert() {
         let alertController = UIAlertController(title: "",
                                                 message: "This opens Pinned Notebook",
