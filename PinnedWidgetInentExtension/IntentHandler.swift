@@ -7,6 +7,7 @@
 //
 
 import Intents
+import FTCommon
 
 // As an example, this class is set up to handle Message intents.
 // You will want to replace this or add other intents as appropriate.
@@ -21,12 +22,12 @@ class IntentHandler: INExtension, FTPinnedIntentConfigurationIntentHandling {
     
     func provideBooksOptionsCollection(for intent: FTPinnedIntentConfigurationIntent) async throws -> INObjectCollection<FTPinnedBookType> {
         var items = [FTPinnedBookType]()
-        let response = FTPinnedMockData.mockData
+        let response = notebooks()
         response.forEach { eachItem in
-            let pinnedItem = FTPinnedBookType(identifier: UUID().uuidString, display: eachItem["bookName"] ?? "")
-            
-            pinnedItem.coverImage = eachItem["imageName"]
-            pinnedItem.time = eachItem["createdTime"]
+            let pinnedItem = FTPinnedBookType(identifier: UUID().uuidString, display: eachItem.relativePath.lastPathComponent.deletingPathExtension)
+            pinnedItem.coverImage = eachItem.coverImageName
+            pinnedItem.time = eachItem.createdTime
+            pinnedItem.relativePath = eachItem.relativePath
             items.append(pinnedItem)
         }
         let collection = INObjectCollection(items: items)
@@ -37,15 +38,68 @@ class IntentHandler: INExtension, FTPinnedIntentConfigurationIntentHandling {
     override func handler(for intent: INIntent) -> Any {
         return self
     }
+    
+    private func notebooks() -> [FTPinnedMockData] {
+        var notebooks = [FTPinnedMockData]()
+        if FileManager().fileExists(atPath: sharedCacheURL.path(percentEncoded: false)) {
+            if let urls = try? FileManager.default.contentsOfDirectory(at: sharedCacheURL,
+                                                                       includingPropertiesForKeys: nil,
+                                                                       options: .skipsHiddenFiles) {
+                let notebookFilteredUrls = urls.filter { eachUrl in
+                    return eachUrl.pathExtension == "ns3"
+                }
+                notebookFilteredUrls.forEach { eachNotebookUrl in
+                    let relativePath : String
+                    let time : String
+                    let coverImage : String
+                    let metaDataPlistUrl = eachNotebookUrl.appendingPathComponent("Metadata/Properties.plist")
+                    relativePath = _relativePath(for: metaDataPlistUrl)
+                    coverImage = eachNotebookUrl.appending(path:"cover-shelf-image.png").path(percentEncoded: false);
+                    time = timeFromDate(currentDate: eachNotebookUrl.fileCreationDate)
+                    let book = FTPinnedMockData(relativePath: relativePath, createdTime: time, coverImageName: coverImage)
+                    notebooks.append(book)
+                }
+
+            }
+        }
+        return notebooks
+    }
+    
+    private func _relativePath(for metaDataPlistUrl: URL) -> String {
+        var relativePath = ""
+        if let data = try? Data(contentsOf: metaDataPlistUrl) {
+            if let plist = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any], let _relativePath = plist["relativePath"] as? String {
+                relativePath = _relativePath
+            }
+        }
+        return relativePath
+    }
+    
+    private func timeFromDate(currentDate: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "hh:mm a"
+        dateFormatter.locale = .current // Set locale to ensure proper representation of AM/PM
+        return dateFormatter.string(from: currentDate)
+    }
+    
+    
+    
+    private var sharedCacheURL: URL {
+        if let url = FileManager().containerURL(forSecurityApplicationGroupIdentifier: FTSharedGroupID.getAppGroupID()) {
+            let directoryURL = url.appending(path: FTSharedGroupID.notshelfDocumentCache);
+            return directoryURL
+        }
+        fatalError("Failed to get path");
+    }
 }
 
 struct FTPinnedMockData {
-    let bookName: String
+    let relativePath: String
     let createdTime: String
     let coverImageName: String
     
-    init(bookName: String, createdTime: String, coverImageName: String) {
-        self.bookName = bookName
+    init(relativePath: String, createdTime: String, coverImageName: String) {
+        self.relativePath = relativePath
         self.createdTime = createdTime
         self.coverImageName = coverImageName
     }

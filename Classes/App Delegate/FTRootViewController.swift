@@ -499,8 +499,35 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             }
         };
     }
-
+   
     // MARK: - open Document from today widget
+    func openPinnedBook(with relativePath: String) {
+        if(FTNoteshelfDocumentProvider.shared.isProviderReady) {
+            var collectionName : String?;
+            if let _collectionName = relativePath.collectionName() {
+                collectionName = _collectionName.deletingPathExtension;
+            }
+            self.shelfCollection(title: collectionName) { (shelfitemcollection) in
+                if let collection = shelfitemcollection {
+                    var groupItem : FTGroupItemProtocol?;
+                    if let groupPath = relativePath.relativeGroupPathFromCollection() {
+                        let url = collection.URL.appendingPathComponent(groupPath);
+                        groupItem = collection.groupItemForURL(url);
+                    }
+                    let shelfItem = collection.documentItemWithName(title: relativePath.documentName(),
+                                                                    inGroup: groupItem);
+                    self.openDocumentAtRelativePath(relativePath, inShelfItem: shelfItem, animate: false, addToRecent: true, bipassPassword: true);
+                }
+            }
+        }
+        else {
+            self.openDocumentAtRelativePath(relativePath, inShelfItem: nil,
+                                            animate: false,
+                                            addToRecent: true,
+                                            bipassPassword: true);
+        }
+    }
+    
     func openDocumentForSelectedNotebook(_ path: URL, isSiriCreateIntent: Bool) {
         if let docController = self.docuemntViewController, !docController.canContinueToImportFiles() {
             let result = path.isPinEnabledForDocument()
@@ -573,6 +600,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         alertController.addAction(cancelAction);
         self.present(alertController, animated: true, completion: nil);
     }
+  
     func showAlertWith(title: String, message: String) {
         UIAlertController.showAlert(withTitle: title, message: message, from: self, withCompletionHandler: nil)
     }

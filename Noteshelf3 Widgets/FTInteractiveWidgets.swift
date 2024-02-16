@@ -16,6 +16,7 @@ struct FTPinnedBookEntry: TimelineEntry {
     let name: String
     let time: String
     let coverImage: String
+    let relativePath: String
 }
 struct FTPinnedTimelineProvider: IntentTimelineProvider {
     typealias Entry = FTPinnedBookEntry
@@ -25,13 +26,13 @@ struct FTPinnedTimelineProvider: IntentTimelineProvider {
     
     func placeholder(in context: Context) -> FTPinnedBookEntry {
         
-        return FTPinnedBookEntry(date: Date(), name: "PlaceHolder", time: "5:00PM", coverImage: "coverImage1")
+        return FTPinnedBookEntry(date: Date(), name: "PlaceHolder", time: "5:00PM", coverImage: "coverImage1", relativePath: "")
     }
 
     func getSnapshot(for configuration: FTPinnedIntentConfigurationIntent,
                      in context: Context,
                      completion: @escaping (FTPinnedBookEntry) -> ()) {
-        let entry = FTPinnedBookEntry(date: Date(), name: "Notebook 1", time: "5:00PM", coverImage: "coverImage1")
+        let entry = FTPinnedBookEntry(date: Date(), name: "Notebook 1", time: "5:00PM", coverImage: "coverImage1", relativePath: "")
         completion(entry)
     }
 
@@ -39,13 +40,13 @@ struct FTPinnedTimelineProvider: IntentTimelineProvider {
                      in context: Context,
                      completion: @escaping (Timeline<FTPinnedBookEntry>) -> ()) {
         Task {
-            let entry = FTPinnedBookEntry(date: Date(), name: configuration.Books?.displayString ?? "Notebook 1", time: configuration.Books?.time ?? "5:00 PM", coverImage: configuration.Books?.coverImage ?? "coverImage1")
+            let entry = FTPinnedBookEntry(date: Date(), name: configuration.Books?.displayString ?? "Notebook 1", time: configuration.Books?.time ?? "5:00 PM", coverImage: configuration.Books?.coverImage ?? "coverImage1", relativePath: configuration.Books?.relativePath ?? "")
             executeTimelineCompletion(completion, timelineEntry: entry)
         }
     }
     
     private func showEmptyState(completion: @escaping (Timeline<FTPinnedBookEntry>) -> ()) {
-        let entry = FTPinnedBookEntry(date: Date(), name: "Empty State", time: "6:00 PM", coverImage: "")
+        let entry = FTPinnedBookEntry(date: Date(), name: "Empty State", time: "6:00 PM", coverImage: "", relativePath: "")
 
         
         // Trigger completion & next fetch happens 15 minutes later
@@ -135,15 +136,16 @@ struct FTPinnedWidget: Widget {
     
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: FTPinnedIntentConfigurationIntent.self, provider: FTPinnedTimelineProvider()) { entry in
-            if #available(iOS 17.0, *) {
+            //if #available(iOS 17.0, *) {
                 FTPinnedWidgetView(entry: entry)
                     .containerBackground(.fill.tertiary, for: .widget)
-                    .widgetURL(URLComponents(type: "pinnedWidget")?.url)
-            } else {
-                FTPinnedWidgetView(entry: entry)
-                    .padding()
-                    .background()
-            }
+                    .widgetURL(URLComponents(type: "pinnedWidget", entry: entry)?.url)
+//            } else {
+//                FTPinnedWidgetView(entry: entry)
+//                    .padding()
+//                    .background()
+//                    .widgetURL(URLComponents(type: "pinnedWidget", entry: entry)?.url)          
+//            }
         }
         .supportedFamilies([.systemSmall])
         .configurationDisplayName("Notebook")
@@ -195,11 +197,15 @@ struct FTQuickNoteCreateWidget: Widget {
 }
 
 private extension URLComponents {
-    init?(type: String) {
+    init?(type: String, entry: TimelineEntry? = nil) {
         self.init()
         self.scheme = FTSharedGroupID.getAppBundleID()
         self.path = "/"
-        self.queryItems = [URLQueryItem(name: "intent", value: type)]
+        let param1 = URLQueryItem(name: "intent", value: type)
+        self.queryItems = [param1]
+        if let entry {
+            self.queryItems?.append(URLQueryItem(name: "relativePath", value: type))
+        }
     }
 }
 

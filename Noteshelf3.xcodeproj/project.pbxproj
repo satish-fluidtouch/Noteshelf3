@@ -699,6 +699,7 @@
 		52C01E132A00F4880038C21A /* FTFinderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C01E122A00F4880038C21A /* FTFinderHelper.swift */; };
 		52C234EA2A7BC7C300E73F1B /* FTNoteBookToolsHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52C234E92A7BC7C300E73F1B /* FTNoteBookToolsHeaderView.xib */; };
 		52C234EC2A7BC91A00E73F1B /* FTNotebookToolsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C234EB2A7BC91A00E73F1B /* FTNotebookToolsHeaderView.swift */; };
+		52C31F0C2B7E1BBA004BE21B /* FTCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA84E442873105500DE801B /* FTCommon.framework */; };
 		52C98BE82A0E3D8C00070F4A /* FTOutLineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C98BE72A0E3D8C00070F4A /* FTOutLineCell.swift */; };
 		52D7D5BD2A70E56900F3089E /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAA84E2628730FA800DE801B /* Colors.xcassets */; };
 		52D7D5BE2A70F4C600F3089E /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAA84E2628730FA800DE801B /* Colors.xcassets */; };
@@ -2293,6 +2294,13 @@
 			remoteGlobalIDString = BAA84E1428730F5800DE801B;
 			remoteInfo = FTStyles;
 		};
+		52C31F0E2B7E1BBA004BE21B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BAA84E432873105500DE801B;
+			remoteInfo = FTCommon;
+		};
 		97C453252B70E40700251C73 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -3591,6 +3599,7 @@
 		52C01E122A00F4880038C21A /* FTFinderHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFinderHelper.swift; sourceTree = "<group>"; };
 		52C234E92A7BC7C300E73F1B /* FTNoteBookToolsHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTNoteBookToolsHeaderView.xib; sourceTree = "<group>"; };
 		52C234EB2A7BC91A00E73F1B /* FTNotebookToolsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNotebookToolsHeaderView.swift; sourceTree = "<group>"; };
+		52C31F112B7E3C5E004BE21B /* PinnedWidgetInentExtensionDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PinnedWidgetInentExtensionDebug.entitlements; sourceTree = "<group>"; };
 		52C98BE72A0E3D8C00070F4A /* FTOutLineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOutLineCell.swift; sourceTree = "<group>"; };
 		52E36A442ABDA68A00FDDC78 /* FTPageUndoRedoGestureDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPageUndoRedoGestureDetector.swift; sourceTree = "<group>"; };
 		5E26C20520220A8300D19A53 /* FTWatchRecordings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FTWatchRecordings.storyboard; sourceTree = "<group>"; };
@@ -4793,6 +4802,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5219822A2B7B9A23004ABDCC /* Intents.framework in Frameworks */,
+				52C31F0C2B7E1BBA004BE21B /* FTCommon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8236,6 +8246,7 @@
 		5219822B2B7B9A24004ABDCC /* PinnedWidgetInentExtension */ = {
 			isa = PBXGroup;
 			children = (
+				52C31F112B7E3C5E004BE21B /* PinnedWidgetInentExtensionDebug.entitlements */,
 				521982322B7B9A27004ABDCC /* PinnedWidgetInentExtension.entitlements */,
 				5219822C2B7B9A24004ABDCC /* IntentHandler.swift */,
 				5219822E2B7B9A24004ABDCC /* Info.plist */,
@@ -12071,6 +12082,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				52C31F0F2B7E1BBA004BE21B /* PBXTargetDependency */,
 			);
 			name = PinnedWidgetInentExtension;
 			productName = PinnedWidgetInentExtension;
@@ -14924,6 +14936,11 @@
 			target = BAA84E1428730F5800DE801B /* FTStyles */;
 			targetProxy = 5283D3A62A5E7AA000C6C125 /* PBXContainerItemProxy */;
 		};
+		52C31F0F2B7E1BBA004BE21B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BAA84E432873105500DE801B /* FTCommon */;
+			targetProxy = 52C31F0E2B7E1BBA004BE21B /* PBXContainerItemProxy */;
+		};
 		97C453262B70E40700251C73 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 97C453172B70E40400251C73 /* Noteshelf3 WidgetsExtension */;
@@ -16484,7 +16501,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = PinnedWidgetInentExtension/PinnedWidgetInentExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = PinnedWidgetInentExtension/PinnedWidgetInentExtensionDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -16750,7 +16767,7 @@
 				INFOPLIST_FILE = "Noteshelf3 Widgets/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf3 Widgets";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -16805,7 +16822,7 @@
 				INFOPLIST_FILE = "Noteshelf3 Widgets/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf3 Widgets";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -16857,7 +16874,7 @@
 				INFOPLIST_FILE = "Noteshelf3 Widgets/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf3 Widgets";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -16909,7 +16926,7 @@
 				INFOPLIST_FILE = "Noteshelf3 Widgets/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf3 Widgets";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -16961,7 +16978,7 @@
 				INFOPLIST_FILE = "Noteshelf3 Widgets/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf3 Widgets";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

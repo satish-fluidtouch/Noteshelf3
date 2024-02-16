@@ -18,7 +18,7 @@ struct FTPinnedWidgetView : View {
                 bottomView(entry: entry)
             }
         }.overlay(alignment: .topLeading) {
-            Image(entry.coverImage)
+            Image(uiImage: UIImage(contentsOfFile: entry.coverImage) ?? UIImage(named: "coverImage1")!)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 44,height: 60)

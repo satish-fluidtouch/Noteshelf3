@@ -9,6 +9,7 @@
 import UIKit
 
 public class FTSharedGroupID {
+    public static let notshelfDocumentCache = "com.noteshelf.cache"
 #if ENTERPRISE_EDITION
     public static func getAppGroupID() -> String {
 #if DEBUG

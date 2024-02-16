@@ -86,6 +86,7 @@ protocol FTIntentHandlingProtocol: UIUserActivityRestoring {
     func showPremiumUpgradeScreen()
     func showPinnedWidgetAlert()
     func showQuickNoteWidgetAlert()
+    func openPinnedBook(with relativePath: String)
     func showAlertWith(title : String,message : String)
     func handleWidgetAction(type: FTWidgetActionType)
 }
@@ -187,7 +188,12 @@ final class FTAppIntentHandler {
                 if queryitem.value == NS3LaunchIntent.migration.rawValue {
                     intentHandler?.startNS2ToNS3Migration()
                 } else if queryitem.value == NS3LaunchIntent.pinnedWidget.rawValue {
-                    intentHandler?.showPinnedWidgetAlert()
+                    if let relativePath = urlcomponents.queryItems?.first(where: {$0.name == "relativePath"})?.value
+                    {
+                        intentHandler?.openPinnedBook(with: relativePath)
+                    } else {
+                        intentHandler?.showPinnedWidgetAlert()
+                    }               
                 } else if queryitem.value == NS3LaunchIntent.quickNote.rawValue {
                     intentHandler?.showQuickNoteWidgetAlert()
                 } else {
