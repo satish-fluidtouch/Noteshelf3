@@ -12,11 +12,11 @@ import FTDocumentFramework
 class FTNSDocumentFileItemFactory : FTFileItemFactory
 {
     static func pdfFileItem(_ fileName: String,document: FTNoteshelfDocument?) -> FTPDFKitFileItemPDF {
-#if  !NS2_SIRI_APP && !NOTESHELF_ACTION
-        return FTNSPDFFileItem(fileName: fileName, document: document);
-#else
+//#if  !NS2_SIRI_APP && !NOTESHELF_ACTION
+//        return FTNSPDFFileItem(fileName: fileName, document: document);
+//#else
         return FTPDFKitFileItemPDF(fileName: fileName, document: document);
-#endif
+//#endif
     }
     
     override var usePDFKitForPDFFileItems: Bool {
@@ -51,11 +51,11 @@ class FTNSDocumentFileItemFactory : FTFileItemFactory
     }
     
 #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
-    override func pdfFileItem(with url: URL!) -> FTFileItem! {
-        return FTNSPDFFileItem(url: url
-                               , isDirectory: false
-                               , document: self.parentDocument);
-    }
+//    override func pdfFileItem(with url: URL!) -> FTFileItem! {
+//        return FTNSPDFFileItem(url: url
+//                               , isDirectory: false
+//                               , document: self.parentDocument);
+//    }
     
     override func sqliteFileItem(with url: URL!) -> FTFileItem! {
         let fileItem = FTNSqliteAnnotationFileItem(url:url

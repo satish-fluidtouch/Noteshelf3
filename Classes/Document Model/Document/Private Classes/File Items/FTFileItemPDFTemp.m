@@ -13,27 +13,33 @@
 
 @property (strong) PDFDocument *documentRef;
 @property (strong) NSURL *sourcePDFURL;
-
+@property (assign) BOOL isTempFile;
 @end
 
 @implementation FTFileItemPDFTemp
 @synthesize documentRef = _documentRef;
+@synthesize isTempFile = _isTempFile;
 
 -(PDFDocument*)pdfDocumentRef
 {
     if(!_documentRef)
     {
-        _documentRef = [[PDFDocument alloc] initWithURL:self.sourcePDFURL];
-        if([_documentRef isEncrypted] == true)
-        {
-            if (self.documentPassword.length != 0)
+        if(self.isTempFile) {
+            _documentRef = [[PDFDocument alloc] initWithURL:self.sourcePDFURL];
+            if([_documentRef isEncrypted] == true)
             {
-                [_documentRef unlockWithPassword:self.documentPassword];
+                if (self.documentPassword.length != 0)
+                {
+                    [_documentRef unlockWithPassword:self.documentPassword];
+                }
+                else
+                {
+                    [_documentRef unlockWithPassword:@""];
+                }
             }
-            else
-            {
-                [_documentRef unlockWithPassword:@""];
-            }
+        }
+        else {
+            _documentRef = [super pdfDocumentRef];
         }
     }
     return _documentRef;
@@ -49,6 +55,7 @@
     }
     else {
         [self setSourceFileURL:self.fileItemURL];
+        self.isTempFile = FALSE;
         return true;
     }
 }
@@ -58,6 +65,7 @@
     if(![self.sourcePDFURL isEqual:inSourceURL]) {
         self.sourcePDFURL = inSourceURL;
         self.documentRef = nil;
+        self.isTempFile = TRUE;
         [self updateContent:nil];
     }
 }
