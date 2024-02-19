@@ -818,12 +818,19 @@ extension FTTextAnnotationViewController : UITextViewDelegate {
             return
         }
         let toRemoveLink = text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-        if toRemoveLink {
-            self.textInputView.setValueFor(nil, forAttribute: NSAttributedString.Key.link.rawValue, in: range)
-            let keys = NSAttributedString.linkAttributes.keys
-            keys.forEach { attr in
-                self.textInputView.setValueFor(nil, forAttribute: attr.rawValue, in: range)
-            }
+        let previousCharacterIndex = range.location - 1
+        if previousCharacterIndex >= 0, toRemoveLink {
+            let previousCharacterRange = NSRange(location: previousCharacterIndex, length: 1)
+            let attributes = self.textInputView.attributedText.attributes(at: previousCharacterIndex, effectiveRange: nil)
+               if nil != attributes[NSAttributedString.Key.link]  {
+                   self.textInputView.setValueFor(nil, forAttribute: NSAttributedString.Key.link.rawValue, in: range)
+                   let keys = NSAttributedString.linkAttributes.keys
+                   keys.forEach { attr in
+                       self.textInputView.setValueFor(nil, forAttribute: attr.rawValue, in: range)
+                   }
+                   self.textInputView.setValueFor(self.textInputView.defaultAttributes[NSAttributedString.Key.foregroundColor], forAttribute: NSAttributedString.Key.foregroundColor.rawValue, in: range)
+                   self.validateKeyboard()
+               }
         }
     }
 
