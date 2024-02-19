@@ -207,6 +207,11 @@ extension FTTextAnnotationViewController {
 extension FTTextAnnotationViewController: FTTextMenuActionProtocol {
     
     func canPerformAction(view: FTAnnotationBaseView, action: Selector, withSender sender: Any!) -> Bool {
+        // To fix the issue of unlock menu items shown after immediate unlock of text annotation.
+        // After complete refactor of UIMenitem, controller, below condition can be removed
+        if !(UIMenuController.shared.menuItems?.isEmpty ?? false), self.isEditMode {
+            UIMenuController.shared.menuItems = []
+        }
         if [#selector(view.editMenuItemAction(_:)), #selector(view.cutMenuItemAction(_:)), #selector(view.copyMenuItemAction(_:)), #selector(view.lockMenuItemAction(_:)),
             #selector(view.copyMenuItemAction(_:)), #selector(view.convertToStroke(_:)),
             #selector(view.bringToFrontMenuItemAction(_:)), #selector(view.sendToBackMenuItemAction(_:)), #selector(view.deleteMenuItemAction(_:))].contains(action) {
