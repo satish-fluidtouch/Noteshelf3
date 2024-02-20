@@ -848,9 +848,7 @@ extension FTTextAnnotationViewController : UITextViewDelegate {
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         if !self.editMode {
             URL.openURL(on: self)
-        } else if let editInteraction = (textView.interactions.first(where: { $0 is UIEditMenuInteraction }) as? UIEditMenuInteraction) {
-            editInteraction.reloadVisibleMenu()
-        }
+        } 
         return false
     }
 
