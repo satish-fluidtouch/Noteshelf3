@@ -628,6 +628,8 @@ extension FTShelfSplitViewController {
                         docContorller.saveApplicationStateByClosingDocument(true, keepEditingOn: false) { canClose in
                             if canClose {
                                 openPDFViewer()
+                            } else {
+                                self.view.isUserInteractionEnabled = true
                             }
                         }
                     } else {
