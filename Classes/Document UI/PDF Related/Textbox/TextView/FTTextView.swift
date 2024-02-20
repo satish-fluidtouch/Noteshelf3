@@ -337,7 +337,6 @@ class FTTextView: UITextView, UIGestureRecognizerDelegate, NSTextStorageDelegate
                         if let attributedString = attributedString {
                             str = NSMutableAttributedString(attributedString: attributedString)
                         }
-                        str?.removeAttribute(.link, range: NSRange(location: 0, length: str?.length ?? 0))
                         str?.applyScale(scaleToApply, originalScaleToApply: scaleToApply)
                         attributedString = str
 
