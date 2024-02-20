@@ -512,6 +512,7 @@
 		5238E7D42A0B712900F8F171 /* FTNoteBookSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5238E7D32A0B712900F8F171 /* FTNoteBookSettings.storyboard */; };
 		5238E7D72A0B7C2A00F8F171 /* FTNoteBookSegmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5238E7D62A0B7C2A00F8F171 /* FTNoteBookSegmentCell.swift */; };
 		523DFE8B2A6FCED100924E9A /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAA84E2628730FA800DE801B /* Colors.xcassets */; };
+		524627982B8480BC00ED5E73 /* FTSharedGroupID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0966EE4E213FE7A000B2B456 /* FTSharedGroupID.swift */; };
 		52550E872A70FCAD00E7A1E7 /* FTNewNotebook.docc in Sources */ = {isa = PBXBuildFile; fileRef = 52550E402A70FCAD00E7A1E7 /* FTNewNotebook.docc */; };
 		52550E882A70FCAD00E7A1E7 /* FTNewNotebookConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550E422A70FCAD00E7A1E7 /* FTNewNotebookConstants.swift */; };
 		52550E892A70FCAD00E7A1E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52550E442A70FCAD00E7A1E7 /* Assets.xcassets */; };
@@ -13009,6 +13010,7 @@
 			files = (
 				97C4535E2B74AF0D00251C73 /* FTWidgetActionType.swift in Sources */,
 				97CFD9D32B7B9EBC007949B2 /* Colors.swift in Sources */,
+				524627982B8480BC00ED5E73 /* FTSharedGroupID.swift in Sources */,
 				97C453552B73725000251C73 /* ScanIntent.swift in Sources */,
 				E759A9692B7DE93B00B97F29 /* FTPinnedIntents.swift in Sources */,
 				97C453442B735A0100251C73 /* FTInteractiveWidgets.swift in Sources */,

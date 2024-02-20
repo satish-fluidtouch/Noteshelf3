@@ -502,6 +502,10 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
    
     // MARK: - open Document from today widget
     func openPinnedBook(with relativePath: String) {
+        self.openPinnedBook(with: relativePath, onCompletion: nil)
+    }
+    
+    func openPinnedBook(with relativePath: String, onCompletion: (() -> ())?) {
         if(FTNoteshelfDocumentProvider.shared.isProviderReady) {
             var collectionName : String?;
             if let _collectionName = relativePath.collectionName() {
@@ -516,7 +520,11 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                     }
                     let shelfItem = collection.documentItemWithName(title: relativePath.documentName(),
                                                                     inGroup: groupItem);
-                    self.openDocumentAtRelativePath(relativePath, inShelfItem: shelfItem, animate: false, addToRecent: true, bipassPassword: true);
+                    self.openDocumentAtRelativePath(relativePath, inShelfItem: shelfItem, animate: false, addToRecent: true, bipassPassword: true) {_,_ in 
+                        onCompletion?()
+                    }
+                } else {
+                    onCompletion?()
                 }
             }
         }
@@ -524,7 +532,20 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             self.openDocumentAtRelativePath(relativePath, inShelfItem: nil,
                                             animate: false,
                                             addToRecent: true,
-                                            bipassPassword: true);
+                                            bipassPassword: true) {_,_ in 
+                onCompletion?()
+            };
+        }
+    }
+    
+    func openAndperformActionInsidePinnedNotebook(_ type :FTPinndedWidgetActionType) {
+        self.openPinnedBook(with: type.relativePath) {[weak self] in
+            guard let self = self else {
+                return
+            }
+            if let docVc = self.noteBookSplitController?.documentViewController {
+                docVc.insertNewPageWith(type: type)
+            }
         }
     }
     
@@ -1045,7 +1066,7 @@ extension FTRootViewController
                                       inShelfItem: FTShelfItemProtocol?,
                                       addToRecent: Bool = false,
                                       igrnoreIfNotDownloaded: Bool,
-                                      bipassPassword: Bool = false) {
+                                      bipassPassword: Bool = false, onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?) {
         let finalizeBlock: (FTLoadingIndicatorViewController) -> Void = { [weak self] indicatorView in
             indicatorView.hide();
 
@@ -1109,8 +1130,9 @@ extension FTRootViewController
                                          shelfItem: shelfItem!,
                                          addToRecent: addToRecent,
                                          passcode: nil,
-                                         shouldAskforPasscode: true,
-                                         onCompletion: nil);
+                                         shouldAskforPasscode: true) {docProtocol,success in
+                        onCompletion?(docProtocol, success)
+                    }
                 }
             } else {
                 finalizeBlock(indicatorView);
@@ -1445,7 +1467,8 @@ extension FTRootViewController {
                                     animate : Bool = false,
                                     addToRecent : Bool = false,
                                     igrnoreIfNotDownloaded : Bool = false,
-                                    bipassPassword : Bool = true)
+                                    bipassPassword : Bool = true,
+                                    onCompletion: ((FTDocumentProtocol?, Bool) -> Void)? = nil)
     {
 
         if(false == FTNoteshelfDocumentProvider.shared.isProviderReady) {
@@ -1469,7 +1492,9 @@ extension FTRootViewController {
                                               inShelfItem: inShelfItem,
                                               addToRecent: addToRecent,
                                               igrnoreIfNotDownloaded: igrnoreIfNotDownloaded,
-                                              bipassPassword: bipassPassword);
+                                              bipassPassword: bipassPassword) {doc,success in
+                onCompletion?(doc, success)
+            }
         }
     }
 

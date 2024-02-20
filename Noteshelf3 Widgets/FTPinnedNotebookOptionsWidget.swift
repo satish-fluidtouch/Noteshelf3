@@ -74,13 +74,13 @@ struct FTPinnedNotebookOptionsWidgetView: View {
     private var optionsView : some View {
         Grid(alignment: .center, horizontalSpacing: 8, verticalSpacing: 8) {
             GridRow {
-                optionViewForType(.pen(entry.relativePath), intent: FTPinnedPenIntent(path: IntentParameter(title: LocalizedStringResource(stringLiteral: entry.relativePath))))
-                optionViewForType(.audio(entry.relativePath), intent: FTPinnedAudioIntent())
+                optionViewForType(.pen(entry.relativePath), intent: FTPinnedPenIntent(path: entry.relativePath))
+                optionViewForType(.audio(entry.relativePath), intent: FTPinnedAudioIntent(path: entry.relativePath))
             }
 
             GridRow {
-                optionViewForType(.openAI(entry.relativePath), intent: FTPinnedOpenAIIntent(path: IntentParameter(title: LocalizedStringResource(stringLiteral: entry.relativePath))))
-                optionViewForType(.text(entry.relativePath), intent: FTPinnedTextIntent(path: IntentParameter(title: LocalizedStringResource(stringLiteral: entry.relativePath))))
+                optionViewForType(.openAI(entry.relativePath), intent: FTPinnedOpenAIIntent(path: entry.relativePath))
+                optionViewForType(.text(entry.relativePath), intent: FTPinnedTextIntent(path: entry.relativePath))
             }
         }
     }

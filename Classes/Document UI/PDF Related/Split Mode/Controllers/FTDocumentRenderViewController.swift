@@ -334,6 +334,38 @@ extension FTDocumentRenderViewController: FTDocumentViewPresenter {
         documentViewController.insertNewPage(fromItem: url, onCompletion: onCompletion);
     }
     
+    func insertNewPageWith(type: FTPinndedWidgetActionType) {
+        if let doc = self.documentViewController.pdfDocument, let refPage = doc.pages().last {
+            guard let insertedPage = doc.insertPageBelow(page: refPage) else {
+               return
+            }
+            self.documentViewController.showPage(at: insertedPage.pageIndex(), forceReLayout: true)
+            switch type {
+            case .pen:
+                self.documentViewController.switch(RKDeskMode.deskModePen)
+                break;
+            case .audio:
+                self.documentViewController.audioButtonAction()
+                break;
+            case .openAI:
+//                self.documentViewController.switch(RKDeskMode.des)
+                self.documentViewController.firstPageController()?.startOpenAiForPage()
+                break;
+            case .text:
+                self.documentViewController.switch(RKDeskMode.deskModeText)
+                let info = FTTextAnnotationInfo();
+                info.localmetadataCache = insertedPage.parentDocument?.localMetadataCache;
+                info.visibleRect = self.documentViewController.firstPageController()?.scrollView?.visibleRect() ?? self.view.frame
+                info.atPoint = self.contentHolderView?.center ?? .zero;
+                info.scale = self.documentViewController.contentScaleInNormalMode;
+                self.documentViewController.firstPageController()?.addAnnotation(info: info)
+                break;
+            }
+        }
+        
+    }
+    
+    
     func addRecordingToPage(actionType: FTAudioActionType,
                             audio: FTAudioFileToImport,
                             onCompletion : ((Bool,NSError?) -> Void)?) {
