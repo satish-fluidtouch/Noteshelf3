@@ -210,6 +210,8 @@ extension UIViewController {
                     // Book is not downloaded yet
                     UIAlertController.showDocumentNotDownloadedAlert(for: destinationURL, from: self)
                     return
+                } else if destinationURL.downloadStatus() == .downloaded {
+                    UIAlertController.showBrokenLinkAlert(from: self)
                 }
                 return
             }

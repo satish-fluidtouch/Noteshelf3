@@ -97,4 +97,12 @@ extension UIAlertController {
         alertController.addAction(noAction)
         controller.present(alertController, animated: true, completion: nil)
     }
+
+    static func showBrokenLinkAlert(from controller: UIViewController) {
+        let alertController = UIAlertController(title: "textLink_brokenLink_message".localized, message: "", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok".localized, style: .cancel) { _ in
+        }
+        alertController.addAction(okAction)
+        controller.present(alertController, animated: true, completion: nil)
+    }
 }
