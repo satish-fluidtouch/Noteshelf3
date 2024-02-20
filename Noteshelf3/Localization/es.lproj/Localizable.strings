@@ -1,6 +1,6 @@
 
 "ADDALLCAPS" = "Agregar todo en mayúsculas";
-"AboutNoteshelf" = "Acerca de Noteshelf.";
+"AboutNoteshelf" = "Acerca de Noteshelf";
 "AboutOptionRateOnAppStore" = "Califícanos en la App Store";
 "AboutOptionWhatsNew" = "¿Qué hay de nuevo?";
 "AboutVisitNoteshelfWebsite" = "Visita el sitio web de Noteshelf.";
@@ -1531,6 +1531,7 @@
 "text.font.setAsDefault.menuTitle" = "Establecer como predeterminado para:";
 "text.font.setAsDefault.thisAndFutureBooks" = "Esta y todas las futuras libretas";
 "text.font.setAsDefault.thisBook" = "Esta libreta";
+"textLink_brokenLink_message" = "El enlace asociado con este contenido está roto.";
 "textLink_closingCurrentDocument_title" = "¿Te gustaría continuar?";
 "textLink_continueConfirmation" = "Esto cerrará el cuaderno actual y te redirigirá a %@.";
 "textLink_documentDeleted_title" = "El cuaderno ha sido eliminado";
@@ -1601,4 +1602,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 8 February 2024 at 11:26 AM
+// Last Synced by Narayana on 20 February 2024 at 6:21 PM
