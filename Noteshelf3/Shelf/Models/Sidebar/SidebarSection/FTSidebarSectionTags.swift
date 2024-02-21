@@ -18,37 +18,52 @@ class FTSidebarSectionTags: FTSidebarSection {
     required init() {
         super.init();
         self.prepareItems();
-        notificationObserver =  NotificationCenter.default.addObserver(forName: .didUpdateTags, object: nil, queue: .main) { [weak self] notification in
-            guard let strongSelf = self else {
-                return
-            }
-            let tags = FTTagsProvider.shared.getTags(true, sort: true);
-            var itemsToRefresh = [FTSideBarItem]();
-            for i in 0..<tags.count {
-                let eachTag = tags[i];
-                if let item = strongSelf.items.first(where: {$0.id == eachTag.id}) {
-                    item.title = eachTag.tagDisplayName;
-                    itemsToRefresh.insert(item, at: i)
-                }
-                else {
-                    let item = FTSideBarItemTag(tag: eachTag);
-                    itemsToRefresh.insert(item, at: i)
-                }
-            }
-            self?.items.removeAll();
-            self?.items.append(contentsOf: itemsToRefresh);
-        }
+        self.addObservers();
+    }
+    
+    override func removeObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didUpdateTags(_:)), name: .didUpdateTags, object: nil)
+    }
+    
+    override func addObservers() {
+        NotificationCenter.default.removeObserver(self, name: .didUpdateTags, object: nil);
     }
     
     deinit {
-        if let observer = self.notificationObserver {
-            NotificationCenter.default.removeObserver(observer, name: .didUpdateTags, object: nil);
-            self.notificationObserver = nil;
-        }
+        self.removeObservers();
+    }
+    
+    override func fetchItems() {
+        self.didUpdateTags(nil);
     }
 }
 
 private extension FTSidebarSectionTags {
+    @objc func didUpdateTags(_ notification: Notification?) {
+        guard Thread.current.isMainThread else {
+            DispatchQueue.main.async { [weak self] in
+                self?.didUpdateTags(notification);
+            }
+            return;
+        }
+        
+        let tags = FTTagsProvider.shared.getTags(true, sort: true);
+        var itemsToRefresh = [FTSideBarItem]();
+        for i in 0..<tags.count {
+            let eachTag = tags[i];
+            if let item = self.items.first(where: {$0.id == eachTag.id}) {
+                item.title = eachTag.tagDisplayName;
+                itemsToRefresh.insert(item, at: i)
+            }
+            else {
+                let item = FTSideBarItemTag(tag: eachTag);
+                itemsToRefresh.insert(item, at: i)
+            }
+        }
+        self.items.removeAll();
+        self.items.append(contentsOf: itemsToRefresh);
+    }
+    
     func prepareItems() {
         var sideBartags = [FTSideBarItem]();
         

@@ -39,6 +39,14 @@ class FTSidebarSection: FTSectionDisplayable, Identifiable, ObservableObject {
         }
     }
     
+    func addObservers() {
+        
+    }
+    
+    func removeObservers() {
+        
+    }
+    
     func fetchItems() {
         
     }

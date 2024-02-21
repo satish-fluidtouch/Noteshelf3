@@ -27,15 +27,21 @@ class FTSidebarSectionUserShelfs: FTSidebarSection {
         let sideBarDict = FTSidebarManager.getSideBarData()
         if let sideBarItemsOrderDict = sideBarDict["SideBarItemsOrder"] as? [String: Any], let categoryBookmarkRawData = sideBarItemsOrderDict["categories"] as? Data, let categoryBookmarkData = try? PropertyListDecoder().decode(FTCategoryBookmarkData.self, from: categoryBookmarkRawData) {
             self.categoryBookmarksData = categoryBookmarkData;
-        }
-        
+        }        
         self.prepreItems(false);
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.categoryDidUpdate(_:)), name: .categoryItemsDidUpdateNotification, object: nil)
+        self.addObservers();
     }
     
     override func fetchItems() {
         self.prepreItems();
+    }
+    
+    override func removeObservers() {
+        NotificationCenter.default.removeObserver(self, name: .categoryItemsDidUpdateNotification, object: nil)
+    }
+    
+    override func addObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.categoryDidUpdate(_:)), name: .categoryItemsDidUpdateNotification, object: nil)
     }
     
     override func moveItem(fromOrder: Int, toOrder: Int) -> Bool {
@@ -47,7 +53,7 @@ class FTSidebarSectionUserShelfs: FTSidebarSection {
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: .categoryItemsDidUpdateNotification, object: nil)
+        self.removeObservers();
     }
     
 }

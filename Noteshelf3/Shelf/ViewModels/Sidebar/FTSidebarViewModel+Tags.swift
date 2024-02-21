@@ -13,7 +13,12 @@ extension FTSidebarViewModel {
     func renametag(_ tag: FTSideBarItem, newTitle: String) {
         if let ftTag = (tag as? FTSideBarItemTag)?.fttag {
             guard FTTagsProvider.shared.getTagsfor([newTitle], shouldCreate: false).isEmpty else {
-                FTTagsProvider.shared.renameTag(ftTag, to: ftTag.tagName);
+                if newTitle.compare(ftTag.tagName, options: [.caseInsensitive,.numeric], range: nil, locale: nil) == .orderedSame {
+                    FTTagsProvider.shared.renameTag(ftTag, to: newTitle);
+                }
+                else {
+                    FTTagsProvider.shared.renameTag(ftTag, to: ftTag.tagName);
+                }
                 return;
             }
             let loadingIndicator = self.delegate?.showIndicatorView("");

@@ -224,8 +224,6 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
              shelfBookmarksVC.reloadContent()
          }
          sideMenuController?.enableUpdatesForSideBar()
-         //Force refresh the UI to update with latest categories.
-         sideMenuController?.updateSideMenuItemsCollections()
      }
 
     func hideGroup(animate: Bool, onCompletion: (() -> Void)?) {

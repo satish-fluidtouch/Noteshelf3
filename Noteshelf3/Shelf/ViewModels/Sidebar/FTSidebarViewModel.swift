@@ -72,7 +72,7 @@ class FTSidebarViewModel: NSObject, ObservableObject {
         super.init()
         self.setSidebarItemTypeForCollection(collection)
         self.selectedShelfItemCollection = collection
-        self.addObserverForContextualOperations()
+        self.commonInitiaize()
     }
     init(selectedSideBarItemType: FTSideBarItemType, selectedTag:String = "") {
         super.init()
@@ -81,11 +81,16 @@ class FTSidebarViewModel: NSObject, ObservableObject {
             selectedShelfItemCollection = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection
         }
         self.lastSelectedTag = selectedTag
-        self.addObserverForContextualOperations()
+        self.commonInitiaize()
     }
     deinit {
     }
 
+    private func commonInitiaize() {
+        self.addObserverForContextualOperations();
+        self.fetchSidebarMenuItems()
+    }
+    
     func shouldShowNumberOfNotebooksCountFor(item: FTSideBarItem) -> Bool {
         if let selectedSideBarItem = selectedSideBarItem, selectedSideBarItem.id == item.id, item.type != .templates {
             return true
@@ -162,14 +167,16 @@ class FTSidebarViewModel: NSObject, ObservableObject {
     }
     
     func addNotificationObservers() {
-        removeNotificationObservers() // remove if its already added
-//        NotificationCenter.default.addObserver(self, selector: #selector(self.categoryDidUpdate(_:)), name: .categoryItemsDidUpdateNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(self.updateTagItems(_:)), name: .refresSideMenuNotification, object: nil)
+        self.menuItems.forEach { eachItem in
+            eachItem.addObservers();
+            eachItem.fetchItems();
+        }
     }
     
     func removeNotificationObservers() {
-//        NotificationCenter.default.removeObserver(self, name: .categoryItemsDidUpdateNotification, object: nil)
-//        NotificationCenter.default.removeObserver(self, name: .refresSideMenuNotification, object: nil)
+        self.menuItems.forEach { eachItem in
+            eachItem.removeObservers();
+        }
     }
 }
 private extension FTSidebarViewModel {
@@ -406,10 +413,6 @@ extension FTSidebarViewModel {
 }
 //MARK: Menu options fetching and building
 extension FTSidebarViewModel {
-    func configureUIOnViewLoad() {
-        self.fetchSidebarMenuItems()
-    }
-
     func updateUserCreatedCategories() {
         self.section(type: .categories).fetchItems();
     }

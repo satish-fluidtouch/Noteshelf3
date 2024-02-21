@@ -90,9 +90,6 @@ struct FTSidebarView: View {
             })
             
             .detectOrientation($orientation)
-                .onFirstAppear(perform: {
-                    self.viewModel.configureUIOnViewLoad()
-                })
                 .onChange(of: orientation) { newValue in
                     self.reloadView.toggle()
                 }
