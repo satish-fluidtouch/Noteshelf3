@@ -120,6 +120,9 @@ class FTTextAnnotationViewController: UIViewController {
         }
         set {
             if newValue == textInputView.isUserInteractionEnabled { return }
+            #if targetEnvironment(macCatalyst)
+            self.forceEndEditing = !newValue
+            #endif
             if newValue {
                 textInputView.isEditable = true;
                 textInputView.isUserInteractionEnabled = true
