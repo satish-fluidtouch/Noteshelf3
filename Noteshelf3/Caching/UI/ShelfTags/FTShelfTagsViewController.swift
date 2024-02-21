@@ -556,6 +556,7 @@ extension FTShelfTagsViewController {
                         _ = _document.createDocumentAtTemporaryURL(url, purpose: .default, fromPages: pages, documentInfo: info) { _, error in
                             if error == nil {
                                 let docum = FTDocumentItem.init(fileURL: url)
+                                docum.isDownloaded = docItem.isDownloaded;
                                 itemsToExport.append(docum)
                             }
                             FTNoteshelfDocumentManager.shared.closeDocument(document: _document, token: token) { _ in

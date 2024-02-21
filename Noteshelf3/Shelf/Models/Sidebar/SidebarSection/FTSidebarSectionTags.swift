@@ -22,11 +22,11 @@ class FTSidebarSectionTags: FTSidebarSection {
     }
     
     override func removeObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didUpdateTags(_:)), name: .didUpdateTags, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .didUpdateTags, object: nil);
     }
     
     override func addObservers() {
-        NotificationCenter.default.removeObserver(self, name: .didUpdateTags, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didUpdateTags(_:)), name: .didUpdateTags, object: nil)
     }
     
     deinit {

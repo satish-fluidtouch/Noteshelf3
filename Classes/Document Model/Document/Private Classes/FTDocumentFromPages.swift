@@ -24,6 +24,7 @@ class FTDocumentFromPages: NSObject {
                                       documentInfo: FTDocumentInputInfo,
                                       onCompletion :@escaping ((Error?) -> Void)) -> Progress
     {
+        try? FileManager().removeItem(at: toURL);
         let progress = Progress();
         progress.totalUnitCount = Int64(2);
         
