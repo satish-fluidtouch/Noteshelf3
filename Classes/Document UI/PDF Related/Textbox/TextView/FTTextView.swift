@@ -494,16 +494,14 @@ class FTTextView: UITextView, UIGestureRecognizerDelegate, NSTextStorageDelegate
     
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         var shouldReturn = super.gestureRecognizerShouldBegin(gestureRecognizer)
-        if isMoving && gestureRecognizer.view == self && (gestureRecognizer is UILongPressGestureRecognizer) {
-            shouldReturn = false
-        } else if panGestureRecognizer == gestureRecognizer {
-            shouldReturn = false
-        } else if gestureRecognizer is UITapGestureRecognizer {
-            let point = gestureRecognizer.location(in: self)
-            let range = self.layoutManager.characterIndex(for: point, in: self.textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
-            if range != NSNotFound {
+        if gestureRecognizer is UITapGestureRecognizer {
+            var point = gestureRecognizer.location(in: self)
+            point.x -= self.textContainerInset.left
+            point.y -= self.textContainerInset.top
+            let index = self.layoutManager.characterIndex(for: point, in: self.textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+            if index != NSNotFound {
                 var glyrange: NSRange = NSRange(location: NSNotFound, length: 0)
-                if nil != self.textStorage.attribute(.link, at: range, effectiveRange: &glyrange) {
+                if nil != self.textStorage.attribute(.link, at: index, effectiveRange: &glyrange) {
                     if glyrange.location != NSNotFound {
                         self.selectedRange = glyrange
                         shouldReturn = false
