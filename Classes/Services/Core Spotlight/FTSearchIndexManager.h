@@ -16,15 +16,16 @@
 -(nullable NSString*)contentForCSSearchIndex;
 -(nullable NSDate*)modifiedDateForCSSearchIndex;
 -(nullable UIImage*)thumbnailForCSSearchIndex;
+-(void)prepare:(__nullable dispatch_queue_t)queue onCompletion:(void (^ __nullable)(void))block;
 
 @end
 
 @interface FTSearchIndexManager : NSObject
 
-+(nonnull id)sharedManager;
++(nonnull instancetype)sharedManager;
 -(void)updateSearchIndex:(nonnull id<FTCSIndexableItem>)inObject completion:(void (^ __nullable)(NSError * __nullable error))block;
 -(void)updateSearchIndexForDocuments:(nonnull NSArray*)documents;
-
+-(void)resumeIndexing;
 @end
 
 

@@ -1329,6 +1329,8 @@ extension FTRootViewController: FTSceneBackgroundHandling {
     func configureSceneNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(sceneDidBecomeActive(_:)), name: UIApplication.sceneDidBecomeActive, object: self.sceneToObserve)
         NotificationCenter.default.addObserver(self, selector: #selector(sceneWillResignActive(_:)), name: UIApplication.sceneWillResignActive, object: self.sceneToObserve)
+        NotificationCenter.default.addObserver(self, selector: #selector(sceneDidEnterBackground(_:)), name: UIApplication.sceneDidEnterBackground, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(sceneWillEnterForeground(_:)), name: UIApplication.sceneWillEnterForeground, object: nil);
         self.configureForImportAction();
     }
 
@@ -1615,5 +1617,28 @@ extension FTRootViewController: SFSafariViewControllerDelegate {
 
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
         self.retryiCloudUnavaialbility()
+    }
+}
+
+extension FTRootViewController {
+    @objc  func sceneDidEnterBackground(_ notification: Notification) {
+        if(UIApplication.shared.applicationState == .background) {
+            self.buildSpotlightSearch();
+        }
+    }
+
+    @objc  func sceneWillEnterForeground(_ notification: Notification) {
+        if(UIApplication.shared.applicationState == .background) {
+            FTSearchIndexManager.shared().resumeIndexing();
+        }
+    }
+
+    @objc func buildSpotlightSearch() {
+        if FTNoteshelfDocumentProvider.shared.isProviderReady {
+            FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(.none, parent: nil, searchKey: nil) { items in
+                let spotLighter = FTDocumentsSpotlightIndexManager();
+                spotLighter.prepareSpotLightIndexForItems(items: items);
+            }
+        }
     }
 }
