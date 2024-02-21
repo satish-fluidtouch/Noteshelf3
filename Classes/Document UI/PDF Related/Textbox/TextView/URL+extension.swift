@@ -26,11 +26,11 @@ extension URL {
     }
 
     func isAppTextPageLink() -> Bool {
-        return self.path().contains(FTAppIntentHandler.hyperlinkPath)
+        return self.path(percentEncoded: false).contains(FTAppIntentHandler.hyperlinkPath)
     }
 
     func isTemplateIntentPath() -> Bool {
-        return self.path().contains(FTAppIntentHandler.templatesPath)
+        return self.path(percentEncoded: false).contains(FTAppIntentHandler.templatesPath)
     }
 
     func getQueryItems() -> (docId: String?, pageId: String?) {
