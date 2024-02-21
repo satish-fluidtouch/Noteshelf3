@@ -24,7 +24,13 @@ struct FTPinnedTimelineProvider: IntentTimelineProvider {
     
     typealias Intent = FTPinnedIntentConfigurationIntent
     
-    
+    private var sharedCacheURL: URL {
+        if let url = FileManager().containerURL(forSecurityApplicationGroupIdentifier: FTSharedGroupID.getAppGroupID()) {
+            let directoryURL = url.appending(path: FTSharedGroupID.notshelfDocumentCache);
+            return directoryURL
+        }
+        fatalError("Failed to get path");
+    }
     func placeholder(in context: Context) -> FTPinnedBookEntry {
         
         return FTPinnedBookEntry(date: Date(), name: "PlaceHolder", time: "5:00PM", coverImage: "coverImage1", relativePath: "", hasCover: false)
@@ -33,7 +39,7 @@ struct FTPinnedTimelineProvider: IntentTimelineProvider {
     func getSnapshot(for configuration: FTPinnedIntentConfigurationIntent,
                      in context: Context,
                      completion: @escaping (FTPinnedBookEntry) -> ()) {
-        let entry = FTPinnedBookEntry(date: Date(), name: "Notebook 1", time: "5:00PM", coverImage: "coverImage1", relativePath: "", hasCover: false)
+        let entry = defaultBookEntry()
         completion(entry)
     }
 
@@ -41,7 +47,12 @@ struct FTPinnedTimelineProvider: IntentTimelineProvider {
                      in context: Context,
                      completion: @escaping (Timeline<FTPinnedBookEntry>) -> ()) {
         Task {
-            let entry = FTPinnedBookEntry(date: Date(), name: configuration.Books?.displayString ?? "Notebook 1", time: configuration.Books?.time ?? "5:00 PM", coverImage: configuration.Books?.coverImage ?? "coverImage1", relativePath: configuration.Books?.relativePath ?? "", hasCover: configuration.Books?.hasCover?.boolValue ?? false)
+            var entry = placeholder(in: context)
+            if let selectedBook = configuration.Books {
+                entry = FTPinnedBookEntry(date: Date(), name: selectedBook.displayString , time: selectedBook.time ?? "5:00 PM", coverImage: selectedBook.coverImage ?? "coverImage1", relativePath: selectedBook.relativePath ?? "", hasCover: selectedBook.hasCover?.boolValue ?? false)
+            } else {
+                entry = defaultBookEntry()
+            }
             executeTimelineCompletion(completion, timelineEntry: entry)
         }
     }
@@ -69,6 +80,65 @@ struct FTPinnedTimelineProvider: IntentTimelineProvider {
         )
         
         completion(timeline)
+    }
+    
+    private func defaultBookEntry() -> FTPinnedBookEntry {
+        var entry = FTPinnedBookEntry(date: Date(), name: "PlaceHolder", time: "5:00PM", coverImage: "coverImage1", relativePath: "", hasCover: false)
+        let sharedCacheURL = self.sharedCacheURL
+        if FileManager().fileExists(atPath: sharedCacheURL.path(percentEncoded: false)) {
+            if let urls = try? FileManager.default.contentsOfDirectory(at: sharedCacheURL,
+                                                                       includingPropertiesForKeys: nil,
+                                                                       options: .skipsHiddenFiles) {
+                let notebookFilteredUrls = urls.filter { eachUrl in
+                    return eachUrl.pathExtension == "ns3"
+                }
+                if let eachNotebookUrl = notebookFilteredUrls.first {
+                    let relativePath : String
+                    let time : String
+                    let coverImage : String
+                    let metaDataPlistUrl = eachNotebookUrl.appendingPathComponent("Metadata/Properties.plist")
+                    relativePath = _relativePath(for: metaDataPlistUrl)
+                    let isCover = hasCover(for: eachNotebookUrl.path(percentEncoded: false))
+                    coverImage = eachNotebookUrl.appending(path:"cover-shelf-image.png").path(percentEncoded: false);
+                    time = timeFromDate(currentDate: eachNotebookUrl.fileCreationDate)
+                     entry = FTPinnedBookEntry(date: Date(), name: relativePath.lastPathComponent.deletingPathExtension, time: time, coverImage: coverImage, relativePath: relativePath, hasCover: isCover)
+                }
+
+            }
+        }
+        return entry
+    }
+    
+    private func _relativePath(for metaDataPlistUrl: URL) -> String {
+        var relativePath = ""
+        if let data = try? Data(contentsOf: metaDataPlistUrl) {
+            if let plist = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any], let _relativePath = plist["relativePath"] as? String {
+                relativePath = _relativePath
+            }
+        }
+        return relativePath
+    }
+    
+    private func hasCover(for notebookPath: String) -> Bool {
+        var hasCover = false
+        let docPlist = notebookPath.appending("Document.plist")
+        do {
+            let url = URL(fileURLWithPath: docPlist)
+            let dict = try NSDictionary(contentsOf: url, error: ())
+            if let pagesArray = dict["pages"] as? [NSDictionary], let firstPage = pagesArray.first {
+                hasCover = firstPage["isCover"] as? Bool ?? false
+            }
+        } catch {
+            return hasCover
+        }
+        return hasCover
+    }
+    
+    private func timeFromDate(currentDate: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "hh:mm a"
+        dateFormatter.locale = .current // Set locale to ensure proper representation of AM/PM
+        return dateFormatter.string(from: currentDate)
     }
 }
 struct Provider: TimelineProvider {

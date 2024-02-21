@@ -1656,6 +1656,13 @@
     [self updateMigrationInfoView];
 }
 
+-(void)updateToolBarWith:(RKDeskMode)mode {
+    [self changeMode:mode];
+    self.previousDeskMode = self.currentDeskMode;
+    self.currentDeskMode = mode;
+    [self validateMenuItems];
+}
+
 -(void)openRackForMode:(RKDeskMode)mode sourceView:(UIView *)sourceView {
     [super openRackForMode:mode sourceView:sourceView];
     [self normalizeAndEndEditingAnnotation:TRUE];

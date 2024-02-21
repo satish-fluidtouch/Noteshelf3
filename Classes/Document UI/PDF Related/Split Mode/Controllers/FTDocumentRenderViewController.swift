@@ -335,14 +335,14 @@ extension FTDocumentRenderViewController: FTDocumentViewPresenter {
     }
     
     func insertNewPageWith(type: FTPinndedWidgetActionType) {
-        if let doc = self.documentViewController.pdfDocument, let refPage = doc.pages().last {
+        if let doc = self.documentViewController.pdfDocument, let refPage = doc.pages().last, type.shouldAddNewPage() {
             guard let insertedPage = doc.insertPageBelow(page: refPage) else {
                return
             }
             self.documentViewController.showPage(at: insertedPage.pageIndex(), forceReLayout: true)
             switch type {
             case .pen:
-                self.documentViewController.switch(RKDeskMode.deskModePen)
+                self.documentViewController.updateToolBar(with: RKDeskMode.deskModePen)
                 break;
             case .audio:
                 self.documentViewController.audioButtonAction()
@@ -352,7 +352,7 @@ extension FTDocumentRenderViewController: FTDocumentViewPresenter {
                 self.documentViewController.firstPageController()?.startOpenAiForPage()
                 break;
             case .text:
-                self.documentViewController.switch(RKDeskMode.deskModeText)
+                self.documentViewController.updateToolBar(with: RKDeskMode.deskModeText)
                 let info = FTTextAnnotationInfo();
                 info.localmetadataCache = insertedPage.parentDocument?.localMetadataCache;
                 info.visibleRect = self.documentViewController.firstPageController()?.scrollView?.visibleRect() ?? self.view.frame
@@ -360,6 +360,8 @@ extension FTDocumentRenderViewController: FTDocumentViewPresenter {
                 info.scale = self.documentViewController.contentScaleInNormalMode;
                 self.documentViewController.firstPageController()?.addAnnotation(info: info)
                 break;
+            case .bookOpen(_):
+                break
             }
         }
         

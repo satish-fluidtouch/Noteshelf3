@@ -10,15 +10,27 @@ import Foundation
 
 extension FTRootViewController {
     func handleWidgetAction(type: FTWidgetActionType) {
-        self.closeAnyActiveOpenedBook {
             if type is FTNotebookCreateWidgetActionType {
-                self.rootContentViewController?.handleWidgetAction(for: type)
+                self.closeAnyActiveOpenedBook {
+                    self.rootContentViewController?.handleWidgetAction(for: type)
+                }
             } else {
                 if let pathType = type as? FTPinndedWidgetActionType {
-                    print("zzzz - pinned widget - path: \(pathType.relativePath)")
-                    self.openAndperformActionInsidePinnedNotebook(pathType)
+                    if self.noteBookSplitController == nil {
+                        self.openAndperformActionInsidePinnedNotebook(pathType)
+                    } else {
+                        let docObject = self.noteBookSplitController?.documentViewController?.documentItemObject
+                        if let docURL = docObject?.URL , docURL.relativePathWRTCollection() == pathType.relativePath {
+                            if let docVc = self.noteBookSplitController?.documentViewController {
+                                docVc.insertNewPageWith(type: pathType)
+                            }
+                        } else {
+                            self.closeAnyActiveOpenedBook {
+                                self.openAndperformActionInsidePinnedNotebook(pathType)
+                            }
+                        }
+                    }
                 }
             }
-        }
     }
 }

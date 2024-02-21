@@ -78,6 +78,7 @@ public enum FTPinndedWidgetActionType: FTWidgetActionType {
     case audio(String)
     case openAI(String)
     case text(String)
+    case bookOpen(String)
 
     var iconName : String {
         let iconName: String
@@ -90,6 +91,8 @@ public enum FTPinndedWidgetActionType: FTWidgetActionType {
             iconName = "pinned_openAI"
         case .text:
             iconName = "pinned_text"
+        case .bookOpen(_):
+            iconName = ""
         }
         return iconName
     }
@@ -97,7 +100,7 @@ public enum FTPinndedWidgetActionType: FTWidgetActionType {
     public var relativePath: String {
         get {
             switch self {
-            case .pen(let path), .audio(let path), .openAI(let path), .text(let path):
+            case .pen(let path), .audio(let path), .openAI(let path), .text(let path),.bookOpen(let path):
                 return path
             }
         }
@@ -111,7 +114,20 @@ public enum FTPinndedWidgetActionType: FTWidgetActionType {
                 self = .openAI(newValue)
             case .text:
                 self = .text(newValue)
+            case .bookOpen:
+                self = .bookOpen(newValue)
             }
         }
+    }
+    
+    func shouldAddNewPage() -> Bool {
+        let boolValue: Bool
+        switch self {
+        case .pen, .audio, .text, .openAI:
+            boolValue = true
+        case .bookOpen:
+            boolValue = false
+        }
+        return boolValue
     }
 }

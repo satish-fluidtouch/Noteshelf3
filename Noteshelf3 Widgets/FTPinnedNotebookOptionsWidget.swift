@@ -17,41 +17,9 @@ struct FTPinnedNotebookOptionsWidgetView: View {
 
     var body: some View {
         HStack(spacing: 0) {
-            VStack {
-                Spacer()
-                VStack {
-                    Text(entry.name)
-                        .lineLimit(2)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .foregroundColor(color.isLightColor() ? Color.black : Color.systemBackground )
-                        .font(.appFont(for: .medium, with: 13))
-                    Text(entry.time)
-                        .lineLimit(1)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .font(.appFont(for: .regular, with: 12))
-                        .foregroundColor(color.isLightColor() ? Color.black.opacity(0.7) : Color.systemBackground.opacity(0.7))
-                }
-                .padding(.leading, 18)
-                .padding(.bottom, 18)
-            }
-            .frame(width: 190, height: 155)
-            .background(Color(uiColor: color))
-            .overlay() {
-                ZStack(alignment: .top) {
-                    if color.isLightColor() {
-                        Color.black.opacity(0.2)
-                    } else {
-                        Color.white.opacity(0.2)
-                    }
-                    Image(uiImage: imageFrom(entry: entry))
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 40,height: 55)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.leading, 18)
-                        .padding(.top, 30)
-                }
-            }
+            Button(intent: FTPinnedBookOpenIntent(path: entry.relativePath)) {
+                sideView
+            }.buttonStyle(.plain)
             VStack {
                 optionsView
             }
@@ -59,6 +27,44 @@ struct FTPinnedNotebookOptionsWidgetView: View {
         }
         .onAppear {
             color = entry.hasCover ? adaptiveColorFromImage() : UIColor(hexString: "#E06E51")
+        }
+    }
+    
+    private var sideView: some View {
+        return VStack {
+            Spacer()
+            VStack {
+                Text(entry.name)
+                    .lineLimit(2)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .foregroundColor(color.isLightColor() ? Color.black : Color.systemBackground )
+                    .font(.appFont(for: .medium, with: 13))
+                Text(entry.time)
+                    .lineLimit(1)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.appFont(for: .regular, with: 12))
+                    .foregroundColor(color.isLightColor() ? Color.black.opacity(0.7) : Color.systemBackground.opacity(0.7))
+            }
+            .padding(.leading, 18)
+            .padding(.bottom, 18)
+        }
+        .frame(width: 190, height: 155)
+        .background(Color(uiColor: color))
+        .overlay() {
+            ZStack(alignment: .top) {
+                if color.isLightColor() {
+                    Color.black.opacity(0.2)
+                } else {
+                    Color.white.opacity(0.2)
+                }
+                Image(uiImage: imageFrom(entry: entry))
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 40,height: 55)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading, 18)
+                    .padding(.top, 30)
+            }
         }
     }
     

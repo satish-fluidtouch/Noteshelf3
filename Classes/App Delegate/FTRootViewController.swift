@@ -38,7 +38,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     fileprivate weak var pencilInteraction : NSObject?;
 
     private var importController : FTImportedDocViewController?
-    private weak var noteBookSplitController: FTNoteBookSplitViewController?
+    internal weak var noteBookSplitController: FTNoteBookSplitViewController?
     var contentView : UIView!;
 
     override var preferredStatusBarStyle : UIStatusBarStyle {
