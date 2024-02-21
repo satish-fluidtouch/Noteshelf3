@@ -285,6 +285,14 @@ extension FTPageViewController: FTLassoSelectionViewDelegate {
         }
         else if(action == .takeScreenshot){
             supports = true;
+        } else if action == .group, selectedAnnotations.count > 1 {
+            if nil == selectedAnnotations.first(where: { $0.groupId != nil }) {
+                supports = true
+            }
+        }  else if action == .ungroup, selectedAnnotations.count > 1 {
+            if nil != selectedAnnotations.first(where: { $0.groupId != nil }) {
+                supports = true
+            }
         }
         else {
             supports = !selectedAnnotations.isEmpty;
@@ -315,6 +323,10 @@ extension FTPageViewController: FTLassoSelectionViewDelegate {
             self.lassoSelectionViewMoveToBackCommand(lassoSelectionView);
         case .openAI:
             self.startOpenAiForPage();
+        case .group:
+            self.lassoSelectionViewGroupCommand(lassoSelectionView);
+        case .ungroup:
+            self.lassoSelectionViewUngroupCommand(lassoSelectionView);
         }
     }
     #if targetEnvironment(macCatalyst)
@@ -502,6 +514,24 @@ private extension FTPageViewController  {
         self.removeAnnotations(selectedAnnotations, refreshView: true);
         self.lassoSelectionView?.resignFirstResponder();
         self.lassoInfo.reset();
+    }
+
+    func lassoSelectionViewGroupCommand(_ lassoSelectionView: FTLassoSelectionView) {
+        let selectedAnnotations = self.lassoInfo.selectedAnnotations;
+        guard !selectedAnnotations.isEmpty else {
+            return;
+        }
+        track("Group",screenName: FTScreenNames.lasso)
+        groupAnnotations(selectedAnnotations)
+    }
+
+    func lassoSelectionViewUngroupCommand(_ lassoSelectionView: FTLassoSelectionView) {
+        let selectedAnnotations = self.lassoInfo.selectedAnnotations;
+        guard !selectedAnnotations.isEmpty else {
+            return;
+        }
+        track("Ungroup",screenName: FTScreenNames.lasso)
+        ungroupAnnotations(selectedAnnotations)
     }
 }
 

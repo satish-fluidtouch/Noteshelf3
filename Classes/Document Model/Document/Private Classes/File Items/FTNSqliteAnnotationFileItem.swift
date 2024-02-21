@@ -13,6 +13,7 @@ import FTDocumentFramework
 class FTNSqliteAnnotationFileItem : FTFileItemSqlite
 {
     fileprivate var annotationsArray : [FTAnnotation]?;
+    fileprivate var _annotationGroups : FTAnnotationGroups<String, Set<FTAnnotation>>?;
     weak var associatedPage : FTPageProtocol?;
     
     var annotations : [FTAnnotation] {
@@ -31,6 +32,23 @@ class FTNSqliteAnnotationFileItem : FTFileItemSqlite
             objc_sync_exit(self);
         }
     }
+
+    private var annotationGroups : FTAnnotationGroups<String, Set<FTAnnotation>> {
+        get{
+            objc_sync_enter(self);
+            if nil == self._annotationGroups {
+                self.loadAnnotations();
+            }
+            objc_sync_exit(self);
+            return self._annotationGroups ?? FTAnnotationGroups();
+        }
+        set{
+            objc_sync_enter(self);
+            self._annotationGroups = newValue;
+            objc_sync_exit(self);
+        }
+    }
+
     func addAnnotation(_ annotation :FTAnnotation,atIndex : Int = -1)
     {
         if(atIndex == -1) || (atIndex > self.annotations.count) {
@@ -129,8 +147,10 @@ class FTNSqliteAnnotationFileItem : FTFileItemSqlite
         (self.associatedPage as? FTPageTileAnnotationMap)?.clearMapCache();
         #endif
         var annotations = [FTAnnotation]();
+        var annotationGroups: FTAnnotationGroups<String, Set<FTAnnotation>> = FTAnnotationGroups();
         if (false == self.schemaExists()) {
             self.annotationsArray = annotations;
+            self._annotationGroups = annotationGroups;
             return;
         }
         var shouldSaveOnRepair = false
@@ -151,6 +171,15 @@ class FTNSqliteAnnotationFileItem : FTFileItemSqlite
                             }
                             #endif
 
+                            // If the annotation contains a groupID, add it to a group
+                            if let groupId = annotation.groupId {
+                                if var groupAnnotations = annotationGroups.value(forKey: groupId) {
+                                    groupAnnotations.insert(annotation)
+                                    annotationGroups.setValue(groupAnnotations, forKey: groupId)
+                                } else {
+                                    annotationGroups.setValue([annotation], forKey: groupId)
+                                }
+                            }
                             shouldSaveOnRepair = annotation.repairIfRequired() || shouldSaveOnRepair
                         }
                 }
@@ -158,6 +187,7 @@ class FTNSqliteAnnotationFileItem : FTFileItemSqlite
             set?.close();
             db.close();
             self.annotationsArray = annotations;
+            self._annotationGroups = annotationGroups
             if shouldSaveOnRepair {
                 self.associatedPage?.isDirty = true
                 track("corrupted_annotation_repaired", params: nil, screenName: "Backend", shouldLog: true)
@@ -294,7 +324,29 @@ class FTNSqliteAnnotationFileItem : FTFileItemSqlite
         if(!self.isModified) {
             super.unloadContentsOfFileItem();
             self.annotationsArray = nil;
+            self._annotationGroups = nil
         }
         objc_sync_exit(self);
+    }
+
+    // MARK: Groups
+    func group(annotations: [FTAnnotation]) {
+        let groupId = UUID().uuidString
+        annotations.forEach{ $0.groupId = groupId }
+        self.annotationGroups.setValue(Set(annotations), forKey: groupId)
+    }
+
+    func ungroup(annotations: [FTAnnotation]) {
+        // If multiple groups got selected, accumulate all the group ids and remove them
+        var groupIds = Set<String>()
+        annotations.forEach{ annotation in
+            if let groupId = annotation.groupId {
+                groupIds.insert(groupId)
+                annotation.groupId = nil
+            }
+        }
+        groupIds.forEach { groupID in
+            self.annotationGroups.removeValue(forKey: groupID)
+        }
     }
 }

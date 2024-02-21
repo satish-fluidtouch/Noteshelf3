@@ -928,6 +928,7 @@
 		BA6C51D628DC728F006504EB /* FTDocumentCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C51CF28DC728E006504EB /* FTDocumentCache.swift */; };
 		BA73AA8E2AEB826D00B4A2A3 /* FTDeveloperOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA237D2D25949DCD00B313B3 /* FTDeveloperOptionsViewController.swift */; };
 		BA7A5F5E2AB0766E006D5284 /* URL+Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7A5F5D2AB0766E006D5284 /* URL+Thumbnail.swift */; };
+		BA81F58F2B832C9F00880D90 /* FTAnnotationGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA81F58E2B832C9F00880D90 /* FTAnnotationGroup.swift */; };
 		BA88C9282A5E8F7900EE6666 /* FTCustomPresentationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA88C9272A5E8F7900EE6666 /* FTCustomPresentationDelegate.swift */; };
 		BA8BA65629766D2900946CFE /* SwiftyDropbox in Frameworks */ = {isa = PBXBuildFile; productRef = BA8BA65529766D2900946CFE /* SwiftyDropbox */; };
 		BA8BA65F29782E9500946CFE /* FTAdvancedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8465E1921EF057F00F892AB /* FTAdvancedViewController.swift */; };
@@ -4080,6 +4081,7 @@
 		BA7A5F5D2AB0766E006D5284 /* URL+Thumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Thumbnail.swift"; sourceTree = "<group>"; };
 		BA7D891121F07DD300883D82 /* FTWatchRecordingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWatchRecordingProvider.swift; sourceTree = "<group>"; };
 		BA7E190624CEFF5D00F73B6B /* FTTextLayouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTextLayouter.swift; sourceTree = "<group>"; };
+		BA81F58E2B832C9F00880D90 /* FTAnnotationGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAnnotationGroup.swift; sourceTree = "<group>"; };
 		BA88C9272A5E8F7900EE6666 /* FTCustomPresentationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCustomPresentationDelegate.swift; sourceTree = "<group>"; };
 		BA8CDA0B2B3DAB4A0031E231 /* FTWhatsNew2024PlannerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWhatsNew2024PlannerController.swift; sourceTree = "<group>"; };
 		BA8CDA0D2B3E987C0031E231 /* FTWhatsNewUserPlannerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWhatsNewUserPlannerController.swift; sourceTree = "<group>"; };
@@ -7025,6 +7027,7 @@
 				211E3BB91E028478007B5CAD /* FTStrokeConstants.h */,
 				BAC0B06521B4F3080085A50F /* SwiftSimplify.swift */,
 				09A3870D210763F4005E4000 /* FTAnnotation.swift */,
+				BA81F58E2B832C9F00880D90 /* FTAnnotationGroup.swift */,
 				09A3870F210763FF005E4000 /* FTStroke.swift */,
 				BA3360CB2657969D00F94E2B /* FTShapeAnnotation.swift */,
 				093E991322E040FE00C52B61 /* FTAnnotation_GuestureHandler.swift */,
@@ -13088,6 +13091,7 @@
 				BAF390C72859ADF00067CA9F /* SwiftConstants.swift in Sources */,
 				97F5D07F2B15EB6D003ED67D /* FTPlanner2024DiaryTrackerTemplateFormat.swift in Sources */,
 				142DB8892A72855C00469B5E /* FTStickerModels.swift in Sources */,
+				BA81F58F2B832C9F00880D90 /* FTAnnotationGroup.swift in Sources */,
 				4708DEC82A026D100009F071 /* FTAppIntentHandler.swift in Sources */,
 				BAF390C82859ADF00067CA9F /* FTExportDataContent.swift in Sources */,
 				47BC0AF72A77CBEE00163A0A /* FTIAPManager.swift in Sources */,

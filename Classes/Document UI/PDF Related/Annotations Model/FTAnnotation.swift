@@ -32,6 +32,8 @@ protocol FTAnnotationStrokeErase
     var forceRender : Bool = false;
 
     var uuid : String = UUID().uuidString;
+    var groupId : String?
+
     var hidden : Bool = false;
     var modifiedTimeInterval : TimeInterval = Date.timeIntervalSinceReferenceDate;
     var createdTimeInterval : TimeInterval = Date.timeIntervalSinceReferenceDate;
