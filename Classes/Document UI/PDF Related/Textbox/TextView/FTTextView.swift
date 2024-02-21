@@ -494,7 +494,11 @@ class FTTextView: UITextView, UIGestureRecognizerDelegate, NSTextStorageDelegate
     
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         var shouldReturn = super.gestureRecognizerShouldBegin(gestureRecognizer)
-        if gestureRecognizer is UITapGestureRecognizer {
+        if isMoving && gestureRecognizer.view == self && (gestureRecognizer is UILongPressGestureRecognizer) {
+            shouldReturn = false
+        } else if panGestureRecognizer == gestureRecognizer {
+            shouldReturn = false
+        } else if gestureRecognizer is UITapGestureRecognizer {
             var point = gestureRecognizer.location(in: self)
             point.x -= self.textContainerInset.left
             point.y -= self.textContainerInset.top
