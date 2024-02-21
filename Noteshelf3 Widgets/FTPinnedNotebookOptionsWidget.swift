@@ -18,16 +18,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
     var body: some View {
         HStack(spacing: 0) {
             VStack {
-                Image(entry.coverImage)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 40,height: 55)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.leading, 18)
-                    .padding(.top, 18)
-
                 Spacer()
-
                 VStack {
                     Text(entry.name)
                         .lineLimit(2)
@@ -45,11 +36,20 @@ struct FTPinnedNotebookOptionsWidgetView: View {
             }
             .frame(width: 190, height: 155)
             .background(Color(uiColor: color))
-            .overlay {
-                if color.isLightColor() {
-                    Color.black.opacity(0.2)
-                } else {
-                    Color.white.opacity(0.2)
+            .overlay() {
+                ZStack(alignment: .top) {
+                    if color.isLightColor() {
+                        Color.black.opacity(0.2)
+                    } else {
+                        Color.white.opacity(0.2)
+                    }
+                    Image(uiImage: imageFrom(entry: entry))
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 40,height: 55)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.leading, 18)
+                        .padding(.top, 30)
                 }
             }
             VStack {
@@ -58,14 +58,21 @@ struct FTPinnedNotebookOptionsWidgetView: View {
             .frame(width: 155, height: 155)
         }
         .onAppear {
-            color = adaptiveColorFromImage()
+            color = entry.hasCover ? adaptiveColorFromImage() : UIColor(hexString: "#E06E51")
         }
+    }
+    
+    private func imageFrom(entry : FTPinnedBookEntry) -> UIImage {
+        var image = UIImage(named: "noCover")!
+        if entry.hasCover {
+            image = UIImage(contentsOfFile: entry.coverImage) ?? image
+        }
+        return image
     }
 
     private func adaptiveColorFromImage() -> UIColor {
         var uiColor = UIColor(hexString: "#E06E51")
         if let uiImage = UIImage(named: entry.coverImage), let colors = ColorThief.getPalette(from: uiImage, colorCount: 5), colors.count >= 2 {
-            print(colors)
             uiColor = colors[1].makeUIColor().withAlphaComponent(0.8)
         }
         return uiColor

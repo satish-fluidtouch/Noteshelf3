@@ -60,7 +60,6 @@ struct topView: View {
     private func adaptiveColorFromImage() -> UIColor {
         var uiColor = UIColor(hexString: "#E06E51")
         if let uiImage = UIImage(named: entry.coverImage), let colors = ColorThief.getPalette(from: uiImage, colorCount: 5), colors.count >= 2 {
-            print(colors)
             uiColor = colors[1].makeUIColor().withAlphaComponent(0.8)
         }
         return uiColor
@@ -77,10 +76,10 @@ struct bottomView: View {
                     .lineLimit(2)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .foregroundColor(Color.label)
-                    .font(.appFont(for: .medium, with: 18))
+                    .font(.appFont(for: .medium, with: 13))
                 Text(entry.time)
                     .lineLimit(1)
-                    .font(.appFont(for: .regular, with: 15))
+                    .font(.appFont(for: .regular, with: 11))
                     .foregroundColor(Color("black70"))
                     .frame(maxWidth: .infinity, alignment: .leading)
             }.padding(.leading, 20)
