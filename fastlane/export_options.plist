@@ -16,6 +16,10 @@
 		<string>Noteshelf 3 Watch AppStore</string>
 		<key>com.fluidtouch.noteshelf3.watchkitapp.watchkitextension</key>
 		<string>Noteshelf 3 Watch Extension AppStore</string>
+		<key>com.fluidtouch.noteshelf3.widgets</key>
+		<string>Noteshelf 3 Widgets AppStore</string>
+		<key>com.fluidtouch.noteshelf3.intents</key>
+		<string>Noteshelf 3 Intents AppStore</string>
 		<key>com.fluidtouch.noteshelf3-beta</key>
 		<string>NS3 Beta TestFlight</string>
 		<key>com.fluidtouch.noteshelf3-beta.noteshelf-action</key>

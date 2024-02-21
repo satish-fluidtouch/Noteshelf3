@@ -12,6 +12,10 @@
 		<string>Noteshelf 3 Thumbnail Catalyst AppStore</string>
 		<key>com.fluidtouch.noteshelf3.noteshelf-action</key>
 		<string>Noteshelf 3 Action Mac AppStore</string>
+		<key>com.fluidtouch.noteshelf3.widgets</key>
+		<string>Noteshelf 3  Widgets Mac AppStore</string>
+		<key>com.fluidtouch.noteshelf3.intents</key>
+		<string>Noteshelf 3  Intents Mac AppStore</string>
 		<key>com.fluidtouch.noteshelf3-beta</key>
 		<string>NS3 Beta Catalyst TestFlight</string>
 		<key>com.fluidtouch.noteshelf3-beta.noteshelf-action</key>
