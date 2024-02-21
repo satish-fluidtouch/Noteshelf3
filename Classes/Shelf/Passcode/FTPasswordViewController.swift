@@ -271,12 +271,24 @@ extension FTPasswordViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension FTPasswordViewController: UITextFieldDelegate {
+    private func textFiledAssociatedTableViewCell(_ textField: UITextField) -> UITableViewCell? {
+        var currentCell: UITableViewCell?;
+        for eachCell in self.tableView.visibleCells {
+            if let normCell = eachCell as? FTPassWordNormalCell
+                , normCell.textFeild == textField
+            {
+                currentCell = normCell;
+            }
+        }
+        return currentCell
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField.returnKeyType == .done {
             self.verifyUserInputs(passwordFlow: self.passwordFlow)
             return false
         }
-        if let cell = textField.superview?.superview as? UITableViewCell {
+        if let cell = textFiledAssociatedTableViewCell(textField) {
             if let indexPath = self.tableView.indexPath(for: cell) {
                 let nextIndexPath = getNextIndexPath(for: indexPath)
                 if let nextView = getNextInputView(for: indexPath) {

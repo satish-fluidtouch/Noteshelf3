@@ -27,7 +27,10 @@ struct FabircKeys {
     static let RecognitionActivated = "Recog_Act"
     static let FavoriteBarStatus = "FavoriteBarStatus"
 
-    static let Clouds = "Clouds"
+    //Nackup values
+    static let Autobackup = "Autobackup"
+    static let AutobackupFormat = "AutobackupFormat"
+    
     static let Layout = "Layout"
     static let Premium = "Premium"
     static let Noteshelf2 = "NS2"
@@ -59,10 +62,13 @@ class FabricHelper: NSObject {
         keys[FabircKeys.Theme] = FTShelfThemeStyle.defaultTheme().title
         keys[FabircKeys.Locale] = Locale.current.identifier
 
-        keys[FabircKeys.Clouds] = FTZenDeskManager.cloudUsed()
         keys[FabircKeys.Recognition] = FTNotebookRecognitionHelper.shouldProceedRecognition ? "YES" : "NO";
         keys[FabircKeys.RecognitionActivated] = FTNotebookRecognitionHelper.myScriptActivated ? "YES" : "NO";
         keys[FabircKeys.Layout] = (UserDefaults.standard.pageLayoutType == .vertical) ? "Vertical" : "Horizontal";
+        
+        keys[FabircKeys.Autobackup] = FTCloudBackUpManager.shared.activeCloudBackUpManager?.cloudBackUpName() ?? "none";
+        keys[FabircKeys.AutobackupFormat] = FTUserDefaults.backupFormat.displayTitle;
+
         keys[FabircKeys.Premium] = FTIAPManager.shared.premiumUser.isPremiumUser ? "YES" : "NO"
         keys[FabircKeys.Noteshelf2] = FTDocumentMigration.isNS2AppInstalled() ? "YES" : "NO"
         keys[FabircKeys.SafeMode] = FTUserDefaults.isInSafeMode() ? "YES" : "NO"

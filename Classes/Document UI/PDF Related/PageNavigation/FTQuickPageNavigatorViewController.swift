@@ -51,6 +51,7 @@ private let gapBetweenPageTipAndThumbnail: CGFloat = 8.0
     let highlightStateImages:[String] = ["handle1", "handle2"]
     let normalStateImages:[String] = ["handle1", "handle1"]
 
+    private var isActivated = false;
     private var currentPageIndex: UInt {
         set {
             if newValue != _currentPageIndex {
@@ -182,7 +183,10 @@ private let gapBetweenPageTipAndThumbnail: CGFloat = 8.0
     }
 
     @objc private func activateNavigatorHandle() {
-        FTCLSLog("QuickNavigator - activate");
+        if !isActivated {
+            isActivated = true;
+            FTCLSLog("QuickNavigator - activate");
+        }
 
         self.view.isUserInteractionEnabled = true
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.deactivateNavigatorHandle), object: nil)
@@ -194,7 +198,10 @@ private let gapBetweenPageTipAndThumbnail: CGFloat = 8.0
     }
     
     @objc private func deactivateNavigatorHandle() {
-        FTCLSLog("QuickNavigator - deactivate");
+        if isActivated {
+            isActivated = false;
+            FTCLSLog("QuickNavigator - deactivate");
+        }
 
         self.view.isUserInteractionEnabled = false
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.deactivateNavigatorHandle), object: nil)
