@@ -19,7 +19,7 @@ import FTCommon
 // "Search for messages in <myApp>"
 
 class IntentHandler: INExtension, FTPinnedIntentConfigurationIntentHandling {
-    
+
     func provideBooksOptionsCollection(for intent: FTPinnedIntentConfigurationIntent) async throws -> INObjectCollection<FTPinnedBookType> {
         var items = [FTPinnedBookType]()
         let response = notebooks()
@@ -35,11 +35,11 @@ class IntentHandler: INExtension, FTPinnedIntentConfigurationIntentHandling {
         return collection
 
     }
-    
+
     override func handler(for intent: INIntent) -> Any {
         return self
     }
-    
+
     private func notebooks() -> [FTPinnedMockData] {
         var notebooks = [FTPinnedMockData]()
         if FileManager().fileExists(atPath: sharedCacheURL.path(percentEncoded: false)) {
@@ -66,7 +66,7 @@ class IntentHandler: INExtension, FTPinnedIntentConfigurationIntentHandling {
         }
         return notebooks
     }
-    
+
     private func _relativePath(for metaDataPlistUrl: URL) -> String {
         var relativePath = ""
         if let data = try? Data(contentsOf: metaDataPlistUrl) {
@@ -76,7 +76,7 @@ class IntentHandler: INExtension, FTPinnedIntentConfigurationIntentHandling {
         }
         return relativePath
     }
-    
+
     private func hasCover(for notebookPath: String) -> Bool {
         var hasCover = false
         let docPlist = notebookPath.appending("Document.plist")
@@ -91,16 +91,16 @@ class IntentHandler: INExtension, FTPinnedIntentConfigurationIntentHandling {
         }
         return hasCover
     }
-    
+
     private func timeFromDate(currentDate: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "hh:mm a"
         dateFormatter.locale = .current // Set locale to ensure proper representation of AM/PM
         return dateFormatter.string(from: currentDate)
     }
-    
-    
-    
+
+
+
     private var sharedCacheURL: URL {
         if let url = FileManager().containerURL(forSecurityApplicationGroupIdentifier: FTSharedGroupID.getAppGroupID()) {
             let directoryURL = url.appending(path: FTSharedGroupID.notshelfDocumentCache);
@@ -115,14 +115,14 @@ struct FTPinnedMockData {
     let createdTime: String
     let coverImageName: String
     let hasCover: Bool
-    
+
     init(relativePath: String, createdTime: String, coverImageName: String, hasCover: Bool) {
         self.relativePath = relativePath
         self.createdTime = createdTime
         self.coverImageName = coverImageName
         self.hasCover = hasCover
     }
-    
+
     static let mockData: [[String: String]] = [
         [
             "bookName": "Notebook1",

@@ -6,8 +6,7 @@
 	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.fluidtouch.noteshelf3</string>
-		<string>group.com.fluidtouch.noteshelf3-dev</string>
+		<string>group.com.fluidtouch.noteshelf3-beta</string>
 	</array>
 	<key>com.apple.security.network.client</key>
 	<true/>
