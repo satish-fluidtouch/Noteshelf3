@@ -629,7 +629,7 @@ extension FTShelfSplitViewController {
                             if canClose {
                                 openPDFViewer()
                             } else {
-                                self.view.isUserInteractionEnabled = true
+                                finalizeClose()
                             }
                         }
                     } else {
