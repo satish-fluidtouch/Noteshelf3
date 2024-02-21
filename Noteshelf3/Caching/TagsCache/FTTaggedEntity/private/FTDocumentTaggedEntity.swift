@@ -20,12 +20,12 @@ class FTDocumentTaggedEntity: FTTaggedEntity {
     override func thumbnail(onCompletion: ((UIImage?,String) -> ())?) -> String {
         let thumbnailPath = FTDocumentCache.shared.cachedLocation(for: self.documentUUID).appending(path: "cover-shelf-image.png");
         let token = UUID().uuidString;
-        DispatchQueue.global().async {
-            let img = UIImage(contentsOfFile: thumbnailPath.path(percentEncoded: false));
-            DispatchQueue.main.async {
-                onCompletion?(img, token)
-            }
-        }
+        let img = UIImage(contentsOfFile: thumbnailPath.path(percentEncoded: false));
+        onCompletion?(img, token)
+//        DispatchQueue.global().async {
+//            DispatchQueue.main.async {
+//            }
+//        }
         return token;
     }
 }

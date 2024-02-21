@@ -83,7 +83,7 @@ extension FTShelfTagsBooksCell: UICollectionViewDataSource, UICollectionViewDele
         var token : String?
         let item = self.tagCategory.books[indexPath.row];
         token = item.thumbnail { (image, inToken) in
-            if token == inToken,let img = image {
+            if let img = image {
                 if  img.size.width > img.size.height  { // landscape
                     let landscapeSize = FTShelfTagsConstants.Book.landscapeSize
                     size = CGSize(width: landscapeSize.width, height: landscapeSize.height + FTShelfTagsConstants.Book.extraHeightPadding)
@@ -93,7 +93,6 @@ extension FTShelfTagsBooksCell: UICollectionViewDataSource, UICollectionViewDele
                 }
             }
         }
-
         return size
     }
 
