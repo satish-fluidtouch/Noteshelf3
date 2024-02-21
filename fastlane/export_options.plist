@@ -26,6 +26,10 @@
 		<string>NS3 Beta Watch Testflight</string>
 		<key>com.fluidtouch.noteshelf3-beta.watchkitapp.watchkitextension</key>
 		<string>NS3 Beta Watch Extension Testflight</string>
+		<key>com.fluidtouch.noteshelf3-beta.widgets</key>
+		<string>NS3 Beta Widgets TestFlight</string>
+		<key>com.fluidtouch.noteshelf3-beta.intents</key>
+		<string>NS3 Beta Intents TestFlight</string>
 	</dict>
 	<key>signingStyle</key>
 	<string>manual</string>

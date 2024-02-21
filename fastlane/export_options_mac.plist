@@ -18,6 +18,10 @@
 		<string>NS3 Beta Catalyst Action TestFlight</string>
 		<key>com.fluidtouch.noteshelf3-beta.thumbnail</key>
 		<string>NS3 Beta Catalyst Thumbnail TestFlight</string>
+		<key>com.fluidtouch.noteshelf3-beta.widgets</key>
+		<string>NS3 Beta Catalyst Widgets TestFlight</string>
+		<key>com.fluidtouch.noteshelf3-beta.intents</key>
+		<string>NS3 Beta Catalyst Intents TestFlight</string>
 	</dict>
 	<key>signingStyle</key>
 	<string>manual</string>
