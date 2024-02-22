@@ -726,6 +726,10 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
         return [FTAnnotation]();
     }
 
+    func annotations(groupId: String) -> [FTAnnotation]? {
+        return self.sqliteFileItem()?.annotations(groupId: groupId)
+    }
+
     func audioAnnotations() -> [FTAnnotation] {
         var annotations = self.annotations();
         annotations = annotations.filter({ (eachAnnotation) -> Bool in

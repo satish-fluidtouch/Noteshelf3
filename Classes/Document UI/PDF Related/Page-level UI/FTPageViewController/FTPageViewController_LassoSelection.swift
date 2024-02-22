@@ -334,6 +334,11 @@ extension FTPageViewController: FTLassoSelectionViewDelegate {
         self.paste(at: touchedPoint);
     }
     #endif
+
+    func initiateGroupedAnnotationEditing(annotations: [FTAnnotation]) {
+        self.lassoInfo.selectedAnnotations = annotations
+        initiateTransformSelection()
+    }
 }
 
 //MARK:- Lasso Actions -
@@ -780,7 +785,7 @@ private extension FTPageViewController
         return snapshot;
     }
 
-    
+
     func initiateTransformSelection()
     {
         let selectedAnnotations = self.lassoInfo.selectedAnnotations;

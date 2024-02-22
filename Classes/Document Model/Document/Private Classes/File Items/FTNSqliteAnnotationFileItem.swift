@@ -349,4 +349,11 @@ class FTNSqliteAnnotationFileItem : FTFileItemSqlite
             self.annotationGroups.removeValue(forKey: groupID)
         }
     }
+
+    func annotations(groupId: String) -> [FTAnnotation]? {
+        if let annotations = annotationGroups.value(forKey: groupId) {
+            return Array(annotations)
+        }
+        return nil
+    }
 }

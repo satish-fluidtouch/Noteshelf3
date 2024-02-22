@@ -255,7 +255,6 @@ extension FTPageViewController {
     
     @IBAction func longPressDetected(_ gesture : UILongPressGestureRecognizer)
     {
-        var isAnnotationDetected = false
         if(gesture.state == .began) {
             self.activeAnnotationController?.annotationControllerLongPressDetected()
             let hitPoint = gesture.location(in: self.contentHolderView);
@@ -264,7 +263,6 @@ extension FTPageViewController {
                 self.editAnnotation(annotation,
                                     eventType: .longPress,
                                     at:hitPoint)
-                isAnnotationDetected = true
                 if annotation.isLocked {
                     return
                 }

@@ -138,8 +138,17 @@ extension FTShapeAnnotation : FTAnnotationSingleTapSelector {
     }
 }
 
-extension FTShapeAnnotation : FTAnnotationLongPressHandler {
-    func canHandleLongPressEvent(atPoint point : CGPoint) -> Bool {
+extension FTShapeAnnotation {
+    override func canHandleLongPressEvent(atPoint point : CGPoint) -> Bool {
         return self.allowsSingleTapSelection(atPoint: point)
+    }
+}
+
+extension FTStroke: FTAnnotationLongPressHandler {
+    func canHandleLongPressEvent(atPoint point : CGPoint) -> Bool {
+        if self.groupId != nil {
+            return true
+        }
+        return false
     }
 }
