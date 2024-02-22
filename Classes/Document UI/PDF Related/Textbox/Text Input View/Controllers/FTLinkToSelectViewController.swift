@@ -24,15 +24,6 @@ class FTLinkToSelectViewController: UIViewController {
         super.viewDidLoad()
         self.configureNavigationBar()
         self.configureSegmentControl()
-
-        self.viewModel?.prepareDocumentDetails(onCompletion: { _ in
-            if let doc = self.viewModel.selectedDocument as? FTThumbnailableCollection {
-                self.docPagesController?.document = doc
-                let indexPath = IndexPath(item: self.viewModel.pageNumber - 1, section: 0)
-                self.docPagesController?.updateSelectedIndexPath(indexPath, toScroll: true)
-                self.tableView?.reloadData()
-            }
-        })
     }
 
     deinit {
@@ -93,6 +84,20 @@ private extension FTLinkToSelectViewController {
         self.handleSegmentControlSelection()
     }
 
+    func configureDocumentIfNeeded() {
+        guard nil == self.docPagesController?.document else {
+            return
+        }
+        self.viewModel?.prepareDocumentDetails(onCompletion: { _ in
+            if let doc = self.viewModel.selectedDocument as? FTThumbnailableCollection {
+                self.docPagesController?.document = doc
+                let indexPath = IndexPath(item: self.viewModel.pageNumber - 1, section: 0)
+                self.docPagesController?.updateSelectedIndexPath(indexPath, toScroll: true)
+                self.tableView?.reloadData()
+            }
+        })
+    }
+
      func configWebView(with urlStr: String?) {
          self.webView.navigationDelegate = self
          self.errorStackView.isHidden = true
@@ -110,6 +115,7 @@ private extension FTLinkToSelectViewController {
             self.containerView.isHidden = false
             self.webView.isHidden = true
             self.errorStackView.isHidden = true
+            self.configureDocumentIfNeeded()
         }
         self.updateDoneEnableStatus()
         self.tableView?.reloadData()
