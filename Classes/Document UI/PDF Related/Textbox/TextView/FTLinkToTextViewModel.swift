@@ -75,6 +75,7 @@ struct FTPageLinkInfo {
 
 protocol FTPageSelectionDelegate: AnyObject {
     func didSelect(page: FTNoteshelfPage)
+    func didScrollPages(contentOffset: CGPoint)
 }
 
 protocol FTDocumentSelectionDelegate: AnyObject {

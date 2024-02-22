@@ -1824,11 +1824,11 @@
             <objects>
                 <viewController storyboardIdentifier="FTDocumentPagesController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="G95-Xl-oqP" customClass="FTDocumentPagesController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JaL-Aq-xgP">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1182"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1181"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="EZM-8i-VEf">
-                                <rect key="frame" x="0.0" y="20" width="1024" height="1162"/>
+                                <rect key="frame" x="0.0" y="20" width="1024" height="1161"/>
                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="lHu-GQ-RgA" customClass="FTFinderCollectionViewFlowLayout" customModule="NS3_Beta" customModuleProvider="target">
                                     <size key="itemSize" width="128" height="128"/>
@@ -1986,14 +1986,21 @@
                                             <outlet property="delegate" destination="cA3-Xq-Qor" id="NNX-o3-D54"/>
                                         </connections>
                                     </tableView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Cr-bY-a2e">
+                                        <rect key="frame" x="0.0" y="156" width="1024" height="1"/>
+                                        <color key="backgroundColor" name="seperator"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="BA7-sB-FMd"/>
+                                        </constraints>
+                                    </view>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yif-zw-bR3">
-                                        <rect key="frame" x="0.0" y="164" width="1024" height="1182"/>
+                                        <rect key="frame" x="0.0" y="157" width="1024" height="1189"/>
                                         <connections>
                                             <segue destination="G95-Xl-oqP" kind="embed" identifier="FTDocumentPagesController" id="J1o-bN-anT"/>
                                         </connections>
                                     </containerView>
                                     <wkWebView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AMo-Gl-Pgw">
-                                        <rect key="frame" x="24" y="164" width="976" height="1158"/>
+                                        <rect key="frame" x="24" y="157" width="976" height="1165"/>
                                         <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <wkWebViewConfiguration key="configuration">
                                             <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -2007,7 +2014,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </wkWebView>
                                     <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="tpp-Kh-tTa" userLabel="Error Stack View">
-                                        <rect key="frame" x="412" y="683" width="200" height="120"/>
+                                        <rect key="frame" x="412" y="679.5" width="200" height="120"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" image="wifi" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="H6k-VT-iLz">
                                                 <rect key="frame" x="0.0" y="2" width="200" height="56"/>
@@ -2037,17 +2044,20 @@
                                     </stackView>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="5Cr-bY-a2e" firstAttribute="top" secondItem="CEu-Ve-O86" secondAttribute="bottom" constant="16" id="3Qm-OP-RMF"/>
                                     <constraint firstItem="W7c-fj-4Rp" firstAttribute="bottom" secondItem="CEu-Ve-O86" secondAttribute="top" constant="-20" id="7X7-si-EEC"/>
                                     <constraint firstItem="Yif-zw-bR3" firstAttribute="leading" secondItem="f2X-mx-yJ0" secondAttribute="leading" id="7jB-FU-KpE"/>
                                     <constraint firstItem="W7c-fj-4Rp" firstAttribute="leading" secondItem="f2X-mx-yJ0" secondAttribute="leading" constant="24" id="AV7-kW-BVE"/>
                                     <constraint firstItem="AMo-Gl-Pgw" firstAttribute="trailing" secondItem="f2X-mx-yJ0" secondAttribute="trailing" constant="-24" id="CeS-DG-Qiu"/>
+                                    <constraint firstItem="Yif-zw-bR3" firstAttribute="top" secondItem="5Cr-bY-a2e" secondAttribute="bottom" id="Oic-nb-8Ev"/>
+                                    <constraint firstItem="5Cr-bY-a2e" firstAttribute="leading" secondItem="f2X-mx-yJ0" secondAttribute="leading" id="Oxy-W5-e4T"/>
+                                    <constraint firstAttribute="trailing" secondItem="5Cr-bY-a2e" secondAttribute="trailing" id="Oyg-On-UCm"/>
                                     <constraint firstAttribute="bottom" secondItem="Yif-zw-bR3" secondAttribute="bottom" id="PYM-9Z-RNP"/>
                                     <constraint firstItem="W7c-fj-4Rp" firstAttribute="top" secondItem="f2X-mx-yJ0" secondAttribute="top" id="Rjd-Ay-A1x"/>
                                     <constraint firstItem="CEu-Ve-O86" firstAttribute="leading" secondItem="f2X-mx-yJ0" secondAttribute="leading" id="SZX-Ki-ubY"/>
                                     <constraint firstItem="AMo-Gl-Pgw" firstAttribute="top" secondItem="Yif-zw-bR3" secondAttribute="top" id="Szj-wA-8lO"/>
                                     <constraint firstAttribute="bottom" secondItem="AMo-Gl-Pgw" secondAttribute="bottom" constant="24" id="TA1-dK-Ote"/>
                                     <constraint firstAttribute="trailing" secondItem="Yif-zw-bR3" secondAttribute="trailing" id="VGc-LS-znS"/>
-                                    <constraint firstItem="Yif-zw-bR3" firstAttribute="top" secondItem="CEu-Ve-O86" secondAttribute="bottom" constant="24" id="WGf-uM-3LQ"/>
                                     <constraint firstItem="tpp-Kh-tTa" firstAttribute="centerX" secondItem="AMo-Gl-Pgw" secondAttribute="centerX" id="ZSY-qy-07I"/>
                                     <constraint firstItem="AMo-Gl-Pgw" firstAttribute="leading" secondItem="f2X-mx-yJ0" secondAttribute="leading" constant="24" id="a0v-7h-LbV"/>
                                     <constraint firstAttribute="trailing" secondItem="CEu-Ve-O86" secondAttribute="trailing" id="asn-fW-Kgr"/>
@@ -2068,6 +2078,7 @@
                     <navigationItem key="navigationItem" id="PKc-JD-QFW"/>
                     <connections>
                         <outlet property="containerView" destination="Yif-zw-bR3" id="8qJ-In-vzj"/>
+                        <outlet property="dividerView" destination="5Cr-bY-a2e" id="dNg-71-A48"/>
                         <outlet property="errorStackView" destination="tpp-Kh-tTa" id="sJj-Gc-ICI"/>
                         <outlet property="segmentControl" destination="W7c-fj-4Rp" id="Kd6-ur-9Df"/>
                         <outlet property="tableView" destination="CEu-Ve-O86" id="L11-JN-lz3"/>
@@ -2144,6 +2155,9 @@
         <namedColor name="regularToolbarBgColor">
             <color red="0.066666666666666666" green="0.066666666666666666" blue="0.066666666666666666" alpha="0.10000000149011612" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="seperator">
+            <color red="0.066666666666666666" green="0.066666666666666666" blue="0.066666666666666666" alpha="0.05000000074505806" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="white100">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -2160,7 +2174,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray2Color">
-            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

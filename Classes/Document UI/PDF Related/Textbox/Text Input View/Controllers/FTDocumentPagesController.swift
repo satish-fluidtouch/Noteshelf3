@@ -22,6 +22,9 @@ class FTDocumentPagesController: UIViewController {
             self.pages = self.document?.documentPages() ?? []
             self.collectionView.collectionViewLayout.invalidateLayout()
             self.collectionView.reloadData()
+            runInMainThread(0.1) {
+                self.delegate?.didScrollPages(contentOffset: self.collectionView.contentOffset)
+            }
         }
     }
 
@@ -185,5 +188,9 @@ extension FTDocumentPagesController: UICollectionViewDataSource, UICollectionVie
             }
         }
         return nil
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.delegate?.didScrollPages(contentOffset: scrollView.contentOffset)
     }
 }

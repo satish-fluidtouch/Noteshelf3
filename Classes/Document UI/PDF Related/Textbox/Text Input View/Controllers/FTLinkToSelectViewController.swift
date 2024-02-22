@@ -15,7 +15,8 @@ class FTLinkToSelectViewController: UIViewController {
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var webView: WKWebView!
     @IBOutlet private weak var errorStackView: UIStackView!
-    
+    @IBOutlet private weak var dividerView: UIView!
+
     var viewModel: FTLinkToTextViewModel!
     weak var docPagesController: FTDocumentPagesController?
 
@@ -124,6 +125,14 @@ private extension FTLinkToSelectViewController {
         let viewModel = FTShelfItemsViewModel(selectedShelfItems: [], purpose: .linking)
         let controller = FTShelfItemsViewControllerNew(shelfItemsViewModel: viewModel, delegate: self)
         self.navigationController?.pushViewController(controller, animated: true)
+    }
+
+    func handleDividerVisibility(with contentOffset: CGPoint) {
+        if contentOffset.y <= 0.0 {
+            self.dividerView.isHidden = true
+        } else {
+            self.dividerView.isHidden = false
+        }
     }
 
     var linkOptions: [FTLinkToOption] {
@@ -276,6 +285,10 @@ extension FTLinkToSelectViewController: FTPageSelectionDelegate {
             self.tableView?.reloadData()
             FTTextLinkEventTracker.trackEvent(with: TextLinkEvents.linkToPageTap)
         }
+    }
+
+    func didScrollPages(contentOffset: CGPoint) {
+        self.handleDividerVisibility(with: contentOffset)
     }
 }
 
