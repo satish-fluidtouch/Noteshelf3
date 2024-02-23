@@ -23,6 +23,7 @@
 @interface FTSearchIndexManager : NSObject
 
 +(nonnull instancetype)sharedManager;
+-(BOOL)supportsSpotlightSearch;
 -(void)updateSearchIndex:(nonnull id<FTCSIndexableItem>)inObject completion:(void (^ __nullable)(NSError * __nullable error))block;
 -(void)updateSearchIndexForDocuments:(nonnull NSArray*)documents;
 -(void)resumeIndexing;

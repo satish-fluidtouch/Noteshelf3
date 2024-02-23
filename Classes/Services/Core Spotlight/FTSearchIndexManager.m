@@ -68,6 +68,9 @@
     return self;
 }
 
+-(BOOL)supportsSpotlightSearch {
+    return [FTCoreSpotlightSearchIndex isCoreSpotlightAvailable];
+}
 - (void)resumeIndexing {
     if(self.paused) {
         self.paused = false;

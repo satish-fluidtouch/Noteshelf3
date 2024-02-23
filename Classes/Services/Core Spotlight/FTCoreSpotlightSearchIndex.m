@@ -27,9 +27,8 @@
     }
     
     CSSearchableItemAttributeSet *attributeSet;
-    attributeSet = [[CSSearchableItemAttributeSet alloc]
-                    initWithItemContentType:(NSString *)kUTTypeItem];
-    
+    attributeSet = [[CSSearchableItemAttributeSet alloc] initWithContentType:[UTType typeWithFilenameExtension:@"ns3"]];
+
     attributeSet.title = title;
     attributeSet.contentDescription = content;
     if(keywords.count > 0){

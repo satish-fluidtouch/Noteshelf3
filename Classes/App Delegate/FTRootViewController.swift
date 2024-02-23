@@ -53,6 +53,8 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     override func viewDidLoad() {
         super.viewDidLoad()
         FTImportStorageManager.clearImportFilesIfNeeded();
+        FTDocumentsSpotlightIndexManager.shared.configure();
+        
         self.contentView = UIView.init(frame: self.view.bounds);
         self.contentView.backgroundColor = UIColor.clear;
 
@@ -1334,8 +1336,6 @@ extension FTRootViewController: FTSceneBackgroundHandling {
     func configureSceneNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(sceneDidBecomeActive(_:)), name: UIApplication.sceneDidBecomeActive, object: self.sceneToObserve)
         NotificationCenter.default.addObserver(self, selector: #selector(sceneWillResignActive(_:)), name: UIApplication.sceneWillResignActive, object: self.sceneToObserve)
-        NotificationCenter.default.addObserver(self, selector: #selector(sceneDidEnterBackground(_:)), name: UIApplication.sceneDidEnterBackground, object: nil);
-        NotificationCenter.default.addObserver(self, selector: #selector(sceneWillEnterForeground(_:)), name: UIApplication.sceneWillEnterForeground, object: nil);
         self.configureForImportAction();
     }
 
@@ -1350,7 +1350,6 @@ extension FTRootViewController: FTSceneBackgroundHandling {
         if(!self.canProceedSceneNotification(notification)) {
             return;
         }
-
         FTAppConfigHelper.sharedAppConfig().updateAppConfig()
         if FTWhatsNewManger.canShowWelcomeScreen(onViewController: self) {
             FTGetstartedHostingViewcontroller.showWelcome(presenterController: self, onDismiss: nil);
@@ -1622,28 +1621,5 @@ extension FTRootViewController: SFSafariViewControllerDelegate {
 
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
         self.retryiCloudUnavaialbility()
-    }
-}
-
-extension FTRootViewController {
-    @objc  func sceneDidEnterBackground(_ notification: Notification) {
-        if(UIApplication.shared.applicationState == .background) {
-            self.buildSpotlightSearch();
-        }
-    }
-
-    @objc  func sceneWillEnterForeground(_ notification: Notification) {
-        if(UIApplication.shared.applicationState == .background) {
-            FTSearchIndexManager.shared().resumeIndexing();
-        }
-    }
-
-    @objc func buildSpotlightSearch() {
-        if FTNoteshelfDocumentProvider.shared.isProviderReady {
-            FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(.none, parent: nil, searchKey: nil) { items in
-                let spotLighter = FTDocumentsSpotlightIndexManager();
-                spotLighter.prepareSpotLightIndexForItems(items: items);
-            }
-        }
     }
 }

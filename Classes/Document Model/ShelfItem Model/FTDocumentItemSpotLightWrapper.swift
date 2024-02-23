@@ -101,12 +101,36 @@ class FTDocumentItemSpotLightWrapper : NSObject,FTCSIndexableItem {
 
 class FTDocumentsSpotlightIndexManager : NSObject
 {
-    func prepareSpotLightIndexForItems(items : [FTShelfItemProtocol]) {
+    static let shared = FTDocumentsSpotlightIndexManager();
+    private var isObserverAdded = false;
+    func configure() {
+        guard !isObserverAdded, FTSearchIndexManager.shared().supportsSpotlightSearch() else  {
+            return;
+        }
+        isObserverAdded = true;
+        NotificationCenter.default.addObserver(self, selector: #selector(self.willEnterForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackground(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil);
+    }
+    
+    @objc private func willEnterForeground(_ notification: Notification) {
+        FTSearchIndexManager.shared().resumeIndexing();
+    }
+
+    @objc private func didEnterBackground(_ notification: Notification) {
+        if FTNoteshelfDocumentProvider.shared.isProviderReady {
+            FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(.none, parent: nil, searchKey: nil) { items in
+                let spotLighter = FTDocumentsSpotlightIndexManager();
+                spotLighter.prepareSpotLightIndexForItems(items: items);
+            }
+        }
+    }
+
+    private func prepareSpotLightIndexForItems(items : [FTShelfItemProtocol]) {
         let objects = self.prepareSpotlightIndex(items: items);
         FTSearchIndexManager.shared().updateSearchIndex(forDocuments: objects);
     }
     
-    fileprivate func prepareSpotlightIndex(items : [FTShelfItemProtocol]) -> [FTDocumentItemSpotLightWrapper]
+    private func prepareSpotlightIndex(items : [FTShelfItemProtocol]) -> [FTDocumentItemSpotLightWrapper]
     {
         var indexObjects = [FTDocumentItemSpotLightWrapper]();
         for eachItem in items {
