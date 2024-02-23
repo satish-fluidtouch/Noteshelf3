@@ -72,6 +72,7 @@ class FTShelfTagsPageCell: UICollectionViewCell {
 
             NSLayoutConstraint.activate([
                 tagsView!.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+                ,tagsView.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor)
             ])
         }
     }
