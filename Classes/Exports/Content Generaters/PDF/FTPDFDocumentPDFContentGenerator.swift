@@ -127,9 +127,8 @@ class FTPDFDocumentPDFContentGenerator: FTPDFDocumentContentGenerator {
                 (eachPage as? FTNoteshelfPage)?.unloadPDFContentsIfNeeded();
             }
 
-            if(!self.target.properties.hidePageTemplate) {
-                self.addAnnotations(url);
-            }
+            self.addAnnotations(url)
+
             self.progress.completedUnitCount += Int64(val);
 
             completion(self.exportItem,nil,false);
@@ -155,26 +154,39 @@ class FTPDFDocumentPDFContentGenerator: FTPDFDocumentContentGenerator {
         for index in 0..<pageCount {
             autoreleasepool {
                 if let pageExported = document.page(at: index) {
-                    let pdfPage = self.pagesToExport[index]
-//                    let shouldAddPDFAnnotations = pdfPage.templateInfo.renderAnnotations;
-                    pdfPage.pdfPageRef?.annotations.forEach({ annotation in
-                        if annotation.action is PDFActionURL {
-                            pageExported.addAnnotation(annotation)
-                        } else if let gotoAction = annotation.action as? PDFActionGoTo {
-                            if let existingPage = gotoAction.destination.page {
-                                let indexNew = self.indexOfPage(existingPage, in: self.pagesToExport)
-                                if let newPage = document.page(at: indexNew) {
-                                    let destinationNew = PDFDestination(page: newPage, at: gotoAction.destination.point)
-                                    gotoAction.destination = destinationNew
-                                    annotation.action = gotoAction
+                    if !self.target.properties.hidePageTemplate {
+                        let pdfPage = self.pagesToExport[index]
+                        pdfPage.pdfPageRef?.annotations.forEach({ annotation in
+                            if annotation.action is PDFActionURL {
+                                pageExported.addAnnotation(annotation)
+                            } else if let gotoAction = annotation.action as? PDFActionGoTo {
+                                if let existingPage = gotoAction.destination.page {
+                                    let indexNew = self.indexOfPage(existingPage, in: self.pagesToExport)
+                                    if let newPage = document.page(at: indexNew) {
+                                        let destinationNew = PDFDestination(page: newPage, at: gotoAction.destination.point)
+                                        gotoAction.destination = destinationNew
+                                        annotation.action = gotoAction
+                                    }
                                 }
+                                pageExported.addAnnotation(annotation)
                             }
-                            pageExported.addAnnotation(annotation)
+                        })
+                    }
+                    // Text Linking
+                    let annotations = pageExported.annotations
+                    annotations.forEach { eachAnnotation in
+                        if let action = eachAnnotation.action as? PDFActionURL, let url = action.url {
+                            let queryItems = url.getQueryItems()
+                            if let documentId = queryItems.docId, let pageId = queryItems.pageId
+                                ,let book = self.notebook, documentId == currentDocumentLinkingId
+                                ,let pageIndex = book.pages().firstIndex(where: { $0.uuid == pageId })
+                                ,let destPdfPage = document.page(at: pageIndex) {
+                                let destinationNew = PDFDestination(page: destPdfPage, at: CGPoint(x: 0, y: destPdfPage.bounds(for: .cropBox).height));
+                                let goToAction = PDFActionGoTo(destination: destinationNew)
+                                eachAnnotation.action = goToAction
+                            }
                         }
-//                        else if(shouldAddPDFAnnotations) {
-//                            pageExported.addAnnotation(annotation)
-//                        }
-                    })
+                    }
                 }
             }
         }

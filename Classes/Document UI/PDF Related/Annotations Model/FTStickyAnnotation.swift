@@ -164,6 +164,7 @@ extension FTStickyAnnotation
                         let image = sourceFileItem.image();
                         copiedFileItem?.setImage(image);
                         
+                        FTCLSLog("NFC - Sticky deepCopy secured: \(toDocument.URL.title)");
                         let coordinator = NSFileCoordinator.init(filePresenter: document);
                         let fileAccessIntent = NSFileAccessIntent.writingIntent(with: copiedFileItem!.fileItemURL,
                                                                                 options: NSFileCoordinator.WritingOptions.forReplacing);
@@ -190,6 +191,7 @@ extension FTStickyAnnotation
                         })
                     }
                     else {
+                        FTCLSLog("NFC - Sticky deepCopy: \(toDocument.URL.title)");
                         FileManager.coordinatedCopyAtURL(sourceFileItem.fileItemURL,
                                                          toURL: copiedFileItem!.fileItemURL)
                         { (success, error) in

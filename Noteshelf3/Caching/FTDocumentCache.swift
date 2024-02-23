@@ -232,6 +232,15 @@ extension FTDocumentCache {
         }
     }
 
+    func checkIfCachedDocumentIsAvailableOrNot(url: URL) -> Bool {
+        let fileManager = FileManager()
+        var status = false
+        if fileManager.fileExists(atPath: url.path) {
+            status = true
+        }
+        return status
+    }
+
     private func relativePathWRTCollectionFor(documentId: String) -> String? {
         let destinationURL = cachedLocation(for: documentId)
         let dest = destinationURL.appendingPathComponent(FTCacheFiles.cachePropertyPlist)

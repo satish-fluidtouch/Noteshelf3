@@ -37,7 +37,7 @@ class FTShelfItemsViewModel: ObservableObject {
     weak var movePageDelegate: FTShelfItemsMovePageDelegate?
 
 
-    private var purpose: FTShelfItemsPurpose = .shelf
+    private(set) var purpose: FTShelfItemsPurpose = .shelf
 
     init(selectedShelfItems: [FTShelfItemProtocol]){
         self.selectedShelfItemsForMove = selectedShelfItems
@@ -59,13 +59,17 @@ class FTShelfItemsViewModel: ObservableObject {
         } else if collection != nil {
             title =  collection?.displayTitle ?? ""
         } else {
-            title = NSLocalizedString("move", comment: "Move")
+            if purpose == .linking {
+                title = "Select".localized
+            } else {
+                title = "move".localized
+            }
         }
         return title
     }
 
     var showMoveButton: Bool {
-        return collection != nil
+        return collection != nil && purpose != .linking
     }
 
     var disableMoveButton: Bool {
