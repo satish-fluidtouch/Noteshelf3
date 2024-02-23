@@ -79,6 +79,7 @@ class FTSearchSectionContent: NSObject, FTSearchSectionContentProtocol {
             return
         }
         if let currentShelfItem = self.sectionHeaderItem {
+            FTCLSLog("Doc Open - Search content : \(currentShelfItem.URL.title)")
             let openRequest = FTDocumentOpenRequest(url: currentShelfItem.URL, purpose: .read);
             FTNoteshelfDocumentManager.shared.openDocument(request: openRequest) { [weak self] (token, document, _) in
                 if let notebook = document {

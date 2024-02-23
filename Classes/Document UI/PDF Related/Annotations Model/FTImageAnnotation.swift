@@ -518,6 +518,7 @@ extension FTImageAnnotation
                     let image = sourceFileItem.image();
                     copiedFileItem?.setImage(image);
                     
+                    FTCLSLog("NFC - Image deepcopy secured: \(toDocument.URL.title)");
                     let coordinator = NSFileCoordinator.init(filePresenter: toDocument);
                     var fileAccessIntents = [NSFileAccessIntent]();
                     let fileAccessIntent = NSFileAccessIntent.writingIntent(with: copiedFileItem!.fileItemURL,
@@ -554,6 +555,7 @@ extension FTImageAnnotation
                     })
                 }
                 else {
+                    FTCLSLog("NFC - Image deepcopy: \(toDocument.URL.title)");
                     FileManager.coordinatedCopyAtURL(sourceFileItem.fileItemURL,
                                                      toURL: copiedFileItem!.fileItemURL)
                     { (success, error) in

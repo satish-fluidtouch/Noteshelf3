@@ -914,6 +914,7 @@ extension FTNoteshelfDocumentProvider {
                         if !FileManager.default.fileExists(atPath: parentURL.path(percentEncoded: false)) {
                             try FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
                         }
+                        FTCLSLog("NFC - NS2 Migration Provider1");
                         try FileManager.default.coordinatedMove(fromURL: url, toURL: destinationURL)
                         collection.addItemsToCache([destinationURL])
                     } else {
@@ -921,6 +922,7 @@ extension FTNoteshelfDocumentProvider {
                             if !FileManager.default.fileExists(atPath: parentURL.path(percentEncoded: false)) {
                                 try? FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
                             }
+                            FTCLSLog("NFC - NS2 Migration Provider2");
                             try? FileManager.default.coordinatedMove(fromURL: url, toURL: destinationURL)
                             _ = (collection as? FTShelfItemCollectionLocal)?.addItemsToCache([destinationURL])
                         })

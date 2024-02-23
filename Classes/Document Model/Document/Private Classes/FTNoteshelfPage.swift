@@ -1249,6 +1249,7 @@ extension FTNoteshelfPage : FTCopying {
             let pdfTemplateFileItem = FTPDFKitFileItemPDF.init(fileName: newPage.associatedPDFFileName)!
             pdfTemplateFileItem.securityDelegate = self._parent;
             
+            FTCLSLog("NFC - Page deepcopy");
             newPage._parent!.templateFolderItem()!.addChildItem(pdfTemplateFileItem);
             FileManager.coordinatedCopyAtURL(self.templateFileItem()!.fileItemURL,
                                              toURL: pdfTemplateFileItem.fileItemURL,
