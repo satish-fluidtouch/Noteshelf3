@@ -13,6 +13,15 @@ import FTDocumentFramework
 {
     case write;
     case read;
+    
+    var displayTitle: String {
+        switch self {
+        case .write:
+            return "Write";
+        case .read:
+            return "Read";
+        }
+    }
 }
 
 // Item refers - a document or page(based on context)

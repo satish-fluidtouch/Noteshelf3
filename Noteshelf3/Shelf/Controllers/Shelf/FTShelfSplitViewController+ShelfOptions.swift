@@ -315,6 +315,7 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
                 if let parent = shelfItem.parent as? FTGroupItem {
                     parent.invalidateTop3Notebooks()
                 }
+                FTCLSLog("Doc Open - Update Cover : \(shelfItem.URL.title)")
                 let request = FTDocumentOpenRequest(url: shelfItem.URL, purpose: .write);
                 request.pin = pin;
                 FTNoteshelfDocumentManager.shared.openDocument(request: request) { (token, document, error) in

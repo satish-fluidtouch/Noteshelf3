@@ -147,6 +147,7 @@ extension FTNoteshelfDocumentProvider {
     fileprivate func copyItemAtURL(sourceURL: URL, toURL destination: URL, onCompletion : @escaping (NSError?) -> Void) {
         DispatchQueue.global().async {
             var error: NSError?;
+            FTCLSLog("NFC - Copy icloud to local");
             let fileCoordinator = NSFileCoordinator(filePresenter: nil);
             fileCoordinator.coordinate(readingItemAt: sourceURL,
                                        options: NSFileCoordinator.ReadingOptions.withoutChanges,

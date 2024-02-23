@@ -473,6 +473,7 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
     fileprivate func getPage(fromPageRecord pageRecord: ENSyncRecord!, onCompletion completionHandler: @escaping ((FTPageProtocol?) -> Void)) {
         
         func openDocument(url: URL,pin: String?) {
+            FTCLSLog("Doc Open - EN Page publish : \(url.title)")
             let openrequest = FTDocumentOpenRequest(url: url, purpose: .read);
             openrequest.pin = pin;
             FTNoteshelfDocumentManager.shared.openDocument(request: openrequest) { (token, document, error) in

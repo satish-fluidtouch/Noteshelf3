@@ -108,6 +108,7 @@ class FTPDFDocumentContentGenerator: FTExportContentGenerator {
         self.pagesToExport = [FTPageProtocol]();
         
         func openDocumentAndAccessPages(_ url: URL,pin: String?) {
+            FTCLSLog("Doc Open - PDF Export : \(url.title)")
             let openRequest = FTDocumentOpenRequest(url: url, purpose: .read);
             openRequest.pin = pin;
             FTNoteshelfDocumentManager.shared.openDocument(request: openRequest) { (token, document, error) in

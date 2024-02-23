@@ -569,7 +569,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     }
     
     func openDocument(purpose: FTDocumentOpenPurpose, completionHandler: ((Bool, NSError?) -> Void)?) {
-        FTCLSLog("Doc open: Initiated: \(self.URL.title)");
+        FTCLSLog("Doc open: Initiated: \(self.URL.title) purpose: \(purpose.displayTitle)");
         self.openPurpose = purpose;
         super.open { (success) in
             if(!success) {

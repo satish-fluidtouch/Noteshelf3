@@ -66,6 +66,7 @@ private class FTDocumentUUIDReaderOperation: Operation
     override func main() {
         self.taskExecuting = true;
         var documentUUID: String?
+        FTCLSLog("NFC - UUID reader: \(self.URL.title)");
         let metaURL = self.URL.appendingPathComponent("\(METADATA_FOLDER_NAME)/\(PROPERTIES_PLIST)");
         var error : NSError?;
         NSFileCoordinator.init().coordinate(readingItemAt: metaURL,
