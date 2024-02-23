@@ -446,7 +446,7 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
         let shelfItemsViewModel = FTShelfItemsViewModel(selectedShelfItems: selectedShelfItems)
         shelfItemsViewModel.selectedShelfItemsForMove = selectedShelfItems
         shelfItemsViewModel.delegate = self
-        let controller = FTShelfItemsViewControllerNew(shelfItemsViewModel: shelfItemsViewModel, purpose: .shelf)
+        let controller = FTShelfItemsViewControllerNew(shelfItemsViewModel: shelfItemsViewModel)
         controller.title = ""
         let navController = UINavigationController(rootViewController: controller)
         navController.modalPresentationStyle = .formSheet

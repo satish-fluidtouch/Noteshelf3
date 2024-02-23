@@ -121,10 +121,12 @@ public extension String {
                 
             } else {
                 let strFormat = self.replacingOccurrences(of: " ", with: "+")
-                let selectedAddress = String(format: "https://www.google.com/search?q=%@",strFormat)
-                if let webURL = URL(string: selectedAddress) {
-                    let request = URLRequest(url: webURL)
-                    return request
+                if let encodedString = strFormat.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
+                    let selectedAddress = String(format: "https://www.google.com/search?q=%@",encodedString)
+                    if let webURL = URL(string: selectedAddress) {
+                        let request = URLRequest(url: webURL)
+                        return request
+                    }
                 }
             }
         }

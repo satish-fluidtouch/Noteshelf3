@@ -11,7 +11,7 @@ import FTDocumentFramework
 
 @objc protocol FTCopying : NSObjectProtocol
 {
-    @objc optional func deepCopyPage(_ toDocument : FTDocumentProtocol,onCompletion : @escaping(FTPageProtocol) -> Void);
+    @objc optional func deepCopyPage(_ toDocument : FTDocumentProtocol, purpose: FTItemPurpose, onCompletion : @escaping(FTPageProtocol) -> Void);
     #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
     @objc optional func deepCopyAnnotation(_ toPage : FTPageProtocol,onCompletion :@escaping (FTAnnotation?) -> Void);
     #endif
