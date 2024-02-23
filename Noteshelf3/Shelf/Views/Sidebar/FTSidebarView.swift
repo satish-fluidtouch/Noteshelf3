@@ -145,9 +145,10 @@ struct FTDisclosureView: View {
                                         numberOfChildren: (item.shelfCollection?.childrens.count ?? 0),
                                         showChildrenNumber: ((item.shelfCollection?.childrens.count ?? 0) > 0 && viewModel.selectedSideBarItem?.id == item.id),
                                         viewWidth: availableWidth)
-                            .environmentObject(viewModel)
-                            .environmentObject(menuSection)
-                            .environmentObject(item)
+                        .frame(idealWidth: availableWidth, idealHeight: 44)
+                        .environmentObject(viewModel)
+                        .environmentObject(menuSection)
+                        .environmentObject(item)
                     }
                 }
                 if menuSection.type == .categories {

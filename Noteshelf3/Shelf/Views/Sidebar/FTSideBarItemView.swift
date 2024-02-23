@@ -64,6 +64,7 @@ struct SideBarItemView : View {
                     .isHidden(!showChildrenNumber)
         }
         .frame(height: 44.0, alignment: .leading)
+        .frame(maxWidth: .infinity,maxHeight: .infinity)
         .contentShape(Rectangle())
         .onDrop(of: [.data],
                 delegate: SideBarItemDropDelegate(viewModel: viewModel,
@@ -128,8 +129,10 @@ struct SideBarItemView : View {
                     .environmentObject(item)
                     .environmentObject(viewModel.sidebarItemContexualMenuVM)
                 },preview: {
-                    view
-                    .frame(width: viewWidth)
+                    HStack(alignment: .center) {
+                        view
+                    }
+                    .frame(idealWidth:viewWidth,maxWidth: .infinity,idealHeight:44, maxHeight: .infinity)
                     .onAppear {
                         viewModel.trackEventForlongpress(item: item)
                         shelfMenuOverlayInfo.isMenuShown = true;

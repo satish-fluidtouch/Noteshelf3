@@ -24,6 +24,18 @@ extension FTShelfViewModel {
             return bottomBarOptions
         }
     }
+    
+    func shouldEnableBottomBarOption(_ option: FTShelfBottomBarOption) -> Bool {
+        var status = self.shouldSupportBottomBarOption(option);
+        if option == .tags,status {
+            let pinEnabledDocuments = self.selectedShelfItems.filter{$0.model.isPinEnabledForDocument()}
+            if pinEnabledDocuments.count == self.selectedShelfItems.count {
+                status = false;
+            }
+        }
+        return status
+    }
+    
     func shouldSupportBottomBarOption(_ option: FTShelfBottomBarOption) -> Bool{
         var status: Bool = true
 

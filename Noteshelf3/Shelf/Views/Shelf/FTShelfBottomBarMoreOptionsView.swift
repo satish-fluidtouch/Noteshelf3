@@ -47,7 +47,7 @@ struct FTShelfBottomBarMoreOptionsView: View {
                             .font(Font.appFont(for: .regular , with: 15))
                     }
                 })
-                .disabled(!shelfViewModel.shouldSupportBottomBarOption(option))
+                .disabled(!shelfViewModel.shouldEnableBottomBarOption(option))
             }
         } label: {
             if toShowCompactModeView() {
