@@ -63,6 +63,11 @@ private class FTTextAnnotationLayoutHelper: NSObject
         convertedPoint.x -= inset.left;
         convertedPoint.y -= inset.top;
         
+        let usedRect = self.layoutManager.usedRect(for: self.textContainer);
+        if !usedRect.contains(convertedPoint) {
+            convertedPoint.y -= inset.bottom;
+        }
+        
         let characterIndex = self.layoutManager.characterIndex(for: convertedPoint,
                                                                in: self.textContainer,
                                                                fractionOfDistanceBetweenInsertionPoints: nil);
