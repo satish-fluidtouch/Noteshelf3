@@ -246,7 +246,17 @@ extension URL {
     func openURL(on viewController: UIViewController) {
         if(UIApplication.shared.canOpenURL(self)) {
             if self.isAppLink() {
-                UIApplication.shared.open(self, options: [:], completionHandler: nil)
+                if let scene = viewController.view.window?.windowScene {
+                    let activity = scene.userActivity ?? NSUserActivity(activityType: "App Internal Link")
+                    activity.userInfo?["url"] = self
+                    activity.userInfo?["openInPlace"] = false
+                    let option = UIScene.ActivationRequestOptions()
+                    option.requestingScene = scene
+                    UIApplication.shared.requestSceneSessionActivation(scene.session, userActivity: activity, options: option)
+                }
+                else {
+                    UIApplication.shared.open(self, options: [:], completionHandler: nil)
+                }
             } else {
                 let title = NSLocalizedString("ExternalLink", comment: "Extenal Link")
                 let message = String.init(format: NSLocalizedString("ExternalLinkOpenInfo", comment: "An external applicaiton..."), (self.absoluteString))
