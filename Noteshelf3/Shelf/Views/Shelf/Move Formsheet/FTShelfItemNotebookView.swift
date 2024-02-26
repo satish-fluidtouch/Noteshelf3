@@ -28,6 +28,18 @@ struct FTShelfItemNotebookView: View {
                     .cornerRadius(nbLeftRadius, corners: [.topLeft,.bottomLeft])
                     .cornerRadius(nbRightRadius, corners: [.topRight,.bottomRight])
                     .zIndex(1)
+                    .overlay(alignment: .center) {
+                        FTCircularProgressView(progress: $notebookItem.progress)
+                            .frame(width: 24, height: 24)
+                            .isHidden(!notebookItem.isDownloadingNotebook)
+
+                        Image(systemName: "icloud.and.arrow.down")
+                            .symbolRenderingMode(.palette)
+                            .foregroundColor(Color.appColor(.black20))
+                            .frame(width: 16, height: 16)
+                            .font(Font.appFont(for: .medium, with: 12))
+                            .isHidden(notebookItem.isDownloadingNotebook || !notebookItem.notDownloaded)
+                    }
                     .if(colorScheme == .light, transform: { view in
                         view.shadow(color: .appColor(.black8), radius: 1.41, x: 0, y: 0.56)
                             .shadow(color:.appColor(.black8), radius: 4.85, x:0, y:2.91)
@@ -81,14 +93,14 @@ struct FTShelfItemNotebookView: View {
         }
     }
     private var nbLeftRadius: CGFloat {
-        if defaultCoverImage?.needEqualCorners ?? false || notebookItem.isNotDownloaded {
+        if defaultCoverImage?.needEqualCorners ?? false || notebookItem.notDownloaded {
             return 2.5
         }else {
             return 0.97
         }
     }
     private var nbRightRadius: CGFloat {
-        if defaultCoverImage?.needEqualCorners ?? false || notebookItem.isNotDownloaded {
+        if defaultCoverImage?.needEqualCorners ?? false || notebookItem.notDownloaded {
             return 2.5
         }else {
             return 2.43

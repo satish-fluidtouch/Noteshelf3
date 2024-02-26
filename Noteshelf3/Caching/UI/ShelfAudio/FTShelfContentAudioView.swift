@@ -169,6 +169,7 @@ struct FTAudioPreviewPageView: View {
         }
 
         let openRequest = FTDocumentOpenRequest(url: docItem.URL, purpose: .read);
+        FTCLSLog("Doc Open - Audio Preview \(docItem.URL.title)")
         FTNoteshelfDocumentManager.shared.openDocument(request: openRequest) { (token, document, error) in
             if let doc = document {
                 doc.pages()[audio.page].thumbnail()?.thumbnailImage(onUpdate: { thumb, _ in
