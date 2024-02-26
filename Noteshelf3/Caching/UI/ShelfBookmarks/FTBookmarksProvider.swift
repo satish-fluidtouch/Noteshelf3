@@ -136,6 +136,7 @@ class FTBookmarksProvider {
 
     private func removeBookmarFor(item: FTBookmarksItem, completion: ((Bool?) -> Void)?) {
         let docUrl = item.shelfItem.URL
+        FTCLSLog("Doc Open - Remove Bookmark: \(docUrl.title)")
         let request = FTDocumentOpenRequest(url: docUrl, purpose: .write)
         FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
             if let document = document as? FTNoteshelfDocument {

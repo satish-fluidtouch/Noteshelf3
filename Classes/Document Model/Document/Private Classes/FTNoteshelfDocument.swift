@@ -421,7 +421,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     
     //MARK:- Doc creation from selectedPages
     func createDocumentAtTemporaryURL(_ toURL : Foundation.URL,
-                                      purpose: FTDocumentCreationPurpose,
+                                      purpose: FTItemPurpose,
                                       fromPages : [FTPageProtocol],
                                       documentInfo: FTDocumentInputInfo?,
                                       onCompletion :@escaping ((Bool,NSError?) -> Void)) -> Progress
@@ -569,7 +569,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     }
     
     func openDocument(purpose: FTDocumentOpenPurpose, completionHandler: ((Bool, NSError?) -> Void)?) {
-        FTCLSLog("Doc open: Initiated: \(self.URL.title)");
+        FTCLSLog("Doc open: Initiated: \(self.URL.title) purpose: \(purpose.displayTitle)");
         self.openPurpose = purpose;
         super.open { (success) in
             if(!success) {
@@ -1307,6 +1307,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                                        currentPageIndex : Int,
                                        startingInsertIndex : Int,
                                        pageInsertPosition : FTPageInsertPostion,
+                                       purpose: FTItemPurpose = .default,
                                        onCompletion :@escaping ((Bool,NSError?,[FTPageProtocol]) -> Void)) -> Progress
     {
         let copiedPages : [FTPageProtocol] = [FTPageProtocol]();
@@ -1319,6 +1320,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                                    pageInsertPosition: pageInsertPosition,
                                    copiedPages: copiedPages,
                                    progress: progress,
+                                   purpose: purpose,
                                    onCompletion: onCompletion)
         return progress;
     }
@@ -1329,12 +1331,13 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                                            pageInsertPosition : FTPageInsertPostion,
                                            copiedPages : [FTPageProtocol],
                                            progress: Progress,
+                                           purpose: FTItemPurpose = .default,
                                            onCompletion :@escaping ((Bool,NSError?,[FTPageProtocol]) -> Void))
     {
         if(currentPageIndex < pages.count) {
             let page = pages[currentPageIndex];
-            (page as? FTCopying)?.deepCopyPage?(self, onCompletion: { (copiedPage) in
-                
+            (page as? FTCopying)?.deepCopyPage?(self, purpose: purpose, onCompletion: { (copiedPage) in
+
                 progress.completedUnitCount += 1;
                 
                 var indexToInsert = currentPageIndex;
@@ -1344,7 +1347,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                 case .inBetween:
                     indexToInsert = startingInsertIndex + currentPageIndex;
                 case .nextToCurrent:
-                    let pageIndex = self.pages().index(where: { (item) -> Bool in
+                    let pageIndex = self.pages().firstIndex(where: { (item) -> Bool in
                         if(item.uuid == page.uuid) {
                             return true;
                         }
@@ -1706,7 +1709,7 @@ extension FTNoteshelfDocument: FTDocumentRecoverPages {
                 let recoveryFileItem = (documentToInsert as? FTDocumentFileItems)?.rootFileItem?.childFileItem(withName: NOTEBOOK_RECOVERY_PLIST) as? FTNotebookRecoverPlist;
                 
                 self.recoverPagesRecursively(documentToInsert.pages(),
-                                             recoverFileItem: recoveryFileItem) { (_, error) in
+                                             recoverFileItem: recoveryFileItem, purpose: .trashRecovery) { (_, error) in
                     docInternalProtocol.closeDocument { (_) in
                         onCompletion(error);
                     }
@@ -1725,6 +1728,7 @@ extension FTNoteshelfDocument: FTDocumentRecoverPages {
     
     private func recoverPagesRecursively(_ pages:[FTPageProtocol],
                                          recoverFileItem: FTNotebookRecoverPlist?,
+                                         purpose: FTItemPurpose = .default,
                                          onCompletion: @escaping ((Bool,NSError?) -> Void)) {
         
         var recoveryPages = pages
@@ -1735,7 +1739,8 @@ extension FTNoteshelfDocument: FTDocumentRecoverPages {
         _ = self.recursivelyCopyPages([eachPage],
                                       currentPageIndex: 0,
                                       startingInsertIndex: indexToInsert,
-                                      pageInsertPosition: .inBetween) { (success, error, _) in
+                                      pageInsertPosition: .inBetween,
+                                      purpose: purpose) { (success, error, _) in
             if success {
                 recoveryPages.removeFirst()
                 if recoveryPages.isEmpty {
@@ -1752,6 +1757,7 @@ extension FTNoteshelfDocument: FTDocumentRecoverPages {
                 } else {
                     self.recoverPagesRecursively(recoveryPages,
                                                  recoverFileItem: recoverFileItem,
+                                                 purpose: purpose,
                                                  onCompletion: onCompletion)
                 }
             } else {

@@ -77,6 +77,7 @@ protocol FTIntentHandlingProtocol: UIUserActivityRestoring {
     func createAndOpenNewNotebook(_ url: URL)
     func openDocumentForSelectedNotebook(_ path: URL, isSiriCreateIntent: Bool)
     func openShelfItem(spotLightHash: String)
+    func openNotebook(using schemeUrl: URL)
     func openTemplatesScreen(url: URL)
     //From Quick Action
     func createNotebookWithAudio()
@@ -171,8 +172,15 @@ final class FTAppIntentHandler {
             track("today_widget", params: ["type": "Open Notebook"])
             intentHandler?.openDocumentForSelectedNotebook(url, isSiriCreateIntent: false)
             return true
-        } else if (url.scheme == FTSharedGroupID.getAppBundleID()) {
-            openAppScehemeURL(url: url)
+        } else if (url.isAppLink()) {
+            if url.isAppTextPageLink() {
+                intentHandler?.openNotebook(using: url)
+            } else if url.isTemplateIntentPath() {
+                intentHandler?.openTemplatesScreen(url: url)
+            } else {
+                openAppScehemeURL(url: url)
+            }
+            return true
         }
         return false
     }
@@ -287,6 +295,9 @@ private extension FTAppIntentHandler {
 }
 
 extension FTAppIntentHandler {
+    static var hyperlinkPath: String {
+        return "/hyperlink/"
+    }
     static var templatesPath: String {
         return "/templates/root"
     }

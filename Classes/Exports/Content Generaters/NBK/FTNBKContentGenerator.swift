@@ -82,7 +82,8 @@ class FTNBKContentGenerator: FTExportContentGenerator, SSZipArchiveDelegate {
     {
         // Removed below main thread, to avoid deadlock in macOS Ventura while trying to drag and drop.
 //        DispatchQueue.global().async {
-            let coordinator = NSFileCoordinator(filePresenter: nil);
+        FTCLSLog("NFC - NBK gen: \(item.shelfItem.URL.title)");
+        let coordinator = NSFileCoordinator(filePresenter: nil);
             var accessError: NSError?;
             coordinator.coordinate(readingItemAt: item.shelfItem.URL,
                                    options: .withoutChanges,

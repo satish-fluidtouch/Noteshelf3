@@ -410,6 +410,9 @@ extension FTAudioAnnotation
             document?.resourceFolderItem()?.addChildItem(copiedFileItem);
 
             if (nil != copiedFileItem && nil != sourceFileItem) {
+                if let doc = document {
+                    FTCLSLog("NFC - Audio copy track: \(doc.URL.title)");
+                }
                 FileManager.coordinatedCopyAtURL(sourceFileItem!.fileItemURL,
                                                  toURL: copiedFileItem!.fileItemURL) { (success, error) in
                                                     if(nil == error) {

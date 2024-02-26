@@ -579,7 +579,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                     if(nil == shelfItem) {
                         _ = (shelfitemcollection as? FTShelfCacheProtocol)?.addItemToCache(path)
                     }
-                    self.openDocumentAtRelativePath(relativePath, inShelfItem: shelfItem, animate: false, addToRecent: true, bipassPassword: true);
+                    self.openDocumentAtRelativePath(relativePath, inShelfItem: shelfItem, animate: false, addToRecent: true, bipassPassword: true, onCompletion: nil);
                 }
             }
         }
@@ -587,10 +587,58 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             self.openDocumentAtRelativePath(relativePath, inShelfItem: nil,
                                             animate: false,
                                             addToRecent: true,
-                                            bipassPassword: true);
+                                            bipassPassword: true, onCompletion: nil);
+        }
+}
+    
+    func openNotebook(using schemeUrl: URL) {
+        let queryItems = schemeUrl.getQueryItems()
+        guard let documentId = queryItems.docId,
+              let pageId = queryItems.pageId else {
+            return
+        }
+
+        guard let docVc = self.docuemntViewController else {
+            FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: documentId) { docItem in
+                guard let shelfItem = docItem else {
+                    self.handeDocumentUnAvailablity(for: documentId)
+                    return
+                }
+                let relativePath = shelfItem.URL.relativePathWRTCollection()
+                self.getShelfItemDetails(relativePath: relativePath) { [weak self] collection, group, shelfItem in
+                    self?.showCollection(collection: collection!,
+                                         groupitem: group,
+                                         shelfItem: shelfItem!,
+                                         addToRecent: false,
+                                         passcode: nil,
+                                         pageUUID: pageId,
+                                         shouldAskforPasscode: true,
+                                         onCompletion: nil)
+                }
+            }
+            return
+        }
+
+        if documentId == currentDocumentLinkingId {
+            docVc.navigateToPage(with: pageId)
+        } else {
+            FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: documentId) { docItem in
+                guard let shelfItem = docItem else {
+                    docVc.handeDocumentUnAvailablity(for: documentId)
+                    return
+                }
+                guard shelfItem.URL.downloadStatus() == .downloaded else {
+                    // Book is not downloaded yet
+                    UIAlertController.showDocumentNotDownloadedAlert(for: shelfItem.URL, from: docVc)
+                    return
+                }
+                let relativePath = shelfItem.URL.relativePathWRTCollection()
+                self.openDocumentIfNeeded(using: relativePath, and: pageId, onCompletion: {_,_ in
+                })
+            }
         }
     }
-    
+
     func startNS2ToNS3Migration() {
         self.prepareProviderIfNeeded {
             self.closeAnyActiveOpenedBook {
@@ -673,7 +721,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                     selfObject.isOpeningDocument = false
 
                     if selfObject.rootContentViewController != nil {
-                        selfObject.rootContentViewController?.showNotebookAskPasswordIfNeeded(shelfItem, animate: animate, pin: nil, addToRecent: true, isQuickCreate: false, createWithAudio: false, onCompletion: {[weak self] (_, _) in
+                        selfObject.rootContentViewController?.showNotebookAskPasswordIfNeeded(shelfItem, animate: animate, pin: nil, pageUUID: nil, addToRecent: true, isQuickCreate: false, createWithAudio: false, onCompletion: {[weak self] (_, _) in
                             if !isPasswordEnabled{
                                 self?.removeLaunchScreen(true);
                             }
@@ -1016,7 +1064,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                                         animate: false,
                                         addToRecent: true,
                                         igrnoreIfNotDownloaded: true,
-                                        bipassPassword: true);
+                                        bipassPassword: true, onCompletion: nil);
     }
 
 #if targetEnvironment(macCatalyst)
@@ -1089,38 +1137,33 @@ extension FTRootViewController
                                                                  onCompletion:
                                                                     { [weak self] pin, success,_ in
                         if(success) {
-                            self?.saveApplicationStateByClosingDocument(true, keepEditingOn: false) { [weak self] success in
-                                if(success) {
-                                    weak var docController = self?.docuemntViewController
-                                    weak var splitController = self?.noteBookSplitController
+                            weak var splitController = self?.noteBookSplitController
 
-                                    self?.showCollection(collection: collection!,
-                                                         groupitem: group,
-                                                         shelfItem: (inShelfItem != nil) ? inShelfItem! : shelfItem!,
-                                                         addToRecent: addToRecent,
-                                                         passcode: pin,
-                                                         shouldAskforPasscode: false,
-                                                         onCompletion:
-                                                            { (_, success) in
-                                        finalizeBlock(indicatorView);
-                                        if let oldRenderView = splitController, let newController = self?.noteBookSplitController {
-                                            UIView.transition(from: oldRenderView.view,
-                                                              to: newController.view,
-                                                              duration: 0.2,
-                                                              options: UIView.AnimationOptions.transitionCrossDissolve,
-                                                              completion: { _ in
-                                                oldRenderView.willMove(toParent: nil);
-                                                oldRenderView.view.removeFromSuperview();
-                                                oldRenderView.removeFromParent();
-                                            });
-                                        }
+                            self?.showCollection(collection: collection!,
+                                                 groupitem: group,
+                                                 shelfItem: (inShelfItem != nil) ? inShelfItem! : shelfItem!,
+                                                 addToRecent: addToRecent,
+                                                 passcode: pin,
+                                                 shouldAskforPasscode: false,
+                                                 onCompletion:
+                                                    { (doc, success) in
+                                finalizeBlock(indicatorView);
+                                if let oldRenderView = splitController, let newController = self?.noteBookSplitController {
+                                    UIView.transition(from: oldRenderView.view,
+                                                      to: newController.view,
+                                                      duration: 0.2,
+                                                      options: UIView.AnimationOptions.transitionCrossDissolve,
+                                                      completion: { _ in
+                                        oldRenderView.willMove(toParent: nil);
+                                        oldRenderView.view.removeFromSuperview();
+                                        oldRenderView.removeFromParent();
                                     });
-                                } else {
-                                    finalizeBlock(indicatorView);
                                 }
-                            }
+                                onCompletion?(doc, success)
+                            });
                         } else {
-                            finalizeBlock(indicatorView);
+                            finalizeBlock(indicatorView)
+                            onCompletion?(nil, false)
                         }
                     })
                 } else {
@@ -1137,6 +1180,7 @@ extension FTRootViewController
             } else {
                 finalizeBlock(indicatorView);
                 UIAlertController.showAlert(withTitle: "", message: NSLocalizedString("NotebookNotAvailable", comment: "NotebookNotAvailable"), from: self!, withCompletionHandler: nil)
+                onCompletion?(nil, false)
             }
         }
     }
@@ -1146,9 +1190,10 @@ extension FTRootViewController
                         shelfItem: FTShelfItemProtocol,
                         addToRecent: Bool = true,
                         passcode: String?,
+                        pageUUID: String? = nil,
                         shouldAskforPasscode: Bool,
                         onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?) {
-        self.rootContentViewController?.showNotebookAskPasswordIfNeeded(shelfItem, animate: false, pin: shouldAskforPasscode ? nil : passcode, addToRecent: addToRecent, isQuickCreate: false, createWithAudio: false, onCompletion: onCompletion)
+        self.rootContentViewController?.showNotebookAskPasswordIfNeeded(shelfItem, animate: false, pin: shouldAskforPasscode ? nil : passcode, pageUUID: pageUUID, addToRecent: addToRecent, isQuickCreate: false, createWithAudio: false, onCompletion: onCompletion)
     }
 }
 
@@ -1374,7 +1419,7 @@ extension FTRootViewController: FTOpenCloseDocumentProtocol {
                                         inShelfItem: shelfItemManagedObject.documentItemProtocol,
                                         animate: false,
                                         addToRecent: addToRecent,
-                                        bipassPassword: true);
+                                        bipassPassword: true, onCompletion: nil);
     }
 
     func closeDocument(shelfItemManagedObject:FTDocumentItemWrapperObject, animate: Bool, onCompletion : (() -> Void)?) {
@@ -1464,6 +1509,7 @@ private extension FTRootViewController {
 extension FTRootViewController {
     func openDocumentAtRelativePath(_ relativePath : String,
                                     inShelfItem: FTShelfItemProtocol?,
+                                    pageUUID: String? = nil,
                                     animate : Bool = false,
                                     addToRecent : Bool = false,
                                     igrnoreIfNotDownloaded : Bool = false,
@@ -1475,16 +1521,19 @@ extension FTRootViewController {
             isOpeningDocument = true
             self.setLastOpenedGroup(nil);
             self.setLastOpenedDocument(NSURL(fileURLWithPath: relativePath) as URL);
+            onCompletion?(nil, false)
             return;
         }
 
         self.dismissPresentedViewController { [weak self] in
             guard let self = self else {
+                onCompletion?(nil, false)
                 return
             }
             if(nil != self.docuemntViewController) {
                 let currentDocumentRelativePath = self.docuemntViewController?.relativePath;
                 if(currentDocumentRelativePath == relativePath) {
+                    onCompletion?(nil, false)
                     return;
                 }
             }
@@ -1494,6 +1543,46 @@ extension FTRootViewController {
                                               igrnoreIfNotDownloaded: igrnoreIfNotDownloaded,
                                               bipassPassword: bipassPassword) {doc,success in
                 onCompletion?(doc, success)
+                
+            }
+        }
+    }
+
+    func openDocumentIfNeeded(using relativePath: String, and pageUUID: String, onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?) {
+        self.getShelfItemDetails(relativePath: relativePath) { [weak self] collection, group, shelfItem in
+            guard let self else { return }
+            if let controller = self.docuemntViewController {
+                FTDocumentPasswordValidate.validateShelfItem(shelfItem: shelfItem!,
+                                                             onviewController: controller,
+                                                             onCompletion:
+                                                                { [weak self] pin, success,_ in
+                    guard let self else { return }
+                    if(success) {
+                        weak var splitController = self.noteBookSplitController
+                        self.showCollection(collection: collection!,
+                                            groupitem: group,
+                                            shelfItem:  shelfItem!,
+                                            addToRecent: false,
+                                            passcode: pin,
+                                            pageUUID: pageUUID,
+                                            shouldAskforPasscode: false,
+                                            onCompletion:
+                                                { (doc, success) in
+                            if success, let oldRenderView = splitController, let newController = self.noteBookSplitController {
+                                UIView.transition(from: oldRenderView.view,
+                                                  to: newController.view,
+                                                  duration: 0.2,
+                                                  options: .transitionCrossDissolve,
+                                                  completion: { _ in
+                                    oldRenderView.remove()
+                                })
+                            }
+                            onCompletion?(doc, success)
+                        })
+                    } else {
+                        onCompletion?(nil, false)
+                    }
+                })
             }
         }
     }
