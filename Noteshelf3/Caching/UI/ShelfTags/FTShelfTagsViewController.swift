@@ -192,6 +192,7 @@ class FTShelfTagsViewController: UIViewController {
             }
             self.activateViewMode()
         }
+        self.collectionView?.reloadData()
     }
 
     private func showPlaceholderView() {
@@ -659,6 +660,8 @@ class FTShelfTagCategory: NSObject {
         didSet {
             self.selectedEntities.removeAll();
             self.allEntities.removeAll();
+            self.pages.removeAll();
+            self.books.removeAll()
         }
     }
     

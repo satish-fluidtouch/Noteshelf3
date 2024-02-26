@@ -19,7 +19,7 @@ class FTTagsProvider: NSObject {
     
     private var taggedEntitiesInfo = [String:FTTaggedEntity]();
 
-    private(set) lazy var alTag: FTAllTag = {
+    private(set) lazy var allTag: FTAllTag = {
         return FTAllTag(name: "AllTags");
     }();
     
@@ -62,7 +62,7 @@ class FTTagsProvider: NSObject {
         var userCreatedTags = Array(self.userTags.values);
         userCreatedTags = sort ? userCreatedTags.sortedTags() : userCreatedTags;
         if includeAllTags {
-            userCreatedTags.insert(self.alTag, at: 0);
+            userCreatedTags.insert(self.allTag, at: 0);
         }
         lock.unlock();
         return userCreatedTags;
@@ -73,8 +73,8 @@ class FTTagsProvider: NSObject {
         var tagItems = [FTTag]();
         var tagsToAdd = [FTTag]();
         names.forEach { eachName in
-            if eachName.caseInsensitiveCompare(self.alTag.tagName) == .orderedSame {
-                tagItems.append(self.alTag)
+            if eachName.caseInsensitiveCompare(self.allTag.tagName) == .orderedSame {
+                tagItems.append(self.allTag)
             }
             else if let tag = self.userTags[eachName.lowercased()] {
                 tagItems.append(tag)
