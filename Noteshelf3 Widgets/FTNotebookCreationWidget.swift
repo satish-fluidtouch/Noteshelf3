@@ -85,7 +85,7 @@ struct NotebookCreation_WidgetsEntryView : View {
                     .foregroundStyle(Color("creationWidgetButtonTint"))
             }
             Text(type.title)
-                .font(.appFont(for: .medium, with: 13))
+                .font(.appFont(for: .medium, with: 14))
                 .foregroundStyle(Color("creationWidgetButtonTint"))
         }
         .frame(maxWidth: .infinity,maxHeight:.infinity, alignment: .leading)

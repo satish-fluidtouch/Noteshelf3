@@ -24,15 +24,14 @@ struct FTPinnedWidgetView : View {
                 .frame(width: 44,height: 60)
                 .padding(.top, 20)
                 .padding(.leading, 24)
+//                .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
+//                .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .topRight]))
+                .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
         }
     }
     
     private func imageFrom(entry : FTPinnedBookEntry) -> UIImage {
-        var image = UIImage(named: "noCover")!
-        if entry.hasCover {
-            image = UIImage(contentsOfFile: entry.coverImage) ?? image
-        }
-        return image
+        return UIImage(contentsOfFile: entry.coverImage) ?? UIImage(named: "noCover")!
     }
 }
 struct topView: View {
@@ -76,12 +75,13 @@ struct bottomView: View {
                     .lineLimit(2)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .foregroundColor(Color.label)
-                    .font(.appFont(for: .medium, with: 13))
+                    .font(.appFont(for: .medium, with: 14))
                 Text(entry.time)
                     .lineLimit(1)
-                    .font(.appFont(for: .regular, with: 11))
+                    .font(.appFont(for: .medium, with: 12))
                     .foregroundColor(Color("black70"))
                     .frame(maxWidth: .infinity, alignment: .leading)
+//                    .padding(.top,1)
             }.padding(.leading, 20)
                 .padding(.bottom, 16)
             Spacer()
@@ -106,5 +106,15 @@ extension UIColor {
             }
         }
         return false
+    }
+}
+
+struct RoundedCorner: Shape {
+    var radius: CGFloat = .infinity
+    var corners: UIRectCorner = .allCorners
+
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        return Path(path.cgPath)
     }
 }

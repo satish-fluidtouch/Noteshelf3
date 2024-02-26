@@ -19,6 +19,7 @@ struct FTQuickNoteCreateView: View {
                 .padding([.top, .leading], 16.0)
             Spacer()
             Text("Create \nQuick Note")
+                .lineSpacing(6)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .font(.clearFaceFont(for: .bold, with: 17))
                 .foregroundColor(Color.systemBackground)
