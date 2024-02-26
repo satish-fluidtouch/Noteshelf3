@@ -111,6 +111,7 @@ extension FTNoteshelfDocument
 
             let copyFileBlock : ((String?)-> Void) = { password in
                 DispatchQueue.global(qos: DispatchQoS.background.qosClass).async {
+                    FTCLSLog("NFC - update page template: \(self.fileURL.title)");
                     let fileCoordinator = NSFileCoordinator.init(filePresenter: self);
                     var coordinateError : NSError?;
                     fileCoordinator.coordinate(writingItemAt: destinationURL, options: NSFileCoordinator.WritingOptions.forReplacing, error: &coordinateError, byAccessor: { (writeURL) in
@@ -198,6 +199,7 @@ extension FTNoteshelfDocument
         }
         else {
             DispatchQueue.global(qos: DispatchQoS.background.qosClass).async {
+                FTCLSLog("NFC - insert file: \(self.fileURL.title)");
                 let fileCoordinator = NSFileCoordinator.init(filePresenter: self);
                 var coordinateError : NSError?;
                 fileCoordinator.coordinate(writingItemAt: destinationURL, options: NSFileCoordinator.WritingOptions.forReplacing, error: &coordinateError, byAccessor: { (writeURL) in

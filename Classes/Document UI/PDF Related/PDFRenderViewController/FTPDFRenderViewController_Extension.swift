@@ -17,6 +17,19 @@ private let customTransitioningDelegate = FTSlideInPresentationManager(mode: .to
 private let customLeftTransitioningDelegate = FTSlideInPresentationManager(mode: .leftToRight);
 
 extension FTPDFRenderViewController {
+    @objc func navigateToPage(with pageId: String) {
+        var reqIndex: Int?
+        if pageId.isEmpty {
+            reqIndex = 0
+        } else if let index = self.pdfDocument.pages().firstIndex(where: { $0.uuid == pageId }) {
+            reqIndex = index
+        }
+        if let index = reqIndex {
+            self.showPage(at: index, forceReLayout: false, animate: false)
+        } else  {
+            UIAlertController.showAlertForPageNotAvailable(from: self, completionHandler: nil)
+        }
+    }
 
     //Cancelling Thumbnail generation
     @objc func cancelAllThumbnailGeneration() {
@@ -809,7 +822,7 @@ extension FTPDFRenderViewController {
         var yOffSet: CGFloat = 0
     #if !targetEnvironment(macCatalyst)
         if self.pageLayoutHelper.layoutType == .horizontal
-            , self.toolBarState() == .normal {
+            , (self.toolBarState() == .normal || self.toolBarState() == .shortCompact) {
             yOffSet += self.deskToolBarHeight()
             self.contentHolderView.clipsToBounds = false;
         } else if (self.pageLayoutHelper.layoutType == .vertical && self.toolBarState() == .shortCompact) {
