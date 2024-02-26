@@ -349,9 +349,9 @@ extension FTAddDocumentEntitiesViewController: FTPHPickerDelegate {
 }
 
 extension FTAddDocumentEntitiesViewController: FTStickerdelegate {
-    func didTapSticker(with image: UIImage) {
+    func didTapSticker(with image: UIImage, title: String) {
         self.delegate?.didFinishPickingUIImages([image], source: FTInsertImageSourceSticker)
-        FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.nbk_addmenu_stickers_sticker_tap)
+        FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.nbk_addmenu_stickers_sticker_tap, params: ["title": title])
         if let navVc = self.presentingViewController{
             navVc.dismiss(animated: true)
         }

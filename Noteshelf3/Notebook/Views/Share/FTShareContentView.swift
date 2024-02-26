@@ -156,7 +156,7 @@ struct FTShareContentView: View {
     private var shareButton : some View {
         Button(action: {
             self.viewModel.handleShareAction()
-            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.share_share_tap)
+            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.share_share_tap, params: ["format": viewModel.selectedFormat.param])
         }) {
             Text(viewModel.share)
                 .appFont(for: .medium, with: 15.0)

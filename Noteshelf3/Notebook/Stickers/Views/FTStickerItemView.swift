@@ -29,7 +29,7 @@ struct FTStickerItemView:View{
                             .onTapGesture {
                                 let newSubitem = downloadviewModel.getStickerSubitem(subitem: subitem, fileName: stickerSubCategory?.filename ?? "",type: stickerSubCategory?.type ?? .staticSticker)
                                     recentViewModel.saveSticker(stickerInfo: newSubitem)
-                                    model?.stickerDelegate?.didTapSticker(with: UIImage(named: newSubitem.image) ?? UIImage())
+                                model?.stickerDelegate?.didTapSticker(with: UIImage(named: newSubitem.image) ?? UIImage(), title: stickerSubCategory?.title ?? "")
                             }
                     }
                 }
