@@ -25,10 +25,12 @@ enum FTTextMenuAction: String {
     case cut
     case copy
     case lock
-    //case removeLink
     case bringToFront
     case sendToBack
     case delete
+    case linkTo
+    case editLink
+    case removeLink
     case converToStroke
 }
 
@@ -86,8 +88,6 @@ class FTAnnotationBaseView: UIView
     @objc func convertToStroke(_ sender:Any?) {
         self.menuHandler.textMenuAction(action: .converToStroke, sender: sender)
     }
-//    @objc func removeLinkMenuItemAction(_ sender: Any?) {
-//    }
 
     @objc func bringToFrontMenuItemAction(_ sender: Any?) {
         self.menuHandler.textMenuAction(action: .bringToFront, sender: sender)
@@ -99,6 +99,18 @@ class FTAnnotationBaseView: UIView
 
     @objc func deleteMenuItemAction(_ sender: Any?) {
         self.menuHandler.textMenuAction(action: .delete, sender: sender)
+    }
+
+    @objc func linkToMenuItemAction(_ sender: Any?) {
+        self.menuHandler.textMenuAction(action: .linkTo, sender: sender)
+    }
+
+    @objc func editLinkMenuItemAction(_ sender: Any?) {
+        self.menuHandler.textMenuAction(action: .editLink, sender: sender)
+    }
+
+    @objc func removeLinkMenuItemAction(_ sender: Any?) {
+        self.menuHandler.textMenuAction(action: .removeLink, sender: sender)
     }
 
     override func canPerformAction(_ action: Selector, withSender sender: Any!) -> Bool {

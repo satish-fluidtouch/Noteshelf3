@@ -10,13 +10,13 @@ import UIKit
 import FTDocumentFramework
 
 class FTPDFDocumentContentGenerator: FTExportContentGenerator {
-    private var notebook : FTDocumentProtocol?;
     private var documentToken: FTDocumentOpenToken = FTDocumentOpenToken();
     
     internal var _pinRequestCompletionBLock:((String?, Bool,Bool) -> Void)?
     internal var pinRequestCompletionBLock: ((String?, Bool) -> Void)?; //not used
     internal var pagesToExport : [FTPageProtocol]!;
-    
+    internal var notebook : FTDocumentProtocol?;
+
     override func resumeProcess() {
         if(self.exportPaused) {
             DispatchQueue.global().async {
@@ -108,6 +108,7 @@ class FTPDFDocumentContentGenerator: FTExportContentGenerator {
         self.pagesToExport = [FTPageProtocol]();
         
         func openDocumentAndAccessPages(_ url: URL,pin: String?) {
+            FTCLSLog("Doc Open - PDF Export : \(url.title)")
             let openRequest = FTDocumentOpenRequest(url: url, purpose: .read);
             openRequest.pin = pin;
             FTNoteshelfDocumentManager.shared.openDocument(request: openRequest) { (token, document, error) in

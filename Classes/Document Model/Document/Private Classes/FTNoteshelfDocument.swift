@@ -421,7 +421,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     
     //MARK:- Doc creation from selectedPages
     func createDocumentAtTemporaryURL(_ toURL : Foundation.URL,
-                                      purpose: FTDocumentCreationPurpose,
+                                      purpose: FTItemPurpose,
                                       fromPages : [FTPageProtocol],
                                       documentInfo: FTDocumentInputInfo?,
                                       onCompletion :@escaping ((Bool,NSError?) -> Void)) -> Progress
@@ -569,7 +569,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     }
     
     func openDocument(purpose: FTDocumentOpenPurpose, completionHandler: ((Bool, NSError?) -> Void)?) {
-        FTCLSLog("Doc open: Initiated");
+        FTCLSLog("Doc open: Initiated: \(self.URL.title) purpose: \(purpose.displayTitle)");
         self.openPurpose = purpose;
         super.open { (success) in
             if(!success) {
@@ -594,9 +594,11 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                         self.propertyInfoPlist()?.setObject([currentUserID], forKey: USER_IDs_KEY)
                     }
                 }
-                
+#if  !NS2_SIRI_APP && !NOTESHELF_ACTION
+                FTDocumentCorruptLogger.shared.markDocumentAsValid(self.fileURL);
+#endif
                 //****************************
-                FTCLSLog("Doc open: valid");
+                FTCLSLog("Doc open: valid: \(self.URL.title)");
                 if(nil != completionHandler) {
                     completionHandler!(success,nil);
                 }
@@ -641,14 +643,14 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     func saveDocument(completionHandler : ((Bool) -> Void)?)
     {
         if(self.openPurpose == .read) {
-            FTLogError("Doc Saved in Readonly");
+            FTLogError("Doc Saved in Readonly: \(self.URL.title)");
             completionHandler?(true);
             return;
         }
         if(self.hasAnyUnsavedChanges) {
             (self.delegate as? FTNoteshelfDocumentDelegate)?.documentWillStartSaving(self);
         }
-        FTCLSLog("Doc: Save");
+        FTCLSLog("Doc: Save: \(self.URL.title)");
         #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
         self.recognitionCache?.saveRecognitionInfoToDisk(forcibly: true);
         if(self.hasAnyUnsavedChanges) {
@@ -680,7 +682,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     
     func closeDocument(completionHandler: ((Bool) -> Void)?)
     {
-         FTCLSLog("Doc: Close");
+         FTCLSLog("Doc: Close: \(self.URL.title)");
         #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
         self.recognitionCache?.saveRecognitionInfoToDisk(forcibly: true)
         #endif
@@ -700,7 +702,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     
     func saveAndCloseWithCompletionHandler(_ onCompletion :((Bool) -> Void)?)
     {
-        FTCLSLog("Doc: Save and Close");
+        FTCLSLog("Doc: Save and Close: \(self.URL.title)");
         self.prepareForClosing();
         self.saveDocument { (saveSuccess) in
             if(saveSuccess) {
@@ -874,7 +876,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     override func revert(toContentsOf url: URL, completionHandler: ((Bool) -> Void)?) {
         if(!isInRevertMode && !self.documentState.contains(UIDocument.State.progressAvailable) && !self.documentState.contains(UIDocument.State.closed)) {
             isInRevertMode = true;
-            FTCLSLog("Doc: Revert");
+            FTLogError("Doc Reverted", attributes: ["title": self.URL.title])
             if((nil == self.pin && self.isPinEnabled())
                 || (nil != self.pin && !self.isPinEnabled())) {
                 self.notifySecurityUpdate();
@@ -896,7 +898,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     }
     
     override func accommodatePresentedItemDeletion(completionHandler: @escaping (Error?) -> Void) {
-        FTCLSLog("accommodatePresentedItemDeletion");
+        FTCLSLog("accommodatePresentedItemDeletion: \(self.URL.title)");
         super.accommodatePresentedItemDeletion {  [weak self] (error) in
                 DispatchQueue.main.async(execute: {
                     if let del = self?.delegate, del.responds(to: #selector(FTDocumentDelegate.documentDidDelete(_:))) {
@@ -908,13 +910,12 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     }
     
     override func savePresentedItemChanges(completionHandler: @escaping (Error?) -> Void) {
+        FTCLSLog("savePresentedItemChanges: \(self.URL.title) haschanges:\(self.hasUnsavedChanges)");
         guard self.hasUnsavedChanges else {
-            FTCLSLog("savePresentedItemChanges: Internal changes haschanges:\(self.hasUnsavedChanges)");
             super.savePresentedItemChanges(completionHandler: completionHandler);
             return;
         }
         
-        FTCLSLog("savePresentedItemChanges: haschanges:\(self.hasUnsavedChanges)");
         if(!Thread.current.isMainThread) {
             DispatchQueue.main.async {
                 self.savePresentedItemChanges(completionHandler: completionHandler);
@@ -949,7 +950,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     
     override func presentedItemDidResolveConflict(_ version: NSFileVersion) {
         super.presentedItemDidResolveConflict(version);
-        FTCLSLog("presentedItemDidResolveConflictVersion");
+        FTCLSLog("presentedItemDidResolveConflictVersion: \(self.URL.title)");
             DispatchQueue.main.async(execute: { [weak self] in
                 if let del = self?.delegate, del.responds(to: #selector(FTDocumentDelegate.documentDidResolveConflict(_:))) {
                     del.documentDidResolveConflict?(self);
@@ -975,10 +976,11 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     
     override func autosave(completionHandler: ((Bool) -> Void)? = nil) {
         if(self.openPurpose == .read) {
-            FTLogError("Doc Auto Save in Readonly");
+            FTLogError("Doc Auto Save in Readonly",attributes: ["title": self.URL.title]);
             completionHandler?(true);
         }
         else {
+            FTLogError("Doc Auto Save",attributes: ["title": self.URL.title]);
             super.autosave { [weak self] (success) in
                 self?.previousFileModeificationDate = self?.fileModificationDate;
                 completionHandler?(success);
@@ -992,7 +994,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     }
     
     private func revertDocument(withRevertURL url: URL, andCompletionHandler completionHandler: ((Bool) -> Void)?) {
-        FTCLSLog("revertDocument");
+        FTCLSLog("revertDocument: \(self.URL.title)");
         super.revert(toContentsOf: url, completionHandler:{ (success) in
             self.isInRevertMode = false;
             if(nil != completionHandler) {
@@ -1305,6 +1307,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                                        currentPageIndex : Int,
                                        startingInsertIndex : Int,
                                        pageInsertPosition : FTPageInsertPostion,
+                                       purpose: FTItemPurpose = .default,
                                        onCompletion :@escaping ((Bool,NSError?,[FTPageProtocol]) -> Void)) -> Progress
     {
         let copiedPages : [FTPageProtocol] = [FTPageProtocol]();
@@ -1317,6 +1320,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                                    pageInsertPosition: pageInsertPosition,
                                    copiedPages: copiedPages,
                                    progress: progress,
+                                   purpose: purpose,
                                    onCompletion: onCompletion)
         return progress;
     }
@@ -1327,12 +1331,13 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                                            pageInsertPosition : FTPageInsertPostion,
                                            copiedPages : [FTPageProtocol],
                                            progress: Progress,
+                                           purpose: FTItemPurpose = .default,
                                            onCompletion :@escaping ((Bool,NSError?,[FTPageProtocol]) -> Void))
     {
         if(currentPageIndex < pages.count) {
             let page = pages[currentPageIndex];
-            (page as? FTCopying)?.deepCopyPage?(self, onCompletion: { (copiedPage) in
-                
+            (page as? FTCopying)?.deepCopyPage?(self, purpose: purpose, onCompletion: { (copiedPage) in
+
                 progress.completedUnitCount += 1;
                 
                 var indexToInsert = currentPageIndex;
@@ -1342,7 +1347,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                 case .inBetween:
                     indexToInsert = startingInsertIndex + currentPageIndex;
                 case .nextToCurrent:
-                    let pageIndex = self.pages().index(where: { (item) -> Bool in
+                    let pageIndex = self.pages().firstIndex(where: { (item) -> Bool in
                         if(item.uuid == page.uuid) {
                             return true;
                         }
@@ -1704,7 +1709,7 @@ extension FTNoteshelfDocument: FTDocumentRecoverPages {
                 let recoveryFileItem = (documentToInsert as? FTDocumentFileItems)?.rootFileItem?.childFileItem(withName: NOTEBOOK_RECOVERY_PLIST) as? FTNotebookRecoverPlist;
                 
                 self.recoverPagesRecursively(documentToInsert.pages(),
-                                             recoverFileItem: recoveryFileItem) { (_, error) in
+                                             recoverFileItem: recoveryFileItem, purpose: .trashRecovery) { (_, error) in
                     docInternalProtocol.closeDocument { (_) in
                         onCompletion(error);
                     }
@@ -1723,6 +1728,7 @@ extension FTNoteshelfDocument: FTDocumentRecoverPages {
     
     private func recoverPagesRecursively(_ pages:[FTPageProtocol],
                                          recoverFileItem: FTNotebookRecoverPlist?,
+                                         purpose: FTItemPurpose = .default,
                                          onCompletion: @escaping ((Bool,NSError?) -> Void)) {
         
         var recoveryPages = pages
@@ -1733,7 +1739,8 @@ extension FTNoteshelfDocument: FTDocumentRecoverPages {
         _ = self.recursivelyCopyPages([eachPage],
                                       currentPageIndex: 0,
                                       startingInsertIndex: indexToInsert,
-                                      pageInsertPosition: .inBetween) { (success, error, _) in
+                                      pageInsertPosition: .inBetween,
+                                      purpose: purpose) { (success, error, _) in
             if success {
                 recoveryPages.removeFirst()
                 if recoveryPages.isEmpty {
@@ -1750,6 +1757,7 @@ extension FTNoteshelfDocument: FTDocumentRecoverPages {
                 } else {
                     self.recoverPagesRecursively(recoveryPages,
                                                  recoverFileItem: recoverFileItem,
+                                                 purpose: purpose,
                                                  onCompletion: onCompletion)
                 }
             } else {
@@ -1866,9 +1874,12 @@ extension FTNoteshelfDocument: FTPDFContentCacheProtocol {
 
 extension FTNoteshelfDocument {
     func logDocumentCorrupt(_ params: [String:Any]) {
-        FTLogError("Doc Corrupt", attributes: params)
-        let obj = FTLogDocumentCorruptErrorFirstTime();
-        obj.logError(self.fileURL, params: params);
+        var inParams = params;
+        inParams["title"] = self.URL.title
+        FTLogError("Doc Corrupt", attributes: inParams)
+#if  !NS2_SIRI_APP && !NOTESHELF_ACTION
+        FTDocumentCorruptLogger.shared.markDocumentAsCorrupted(self.fileURL, params: params);
+#endif
     }
         
     func logDocumentVersionNotSupported(_ documentVersion: String?) {
@@ -1898,34 +1909,79 @@ extension URL {
     }
 }
 
-private class FTLogDocumentCorruptErrorFirstTime: NSObject {
-    func logError(_ path: URL,params: [String:Any]) {
 #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
-        if let filePath = URL.documentErrorFileURL {
+private class FTDocumentCorruptLogger: NSObject {
+    static let shared = FTDocumentCorruptLogger();
+    private lazy var queue: DispatchQueue = {
+        return DispatchQueue(label: "com.fluidtouch.doccorruptlogger");
+    }();
+    
+    private func docCorruptedInfo(_ path: URL) -> [String] {
+        var docInfo = [String]();
+        if FileManager().fileExists(atPath: path.path(percentEncoded: false)) {
             do {
-                var docInfo = [String]();
-                if FileManager().fileExists(atPath: filePath.path) {
-                    do {
-                        let data = try Data(contentsOf: filePath)
-                        if let info = try PropertyListSerialization.propertyList(from: data, format: nil) as? [String] {
-                            docInfo = info;
-                        }
-                    }
-                }
-                let relativePath = path.relativePathWithOutExtension().lowercased()
-                if !docInfo.contains(relativePath) {
-                    
-                    FTLogError("Doc Corrupt First Time",attributes: params);
-                    track("Doc Corrupt First Time", params: params,screenName: "Doc open");
-                    docInfo.append(relativePath);
-                    let data = try PropertyListSerialization.data(fromPropertyList: docInfo, format: .xml, options: 0);
-                    try data.write(to: filePath, options: .atomic);
+                let data = try Data(contentsOf: path)
+                if let info = try PropertyListSerialization.propertyList(from: data, format: nil) as? [String] {
+                    docInfo = info;
                 }
             }
             catch {
                 
             }
         }
-#endif
+        return docInfo
+    }
+    
+    func saveDocumentCorruptInfo(path: URL, info docInfo:[String]) {
+        do {
+            let data = try PropertyListSerialization.data(fromPropertyList: docInfo, format: .xml, options: 0);
+            try data.write(to: path, options: .atomic);
+        }
+        catch {
+            
+        }
+    }
+    
+    func markDocumentAsCorrupted(_ path: URL,params: [String:Any])
+    {
+        guard let filePath = URL.documentErrorFileURL else {
+            return;
+        }
+        self.queue.async {
+            do {
+                var docInfo = self.docCorruptedInfo(filePath);
+                let relativePath = path.relativePathWithOutExtension().lowercased()
+                if !docInfo.contains(relativePath) {
+                    var inParams = params;
+                    inParams["path"] = relativePath;
+                    FTLogError("Doc Corrupt First Time",attributes: inParams);
+                    track("Doc Corrupt First Time", params: inParams,screenName: "Doc open");
+                    docInfo.append(relativePath);
+                    self.saveDocumentCorruptInfo(path: filePath, info: docInfo);
+                }
+            }
+            catch {
+                
+            }
+        }
+    }
+    
+    func markDocumentAsValid(_ path: URL) {
+        guard let filePath = URL.documentErrorFileURL else {
+            return;
+        }
+        self.queue.async {
+            var docInfo = self.docCorruptedInfo(filePath);
+            let relativePath = path.relativePathWithOutExtension().lowercased()
+            if let index = docInfo.firstIndex(of: relativePath) {
+                var params = [String:Any]();
+                params["path"] = relativePath;
+                FTLogError("Doc Corrupt Recovered",attributes: params);
+                track("Doc Corrupt Recovered", params: params,screenName: "Doc open");
+                docInfo.remove(at: index);
+                self.saveDocumentCorruptInfo(path: filePath, info: docInfo);
+            }
+        }
     }
 }
+#endif

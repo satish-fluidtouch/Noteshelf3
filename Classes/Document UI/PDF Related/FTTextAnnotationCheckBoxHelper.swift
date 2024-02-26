@@ -63,6 +63,11 @@ private class FTTextAnnotationLayoutHelper: NSObject
         convertedPoint.x -= inset.left;
         convertedPoint.y -= inset.top;
         
+        let usedRect = self.layoutManager.usedRect(for: self.textContainer);
+        if !usedRect.contains(convertedPoint) {
+            convertedPoint.y -= inset.bottom;
+        }
+        
         let characterIndex = self.layoutManager.characterIndex(for: convertedPoint,
                                                                in: self.textContainer,
                                                                fractionOfDistanceBetweenInsertionPoints: nil);
@@ -101,16 +106,16 @@ class FTTextAnnotationLinkHelper: NSObject
     {
         var action: FTAnnotationAction?;
         if let textAnnotation = annotation as? FTTextAnnotation,
-            let attrString = textAnnotation.detectedAttributedString {
+            let attrString = textAnnotation.attributedString {
             FTTextAnnotationLayoutHelper.shared.updateWith(textAnnotation: textAnnotation,
                                                            attrString: attrString);
 
             let attributesInfo = FTTextAnnotationLayoutHelper.shared.attributes(atPoint: point);
-            if let actionURL = attributesInfo.attributes?[.customLink] as? URL {
-                action = FTAnnotationAction();
-                action?.URL = actionURL;
-                action?.rect = attributesInfo.boundingRect;
-                action?.annotation = annotation;
+            if let actionURL = attributesInfo.attributes?[.link] as? URL {
+                action = FTAnnotationAction()
+                action?.URL = actionURL
+                action?.rect = attributesInfo.boundingRect
+                action?.annotation = annotation
             }
         }
         return action;

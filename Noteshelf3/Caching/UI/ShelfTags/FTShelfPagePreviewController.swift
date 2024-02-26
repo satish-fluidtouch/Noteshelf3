@@ -24,6 +24,18 @@ struct FTPreviewDefaultSize {
        let aspectRect = AVMakeRect(aspectRatio: image.size, insideRect: referenceRect);
        return aspectRect.size;
    }
+
+    static func linkPreviewSize(for image: UIImage) -> CGSize {
+        var referenceRect = CGRect.zero;
+        if(image.size.width > image.size.height) {
+            referenceRect.size = FTPreviewDefaultSize.landscape
+        }
+        else {
+            referenceRect.size = FTPreviewDefaultSize.portrait
+        }
+        let aspectRect = AVMakeRect(aspectRatio: image.size, insideRect: referenceRect)
+        return aspectRect.size
+    }
 }
 
 class FTShelfPagePreviewController: UIViewController {

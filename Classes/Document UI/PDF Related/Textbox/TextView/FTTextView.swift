@@ -94,7 +94,8 @@ class FTTextView: UITextView, UIGestureRecognizerDelegate, NSTextStorageDelegate
           #else
           allowsEditingTextAttributes = false
           #endif
-          dataDetectorTypes = [.link]//[.link, .phoneNumber]
+
+        self.linkTextAttributes = NSAttributedString.linkAttributes;
     }
     
     var defaultAttributes: [NSAttributedString.Key : Any] {
@@ -115,27 +116,6 @@ class FTTextView: UITextView, UIGestureRecognizerDelegate, NSTextStorageDelegate
           return dictionary ?? [:]
     }
     
-    var linktextAttributes: [NSAttributedString.Key : Any]! {
-        var linkAttrs = super.linkTextAttributes
-        let customLinkAttrs = NSAttributedString.linkAttributes
-        (customLinkAttrs as NSDictionary).enumerateKeysAndObjects({ key, obj, _ in
-            if let keyAttr = key as? NSAttributedString.Key {
-                linkAttrs?[keyAttr] = obj
-            }
-        })
-        return linkAttrs
-    }
-
-    #if !targetEnvironment(macCatalyst)
-    override func becomeFirstResponder() -> Bool {
-        let responder = super.becomeFirstResponder()
-        if(responder) {
-            self.updateMenuItems()
-        }
-        return responder
-    }
-    #endif
-
     func setValueFor(_ value: Any?, forAttribute attr: String, in range: NSRange) {
         if range.length == 0 {
             var attributes = typingAttributes
@@ -357,7 +337,6 @@ class FTTextView: UITextView, UIGestureRecognizerDelegate, NSTextStorageDelegate
                         if let attributedString = attributedString {
                             str = NSMutableAttributedString(attributedString: attributedString)
                         }
-                        str?.removeAttribute(.link, range: NSRange(location: 0, length: str?.length ?? 0))
                         str?.applyScale(scaleToApply, originalScaleToApply: scaleToApply)
                         attributedString = str
 
@@ -519,6 +498,20 @@ class FTTextView: UITextView, UIGestureRecognizerDelegate, NSTextStorageDelegate
             shouldReturn = false
         } else if panGestureRecognizer == gestureRecognizer {
             shouldReturn = false
+        } else if gestureRecognizer is UITapGestureRecognizer {
+            var point = gestureRecognizer.location(in: self)
+            point.x -= self.textContainerInset.left
+            point.y -= self.textContainerInset.top
+            let index = self.layoutManager.characterIndex(for: point, in: self.textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+            if index != NSNotFound {
+                var glyrange: NSRange = NSRange(location: NSNotFound, length: 0)
+                if nil != self.textStorage.attribute(.link, at: index, effectiveRange: &glyrange) {
+                    if glyrange.location != NSNotFound {
+                        self.selectedRange = glyrange
+                        shouldReturn = false
+                    }
+                }
+            }
         }
         return shouldReturn
     }
@@ -611,80 +604,3 @@ class FTTextView: UITextView, UIGestureRecognizerDelegate, NSTextStorageDelegate
             }
         })
     }
-
-extension FTTextView {
-
-    @objc func lookUpMenuItemAction(_ sender: Any?) {
-        if let controller = self.annotationViewController {
-            controller.performLookUpMenu(sender)
-        }
-    }
-    
-    @objc func shareMenuItemAction(_ sender: Any?) {
-        if let controller = self.annotationViewController {
-            controller.performShareMenu(sender)
-        }
-    }
-
-    @objc func colorMenuItemAction(_ sender: Any?) {
-        if let controller = self.annotationViewController {
-            controller.performColorMenu(sender)
-        }
-    }
-
-    func getSelectedText() -> String? {
-        if let selectedTextRange: UITextRange = self.selectedTextRange,!selectedTextRange.isEmpty {
-            return self.text(in: selectedTextRange);
-        }
-        return nil
-    }
-    
-    func isTextHighLighted() -> Bool {
-        return !(self.selectedTextRange?.isEmpty ?? true);
-    }
-    
-    override func canPerformAction(_ action: Selector, withSender sender: Any!) -> Bool {
-        
-        if let controller = self.annotationViewController,  controller.isEditMode {
-            if [#selector(self.copy(_:)),
-                #selector(self.cut(_:)),
-                #selector(self.paste(_:)),
-                #selector(self.select(_:)),
-                #selector(self.selectAll(_:))
-            ].contains(action) {
-                return super.canPerformAction(action, withSender: sender);
-            }
-            
-            if action == #selector(self.colorMenuItemAction(_:)) {
-                return true;
-            }
-            
-            if self.isTextHighLighted() {
-                if [#selector(self.lookUpMenuItemAction(_:)), #selector(self.shareMenuItemAction(_:)),
-                    #selector(self.delete(_:))].contains(action) {
-                    return true
-                }
-            }
-        }
-        
-        if action == Selector(("replace:")) {
-            return true
-        }
-        return false
-    }
-
-}
-
-#if !targetEnvironment(macCatalyst)
-private extension FTTextView {
-    func updateMenuItems() {
-        let colorMenuItem: UIMenuItem = UIMenuItem(title: NSLocalizedString("Color", comment: "Color"), action: #selector(FTTextView.colorMenuItemAction(_:)))
-        let lookUpMenuItem: UIMenuItem = UIMenuItem(title: NSLocalizedString("LookUp", comment: "Look Up"), action: #selector(FTTextView.lookUpMenuItemAction(_:)))
-        let shareMenuItem: UIMenuItem = UIMenuItem(title: NSLocalizedString("Share", comment: "Share"), action: #selector(FTTextView.shareMenuItemAction(_:)))
-        let menuItems: [UIMenuItem] = [colorMenuItem, lookUpMenuItem, shareMenuItem]
-       
-        let menuController = UIMenuController.shared
-        menuController.menuItems = menuItems
-    }
-}
-#endif

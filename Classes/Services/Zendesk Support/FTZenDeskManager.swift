@@ -282,6 +282,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
             "OS": "\(UIDevice.current.systemName) \(ProcessInfo.processInfo.operatingSystemVersionString)",
             "iCloud": FTNSiCloudManager.shared().iCloudOn() ? "YES" : "NO",
             "Autobackup": FTCloudBackUpManager.shared.activeCloudBackUpManager?.cloudBackUpName() ?? "none",
+            "AutobackupFormat": FTUserDefaults.backupFormat.displayTitle,
             "ENPublish": UserDefaults.standard.bool(forKey: "EvernotePubUsed") ? evernoteUser() : "NO",
             "Apple Pencil": UserDefaults.standard.bool(forKey: "isUsingApplePencil") ? "YES" : "NO",
             "Lang": FTUtils.currentLanguage(),
@@ -324,6 +325,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
             ,let pencil = customFields["Apple Pencil"]
             ,let iCloud = customFields["iCloud"]
             ,let autobackup = customFields["Autobackup"]
+            ,let format = customFields["AutobackupFormat"]
             ,let ENPublish = customFields["ENPublish"]
             ,let lang = customFields["Lang"]
             ,let locale = customFields["Locale"]
@@ -336,7 +338,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
             ,let safemode = customFields["SafeMode"]
             ,let deviceIDs = customFields["DeviceIDs"]
         {
-            string = "User ID: \(userId) | Version: \(version) | Premium: \(premium) | OS: \(operatingSystem) | Device: \(Device) | \(sizes) | Apple Pencil: \(pencil) | iCloud: \(iCloud) | Autobackup: \(autobackup) | Publish: \(ENPublish) | Lang: \(lang) | Locale: \(locale) | AppleWatch : \(appleWatch) | RLang : \(recognition) | R_Act: \(recog_Act) | Layout: \(layoutType) | Screens : \(UIScreen.screensDescription) | NS2: \(ns2) | SafeMode: \(safemode) DeviceID: \(deviceIDs)"
+            string = "User ID: \(userId) | Version: \(version) | Premium: \(premium) | OS: \(operatingSystem) | Device: \(Device) | \(sizes) | Apple Pencil: \(pencil) | iCloud: \(iCloud) | Autobackup: \(autobackup) | Format: \(format) | Publish: \(ENPublish) | Lang: \(lang) | Locale: \(locale) | AppleWatch : \(appleWatch) | RLang : \(recognition) | R_Act: \(recog_Act) | Layout: \(layoutType) | Screens : \(UIScreen.screensDescription) | NS2: \(ns2) | SafeMode: \(safemode) DeviceID: \(deviceIDs)"
         }
         return string ?? ""
     }

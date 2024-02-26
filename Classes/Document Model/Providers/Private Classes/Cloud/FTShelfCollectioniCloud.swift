@@ -99,6 +99,7 @@ extension FTShelfCollectioniCloud: FTShelfCollection {
             let name = self.uniqueFileName(title+".shelf", inItems: items);
             let destURL = self.iCloudDocumentsURL.appendingPathComponent(name)
             DispatchQueue.global().async(execute: {
+                FTCLSLog("NFC - Rename Shelf: \(collection.URL.title)");
                 let fileCoordinator = NSFileCoordinator(filePresenter: nil);
                 fileCoordinator.coordinate(writingItemAt: collection.URL, options: NSFileCoordinator.WritingOptions.forMoving, writingItemAt: destURL, options: NSFileCoordinator.WritingOptions.forReplacing, error: nil, byAccessor: { newURL1, newURL2 in
                     var error: NSError?;
@@ -121,6 +122,7 @@ extension FTShelfCollectioniCloud: FTShelfCollection {
     func deleteShelf(_ collection: FTShelfItemCollection, onCompletion: @escaping ((NSError?, FTShelfItemCollection?) -> Void)) {
         self.disableUpdates()
         DispatchQueue.global().async(execute: {
+            FTCLSLog("NFC - Delete Shelf: \(collection.URL.title)");
             let fileCordinator = NSFileCoordinator(filePresenter: nil);
 
             fileCordinator.coordinate(writingItemAt: collection.URL as URL,
@@ -460,6 +462,7 @@ extension FTShelfCollectioniCloud {
 
             let fileManager = FileManager();
 
+            FTCLSLog("NFC - Create Shelf: \(defaultCollectionURL.title)");
             let fileCoordinator = NSFileCoordinator(filePresenter: nil);
             fileCoordinator.coordinate(writingItemAt: defaultCollectionURL, options: NSFileCoordinator.WritingOptions(rawValue: 0), error: nil, byAccessor: { writingURL in
 
