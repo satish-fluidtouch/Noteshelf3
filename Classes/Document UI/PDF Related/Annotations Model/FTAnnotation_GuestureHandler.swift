@@ -146,9 +146,20 @@ extension FTShapeAnnotation {
 
 extension FTStroke: FTAnnotationLongPressHandler {
     func canHandleLongPressEvent(atPoint point : CGPoint) -> Bool {
+        guard self.intersectsPath(point.pathWith1Px, withScale: 1.0, withOffset: CGPoint.zero) else {
+            return false
+        }
         if self.groupId != nil {
             return true
         }
         return false
+    }
+}
+
+private extension CGPoint {
+    var pathWith1Px: CGPath {
+        let largerRect = CGRect(x: self.x, y: self.y, width: 1, height: 1).insetBy(dx: -10, dy: -10)
+        let path1x = CGPath(rect: largerRect, transform: nil)
+        return path1x
     }
 }

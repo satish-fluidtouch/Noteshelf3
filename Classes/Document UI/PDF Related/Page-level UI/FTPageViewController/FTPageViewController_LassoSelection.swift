@@ -40,6 +40,10 @@ extension FTPageViewController
             showPasteOptions = true
         }
 
+        if nil != self.lassoContentSelectionViewController {
+            showPasteOptions = false
+        }
+
         guard let contentView = self.contentHolderView, showPasteOptions else {
             return
         }
@@ -285,13 +289,17 @@ extension FTPageViewController: FTLassoSelectionViewDelegate {
         }
         else if(action == .takeScreenshot){
             supports = true;
-        } else if action == .group, selectedAnnotations.count > 1 {
-            if nil == selectedAnnotations.first(where: { $0.groupId != nil }) {
-                supports = true
+        } else if action == .group {
+            if selectedAnnotations.count > 1 {
+                if nil == selectedAnnotations.first(where: { $0.groupId != nil }) {
+                    supports = true
+                }
             }
-        }  else if action == .ungroup, selectedAnnotations.count > 1 {
-            if nil != selectedAnnotations.first(where: { $0.groupId != nil }) {
-                supports = true
+        }  else if action == .ungroup {
+            if selectedAnnotations.count > 1 {
+                if nil != selectedAnnotations.first(where: { $0.groupId != nil }) {
+                    supports = true
+                }
             }
         }
         else {
