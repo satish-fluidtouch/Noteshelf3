@@ -429,6 +429,7 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
         var removedItems = [AnyObject]();
 
         DispatchQueue.global().async(execute: {
+            FTCLSLog("NFC - rename doc local: \(shelfItem.URL.title)");
             let fileCordinator = NSFileCoordinator(filePresenter: nil);
 
             fileCordinator.coordinate(writingItemAt: shelfItem.URL as URL,
@@ -786,6 +787,7 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
     fileprivate func fileOperationMoveFileAtPath(_ fileURL : Foundation.URL,toPath : Foundation.URL,onCompletion:@escaping (NSError?) -> Void)
     {
         DispatchQueue.global().async(execute: {
+            FTCLSLog("NFC - Move operation local: \(fileURL.title)");
             let fileCoordinator = NSFileCoordinator.init(filePresenter: nil);
             
             fileCoordinator.coordinate(writingItemAt: fileURL, options: NSFileCoordinator.WritingOptions.forMoving, writingItemAt: toPath, options: NSFileCoordinator.WritingOptions.forReplacing, error: nil, byAccessor: { (newURL1, newURL2) in

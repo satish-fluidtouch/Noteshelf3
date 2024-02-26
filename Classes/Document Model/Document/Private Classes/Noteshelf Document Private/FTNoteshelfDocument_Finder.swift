@@ -77,6 +77,7 @@ extension FTNoteshelfDocument : FTThumbnailableCollection {
         let progress = Progress.init();
         progress.totalUnitCount = Int64(pages.count);
         
+        FTCLSLog("Doc Open - Nmove pages : \(toDocument.title)")
         let request = FTDocumentOpenRequest(url: toDocument, purpose: .write);
         request.pin = pin;
         FTNoteshelfDocumentManager.shared.openDocument(request: request) { (tokenID, document, error) in

@@ -65,6 +65,7 @@ class FTNotebookContentSearchProcessor: NSObject, FTSearchProcessor {
                     return
                 }
 
+                FTCLSLog("Doc Open - Notebook content search : \(shelfItem.URL.title)")
                 let request = FTDocumentOpenRequest(url: shelfItem.URL, purpose: .read);
                 FTNoteshelfDocumentManager.shared.openDocument(request: request) { [weak self] (token, document, _) in
                     if let doc = document {

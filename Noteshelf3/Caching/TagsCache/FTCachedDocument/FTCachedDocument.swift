@@ -129,7 +129,7 @@ class FTCachedDocument: NSObject {
 
     //Doc creation from selectedPages
     func createDocumentAtTemporaryURL(_ toURL : Foundation.URL,
-                                      purpose: FTDocumentCreationPurpose,
+                                      purpose: FTItemPurpose,
                                       fromPages : [FTPageProtocol],
                                       documentInfo: FTDocumentInputInfo?,
                                       onCompletion : @escaping ((Bool,NSError?) -> Void)) -> Progress {

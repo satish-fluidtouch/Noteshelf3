@@ -381,6 +381,7 @@ extension FTShelfSplitViewController {
 
                 if let destItem = destinationShelfItem {
                     let blockToOpenBook : (String?) -> () = { (pin) in
+                        FTCLSLog("Doc Open - Restore doc : \(destItem.URL.title)")
                         let openRequest = FTDocumentOpenRequest(url: destItem.URL, purpose: .write);
                         openRequest.pin = pin;
                         FTNoteshelfDocumentManager.shared.openDocument(request: openRequest) { (tokenID, document, error) in

@@ -16,6 +16,7 @@ class FTFileCacheManager: NSObject {
         let fileCoorinator = NSFileCoordinator.init(filePresenter: nil)
         var copyError: NSError?
         var catchError: Error?
+        FTCLSLog("NFC - Cache Doc: \(source.title)");
         fileCoorinator.coordinate(readingItemAt: source,
                                   options: NSFileCoordinator.ReadingOptions.withoutChanges,
                                   writingItemAt: destination,
@@ -82,6 +83,7 @@ class FTFileCacheManager: NSObject {
             throw error
         }
         if let catchError = catchError {
+            FTCLSLog("NFC - Cache doc: \(source.title)");
             try defaultManager.coordinatedCopy(fromURL: source, toURL: destination, force: true)
         }
     }

@@ -29,9 +29,6 @@ class FTShelfItems: ObservableObject,Identifiable {
         self.shelfItemType = .collection
         self.collection = collection
     }
-    var isNotDownloaded: Bool {
-        (notebook as? FTDocumentItemProtocol)?.isDownloaded == false
-    }
 }
 
 class FTShelfGroupItem: FTShelfItems {
@@ -48,6 +45,14 @@ class FTShelfGroupItem: FTShelfItems {
     }
 }
 class FTShelfNotebookItem: FTShelfItems {
+    private var progressObserver: NSKeyValueObservation?
+    private var downloadedStatusObserver: NSKeyValueObservation?
+    private var downloadingStatusObserver: NSKeyValueObservation?
+
+    @Published var notDownloaded = false
+    @Published var isDownloadingNotebook: Bool = false
+    @Published var progress: CGFloat = 0.0
+
     init(notebook: FTShelfItemProtocol) {
         super.init(collection: notebook.shelfCollection)
             self.id = notebook.uuid
@@ -57,6 +62,75 @@ class FTShelfNotebookItem: FTShelfItems {
             self.collection = notebook.shelfCollection
             self.group = notebook.parent
             self.subTitle = notebook.fileModificationDate.shelfShortStyleFormat()
+            self.updateDownloadStatusFor(item: notebook)
+    }
+
+    deinit {
+        self.stopObservingProgressUpdates()
+    }
+
+     func downloadNotebook() {
+        guard let book = notebook else {
+            return
+        }
+        do {
+            if(CloudBookDownloadDebuggerLog) {
+                FTCLSLog("Book: \(book.displayTitle): Download Requested")
+            }
+            try FileManager().startDownloadingUbiquitousItem(at: book.URL)
+            self.startObservingProgressUpdates()
+        }
+        catch let nserror as NSError {
+            FTCLSLog("Book: \(book.displayTitle): Download Failed :\(nserror.description)")
+            FTLogError("Notebook download failed", attributes: nserror.userInfo)
+        }
+    }
+
+    func startObservingProgressUpdates(){
+        self.stopObservingProgressUpdates()
+        self.progressObserver = (self.notebook as? FTDocumentItem)?.observe(\.downloadProgress,
+                                                                              options: [.new, .old]) { [weak self] (shelfItem, _) in
+            runInMainThread {
+                self?.updateDownloadStatusFor(item: shelfItem)
+            }
+        }
+        self.downloadingStatusObserver = (self.notebook as? FTDocumentItem)?.observe(\.isDownloading,
+                                                                                       options: [.new, .old]) { [weak self] (shelfItem, _) in
+            runInMainThread {
+                self?.updateDownloadStatusFor(item: shelfItem)
+            }
+        }
+        self.downloadedStatusObserver = (self.notebook as? FTDocumentItem)?.observe(\.downloaded,
+                                                                                      options: [.new, .old]) { [weak self] (shelfItem, _) in
+            runInMainThread {
+                self?.updateDownloadStatusFor(item: shelfItem)
+            }
+        }
+    }
+
+    func updateDownloadStatusFor(item : FTShelfItemProtocol) {
+        guard let documentItem = item as? FTDocumentItem else {
+            return
+        }
+        self.isDownloadingNotebook = false
+
+        if documentItem.isDownloaded {
+            self.notDownloaded = false
+            self.progress = 1.0
+        } else if documentItem.isDownloading {
+            let progress = min(CGFloat(documentItem.downloadProgress)/100,1.0)
+            self.isDownloadingNotebook = true
+            self.notDownloaded = false
+            self.progress = progress
+        } else if !documentItem.isDownloaded {
+            self.notDownloaded = true
+        }
+    }
+
+    func stopObservingProgressUpdates() {
+        self.progressObserver?.invalidate()
+        self.downloadedStatusObserver?.invalidate()
+        self.downloadingStatusObserver?.invalidate()
     }
 
     func fetchCoverImage(completionhandler: @escaping (UIImage?) -> ()){

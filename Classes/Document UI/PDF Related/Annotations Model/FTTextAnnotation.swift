@@ -50,30 +50,16 @@ class FTTextAnnotation: FTAnnotation,FTImageRenderingProtocol {
             if let newAttrStr = newValue,
                 let oldAttrStr = self.attributedString,
                 !newAttrStr.isEqual(toAttributedText: oldAttrStr) {
-                _detectedAttributedString = nil;
-                self.forceRender = true;
+                self.forceRender = true
             }
             else if(nil == newValue && nil != self.attributedString) {
-                _detectedAttributedString = nil;
-                self.forceRender = true;
+                self.forceRender = true
             }
             else if(nil != newValue && nil == self.attributedString) {
-                _detectedAttributedString = nil;
-                self.forceRender = true;
+                self.forceRender = true
             }
         }
     };
-    
-    private var _detectedAttributedString: NSMutableAttributedString?
-    var detectedAttributedString: NSAttributedString? {
-        if(nil == _detectedAttributedString) {
-            if let atr = self.attributedString {
-                _detectedAttributedString = NSMutableAttributedString(attributedString: atr);
-                _detectedAttributedString?.applyDataDetectorAttributes();
-            }
-        }
-        return _detectedAttributedString;
-    }
     
     var dataValue : Data? {
         get {
@@ -96,6 +82,7 @@ class FTTextAnnotation: FTAnnotation,FTImageRenderingProtocol {
                 let mappedAttr = attrStr.mapAttributesToMatch(withLineHeight: -1);
                 let mutAttrStr = NSMutableAttributedString.init(attributedString: mappedAttr!);
                 mutAttrStr.applyScale(1, originalScaleToApply: CGFloat(self.transformScale));
+                mutAttrStr.applyDataDetectorAttributes()
                 self.attributedString = mutAttrStr;
             }
         }
@@ -222,7 +209,7 @@ private extension FTTextAnnotation
     private func textToImage(scale : CGFloat) -> UIImage?
     {
         var image : UIImage?;
-        if let attrstr = self.detectedAttributedString {
+        if let attrstr = self.attributedString {
             let screenScale = UIScreen.main.scale;
 
             //get the max texture size scale
@@ -237,6 +224,14 @@ private extension FTTextAnnotation
 
             //apply scale to the attributed string to match it.
             let mutStr = NSMutableAttributedString(attributedString: attrstr);
+            mutStr.beginEditing()
+            mutStr.enumerateAttribute(.link, in: NSRange(location: 0, length: mutStr.length)) { (linkValue, range, stop) in
+                if nil != linkValue {
+                    mutStr.removeAttribute(.link, range: range)
+                    mutStr.addAttributes(NSAttributedString.linkAttributes, range: range);
+                }
+            }
+            mutStr.endEditing();
             mutStr.applyScale(scaleTpApply, originalScaleToApply: CGFloat(self.transformScale)*scaleTpApply);
 
             UIGraphicsBeginImageContextWithOptions(imageSize, false, 0);
@@ -440,7 +435,7 @@ extension FTTextAnnotation : FTCGContextRendering
 
         var inset = FTTextView.textContainerInset(self.version);
         inset = UIEdgeInsetsScale(inset, CGFloat(self.transformScale));
-        guard let attributedString = self.detectedAttributedString else { return }
+        guard let attributedString = self.attributedString else { return }
         let textLayouter = FTTextLayouter.init(attributedString: attributedString,
                                                constraints: CGSize.init(width: self.boundingRect.size.width-(inset.left+inset.right),
                                                                         height: CGFloat.greatestFiniteMagnitude));
@@ -504,57 +499,42 @@ extension FTTextAnnotation : NSSecureCoding {
     }
 }
 
-private extension NSMutableAttributedString
-{
-    func applyDataDetectorAttributes()
-    {
-        let string = self.string;
+extension NSMutableAttributedString {
+    func applyDataDetectorAttributes() {
+        let string = self.string
         guard !string.isEmpty else {
-            return;
+            return
         }
-        
         do {
-            let detector = try NSDataDetector.init(types: NSTextCheckingAllSystemTypes);
-            detector.enumerateMatches(in: string,
-                                      options: .reportCompletion,
-                                      range: NSRange(location: 0, length:string.count))
-            { (result, _, _) in
-                if let _result = result {
-                    let range = _result.range;
-                    switch(_result.resultType) {
-                    case .link:
-                        if let url = _result.url {
-                            self.addAttribute(.customLink, value: url, range: range)
-                            self.addAttributes(NSAttributedString.linkAttributes, range: range);
-                        }
-//                    case .phoneNumber:
-//                        if let phoneNumber = _result.phoneNumber {
-//                            let withspace = phoneNumber.replacingOccurrences(of: " ", with: "");
-//                            if let url = URL(string: "tel:\(withspace)") {
-//                                self.addAttribute(.link, value: url, range: range)
-//                                self.addAttributes(NSAttributedString.linkAttributes, range: range);
-//                            }
-//                        }
-                    default:
-                        break;
+            let detector = try NSDataDetector(types: NSTextCheckingAllSystemTypes)
+            detector.enumerateMatches(in: string, options: .reportCompletion, range: NSRange(location: 0, length: string.count)) { (result, _, _) in
+                if let _result = result, _result.resultType == .link, let url = _result.url {
+                    if !self.containsLinkAttribute(in: _result.range) {
+                        self.addAttribute(.link, value: url, range: _result.range)
+                        self.addAttributes(NSAttributedString.linkAttributes, range: _result.range)
                     }
                 }
-            };
+            }
+        } catch {
+            // Handle error if needed
         }
-        catch {
-            
+    }
+
+    private func containsLinkAttribute(in range: NSRange) -> Bool {
+        var containsLinkAttribute = false
+        self.enumerateAttributes(in: range, options: []) { (attributes, _, _) in
+            if attributes[NSAttributedString.Key.link] != nil {
+                containsLinkAttribute = true
+            }
         }
+        return containsLinkAttribute
     }
 }
 
 @objc extension UIColor {
     class var link: UIColor {
-        return UIColor(hexString: "5779F8");
+        return UIColor(hexString: "007AFF");
     }
-}
-
-extension NSAttributedString.Key  {
-    static let customLink = NSAttributedString.Key(rawValue: "customLinkAttriuteName");
 }
 
 @objc extension NSAttributedString

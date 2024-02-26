@@ -142,6 +142,7 @@ class FTNSTemplateContentGenerator: FTExportContentGenerator {
             }
             else {
                 let openRequest = FTDocumentOpenRequest(url: fileURL, purpose: .read);
+                FTCLSLog("Doc Open - Template generator \(fileURL.title)")
                 FTNoteshelfDocumentManager.shared.openDocument(request: openRequest) { (token, document, error) in
                     if let doc = document {
                         if let firstPage = doc.pages().first {

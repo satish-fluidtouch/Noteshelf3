@@ -13,9 +13,19 @@ import FTDocumentFramework
 {
     case write;
     case read;
+    
+    var displayTitle: String {
+        switch self {
+        case .write:
+            return "Write";
+        case .read:
+            return "Read";
+        }
+    }
 }
 
-@objc enum FTDocumentCreationPurpose: Int {
+// Item refers - a document or page(based on context)
+@objc enum FTItemPurpose: Int {
     case `default`;
     case trashRecovery;
 }
@@ -77,7 +87,7 @@ protocol FTDocumentProtocolInternal: NSObjectProtocol {
 
     //Doc creation from selectedPages
     func createDocumentAtTemporaryURL(_ toURL : Foundation.URL,
-                                      purpose: FTDocumentCreationPurpose,
+                                      purpose: FTItemPurpose,
                                       fromPages : [FTPageProtocol],
                                       documentInfo: FTDocumentInputInfo?,
                                       onCompletion : @escaping ((Bool,NSError?) -> Void)) -> Progress;

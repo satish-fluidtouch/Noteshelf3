@@ -129,7 +129,7 @@ let kAudioRecIconSize : CGSize = CGSize.init(width: audioRecordSize, height: aud
     var attributedString : NSAttributedString?
     var string : String?
     var fromConvertToText: Bool = false;
-    
+
     func defaultTextTypingAttributes() -> [NSAttributedString.Key : Any]
     {
         let paragraphStyle = NSMutableParagraphStyle();
@@ -306,10 +306,7 @@ extension FTTextAnnotation
         }
         else {
             if let str = textInfo.string {
-                let attrString = NSMutableAttributedString.init(string: str, attributes: attrs);
-                if !str.isEmpty {
-                    attrString.removeAttribute(.link, range: NSRange(location: 0, length: str.count));
-                }
+                let attrString = NSMutableAttributedString.init(string: str, attributes: attrs)
                 self.attributedString = attrString
             }
             else {

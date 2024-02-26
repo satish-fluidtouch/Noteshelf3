@@ -45,13 +45,15 @@ class FTTextAnnotationViewController: UIViewController {
     weak var delegate: FTAnnotationEditControllerDelegate?
     fileprivate var annotationMode: FTAnnotationMode = FTAnnotationMode.create
     fileprivate var _annotation: FTAnnotation?
-    private var transitionInProgress: Bool = false
+    internal var transitionInProgress: Bool = false
     private var contentHolderview : UIView?;
     let customTransitioningDelegate = FTSlideInPresentationManager(mode: .topToBottom)
 
     private var resizeMode: FTTextBoxResizeMode = .none;
     private var resizeDirection = FTKnobResizeDirection.bottomRight;
     private var knobHandlerImage: UIImageView!
+    internal var interaction: UIEditMenuInteraction?
+    internal var editMenuConfig: UIEditMenuConfiguration?
 
     // Don't make below viewmodel weak as this is needed for eyedropper delegate to be implemented here(since we are dismissing color edit controller)
     internal var penShortcutViewModel: FTPenShortcutViewModel?
@@ -61,6 +63,7 @@ class FTTextAnnotationViewController: UIViewController {
 #endif
 
     private weak var referenceLibraryController: FTReferenceLibraryViewController?;
+    var linkSelectedRange: NSRange?
     
     var annotation: FTAnnotation {
         return _annotation!;
@@ -117,12 +120,14 @@ class FTTextAnnotationViewController: UIViewController {
         }
         set {
             if newValue == textInputView.isUserInteractionEnabled { return }
+            #if targetEnvironment(macCatalyst)
+            self.forceEndEditing = !newValue
+            #endif
             if newValue {
                 textInputView.isEditable = true;
                 textInputView.isUserInteractionEnabled = true
                 self.checkBoxGesture?.isEnabled = false;
                 self.autocorrectionType = UITextAutocorrectionType.yes
-                UIMenuController.shared.hideMenu()
                 _ = self.becomeFirstResponder()
                 textInputView.layoutManager.invalidateDisplay(forCharacterRange: NSRange(location: 0, length: textInputView.textStorage.length));
             }
@@ -150,9 +155,6 @@ class FTTextAnnotationViewController: UIViewController {
         get {
             let attributes: NSMutableAttributedString? = textInputView.attributedText.mutableDeepCopy()
             attributes?.applyScale(1 / textInputView.scale, originalScaleToApply: 1 * textInputView.transformScale)
-            if let length = attributes?.length,length > 0 {
-                attributes?.removeAttribute(.link, range: NSRange(location: 0, length: length));
-            }
             return attributes!
         }
         set {
@@ -226,9 +228,6 @@ class FTTextAnnotationViewController: UIViewController {
                                                queue: nil) { [weak self] (notification) in
             self?.forceEndEditing = true
         }
-        
-        let contextMenu = UIContextMenuInteraction.init(delegate: self)
-        self.view.addInteraction(contextMenu)
         #endif
     }
 
@@ -416,8 +415,14 @@ class FTTextAnnotationViewController: UIViewController {
     override var isFirstResponder: Bool {
         return textInputView.isFirstResponder
     }
-        
-    @objc fileprivate func saveTextEntryAttributes() {
+
+    // Making it as internal - not intended for outside purpose, required only inside this controller files
+    internal func handleLinkTextEditUpdate() {
+        self.resizeTextViewAsNeeded()
+        self.saveTextEntryAttributes()
+    }
+
+    @objc func saveTextEntryAttributes() {
         //Check if the text is empty in which case we can remove the annotation object.
         var shouldRemove = false;
         #if targetEnvironment(macCatalyst)
@@ -476,7 +481,6 @@ class FTTextAnnotationViewController: UIViewController {
         refLibController.title = text
         self.referenceLibraryController = refLibController;
         self.editMode = false
-        UIMenuController.shared.hideMenu()
         refLibController.onCompletion = { [weak self] in
             self?.setupMenuForTextViewLongPress();
         }
@@ -735,6 +739,9 @@ extension FTTextAnnotationViewController : UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         NSObject.cancelPreviousPerformRequests(withTarget: self)
+        let attr = NSMutableAttributedString(attributedString: textView.attributedText)
+        attr.applyDataDetectorAttributes()
+        textView.attributedText = attr
         #if !targetEnvironment(macCatalyst)
         if(!transitionInProgress) {
             self.editMode = false
@@ -780,7 +787,6 @@ extension FTTextAnnotationViewController : UITextViewDelegate {
             self.scheduleScrolling();
             validateKeyboard()
         }
-        
     }
     
         //#if SUPPORTS_BULLETS
@@ -788,7 +794,8 @@ extension FTTextAnnotationViewController : UITextViewDelegate {
         //Remove any submenu's in toolbar
         let contentScale = self.zoomScale;
         var returnValue = true
-        
+        self.removeLinkIfNeeded(range: range, replacementText: text)
+
         if (text == "\n") {
             if textInputView.hasBulletsInLineParagraph(for: textView.selectedRange) {
                 returnValue = textView.autoContinueBullets(forEditing: textView.selectedRange, scale: contentScale * textInputView.transformScale)
@@ -804,6 +811,32 @@ extension FTTextAnnotationViewController : UITextViewDelegate {
         return returnValue
     }
     
+    private func removeLinkIfNeeded(range: NSRange, replacementText text: String) {
+        let editedText = (self.textInputView.text as NSString).replacingCharacters(in: range, with: text)
+        let nsStrEditedText = NSString(string: editedText)
+        let editedRange = NSRange(location: range.location, length: (text as NSString).length)
+        let wordRange = (editedText as NSString).rangeOfWord(at: editedRange.location)
+        guard editedRange.location + editedRange.length <= nsStrEditedText.length,
+              wordRange.location + wordRange.length <= nsStrEditedText.length else {
+            return
+        }
+        let toRemoveLink = text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        let previousCharacterIndex = range.location - 1
+        if previousCharacterIndex >= 0, toRemoveLink {
+            let previousCharacterRange = NSRange(location: previousCharacterIndex, length: 1)
+            let attributes = self.textInputView.attributedText.attributes(at: previousCharacterIndex, effectiveRange: nil)
+               if nil != attributes[NSAttributedString.Key.link]  {
+                   self.textInputView.setValueFor(nil, forAttribute: NSAttributedString.Key.link.rawValue, in: range)
+                   let keys = NSAttributedString.linkAttributes.keys
+                   keys.forEach { attr in
+                       self.textInputView.setValueFor(nil, forAttribute: attr.rawValue, in: range)
+                   }
+                   self.textInputView.setValueFor(self.textInputView.defaultAttributes[NSAttributedString.Key.foregroundColor], forAttribute: NSAttributedString.Key.foregroundColor.rawValue, in: range)
+                   self.validateKeyboard()
+               }
+        }
+    }
+
     func textView(_ textView: UITextView,
                   shouldInteractWith textAttachment: NSTextAttachment,
                   in characterRange: NSRange,
@@ -815,13 +848,13 @@ extension FTTextAnnotationViewController : UITextViewDelegate {
         return val;
     }
     
-    func textView(_ textView: UITextView, shouldInteractWith URL: URL,
-                  in characterRange: NSRange,
-                  interaction: UITextItemInteraction) -> Bool {
-        URL.openURL(on: self);
-        return false;
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        if !self.editMode {
+            URL.openURL(on: self)
+        } 
+        return false
     }
-    
+
     func textStorageShouldInteractWith(_ textStorage : NSTextStorage ,
                                        attachment : NSTextAttachment ,
                                        characterRange : NSRange) -> Bool {
@@ -1452,11 +1485,6 @@ extension FTTextAnnotationViewController : FTTouchEventProtocol
                 isMoving = true;
             }
         }
-        
-        if (isMoving || isScaling),!self.editMode {
-            UIMenuController.shared.hideMenu()
-        }
-
     }
     
     func processTouchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -1705,8 +1733,14 @@ extension FTTextAnnotationViewController {
             #selector(self.delete(_:))
         ].contains(selector) {
             return true;
+        } else if self.textInputView.checkIfToShowEditLinkOptions() {
+            if [#selector(FTAnnotationBaseView.editLinkMenuItemAction(_:)), #selector(FTAnnotationBaseView.removeLinkMenuItemAction(_:))].contains(selector) {
+                return true
+            }
+        } else if [#selector(FTAnnotationBaseView.linkToMenuItemAction(_:))].contains(selector) {
+            return true
         }
-        return false;
+        return false
     }
     
     func performAction(_ selector: Selector) {
@@ -1722,3 +1756,24 @@ extension FTTextAnnotationViewController {
     }
 }
 #endif
+
+extension NSString {
+    func rangeOfWord(at index: Int) -> NSRange {
+        guard index >= 0 && index < length else {
+            return NSRange(location: 0, length: 0)
+        }
+        var start = index
+        var end = index
+        self.enumerateSubstrings(in: NSRange(location: 0, length: length), options: .byWords) { (subStr, range, _, _) in
+            if range.contains(start) {
+                start = range.location
+            }
+        }
+        self.enumerateSubstrings(in: NSRange(location: 0, length: length), options: .byWords) { (subStr, range, _, _) in
+            if range.contains(end) {
+                end = NSMaxRange(range)
+            }
+        }
+        return NSRange(location: start, length: end - start)
+    }
+}

@@ -1195,9 +1195,12 @@ extension FTNoteshelfPage : FTPageTileAnnotationMap
 #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
 //MARK:- FTCopying -
 extension FTNoteshelfPage : FTCopying {
-    internal func copyPage(_ toDocument: FTDocumentProtocol) -> FTNoteshelfPage {
+    internal func copyPage(_ toDocument: FTDocumentProtocol, purpose: FTItemPurpose = .default) -> FTNoteshelfPage {
         guard let parentDoc = toDocument as? FTNoteshelfDocument else { fatalError("Parent document is nil")}
         let newPage = FTNoteshelfPage(parentDocument: parentDoc);
+        if purpose == .trashRecovery {
+            newPage._uuid = self.uuid
+        }
         newPage.isInitializationInprogress = true;
         newPage.associatedPDFFileName = self.associatedPDFFileName;
         newPage.associatedPDFPageIndex = self.associatedPDFPageIndex;
@@ -1225,9 +1228,9 @@ extension FTNoteshelfPage : FTCopying {
         return newPage;
     }
     
-    internal func deepCopyPage(_ toDocument: FTDocumentProtocol, onCompletion: @escaping (FTPageProtocol) -> Void)
+    internal func deepCopyPage(_ toDocument: FTDocumentProtocol, purpose: FTItemPurpose = .default, onCompletion: @escaping (FTPageProtocol) -> Void)
     {
-        let newPage = self.copyPage(toDocument);
+        let newPage = self.copyPage(toDocument, purpose: purpose);
         newPage.isInitializationInprogress = true;
         newPage.pageBackgroundColor = self.pageBackgroundColor;
         newPage.hasContents = self.hasContents
@@ -1254,6 +1257,7 @@ extension FTNoteshelfPage : FTCopying {
             let pdfTemplateFileItem = FTPDFKitFileItemPDF.init(fileName: newPage.associatedPDFFileName)!
             pdfTemplateFileItem.securityDelegate = self._parent;
             
+            FTCLSLog("NFC - Page deepcopy");
             newPage._parent!.templateFolderItem()!.addChildItem(pdfTemplateFileItem);
             FileManager.coordinatedCopyAtURL(self.templateFileItem()!.fileItemURL,
                                              toURL: pdfTemplateFileItem.fileItemURL,

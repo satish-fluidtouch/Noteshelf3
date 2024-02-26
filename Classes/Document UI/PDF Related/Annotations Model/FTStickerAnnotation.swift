@@ -62,6 +62,7 @@ extension FTStickerAnnotation
                         let image = sourceFileItem.image();
                         copiedFileItem?.setImage(image);
                         
+                        FTCLSLog("NFC - sticker deepcopy secured: \(toDocument.URL.title)");
                         let coordinator = NSFileCoordinator.init(filePresenter: document);
                         let fileAccessIntent = NSFileAccessIntent.writingIntent(with: copiedFileItem!.fileItemURL,
                                                                                 options: NSFileCoordinator.WritingOptions.forReplacing);
@@ -88,6 +89,7 @@ extension FTStickerAnnotation
                         })
                     }
                     else {
+                        FTCLSLog("NFC - sticker deepcopy: \(toDocument.URL.title)");
                         FileManager.coordinatedCopyAtURL(sourceFileItem.fileItemURL,
                                                          toURL: copiedFileItem!.fileItemURL)
                         { (success, error) in
