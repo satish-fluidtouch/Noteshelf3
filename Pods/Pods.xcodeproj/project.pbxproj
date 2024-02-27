@@ -3366,7 +3366,7 @@
 		8B35E5D5A11C44F4FD9B0599F7999B93 /* SSZipArchive.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SSZipArchive.release.xcconfig; sourceTree = "<group>"; };
 		8B70F50F0C13D9CB2156A2675C603DAE /* MSALError.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MSALError.h; path = MSAL/src/public/MSALError.h; sourceTree = "<group>"; };
 		8B80A7F2C68A98A935285AFE2417A88E /* FirebaseRemoteConfig-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "FirebaseRemoteConfig-Info.plist"; sourceTree = "<group>"; };
-		8B89480B96DBC41BEBD892B57C0317A7 /* MLKitDigitalInkRecognition-MLKitDigitalInkRecognition_resource */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "MLKitDigitalInkRecognition-MLKitDigitalInkRecognition_resource"; path = MLKitDigitalInkRecognition_resource.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B89480B96DBC41BEBD892B57C0317A7 /* MLKitDigitalInkRecognition_resource.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MLKitDigitalInkRecognition_resource.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BA66BE756B308E97D9481CD5E915FE8 /* crashlytics.nanopb.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = crashlytics.nanopb.h; path = Crashlytics/Protogen/nanopb/crashlytics.nanopb.h; sourceTree = "<group>"; };
 		8BF3CB707BEB9080004265AB71BEFB3B /* MSALB2COauth2Provider.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MSALB2COauth2Provider.m; path = MSAL/src/instance/oauth2/b2c/MSALB2COauth2Provider.m; sourceTree = "<group>"; };
 		8BF59C81242D61D8BC24D54CF6C4ABC4 /* GULSceneDelegateSwizzler_Private.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GULSceneDelegateSwizzler_Private.h; path = GoogleUtilities/AppDelegateSwizzler/Internal/GULSceneDelegateSwizzler_Private.h; sourceTree = "<group>"; };
@@ -6948,7 +6948,7 @@
 				B43874C6CBB50E7134FBEC24BABFE14F /* GoogleUtilities */,
 				28A6DB952CEA79E3902D41748273A364 /* GoogleUtilitiesComponents */,
 				C1998E0D8085221AD87F89B614C10E52 /* GTMSessionFetcher */,
-				8B89480B96DBC41BEBD892B57C0317A7 /* MLKitDigitalInkRecognition-MLKitDigitalInkRecognition_resource */,
+				8B89480B96DBC41BEBD892B57C0317A7 /* MLKitDigitalInkRecognition_resource.bundle */,
 				07FF532D124FFF8567F6B7C7585EB6E6 /* MSAL */,
 				B48D92A2F6E69FDB51253F50BADA8097 /* MSGraphClientSDK */,
 				7CFFC4241DDBBE5A3D52396D4E5EE228 /* MSGraphMSALAuthProvider */,
@@ -8104,7 +8104,7 @@
 			);
 			name = "MLKitDigitalInkRecognition-MLKitDigitalInkRecognition_resource";
 			productName = MLKitDigitalInkRecognition_resource;
-			productReference = 8B89480B96DBC41BEBD892B57C0317A7 /* MLKitDigitalInkRecognition-MLKitDigitalInkRecognition_resource */;
+			productReference = 8B89480B96DBC41BEBD892B57C0317A7 /* MLKitDigitalInkRecognition_resource.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 		25E9E9A17BC3F670357D7385C521E48E /* FirebaseCoreInternal */ = {
@@ -10697,6 +10697,7 @@
 			buildSettings = {
 				CODE_SIGNING_ALLOWED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/MLKitDigitalInkRecognition";
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				IBSC_MODULE = MLKitDigitalInkRecognition;
 				INFOPLIST_FILE = "Target Support Files/MLKitDigitalInkRecognition/ResourceBundle-MLKitDigitalInkRecognition_resource-MLKitDigitalInkRecognition-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -10821,6 +10822,7 @@
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGNING_ALLOWED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/MLKitDigitalInkRecognition";
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				IBSC_MODULE = MLKitDigitalInkRecognition;
 				INFOPLIST_FILE = "Target Support Files/MLKitDigitalInkRecognition/ResourceBundle-MLKitDigitalInkRecognition_resource-MLKitDigitalInkRecognition-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -15300,6 +15302,7 @@
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGNING_ALLOWED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/MLKitDigitalInkRecognition";
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				IBSC_MODULE = MLKitDigitalInkRecognition;
 				INFOPLIST_FILE = "Target Support Files/MLKitDigitalInkRecognition/ResourceBundle-MLKitDigitalInkRecognition_resource-MLKitDigitalInkRecognition-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -15643,6 +15646,7 @@
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGNING_ALLOWED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/MLKitDigitalInkRecognition";
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				IBSC_MODULE = MLKitDigitalInkRecognition;
 				INFOPLIST_FILE = "Target Support Files/MLKitDigitalInkRecognition/ResourceBundle-MLKitDigitalInkRecognition_resource-MLKitDigitalInkRecognition-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -15853,6 +15857,7 @@
 			buildSettings = {
 				CODE_SIGNING_ALLOWED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/MLKitDigitalInkRecognition";
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				IBSC_MODULE = MLKitDigitalInkRecognition;
 				INFOPLIST_FILE = "Target Support Files/MLKitDigitalInkRecognition/ResourceBundle-MLKitDigitalInkRecognition_resource-MLKitDigitalInkRecognition-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
