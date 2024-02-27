@@ -697,6 +697,8 @@
 		52C234EA2A7BC7C300E73F1B /* FTNoteBookToolsHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52C234E92A7BC7C300E73F1B /* FTNoteBookToolsHeaderView.xib */; };
 		52C234EC2A7BC91A00E73F1B /* FTNotebookToolsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C234EB2A7BC91A00E73F1B /* FTNotebookToolsHeaderView.swift */; };
 		52C98BE82A0E3D8C00070F4A /* FTOutLineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C98BE72A0E3D8C00070F4A /* FTOutLineCell.swift */; };
+		52D5B10F2B8DB23D00567AC5 /* FTWidgetIntentDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D5B10E2B8DB23D00567AC5 /* FTWidgetIntentDataHelper.swift */; };
+		52D5B1102B8DB2B700567AC5 /* FTWidgetIntentDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D5B10E2B8DB23D00567AC5 /* FTWidgetIntentDataHelper.swift */; };
 		52D7D5BD2A70E56900F3089E /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAA84E2628730FA800DE801B /* Colors.xcassets */; };
 		52D7D5BE2A70F4C600F3089E /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAA84E2628730FA800DE801B /* Colors.xcassets */; };
 		52DE39482A150E3A0090A630 /* DancingScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52BBD4F329E9590B003088AE /* DancingScript-Regular.ttf */; };
@@ -2048,14 +2050,12 @@
 		E740164129700DD7003D3D7D /* FTGlobalSearchController+Suggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E740164029700DD7003D3D7D /* FTGlobalSearchController+Suggestions.swift */; };
 		E746A99129A48248009B95B4 /* FTStickersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E746A99029A48248009B95B4 /* FTStickersViewController.swift */; };
 		E7485B7E2B7CDFE500EE9BF2 /* FTQuickNoteCreateWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7485B7C2B7CD8DE00EE9BF2 /* FTQuickNoteCreateWidget.swift */; };
+		E755B7592B7B7D15007DDC30 /* FTTextView_MenuHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E755B7582B7B7D15007DDC30 /* FTTextView_MenuHandler.swift */; };
 		E75705D92AF5104900699764 /* FTFavoriteShortcutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75705D82AF5104900699764 /* FTFavoriteShortcutController.swift */; };
 		E75705DB2AF51E8F00699764 /* FTFavoriteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75705DA2AF51E8F00699764 /* FTFavoriteEditViewController.swift */; };
 		E759A9672B7DE3F500B97F29 /* FTPinnedNotebookOptionsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E759A9662B7DE3F500B97F29 /* FTPinnedNotebookOptionsWidget.swift */; };
 		E759A9692B7DE93B00B97F29 /* FTPinnedIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E759A9682B7DE93B00B97F29 /* FTPinnedIntents.swift */; };
 		E759A96A2B7E1AD600B97F29 /* FTPinnedIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E759A9682B7DE93B00B97F29 /* FTPinnedIntents.swift */; };
-		E755B7592B7B7D15007DDC30 /* FTTextView_MenuHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E755B7582B7B7D15007DDC30 /* FTTextView_MenuHandler.swift */; };
-		E75705D92AF5104900699764 /* FTFavoriteShortcutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75705D82AF5104900699764 /* FTFavoriteShortcutController.swift */; };
-		E75705DB2AF51E8F00699764 /* FTFavoriteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75705DA2AF51E8F00699764 /* FTFavoriteEditViewController.swift */; };
 		E75A36342B4FA47E00833348 /* FTLinkToSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A36332B4FA47E00833348 /* FTLinkToSelectViewController.swift */; };
 		E75A36362B4FB52000833348 /* FTLinkTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A36352B4FB52000833348 /* FTLinkTextTableViewCell.swift */; };
 		E75A36382B4FB53300833348 /* FTLinkBookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A36372B4FB53300833348 /* FTLinkBookTableViewCell.swift */; };
@@ -3609,6 +3609,7 @@
 		52C234EB2A7BC91A00E73F1B /* FTNotebookToolsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNotebookToolsHeaderView.swift; sourceTree = "<group>"; };
 		52C31F132B7F713C004BE21B /* Noteshelf3 WidgetsExtensionDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf3 WidgetsExtensionDebug.entitlements"; sourceTree = "<group>"; };
 		52C98BE72A0E3D8C00070F4A /* FTOutLineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOutLineCell.swift; sourceTree = "<group>"; };
+		52D5B10E2B8DB23D00567AC5 /* FTWidgetIntentDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWidgetIntentDataHelper.swift; sourceTree = "<group>"; };
 		52E36A442ABDA68A00FDDC78 /* FTPageUndoRedoGestureDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPageUndoRedoGestureDetector.swift; sourceTree = "<group>"; };
 		5E26C20520220A8300D19A53 /* FTWatchRecordings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FTWatchRecordings.storyboard; sourceTree = "<group>"; };
 		5E31A16520062B2B007C28F5 /* FTExportProgressManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTExportProgressManager.swift; sourceTree = "<group>"; };
@@ -9223,6 +9224,7 @@
 				97C4535B2B74AF0D00251C73 /* FTWidgetActionType.swift */,
 				E7485B7C2B7CD8DE00EE9BF2 /* FTQuickNoteCreateWidget.swift */,
 				E759A9662B7DE3F500B97F29 /* FTPinnedNotebookOptionsWidget.swift */,
+				52D5B10E2B8DB23D00567AC5 /* FTWidgetIntentDataHelper.swift */,
 			);
 			path = "Noteshelf3 Widgets";
 			sourceTree = "<group>";
@@ -13042,6 +13044,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84485C1C2B86003C005A981D /* IntentHandler.swift in Sources */,
+				52D5B1102B8DB2B700567AC5 /* FTWidgetIntentDataHelper.swift in Sources */,
 				84485C282B860069005A981D /* PinnedIntentDefinition.intentdefinition in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -13061,6 +13064,7 @@
 				97C453632B74B02900251C73 /* FTWidgetActionController.swift in Sources */,
 				97C453402B73538B00251C73 /* FTNotebookCreationWidget.swift in Sources */,
 				E7485B7E2B7CDFE500EE9BF2 /* FTQuickNoteCreateWidget.swift in Sources */,
+				52D5B10F2B8DB23D00567AC5 /* FTWidgetIntentDataHelper.swift in Sources */,
 				97C453492B73721400251C73 /* QuickNoteIntent.swift in Sources */,
 				97C4534D2B73722C00251C73 /* NewNotebookIntent.swift in Sources */,
 				5219823B2B7B9BC1004ABDCC /* PinnedIntentDefinition.intentdefinition in Sources */,
