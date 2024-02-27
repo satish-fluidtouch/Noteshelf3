@@ -1571,6 +1571,11 @@ extension FTRootViewController {
                 self?.presentNotebookSplitController(splitscreen: splitscreen,
                                                      oldController: oldController,
                                                      animate: animate) {
+                    if let docitem = shelfItem as? FTDocumentItemProtocol {
+                        FTNoteshelfDocumentProvider.shared.addShelfItemToList(shelfItem, mode: .recent)
+                        docitem.updateLastOpenedDate();
+                        (document as? FTNoteshelfDocument)?.setLastOpenedDate(docitem.fileLastOpenedDate)
+                    }
                     blockToCall();
                 }
             }

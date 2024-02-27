@@ -132,7 +132,7 @@ class FTCloudBackupPublisher: NSObject {
     }
     
     func publishNextRequest() {
-        if shouldCancelPublishing {
+        if shouldCancelPublishing || !FTNoteshelfDocumentProvider.shared.isProviderReady {
             publishDidCancel()
             return
         }
