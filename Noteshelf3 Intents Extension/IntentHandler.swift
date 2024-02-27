@@ -29,6 +29,7 @@ class IntentHandler: INExtension, FTPinnedIntentConfigurationIntentHandling {
             pinnedItem.time = eachItem.createdTime
             pinnedItem.relativePath = eachItem.relativePath
             pinnedItem.hasCover = NSNumber(booleanLiteral: eachItem.hasCover)
+            pinnedItem.isLandscape = NSNumber(booleanLiteral: eachItem.isLandscape)
             items.append(pinnedItem)
         }
         let collection = INObjectCollection(items: items)

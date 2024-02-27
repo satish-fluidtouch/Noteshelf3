@@ -25,7 +25,7 @@ struct FTPinnedWidgetView : View {
                     .frame(width: imageSize(for: entry).width,height: imageSize(for: entry).height)
                     .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
                     .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .bottomRight]))
-                    .padding(.top, 20)
+                    .padding(.top, entry.isLandscape ? 34 : 20)
                     .padding(.leading, 24)
                     .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
             }
@@ -39,7 +39,7 @@ struct FTPinnedWidgetView : View {
     private func imageSize(for entry: FTPinnedBookEntry) -> CGSize {
         var size = CGSize(width: 40, height: 55)
         if entry.isLandscape {
-            size = CGSize(width: 52, height: 38)
+            size = CGSize(width: 60, height: 44)
         }
         return size
     }
@@ -51,7 +51,7 @@ struct topView: View {
     var body: some View {
         ZStack {
             Color(uiColor: color)
-        }.frame(width: 160, height: 48)
+        }.frame(width: 160, height: 55)
             .onAppear {
                 color = entry.hasCover ? adaptiveColorFromImage() : UIColor(hexString: "#E06E51")
             }

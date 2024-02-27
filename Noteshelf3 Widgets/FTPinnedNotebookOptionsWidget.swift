@@ -37,7 +37,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
     private var sideView: some View {
         return VStack {
             Spacer()
-            VStack {
+            VStack(spacing: 4) {
                 Text(entry.name)
                     .lineLimit(2)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -48,7 +48,6 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.appFont(for: .medium, with: 12))
                     .foregroundColor(color.isLightColor() ? Color.black.opacity(0.7) : Color.systemBackground.opacity(0.7))
-//                    .padding(.top,1)
             }
             .padding(.leading, 18)
             .padding(.bottom, 18)
@@ -57,18 +56,27 @@ struct FTPinnedNotebookOptionsWidgetView: View {
         .background(Color(uiColor: color))
         .overlay() {
             ZStack(alignment: .top) {
-                if color.isLightColor() {
-                    Color.black.opacity(0.2)
-                } else {
-                    Color.white.opacity(0.2)
+                if entry.hasCover {
+                    if color.isLightColor() {
+                        Color.black.opacity(0.2)
+                    } else {
+                        Color.white.opacity(0.2)
+                    }
                 }
-                Image(uiImage: imageFrom(entry: entry))
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: imageSize(for: entry).width,height: imageSize(for: entry).height)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.leading, 18)
-                    .padding(.top, 30)
+                VStack {
+                    HStack {
+                        Image(uiImage: imageFrom(entry: entry))
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: imageSize(for: entry).width,height: imageSize(for: entry).height)
+                            .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
+                            .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .bottomRight]))
+                            .padding(.leading, 18)
+                            .padding(.top, 20)
+                        Spacer()
+                    }
+                    Spacer()
+                }
             }
         }.isHidden(entry.relativePath.isEmpty)
     }
@@ -94,7 +102,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
     private func imageSize(for entry: FTPinnedBookEntry) -> CGSize {
         var size = CGSize(width: 40, height: 55)
         if entry.isLandscape {
-            size = CGSize(width: 52, height: 38)
+            size = CGSize(width: 60, height: 44 )
         }
         return size
     }
