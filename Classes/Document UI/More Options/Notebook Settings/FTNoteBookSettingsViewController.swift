@@ -154,19 +154,19 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
         if setting == .allowHyperLinks {
             let hyperlinkDisabled = FTUserDefaults.isHyperlinkDisabled()
             FTUserDefaults.disableHyperlink(!hyperlinkDisabled)
-            let str = FTUserDefaults.isHyperlinkDisabled() ? "off" : "on"
+            let str = !hyperlinkDisabled ? "off" : "on"
             FTNotebookEventTracker.trackNotebookEvent(with: setting.eventName, params: ["toggle": str])
         } else if setting == .hideUiInPresentMode {
             let presentUI = FTUserDefaults().shouldPresentAppUIOnPresentation
             FTUserDefaults().shouldPresentAppUIOnPresentation = !presentUI
-            let str = FTUserDefaults().shouldPresentAppUIOnPresentation ? "off" : "on"
+            let str = !presentUI ? "off" : "on"
             FTNotebookEventTracker.trackNotebookEvent(with: setting.eventName, params: ["toggle": str])
             NotificationCenter.default.post(name: NSNotification.Name.FTDidChangeWhiteBoardScreenValue, object: nil);
         } else if setting == .autoLock {
             let disableAutoLock = FTUserDefaults.disableAutoLock
             FTUserDefaults.disableAutoLock = !disableAutoLock
             self.updateIdleTimerDisabledStatus()
-            let str = FTUserDefaults.disableAutoLock ? "on" : "off"
+            let str = !disableAutoLock ? "on" : "off"
             FTNotebookEventTracker.trackNotebookEvent(with: setting.eventName, params: ["toggle": str])
         } else if setting == .evernoteSync {
             toggleEvernoteSyncStatusFor(uiSwitch: uiSwitch)
