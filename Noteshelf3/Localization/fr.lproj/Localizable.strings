@@ -1531,6 +1531,21 @@
 "text.font.setAsDefault.menuTitle" = "Définir par défaut pour:";
 "text.font.setAsDefault.thisAndFutureBooks" = "Celui-ci et tous les cahiers à venir.";
 "text.font.setAsDefault.thisBook" = "Ce cahier.";
+"textLink_brokenLink_message" = "Le lien associé à ce contenu est cassé.";
+"textLink_closingCurrentDocument_title" = "Voulez-vous continuer ?";
+"textLink_continueConfirmation" = "Cela fermera le carnet actuel et vous redirigera vers %@.";
+"textLink_documentDeleted_title" = "Le cahier a été supprimé";
+"textLink_documentItselfNotAvailable_message" = "Le cahier lié au contenu a été supprimé.";
+"textLink_editLink" = "Modifier le lien";
+"textLink_linkTo" = "Lien vers";
+"textLink_linktext" = "Texte du lien";
+"textLink_notebookDeletedOrUndownloaded" = "Impossible d'accéder au chaier associé à ce lien.";
+"textLink_notebookNotDownloadedMessage" = "Le cahier lié à ce contenu n'a pas encore été téléchargé depuis iCloud. Veuillez réessayer après un certain temps.";
+"textLink_notebookUnavailable" = "Cahier indisponible";
+"textLink_otherbook_firstPageConfirmation_message" = "La page liée au contenu a été supprimée. Souhaitez-vous accéder au cahier où se trouvait la page ?";
+"textLink_pageDeleted_title" = "La page a été supprimée";
+"textLink_pageNotAvailable" = "La page liée au contenu a été supprimée.";
+"textLink_removeLink" = "Supprimer le lien";
 "textmode.fonttitle" = "Style de police/texte";
 "texttoolbar.fontselectionTitle" = "Sélectionner la police";
 "theams.unsplashDescription" = "Choisissez depuis Unsplash, prenez une photo ou sélectionnez depuis votre bibliothèque de photos pour créer vos couvertures personnalisées.";
@@ -1587,4 +1602,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Siva on 24 January 2024 at 11:08 AM
+// Last Synced by Narayana on 20 February 2024 at 6:21 PM

@@ -40,6 +40,10 @@ extension FTPageViewController
             showPasteOptions = true
         }
 
+        if nil != self.lassoContentSelectionViewController {
+            showPasteOptions = false
+        }
+
         guard let contentView = self.contentHolderView, showPasteOptions else {
             return
         }
@@ -291,6 +295,18 @@ extension FTPageViewController: FTLassoSelectionViewDelegate {
         }
         else if(action == .takeScreenshot){
             supports = true;
+        } else if action == .group {
+            if selectedAnnotations.count > 1 {
+                if nil == selectedAnnotations.first(where: { $0.groupId != nil }) {
+                    supports = true
+                }
+            }
+        }  else if action == .ungroup {
+            if selectedAnnotations.count > 1 {
+                if nil != selectedAnnotations.first(where: { $0.groupId != nil }) {
+                    supports = true
+                }
+            }
         }
         else {
             supports = !selectedAnnotations.isEmpty;
@@ -323,6 +339,10 @@ extension FTPageViewController: FTLassoSelectionViewDelegate {
             self.startOpenAiForPage();
         case .saveClip:
             self.lassoSelectionViewCreateSnippetCommand(lassoSelectionView)
+        case .group:
+            self.lassoSelectionViewGroupCommand(lassoSelectionView);
+        case .ungroup:
+            self.lassoSelectionViewUngroupCommand(lassoSelectionView);
         }
     }
     #if targetEnvironment(macCatalyst)
@@ -330,6 +350,11 @@ extension FTPageViewController: FTLassoSelectionViewDelegate {
         self.paste(at: touchedPoint);
     }
     #endif
+
+    func initiateGroupedAnnotationEditing(annotations: [FTAnnotation]) {
+        self.lassoInfo.selectedAnnotations = annotations
+        initiateTransformSelection()
+    }
 }
 
 //MARK:- Lasso Actions -
@@ -530,6 +555,23 @@ private extension FTPageViewController  {
         self.parent?.ftPresentFormsheet(vcToPresent: saveClipPreview, hideNavBar: true)
     }
 
+    func lassoSelectionViewGroupCommand(_ lassoSelectionView: FTLassoSelectionView) {
+        let selectedAnnotations = self.lassoInfo.selectedAnnotations;
+        guard !selectedAnnotations.isEmpty else {
+            return;
+        }
+        track("Group",screenName: FTScreenNames.lasso)
+        groupAnnotations(selectedAnnotations)
+    }
+
+    func lassoSelectionViewUngroupCommand(_ lassoSelectionView: FTLassoSelectionView) {
+        let selectedAnnotations = self.lassoInfo.selectedAnnotations;
+        guard !selectedAnnotations.isEmpty else {
+            return;
+        }
+        track("Ungroup",screenName: FTScreenNames.lasso)
+        ungroupAnnotations(selectedAnnotations)
+    }
 }
 
 extension FTPageViewController: FTSaveClipDelegate {

@@ -1531,6 +1531,21 @@
 "text.font.setAsDefault.menuTitle" = "設定為預設：";
 "text.font.setAsDefault.thisAndFutureBooks" = "這本和所有未來的筆記本";
 "text.font.setAsDefault.thisBook" = "這本筆記本";
+"textLink_brokenLink_message" = "與此內容相關聯的連結已損壞。";
+"textLink_closingCurrentDocument_title" = "你想繼續嗎？";
+"textLink_continueConfirmation" = "這將關閉當前筆記並將您重新導向至%@";
+"textLink_documentDeleted_title" = "筆記本已被刪除";
+"textLink_documentItselfNotAvailable_message" = "連結到該內容的筆記本已被刪除。";
+"textLink_editLink" = "編輯連結";
+"textLink_linkTo" = "連結至";
+"textLink_linktext" = "連結文字";
+"textLink_notebookDeletedOrUndownloaded" = "無法存取與此連結關聯的筆記本。";
+"textLink_notebookNotDownloadedMessage" = "尚未從 iCloud 下載連結到此內容的筆記本。 請稍後再試。";
+"textLink_notebookUnavailable" = "筆記本無法使用";
+"textLink_otherbook_firstPageConfirmation_message" = "鏈接到內容的頁面已被刪除。您是否要導航到頁面所在的筆記本？";
+"textLink_pageDeleted_title" = "頁面已被刪除";
+"textLink_pageNotAvailable" = "鏈接到內容的頁面已被刪除。";
+"textLink_removeLink" = "移除連結";
 "textmode.fonttitle" = "字體/文字樣式";
 "texttoolbar.fontselectionTitle" = "選擇字體";
 "theams.unsplashDescription" = "從Unsplash選擇，拍照或從照片庫中選擇以建立您的自訂封面。";
@@ -1587,4 +1602,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Siva on 24 January 2024 at 11:08 AM
+// Last Synced by Narayana on 20 February 2024 at 6:21 PM

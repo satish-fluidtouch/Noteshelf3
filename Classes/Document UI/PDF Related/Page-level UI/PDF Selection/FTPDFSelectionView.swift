@@ -379,7 +379,9 @@ class FTPDFSelectionView: UIView {
         if let gesture = gestureCondition {
             longtextInteraction?.require(toFail: gesture);
         }
+#if !targetEnvironment(macCatalyst)
         longtextInteraction?.allowedTouchTypes = [NSNumber(value: (UITouch.TouchType.direct.rawValue))];
+#endif
     }
 
     private func commonSetup() {

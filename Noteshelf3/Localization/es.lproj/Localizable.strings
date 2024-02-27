@@ -1,6 +1,6 @@
 
 "ADDALLCAPS" = "Agregar todo en mayúsculas";
-"AboutNoteshelf" = "Acerca de Noteshelf.";
+"AboutNoteshelf" = "Acerca de Noteshelf";
 "AboutOptionRateOnAppStore" = "Califícanos en la App Store";
 "AboutOptionWhatsNew" = "¿Qué hay de nuevo?";
 "AboutVisitNoteshelfWebsite" = "Visita el sitio web de Noteshelf.";
@@ -1531,6 +1531,21 @@
 "text.font.setAsDefault.menuTitle" = "Establecer como predeterminado para:";
 "text.font.setAsDefault.thisAndFutureBooks" = "Esta y todas las futuras libretas";
 "text.font.setAsDefault.thisBook" = "Esta libreta";
+"textLink_brokenLink_message" = "El enlace asociado con este contenido está roto.";
+"textLink_closingCurrentDocument_title" = "¿Te gustaría continuar?";
+"textLink_continueConfirmation" = "Esto cerrará el cuaderno actual y te redirigirá a %@.";
+"textLink_documentDeleted_title" = "El cuaderno ha sido eliminado";
+"textLink_documentItselfNotAvailable_message" = "El cuaderno vinculado al contenido ha sido eliminado.";
+"textLink_editLink" = "Editar enlace";
+"textLink_linkTo" = "Enlace a";
+"textLink_linktext" = "Texto del enlace";
+"textLink_notebookDeletedOrUndownloaded" = "No se puede acceder al cuaderno asociado con este enlace.";
+"textLink_notebookNotDownloadedMessage" = "El cuaderno vinculado a este contenido todavía no se ha descargado de iCloud. Inténtelo de nuevo después de un tiempo.";
+"textLink_notebookUnavailable" = "Cuaderno no disponible";
+"textLink_otherbook_firstPageConfirmation_message" = "La página vinculada al contenido ha sido eliminada. ¿Te gustaría navegar al cuaderno donde se encontraba la página?";
+"textLink_pageDeleted_title" = "La página ha sido eliminada";
+"textLink_pageNotAvailable" = "La página vinculada al contenido ha sido eliminada.";
+"textLink_removeLink" = "Eliminar enlace";
 "textmode.fonttitle" = "Estilo de fuente/texto";
 "texttoolbar.fontselectionTitle" = "Seleccionar Fuente";
 "theams.unsplashDescription" = "Seleccionar de Unsplash, tomar una foto o seleccionar de tu Biblioteca de Fotos para crear tus portadas personalizadas.";
@@ -1587,4 +1602,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Siva on 24 January 2024 at 11:08 AM
+// Last Synced by Narayana on 20 February 2024 at 6:21 PM

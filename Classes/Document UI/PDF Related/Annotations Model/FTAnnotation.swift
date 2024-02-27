@@ -32,6 +32,8 @@ protocol FTAnnotationStrokeErase
     var forceRender : Bool = false;
 
     var uuid : String = UUID().uuidString;
+    var groupId : String?
+
     var hidden : Bool = false;
     var modifiedTimeInterval : TimeInterval = Date.timeIntervalSinceReferenceDate;
     var createdTimeInterval : TimeInterval = Date.timeIntervalSinceReferenceDate;
@@ -219,7 +221,7 @@ extension FTAnnotation : FTCopying
         
     }
     
-    func deepCopyPage(_ toDocument: FTDocumentProtocol, onCompletion: @escaping (FTPageProtocol) -> Void) {
+    func deepCopyPage(_ toDocument: FTDocumentProtocol, purpose: FTItemPurpose, onCompletion: @escaping (FTPageProtocol) -> Void) {
         
     }
 }

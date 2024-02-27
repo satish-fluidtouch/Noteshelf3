@@ -10,7 +10,7 @@ import UIKit
 import FTCommon
 
 @objc enum FTLassoAction: Int {
-    case copy,cut,takeScreenshot,delete,resize,color,convertToText, moveToFront, moveToBack,openAI, saveClip;
+    case copy,cut,takeScreenshot,delete,resize,color,convertToText, moveToFront, moveToBack,openAI, saveClip, group, ungroup
 }
 
 @objc enum FTLassoSelectionType: Int {
@@ -134,6 +134,10 @@ class FTLassoSelectionView: UIView {
         let openAI = UIMenuItem(title: "noteshelf.ai.noteshelfAI".aiLocalizedString, action: #selector(self.openAIAction(_:)));
         let saveClip = UIMenuItem(title: "clip.saveClip".localized, action: #selector(self.saveClip(_:)));
 
+// (AK): Hiding these items temporarily, these will provide the behind the scenes functionality.
+//        let groupMenuItem = UIMenuItem(title: NSLocalizedString("Group", comment: "Group"), action: #selector(self.groupMenuAction(_:)));
+//        let ungroupMenuItem = UIMenuItem(title: NSLocalizedString("Ungroup", comment: "Group"), action: #selector(self.ungroupMenuAction(_:)));
+
         var options = [cutMenuItem
                        ,copyMenuItem
                        ,deleteMenuItem
@@ -190,6 +194,12 @@ class FTLassoSelectionView: UIView {
         }
         else if action == #selector(FTLassoSelectionView.openAIAction(_:)) {
             retValue = !FTNoteshelfAI.supportsNoteshelfAI ? false : delegate.lassoSelectionView(self, canPerform: .openAI)
+        }
+        else if action == #selector(FTLassoSelectionView.groupMenuAction(_:)) {
+            retValue = self.delegate?.lassoSelectionView(self, canPerform: .group) ?? true;
+        }
+        else if action == #selector(FTLassoSelectionView.ungroupMenuAction(_:)) {
+            retValue = self.delegate?.lassoSelectionView(self, canPerform: .ungroup) ?? true;
         }
         return retValue;
     }
@@ -571,6 +581,16 @@ extension FTLassoSelectionView {
     func openAIAction(_ sender:Any?) {
         self.delegate?.lassoSelectionView(self, perform: .openAI)
         track("lasso_openAI_tapped", params: [:], screenName: FTScreenNames.lasso)
+    }
+
+    func groupMenuAction(_ sender:Any?) {
+        self.delegate?.lassoSelectionView(self, perform: .group)
+        track("lasso_group_tapped", params: [:], screenName: FTScreenNames.lasso)
+    }
+
+    func ungroupMenuAction(_ sender:Any?) {
+        self.delegate?.lassoSelectionView(self, perform: .ungroup)
+        track("lasso_ungroup_tapped", params: [:], screenName: FTScreenNames.lasso)
     }
 
     func hideMenu() {

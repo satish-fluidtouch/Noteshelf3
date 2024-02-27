@@ -1531,6 +1531,21 @@
 "text.font.setAsDefault.menuTitle" = "デフォルトに設定します:";
 "text.font.setAsDefault.thisAndFutureBooks" = "このノートおよびすべての将来のノート";
 "text.font.setAsDefault.thisBook" = "このノートブック";
+"textLink_brokenLink_message" = "このテキストに関連付けられたリンクは壊れています。";
+"textLink_closingCurrentDocument_title" = "続けますか？";
+"textLink_continueConfirmation" = "この操作により、現在のノートブックが閉じられ、%@ にリダイレクトされます。";
+"textLink_documentDeleted_title" = "ノートブックは削除されました";
+"textLink_documentItselfNotAvailable_message" = "コンテンツにリンクされているノートブックが削除されました。";
+"textLink_editLink" = "編集リンク";
+"textLink_linkTo" = "リンク先";
+"textLink_linktext" = "リンクテキスト";
+"textLink_notebookDeletedOrUndownloaded" = "このリンクに関連付けられたノートブックにアクセスできません。";
+"textLink_notebookNotDownloadedMessage" = "このコンテンツにリンクされているノートブックは、まだ iCloud からダウンロードされていません。 しばらくしてからもう一度お試しください。";
+"textLink_notebookUnavailable" = "ノートブック利用不可";
+"textLink_otherbook_firstPageConfirmation_message" = "コンテンツにリンクされたページは削除されました。ページがあったノートブックに移動しますか？";
+"textLink_pageDeleted_title" = "ページが削除されました";
+"textLink_pageNotAvailable" = "コンテンツにリンクされたページは削除されました。";
+"textLink_removeLink" = "リンクを削除";
 "textmode.fonttitle" = "フォント/テキストスタイル";
 "texttoolbar.fontselectionTitle" = "フォントを選択";
 "theams.unsplashDescription" = "Unsplash から選択、写真を撮影、または写真ライブラリから選択してカスタムカバーを作成してください。";
@@ -1587,4 +1602,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Siva on 24 January 2024 at 11:08 AM
+// Last Synced by Narayana on 20 February 2024 at 6:21 PM

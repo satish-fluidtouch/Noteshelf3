@@ -317,6 +317,7 @@ extension FTFinderViewController: FTShelfItemsMovePageDelegate {
                 if(shouldContinue) {
                     self.showLoading(withMessage: NSLocalizedString("Downloading", comment: "Downloading"));
                     DispatchQueue.global().async {
+                        FTCLSLog("NFC - Finder item Picker: \(shelfItem.URL.title)");
                         var error : NSError?;
                         let fileCoordinator = NSFileCoordinator.init(filePresenter: nil);
                         fileCoordinator.coordinate(readingItemAt: shelfItem.URL,

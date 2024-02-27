@@ -44,7 +44,15 @@ class FTBookOpenSceneDelegate: FTSceneDelegate {
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         guard let context = URLContexts.first else { return }
-        self.openUrl(with: context)
+        let queryItems = context.url.getQueryItems()
+        guard let documentId = queryItems.docId,
+              let pageId = queryItems.pageId, documentId == currentDocumentLinkingId else {
+            self.openUrl(with: context)
+            return
+        }
+        if let rootVc = self.window?.rootViewController as? FTBookSessionRootViewController {
+            rootVc.openNotebook(using: pageId)
+        }
     }
     
     func stateRestorationActivity(for scene: UIScene) -> NSUserActivity? {

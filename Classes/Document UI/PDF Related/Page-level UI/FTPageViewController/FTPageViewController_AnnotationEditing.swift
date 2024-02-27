@@ -85,6 +85,7 @@ internal extension FTPageViewController
     {
         var annotation : FTAnnotation?;
         
+        // TODO: (AK) Optimise, ideally this should be looped through the tiled annotations like Eraser
         let annotations = self.pdfPage?.annotations().reversed() ?? [FTAnnotation]();
         let scaledDownPoint = CGPointScale(point, 1/self.pageContentScale);
         for eachAnnotation in annotations {
@@ -128,9 +129,15 @@ internal extension FTPageViewController
             if annotation.isLocked {
                 showUnlockMenu(annotation: annotation)
             } else {
-                self.enterEditing(annotation: annotation,
-                                  eventType: eventType,
-                                  at: point);
+                if let groupId = annotation.groupId {
+                    self.enterGroupEditing(groupId: groupId,
+                                           eventType: eventType,
+                                           at: point)
+                } else {
+                    self.enterEditing(annotation: annotation,
+                                      eventType: eventType,
+                                      at: point);
+                }
             }
         }
     }
@@ -200,7 +207,17 @@ private extension FTPageViewController
             startEditing();
         }
     }
-    
+
+    func enterGroupEditing(groupId : String,
+                           eventType : FTProcessEventType,
+                           at point:CGPoint) {
+        guard let groupAnnotations = self.pdfPage?.annotations(groupId: groupId) else {
+            return
+        }
+
+        initiateGroupedAnnotationEditing(annotations: groupAnnotations)
+    }
+
     @objc func delayedRender(_ annotation : FTAnnotation)
     {
         let displayRect = annotation.renderingRect;

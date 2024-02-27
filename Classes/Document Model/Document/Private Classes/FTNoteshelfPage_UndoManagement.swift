@@ -35,7 +35,7 @@ private final class FTAnnotationWithUndoInfo {
     }
 }
 
-protocol FTPageUndoManagement : AnyObject {
+protocol FTPageUndoManagement : AnyObject, FTPageAnnotationGrouping {
     func addAnnotations(_ annotations: [FTAnnotation], indices: [Int]?)
     func removeAnnotations(_ annotations : [FTAnnotation])
     func moveAnnotationsToFront(_ annotations : [FTAnnotation])
@@ -51,6 +51,11 @@ protocol FTPageUndoManagement : AnyObject {
     func translate(annotations:[FTAnnotation], offset: CGPoint, shouldRefresh: Bool)
     func rotate(annotations:[FTAnnotation], angle: CGFloat, refPoint: CGPoint, shouldRefresh: Bool,                   startRect: CGRect,
                 targetRect: CGRect)
+}
+
+protocol FTPageAnnotationGrouping {
+    func group(annotations: [FTAnnotation])
+    func ungroup(annotations: [FTAnnotation])
 }
 
 extension FTNoteshelfPage: FTPageUndoManagement {
@@ -232,7 +237,7 @@ extension FTNoteshelfPage: FTPageUndoManagement {
         var indices = [Int]();
         let pageAnnotations = annotations();
         for eachAnnotation in inannotations {
-            if let index = pageAnnotations.index(of: eachAnnotation) {
+            if let index = pageAnnotations.firstIndex(of: eachAnnotation) {
                 indices.append(index);
             }
         }
@@ -376,6 +381,32 @@ extension FTNoteshelfPage: FTPageUndoManagement {
             self.postUndoRedoNotification();
         }
     }
+
+    func group(annotations: [FTAnnotation]) {
+        guard let annotationsFileItem = self.sqliteFileItem() else {
+            return
+        }
+        
+        annotationsFileItem.group(annotations: annotations)
+        undoManager?.registerUndo(withTarget: self, handler: { selfObject in
+            selfObject.ungroup(annotations: annotations)
+            selfObject.postUndoRedoNotification();
+        })
+        self.isDirty = true;
+    }
+
+    func ungroup(annotations: [FTAnnotation]) {
+        guard let annotationsFileItem = self.sqliteFileItem() else {
+            return
+        }
+
+        annotationsFileItem.ungroup(annotations: annotations)
+        undoManager?.registerUndo(withTarget: self, handler: { selfObject in
+            selfObject.group(annotations: annotations)
+            selfObject.postUndoRedoNotification();
+        })
+        self.isDirty = true;
+    }
 }
 
 private extension FTNoteshelfPage {
@@ -399,7 +430,7 @@ private extension FTNoteshelfPage {
         var annotationWithIndices = [Int:FTAnnotation]()
         for eachAnnotation in annotations {
             if(eachAnnotation.supportsUndo) {
-                if let index = pageAnnotations.index(of: eachAnnotation) {
+                if let index = pageAnnotations.firstIndex(of: eachAnnotation) {
                     annotationWithIndices[index] = eachAnnotation
                 }
             }

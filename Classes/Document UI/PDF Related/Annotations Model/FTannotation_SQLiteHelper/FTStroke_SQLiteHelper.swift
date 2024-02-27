@@ -10,9 +10,9 @@ import UIKit
 import FTDocumentFramework
 
 private let strokeInsertQuery = """
-INSERT INTO annotation (annotationType,strokeWidth,strokeColor,penType,boundingRect_x,boundingRect_y,boundingRect_w,boundingRect_h,segmentCount,stroke_segments_v3,createdTime,modifiedTime,isReadonly,version)
+INSERT INTO annotation (annotationType,strokeWidth,strokeColor,penType,boundingRect_x,boundingRect_y,boundingRect_w,boundingRect_h,segmentCount,stroke_segments_v3,createdTime,modifiedTime,isReadonly,version, id, groupId)
 VALUES
-(?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
 """;
 
 extension FTStroke {
@@ -21,6 +21,17 @@ extension FTStroke {
     }
     
     override func saveToDatabase(_ db : FMDatabase) -> Bool {
+        let id: Any
+        let groupId: Any
+        // Adding annotation UUID only if we have the groupID to reduce the storage usage.
+        if let _groupID = self.groupId {
+            id = self.uuid
+            groupId = _groupID
+        } else {
+            id = NSNull()
+            groupId = NSNull()
+        }
+
         return db.executeUpdate(strokeInsertQuery, withArgumentsIn: [
             NSNumber.init(value: FTAnnotationType.stroke.rawValue), //Changed to stroke, as we're subclssing this to FTShape and saving intermediately.
             NSNumber.init(value: Float(self.strokeWidth) as Float),
@@ -35,7 +46,9 @@ extension FTStroke {
             NSNumber.init(value: self.createdTimeInterval as Double),
             NSNumber.init(value: self.modifiedTimeInterval as Double),
             NSNumber.init(value: self.isReadonly),
-            NSNumber.init(value: self.version)
+            NSNumber.init(value: self.version),
+            id,
+            groupId
             ]);
         
     }
