@@ -132,9 +132,9 @@ protocol FTGroupItemProtocol : FTShelfItemProtocol {
     var isUpdated: Bool {get set};
 }
 
-protocol FTShelfImage : FTDiskItemProtocol {
-    var image : UIImage? {get};
-}
+//protocol FTShelfImage : FTDiskItemProtocol {
+//    var image : UIImage? {get};
+//}
 
 #if targetEnvironment(macCatalyst)
 extension FTShelfSortOrder {

@@ -35,21 +35,25 @@ extension FTSidebarViewModel {
     func deleteTag(_ tag: FTSideBarItem) {
         if let ftTag = (tag as? FTSideBarItemTag)?.fttag {
             let tagSection = self.section(type: .tags)
-            var index = -1;
-            if self.selectedSideBarItem == tag {
-                index = tagSection.items.firstIndex(of: tag) ?? 0;
+            
+            var itemToSelect: FTSideBarItem?
+            if self.selectedSideBarItem == tag, let index = tagSection.items.firstIndex(of: tag) {
+                var menuItems = tagSection.items;
+                menuItems.remove(at: index)
+                let indexToSet = min(index,menuItems.count-1);
+                itemToSelect = menuItems[indexToSet];
             }
+
             let loadingIndicator = self.delegate?.showIndicatorView("");
             runInMainThread {
                 let tagUpdated = FTDocumentTagUpdater();
                 _ = tagUpdated.delete(tag: ftTag) {
-                    if index != -1 {
-                        tagSection.removeItem(at: index);
-                        let menuItems = tagSection.items;
-                        let indexToSet = min(index,menuItems.count-1);
-                        let newItemToSet = menuItems[indexToSet];
-                        self.selectedSideBarItem = newItemToSet;
-                        self.delegate?.didTapOnSidebarItem(newItemToSet)
+                    if let index = tagSection.items.firstIndex(of: tag) {
+                        tagSection.removeItem(at: index)
+                    }
+                    if let _item = itemToSelect {
+                        self.selectedSideBarItem = _item;
+                        self.delegate?.didTapOnSidebarItem(_item)
                     }
                     debugLog("tagUpdated: \(tagUpdated)");
                     loadingIndicator?.hide()

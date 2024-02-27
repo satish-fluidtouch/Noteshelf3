@@ -39,6 +39,8 @@ private class FTNSDocumentListener: NSObject {
 
 class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,FTDocumentProtocolInternal
 {
+    private var lastOpenedDate: Date?;
+    
     fileprivate var searchOperationQueue = OperationQueue();
     fileprivate var openPurpose = FTDocumentOpenPurpose.write;
     
@@ -243,6 +245,10 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     }
     #endif
 
+    func setLastOpenedDate(_ date: Date) {
+        self.lastOpenedDate = date;
+    }
+    
     //MARK:- Create Doc / Insert PDF to Doc -
     @available(*, renamed: "createDocument(_:)")
     func createDocument(_ info : FTDocumentInputInfo,onCompletion : @escaping  ((NSError?,Bool) -> Void))
@@ -878,9 +884,17 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
 
         let uuid = self.URL.getExtendedAttribute(for: .documentUUIDKey)?.stringValue
         // Ideally In-equality condition is not needed, just as a safety check we're adding.
+        var extendedAttributes = [FileAttributeKey.ExtendedAttribute]()
         if uuid == nil || uuid != self.documentUUID {
             let uuidAttribute = FileAttributeKey.ExtendedAttribute(key: .documentUUIDKey, string: self.documentUUID)
-            try? self.URL.setExtendedAttributes(attributes: [uuidAttribute])
+            extendedAttributes.append(uuidAttribute);
+        }
+        if let date = self.lastOpenedDate {
+            let lastOpenAttribute = FileAttributeKey.ExtendedAttribute(key: .lastOpenDateKey, date: date)
+            extendedAttributes.append(lastOpenAttribute);
+        }
+        if(!extendedAttributes.isEmpty) {
+            try? self.URL.setExtendedAttributes(attributes: extendedAttributes)
         }
     }
     

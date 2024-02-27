@@ -363,7 +363,6 @@ extension FTNoteshelfDocumentProvider {
 
     @discardableResult func addShelfItemToList(_ shelfItem: FTShelfItemProtocol, mode: FTRecentItemType) -> NSError? {
         if mode == .recent {
-            (shelfItem as? FTDocumentItemProtocol)?.updateLastOpenedDate();
             return (self.recentShelfCollection as? FTShelfCollectionRecent)?.recentShelfItemCollection.addShelfItemToList(shelfItem.URL);
         } else {
             let error = (self.recentShelfCollection as? FTShelfCollectionRecent)?.favoritesShelfItemCollection.addShelfItemToList(shelfItem.URL);
