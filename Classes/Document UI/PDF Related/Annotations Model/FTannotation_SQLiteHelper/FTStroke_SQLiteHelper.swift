@@ -21,16 +21,7 @@ extension FTStroke {
     }
     
     override func saveToDatabase(_ db : FMDatabase) -> Bool {
-        let id: Any
-        let groupId: Any
-        // Adding annotation UUID only if we have the groupID to reduce the storage usage.
-        if let _groupID = self.groupId {
-            id = self.uuid
-            groupId = _groupID
-        } else {
-            id = NSNull()
-            groupId = NSNull()
-        }
+        let ids = identifiers()
 
         return db.executeUpdate(strokeInsertQuery, withArgumentsIn: [
             NSNumber.init(value: FTAnnotationType.stroke.rawValue), //Changed to stroke, as we're subclssing this to FTShape and saving intermediately.
@@ -47,8 +38,8 @@ extension FTStroke {
             NSNumber.init(value: self.modifiedTimeInterval as Double),
             NSNumber.init(value: self.isReadonly),
             NSNumber.init(value: self.version),
-            id,
-            groupId
+            ids.uuid,
+            ids.groupId
             ]);
         
     }

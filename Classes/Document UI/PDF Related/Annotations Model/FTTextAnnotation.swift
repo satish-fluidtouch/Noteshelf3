@@ -418,6 +418,7 @@ extension FTTextAnnotation
 {
     override func deepCopyAnnotation(_ toPage: FTPageProtocol, onCompletion: @escaping (FTAnnotation?) -> Void) {
         let annotation = FTTextAnnotation.init(withPage : toPage)
+        annotation.groupId = self.groupId;
         annotation.boundingRect = self.boundingRect;
         annotation.isReadonly = self.isReadonly;
         annotation.version = self.version;

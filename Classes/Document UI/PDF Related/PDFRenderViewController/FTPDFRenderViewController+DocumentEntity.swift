@@ -173,7 +173,9 @@ extension FTPDFRenderViewController: FTSavedClipdelegate {
                 let targetRect = CGRect(x: (screenArea.size.width - startRect.size.width) * 0.5, y: (screenArea.size.height - startRect.size.height) * 0.5, width: startRect.size.width, height: startRect.size.height)
                 let translateX = targetRect.origin.x - startRect.origin.x;
                 let translateY = targetRect.origin.y - startRect.origin.y;
+                let groupId = UUID().uuidString
                 annotations.forEach { eachAnn in
+                    eachAnn.groupId = groupId
                     eachAnn.setOffset(CGPoint(x: translateX, y: translateY))
                 }
                 page.deepCopyAnnotations(annotations, disableUndo: false) { [pageController] copiedAnnotations in

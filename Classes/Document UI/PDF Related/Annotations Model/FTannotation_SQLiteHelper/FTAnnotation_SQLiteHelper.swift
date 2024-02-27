@@ -115,4 +115,24 @@ extension FTAnnotation {
     func finalizeToSaveToDB() -> [FTAnnotation] {
         return [self];
     }
+
+    struct Identifier {
+        let uuid: Any
+        let groupId: Any
+    }
+
+    func identifiers() -> Identifier {
+        let id: Any
+        let groupId: Any
+        // Adding annotation UUID only if we have the groupID to reduce the storage usage.
+        if let _groupID = self.groupId {
+            id = self.uuid
+            groupId = _groupID
+        } else {
+            id = NSNull()
+            groupId = NSNull()
+        }
+
+        return Identifier(uuid: id, groupId: groupId)
+    }
 }

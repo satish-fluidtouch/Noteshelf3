@@ -9,12 +9,14 @@
 import UIKit
 import FTDocumentFramework
 
-private let audioInsertQuery = "INSERT INTO annotation (id,annotationType,boundingRect_x,boundingRect_y,boundingRect_w,boundingRect_h,screenScale,createdTime,modifiedTime,isReadonly,version)VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+private let audioInsertQuery = "INSERT INTO annotation (id,groupId,annotationType,boundingRect_x,boundingRect_y,boundingRect_w,boundingRect_h,screenScale,createdTime,modifiedTime,isReadonly,version)VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
 
 extension FTAudioAnnotation  {
     override func saveToDatabase(_ db : FMDatabase)  -> Bool {
+        let ids = self.identifiers()
         return db.executeUpdate(audioInsertQuery, withArgumentsIn: [
-            self.uuid,
+            ids.uuid,
+            ids.groupId,
             NSNumber.init(value: self.annotationType.rawValue),
             NSNumber.init(value: Float(self.boundingRect.origin.x) as Float),
             NSNumber.init(value: Float(self.boundingRect.origin.y) as Float),

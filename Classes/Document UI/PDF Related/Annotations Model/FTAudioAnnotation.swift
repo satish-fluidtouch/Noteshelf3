@@ -349,6 +349,7 @@ extension FTAudioAnnotation
 {
     override func deepCopyAnnotation(_ toPage: FTPageProtocol, onCompletion: @escaping (FTAnnotation?) -> Void) {
         let annotation = FTAudioAnnotation.init(withPage : toPage);
+        annotation.groupId = self.groupId;
         annotation.isReadonly = self.isReadonly;
         annotation.version = self.version;
         annotation.boundingRect = self.boundingRect;

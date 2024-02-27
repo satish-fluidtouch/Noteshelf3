@@ -9,12 +9,15 @@
 import UIKit
 import FTDocumentFramework
 
-let stickyInsertQuery = "INSERT INTO annotation (id,annotationType,boundingRect_x,boundingRect_y,boundingRect_w,boundingRect_h,screenScale,createdTime,modifiedTime,emojiName,isReadonly,version)VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+let stickyInsertQuery = "INSERT INTO annotation (id,groupId,annotationType,boundingRect_x,boundingRect_y,boundingRect_w,boundingRect_h,screenScale,createdTime,modifiedTime,emojiName,isReadonly,version)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 extension FTStickyAnnotation {
     override func saveToDatabase(_ db : FMDatabase)  -> Bool {
+        let ids = identifiers()
+
         return db.executeUpdate(stickyInsertQuery, withArgumentsIn: [
-            self.uuid,
+            ids.uuid,
+            ids.groupId,
             NSNumber.init(value: self.annotationType.rawValue),
             NSNumber.init(value: Float(self.boundingRect.origin.x) as Float),
             NSNumber.init(value: Float(self.boundingRect.origin.y) as Float),

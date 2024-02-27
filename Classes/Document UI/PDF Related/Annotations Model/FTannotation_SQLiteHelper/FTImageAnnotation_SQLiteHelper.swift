@@ -9,10 +9,11 @@
 import UIKit
 import FTDocumentFramework
 
-private let imageInsertQuery = "INSERT INTO annotation (id,annotationType,boundingRect_x,boundingRect_y,boundingRect_w,boundingRect_h,screenScale,txMatrix,imgTxMatrix,createdTime,modifiedTime,isReadonly,version,isLocked)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+private let imageInsertQuery = "INSERT INTO annotation (id,annotationType,boundingRect_x,boundingRect_y,boundingRect_w,boundingRect_h,screenScale,txMatrix,imgTxMatrix,createdTime,modifiedTime,isReadonly,version,isLocked,id, groupId)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 extension FTImageAnnotation  {
     override func saveToDatabase(_ db : FMDatabase)  -> Bool {
+        let ids = self.identifiers()
         return db.executeUpdate(imageInsertQuery, withArgumentsIn: [
             self.uuid,
             NSNumber.init(value: self.annotationType.rawValue),
@@ -27,7 +28,9 @@ extension FTImageAnnotation  {
             NSNumber.init(value: self.modifiedTimeInterval as Double),
             NSNumber.init(value: self.isReadonly),
             NSNumber.init(value: self.version),
-            NSNumber.init(value: self.isLocked)
+            NSNumber.init(value: self.isLocked),
+            ids.uuid,
+            ids.groupId
             ]);
     }
     

@@ -487,6 +487,7 @@ extension FTImageAnnotation
 {
     override func deepCopyAnnotation(_ toPage: FTPageProtocol, onCompletion: @escaping (FTAnnotation?) -> Void) {
         let imageAnnotation = FTImageAnnotation.init(withPage : toPage);
+        imageAnnotation.groupId = self.groupId;
         imageAnnotation.boundingRect = self.boundingRect;
         imageAnnotation.version = self.version;
         imageAnnotation.isReadonly = self.isReadonly;

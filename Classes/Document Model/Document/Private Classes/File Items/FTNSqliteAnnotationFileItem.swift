@@ -58,6 +58,17 @@ class FTNSqliteAnnotationFileItem : FTFileItemSqlite
             self.annotations.insert(annotation, at: atIndex);
         }
         self.updateContent(self.annotations as NSObjectProtocol);
+
+        // If the annotation contains a groupID, add it to a group
+        if let groupId = annotation.groupId {
+            if var groupAnnotations = annotationGroups.value(forKey: groupId) {
+                groupAnnotations.insert(annotation)
+                annotationGroups.setValue(groupAnnotations, forKey: groupId)
+            } else {
+                annotationGroups.setValue([annotation], forKey: groupId)
+            }
+        }
+
         #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
         if(annotation.shouldAddToPageTile) {
             (self.associatedPage as? FTPageTileAnnotationMap)?.tileMapAddAnnotation(annotation);
@@ -71,6 +82,12 @@ class FTNSqliteAnnotationFileItem : FTFileItemSqlite
         if (index != nil && index != NSNotFound)
         {
             self.annotations.remove(at: index!);
+            if let groupId = annotation.groupId {
+                if var groupAnnotations = annotationGroups.value(forKey: groupId) {
+                    groupAnnotations.remove(annotation)
+                    annotationGroups.setValue(groupAnnotations, forKey: groupId)
+                }
+            }
             self.updateContent(self.annotations as NSObjectProtocol);
             #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
             if(annotation.shouldAddToPageTile) {

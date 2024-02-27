@@ -135,12 +135,14 @@ class FTLassoSelectionView: UIView {
         let saveClip = UIMenuItem(title: "clip.saveClip".localized, action: #selector(self.saveClip(_:)));
 
 // (AK): Hiding these items temporarily, these will provide the behind the scenes functionality.
-//        let groupMenuItem = UIMenuItem(title: NSLocalizedString("Group", comment: "Group"), action: #selector(self.groupMenuAction(_:)));
-//        let ungroupMenuItem = UIMenuItem(title: NSLocalizedString("Ungroup", comment: "Group"), action: #selector(self.ungroupMenuAction(_:)));
+        let groupMenuItem = UIMenuItem(title: NSLocalizedString("Group", comment: "Group"), action: #selector(self.groupMenuAction(_:)));
+        let ungroupMenuItem = UIMenuItem(title: NSLocalizedString("Ungroup", comment: "Group"), action: #selector(self.ungroupMenuAction(_:)));
 
         var options = [cutMenuItem
                        ,copyMenuItem
                        ,deleteMenuItem
+                       , groupMenuItem
+                       , ungroupMenuItem
                        ,resizeMenuItem
                        ,saveClip
                        ,colorMenuItem

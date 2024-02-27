@@ -601,8 +601,10 @@ extension FTPageViewController: FTSaveClipDelegate {
             let doc = (ftdocument as? FTNoteshelfDocument)
             doc?.openDocument(purpose: .write, completionHandler: { success, error in
                 if let page = doc?.pages().first as? FTNoteshelfPage {
+                    let groupId = UUID().uuidString
                     page.deepCopyAnnotations(selectedAnnotations, onCompletion: { copiedAnnotations in
                         copiedAnnotations.forEach { annotation in
+                            annotation.groupId = groupId
                             annotation.setOffset(CGPoint(x: -totalBoundingRect.origin.x, y: -totalBoundingRect.origin.y))
                         }
                         FTPDFExportView.snapshot(forPage: page, size: page.pdfPageRect.size, screenScale: 1, offscreenRenderer: nil, purpose: FTSnapshotPurposeThumbnail, windowHash: nil) { image, _ in
