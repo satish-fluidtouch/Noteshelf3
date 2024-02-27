@@ -18,27 +18,27 @@ extension FTShelfItemCollectionAll {
     }
 }
 
-extension FTDocumentProtocolInternal {
-    func openDocument(purpose: FTDocumentOpenPurpose) async throws -> Bool {
-        return try await withCheckedThrowingContinuation({ continuation in
-            self.openDocument(purpose: purpose, completionHandler: { isSuccess, error in
-                if let error = error {
-                    continuation.resume(throwing: error)
-                } else {
-                    continuation.resume(returning: isSuccess)
-                }
-            })
-        })
-    }
-
-    func saveAndClose() async -> Bool {
-        return await withCheckedContinuation({ continuation in
-            self.saveAndCloseWithCompletionHandler { isSuccess in
-                continuation.resume(returning: isSuccess)
-            }
-        })
-    }
-}
+//extension FTDocumentProtocolInternal {
+//    func openDocument(purpose: FTDocumentOpenPurpose) async throws -> Bool {
+//        return try await withCheckedThrowingContinuation({ continuation in
+//            self.openDocument(purpose: purpose, completionHandler: { isSuccess, error in
+//                if let error = error {
+//                    continuation.resume(throwing: error)
+//                } else {
+//                    continuation.resume(returning: isSuccess)
+//                }
+//            })
+//        })
+//    }
+//
+//    func saveAndClose() async -> Bool {
+//        return await withCheckedContinuation({ continuation in
+//            self.saveAndCloseWithCompletionHandler { isSuccess in
+//                continuation.resume(returning: isSuccess)
+//            }
+//        })
+//    }
+//}
 
 // MARK: TagsPages
 extension FTNoteshelfDocument {

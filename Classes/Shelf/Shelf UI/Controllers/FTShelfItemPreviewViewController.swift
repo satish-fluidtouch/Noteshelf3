@@ -102,6 +102,7 @@ class FTShelfItemPreviewViewController: UIViewController {
                     });
                     return
                 }
+                FTCLSLog("Doc Open - Shelf Preview : \(item.URL.title)")
                 let request = FTDocumentOpenRequest(url: item.URL, purpose: .read);
                 FTNoteshelfDocumentManager.shared.openDocument(request: request) { [weak self] (token, document, _) in
                     if let doc = document {

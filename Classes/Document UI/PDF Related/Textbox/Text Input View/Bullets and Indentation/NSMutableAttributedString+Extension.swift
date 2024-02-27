@@ -37,6 +37,7 @@ extension NSMutableAttributedString {
                 style.firstLineHeadIndent *= scale
                 style.headIndent *= scale
                 style.lineSpacing *= scale
+                style.paragraphSpacing *= scale
                 
                 if style.hasBullet() {
                     style.defaultTabInterval = 2 * indentOffset * originalScale

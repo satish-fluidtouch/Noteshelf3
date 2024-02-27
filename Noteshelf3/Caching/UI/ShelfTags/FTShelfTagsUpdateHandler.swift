@@ -43,6 +43,7 @@ class FTShelfTagsUpdateHandler: NSObject {
                 let isDocAlreadyOpened = FTNoteshelfDocumentManager.shared.isDocumentAlreadyOpen(for: url)
                 dispatchGroup.enter()
                 let items = eachItem.value
+                FTCLSLog("Doc Open - Update Tag : \(url.title)")
                 let request = FTDocumentOpenRequest(url: url, purpose: .write)
                 FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
                     if let document = document as? FTNoteshelfDocument {
@@ -101,6 +102,7 @@ class FTShelfTagsUpdateHandler: NSObject {
                 FTDocumentCache.shared.disableCacheUpdates();
                 for case let doc in filteredDocuments where doc.documentUUID != nil {
                     dispatchGroup.enter()
+                    FTCLSLog("Doc Open - Delete Tag : \(doc.URL.title)")
                     let request = FTDocumentOpenRequest(url: doc.URL, purpose: .write)
                     FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
                         if let document = document as? FTNoteshelfDocument {
@@ -149,6 +151,7 @@ class FTShelfTagsUpdateHandler: NSObject {
                 FTDocumentCache.shared.disableCacheUpdates();
                 for case let doc in filteredDocuments where doc.documentUUID != nil {
                     dispatchGroup.enter()
+                    FTCLSLog("Doc Open - Rename Tag : \(doc.URL.title)")
                     let request = FTDocumentOpenRequest(url: doc.URL, purpose: .write)
                     FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
                         if let document = document as? FTNoteshelfDocument {
