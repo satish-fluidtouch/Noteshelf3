@@ -18,6 +18,7 @@ struct FTPinnedBookEntry: TimelineEntry {
     let coverImage: String
     let relativePath: String
     let hasCover: Bool
+    let isLandscape: Bool
 }
 struct FTPinnedTimelineProvider: IntentTimelineProvider {
     typealias Entry = FTPinnedBookEntry
@@ -33,7 +34,7 @@ struct FTPinnedTimelineProvider: IntentTimelineProvider {
     }
     func placeholder(in context: Context) -> FTPinnedBookEntry {
         
-        return FTPinnedBookEntry(date: Date(), name: "PlaceHolder", time: "5:00PM", coverImage: "coverImage1", relativePath: "", hasCover: false)
+        return FTPinnedBookEntry(date: Date(), name: "PlaceHolder", time: "5:00PM", coverImage: "coverImage1", relativePath: "", hasCover: false, isLandscape: false)
     }
 
     func getSnapshot(for configuration: FTPinnedIntentConfigurationIntent,
@@ -49,7 +50,7 @@ struct FTPinnedTimelineProvider: IntentTimelineProvider {
         Task {
             var entry = placeholder(in: context)
             if let selectedBook = configuration.Books {
-                entry = FTPinnedBookEntry(date: Date(), name: selectedBook.displayString , time: selectedBook.time ?? "5:00 PM", coverImage: selectedBook.coverImage ?? "coverImage1", relativePath: selectedBook.relativePath ?? "", hasCover: selectedBook.hasCover?.boolValue ?? false)
+                entry = FTPinnedBookEntry(date: Date(), name: selectedBook.displayString , time: selectedBook.time ?? "5:00 PM", coverImage: selectedBook.coverImage ?? "coverImage1", relativePath: selectedBook.relativePath ?? "", hasCover: selectedBook.hasCover?.boolValue ?? false, isLandscape: selectedBook.isLandscape?.boolValue ?? false)
             } else {
                 entry = defaultBookEntry()
             }
@@ -58,7 +59,7 @@ struct FTPinnedTimelineProvider: IntentTimelineProvider {
     }
     
     private func showEmptyState(completion: @escaping (Timeline<FTPinnedBookEntry>) -> ()) {
-        let entry = FTPinnedBookEntry(date: Date(), name: "Empty State", time: "6:00 PM", coverImage: "", relativePath: "", hasCover: false)
+        let entry = FTPinnedBookEntry(date: Date(), name: "Empty State", time: "6:00 PM", coverImage: "", relativePath: "", hasCover: false, isLandscape: false)
 
         
         // Trigger completion & next fetch happens 15 minutes later
@@ -83,7 +84,7 @@ struct FTPinnedTimelineProvider: IntentTimelineProvider {
     }
     
     private func defaultBookEntry() -> FTPinnedBookEntry {
-        var entry = FTPinnedBookEntry(date: Date(), name: "PlaceHolder", time: "5:00PM", coverImage: "coverImage1", relativePath: "", hasCover: false)
+        var entry = FTPinnedBookEntry(date: Date(), name: "PlaceHolder", time: "5:00PM", coverImage: "coverImage1", relativePath: "", hasCover: false, isLandscape: false)
         let sharedCacheURL = self.sharedCacheURL
         if FileManager().fileExists(atPath: sharedCacheURL.path(percentEncoded: false)) {
             if let urls = try? FileManager.default.contentsOfDirectory(at: sharedCacheURL,
@@ -98,10 +99,10 @@ struct FTPinnedTimelineProvider: IntentTimelineProvider {
                     let coverImage : String
                     let metaDataPlistUrl = eachNotebookUrl.appendingPathComponent("Metadata/Properties.plist")
                     relativePath = _relativePath(for: metaDataPlistUrl)
-                    let isCover = hasCover(for: eachNotebookUrl.path(percentEncoded: false))
+                    let pageAttrs = pageAttrs(for: eachNotebookUrl.path(percentEncoded: false))
                     coverImage = eachNotebookUrl.appending(path:"cover-shelf-image.png").path(percentEncoded: false);
                     time = timeFromDate(currentDate: eachNotebookUrl.fileCreationDate)
-                     entry = FTPinnedBookEntry(date: Date(), name: relativePath.lastPathComponent.deletingPathExtension, time: time, coverImage: coverImage, relativePath: relativePath, hasCover: isCover)
+                    entry = FTPinnedBookEntry(date: Date(), name: relativePath.lastPathComponent.deletingPathExtension, time: time, coverImage: coverImage, relativePath: relativePath, hasCover: pageAttrs.0, isLandscape: pageAttrs.1)
                 }
 
             }
@@ -119,19 +120,26 @@ struct FTPinnedTimelineProvider: IntentTimelineProvider {
         return relativePath
     }
     
-    private func hasCover(for notebookPath: String) -> Bool {
+    private func pageAttrs(for notebookPath: String) -> (Bool, Bool) {
         var hasCover = false
+        var isLandscape = false
         let docPlist = notebookPath.appending("Document.plist")
         do {
             let url = URL(fileURLWithPath: docPlist)
             let dict = try NSDictionary(contentsOf: url, error: ())
             if let pagesArray = dict["pages"] as? [NSDictionary], let firstPage = pagesArray.first {
+                if let pageRectPDFKit = firstPage["pdfKitPageRect"] as? String {
+                    let rect = NSCoder.cgRect(for: pageRectPDFKit);
+                    if rect.width > rect.height {
+                        isLandscape = true
+                    }
+                }
                 hasCover = firstPage["isCover"] as? Bool ?? false
             }
         } catch {
-            return hasCover
+            return (hasCover, isLandscape)
         }
-        return hasCover
+        return (hasCover, isLandscape)
     }
     
     private func timeFromDate(currentDate: Date) -> String {

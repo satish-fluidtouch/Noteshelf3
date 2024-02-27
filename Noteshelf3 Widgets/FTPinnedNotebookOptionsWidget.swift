@@ -61,7 +61,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                 Image(uiImage: imageFrom(entry: entry))
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 40,height: 55)
+                    .frame(width: imageSize(for: entry).width,height: imageSize(for: entry).height)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.leading, 18)
                     .padding(.top, 30)
@@ -70,11 +70,15 @@ struct FTPinnedNotebookOptionsWidgetView: View {
     }
     
     private func imageFrom(entry : FTPinnedBookEntry) -> UIImage {
-        var image = UIImage(named: "noCover")!
-        if entry.hasCover {
-            image = UIImage(contentsOfFile: entry.coverImage) ?? image
+        return UIImage(contentsOfFile: entry.coverImage) ?? UIImage(named: "noCover")!
+    }
+    
+    private func imageSize(for entry: FTPinnedBookEntry) -> CGSize {
+        var size = CGSize(width: 40, height: 55)
+        if entry.isLandscape {
+            size = CGSize(width: 52, height: 38)
         }
-        return image
+        return size
     }
 
     private func adaptiveColorFromImage() -> UIColor {
@@ -124,7 +128,7 @@ struct FTPinnedBookOptionButtonStyle: ButtonStyle {
 
 struct FTPinnedNotebookOptionsWidgetView_Previews: PreviewProvider {
     static var previews: some View {
-        FTPinnedNotebookOptionsWidgetView(entry: FTPinnedBookEntry(date: Date(), name: "Notebook Title hdsfhhg", time: "12:00 PM", coverImage: "coverImage1", relativePath: "", hasCover: false))
+        FTPinnedNotebookOptionsWidgetView(entry: FTPinnedBookEntry(date: Date(), name: "Notebook Title hdsfhhg", time: "12:00 PM", coverImage: "coverImage1", relativePath: "", hasCover: false, isLandscape: false))
     }
 }
 

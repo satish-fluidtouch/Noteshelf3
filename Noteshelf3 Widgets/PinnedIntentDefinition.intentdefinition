@@ -107,7 +107,7 @@
 			<key>INTypeDisplayNameID</key>
 			<string>n9Cw6V</string>
 			<key>INTypeLastPropertyTag</key>
-			<integer>107</integer>
+			<integer>109</integer>
 			<key>INTypeName</key>
 			<string>PinnedBookType</string>
 			<key>INTypeProperties</key>
@@ -226,6 +226,31 @@
 					<string>hasCover</string>
 					<key>INTypePropertyTag</key>
 					<integer>107</integer>
+					<key>INTypePropertyType</key>
+					<string>Boolean</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDisplayName</key>
+					<string>Is Landscape</string>
+					<key>INTypePropertyDisplayNameID</key>
+					<string>MB4I6C</string>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>9</integer>
+					<key>INTypePropertyMetadata</key>
+					<dict>
+						<key>INTypePropertyMetadataFalseDisplayName</key>
+						<string>false</string>
+						<key>INTypePropertyMetadataFalseDisplayNameID</key>
+						<string>qJEbPA</string>
+						<key>INTypePropertyMetadataTrueDisplayName</key>
+						<string>true</string>
+						<key>INTypePropertyMetadataTrueDisplayNameID</key>
+						<string>j9Ozr2</string>
+					</dict>
+					<key>INTypePropertyName</key>
+					<string>isLandscape</string>
+					<key>INTypePropertyTag</key>
+					<integer>109</integer>
 					<key>INTypePropertyType</key>
 					<string>Boolean</string>
 				</dict>

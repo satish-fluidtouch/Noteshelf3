@@ -21,7 +21,7 @@ struct FTPinnedWidgetView : View {
             Image(uiImage: imageFrom(entry: entry))
                 .resizable()
                 .scaledToFit()
-                .frame(width: 44,height: 60)
+                .frame(width: imageSize(for: entry).width,height: imageSize(for: entry).height)
                 .padding(.top, 20)
                 .padding(.leading, 24)
 //                .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
@@ -32,6 +32,14 @@ struct FTPinnedWidgetView : View {
     
     private func imageFrom(entry : FTPinnedBookEntry) -> UIImage {
         return UIImage(contentsOfFile: entry.coverImage) ?? UIImage(named: "noCover")!
+    }
+    
+    private func imageSize(for entry: FTPinnedBookEntry) -> CGSize {
+        var size = CGSize(width: 40, height: 55)
+        if entry.isLandscape {
+            size = CGSize(width: 52, height: 38)
+        }
+        return size
     }
 }
 struct topView: View {

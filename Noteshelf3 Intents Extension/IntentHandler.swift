@@ -55,10 +55,10 @@ class IntentHandler: INExtension, FTPinnedIntentConfigurationIntentHandling {
                     let coverImage : String
                     let metaDataPlistUrl = eachNotebookUrl.appendingPathComponent("Metadata/Properties.plist")
                     relativePath = _relativePath(for: metaDataPlistUrl)
-                    let isCover = hasCover(for: eachNotebookUrl.path(percentEncoded: false))
+                    let pageAttrs = pageAttrs(for: eachNotebookUrl.path(percentEncoded: false))
                     coverImage = eachNotebookUrl.appending(path:"cover-shelf-image.png").path(percentEncoded: false);
                     time = timeFromDate(currentDate: eachNotebookUrl.fileCreationDate)
-                    let book = FTPinnedMockData(relativePath: relativePath, createdTime: time, coverImageName: coverImage, hasCover: isCover)
+                    let book = FTPinnedMockData(relativePath: relativePath, createdTime: time, coverImageName: coverImage, hasCover: pageAttrs.0, isLandscape: pageAttrs.1)
                     notebooks.append(book)
                 }
 
@@ -77,19 +77,26 @@ class IntentHandler: INExtension, FTPinnedIntentConfigurationIntentHandling {
         return relativePath
     }
 
-    private func hasCover(for notebookPath: String) -> Bool {
+    private func pageAttrs(for notebookPath: String) -> (Bool, Bool) {
         var hasCover = false
+        var isLandscape = false
         let docPlist = notebookPath.appending("Document.plist")
         do {
             let url = URL(fileURLWithPath: docPlist)
             let dict = try NSDictionary(contentsOf: url, error: ())
             if let pagesArray = dict["pages"] as? [NSDictionary], let firstPage = pagesArray.first {
+                if let pageRectPDFKit = firstPage["pdfKitPageRect"] as? String {
+                    let rect = NSCoder.cgRect(for: pageRectPDFKit);
+                    if rect.width > rect.height {
+                        isLandscape = true
+                    }
+                }
                 hasCover = firstPage["isCover"] as? Bool ?? false
             }
         } catch {
-            return hasCover
+            return (hasCover, isLandscape)
         }
-        return hasCover
+        return (hasCover, isLandscape)
     }
 
     private func timeFromDate(currentDate: Date) -> String {
@@ -115,12 +122,14 @@ struct FTPinnedMockData {
     let createdTime: String
     let coverImageName: String
     let hasCover: Bool
-
-    init(relativePath: String, createdTime: String, coverImageName: String, hasCover: Bool) {
+    let isLandscape: Bool
+    
+    init(relativePath: String, createdTime: String, coverImageName: String, hasCover: Bool, isLandscape: Bool) {
         self.relativePath = relativePath
         self.createdTime = createdTime
         self.coverImageName = coverImageName
         self.hasCover = hasCover
+        self.isLandscape = isLandscape
     }
 
     static let mockData: [[String: String]] = [
