@@ -25,12 +25,12 @@ extension URL {
         return self.scheme == FTSharedGroupID.getAppBundleID()
     }
 
-    func isAppTextPageLink() -> Bool {
-        return self.path(percentEncoded: false).contains(FTAppIntentHandler.hyperlinkPath)
-    }
-
-    func isTemplateIntentPath() -> Bool {
-        return self.path(percentEncoded: false).contains(FTAppIntentHandler.templatesPath)
+    func checkIf(contains path: String) -> Bool {
+        var status = false
+        if let urlcomponents = URLComponents(url: self, resolvingAgainstBaseURL: true) {
+            status = urlcomponents.path.contains(path)
+        }
+        return status
     }
 
     func getQueryItems() -> (docId: String?, pageId: String?) {

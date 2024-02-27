@@ -641,9 +641,6 @@ extension FTShelfSplitViewController {
                         rootController.switchToPDFViewer(docInfo, animate: shouldAnimate ,onCompletion: {
                             self.openingBookInProgress = false
                             self.view.isUserInteractionEnabled = true
-                            if(addToRecent) {
-                                FTNoteshelfDocumentProvider.shared.addShelfItemToList(shelfItem, mode: .recent)
-                            }
                             NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
                             notebookToOpen.isJustCreatedWithQuickNote = isQuickCreate
                             onCompletion?(notebookToOpen, true)
