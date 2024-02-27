@@ -1532,6 +1532,7 @@ extension FTRootViewController {
         self.setWindowTitle(documentInfo.shelfItem.displayTitle)
 
         let shelfItem = documentInfo.shelfItem;
+        let document = documentInfo.document;
         self.setLastOpenedDocument(shelfItem.URL);
         self.rootContentViewController?.shelfWillMovetoBack()
         FTENPublishManager.shared.currentOpenedDocumentUUID = documentInfo.document.documentUUID;
