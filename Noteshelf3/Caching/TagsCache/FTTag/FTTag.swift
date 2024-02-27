@@ -141,11 +141,9 @@ class FTTag: NSObject {
     }
     
     private func addTaggedItemIfNeeded(_ item: FTTaggedEntity,forceAdd: Bool) {
-        guard self.loadState == .loaded || forceAdd else {
-            return;
-        }
         self.lockSelf()
-        if !self.taggedEntitties.contains(item) {
+        if (self.loadState == .loaded || forceAdd)
+            ,!self.taggedEntitties.contains(item) {
             self.taggedEntitties.append(item);
         }
         item.addTag(self);

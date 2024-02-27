@@ -11,7 +11,38 @@ import FTStyles
 import FTCommon
 import FTNewNotebook
 
+private class FTTagButtonCell: UIButton {
+    private var maxWidth: CGFloat?;
+    convenience init(_ tagTitle: String, maxWidth: CGFloat? = nil) {
+        self.init(type: .custom);
+        self.maxWidth = maxWidth
+        self.layer.cornerRadius = 6
+        self.titleLabel?.lineBreakMode  = .byTruncatingMiddle
+        self.setTitle(tagTitle, for: .normal)
+        self.titleLabel?.font = UIFont.appFont(for: .medium, with: 12)
+        self.backgroundColor = UIColor.appColor(.accentBg)
+        self.setTitleColor(UIColor.appColor(.accent), for: .normal)
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        var size = super.intrinsicContentSize;
+        if let _maxWidth = self.maxWidth {
+            size.width = min(size.width, _maxWidth);
+        }
+        return size;
+    }
+}
+
 class FTShelfTagsPageCell: UICollectionViewCell {
+    private struct FTCellLayout {
+        static let padding: CGFloat = 10
+        static let spacing: CGFloat = 5
+        static let countMaxWidth: CGFloat = 40.0
+        static var minRequiredWidth: CGFloat {
+            return FTCellLayout.padding + FTCellLayout.spacing + FTCellLayout.countMaxWidth
+        }
+    }
+    
     @IBOutlet weak var thumbnail: UIImageView?
     @IBOutlet weak var notDownloadStatusView: UIImageView?
     @IBOutlet weak var tagsView: UIStackView!
@@ -32,25 +63,33 @@ class FTShelfTagsPageCell: UICollectionViewCell {
             }
         }
     }
-    
+        
+    override func awakeFromNib() {
+        super.awakeFromNib();
+        guard let tagView = self.tagsView else {
+            return;
+        }
+        tagsView?.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tagView.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+            ,tagView.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor)
+        ])
+    }
+
     private func updateTagsViewWith(tags: [String]) {
-        let padding = 10.0
-        let interitemSpace = 5.0
+        self.layoutIfNeeded()
+        let padding = FTCellLayout.padding
+        let interitemSpace = FTCellLayout.spacing
         var xAxis = 0.0
         let totalWidth = self.bookTitleLbl?.frame.width ?? 100
         var availableSpace = totalWidth
         var tagsCount = tags.count
-        let countStrWidth = 40.0
+        let countStrWidth = FTCellLayout.countMaxWidth
         tagsView?.subviews.forEach {$0.removeFromSuperview()}
+
         for (index, tag) in tags.enumerated() {
             let pageTag = "  #\(tag)  "
-            let tagButton = UIButton(type: .custom)
-            tagButton.layer.cornerRadius = 6
-            tagButton.titleLabel?.lineBreakMode  = .byTruncatingMiddle
-            tagButton.setTitle(pageTag, for: .normal)
-            tagButton.titleLabel?.font = UIFont.appFont(for: .medium, with: 12)
-            tagButton.backgroundColor = UIColor.appColor(.accentBg)
-            tagButton.setTitleColor(UIColor.appColor(.accent), for: .normal)
+            let tagButton = FTTagButtonCell(pageTag, maxWidth: totalWidth - (tags.count > 1 ? FTCellLayout.minRequiredWidth : 0));
             var fittingWidth = tagButton.intrinsicContentSize.width + padding
             if fittingWidth < (availableSpace + interitemSpace) - countStrWidth || index == 0 {
                  availableSpace = totalWidth - (xAxis + fittingWidth + interitemSpace)
@@ -68,12 +107,6 @@ class FTShelfTagsPageCell: UICollectionViewCell {
                 tagsView?.addArrangedSubview(tagButton)
                 return
             }
-            tagsView?.translatesAutoresizingMaskIntoConstraints = false
-
-            NSLayoutConstraint.activate([
-                tagsView!.centerXAnchor.constraint(equalTo: self.centerXAnchor)
-                ,tagsView.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor)
-            ])
         }
     }
 }

@@ -21,11 +21,14 @@ class FTSidebarSection: FTSectionDisplayable, Identifiable, ObservableObject {
     @Published var isExpanded = true {
         didSet {
             if isExpanded != oldValue {
-                FTUserDefaults.defaults().set(isExpanded, forKey: "isExpanded_\(type.rawValue)");
+                FTUserDefaults.defaults().set(isExpanded, forKey: self.isExpandedKey);
             }
         }
     }
     
+    private var isExpandedKey: String {
+        return "isExpanded_\(type.rawValue)";
+    }
     var supportsRearrangeOfItems: Bool {
         return false;
     }
@@ -35,7 +38,8 @@ class FTSidebarSection: FTSectionDisplayable, Identifiable, ObservableObject {
     required init() {
         self.items = items
         if type != .all {
-            self.isExpanded = FTUserDefaults.defaults().bool(forKey: "isExpanded_\(type.rawValue)")
+            FTUserDefaults.defaults().register(defaults: [self.isExpandedKey : NSNumber(booleanLiteral: true)])
+            self.isExpanded = FTUserDefaults.defaults().bool(forKey: self.isExpandedKey)
         }
     }
     
