@@ -18,15 +18,17 @@ struct FTPinnedWidgetView : View {
                 bottomView(entry: entry)
             }
         }.overlay(alignment: .topLeading) {
-            Image(uiImage: imageFrom(entry: entry))
-                .resizable()
-                .scaledToFit()
-                .frame(width: imageSize(for: entry).width,height: imageSize(for: entry).height)
-                .padding(.top, 20)
-                .padding(.leading, 24)
-//                .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
-//                .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .topRight]))
-                .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+            if !entry.relativePath.isEmpty {
+                Image(uiImage: imageFrom(entry: entry))
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: imageSize(for: entry).width,height: imageSize(for: entry).height)
+                    .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
+                    .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .bottomRight]))
+                    .padding(.top, 20)
+                    .padding(.leading, 24)
+                    .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+            }
         }
     }
     
@@ -77,6 +79,33 @@ struct bottomView: View {
     let entry: FTPinnedBookEntry
     var body: some View {
         HStack {
+            if entry.relativePath.isEmpty {
+                EmptyView()
+            } else {
+                NoteBookInfoView(entry: entry)
+            }
+        }.frame(width: 160, height: 110)
+            .background(Rectangle().fill(LinearGradient(colors: [Color(uiColor: UIColor(hexString: "#F0EEEB")),Color(uiColor: UIColor(hexString: "#FFFFFF"))], startPoint: .top, endPoint: .bottom)))
+    }
+}
+
+struct EmptyView: View {
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 10)                
+                .frame(width:119, height: 64)
+            .foregroundColor(Color.black.opacity(0.03))
+            Text("No notes yet")
+                .font(.appFont(for: .medium, with: 13))
+                .foregroundColor(Color(uiColor: UIColor(hexString: "#1C1C1C", alpha: 0.4)))
+        }
+    }
+}
+
+struct NoteBookInfoView: View {
+    let entry: FTPinnedBookEntry
+    var body: some View {
+        HStack {
             VStack {
                 Spacer()
                 Text(entry.name)
@@ -89,16 +118,13 @@ struct bottomView: View {
                     .font(.appFont(for: .medium, with: 12))
                     .foregroundColor(Color("black70"))
                     .frame(maxWidth: .infinity, alignment: .leading)
-//                    .padding(.top,1)
+                //                    .padding(.top,1)
             }.padding(.leading, 20)
                 .padding(.bottom, 16)
             Spacer()
-        }.frame(width: 160, height: 110)
-            .background(Rectangle().fill(LinearGradient(colors: [Color(uiColor: UIColor(hexString: "#F0EEEB")),Color(uiColor: UIColor(hexString: "#FFFFFF"))], startPoint: .top, endPoint: .bottom)))
+        }
     }
 }
-
-
 
 extension UIColor {
     func isLightColor() -> Bool {
@@ -124,5 +150,15 @@ struct RoundedCorner: Shape {
     func path(in rect: CGRect) -> Path {
         let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         return Path(path.cgPath)
+    }
+}
+
+extension View {
+    @ViewBuilder func isHidden(_ isHidden: Bool) -> some View {
+        if isHidden {
+            self.hidden()
+        } else {
+            self
+        }
     }
 }

@@ -18,7 +18,11 @@ struct FTPinnedNotebookOptionsWidgetView: View {
     var body: some View {
         HStack(spacing: 0) {
             Button(intent: FTPinnedBookOpenIntent(path: entry.relativePath)) {
-                sideView
+                if entry.relativePath.isEmpty {
+                    NoNotesView
+                } else {
+                    sideView
+                }
             }.buttonStyle(.plain)
             VStack {
                 optionsView
@@ -66,7 +70,21 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                     .padding(.leading, 18)
                     .padding(.top, 30)
             }
+        }.isHidden(entry.relativePath.isEmpty)
+    }
+    
+    private  var NoNotesView: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 10)
+                .frame(width: 150, height: 120)
+                .foregroundColor(Color(uiColor: UIColor(hexString: "FFFFFF",alpha: 0.1)))
+            Text("No notes yet")
+                .font(.appFont(for: .medium, with: 13))
+                .foregroundColor(Color(uiColor: UIColor(hexString: "FFFFFF")))
         }
+        .frame(width: 190, height: 155)
+        .background(Color(uiColor: color))
+        
     }
     
     private func imageFrom(entry : FTPinnedBookEntry) -> UIImage {
@@ -113,6 +131,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
             }
         }
         .buttonStyle(FTPinnedBookOptionButtonStyle())
+        .disabled(type.relativePath.isEmpty)
     }
 }
 
