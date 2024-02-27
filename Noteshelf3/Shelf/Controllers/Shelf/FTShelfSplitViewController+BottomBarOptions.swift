@@ -157,20 +157,24 @@ extension FTShelfSplitViewController {
             }
         }
     }
+    
     func clearCache(documentUUID : String?) {
         if let docID = documentUUID {
             let thumbnailPath = URL.thumbnailFolderURL().appendingPathComponent(docID);
             try? FileManager.default.removeItem(at: thumbnailPath);
         }
     }
-    func restoreShelfItem( items inItems: [FTShelfItemProtocol],onCompletion:@escaping((Bool) -> Void)) {
+    
+    func restoreShelfItem( items inItems: [FTShelfItemProtocol],onCompletion:@escaping((_ success: Bool, _ removedItems:[FTShelfItemProtocol]) -> Void)) {
         let items = self.groupRecoverBooksAndPages(inItems);
+        var removedItems = [FTShelfItemProtocol]();
+        
         let loadingIndicatorViewController = FTLoadingIndicatorViewController.show(onMode: .activityIndicator,
                                                 from: self,
                                                 withText: NSLocalizedString("notebook.restoring", comment: "Restoring..."))
 
         startRestore(items: items, onCompletion: onCompletion)
-        func startRestore(items : [FTShelfItemProtocol],onCompletion:@escaping((Bool) -> Void)){
+        func startRestore(items : [FTShelfItemProtocol],onCompletion:@escaping((_ sucess:Bool, _ removedItems:[FTShelfItemProtocol]) -> Void)){
             var itemsToMove = items;
             self.restoringItems = items
 
@@ -180,7 +184,7 @@ extension FTShelfSplitViewController {
                     self.showToastMessage(toastMessage);
                     self.restoringToastMessage = nil
                 }
-                onCompletion(true)
+                onCompletion(true,removedItems)
                 return;
             }
             let item = itemsToMove.removeFirst();
@@ -189,21 +193,25 @@ extension FTShelfSplitViewController {
             var restoreBook = true;
 
             let finalizedBlock: (Error?) -> () = { [weak self] (error) in
-                //self?.shelfBottomToolBar?.view.isUserInteractionEnabled = true
-                if let error, error is FTPremiumUserError {
-                    loadingIndicatorViewController.hide()
-                    guard let self = self else { return }
-                    FTIAPurchaseHelper.shared.showIAPAlert(on: self);
-                    onCompletion(false)
-                } else if let nsError = error as NSError? {
-                    loadingIndicatorViewController.hide()
-                    nsError.showAlert(from: self);
-                    onCompletion(false)
+                if let _error = error {
+                    if _error is FTPremiumUserError {
+                        loadingIndicatorViewController.hide()
+                        guard let self = self else { return }
+                        FTIAPurchaseHelper.shared.showIAPAlert(on: self);
+                        onCompletion(false,removedItems)
+                        return;
+                    }
+                    else if !(_error as NSError).isInvalidPinError {
+                        loadingIndicatorViewController.hide()
+                        (_error as NSError).showAlert(from: self);
+                        onCompletion(false,removedItems);
+                        return;
+                    }
                 }
                 else {
-                    startRestore(items: itemsToMove, onCompletion: onCompletion)
-                   //self?.restoreShelfItem(items: itemsToMove, onCompletion: onCompletion);
+                    removedItems.append(item);
                 }
+                startRestore(items: itemsToMove, onCompletion: onCompletion)
             };
             // self.shelfBottomToolBar?.view.isUserInteractionEnabled = false
             let filePath = item.URL.appendingPathComponent(NOTEBOOK_RECOVERY_PLIST);
@@ -348,6 +356,10 @@ extension FTShelfSplitViewController {
                 loadingIndicatorViewController.hide()
                 guard FTIAPManager.shared.premiumUser.canAddFewMoreBooks(count: 1) else {
                     completion(FTPremiumUserError.nonPremiumError)
+                    return;
+                }
+                if let error, error.isInvalidPinError {
+                    completion(error)
                     return;
                 }
                 FTNoteshelfDocumentProvider.shared.uncategorizedNotesCollection { [weak self] collectionItem in

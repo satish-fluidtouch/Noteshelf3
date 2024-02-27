@@ -24,7 +24,7 @@ protocol FTShelfViewModelProtocol: AnyObject {
     func hideCurrentGroup(animated: Bool,onCompletion: (() -> Void)?)
     func moveItemsToTrash(items:[FTShelfItemProtocol], _ onCompletion:(([FTShelfItemProtocol]) -> Void)?)
     func deleteItems(_ items : [FTShelfItemProtocol],  shouldEmptyTrash:Bool, onCompletion: @escaping((Bool) -> Void))
-    func restoreShelfItem( items : [FTShelfItemProtocol],onCompletion:@escaping((Bool) -> Void))
+    func restoreShelfItem( items : [FTShelfItemProtocol],onCompletion:@escaping((_ success: Bool, _ removedItems:[FTShelfItemProtocol]) -> Void))
     func favoriteShelfItem(_ item: FTShelfItemProtocol,toPin: Bool)
     func showMoveItemsPopOverWith(selectedShelfItems: [FTShelfItemProtocol])
     func duplicateDocuments(_ items : [FTShelfItemProtocol], onCompletion: @escaping((Bool) -> Void))
