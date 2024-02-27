@@ -389,6 +389,7 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
                                     onCompletion block:@escaping (NSError?, FTDocumentItemProtocol?) -> Void) {
         self.parent?.disableUpdates()
         DispatchQueue.global().async(execute: {
+            FTCLSLog("NFC - Rename Document: \(shelfItem.URL.title)");
             let fileCordinator = NSFileCoordinator(filePresenter: nil);
 
             fileCordinator.coordinate(writingItemAt: shelfItem.URL as URL,
@@ -889,6 +890,7 @@ extension FTShelfItemCollectionICloud {
 
     fileprivate func fileOperationMoveFileAtPath(_ fileURL: Foundation.URL, toPath: Foundation.URL, onCompletion:@escaping (NSError?) -> Void) {
         DispatchQueue.global().async(execute: {
+            FTCLSLog("NFC - move operation: \(fileURL.title)");
             let fileCoordinator = NSFileCoordinator(filePresenter: nil);
 
             fileCoordinator.coordinate(writingItemAt: fileURL, options: NSFileCoordinator.WritingOptions.forMoving, writingItemAt: toPath, options: NSFileCoordinator.WritingOptions.forReplacing, error: nil, byAccessor: { newURL1, newURL2 in
@@ -926,6 +928,7 @@ extension FTShelfItemCollectionICloud {
             if(nil == fileCoordinator) {
                 fileCoordinator = NSFileCoordinator(filePresenter: nil);
             }
+            FTCLSLog("NFC - move doc operation: \(shelfItem.URL.title)");
             fileCoordinator!.coordinate(writingItemAt: shelfItem.URL, options: NSFileCoordinator.WritingOptions.forMoving, writingItemAt: newURL, options: NSFileCoordinator.WritingOptions.forReplacing, error: nil, byAccessor: { newURL1, newURL2 in
             do {
                 try FileManager().moveItem(at: newURL1, to: newURL2);

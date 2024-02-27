@@ -12,7 +12,7 @@ import FTCommon
 
 class FTBookSessionRootViewController: UIViewController {
     private weak var launchScreenController: UIViewController?
-    private weak var notebookSplitController: FTNoteBookSplitViewController?
+    private(set) weak var notebookSplitController: FTNoteBookSplitViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad();
@@ -27,6 +27,12 @@ class FTBookSessionRootViewController: UIViewController {
         }
     }
     
+    func openNotebook(using pageId: String) {
+        if let splitVc = self.notebookSplitController, let docVc = splitVc.documentViewController {
+            docVc.navigateToPage(with: pageId)
+        } 
+    }
+
     @objc private func sceneDidDisconnect(_ scene: NSNotification) {
         if let sceneToObserve = scene.object as? UIScene {
             sceneToObserve.userActivity?.invalidate();
@@ -87,29 +93,55 @@ private extension FTBookSessionRootViewController {
                 let createWithAudio = userActivity.createWithAudio
                 let isQuickCreate = userActivity.isQuickCreate
                 FTNoteshelfDocumentManager.shared.openDocument(request: request) { [weak self] token, docItem, error in
+                    guard let self else { return }
                     if let _docitem = docItem, let doc = _docitem as? FTNoteshelfDocument {
-                        let shouldInsertCover = doc.propertyInfoPlist()?.object(forKey: INSERTCOVER) as? Bool ?? false
-                        if shouldInsertCover {
-                            doc.insertCoverForPasswordProtectedBooks { success, error in
-                                doc.propertyInfoPlist()?.setObject(false, forKey: INSERTCOVER)
-                                processDocumentOpen()
+                        var reqIndex: Int?
+                        if let pageId = userActivity.userInfo?["pageUUID"] as? String {
+                            if let index = doc.pages().firstIndex(where: {$0.uuid == pageId }) {
+                                reqIndex = index
+                                continueProcessDocumentOpen()
+                            } else {
+                                UIAlertController.showAlertForPageNotAvailableAndSuggestToFirstPage(from: self, notebookTitle: doc.documentName) { yes in
+                                    if yes {
+                                        continueProcessDocumentOpen()
+                                    } else {
+                                        self.killSession()
+                                    }
+                                }
                             }
                         } else {
-                            processDocumentOpen()
+                            continueProcessDocumentOpen()
                         }
+
+                        func continueProcessDocumentOpen() {
+                            let shouldInsertCover = doc.propertyInfoPlist()?.object(forKey: INSERTCOVER) as? Bool ?? false
+                            if shouldInsertCover {
+                                doc.insertCoverForPasswordProtectedBooks { success, error in
+                                    doc.propertyInfoPlist()?.setObject(false, forKey: INSERTCOVER)
+                                    processDocumentOpen()
+                                }
+                            } else {
+                                processDocumentOpen()
+                            }
+                        }
+
                         func processDocumentOpen() {
-                            let docInfo = FTDocumentOpenInfo(document: _docitem, shelfItem: shelfItem);
+                            let docInfo = FTDocumentOpenInfo(document: _docitem, shelfItem: shelfItem, index: reqIndex ?? -1);
                             docInfo.documentOpenToken = token;
                             docItem?.isJustCreatedWithQuickNote = isQuickCreate
-                            self?.showNotebookView(docInfo);
-                            FTNoteshelfDocumentProvider.shared.addShelfItemToList(shelfItem, mode: .recent)
+                            self.showNotebookView(docInfo);
+                            if let docitem = shelfItem as? FTDocumentItemProtocol {
+                                FTNoteshelfDocumentProvider.shared.addShelfItemToList(shelfItem, mode: .recent)
+                                docitem.updateLastOpenedDate();
+                                (docInfo.document as? FTNoteshelfDocument)?.setLastOpenedDate(docitem.fileLastOpenedDate)
+                            }
                             if createWithAudio {
-                                self?.notebookSplitController?.documentViewController?.startRecordingOnAudioNotebook()
+                                self.notebookSplitController?.documentViewController?.startRecordingOnAudioNotebook()
                             }
                         }
                     }
                     else {
-                        self?.killSession();
+                        self.killSession()
                     }
                 }
             }

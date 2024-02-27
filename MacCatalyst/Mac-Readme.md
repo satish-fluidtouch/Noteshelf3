@@ -51,3 +51,10 @@
     7. FirebaseOAuthUI-FirebaseOAuthUI
     8. GoogleSignIn-GoogleSignIn
     9. gRPC-C++-gRPCCertificates-Cpp
+
+
+/////////
+Open Ai Used Key:
+Main Key: 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
+Placeholder: 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
+/////

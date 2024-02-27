@@ -237,6 +237,7 @@ final class FTDocumentMigration {
                 try FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
             }
             if !FileManager().fileExists(atPath: destUrl.path(percentEncoded: false)) {
+                FTCLSLog("NFC - NS2 Migration");
                 try FileManager.default.coordinatedMove(fromURL: indexUrl, toURL: destUrl)
             }
         }  catch {

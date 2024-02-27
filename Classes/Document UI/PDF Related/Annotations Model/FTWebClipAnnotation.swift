@@ -57,6 +57,7 @@ extension FTWebClipAnnotation
                         let image = sourceFileItem.image();
                         copiedFileItem?.setImage(image);
                         
+                        FTCLSLog("NFC - webclip deepCopy secured: \(toDocument.URL.title)");
                         let coordinator = NSFileCoordinator.init(filePresenter: document);
                         let fileAccessIntent = NSFileAccessIntent.writingIntent(with: copiedFileItem!.fileItemURL,
                                                                                 options: NSFileCoordinator.WritingOptions.forReplacing);
@@ -83,6 +84,7 @@ extension FTWebClipAnnotation
                         })
                     }
                     else {
+                        FTCLSLog("NFC - webclip deepcopy: \(toDocument.URL.title)");
                         FileManager.coordinatedCopyAtURL(sourceFileItem.fileItemURL,
                                                          toURL: copiedFileItem!.fileItemURL)
                         { (success, error) in

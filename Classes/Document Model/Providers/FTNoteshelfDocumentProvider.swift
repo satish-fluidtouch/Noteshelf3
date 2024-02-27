@@ -362,7 +362,6 @@ extension FTNoteshelfDocumentProvider {
 
     @discardableResult func addShelfItemToList(_ shelfItem: FTShelfItemProtocol, mode: FTRecentItemType) -> NSError? {
         if mode == .recent {
-            (shelfItem as? FTDocumentItemProtocol)?.updateLastOpenedDate();
             return (self.recentShelfCollection as? FTShelfCollectionRecent)?.recentShelfItemCollection.addShelfItemToList(shelfItem.URL);
         } else {
             let error = (self.recentShelfCollection as? FTShelfCollectionRecent)?.favoritesShelfItemCollection.addShelfItemToList(shelfItem.URL);
@@ -914,6 +913,7 @@ extension FTNoteshelfDocumentProvider {
                         if !FileManager.default.fileExists(atPath: parentURL.path(percentEncoded: false)) {
                             try FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
                         }
+                        FTCLSLog("NFC - NS2 Migration Provider1");
                         try FileManager.default.coordinatedMove(fromURL: url, toURL: destinationURL)
                         collection.addItemsToCache([destinationURL])
                     } else {
@@ -921,6 +921,7 @@ extension FTNoteshelfDocumentProvider {
                             if !FileManager.default.fileExists(atPath: parentURL.path(percentEncoded: false)) {
                                 try? FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
                             }
+                            FTCLSLog("NFC - NS2 Migration Provider2");
                             try? FileManager.default.coordinatedMove(fromURL: url, toURL: destinationURL)
                             _ = (collection as? FTShelfItemCollectionLocal)?.addItemsToCache([destinationURL])
                         })
@@ -961,4 +962,28 @@ extension FTNoteshelfDocumentProvider {
     func isContentMovingInProgress() -> Bool {
         self.isContentMoving
     }
+#if  !NS2_SIRI_APP && !NOTESHELF_ACTION
+    func findDocumentItem(byDocumentId documentId: String, completion: @escaping (FTDocumentItemProtocol?) -> Void) {
+        allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
+            let foundItem = allItems.first { item in
+                (item as? FTDocumentItemProtocol)?.documentUUID == documentId
+            } as? FTDocumentItemProtocol
+            completion(foundItem)
+        }
+    }
+
+    func checkIfDocumentExistsInTrash(byDocumentId docId: String, completion: @escaping (Bool) -> Void) {
+        self.trashShelfItemCollection { trashCollection in
+            trashCollection.shelfItems(.none, parent: nil, searchKey: nil) { items in
+                if let foundItem = items.first { item in
+                    (item as? FTDocumentItemProtocol)?.documentUUID == docId
+                } as? FTDocumentItemProtocol {
+                    completion(true)
+                    return
+                }
+                completion(false)
+            }
+        }
+    }
+#endif
 }
