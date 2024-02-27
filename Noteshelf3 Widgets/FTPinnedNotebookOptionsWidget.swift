@@ -14,6 +14,7 @@ import FTStyles
 struct FTPinnedNotebookOptionsWidgetView: View {
     let entry: FTPinnedBookEntry
     @State var color: UIColor = .black
+    @State var image = UIImage(named: "noCover")!
 
     var body: some View {
         HStack(spacing: 0) {
@@ -31,6 +32,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
         }
         .onAppear {
             color = entry.hasCover ? adaptiveColorFromImage() : UIColor(hexString: "#E06E51")
+            image = imageFrom(entry: entry)
         }
     }
     
@@ -65,14 +67,14 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                 }
                 VStack {
                     HStack {
-                        Image(uiImage: imageFrom(entry: entry))
+                        Image(uiImage: image)
                             .resizable()
                             .scaledToFit()
                             .frame(width: imageSize(for: entry).width,height: imageSize(for: entry).height)
                             .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
                             .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .bottomRight]))
                             .padding(.leading, 18)
-                            .padding(.top, 20)
+                            .padding(.top, image.size.width > image.size.height ? 30 : 20)
                         Spacer()
                     }
                     Spacer()
@@ -101,15 +103,15 @@ struct FTPinnedNotebookOptionsWidgetView: View {
     
     private func imageSize(for entry: FTPinnedBookEntry) -> CGSize {
         var size = CGSize(width: 40, height: 55)
-        if entry.isLandscape {
-            size = CGSize(width: 60, height: 44 )
+        if image.size.width > image.size.height {
+            size = CGSize(width: 60, height: 44)
         }
         return size
     }
 
     private func adaptiveColorFromImage() -> UIColor {
         var uiColor = UIColor(hexString: "#E06E51")
-        if let uiImage = UIImage(named: entry.coverImage), let colors = ColorThief.getPalette(from: uiImage, colorCount: 5), colors.count >= 2 {
+        if  let colors = ColorThief.getPalette(from: image, colorCount: 5), colors.count >= 2 {
             uiColor = colors[1].makeUIColor().withAlphaComponent(0.8)
         }
         return uiColor
@@ -135,21 +137,26 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                 Image("\(type.iconName)")
                     .frame(width: 18,height: 18,alignment: .center)
                     .scaledToFit()
-                    .tint(Color("creationWidgetButtonTint"))
+                    .tint(Color(type.relativePath.isEmpty ? "imageDisabledTintColor" : "creationWidgetButtonTint"))
             }
         }
-        .buttonStyle(FTPinnedBookOptionButtonStyle())
+        .buttonStyle(FTPinnedBookOptionButtonStyle(color: Color(type.relativePath.isEmpty ? "pinnedBookEmptyBgColor" : "pinnedBookOptionBgColor")))
         .disabled(type.relativePath.isEmpty)
     }
 }
 
 struct FTPinnedBookOptionButtonStyle: ButtonStyle {
+    let bgColor: Color
+
+    public init(color: Color) {
+        self.bgColor = color
+    }
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .frame(width: 54, height: 54)
-            .background(Color("pinnedBookOptionBgColor"))
+            .background(bgColor)
             .clipShape(RoundedRectangle(cornerRadius: 12))
-
     }
 }
 

@@ -11,6 +11,7 @@ import FTCommon
 
 struct FTPinnedWidgetView : View {
     let entry: FTPinnedBookEntry
+    @State var image = UIImage(named: "noCover")!
     var body: some View {
         VStack {
             VStack(spacing: 0) {
@@ -19,26 +20,29 @@ struct FTPinnedWidgetView : View {
             }
         }.overlay(alignment: .topLeading) {
             if !entry.relativePath.isEmpty {
-                Image(uiImage: imageFrom(entry: entry))
+                Image(uiImage: image)
                     .resizable()
                     .scaledToFit()
                     .frame(width: imageSize(for: entry).width,height: imageSize(for: entry).height)
                     .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
                     .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .bottomRight]))
-                    .padding(.top, entry.isLandscape ? 34 : 20)
+                    .padding(.top, image.size.width > image.size.height ? 34 : 20)
                     .padding(.leading, 24)
                     .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
             }
+        }.onAppear {
+            image = imageFrom(entry : entry)
         }
     }
     
     private func imageFrom(entry : FTPinnedBookEntry) -> UIImage {
-        return UIImage(contentsOfFile: entry.coverImage) ?? UIImage(named: "noCover")!
+        let image = UIImage(contentsOfFile: entry.coverImage)
+        return image ?? UIImage(named: "noCover")!
     }
     
     private func imageSize(for entry: FTPinnedBookEntry) -> CGSize {
         var size = CGSize(width: 40, height: 55)
-        if entry.isLandscape {
+        if image.size.width > image.size.height {
             size = CGSize(width: 60, height: 44)
         }
         return size
@@ -68,7 +72,7 @@ struct topView: View {
     
     private func adaptiveColorFromImage() -> UIColor {
         var uiColor = UIColor(hexString: "#E06E51")
-        if let uiImage = UIImage(named: entry.coverImage), let colors = ColorThief.getPalette(from: uiImage, colorCount: 5), colors.count >= 2 {
+        if let uiImage = UIImage(contentsOfFile: entry.coverImage), let colors = ColorThief.getPalette(from: uiImage, colorCount: 5), colors.count >= 2 {
             uiColor = colors[1].makeUIColor().withAlphaComponent(0.8)
         }
         return uiColor
@@ -80,24 +84,24 @@ struct bottomView: View {
     var body: some View {
         HStack {
             if entry.relativePath.isEmpty {
-                EmptyView()
+                EmptyNotesView()
             } else {
                 NoteBookInfoView(entry: entry)
             }
         }.frame(width: 160, height: 110)
-            .background(Rectangle().fill(LinearGradient(colors: [Color(uiColor: UIColor(hexString: "#F0EEEB")),Color(uiColor: UIColor(hexString: "#FFFFFF"))], startPoint: .top, endPoint: .bottom)))
+            .background(Rectangle().fill(LinearGradient(colors: [Color("widgetBG1"),Color("widgetBG2")], startPoint: .top, endPoint: .bottom)))
     }
 }
 
-struct EmptyView: View {
+struct EmptyNotesView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 10)                
                 .frame(width:119, height: 64)
-            .foregroundColor(Color.black.opacity(0.03))
+            .foregroundColor(Color("EmptyNotesBG"))
             Text("No notes yet")
                 .font(.appFont(for: .medium, with: 13))
-                .foregroundColor(Color(uiColor: UIColor(hexString: "#1C1C1C", alpha: 0.4)))
+                .foregroundColor(Color("EmptyNotesTitle"))
         }
     }
 }
@@ -106,7 +110,7 @@ struct NoteBookInfoView: View {
     let entry: FTPinnedBookEntry
     var body: some View {
         HStack {
-            VStack {
+            VStack(spacing: 4) {
                 Spacer()
                 Text(entry.name)
                     .lineLimit(2)
@@ -118,7 +122,6 @@ struct NoteBookInfoView: View {
                     .font(.appFont(for: .medium, with: 12))
                     .foregroundColor(Color("black70"))
                     .frame(maxWidth: .infinity, alignment: .leading)
-                //                    .padding(.top,1)
             }.padding(.leading, 20)
                 .padding(.bottom, 16)
             Spacer()
