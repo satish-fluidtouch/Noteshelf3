@@ -590,9 +590,16 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                     UIAlertController.showDocumentNotDownloadedAlert(for: shelfItem.URL, from: docVc)
                     return
                 }
-                let relativePath = shelfItem.URL.relativePathWRTCollection()
-                self.openDocumentIfNeeded(using: relativePath, and: pageId, onCompletion: {_,_ in
-                })
+
+                // After copy paste of same book text link in other book, document id will not be SELF any more.
+                //Incase If document id falls for current book, if condition helps
+                if documentId == self.docuemntViewController?.documentItemObject.documentUUID {
+                    docVc.navigateToPage(with: pageId)
+                } else {
+                    let relativePath = shelfItem.URL.relativePathWRTCollection()
+                    self.openDocumentIfNeeded(using: relativePath, and: pageId, onCompletion: {_,_ in
+                    })
+                }
             }
         }
     }
