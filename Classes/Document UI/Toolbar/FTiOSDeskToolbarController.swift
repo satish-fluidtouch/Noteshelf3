@@ -80,7 +80,7 @@ protocol FTDeskPanelActionDelegate: AnyObject {
         if(currentFrameSize.width != self.currentSize.width) {
             var space: CGFloat = 0.0
             if UIDevice.current.isPhone() {
-                if let window = UIApplication.shared.keyWindow {
+                if let window = UIApplication.shared.keyWindow ?? self.view.window {
                     self.currentSize = currentFrameSize
                     space = window.safeAreaInsets.top
                 }
