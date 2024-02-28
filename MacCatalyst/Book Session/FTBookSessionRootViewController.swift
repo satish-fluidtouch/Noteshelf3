@@ -130,7 +130,11 @@ private extension FTBookSessionRootViewController {
                             docInfo.documentOpenToken = token;
                             docItem?.isJustCreatedWithQuickNote = isQuickCreate
                             self.showNotebookView(docInfo);
-                            FTNoteshelfDocumentProvider.shared.addShelfItemToList(shelfItem, mode: .recent)
+                            if let docitem = shelfItem as? FTDocumentItemProtocol {
+                                FTNoteshelfDocumentProvider.shared.addShelfItemToList(shelfItem, mode: .recent)
+                                docitem.updateLastOpenedDate();
+                                (docInfo.document as? FTNoteshelfDocument)?.setLastOpenedDate(docitem.fileLastOpenedDate)
+                            }
                             if createWithAudio {
                                 self.notebookSplitController?.documentViewController?.startRecordingOnAudioNotebook()
                             }
