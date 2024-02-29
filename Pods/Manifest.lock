@@ -1,83 +1,96 @@
 PODS:
-  - ASN1Swift (1.2.3)
-  - Firebase/Analytics (10.3.0):
+  - ASN1Swift (1.2.5)
+  - Firebase/Analytics (10.21.0):
     - Firebase/Core
-  - Firebase/Core (10.3.0):
+  - Firebase/Core (10.21.0):
     - Firebase/CoreOnly
-    - FirebaseAnalytics (~> 10.3.0)
-  - Firebase/CoreOnly (10.3.0):
-    - FirebaseCore (= 10.3.0)
-  - Firebase/Crashlytics (10.3.0):
+    - FirebaseAnalytics (~> 10.21.0)
+  - Firebase/CoreOnly (10.21.0):
+    - FirebaseCore (= 10.21.0)
+  - Firebase/Crashlytics (10.21.0):
     - Firebase/CoreOnly
-    - FirebaseCrashlytics (~> 10.3.0)
-  - Firebase/RemoteConfig (10.3.0):
+    - FirebaseCrashlytics (~> 10.21.0)
+  - Firebase/RemoteConfig (10.21.0):
     - Firebase/CoreOnly
-    - FirebaseRemoteConfig (~> 10.3.0)
-  - FirebaseABTesting (10.3.0):
+    - FirebaseRemoteConfig (~> 10.21.0)
+  - FirebaseABTesting (10.21.0):
     - FirebaseCore (~> 10.0)
-  - FirebaseAnalytics (10.3.0):
-    - FirebaseAnalytics/AdIdSupport (= 10.3.0)
-    - FirebaseCore (~> 10.0)
-    - FirebaseInstallations (~> 10.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
-    - GoogleUtilities/MethodSwizzler (~> 7.8)
-    - GoogleUtilities/Network (~> 7.8)
-    - "GoogleUtilities/NSData+zlib (~> 7.8)"
-    - nanopb (< 2.30910.0, >= 2.30908.0)
-  - FirebaseAnalytics/AdIdSupport (10.3.0):
+  - FirebaseAnalytics (10.21.0):
+    - FirebaseAnalytics/AdIdSupport (= 10.21.0)
     - FirebaseCore (~> 10.0)
     - FirebaseInstallations (~> 10.0)
-    - GoogleAppMeasurement (= 10.3.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
-    - GoogleUtilities/MethodSwizzler (~> 7.8)
-    - GoogleUtilities/Network (~> 7.8)
-    - "GoogleUtilities/NSData+zlib (~> 7.8)"
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - FirebaseCore (10.3.0):
+  - FirebaseAnalytics/AdIdSupport (10.21.0):
+    - FirebaseCore (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - GoogleAppMeasurement (= 10.21.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - FirebaseCore (10.21.0):
     - FirebaseCoreInternal (~> 10.0)
-    - GoogleUtilities/Environment (~> 7.8)
-    - GoogleUtilities/Logger (~> 7.8)
-  - FirebaseCoreInternal (10.3.0):
-    - "GoogleUtilities/NSData+zlib (~> 7.8)"
-  - FirebaseCrashlytics (10.3.0):
+    - GoogleUtilities/Environment (~> 7.12)
+    - GoogleUtilities/Logger (~> 7.12)
+  - FirebaseCoreExtension (10.21.0):
     - FirebaseCore (~> 10.0)
+  - FirebaseCoreInternal (10.21.0):
+    - "GoogleUtilities/NSData+zlib (~> 7.8)"
+  - FirebaseCrashlytics (10.21.0):
+    - FirebaseCore (~> 10.5)
     - FirebaseInstallations (~> 10.0)
+    - FirebaseSessions (~> 10.5)
     - GoogleDataTransport (~> 9.2)
     - GoogleUtilities/Environment (~> 7.8)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (~> 2.1)
-  - FirebaseInstallations (10.3.0):
+  - FirebaseInstallations (10.21.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
     - PromisesObjC (~> 2.1)
-  - FirebaseRemoteConfig (10.3.0):
+  - FirebaseRemoteConfig (10.21.0):
     - FirebaseABTesting (~> 10.0)
     - FirebaseCore (~> 10.0)
     - FirebaseInstallations (~> 10.0)
+    - FirebaseSharedSwift (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
-  - GoogleAppMeasurement (10.3.0):
-    - GoogleAppMeasurement/AdIdSupport (= 10.3.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
-    - GoogleUtilities/MethodSwizzler (~> 7.8)
-    - GoogleUtilities/Network (~> 7.8)
-    - "GoogleUtilities/NSData+zlib (~> 7.8)"
+  - FirebaseSessions (10.21.0):
+    - FirebaseCore (~> 10.5)
+    - FirebaseCoreExtension (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - GoogleDataTransport (~> 9.2)
+    - GoogleUtilities/Environment (~> 7.10)
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - GoogleAppMeasurement/AdIdSupport (10.3.0):
-    - GoogleAppMeasurement/WithoutAdIdSupport (= 10.3.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
-    - GoogleUtilities/MethodSwizzler (~> 7.8)
-    - GoogleUtilities/Network (~> 7.8)
-    - "GoogleUtilities/NSData+zlib (~> 7.8)"
+    - PromisesSwift (~> 2.1)
+  - FirebaseSharedSwift (10.21.0)
+  - GoogleAppMeasurement (10.21.0):
+    - GoogleAppMeasurement/AdIdSupport (= 10.21.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - GoogleAppMeasurement/WithoutAdIdSupport (10.3.0):
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
-    - GoogleUtilities/MethodSwizzler (~> 7.8)
-    - GoogleUtilities/Network (~> 7.8)
-    - "GoogleUtilities/NSData+zlib (~> 7.8)"
+  - GoogleAppMeasurement/AdIdSupport (10.21.0):
+    - GoogleAppMeasurement/WithoutAdIdSupport (= 10.21.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - GoogleDataTransport (9.2.0):
+  - GoogleAppMeasurement/WithoutAdIdSupport (10.21.0):
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleDataTransport (9.3.0):
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
@@ -98,24 +111,24 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.3.2)
     - "GoogleToolboxForMac/NSString+URLArguments (= 2.3.2)"
   - "GoogleToolboxForMac/NSString+URLArguments (2.3.2)"
-  - GoogleUtilities/AppDelegateSwizzler (7.10.0):
+  - GoogleUtilities/AppDelegateSwizzler (7.12.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (7.10.0):
+  - GoogleUtilities/Environment (7.12.0):
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/Logger (7.10.0):
+  - GoogleUtilities/Logger (7.12.0):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (7.10.0):
+  - GoogleUtilities/MethodSwizzler (7.12.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (7.10.0):
+  - GoogleUtilities/Network (7.12.0):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (7.10.0)"
-  - GoogleUtilities/Reachability (7.10.0):
+  - "GoogleUtilities/NSData+zlib (7.12.0)"
+  - GoogleUtilities/Reachability (7.12.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (7.10.0):
+  - GoogleUtilities/UserDefaults (7.12.0):
     - GoogleUtilities/Logger
   - GoogleUtilitiesComponents (1.1.0):
     - GoogleUtilities/Logger
@@ -146,32 +159,34 @@ PODS:
   - MSGraphMSALAuthProvider (0.2.1):
     - MSAL (~> 1.0.0)
     - MSGraphClientSDK (~> 1.0.0)
-  - nanopb (2.30909.0):
-    - nanopb/decode (= 2.30909.0)
-    - nanopb/encode (= 2.30909.0)
-  - nanopb/decode (2.30909.0)
-  - nanopb/encode (2.30909.0)
-  - PromisesObjC (2.1.1)
+  - nanopb (2.30909.1):
+    - nanopb/decode (= 2.30909.1)
+    - nanopb/encode (= 2.30909.1)
+  - nanopb/decode (2.30909.1)
+  - nanopb/encode (2.30909.1)
+  - PromisesObjC (2.3.1)
+  - PromisesSwift (2.3.1):
+    - PromisesObjC (= 2.3.1)
   - Reachability (3.2)
   - SSZipArchive (2.4.3)
-  - SwiftLint (0.50.3)
-  - TPInAppReceipt (3.3.4):
-    - TPInAppReceipt/Core (= 3.3.4)
-  - TPInAppReceipt/Core (3.3.4):
-    - ASN1Swift (~> 1.2.3)
-  - ZendeskCommonUISDK (8.0.0)
-  - ZendeskCoreSDK (4.0.0)
-  - ZendeskMessagingAPISDK (5.0.0):
-    - ZendeskSDKConfigurationsSDK (~> 3.0.0)
-  - ZendeskMessagingSDK (5.0.0):
-    - ZendeskCommonUISDK (~> 8.0.0)
-    - ZendeskMessagingAPISDK (~> 5.0.0)
-  - ZendeskSDKConfigurationsSDK (3.0.0)
-  - ZendeskSupportProvidersSDK (7.0.0):
-    - ZendeskCoreSDK (~> 4.0.0)
-  - ZendeskSupportSDK (7.0.0):
-    - ZendeskMessagingSDK (~> 5.0.0)
-    - ZendeskSupportProvidersSDK (~> 7.0.0)
+  - SwiftLint (0.54.0)
+  - TPInAppReceipt (3.4.0):
+    - TPInAppReceipt/Core (= 3.4.0)
+  - TPInAppReceipt/Core (3.4.0):
+    - ASN1Swift (~> 1.2.5)
+  - ZendeskCommonUISDK (9.0.0)
+  - ZendeskCoreSDK (5.0.0)
+  - ZendeskMessagingAPISDK (6.0.0):
+    - ZendeskSDKConfigurationsSDK (~> 4.0.0)
+  - ZendeskMessagingSDK (6.0.0):
+    - ZendeskCommonUISDK (~> 9.0.0)
+    - ZendeskMessagingAPISDK (~> 6.0.0)
+  - ZendeskSDKConfigurationsSDK (4.0.0)
+  - ZendeskSupportProvidersSDK (8.0.0):
+    - ZendeskCoreSDK (~> 5.0.0)
+  - ZendeskSupportSDK (8.0.0):
+    - ZendeskMessagingSDK (~> 6.0.0)
+    - ZendeskSupportProvidersSDK (~> 8.0.0)
 
 DEPENDENCIES:
   - Firebase/Analytics
@@ -191,10 +206,13 @@ SPEC REPOS:
     - FirebaseABTesting
     - FirebaseAnalytics
     - FirebaseCore
+    - FirebaseCoreExtension
     - FirebaseCoreInternal
     - FirebaseCrashlytics
     - FirebaseInstallations
     - FirebaseRemoteConfig
+    - FirebaseSessions
+    - FirebaseSharedSwift
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleMLKit
@@ -209,6 +227,7 @@ SPEC REPOS:
     - MSGraphClientSDK
     - nanopb
     - PromisesObjC
+    - PromisesSwift
     - Reachability
     - SSZipArchive
     - SwiftLint
@@ -231,20 +250,23 @@ CHECKOUT OPTIONS:
     :git: https://github.com/AkshayFT/msgraph-sdk-objc-auth
 
 SPEC CHECKSUMS:
-  ASN1Swift: 73ba94f1d97c1c1d059d180708ad42845aeac4f9
-  Firebase: f92fc551ead69c94168d36c2b26188263860acd9
-  FirebaseABTesting: e6660693429b4663573c82f8d2f1041deff1753a
-  FirebaseAnalytics: 036232b6a1e2918e5f67572417be1173576245f3
-  FirebaseCore: 988754646ab3bd4bdcb740f1bfe26b9f6c0d5f2a
-  FirebaseCoreInternal: 29b76f784d607df8b2a1259d73c3f04f1210137b
-  FirebaseCrashlytics: f20d956f8229010b645e534693c39e0b7843c268
-  FirebaseInstallations: e2f26126089dcf41e215f7b8925af8d953c7d602
-  FirebaseRemoteConfig: c24f767c17b0440ee63c7e93380d599173556113
-  GoogleAppMeasurement: c7d6fff39bf2d829587d74088d582e32d75133c3
-  GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
+  ASN1Swift: be676fe8c6cd753dbc402ec68b28544d53aa0c26
+  Firebase: 4453b799f72f625384dc23f412d3be92b0e3b2a0
+  FirebaseABTesting: 40774deef367dcc7b736b6c26dd59ce0fab42f41
+  FirebaseAnalytics: d275f288881d4417f780115dd52c05fa9752d530
+  FirebaseCore: 74f647ad9739ea75112ce6c3b3b91f5488ce1122
+  FirebaseCoreExtension: 1c044fd46e95036cccb29134757c499613f3f564
+  FirebaseCoreInternal: 43c1788eaeee9d1b97caaa751af567ce11010d00
+  FirebaseCrashlytics: 063b883186d7ccb1db1837c19113ca6294880c1b
+  FirebaseInstallations: 390ea1d10a4d02b20c965cbfd527ee9b3b412acb
+  FirebaseRemoteConfig: 1dd5164b2183aff07c7726df6b0212ad5154c1fe
+  FirebaseSessions: 80c2bbdd28166267b3d132debe5f7531efdb00bc
+  FirebaseSharedSwift: 19b3f709993d6fa1d84941d41c01e3c4c11eab93
+  GoogleAppMeasurement: a65314d316443969ed3d3709b3a187448ed6418f
+  GoogleDataTransport: 57c22343ab29bc686febbf7cbb13bad167c2d8fe
   GoogleMLKit: 2bd0dc6253c4d4f227aad460f69215a504b2980e
   GoogleToolboxForMac: 8bef7c7c5cf7291c687cf5354f39f9db6399ad34
-  GoogleUtilities: bad72cb363809015b1f7f19beb1f1cd23c589f95
+  GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
   GoogleUtilitiesComponents: 679b2c881db3b615a2777504623df6122dd20afe
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
   MLKitCommon: c1b791c3e667091918d91bda4bba69a91011e390
@@ -253,19 +275,20 @@ SPEC CHECKSUMS:
   MSAL: e4c1cbcf59e04073b427ce9fbfc0346b54abb62e
   MSGraphClientSDK: ffc07a58a838e0702c7bf2a856367035d4a335d7
   MSGraphMSALAuthProvider: 8dcbccf26fe855644f0935f561932bc11895d26b
-  nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
-  PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
+  nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
+  PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
+  PromisesSwift: 28dca69a9c40779916ac2d6985a0192a5cb4a265
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
-  SwiftLint: 77f7cb2b9bb81ab4a12fcc86448ba3f11afa50c6
-  TPInAppReceipt: 75ff97f2484a463cf46c172fe7f94225612aeda1
-  ZendeskCommonUISDK: d2dfaa56b9da2658dac0e078022bf918959b5854
-  ZendeskCoreSDK: bd3bc4e7ac4e508de20425a1eac3512a2d2c86bb
-  ZendeskMessagingAPISDK: 355f623d727620755b4041a42dffda4fb28ab90c
-  ZendeskMessagingSDK: 66b82e44c774359ac14f5fb21765aa73d0d174dd
-  ZendeskSDKConfigurationsSDK: 6b4b0941d46afd7352682c4ce764d5999535b7d4
-  ZendeskSupportProvidersSDK: 44f6639b5845815d4111b97ff00218f122ef9e33
-  ZendeskSupportSDK: cae2bd10740bed62d8f89b78e6eea42713cd1e3c
+  SwiftLint: c1de071d9d08c8aba837545f6254315bc900e211
+  TPInAppReceipt: 43196f444b7287a7d228184b9df7eae5598c1940
+  ZendeskCommonUISDK: b87f90874386ebcc01f4b2a0b20a28c62658987a
+  ZendeskCoreSDK: cdc814e7fd64764fb0b0acb04e596df437708faa
+  ZendeskMessagingAPISDK: 9ce539eebcaa014fe6acc44da31262a2c52891c1
+  ZendeskMessagingSDK: ccc8dd41b774b0d2f94733505b9f1882d72184da
+  ZendeskSDKConfigurationsSDK: 79c444da987390456ec05657ffa2f5ca0eb54aef
+  ZendeskSupportProvidersSDK: 4aafe8114a9bba1a98dc03ca14d8fa6510cf4e70
+  ZendeskSupportSDK: 8cf921c496269bb5f53aac9320f3d002a793991d
 
 PODFILE CHECKSUM: 16d7175d5a1be3689ee6f4ad46f85933d07d8055
 

@@ -45,6 +45,7 @@ extension FTENPublishManager {
                 func openDocument(pin: String?) {
                     let openRequest = FTDocumentOpenRequest(url: url, purpose: .read);
                     openRequest.pin = pin;
+                    FTCLSLog("Doc Open - Update Sync Records \(url.title)")
                     FTNoteshelfDocumentManager.shared.openDocument(request: openRequest) { (token, document, error) in
                         if let doc = document {
                             var pages = [[String : Any]]();

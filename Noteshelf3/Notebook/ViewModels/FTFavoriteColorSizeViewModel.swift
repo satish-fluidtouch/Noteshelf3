@@ -191,7 +191,7 @@ extension FTFavoriteSizeViewModel {
     func updateCurrentPenSize(size: CGFloat, sizeMode: FTFavoriteSizeMode) {
         let formattedSize = size.roundToDecimal(1)
         self.currentSelectedSize = formattedSize
-        if let penSize = FTPenSize(rawValue: formattedSize.toInt) {
+        if let penSize = FTPenSize(rawValue: formattedSize.rounded().toInt) {
             self.currentPenset.size = penSize
         }
         self.currentPenset.preciseSize = formattedSize

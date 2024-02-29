@@ -77,6 +77,7 @@ protocol FTIntentHandlingProtocol: UIUserActivityRestoring {
     func createAndOpenNewNotebook(_ url: URL)
     func openDocumentForSelectedNotebook(_ path: URL, isSiriCreateIntent: Bool)
     func openShelfItem(spotLightHash: String)
+    func openNotebook(using schemeUrl: URL)
     func openTemplatesScreen(url: URL)
     //From Quick Action
     func createNotebookWithAudio()
@@ -165,18 +166,22 @@ final class FTAppIntentHandler {
             track("today_widget", params: ["type": "Open Notebook"])
             intentHandler?.openDocumentForSelectedNotebook(url, isSiriCreateIntent: false)
             return true
-        } else if (url.scheme == FTSharedGroupID.getAppBundleID()) {
-            openAppScehemeURL(url: url)
+        } else if (url.isAppLink()) {
+            if url.checkIf(contains: FTAppIntentHandler.hyperlinkPath) {
+                intentHandler?.openNotebook(using: url)
+            } else if url.checkIf(contains: FTAppIntentHandler.templatesPath) {
+                intentHandler?.openTemplatesScreen(url: url)
+            } else {
+                openAppScehemeURL(url: url)
+            }
+            return true
         }
         return false
     }
 
     private func openAppScehemeURL(url: URL) {
         if let urlcomponents = URLComponents(url: url, resolvingAgainstBaseURL: true) {
-            if urlcomponents.path.contains(FTAppIntentHandler.templatesPath) {
-                intentHandler?.openTemplatesScreen(url: url)
-            }
-            else if let queryitem = urlcomponents.queryItems?.first
+            if let queryitem = urlcomponents.queryItems?.first
                         , queryitem.name == "intent" {
                 if queryitem.value == NS3LaunchIntent.migration.rawValue {
                     intentHandler?.startNS2ToNS3Migration()
@@ -265,6 +270,9 @@ private extension FTAppIntentHandler {
 }
 
 extension FTAppIntentHandler {
+    static var hyperlinkPath: String {
+        return "/hyperlink/"
+    }
     static var templatesPath: String {
         return "/templates/root"
     }

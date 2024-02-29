@@ -20,6 +20,7 @@ class FTNoteBookSegmentCell: UITableViewCell {
     @IBAction func didTapOnSegment(_ segment: UISegmentedControl) {
         if let direction = FTPageLayout(rawValue: segment.selectedSegmentIndex) {
             UserDefaults.standard.pageLayoutType = direction
+            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.nbk_moresettings_scrolling_tap, params: ["segment": (direction == .horizontal) ? "horizontal" : "vertical"])
         }
     }
 }

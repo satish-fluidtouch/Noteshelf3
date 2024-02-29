@@ -62,6 +62,7 @@ extension FTAddMenuMediaViewController: UITableViewDelegate {
         } else {
             mediaDelegate?.didTapMediaItem(item.type)
         }
+        FTNotebookEventTracker.trackNotebookEvent(with: item.type.eventName)
     }
 }
 

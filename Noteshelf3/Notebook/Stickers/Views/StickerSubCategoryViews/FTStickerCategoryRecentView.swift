@@ -30,7 +30,7 @@ struct FTStickerCategoryRecentView: View {
                                 )
                                 .contextMenu{
                                     Button("useSticker".localized) {
-                                        viewModel.stickerDelegate?.didTapSticker(with: UIImage(named: subitem.image) ?? UIImage())
+                                        viewModel.stickerDelegate?.didTapSticker(with: UIImage(named: subitem.image) ?? UIImage(), title: "")
                                     }
                                     Divider()
                                     Button(role:.destructive,action: {
@@ -44,7 +44,7 @@ struct FTStickerCategoryRecentView: View {
                                     })
                                 }
                                 .onTapGesture {
-                                    viewModel.stickerDelegate?.didTapSticker(with: UIImage(named: subitem.image) ?? UIImage())
+                                    viewModel.stickerDelegate?.didTapSticker(with: UIImage(named: subitem.image) ?? UIImage(), title: "")
                                 }
                         }
                     }

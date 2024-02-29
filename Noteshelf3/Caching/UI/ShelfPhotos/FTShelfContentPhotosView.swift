@@ -161,6 +161,7 @@ struct FTMediaPreviewPageView: View {
         }
 
         let openRequest = FTDocumentOpenRequest(url: docItem.URL, purpose: .read);
+        FTCLSLog("Doc Open - Media preview \(docItem.URL.title)")
         FTNoteshelfDocumentManager.shared.openDocument(request: openRequest) { (token, document, error) in
             if let doc = document {
                 doc.pages()[media.page].thumbnail()?.thumbnailImage(onUpdate: { thumb, _ in

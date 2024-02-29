@@ -27,8 +27,6 @@ class FTFinderThumbnailViewCell: UICollectionViewCell {
     @IBOutlet weak var labelPageNumber: FTCustomLabel!
     var shouldShowVerticalDivider = false
     @IBOutlet weak var searchHighlightViewWidthConstraint: NSLayoutConstraint?
-    
-    @IBOutlet weak var imageViewPageSelectionWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var imageViewPageWidthConstraint: NSLayoutConstraint!
     
     fileprivate var observerAdded = false;

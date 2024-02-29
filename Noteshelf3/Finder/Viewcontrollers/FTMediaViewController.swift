@@ -529,7 +529,7 @@ extension FTMediaViewController:  UICollectionViewDelegate, FTCollectionViewDele
                 indexSelected = 0;
             }
             let param =  (self.selectedMediaType == .allMedia) ? "off" : "on"
-            track("finder_content_item_tap", params: ["filter toggle": param],screenName: FTScreenNames.finder)
+            track("finder_content_item_tap", params: ["filter_toggle": param],screenName: FTScreenNames.finder)
             self.delegate?.finderViewController(didSelectPageAtIndex: indexSelected)
         }
     }

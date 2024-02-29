@@ -219,7 +219,7 @@ extension FTAnnotation : FTCopying
         
     }
     
-    func deepCopyPage(_ toDocument: FTDocumentProtocol, onCompletion: @escaping (FTPageProtocol) -> Void) {
+    func deepCopyPage(_ toDocument: FTDocumentProtocol, purpose: FTItemPurpose, onCompletion: @escaping (FTPageProtocol) -> Void) {
         
     }
 }
