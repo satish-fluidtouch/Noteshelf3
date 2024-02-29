@@ -584,8 +584,8 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
             }
             
             if(self.isInDocCreationMode
-                || (self.isValidDocument() && self.isDocumentVersionSupported())
-                    ) {
+               || (self.isValidDocument() && self.isDocumentVersionSupported())
+            ) {
                 
                 //**************************** User IDs from all the devices
                 if let currentUserID = UserDefaults.standard.object(forKey: "USER_ID_FOR_CRASH") as? String{
@@ -622,7 +622,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                         if(nil == deviceID) {
                             deviceID = "Unknown";
                         }
-
+                        
                         var appversion = infoFileItem?.object(forKey: APP_VERSION) as? String;
                         if(nil == appversion) {
                             appversion = "Unknown";
@@ -635,6 +635,10 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                                   "Reason": "info plist Not Found"]
                     }
                     self.logDocumentCorrupt(params);
+                    //------ Some times In Metadata Plist isSecured bool is set to false, even though the book is secured.Logging it for further investigation -----//
+                    if self.isPinEnabled(),!self.isSecured() {
+                        FTLogError("IS_SECURED_ERROR")
+                    }
                 }
                 
                 self.closeDocument(completionHandler: { _ in
