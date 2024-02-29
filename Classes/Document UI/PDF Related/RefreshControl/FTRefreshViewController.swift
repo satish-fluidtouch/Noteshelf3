@@ -16,6 +16,21 @@ enum FTNewPageCreationOption: Int {
     case scanDocumentPage
     case cameraPage
     case pageOptions
+    
+    var eventName : String {
+        var value: String = ""
+        if self == .templatePage {
+            value = FTNotebookEventTracker.nbk_swipe_choosetemplate_tap
+        } else if self == .importPhotoPage {
+            value = FTNotebookEventTracker.nbk_swipe_importdocument_tap
+        } else if self == .normalPage {
+            value = FTNotebookEventTracker.nbk_swipe_newpage_tap
+        } else if self == .pageOptions {
+            value = FTNotebookEventTracker.nbk_swipe_more_tap
+        }
+        return value
+    }
+
 }
 
 enum FTRefreshPosition: Int {
@@ -290,6 +305,7 @@ extension FTRefreshViewController: FTRefreshPageDelegate {
         } else {
             self.createPageWithSelectedOption(item, fromAction: true)
         }
+        FTNotebookEventTracker.trackNotebookEvent(with: item.eventName)
     }
     
     private func didTapAddPageOption(_ sender: UIButton) {
@@ -299,6 +315,7 @@ extension FTRefreshViewController: FTRefreshPageDelegate {
         }
         pageViewController.delegate = self
         pageViewController.dataManager = AddMenuDataManager()
+        pageViewController.source = .swipeToAddPage
         pageViewController.ftPresentationDelegate.source = sender
         self.ftPresentPopover(vcToPresent: pageViewController, contentSize: CGSize(width: 320, height: 400), hideNavBar: true)
     }

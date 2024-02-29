@@ -131,6 +131,7 @@ extension FTBookmarkViewController : UICollectionViewDataSource, UICollectionVie
         currentBookmarkColor = colorHexString
         self.collectionView?.reloadData()
         saveBookmarkPage()
+        FTFinderEventTracker.trackFinderEvent(with: "bookmark_color_tap")
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -140,6 +141,7 @@ extension FTBookmarkViewController : UICollectionViewDataSource, UICollectionVie
     @objc func buttonTapped(_ sender: UIButton) {
         self.dismiss(animated: true)
         self.delegate?.removeBookMark(for: pages)
+        FTFinderEventTracker.trackFinderEvent(with: "bookmark_remove_tap")
     }
 }
 
@@ -153,5 +155,6 @@ extension FTBookmarkViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         saveBookmarkPage()
+        FTFinderEventTracker.trackFinderEvent(with: "bookmark_title_type")
     }
 }
