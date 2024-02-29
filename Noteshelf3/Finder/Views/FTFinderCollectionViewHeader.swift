@@ -15,6 +15,7 @@ protocol FTFinderHeaderDelegate: AnyObject {
 class FTFinderCollectionViewHeader: UICollectionReusableView {
     @IBOutlet weak var collectionViewHeaderLeadingConstraint: NSLayoutConstraint!
 //    @IBOutlet weak var headerLabel: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var descriptionTrailingConstraint: NSLayoutConstraint!
     @IBOutlet weak var titleLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var titleLabel: UILabel!
@@ -32,6 +33,7 @@ class FTFinderCollectionViewHeader: UICollectionReusableView {
         segmentControl.type = .text
         segmentControl.populateSegments()
         segmentControl.selectedSegmentIndex = 0
+        self.activityIndicator.isHidden = true
     }
     
     func hideDivider(_ value: Bool) {
@@ -44,6 +46,29 @@ class FTFinderCollectionViewHeader: UICollectionReusableView {
         }
     }
     
+    func showSearchIndicator(_ value : Bool) {
+        if value {
+            if !self.activityIndicator.isAnimating {
+                self.titleLabel.text = "Searching".localized
+                self.activityIndicator.isHidden = false
+                self.activityIndicator.startAnimating()
+            }
+        } else {
+            self.titleLabel.text = "Results".localized
+            self.activityIndicator.isHidden = true
+            self.activityIndicator.stopAnimating()
+        }
+    }
+    
+    func updateCountLabel(with count: Int) {
+        var text = "NothingFound".localized
+        if count > 0 {
+            let noofpages = "\(count)"
+            text =  String(format: NSLocalizedString("insidenotebook.share.pagescount", comment: "%@ pages "), noofpages)
+        }
+        self.descriptionLabel.text = text
+    }
+    
     func configureHeader(count: Int, mode: FTFinderScreenMode, tab: FTFinderSelectedTab) {
         titleLabel.isHidden = (tab == .thumnails)
         descriptionLabel.isHidden = (tab == .thumnails)
@@ -52,12 +77,6 @@ class FTFinderCollectionViewHeader: UICollectionReusableView {
         descriptionTrailingConstraint.constant = (mode == .fullScreen) ? 44 : 16
         dividerView.isHidden = true
         self.selectedTab = tab
-        self.titleLabel.text = "Pages".localized
-        var text = "NothingFound".localized
-        if count > 0 {
-            let noofpages = "\(count)"
-            text =  String(format: NSLocalizedString("insidenotebook.share.pagescount", comment: "%@ pages "), noofpages)
-        }
-        self.descriptionLabel.text = text
+        self.updateCountLabel(with: count)
     }
 }

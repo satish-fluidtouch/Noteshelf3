@@ -325,6 +325,7 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
     private func didTapEditOption(identifier: String) {
         if let option = FTMediaType(rawValue: identifier) {
             self.selectedMediaType = option
+            updateFilterOptionImage()
             FTFinderEventTracker.trackFinderEvent(with: "finder_more_filter_tap", params: ["filter": option.eventDescription()])
             updateAndReloadCollectionView()
             if let optionsMenu = editButton.menu?.children.first as? UIMenu {
@@ -340,6 +341,11 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
                 }
             }
          }
+    }
+    
+    private func updateFilterOptionImage() {
+        let image = (self.selectedMediaType == .allMedia) ? UIImage(systemName: "ellipsis.circle") : UIImage(systemName: "ellipsis.circle.fill")
+        editButton.setImage(image, for: .normal)
     }
     
     func resetSelection() {

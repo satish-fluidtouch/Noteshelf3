@@ -124,7 +124,15 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
         self.searchController = searchVC;
         navigationItem.searchController = searchVC
         initializeSearchBar()
-
+//        self.searchOptions.onFinding = { [weak self] in
+//            self?.finderController?.updateBackgroundViewForSearch()
+//            self?.updateFilterAndCreateSnapShot();
+//        }
+//        self.searchOptions.onCompletion = { [weak self] in
+//            self?.finderController?.updateBackgroundViewForSearch()
+//            self?.updateFilterAndCreateSnapShot();
+//            self?.finderController?.showSearchIndicator(false)
+//        }
         recentsTableView.register(FTRecentSearchCell.self, forCellReuseIdentifier: kRecentSearchCell)
         if let doc = self.document as? FTNoteshelfDocument {
             FTFilterRecentsStorage.shared.documentUUID = doc.documentUUID
@@ -145,6 +153,7 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
         self.finderController?.updateBackgroundViewForSearch()
         self.updateFilterAndCreateSnapShot();
     }
+    
     override var prefersHomeIndicatorAutoHidden: Bool {
         return self.tabBarController?.prefersHomeIndicatorAutoHidden ?? super.prefersHomeIndicatorAutoHidden
     }
@@ -224,21 +233,10 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
     private func updateFilterAndCreateSnapShot() {
         if let searchPages = searchOptions.searchPages {
             finderController?.searchResultPages = searchPages
-            hideLoadingIndicator()
             finderController?.updateFilterAndCreateSnapShot()
         }
     }
-    
-    private func hideLoadingIndicator() {
-        self.activityIndicator.isHidden = true
-        self.activityIndicator.stopAnimating()
-    }
-    
-    private func showLoadingIndicator() {
-        self.activityIndicator.isHidden = false
-        self.activityIndicator.startAnimating()
-    }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let finderController = segue.destination as? FTFinderViewController, let doc = self.document {
             self.finderController = finderController
@@ -426,7 +424,7 @@ extension FTFinderSearchController {
         }
         if searchInputInfo.textKey != searchText || searchInputInfo.tags != tags {
             isSearching = true
-            showLoadingIndicator()
+            self.finderController?.showSearchIndicator(true)
             self.document?.startRecognitionIfNeeded();
             finderController?.configureForSearchTab()
             finderController?.isSearching = true
@@ -437,6 +435,7 @@ extension FTFinderSearchController {
             }, onCompletion: { [weak self] in
                 FTFinderEventTracker.trackFinderEvent(with: "finder_search_done")
                 self?.reloadData()
+                self?.finderController?.showSearchIndicator(false)
             })
             constructRecentItems()
             updateSubViews(isSearching: true)
@@ -582,7 +581,6 @@ extension FTFinderSearchController : UISearchTextFieldDelegate, UISearchResultsU
     
     internal func perfromSearchCancel() {
         self.isSearching = false
-        hideLoadingIndicator()
         updateSubViews(isSearching: self.isSearching)
         recentsTableView.reloadData()
         recentsTableView.isHidden = false

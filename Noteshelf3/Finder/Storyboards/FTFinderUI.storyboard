@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_72" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -346,7 +346,7 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Content" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k2m-UQ-Ouo" customClass="FTCustomLabel" customModule="FTCommon">
-                                        <rect key="frame" x="16" y="68" width="99" height="33.666666666666657"/>
+                                        <rect key="frame" x="16" y="68" width="99" height="26"/>
                                         <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="28"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -768,6 +768,8 @@
                                         <connections>
                                             <outlet property="bookmarkButton" destination="kDc-O3-Mt1" id="zBG-08-A6e"/>
                                             <outlet property="bookmarkTitle" destination="fyD-Uh-LQU" id="Pgb-wz-u57"/>
+                                            <outlet property="imageViewHeightConstraint" destination="fUS-Q9-dFd" id="sS0-a5-4gu"/>
+                                            <outlet property="imageViewWidthConstraint" destination="1mw-aI-Wjy" id="vb3-w7-wXa"/>
                                             <outlet property="pageNumber" destination="PIr-n9-m2E" id="8nI-0E-sUE"/>
                                             <outlet property="selectedImageView" destination="LLH-g1-528" id="ecl-kO-t8f"/>
                                             <outlet property="thumbnail" destination="FDf-MN-Zin" id="Isu-PF-XjI"/>
@@ -883,8 +885,15 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="5Ja-sl-sRM">
+                                            <rect key="frame" x="221.66666666666666" y="4" width="16" height="16"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="16" id="Umg-Xv-nOB"/>
+                                                <constraint firstAttribute="width" constant="16" id="aUC-C9-ret"/>
+                                            </constraints>
+                                        </activityIndicatorView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Results" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hzy-CY-Vof">
-                                            <rect key="frame" x="211.66666666666666" y="4.333333333333333" width="44.333333333333343" height="15.666666666666668"/>
+                                            <rect key="frame" x="241.66666666666666" y="4.333333333333333" width="44.333333333333343" height="15.666666666666668"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" name="black70"/>
                                             <nil key="highlightedColor"/>
@@ -918,14 +927,17 @@
                                         <constraint firstAttribute="trailing" secondItem="LW2-qa-M7s" secondAttribute="trailing" constant="44" id="8hR-2b-P2o"/>
                                         <constraint firstItem="LW2-qa-M7s" firstAttribute="top" secondItem="SBL-4w-nyu" secondAttribute="top" id="B18-nu-JIy"/>
                                         <constraint firstItem="Hzy-CY-Vof" firstAttribute="centerY" secondItem="SBL-4w-nyu" secondAttribute="centerY" id="C3b-jK-Pku"/>
-                                        <constraint firstAttribute="trailing" secondItem="Hzy-CY-Vof" secondAttribute="trailing" constant="44" id="Cyg-w4-W0s"/>
+                                        <constraint firstItem="5Ja-sl-sRM" firstAttribute="centerY" secondItem="SBL-4w-nyu" secondAttribute="centerY" id="CL8-lC-ls2"/>
+                                        <constraint firstAttribute="trailing" secondItem="Hzy-CY-Vof" secondAttribute="trailing" constant="14" id="Cyg-w4-W0s"/>
                                         <constraint firstItem="bIh-lL-adt" firstAttribute="leading" secondItem="SBL-4w-nyu" secondAttribute="leading" id="EA1-hg-QdF"/>
                                         <constraint firstItem="bIh-lL-adt" firstAttribute="bottom" secondItem="SBL-4w-nyu" secondAttribute="bottom" id="FeC-tb-ww9"/>
                                         <constraint firstAttribute="trailing" secondItem="bIh-lL-adt" secondAttribute="trailing" id="HC2-NL-Ht5"/>
                                         <constraint firstItem="RFh-Cr-onL" firstAttribute="leading" secondItem="SBL-4w-nyu" secondAttribute="leading" constant="44" id="MlS-Sq-dVD"/>
                                         <constraint firstItem="LW2-qa-M7s" firstAttribute="leading" secondItem="SBL-4w-nyu" secondAttribute="leading" constant="44" id="bbd-89-hWE"/>
+                                        <constraint firstItem="5Ja-sl-sRM" firstAttribute="trailing" secondItem="Hzy-CY-Vof" secondAttribute="leading" constant="-4" id="kyR-jk-LbW"/>
                                     </constraints>
                                     <connections>
+                                        <outlet property="activityIndicator" destination="5Ja-sl-sRM" id="zoq-X0-eFf"/>
                                         <outlet property="descriptionLabel" destination="Hzy-CY-Vof" id="90e-jC-8eJ"/>
                                         <outlet property="descriptionTrailingConstraint" destination="Cyg-w4-W0s" id="2sd-x7-bSl"/>
                                         <outlet property="dividerView" destination="bIh-lL-adt" id="vgb-j6-2vz"/>
@@ -1044,7 +1056,7 @@
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pages" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lgh-bm-934" customClass="FTCustomLabel" customModule="FTCommon">
-                                                <rect key="frame" x="0.0" y="52" width="70.333333333333329" height="33.666666666666657"/>
+                                                <rect key="frame" x="0.0" y="52" width="70.333333333333329" height="26"/>
                                                 <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="28"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1086,7 +1098,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AiS-uY-qG4" customClass="FTCustomLabel" customModule="FTCommon">
-                                                <rect key="frame" x="109.66666666666669" y="9.9999999999999982" width="49" height="24.333333333333329"/>
+                                                <rect key="frame" x="109.66666666666669" y="12.666666666666673" width="49" height="18.666666666666671"/>
                                                 <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1419,7 +1431,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hNq-Lm-8oI" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="right" id="1yO-CH-f6O"/>
             </objects>
-            <point key="canvasLocation" x="-2797" y="706"/>
+            <point key="canvasLocation" x="-2797.6744186046512" y="705.57939914163092"/>
         </scene>
         <!--Storyboard Reference-->
         <scene sceneID="506-Dq-d3a">
@@ -1438,24 +1450,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oza-N3-EvM" customClass="FTCustomLabel" customModule="FTCommon">
-                                <rect key="frame" x="190.66666666666666" y="77" width="49" height="24.333333333333329"/>
+                                <rect key="frame" x="190.66666666666666" y="77" width="49" height="18.666666666666671"/>
                                 <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="xxn-Hi-D6f">
-                                <rect key="frame" x="16" y="119.33333333333331" width="398" height="762.66666666666674"/>
+                                <rect key="frame" x="16" y="113.66666666666669" width="398" height="768.33333333333326"/>
                                 <color key="backgroundColor" name="cellBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FTAudioSessionCell" id="1Zl-S9-sLQ" customClass="FTAudioSessionCell" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="55.333332061767578" width="398" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="55.333332061767578" width="398" height="51.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1Zl-S9-sLQ" id="d6J-3K-oVp">
-                                            <rect key="frame" x="0.0" y="0.0" width="398" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="398" height="51.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7oU-n8-Onf">
-                                                    <rect key="frame" x="55.000000000000007" y="10.333333333333334" width="23.333333333333336" height="23.333333333333329"/>
+                                                    <rect key="frame" x="55.000000000000007" y="14.333333333333334" width="23.333333333333336" height="23.333333333333329"/>
                                                     <color key="tintColor" name="accent"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" image="play.circle.fill" catalog="system">
@@ -1468,7 +1480,7 @@
                                                     </connections>
                                                 </button>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="X7V-lj-Ofi">
-                                                    <rect key="frame" x="94.333333333333329" y="1.6666666666666679" width="41.333333333333329" height="40.666666666666657"/>
+                                                    <rect key="frame" x="94.333333333333329" y="5.6666666666666679" width="41.333333333333329" height="40.666666666666657"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="22D-Pd-BU1" customClass="FTCustomLabel" customModule="FTCommon">
                                                             <rect key="frame" x="0.0" y="0.0" width="41.333333333333336" height="20.333333333333332"/>
@@ -1547,27 +1559,27 @@
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FTMediaFilterCell" id="rrL-yj-RsO" customClass="FTMediaFilterCell" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="430" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="50" width="430" height="51.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rrL-yj-RsO" id="Yyi-fd-PB3">
-                                            <rect key="frame" x="0.0" y="0.0" width="430" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="430" height="51.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Wq1-id-l8K">
-                                                    <rect key="frame" x="16" y="15.666666666666666" width="13" height="12.333333333333337"/>
+                                                    <rect key="frame" x="16" y="19.666666666666661" width="13" height="12.333333333333339"/>
                                                     <color key="tintColor" name="black1"/>
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
                                                         <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="12"/>
                                                     </preferredSymbolConfiguration>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hio-Cd-qFk" customClass="FTCustomLabel" customModule="FTCommon">
-                                                    <rect key="frame" x="39" y="13" width="37" height="18"/>
+                                                    <rect key="frame" x="39" y="17" width="37" height="18"/>
                                                     <fontDescription key="fontDescription" name="Aeonik-Regular" family="Aeonik" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="square.grid.2x2" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="BnF-KD-teZ">
-                                                    <rect key="frame" x="396.66666666666669" y="14.333333333333336" width="17.333333333333314" height="15.666666666666664"/>
+                                                    <rect key="frame" x="396.66666666666669" y="18.333333333333336" width="17.333333333333314" height="15.666666666666664"/>
                                                     <color key="tintColor" name="black1"/>
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
                                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
@@ -2010,7 +2022,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="viz-TX-T96"/>
+        <segue reference="tkG-CZ-Chg"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="bookmark" catalog="system" width="110" height="128"/>

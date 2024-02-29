@@ -37,9 +37,15 @@ extension FTFinderViewController {
         collectionViewCell.buttonBookmark?.setImage(UIImage(systemName: imageName), for: .normal)
         let bookmarkColor = (!page.bookmarkColor.isEmpty) ? UIColor(hexString: page.bookmarkColor) : .appColor(.gray9)
         collectionViewCell.buttonBookmark?.tintColor = page.isBookmarked ? bookmarkColor : .appColor(.gray9)
-        let size = AVMakeRect(aspectRatio: page.pdfPageRect.size, insideRect: CGRect(origin: CGPoint.zero, size: self.cellSize)).size
+        let columnWidth = cellSize(collectionView.frame.size)
+        let potraitWidth = ((columnWidth) * potraitWidthRatio)
+        var height : CGFloat = ((potraitWidth) * potraitHeightRatio)
+        var size = CGSize(width: potraitWidth, height: height)
+        if page.pdfPageRect.size.width > page.pdfPageRect.size.height {
+            height = ((columnWidth) * landscapeHeightRatio)
+            size = CGSize(width: columnWidth, height: height)
+        }
         collectionViewCell.pdfSize = size;
-        collectionViewCell.pageSize = self.cellSize
         collectionViewCell.labelPageNumber?.text = "\(page.pageIndex() + 1)";
         collectionViewCell.setThumbnailImage(usingPage: page);
         collectionViewCell.shouldShowVerticalDivider = self.view.frame.width <= supplimentaryFinderVcWidth
@@ -65,12 +71,11 @@ extension FTFinderViewController {
     
     func collectionView(_ collectionView: UICollectionView, placeHolderCellForRowAt indexPath: IndexPath) -> UICollectionViewCell {
         let collectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "FTPlaceHolderThumbnailCell", for: indexPath) as! FTPlaceHolderThumbnailCell
-        var bounds = UIScreen.main.bounds
-        if bounds.width > bounds.height {
-            bounds = CGRect(origin: bounds.origin, size: CGSize(width: bounds.height, height: bounds.width))
-        }
         collectionViewCell.isDisabled = (mode == .edit)
-        let size = AVMakeRect(aspectRatio: bounds.size, insideRect: CGRect(origin: CGPoint.zero, size: self.cellSize)).size
+        let columnWidth = cellSize(collectionView.frame.size)
+        let potraitWidth = ((columnWidth) * potraitWidthRatio)
+        let height : CGFloat = ((potraitWidth) * potraitHeightRatio)
+        let size = CGSize(width: potraitWidth, height: height)
         collectionViewCell.imageSize = size
         collectionViewCell.moreOptionsButton.addTarget(self, action: #selector(didTapAddPageOption(_:)), for: .touchUpInside)
         return collectionViewCell
@@ -98,6 +103,8 @@ extension FTFinderViewController {
             collectionViewCell.setIsSelected(false);
         }
         collectionViewCell.isEditMode = (self.mode == .edit || self.mode == .selectPages)
+        let size = AVMakeRect(aspectRatio: page.pdfPageRect.size, insideRect: CGRect(origin: CGPoint.zero, size: self.bookMarkThumbSize)).size
+        collectionViewCell.thumbImageSize = size
         collectionViewCell.confiureCell(with: page)
         return collectionViewCell
     }
@@ -163,7 +170,7 @@ extension FTFinderViewController: FTBookmarkPageViewControllerDelegate, FTAddMen
             page.bookmarkColor = ""
             page.bookmarkTitle = ""
         }
-        reloadFilteredData()
+        reloadFilteredItems()
         if selectedSegment == .bookmark {
             deselectAll()
             let bookmarkedPages = self.documentPages.filter{$0.isBookmarked};

@@ -15,6 +15,8 @@ class FTBookmarkCollectionViewCell: UICollectionViewCell {
     @IBOutlet var pageNumber: FTCustomLabel?
     @IBOutlet var thumbnail: UIImageView?
     
+    @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var bookmarkButton: FTBaseButton!
     
     var isEditMode : Bool = false {
@@ -22,6 +24,8 @@ class FTBookmarkCollectionViewCell: UICollectionViewCell {
             selectedImageView?.isHidden = !isEditMode
         }
     }
+    
+    var thumbImageSize : CGSize?
   
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -45,6 +49,10 @@ class FTBookmarkCollectionViewCell: UICollectionViewCell {
         bookmarkButton.tintColor = page.isBookmarked ? bookmarkColor : UIColor.appColor(.black20)
         page.thumbnail()?.thumbnailImage(onUpdate: {[weak self] image, error in
             self?.thumbnail?.image = image
+            if let size = self?.thumbImageSize {
+                self?.imageViewWidthConstraint.constant = size.width
+                self?.imageViewHeightConstraint.constant = size.height
+            }
             if nil == image {
                 self?.thumbnail?.image = UIImage(named: "finder-empty-pdf-page");
             }
