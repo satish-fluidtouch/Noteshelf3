@@ -22,13 +22,12 @@ struct FTPinnedWidgetView : View {
             if !entry.relativePath.isEmpty {
                 Image(uiImage: image)
                     .resizable()
-                    .scaledToFit()
                     .frame(width: imageSize(for: entry).width,height: imageSize(for: entry).height)
                     .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
                     .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .bottomRight]))
                     .padding(.top, image.size.width > image.size.height ? 34 : 20)
                     .padding(.leading, 24)
-                    .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+                    .shadow(color: .black.opacity(0.15), radius: 4, x: 0, y: 3)
             }
         }.onAppear {
             image = imageFrom(entry : entry)
@@ -41,7 +40,7 @@ struct FTPinnedWidgetView : View {
     }
     
     private func imageSize(for entry: FTPinnedBookEntry) -> CGSize {
-        var size = CGSize(width: 40, height: 55)
+        var size = CGSize(width: 46, height: 60)
         if image.size.width > image.size.height {
             size = CGSize(width: 60, height: 44)
         }
@@ -110,7 +109,7 @@ struct NoteBookInfoView: View {
     let entry: FTPinnedBookEntry
     var body: some View {
         HStack {
-            VStack(spacing: 4) {
+            VStack(spacing: 3) {
                 Spacer()
                 Text(entry.name)
                     .lineLimit(2)
@@ -119,8 +118,8 @@ struct NoteBookInfoView: View {
                     .font(.appFont(for: .medium, with: 14))
                 Text(entry.time)
                     .lineLimit(1)
-                    .font(.appFont(for: .medium, with: 12))
-                    .foregroundColor(Color("black70"))
+                    .font(.appFont(for: .regular, with: 12))
+                    .foregroundColor(Color("black50"))
                     .frame(maxWidth: .infinity, alignment: .leading)
             }.padding(.leading, 20)
                 .padding(.bottom, 16)

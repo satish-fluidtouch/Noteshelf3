@@ -31,15 +31,15 @@ struct FTPinnedNotebookOptionsWidgetView: View {
             .frame(width: 155, height: 155)
         }
         .onAppear {
-            color = entry.hasCover ? adaptiveColorFromImage() : UIColor(hexString: "#E06E51")
             image = imageFrom(entry: entry)
+            color = entry.hasCover ? adaptiveColorFromImage() : UIColor(hexString: "#E06E51",alpha: 0.9)
         }
     }
     
     private var sideView: some View {
         return VStack {
             Spacer()
-            VStack(spacing: 4) {
+            VStack(spacing: 3) {
                 Text(entry.name)
                     .lineLimit(2)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -48,8 +48,8 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                 Text(entry.time)
                     .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .font(.appFont(for: .medium, with: 12))
-                    .foregroundColor(color.isLightColor() ? Color.black.opacity(0.7) : Color.systemBackground.opacity(0.7))
+                    .font(.appFont(for: .regular, with: 12))
+                    .foregroundColor(color.isLightColor() ? Color.black.opacity(0.5) : Color.systemBackground.opacity(0.7))
             }
             .padding(.leading, 18)
             .padding(.bottom, 18)
@@ -69,12 +69,12 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                     HStack {
                         Image(uiImage: image)
                             .resizable()
-                            .scaledToFit()
                             .frame(width: imageSize(for: entry).width,height: imageSize(for: entry).height)
                             .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
                             .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .bottomRight]))
                             .padding(.leading, 18)
                             .padding(.top, image.size.width > image.size.height ? 30 : 20)
+                            .shadow(color: .black.opacity(0.15), radius: 4, x: 0, y: 3)
                         Spacer()
                     }
                     Spacer()
@@ -102,7 +102,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
     }
     
     private func imageSize(for entry: FTPinnedBookEntry) -> CGSize {
-        var size = CGSize(width: 40, height: 55)
+        var size = CGSize(width: 46, height: 60)
         if image.size.width > image.size.height {
             size = CGSize(width: 60, height: 44)
         }

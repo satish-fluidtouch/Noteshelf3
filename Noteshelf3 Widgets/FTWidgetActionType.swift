@@ -25,7 +25,7 @@ public enum FTNotebookCreateWidgetActionType: FTWidgetActionType {
         case .quickNote:
             title = "Quick Note"
         case .newNotebook:
-            title = "New Notebook"
+            title = "Notebook"
         case .audioNote:
             title = "Audio Note"
         case .scan:
