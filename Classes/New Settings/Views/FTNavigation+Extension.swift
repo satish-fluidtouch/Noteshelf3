@@ -64,7 +64,6 @@ extension UIViewController {
     }
 
     @objc func leftNavBtnTapped(_ sender : UIButton) {
-        FTFinderEventTracker.trackFinderEvent(with: "quickaccess_back_tap")
         if self == self.navigationController?.viewControllers[0] {
             self.dismiss(animated: true, completion: nil)
         } else {

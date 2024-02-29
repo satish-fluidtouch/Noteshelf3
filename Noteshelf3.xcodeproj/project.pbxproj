@@ -504,6 +504,7 @@
 		5238E7D42A0B712900F8F171 /* FTNoteBookSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5238E7D32A0B712900F8F171 /* FTNoteBookSettings.storyboard */; };
 		5238E7D72A0B7C2A00F8F171 /* FTNoteBookSegmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5238E7D62A0B7C2A00F8F171 /* FTNoteBookSegmentCell.swift */; };
 		523DFE8B2A6FCED100924E9A /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAA84E2628730FA800DE801B /* Colors.xcassets */; };
+		524B27C22B6CEED3003AE5A6 /* FTNotebookEventTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524B27C12B6CEED3003AE5A6 /* FTNotebookEventTracker.swift */; };
 		52550E872A70FCAD00E7A1E7 /* FTNewNotebook.docc in Sources */ = {isa = PBXBuildFile; fileRef = 52550E402A70FCAD00E7A1E7 /* FTNewNotebook.docc */; };
 		52550E882A70FCAD00E7A1E7 /* FTNewNotebookConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550E422A70FCAD00E7A1E7 /* FTNewNotebookConstants.swift */; };
 		52550E892A70FCAD00E7A1E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52550E442A70FCAD00E7A1E7 /* Assets.xcassets */; };
@@ -3370,6 +3371,7 @@
 		5238E7D12A0B705000F8F171 /* FTNoteBookSettingsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNoteBookSettingsHelper.swift; sourceTree = "<group>"; };
 		5238E7D32A0B712900F8F171 /* FTNoteBookSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FTNoteBookSettings.storyboard; sourceTree = "<group>"; };
 		5238E7D62A0B7C2A00F8F171 /* FTNoteBookSegmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNoteBookSegmentCell.swift; sourceTree = "<group>"; };
+		524B27C12B6CEED3003AE5A6 /* FTNotebookEventTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNotebookEventTracker.swift; sourceTree = "<group>"; };
 		52550E402A70FCAD00E7A1E7 /* FTNewNotebook.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = FTNewNotebook.docc; sourceTree = "<group>"; };
 		52550E422A70FCAD00E7A1E7 /* FTNewNotebookConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTNewNotebookConstants.swift; sourceTree = "<group>"; };
 		52550E442A70FCAD00E7A1E7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -10156,6 +10158,7 @@
 				ED5C65B0248A5E0D00CDC85A /* FTNotebookInfoModels.swift */,
 				E743C12A25A7039300D59BBF /* FTQuickCreateInfoTipViewController.swift */,
 				E762F6E4272FA5C700F46DCE /* FTQuickNoteSaveViewController.swift */,
+				524B27C12B6CEED3003AE5A6 /* FTNotebookEventTracker.swift */,
 			);
 			path = "More Options";
 			sourceTree = "<group>";
@@ -13220,6 +13223,7 @@
 				97C73415294745FA00F18497 /* FTShelfSplitViewController+Sidebar.swift in Sources */,
 				E7B5A343299E3EBD0031A87E /* FTConvertToTextViewController+MenuHandler.swift in Sources */,
 				BAF3911E2859ADF00067CA9F /* FTPageProtocol.swift in Sources */,
+				524B27C22B6CEED3003AE5A6 /* FTNotebookEventTracker.swift in Sources */,
 				42835D432892C23900B041A3 /* FTFinderPresentable.swift in Sources */,
 				9715E0332AEA9D2C00EC48D4 /* TProtocolException.m in Sources */,
 				BAF391202859ADF00067CA9F /* FTRecognitionCachePlistItem.swift in Sources */,
