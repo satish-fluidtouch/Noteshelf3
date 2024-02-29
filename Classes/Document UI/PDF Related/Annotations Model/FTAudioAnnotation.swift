@@ -396,46 +396,35 @@ extension FTAudioAnnotation
                             currentIndex index : Int,
                             onCompletion completion :@escaping (Error?)->())
     {
-        if(index < sourceTrackNames.count) {
-            var currentIndex = index;
-            let fileName = sourceTrackNames[index];
-            
-            let sourceDocument = sourcePage.parentDocument as? FTDocumentFileItems;
-            let sourceFileItem = sourceDocument?.resourceFolderItem()?.childFileItem(withName: fileName);
-            
-            let document = destPage.parentDocument as? FTDocumentFileItems;
-            let targetFileName = targetTrackNames[index];
-            
-            let copiedFileItem = FTFileItemAudio.init(fileName : targetFileName);
-            document?.resourceFolderItem()?.addChildItem(copiedFileItem);
-
-            if (nil != copiedFileItem && nil != sourceFileItem) {
-                if let doc = document {
-                    FTCLSLog("NFC - Audio copy track: \(doc.URL.title)");
-                }
-                FileManager.coordinatedCopyAtURL(sourceFileItem!.fileItemURL,
-                                                 toURL: copiedFileItem!.fileItemURL) { (success, error) in
-                                                    if(nil == error) {
-                                                        completion(error);
-                                                    }
-                                                    else {
-                                                        currentIndex += 1;
-                                                        self.copyTracks(sourceTrackNames,
-                                                                        fromPage: sourcePage,
-                                                                        toTrackNames: targetTrackNames,
-                                                                        toPage: destPage,
-                                                                        currentIndex: currentIndex,
-                                                                        onCompletion: completion);
-                                                    }
-                }
-            }
-            else {
-                completion(NSError.init() as Error);
-            }
-        }
-        else {
+        guard (index < sourceTrackNames.count) else {
             completion(nil);
+            return
         }
+
+        var currentIndex = index;
+        let fileName = sourceTrackNames[index];
+
+        guard let sourceDocument = sourcePage.parentDocument as? FTDocumentFileItems,
+              let sourceFileItem = sourceDocument.resourceFolderItem()?.childFileItem(withName: fileName),
+              let destinationResourceFolder = (destPage.parentDocument as? FTDocumentFileItems)?.resourceFolderItem() else {
+            completion(NSError.init() as Error);
+            return
+        }
+
+        let targetFileName = targetTrackNames[index];
+        let destinationURL = destinationResourceFolder.fileItemURL.appending(path: targetFileName, directoryHint: URL.DirectoryHint.notDirectory)
+
+        let copiedFileItem = FTFileItemAudioTemporary(url: destinationURL, sourceURL: sourceFileItem.fileItemURL)
+        destinationResourceFolder.addChildItem(copiedFileItem);
+
+        currentIndex += 1;
+
+        self.copyTracks(sourceTrackNames,
+                        fromPage: sourcePage,
+                        toTrackNames: targetTrackNames,
+                        toPage: destPage,
+                        currentIndex: currentIndex,
+                        onCompletion: completion);
     }
 }
 
