@@ -10,7 +10,7 @@ import FTDocumentFramework
 
 //----------------EXPERIMENTAL--------------//
 // remove this after validation
-private let usecoordinatedcopy = false
+private let usecoordinatedcopy = true
 //----------------EXPERIMENTAL--------------//
 
 protocol FTFileItemCacheble {
@@ -24,7 +24,7 @@ class FTFileItemImageTemporary: FTFileItemImage, FTFileItemCacheble {
         temporaryLocation = URL.temporaryDirectory.appending(path: UUID().uuidString, directoryHint: .notDirectory)
         do {
             if usecoordinatedcopy {
-                try FileManager.default.coordinatedCopy(fromURL: url, toURL: temporaryLocation)
+                try FileManager.default.coordinatedCopy(fromURL: sourceURL, toURL: temporaryLocation)
             } else {
                 try FileManager.default.copyItem(at: sourceURL, to: temporaryLocation)
             }
@@ -53,7 +53,7 @@ class FTFileItemAudioTemporary: FTFileItemAudio, FTFileItemCacheble {
         temporaryLocation = URL.temporaryDirectory.appending(path: UUID().uuidString, directoryHint: .notDirectory)
         do {
             if usecoordinatedcopy {
-                try FileManager.default.coordinatedCopy(fromURL: url, toURL: temporaryLocation)
+                try FileManager.default.coordinatedCopy(fromURL: sourceURL, toURL: temporaryLocation)
             } else {
                 try FileManager.default.copyItem(at: sourceURL, to: temporaryLocation)
             }

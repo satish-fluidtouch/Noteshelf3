@@ -505,20 +505,26 @@ extension FTImageAnnotation
 
             let destinationFileItemURL = resourceFolder.fileItemURL.appending(path: imageAnnotation.imageContentFileName(), directoryHint: .notDirectory)
 
-            let copiedFileItem = FTFileItemImageTemporary(url: destinationFileItemURL, sourceURL: sourceFileItemURL)
-            copiedFileItem?.securityDelegate = document;
+            guard let copiedFileItem = FTFileItemImageTemporary(url: destinationFileItemURL, sourceURL: sourceFileItemURL) else {
+                onCompletion(nil);
+                return
+            }
+            copiedFileItem.securityDelegate = document;
             resourceFolder.addChildItem(copiedFileItem);
 
-            copiedFileItem?.setImage(sourceFileItem.image())
+            copiedFileItem.setImage(sourceFileItem.image())
 
             if let trasnformmedFileItem = self.transformedContentFileItem() {
                 let destinationFileItemURL = resourceFolder.fileItemURL.appending(path: imageAnnotation.transformedContentFileName(), directoryHint: .notDirectory)
 
-                let copiedTrasnformmedFileItem = FTFileItemImageTemporary(url: destinationFileItemURL, sourceURL: trasnformmedFileItem.fileItemURL)
-                copiedTrasnformmedFileItem?.securityDelegate = document;
-                resourceFolder.addChildItem(copiedFileItem);
+                guard let copiedTrasnformmedFileItem = FTFileItemImageTemporary(url: destinationFileItemURL, sourceURL: trasnformmedFileItem.fileItemURL) else {
+                    onCompletion(nil);
+                    return
+                }
+                copiedTrasnformmedFileItem.securityDelegate = document;
+                resourceFolder.addChildItem(copiedTrasnformmedFileItem);
 
-                copiedTrasnformmedFileItem?.setImage(trasnformmedFileItem.image())
+                copiedTrasnformmedFileItem.setImage(trasnformmedFileItem.image())
             }
             onCompletion(imageAnnotation);
         }

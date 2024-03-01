@@ -406,7 +406,8 @@ extension FTAudioAnnotation
 
         guard let sourceDocument = sourcePage.parentDocument as? FTDocumentFileItems,
               let sourceFileItem = sourceDocument.resourceFolderItem()?.childFileItem(withName: fileName),
-              let destinationResourceFolder = (destPage.parentDocument as? FTDocumentFileItems)?.resourceFolderItem() else {
+              let document = destPage.parentDocument as? FTNoteshelfDocument,
+              let destinationResourceFolder = document.resourceFolderItem() else {
             completion(NSError.init() as Error);
             return
         }
@@ -414,8 +415,15 @@ extension FTAudioAnnotation
         let targetFileName = targetTrackNames[index];
         let destinationURL = destinationResourceFolder.fileItemURL.appending(path: targetFileName, directoryHint: URL.DirectoryHint.notDirectory)
 
-        let copiedFileItem = FTFileItemAudioTemporary(url: destinationURL, sourceURL: sourceFileItem.fileItemURL)
+        guard let copiedFileItem = FTFileItemAudioTemporary(url: destinationURL, sourceURL: sourceFileItem.fileItemURL) else {
+            completion(nil);
+            return
+        }
+        copiedFileItem.securityDelegate = document
         destinationResourceFolder.addChildItem(copiedFileItem);
+
+        // TODO: (AK) Work around to make the FileItem modfied to true, as we are not using direct approach for audio file items
+        copiedFileItem.updateContent(NSObject())
 
         currentIndex += 1;
 
