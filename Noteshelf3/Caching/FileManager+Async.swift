@@ -9,7 +9,7 @@
 import Foundation
 extension FileManager {
 
-    func coordinatedCopy(fromURL: URL, toURL: URL, force: Bool = false, onCompletion: ((Error?)->())?) {
+    private func coordinatedCopy(fromURL: URL, toURL: URL, force: Bool = false, onCompletion: ((Error?)->())?) {
         let document = FTNoteshelfDocument(fileURL: fromURL);
         let fileCoorinator = NSFileCoordinator.init(filePresenter: document)
         let readIntent = NSFileAccessIntent.readingIntent(with: fromURL,options: .withoutChanges);

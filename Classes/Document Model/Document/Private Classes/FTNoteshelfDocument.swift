@@ -287,6 +287,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                             self.closeDocument(completionHandler: { _ in
                                 DispatchQueue.main.async(execute: {
                                     if(nil != error) {
+                                        FTCLSLog("FM Create Doc Remove: - \(self.addressString) - \(self.URL.title)")
                                         try? FileManager().removeItem(at: self.fileURL);
                                     }
                                     self.isInDocCreationMode = false;
@@ -432,6 +433,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                                       documentInfo: FTDocumentInputInfo?,
                                       onCompletion :@escaping ((Bool,NSError?) -> Void)) -> Progress
     {
+        FTCLSLog("Creating temp document: \(self.addressString) - \(fromPages.count) - \(purpose.rawValue)")
         let info: FTDocumentInputInfo;
         if let dInfo = documentInfo {
             info = dInfo;
