@@ -125,6 +125,7 @@
 		09DEFBD92A725E9600F41C1E /* FTWordStrokeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEFBD82A725E9600F41C1E /* FTWordStrokeInfo.swift */; };
 		09DEFBDB2A725EC200F41C1E /* FTStrokeGlyphInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEFBDA2A725EC200F41C1E /* FTStrokeGlyphInfo.swift */; };
 		09F81DC4291544ED0040E023 /* FTToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F81DC3291544ED0040E023 /* FTToolbarView.swift */; };
+		09FBDFEE2B90BA6400BEE907 /* FTFileItemPDFTemp.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E41AB21F9712CB00A591F1 /* FTFileItemPDFTemp.m */; };
 		0E4FDED42AC1B3AA0097FE16 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E4FDED22AC1B3AA0097FE16 /* Interface.storyboard */; };
 		0E4FDED62AC1B3AC0097FE16 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E4FDED52AC1B3AC0097FE16 /* Assets.xcassets */; };
 		0E4FDEDD2AC1B3AC0097FE16 /* Noteshelf3 WatchApp Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0E4FDEDC2AC1B3AC0097FE16 /* Noteshelf3 WatchApp Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -14588,6 +14589,7 @@
 				4209FE86295C609A00ACC02E /* NSURL_Application_Specific_Paths.swift in Sources */,
 				5283D3A32A5E6D3600C6C125 /* FTBaseCommunicationManager.swift in Sources */,
 				4209FE61295C5CA800ACC02E /* FTShelfItemCollection.swift in Sources */,
+				09FBDFEE2B90BA6400BEE907 /* FTFileItemPDFTemp.m in Sources */,
 				4209FE84295C606500ACC02E /* FTNSDocumentInfoPlistItem.swift in Sources */,
 				423EE1E0253491AF007967F9 /* NSData256+Extension.swift in Sources */,
 				4209FE6B295C5EDB00ACC02E /* FTGroupItem.swift in Sources */,
