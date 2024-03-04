@@ -86,6 +86,7 @@ extension FTRotatePageViewController : UITableViewDataSource, UITableViewDelegat
         self.rotationAngleChanged?(angle)
         
         var paramValue: String = ""
+        let setting = self.settings[indexPath.row]
         switch self.settings[indexPath.row].rotation {
         case .nintetyClockwise:
             paramValue = "Clockwise90"
@@ -94,6 +95,6 @@ extension FTRotatePageViewController : UITableViewDataSource, UITableViewDelegat
         case .oneEighty:
             paramValue = "180"
         }
-        track("rotatepage_degree_tapped", params: ["degree" : paramValue],screenName: FTScreenNames.noteBookOptions)
+        FTNotebookEventTracker.trackNotebookEvent(with: setting.eventName)
     }
 }

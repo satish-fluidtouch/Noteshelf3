@@ -52,6 +52,7 @@ extension FTNoteBookTexfieldCell : UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
+        FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.nbk_more_getinfo_title_tap)
         self.handleEndEdit(textField: textField)
     }
     

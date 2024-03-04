@@ -98,7 +98,7 @@ struct FTSidebarView: View {
             FTEditableView(placeHolder: placeHolder,
                            onButtonSubmit:  onSubmit ,
                            showEditableField: editableField,
-                           originalTitle: item.title)
+                           textFieldText: item.title)
             .environmentObject(item)
             .environmentObject(viewModel)
         }
@@ -132,7 +132,7 @@ struct FTSidebarView: View {
                         let oldTitle = item.title
                         getEditableViewForSideBarItem(item, withPlaceHolder:item.title,editableField: true) { newTitle in
                             item.isEditing = false
-                            if !newTitle.isEmpty {
+                            if !newTitle.isEmpty, !newTitle.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty {
                                 viewModel.renameSideBarItem(item, oldTitle: oldTitle)
                             }
                         }
@@ -149,7 +149,7 @@ struct FTSidebarView: View {
                 }
                 if menuSection.type == .categories {
                     getEditableViewForSideBarItem(viewModel.newItem,withPlaceHolder:"NewCategory".localized) { newTitle in
-                        if !newTitle.isEmpty {
+                        if !newTitle.isEmpty , !newTitle.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty {
                             viewModel.addNewCategoryWithTitle(newTitle)
                             viewModel.newItem.title = ""
                         }else {

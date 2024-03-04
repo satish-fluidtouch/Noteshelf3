@@ -10,7 +10,7 @@ import Combine
 import UniformTypeIdentifiers
 
 public protocol FTStickerdelegate : AnyObject {
-    func didTapSticker(with image:UIImage)
+    func didTapSticker(with image:UIImage, title: String)
     func dismiss()
 }
 

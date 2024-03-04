@@ -14,6 +14,21 @@ enum FTNotebookTool: Int {
     case present
     case gotoPage
     case zoomBox
+    
+    func trackEvent() {
+        let eventName : String
+        switch self {
+        case .share:
+            eventName = FTNotebookEventTracker.nbk_more_share_tap
+        case .present:
+            eventName = FTNotebookEventTracker.nbk_more_present_tap
+        case .gotoPage:
+            eventName = FTNotebookEventTracker.nbk_more_gotopage_tap
+        case .zoomBox:
+            eventName = FTNotebookEventTracker.nbk_more_zoombox_tap
+        }
+        FTNotebookEventTracker.trackNotebookEvent(with: eventName)
+    }
 }
 protocol FTNotebookToolDelegate: AnyObject {
     func didTapTool(type: FTNotebookTool)

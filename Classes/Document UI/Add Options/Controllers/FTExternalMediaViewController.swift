@@ -91,6 +91,7 @@ extension FTExternalMediaViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let item = items?[indexPath.row] {
             self.delegate?.didTapAttachmentItem(item.type)
+            FTNotebookEventTracker.trackNotebookEvent(with: item.type.eventName)
         }
     }
 }
