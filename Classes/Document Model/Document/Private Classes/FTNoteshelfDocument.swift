@@ -874,20 +874,21 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                                 andAttributes: additionalFileAttributes,
                                 safelyTo: url,
                                 for: saveOperation);
-
-        let uuid = self.URL.getExtendedAttribute(for: .documentUUIDKey)?.stringValue
-        // Ideally In-equality condition is not needed, just as a safety check we're adding.
-        var extendedAttributes = [FileAttributeKey.ExtendedAttribute]()
-        if uuid == nil || uuid != self.documentUUID {
-            let uuidAttribute = FileAttributeKey.ExtendedAttribute(key: .documentUUIDKey, string: self.documentUUID)
-            extendedAttributes.append(uuidAttribute);
-        }
-        if let date = self.lastOpenedDate {
-            let lastOpenAttribute = FileAttributeKey.ExtendedAttribute(key: .lastOpenDateKey, date: date)
-            extendedAttributes.append(lastOpenAttribute);
-        }
-        if(!extendedAttributes.isEmpty) {
-            try? self.URL.setExtendedAttributes(attributes: extendedAttributes)
+        if FTDocumentPropertiesReader.USE_EXTENDED_ATTRIBUTE {
+            let uuid = self.URL.getExtendedAttribute(for: .documentUUIDKey)?.stringValue
+            // Ideally In-equality condition is not needed, just as a safety check we're adding.
+            var extendedAttributes = [FileAttributeKey.ExtendedAttribute]()
+            if uuid == nil || uuid != self.documentUUID {
+                let uuidAttribute = FileAttributeKey.ExtendedAttribute(key: .documentUUIDKey, string: self.documentUUID)
+                extendedAttributes.append(uuidAttribute);
+            }
+            if let date = self.lastOpenedDate {
+                let lastOpenAttribute = FileAttributeKey.ExtendedAttribute(key: .lastOpenDateKey, date: date)
+                extendedAttributes.append(lastOpenAttribute);
+            }
+            if(!extendedAttributes.isEmpty) {
+                try? self.URL.setExtendedAttributes(attributes: extendedAttributes)
+            }
         }
     }
     
