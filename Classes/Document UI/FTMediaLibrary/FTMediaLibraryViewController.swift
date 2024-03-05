@@ -16,6 +16,15 @@ private let UNSPLASH_SEGMENTED_INDEX_KEY = "kUnsplashSelectedSegmentIndex"
 
 enum MediaSource: String {
     case pixabay, unSplash
+    var eventName : String {
+        let value: String
+        if self == .pixabay {
+            value = FTNotebookEventTracker.nbk_addmenu_pixabay_imag_tap
+        } else  {
+            value = FTNotebookEventTracker.nbk_addmenu_unsplash_image_tap
+        }
+        return value
+    }
 }
 
 enum MediaCellTypes: String {
@@ -478,6 +487,7 @@ extension FTMediaLibraryViewController: FTMediaLibraryDataSourceDelegate {
         if let navVc = self.navigationController {
             controllerToDismiss = navVc
         }
+        FTNotebookEventTracker.trackNotebookEvent(with: mediaSource.eventName)
         controllerToDismiss.dismiss(animated: true, completion: {
             self.delegate?.mediaLibraryViewController(self, didSelect: mediaLibraryImage, source: source)
         })

@@ -19,5 +19,6 @@
 #import "Constants.h"
 #import "FTNDocumentConstants.h"
 #import "FTPrivateProtocols.h"
+#import "FTFileItemPDFTemp.h"
 
 #endif /* NoteshelfAction_Bridging_Header_h */
