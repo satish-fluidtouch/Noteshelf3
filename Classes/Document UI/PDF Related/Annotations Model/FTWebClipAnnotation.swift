@@ -55,9 +55,7 @@ extension FTWebClipAnnotation
 
         let sourceFileItemURL = sourceResourceFolder.fileItemURL.appending(path: self.imageContentFileName(), directoryHint: .notDirectory)
 
-        let destinationFileItemURL = resourceFolder.fileItemURL.appending(path: annotation.imageContentFileName(), directoryHint: .notDirectory)
-
-        guard let copiedFileItem = FTFileItemImageTemporary(url: destinationFileItemURL, sourceURL: sourceFileItemURL) else {
+        guard let copiedFileItem = FTFileItemImageTemporary(fileName: annotation.imageContentFileName(), sourceURL: sourceFileItemURL) else {
             onCompletion(nil)
             return
         }

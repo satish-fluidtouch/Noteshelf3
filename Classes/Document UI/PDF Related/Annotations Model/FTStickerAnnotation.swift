@@ -55,9 +55,7 @@ extension FTStickerAnnotation
            let sourceResourceFolder = sourceDocument.resourceFolderItem(),
            let resourceFolder = document.resourceFolderItem() {
 
-            let destinationFileItemURL = resourceFolder.fileItemURL.appending(path: annotation.imageContentFileName(), directoryHint: .notDirectory)
-
-            guard let copiedFileItem = FTFileItemImageTemporary(url: destinationFileItemURL, sourceURL: sourceFileItem.fileItemURL) else {
+            guard let copiedFileItem = FTFileItemImageTemporary(fileName: annotation.imageContentFileName(), sourceURL: sourceFileItem.fileItemURL) else {
                 onCompletion(nil)
                 return
             }

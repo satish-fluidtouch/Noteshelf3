@@ -413,9 +413,8 @@ extension FTAudioAnnotation
         }
 
         let targetFileName = targetTrackNames[index];
-        let destinationURL = destinationResourceFolder.fileItemURL.appending(path: targetFileName, directoryHint: URL.DirectoryHint.notDirectory)
 
-        guard let copiedFileItem = FTFileItemAudioTemporary(url: destinationURL, sourceURL: sourceFileItem.fileItemURL) else {
+        guard let copiedFileItem = FTFileItemAudioTemporary(fileName: targetFileName, sourceURL: sourceFileItem.fileItemURL) else {
             completion(nil);
             return
         }

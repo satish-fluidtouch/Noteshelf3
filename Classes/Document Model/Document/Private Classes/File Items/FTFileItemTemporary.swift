@@ -8,68 +8,101 @@
 
 import FTDocumentFramework
 
-//----------------EXPERIMENTAL--------------//
-// remove this after validation
-private let usecoordinatedcopy = true
-//----------------EXPERIMENTAL--------------//
-
 protocol FTFileItemCacheble {
-    init?(url: URL, sourceURL: URL)
+    init?(fileName: String, sourceURL: URL)
 }
 
 class FTFileItemImageTemporary: FTFileItemImage, FTFileItemCacheble {
-    private let temporaryLocation: URL
+    private var temporaryLocation: URL?
 
-    required init?(url: URL, sourceURL: URL) {
-        temporaryLocation = URL.temporaryDirectory.appending(path: UUID().uuidString, directoryHint: .notDirectory)
+    required init?(fileName: String, sourceURL: URL) {
+        let temporaryLocation = URL.temporaryDirectory.appending(path: UUID().uuidString, directoryHint: .notDirectory)
         do {
-            if usecoordinatedcopy {
-                try FileManager.default.coordinatedCopy(fromURL: sourceURL, toURL: temporaryLocation)
-            } else {
-                try FileManager.default.copyItem(at: sourceURL, to: temporaryLocation)
-            }
-            super.init(url: url, isDirectory: false)
+            try FileManager.default.coordinatedCopy(fromURL: sourceURL, toURL: temporaryLocation)
+            self.temporaryLocation = temporaryLocation
+            super.init(fileName: fileName, isDirectory: false)
+            // Force set to nil, to make this file item as dirty
+            self.updateContent(nil)
         } catch {
-            print("Cacheable file item create error", error)
             return nil
         }
     }
 
+    override func loadContentsOfFileItem() -> Any! {
+        guard let temporaryLocation else {
+            return super.loadContentsOfFileItem()
+        }
+
+        if var data = try? Data(contentsOf: temporaryLocation) {
+            if self.shouldDecryptWhileLoading(),
+               let securityDel = self.securityDelegate {
+                data = securityDel.decrypt(data)
+            }
+            return UIImage(data: data)
+        }
+        return nil
+    }
+
     override func saveContentsOfFileItem() -> Bool {
+        guard let temporaryLocation else {
+            return saveContentsOfFileItem()
+        }
+
+        // Perform save to main document from the temporary location
         do {
             try FileManager.default.moveItem(at: temporaryLocation, to: self.fileItemURL)
+            // reset the temp URL to nil so that this class acts like a normal file item.
+            self.temporaryLocation = nil
             return true
         } catch {
-            print("Cacheable file item save error", error)
             return false
         }
     }
 }
 
 class FTFileItemAudioTemporary: FTFileItemAudio, FTFileItemCacheble {
-    private let temporaryLocation: URL
+    private var temporaryLocation: URL?
 
-    required init?(url: URL, sourceURL: URL) {
-        temporaryLocation = URL.temporaryDirectory.appending(path: UUID().uuidString, directoryHint: .notDirectory)
+    required init?(fileName: String, sourceURL: URL) {
+        let temporaryLocation = URL.temporaryDirectory.appending(path: UUID().uuidString, directoryHint: .notDirectory)
         do {
-            if usecoordinatedcopy {
-                try FileManager.default.coordinatedCopy(fromURL: sourceURL, toURL: temporaryLocation)
-            } else {
-                try FileManager.default.copyItem(at: sourceURL, to: temporaryLocation)
-            }
-            super.init(url: url, isDirectory: false)
+            try FileManager.default.coordinatedCopy(fromURL: sourceURL, toURL: temporaryLocation)
+            self.temporaryLocation = temporaryLocation
+            super.init(fileName: fileName, isDirectory: false)
+            // Force set to nil, to make this file item as dirty
+            self.updateContent(nil)
         } catch {
-            print("Cacheable file item create error", error)
             return nil
         }
     }
+    
+    override func loadContentsOfFileItem() -> Any! {
+        guard let temporaryLocation else {
+            return super.loadContentsOfFileItem()
+        }
+
+        if var data = try? Data(contentsOf: temporaryLocation) {
+            if self.shouldDecryptWhileLoading(),
+               let securityDel = self.securityDelegate {
+                data = securityDel.decrypt(data)
+            }
+            return data
+        }
+        return nil
+    }
 
     override func saveContentsOfFileItem() -> Bool {
+        guard let temporaryLocation else {
+            return saveContentsOfFileItem()
+        }
+
+        // Perform save to main document from the temporary location
         do {
             try FileManager.default.moveItem(at: temporaryLocation, to: self.fileItemURL)
+            // reset the temp URL to nil so that this class acts like a normal file item.
+            self.temporaryLocation = nil
             return true
         } catch {
-            print("Cacheable file item save error", error)
             return false
         }
     }
