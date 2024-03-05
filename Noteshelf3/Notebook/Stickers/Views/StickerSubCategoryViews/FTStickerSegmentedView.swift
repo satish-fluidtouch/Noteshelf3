@@ -28,6 +28,7 @@ struct FTStickerSegmentedView: View {
                             .onTapGesture {
                                 selection = item
                                 onTapMenu(item)
+                                FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.nbk_addmenu_stickers_category_tap, params: ["title": item])
                                 withAnimation(.easeInOut(duration: 0.4)) {
                                     proxy.scrollTo(item,anchor: .center)
                                 }

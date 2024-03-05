@@ -143,6 +143,7 @@ protocol FTDeskPanelActionDelegate: AnyObject {
             } else {
                 strongSelf.updateScreenModeIfNeeded(.focus)
                 strongSelf.actionDelegate?.didTapRightPanelTool(.focus, source: strongSelf.fullScreenModeButton, mode: .focus)
+                FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.focusmode_gesture_toggle, params: ["toggle": "on"])
             }
         }
         
@@ -286,8 +287,10 @@ private extension FTiOSDeskToolbarController {
     @IBAction private func leftPanelButtonTapped(_ sender : UIButton) {
         if(sender == self.undoButton) {
             self.performUndoIfNeeded()
+            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_undo_tap)
         } else if (sender == self.redoButton) {
             self.performRedoIfNeeded()
+            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_redo_tap)
         } else {
             if let button = FTDeskLeftPanelTool.init(rawValue: sender.tag) {
                 self.actionDelegate?.didTapLeftPanelTool(button, source: sender)
@@ -298,6 +301,7 @@ private extension FTiOSDeskToolbarController {
     @IBAction private func rightPanelButtonTapped(_ sender: UIButton) {
         if sender == self.fullScreenModeButton {
             self.updateScreenModeIfNeeded(.focus)
+            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_focusmode_toggle, params: ["toggle": "on"])
             if let button = FTDeskRightPanelTool(rawValue: sender.tag) {
                 self.actionDelegate?.didTapRightPanelTool(button, source: sender, mode: .focus)
             }
@@ -340,6 +344,7 @@ extension FTiOSDeskToolbarController {
         if let parent = self.parent as? FTDocumentRenderViewController {
             if let focusModeView = parent.view.subviews.first(where: { $0 is FTFocusModeView }) {
                 self.updateScreenModeIfNeeded(.normal)
+                FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_focusmode_toggle, params: ["toggle": "off"])
                 UIView.animate(withDuration: 0.3) {
                     self.actionDelegate?.didTapRightPanelTool(FTDeskRightPanelTool.focus, source: focusModeView, mode: .normal)
                     focusModeView.removeFromSuperview()

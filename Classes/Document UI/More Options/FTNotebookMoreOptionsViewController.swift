@@ -250,6 +250,7 @@ extension FTNotebookMoreOptionsViewController: UITableViewDelegate, UITableViewD
 #endif
         }
         setting.isViewed = true
+        FTNotebookEventTracker.trackNotebookEvent(with: setting.eventName)
     }
     
     func showGoToPageAlert() {
@@ -310,6 +311,18 @@ extension FTNotebookMoreOptionsViewController: FTShareBeginnerDelegate, FTGetInf
         self.dismiss(animated: true) {
             self.delegate?.didSelectShareOption(option: option)
         }
+        let eventName : String
+        switch option {
+        case .allPages:
+            eventName = FTNotebookEventTracker.nbk_more_share_allpages_tap
+        case .selectPages:
+            eventName = FTNotebookEventTracker.nbk_more_share_selectpages_tap
+        case .currentPage:
+            eventName = FTNotebookEventTracker.nbk_more_share_currentpage_tap
+        case .notebook:
+            eventName = ""
+        }
+        FTNotebookEventTracker.trackNotebookEvent(with: eventName)
     }
     
     func handleGoToPage(with page: Int) {
@@ -339,5 +352,6 @@ extension FTNotebookMoreOptionsViewController: FTNotebookToolDelegate {
         case .zoomBox:
             self.delegate?.didTapBasicOption(option: .zoomBox, with: page, controller: self)
         }
+        type.trackEvent()
     }
 }

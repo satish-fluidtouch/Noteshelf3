@@ -22,6 +22,7 @@ import UIKit
     public static let noteBookOptions = "NB_Options"
     public static let share = "Share"
     public static let finder = "Finder"
+    public static let notebook = "Notebook"
     public static let lasso = "Lasso"
     public static let shelfSettings = "Shelf_Settings"
     public static let audio = "Audio"
