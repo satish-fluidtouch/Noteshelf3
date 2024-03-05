@@ -78,4 +78,19 @@ extension RKExportFormat {
         }
         return icon
     }
+    
+    var param: String {
+        let name: String
+        switch self {
+        case kExportFormatImage:
+            name = "image"
+        case kExportFormatPDF:
+            name = "pdf"
+        case kExportFormatNBK:
+            name = "noteshelf"
+        default:
+            name = ""
+        }
+        return name
+    }
 }

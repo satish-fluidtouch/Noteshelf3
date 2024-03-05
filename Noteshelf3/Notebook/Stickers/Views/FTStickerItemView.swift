@@ -29,12 +29,15 @@ struct FTStickerItemView:View{
                             .onTapGesture {
                                 let newSubitem = downloadviewModel.getStickerSubitem(subitem: subitem, fileName: stickerSubCategory?.filename ?? "",type: stickerSubCategory?.type ?? .staticSticker)
                                     recentViewModel.saveSticker(stickerInfo: newSubitem)
-                                    model?.stickerDelegate?.didTapSticker(with: UIImage(named: newSubitem.image) ?? UIImage())
+                                model?.stickerDelegate?.didTapSticker(with: UIImage(named: newSubitem.image) ?? UIImage(), title: stickerSubCategory?.title ?? "")
                             }
                     }
                 }
                 .padding(.horizontal,16)
                 .padding(.bottom,16)
+            }.onAppear{
+                FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker
+                    .nbk_addmenu_stickers_subcategory_tap,params: ["title": stickerSubCategory?.title ?? ""])
             }
         }
         .background(Color.appColor(.popoverBgColor))
