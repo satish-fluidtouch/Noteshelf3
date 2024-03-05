@@ -12,11 +12,22 @@ protocol FTFileItemCacheble {
     init?(fileName: String, sourceURL: URL)
 }
 
+private extension FTFileItemCacheble {
+    static func temporaryLocationForFile() -> URL {
+        let temporaryLocation = URL.libraryDirectory.appending(path: "DeepCopy")
+        var isDir = ObjCBool(false);
+        if !FileManager.default.fileExists(atPath: temporaryLocation.path, isDirectory: &isDir) || !isDir.boolValue {
+            try? FileManager().createDirectory(at: temporaryLocation, withIntermediateDirectories: true);
+        }
+        return temporaryLocation.appending(path: UUID().uuidString, directoryHint: .notDirectory)
+    }
+}
+
 class FTFileItemImageTemporary: FTFileItemImage, FTFileItemCacheble {
     private var temporaryLocation: URL?
 
     required init?(fileName: String, sourceURL: URL) {
-        let temporaryLocation = URL.temporaryDirectory.appending(path: UUID().uuidString, directoryHint: .notDirectory)
+        let temporaryLocation = Self.temporaryLocationForFile()
         do {
             try FileManager.default.coordinatedCopy(fromURL: sourceURL, toURL: temporaryLocation)
             self.temporaryLocation = temporaryLocation
@@ -45,7 +56,7 @@ class FTFileItemImageTemporary: FTFileItemImage, FTFileItemCacheble {
 
     override func saveContentsOfFileItem() -> Bool {
         guard let temporaryLocation else {
-            return saveContentsOfFileItem()
+            return super.saveContentsOfFileItem()
         }
 
         // Perform save to main document from the temporary location
@@ -64,7 +75,7 @@ class FTFileItemAudioTemporary: FTFileItemAudio, FTFileItemCacheble {
     private var temporaryLocation: URL?
 
     required init?(fileName: String, sourceURL: URL) {
-        let temporaryLocation = URL.temporaryDirectory.appending(path: UUID().uuidString, directoryHint: .notDirectory)
+        let temporaryLocation = Self.temporaryLocationForFile()
         do {
             try FileManager.default.coordinatedCopy(fromURL: sourceURL, toURL: temporaryLocation)
             self.temporaryLocation = temporaryLocation
@@ -93,7 +104,7 @@ class FTFileItemAudioTemporary: FTFileItemAudio, FTFileItemCacheble {
 
     override func saveContentsOfFileItem() -> Bool {
         guard let temporaryLocation else {
-            return saveContentsOfFileItem()
+            return super.saveContentsOfFileItem()
         }
 
         // Perform save to main document from the temporary location
