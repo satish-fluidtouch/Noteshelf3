@@ -62,6 +62,31 @@ enum FTNoteBookSettingCellTye {
         }
         return title.localized
     }
+    
+    var eventName: String {
+        let title: String
+        switch self {
+        case .autoBackup:
+            title = "autobackup"
+        case .password:
+            title = FTNotebookEventTracker.nbk_moresettings_password_tap
+        case .autoLock:
+            title = FTNotebookEventTracker.nbk_moresettings_autolock_toggle
+        case .stylus:
+            title = FTNotebookEventTracker.nbk_moresettings_stylus_tap
+        case .addToSiri:
+            title = FTNotebookEventTracker.nbk_moresettings_addtisiri_tap
+        case .scrolling:
+            title = FTNotebookEventTracker.nbk_moresettings_scrolling_tap
+        case .hideUiInPresentMode:
+            title = FTNotebookEventTracker.nbk_moresettings_hideappUI_toggle
+        case .allowHyperLinks:
+            title = FTNotebookEventTracker.nbk_moresettings_hyperlinks_toggle
+        case .evernoteSync:
+            title = FTNotebookEventTracker.nbk_moresettings_synctoevernote_tap
+        }
+        return title
+    }
 }
 
 enum FTNoteBookStylusSetting {

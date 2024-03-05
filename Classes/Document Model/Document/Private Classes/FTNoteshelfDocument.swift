@@ -39,6 +39,8 @@ private class FTNSDocumentListener: NSObject {
 
 class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,FTDocumentProtocolInternal
 {
+    private var lastOpenedDate: Date?;
+    
     fileprivate var searchOperationQueue = OperationQueue();
     fileprivate var openPurpose = FTDocumentOpenPurpose.write;
     
@@ -230,6 +232,10 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     }
     #endif
 
+    func setLastOpenedDate(_ date: Date) {
+        self.lastOpenedDate = date;
+    }
+    
     //MARK:- Create Doc / Insert PDF to Doc -
     @available(*, renamed: "createDocument(_:)")
     func createDocument(_ info : FTDocumentInputInfo,onCompletion : @escaping  ((NSError?,Bool) -> Void))
@@ -281,6 +287,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                             self.closeDocument(completionHandler: { _ in
                                 DispatchQueue.main.async(execute: {
                                     if(nil != error) {
+                                        FTCLSLog("FM Create Doc Remove: - \(self.addressString) - \(self.URL.title)")
                                         try? FileManager().removeItem(at: self.fileURL);
                                     }
                                     self.isInDocCreationMode = false;
@@ -426,6 +433,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                                       documentInfo: FTDocumentInputInfo?,
                                       onCompletion :@escaping ((Bool,NSError?) -> Void)) -> Progress
     {
+        FTCLSLog("Creating temp document: \(self.addressString) - \(fromPages.count) - \(purpose.rawValue)")
         let info: FTDocumentInputInfo;
         if let dInfo = documentInfo {
             info = dInfo;
@@ -569,7 +577,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     }
     
     func openDocument(purpose: FTDocumentOpenPurpose, completionHandler: ((Bool, NSError?) -> Void)?) {
-        FTCLSLog("Doc open: Initiated: \(self.URL.title) purpose: \(purpose.displayTitle)");
+        FTCLSLog("Doc open: Initiated: \(self.addressString) - \(self.URL.title) - \(purpose.displayTitle)");
         self.openPurpose = purpose;
         super.open { (success) in
             if(!success) {
@@ -578,8 +586,8 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
             }
             
             if(self.isInDocCreationMode
-                || (self.isValidDocument() && self.isDocumentVersionSupported())
-                    ) {
+               || (self.isValidDocument() && self.isDocumentVersionSupported())
+            ) {
                 
                 //**************************** User IDs from all the devices
                 if let currentUserID = UserDefaults.standard.object(forKey: "USER_ID_FOR_CRASH") as? String{
@@ -595,10 +603,10 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                     }
                 }
 #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
-                FTDocumentCorruptLogger.shared.markDocumentAsValid(self.fileURL);
+                FTDocumentCorruptLogger.shared.markDocumentAsValid(self.fileURL,documentAddress:self.addressString);
 #endif
                 //****************************
-                FTCLSLog("Doc open: valid: \(self.URL.title)");
+                FTCLSLog("Doc open: valid: \(self.addressString) - \(self.URL.title)");
                 if(nil != completionHandler) {
                     completionHandler!(success,nil);
                 }
@@ -616,7 +624,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                         if(nil == deviceID) {
                             deviceID = "Unknown";
                         }
-
+                        
                         var appversion = infoFileItem?.object(forKey: APP_VERSION) as? String;
                         if(nil == appversion) {
                             appversion = "Unknown";
@@ -629,6 +637,10 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                                   "Reason": "info plist Not Found"]
                     }
                     self.logDocumentCorrupt(params);
+                    //------ Some times In Metadata Plist isSecured bool is set to false, even though the book is secured.Logging it for further investigation -----//
+                    if self.isPinEnabled(),!self.isSecured() {
+                        FTLogError("IS_SECURED_ERROR")
+                    }
                 }
                 
                 self.closeDocument(completionHandler: { _ in
@@ -643,14 +655,14 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     func saveDocument(completionHandler : ((Bool) -> Void)?)
     {
         if(self.openPurpose == .read) {
-            FTLogError("Doc Saved in Readonly: \(self.URL.title)");
+            FTLogError("Doc Saved in Readonly: \(self.addressString) - \(self.URL.title)");
             completionHandler?(true);
             return;
         }
         if(self.hasAnyUnsavedChanges) {
             (self.delegate as? FTNoteshelfDocumentDelegate)?.documentWillStartSaving(self);
         }
-        FTCLSLog("Doc: Save: \(self.URL.title)");
+        FTCLSLog("Doc: Save: \(self.addressString) - \(self.URL.title)");
         #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
         self.recognitionCache?.saveRecognitionInfoToDisk(forcibly: true);
         if(self.hasAnyUnsavedChanges) {
@@ -682,7 +694,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     
     func closeDocument(completionHandler: ((Bool) -> Void)?)
     {
-         FTCLSLog("Doc: Close: \(self.URL.title)");
+         FTCLSLog("Doc: Close: \(self.addressString) \(self.URL.title)");
         #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
         self.recognitionCache?.saveRecognitionInfoToDisk(forcibly: true)
         #endif
@@ -702,7 +714,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     
     func saveAndCloseWithCompletionHandler(_ onCompletion :((Bool) -> Void)?)
     {
-        FTCLSLog("Doc: Save and Close: \(self.URL.title)");
+        FTCLSLog("Doc: Save and Close: \(self.addressString) - \(self.URL.title)");
         self.prepareForClosing();
         self.saveDocument { (saveSuccess) in
             if(saveSuccess) {
@@ -862,12 +874,21 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                                 andAttributes: additionalFileAttributes,
                                 safelyTo: url,
                                 for: saveOperation);
-
-        let uuid = self.URL.getExtendedAttribute(for: .documentUUIDKey)?.stringValue
-        // Ideally In-equality condition is not needed, just as a safety check we're adding.
-        if uuid == nil || uuid != self.documentUUID {
-            let uuidAttribute = FileAttributeKey.ExtendedAttribute(key: .documentUUIDKey, string: self.documentUUID)
-            try? self.URL.setExtendedAttributes(attributes: [uuidAttribute])
+        if FTDocumentPropertiesReader.USE_EXTENDED_ATTRIBUTE {
+            let uuid = self.URL.getExtendedAttribute(for: .documentUUIDKey)?.stringValue
+            // Ideally In-equality condition is not needed, just as a safety check we're adding.
+            var extendedAttributes = [FileAttributeKey.ExtendedAttribute]()
+            if uuid == nil || uuid != self.documentUUID {
+                let uuidAttribute = FileAttributeKey.ExtendedAttribute(key: .documentUUIDKey, string: self.documentUUID)
+                extendedAttributes.append(uuidAttribute);
+            }
+            if let date = self.lastOpenedDate {
+                let lastOpenAttribute = FileAttributeKey.ExtendedAttribute(key: .lastOpenDateKey, date: date)
+                extendedAttributes.append(lastOpenAttribute);
+            }
+            if(!extendedAttributes.isEmpty) {
+                try? self.URL.setExtendedAttributes(attributes: extendedAttributes)
+            }
         }
     }
     
@@ -876,7 +897,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     override func revert(toContentsOf url: URL, completionHandler: ((Bool) -> Void)?) {
         if(!isInRevertMode && !self.documentState.contains(UIDocument.State.progressAvailable) && !self.documentState.contains(UIDocument.State.closed)) {
             isInRevertMode = true;
-            FTLogError("Doc Reverted", attributes: ["title": self.URL.title])
+            FTLogError("Doc Reverted - \(self.openPurpose.displayTitle)", attributes: ["title": self.URL.title, "address" : self.addressString])
             if((nil == self.pin && self.isPinEnabled())
                 || (nil != self.pin && !self.isPinEnabled())) {
                 self.notifySecurityUpdate();
@@ -898,7 +919,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     }
     
     override func accommodatePresentedItemDeletion(completionHandler: @escaping (Error?) -> Void) {
-        FTCLSLog("accommodatePresentedItemDeletion: \(self.URL.title)");
+        FTCLSLog("accommodatePresentedItemDeletion: \(self.addressString) - \(self.URL.title)");
         super.accommodatePresentedItemDeletion {  [weak self] (error) in
                 DispatchQueue.main.async(execute: {
                     if let del = self?.delegate, del.responds(to: #selector(FTDocumentDelegate.documentDidDelete(_:))) {
@@ -910,7 +931,6 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     }
     
     override func savePresentedItemChanges(completionHandler: @escaping (Error?) -> Void) {
-        FTCLSLog("savePresentedItemChanges: \(self.URL.title) haschanges:\(self.hasUnsavedChanges)");
         guard self.hasUnsavedChanges else {
             super.savePresentedItemChanges(completionHandler: completionHandler);
             return;
@@ -922,7 +942,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
             }
             return;
         }
-        
+        FTCLSLog("savePresentedItemChanges: \(self.addressString) - \(self.URL.title)");
         if self.delegate != nil
             && (self.delegate.responds(to: #selector(FTDocumentDelegate.documentWillGetReloaded(_:onCompletion:)))) {
             self.delegate.documentWillGetReloaded!(self, onCompletion: {
@@ -950,7 +970,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     
     override func presentedItemDidResolveConflict(_ version: NSFileVersion) {
         super.presentedItemDidResolveConflict(version);
-        FTCLSLog("presentedItemDidResolveConflictVersion: \(self.URL.title)");
+        FTCLSLog("presentedItemDidResolveConflictVersion: \(self.addressString) - \(self.URL.title)");
             DispatchQueue.main.async(execute: { [weak self] in
                 if let del = self?.delegate, del.responds(to: #selector(FTDocumentDelegate.documentDidResolveConflict(_:))) {
                     del.documentDidResolveConflict?(self);
@@ -980,7 +1000,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
             completionHandler?(true);
         }
         else {
-            FTLogError("Doc Auto Save",attributes: ["title": self.URL.title]);
+            FTCLSLog("Doc Auto Save: \(self.addressString) - \(self.URL.title)")
             super.autosave { [weak self] (success) in
                 self?.previousFileModeificationDate = self?.fileModificationDate;
                 completionHandler?(success);
@@ -994,7 +1014,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     }
     
     private func revertDocument(withRevertURL url: URL, andCompletionHandler completionHandler: ((Bool) -> Void)?) {
-        FTCLSLog("revertDocument: \(self.URL.title)");
+        FTCLSLog("revertDocument: \(self.addressString) - \(self.URL.title) - \(self.openPurpose.displayTitle)");
         super.revert(toContentsOf: url, completionHandler:{ (success) in
             self.isInRevertMode = false;
             if(nil != completionHandler) {
@@ -1876,6 +1896,7 @@ extension FTNoteshelfDocument {
     func logDocumentCorrupt(_ params: [String:Any]) {
         var inParams = params;
         inParams["title"] = self.URL.title
+        inParams["address"] = self.addressString
         FTLogError("Doc Corrupt", attributes: inParams)
 #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
         FTDocumentCorruptLogger.shared.markDocumentAsCorrupted(self.fileURL, params: params);
@@ -1966,7 +1987,7 @@ private class FTDocumentCorruptLogger: NSObject {
         }
     }
     
-    func markDocumentAsValid(_ path: URL) {
+    func markDocumentAsValid(_ path: URL,documentAddress: String) {
         guard let filePath = URL.documentErrorFileURL else {
             return;
         }
@@ -1976,6 +1997,7 @@ private class FTDocumentCorruptLogger: NSObject {
             if let index = docInfo.firstIndex(of: relativePath) {
                 var params = [String:Any]();
                 params["path"] = relativePath;
+                params["add"] = documentAddress
                 FTLogError("Doc Corrupt Recovered",attributes: params);
                 track("Doc Corrupt Recovered", params: params,screenName: "Doc open");
                 docInfo.remove(at: index);
@@ -1985,3 +2007,9 @@ private class FTDocumentCorruptLogger: NSObject {
     }
 }
 #endif
+
+extension FTNoteshelfDocument {
+    var addressString: String {
+        return String(format: "%p", self);
+    }
+}
