@@ -78,11 +78,20 @@ extension FTSidePanelShelfItemPickerDelegate {
     
     func configureNavigation(title: String) {
         self.navigationItem.hidesBackButton = true
-        let leftItem = UIBarButtonItem(image: UIImage.image(for: "chevron.backward", font: UIFont.appFont(for: .medium, with: 18)), style: .plain, target: self, action: #selector(leftNavBtnTapped(_ :)))
+        let leftItem = UIBarButtonItem(image: UIImage.image(for: "chevron.backward", font: UIFont.appFont(for: .medium, with: 18)), style: .plain, target: self, action: #selector(buttonTapped(_ :)))
         self.navigationItem.leftBarButtonItems = [leftItem]
         self.navigationItem.title = title
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationController?.navigationItem.largeTitleDisplayMode = .always
+    }
+    
+    @objc func buttonTapped(_ sender : UIButton) {
+        FTFinderEventTracker.trackFinderEvent(with: "quickaccess_back_tap")
+        if self == self.navigationController?.viewControllers[0] {
+            self.dismiss(animated: true, completion: nil)
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     override func viewDidLoad() {

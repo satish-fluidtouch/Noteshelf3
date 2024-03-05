@@ -114,6 +114,22 @@ class FTNoteshelfDocumentProvider: NSObject {
     func refreshCurrentShelfCollection(onCompletion : @escaping () -> Void) {
         self.currentCollection().refreshShelfCollection(onCompletion: onCompletion);
     }
+    
+    func generateDocumentsDirectoryLog() -> [String] {
+        var url =  FTUtils.noteshelfDocumentsDirectory().appendingPathComponent("User Documents")
+        if FTUserDefaults.defaults().iCloudOn, let iCloudUrl = FTNSiCloudManager.shared().iCloudRootURL() {
+            url = iCloudUrl
+        }
+        let contents = FileManager.default.enumerator(at: url, includingPropertiesForKeys: nil, options: [.skipsPackageDescendants, .producesRelativePathURLs])
+        var relativePaths = [String]();
+        contents?.enumerated().forEach({ eachItem in
+            let item = eachItem.element;
+            if let pathURL = (item as? URL)?.relativePath {
+                relativePaths.append(pathURL);
+            }
+        })
+        return relativePaths
+    }
 
     fileprivate static func documentProvider(_ onCompletion : @escaping ((FTNoteshelfDocumentProvider) -> Void)) {
         let documentProvider = FTNoteshelfDocumentProvider();
