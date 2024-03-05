@@ -331,7 +331,7 @@ extension FTPDFRenderViewController {
 }
 
 extension FTPDFRenderViewController: FTStickerdelegate {
-    public func didTapSticker(with image:UIImage) {
+    public func didTapSticker(with image:UIImage, title: String) {
         self.insert([image], center: .zero, droppedPoint: .zero, source: FTInsertImageSourceSticker)
         self.dismiss()
     }

@@ -797,8 +797,8 @@ extension FTShelfSplitViewController: FTShelfItemsViewModelDelegate {
             if(nil != title) {
                 categoryTitle = title!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines);
             }
-            if(nil == title || title!.isEmpty) {
-                categoryTitle = NSLocalizedString("NewCategory", comment: "Untitle");
+            if(nil == categoryTitle || categoryTitle!.isEmpty) {
+                categoryTitle = NSLocalizedString("Untitled", comment: "Untitle");
             }
             viewController.dismiss(animated: true) {
                 self.currentShelfViewModel?.addObserversForShelfItems()

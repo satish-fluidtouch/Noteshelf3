@@ -217,6 +217,7 @@ private class FTCopySource: NSObject {
         let fileManager = FileManager();
         if fileManager.fileExists(atPath: self.sourceURL.path),
             !fileManager.fileExists(atPath: self.destinationURL.path) {
+            FTCLSLog("FM Copy file doc From pages: \(self.sourceURL.title) - \(self.destinationURL.title)")
             try fileManager.copyItem(at: self.sourceURL, to: self.destinationURL);
         }
     }

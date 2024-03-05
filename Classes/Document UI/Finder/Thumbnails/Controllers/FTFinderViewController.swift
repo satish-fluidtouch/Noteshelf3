@@ -614,6 +614,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
 
     @IBAction func didTapDoneButton(_ sender: Any) {
         if mode == .selectPages {
+            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.share_selectpages_done_tap, params: ["location": currentFinderLocation()])
             self.dismiss(animated: true)
             return
         }
@@ -684,6 +685,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     @IBAction func shareButton(_ sender: Any) {
         self.dismiss(animated: true)
         self.shareClicked(withSelectedPages: self.selectedPages)
+        FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.share_selectpages_share_tap, params: ["location": currentFinderLocation()])
     }
 
     private func updateSegmentData(for type: FTFinderSectionType) {
@@ -1107,7 +1109,6 @@ extension FTFinderViewController:  UICollectionViewDelegate, UICollectionViewDel
             }
 
             let page = self.filteredPages[indexPath.item];
-            FTCLSLog("Finder - Mode: \(self.mode), Screen State: \(self.screenMode)")
             if  self.mode == .none {
                 let indexSelected: Int;
                 if self.mode == .none {
@@ -1132,11 +1133,11 @@ extension FTFinderViewController:  UICollectionViewDelegate, UICollectionViewDel
                 });
                 if pageSelected {
                     self.selectedPages.remove(page);
-                    FTFinderEventTracker.trackFinderEvent(with: "finder_select_page_unselect_tap", params: ["location": currentFinderLocation()])
+                    trackPageUnSelect()
                 }
                 else {
                     self.selectedPages.add(page);
-                    FTFinderEventTracker.trackFinderEvent(with: "finder_select_page_select_tap", params: ["location": currentFinderLocation()])
+                    trackPageSelect()
                 }
                 if let collectionViewCell = collectionView.cellForItem(at: indexPath) as? FTFinderThumbnailViewCell {
                     collectionView.deselectItem(at: indexPath, animated: true);
@@ -1161,6 +1162,22 @@ extension FTFinderViewController:  UICollectionViewDelegate, UICollectionViewDel
                 self.updateSelectAllUI();
                 self.updateSelectionTitle()
             }
+        }
+    }
+    
+    private func trackPageSelect() {
+        if mode == .selectPages {
+            FTNotebookEventTracker.trackNotebookEvent(with: "share_selectpages_page_select", params: ["location": currentFinderLocation()])
+        } else {
+            FTFinderEventTracker.trackFinderEvent(with: "finder_select_page_select_tap", params: ["location": currentFinderLocation()])
+        }
+    }
+    
+    private func trackPageUnSelect() {
+        if mode == .selectPages {
+            FTNotebookEventTracker.trackNotebookEvent(with: "share_selectpages_page_unselect", params: ["location": currentFinderLocation()])
+        } else {
+            FTFinderEventTracker.trackFinderEvent(with: "finder_select_page_unselect_tap", params: ["location": currentFinderLocation()])
         }
     }
 
@@ -1469,8 +1486,13 @@ extension FTFinderViewController {
         };
         self.updateSelectionTitle();
         self.updateSelectAllUI();
-        let eventName = !self.selectAll ?  "finder_select_selectall_tap" :  "finder_select_selectnone_tap"
-        FTFinderEventTracker.trackFinderEvent(with:eventName, params: ["location": currentFinderLocation()])
+        if mode == .selectPages {
+            let eventName = !self.selectAll ?  "share_selectpages_selectall_tap" :  "share_selectpages_selectnone_tap"
+            FTNotebookEventTracker.trackNotebookEvent(with:eventName, params: ["location": currentFinderLocation()])
+        } else {
+            let eventName = !self.selectAll ?  "finder_select_selectall_tap" :  "finder_select_selectnone_tap"
+            FTFinderEventTracker.trackFinderEvent(with:eventName, params: ["location": currentFinderLocation()])
+        }
     }
 
     @IBAction func didTapAddNewPage(_ sender: UIButton) {

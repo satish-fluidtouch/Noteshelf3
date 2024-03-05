@@ -151,6 +151,7 @@ private extension FTToolbarCenterPanelController {
             let yOffset = self.collectionView.contentOffset.y
             self.collectionView.setContentOffset(CGPoint(x: reqOffsetX, y: yOffset), animated: true)
             self.updateCurrentStatusOfNavButtons()
+            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_left_arrow_tap)
         }
     }
 
@@ -161,6 +162,7 @@ private extension FTToolbarCenterPanelController {
             let yOffset = self.collectionView.contentOffset.y
             self.collectionView.setContentOffset(CGPoint(x: reqOffsetX, y: yOffset), animated: true)
             self.updateCurrentStatusOfNavButtons()
+            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_right_arrow_tap)
         }
     }
 
@@ -271,11 +273,14 @@ extension FTToolbarCenterPanelController: UICollectionViewDataSource, UICollecti
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         self.updateCurrentStatusOfNavButtons()
+        FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_tools_swipe)
+
     }
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {
             self.updateCurrentStatusOfNavButtons()
+            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_tools_swipe)
         }
     }
 

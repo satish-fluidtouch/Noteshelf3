@@ -40,16 +40,17 @@ extension NSNotification.Name {
     private var _fileLastOpenedDate: Date?;
     var fileLastOpenedDate: Date {
         if isDownloaded, nil == _fileLastOpenedDate {
-            if nil == self.metadataItem {
-                _fileLastOpenedDate = self.URL.fileLastOpenedDate;
-            }
-            else if let docID = self.documentUUID {
+            if let docID = self.documentUUID {
 #if !NOTESHELF_ACTION
                 debugLog("fileModDate: reading lastOpenedDocument : \(self.URL.title)")
                 let cache = FTDocumentCache.shared.cachedLocation(for: docID);
                 _fileLastOpenedDate = cache.fileLastOpenedDate;
 #endif
             }
+        }
+        if let inlastopenedDate = _fileLastOpenedDate
+            , inlastopenedDate.compare(self.fileModificationDate) == .orderedAscending {
+            _fileLastOpenedDate = self.fileModificationDate;
         }
         return _fileLastOpenedDate ?? self.fileModificationDate;
     }
@@ -118,9 +119,11 @@ extension NSNotification.Name {
                 
                 FTDocumentPropertiesReader.shared.readDocumentUUID(self.URL) { (docProperties) in
                     self.documentUUID = docProperties.documentID;
-                    self._fileLastOpenedDate = nil;
-                    if let date = docProperties.lastOpnedDate {
-                        self.setLastOpenedDate(date)
+                    if FTDocumentPropertiesReader.USE_EXTENDED_ATTRIBUTE {
+                        self._fileLastOpenedDate = nil;
+                        if let date = docProperties.lastOpnedDate {
+                            self.setLastOpenedDate(date)
+                        }
                     }
                     self.downloaded = newValue;
                     if nil != self.metadataItem
@@ -131,17 +134,22 @@ extension NSNotification.Name {
             }
             else {
                 if(newValue) {
-                    debugLog("fileModDate: Updating last openDate : \(self.URL.title)")
-                    FTDocumentPropertiesReader.shared.readDocumentUUID(self.URL) { (docProperties) in
-                        self._fileLastOpenedDate = nil;
-                        if let date = docProperties.lastOpnedDate {
-                            self.setLastOpenedDate(date)
+                    if FTDocumentPropertiesReader.USE_EXTENDED_ATTRIBUTE {
+                        FTDocumentPropertiesReader.shared.readDocumentUUID(self.URL) { (docProperties) in
+                            debugLog("fileModDate: Updating last openDate : \(self.URL.title)")
+                            self._fileLastOpenedDate = nil;
+                            if let date = docProperties.lastOpnedDate {
+                                self.setLastOpenedDate(date)
+                            }
+                            self.downloaded = newValue;
+                            if nil != self.metadataItem
+                                , let shelfCollection = self.shelfCollection as? FTShelfItemDocumentStatusChangePublisher {
+                                shelfCollection.documentItem(self, didChangeDownloadStatus: newValue);
+                            }
                         }
+                    }
+                    else {
                         self.downloaded = newValue;
-                        if nil != self.metadataItem
-                            , let shelfCollection = self.shelfCollection as? FTShelfItemDocumentStatusChangePublisher {
-                            shelfCollection.documentItem(self, didChangeDownloadStatus: newValue);
-                        }
                     }
                 }
                 else {
@@ -344,9 +352,6 @@ private extension FTDocumentItem {
 
 private extension FTDocumentItem {
     func setLastOpenedDate(_ date: Date) {
-        if nil == self.metadataItem {
-            self.URL.updateLastOpenedDate(date)
-        }
 #if !NOTESHELF_ACTION
         guard let docID = self.documentUUID else {
             _fileLastOpenedDate = date;

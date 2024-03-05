@@ -46,6 +46,7 @@ enum FTSideBarItemType: String {
     case tag
     case allTags
     case bookmark
+    case addnewCategory
 
     var displayTitle: String {
         let title: String

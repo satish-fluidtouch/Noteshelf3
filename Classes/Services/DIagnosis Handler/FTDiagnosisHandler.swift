@@ -48,6 +48,7 @@ import MessageUI
         self.generateEvernoteSynLog(tempSyncFolderPath);
         self.generateWatchSyncDefaults(tempSyncFolderPath);
         self.generateAdditionalCustomFields(tempSyncFolderPath);
+        self.generateDocumentsDirectoryLog(tempSyncFolderPath)
         #endif
         self.generateCloudBackLog(tempSyncFolderPath);
         self.generateAppInfoLog(tempSyncFolderPath);
@@ -120,6 +121,16 @@ import MessageUI
             let filePath = toPath.appending("/").appending(path.lastPathComponent);
             _ = try? fileManager.copyItem(atPath: path.path, toPath: filePath);
         }
+    }
+    
+    fileprivate func generateDocumentsDirectoryLog(_ toPath : String)
+    {
+        let filePath = toPath + "/DocumentsDirectory.log";
+        let directory = FTNoteshelfDocumentProvider.shared.generateDocumentsDirectoryLog()
+        let combinedString = directory.joined(separator: "\n")
+        do {
+            try combinedString.write(toFile: filePath, atomically: true, encoding: .utf8)
+        } catch {}
     }
     
     fileprivate func generateUserDefaults(_ toPath : String)

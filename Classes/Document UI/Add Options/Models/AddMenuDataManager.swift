@@ -10,14 +10,66 @@ import Foundation
 
 enum FTPageType: String {
     case newPage, chooseTemplate, photoTemplate, scanDocument, pageFromCamera, importDocument, inserFromclipboard
+    var eventName: String {
+        let eventName: String
+        switch self {
+        case .newPage:
+            eventName = FTNotebookEventTracker.nbk_addpage_newpage_tap
+        case .chooseTemplate:
+            eventName = FTNotebookEventTracker.nbk_addpage_choosetemplate_tap
+        case .photoTemplate:
+            eventName = FTNotebookEventTracker.nbk_addpage_pagefromphoto_tap
+        case .scanDocument:
+            eventName = FTNotebookEventTracker.nbk_addpage_scan_tap
+        case .pageFromCamera:
+            eventName = FTNotebookEventTracker.nbk_addpage_pagefromcamera_tap
+        case .importDocument:
+            eventName = FTNotebookEventTracker.nbk_addpage_importdocument_tap
+        case .inserFromclipboard:
+            eventName = FTNotebookEventTracker.nbk_addpage_pastefromclipboard_tap
+        }
+        return eventName
+    }
 }
 
 enum MediaType: String {
     case photo, camera, audio, emojis, stickers, importMedia, appleWatch
+    var eventName: String {
+        let eventName: String
+        switch self {
+        case .photo:
+            eventName = FTNotebookEventTracker.nbk_addmenu_photo_tap
+        case .camera:
+            eventName = FTNotebookEventTracker.nbk_addmenu_camera_tap
+        case .audio:
+            eventName = FTNotebookEventTracker.nbk_addmenu_recordaudio_tap
+        case .emojis:
+            eventName = FTNotebookEventTracker.nbk_addmenu_emojis_tap
+        case .stickers:
+            eventName = FTNotebookEventTracker.nbk_addmenu_stickers_tap
+        case .importMedia:
+            eventName = FTNotebookEventTracker.nbk_addmenu_importmedia_tap
+        case .appleWatch:
+            eventName = FTNotebookEventTracker.nbk_addmenu_applewatch_tap
+        }
+        return eventName
+    }
 }
 
 enum AttachmentType: String {
     case webClip, unsplash, pixabay
+    var eventName: String {
+        let eventName: String
+        switch self {
+        case .webClip:
+            eventName = FTNotebookEventTracker.nbk_addmenu_webclip_tap
+        case .unsplash:
+            eventName = FTNotebookEventTracker.nbk_addmenu_unsplash_tap
+        case .pixabay:
+            eventName = FTNotebookEventTracker.nbk_addmenu_pixabay_tap
+        }
+        return eventName
+    }
 }
 
 protocol MenuProtocal {

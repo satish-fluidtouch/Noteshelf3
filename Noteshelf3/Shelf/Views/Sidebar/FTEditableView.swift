@@ -91,7 +91,7 @@ struct FTEditableView: View {
     }
     
     private func didTapSubmitOrKeyboardHideOption(){
-        var newTitle = currentTitle
+        var newTitle = currentTitle.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty
         if !newTitle.isEmpty {
             if originalTitle.isEmpty { // New categpry case
                 item.title = ""
