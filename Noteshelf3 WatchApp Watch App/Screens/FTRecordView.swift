@@ -10,8 +10,6 @@ import SwiftUI
 
 struct FTRecordView: View {
     @State private var isRecording: Bool = false
-    @State private var elapsedTime: TimeInterval = 0
-    @State private var timer: Timer?
 
     private let recordColor = Color(red: 224/255, green: 110/255, blue: 81/255)
     var viewModel: FTRecordViewModel
@@ -38,7 +36,6 @@ struct FTRecordView: View {
 
             Button(action: {
                 if !isRecording {
-                    self.elapsedTime = 0
                     self.viewModel.recordAudio()
                 }
                 self.isRecording.toggle()
@@ -53,31 +50,8 @@ struct FTRecordView: View {
     }
 
     private var timerView: some View {
-        Text(formattedTime)
+        Text(viewModel.durationStr)
             .foregroundColor(.white)
-            .onAppear {
-                self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-                    self.elapsedTime += 1
-                }
-            }
-            .onDisappear {
-                self.timer?.invalidate()
-            }
-    }
-
-    private var formattedTime: String {
-        let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.hour, .minute, .second]
-        formatter.unitsStyle = .positional
-        formatter.zeroFormattingBehavior = .pad
-        var formattedString = formatter.string(from: elapsedTime) ?? "00:00:00"
-        if elapsedTime <= 3600 {
-            let index = formattedString.startIndex
-            formattedString.remove(at: index)
-            formattedString.remove(at: index)
-            formattedString.remove(at: index)
-        }
-        return formattedString
     }
 }
 

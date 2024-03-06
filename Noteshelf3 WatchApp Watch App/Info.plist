@@ -29,5 +29,7 @@
 	<string>$(MAIN_APP_BUNDLE_IDENTIFIER)</string>
 	<key>WKWatchKitApp</key>
 	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Used to record audio as you take notes in Noteshelf.</string>
 </dict>
 </plist>

@@ -8,24 +8,24 @@
 
 import Foundation
 
-extension URL {
-    var fileModificationDate : Date {
-        var date: Date?;
-        do {
-            date = try self.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate;
-        }
-        catch {
-        }
-        return date ?? self.fileCreationDate
-    }
-
-    var fileCreationDate : Date {
-        var date: Date?;
-        do {
-            date = try self.resourceValues(forKeys: [.creationDateKey]).creationDate;
-        }
-        catch {
-        }
-        return date ?? Date()
-    }
-}
+//extension URL {
+//    var fileModificationDate : Date {
+//        var date: Date?;
+//        do {
+//            date = try self.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate;
+//        }
+//        catch {
+//        }
+//        return date ?? self.fileCreationDate
+//    }
+//
+//    var fileCreationDate : Date {
+//        var date: Date?;
+//        do {
+//            date = try self.resourceValues(forKeys: [.creationDateKey]).creationDate;
+//        }
+//        catch {
+//        }
+//        return date ?? Date()
+//    }
+//}
