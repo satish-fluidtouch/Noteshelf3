@@ -65,6 +65,7 @@ final class FTDocumentCache {
             fatalError("Unable to find cache directory")
         }
         cacheFolderURL = Foundation.URL(fileURLWithPath: cacheFolder).appendingPathComponent(FTCacheFiles.cacheFolderName)
+        self.configure();
     }
 
     func start() {
@@ -280,6 +281,11 @@ private extension FTDocumentCache {
             throw FTCacheError.documentIsStillOpen
         }
 
+        if let document = FTDocumentFactory.documentForItemAtURL(url) as? FTCacheableDocument
+            {
+            document.generateCache(documentID: documentUUID, cacheLocation: URL.cacheLocation)
+        }
+        
         let _fileManager = FileManager();
         if !_fileManager.fileExists(atPath: destinationURL.path) {
             do {
@@ -322,6 +328,8 @@ private extension FTDocumentCache {
         for case let doc in documents where doc.documentUUID != nil {
             guard let docUUID = doc.documentUUID, doc.isDownloaded else { continue }
 
+            self.deleteCache(docUUID, cacheLocation: URL.cacheLocation);
+
             let destinationURL = cachedLocation(for: docUUID)
             let relativePath = self.relativePathWRTCollectionFor(documentId: docUUID)
             let _fileManger = FileManager();
@@ -337,5 +345,99 @@ private extension FTDocumentCache {
             }
         }
     }
+}
 
+extension URL {
+    static var cacheLocation: URL {
+       guard let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first else {
+           fatalError("Pth not found");
+       }
+       let cacheURL = URL(filePath: path).appending(path: "Testing");
+       if !FileManager().fileExists(atPath: cacheURL.path(percentEncoded: false)) {
+           do {
+               try FileManager().createDirectory(at: cacheURL, withIntermediateDirectories: true);
+           }
+           catch  {
+               fatalError(error.localizedDescription)
+           }
+       }
+       return cacheURL;
+   }
+}
+
+extension FTDocumentCache {
+    private func configure() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.appWillEnterForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    @objc private func appWillEnterForeground(_ notiifcation: Notification) {
+        self.clearUnusedCacheItems();
+    }
+    
+    private var cacheValidationExpiryTime: TimeInterval {
+#if DEBUG
+        return 60 * 60;
+#else
+        return 60 * 60 * 24;
+#endif
+    }
+    
+    private var cacheExpiryTime: TimeInterval {
+#if DEBUG
+        return 60 * 60 * 24;
+#else
+        return 60 * 60 * 24 * 30
+#endif
+    }
+    
+    private func deleteCache(_ documentID: String,cacheLocation: URL) {
+        let coordinator = NSFileCoordinator()
+        var error: NSError?
+        let cacheDocumentURL = cacheLocation.appending(path: documentID).appendingPathExtension(FTFileExtension.ns3);
+
+        coordinator.coordinate(writingItemAt: cacheDocumentURL, options: .forDeleting, error: &error) { writingURL in
+            do {
+                try FileManager().removeItem(at: writingURL);
+            }
+            catch {
+                debugLog("cache: failed to delete: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func clearUnusedCacheItems() {
+        guard FTNoteshelfDocumentProvider.shared.isProviderReady else {
+            return;
+        }
+        let val = UserDefaults.standard.double(forKey: "lastValidationTime")
+        let currentVal = Date().timeIntervalSinceReferenceDate;
+        guard currentVal - val > self.cacheValidationExpiryTime else {
+            return;
+        }
+        UserDefaults.standard.set(currentVal, forKey: "lastValidationTime");
+        
+        FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(.none, parent: nil, searchKey: nil) { items in
+            DispatchQueue.global().async {
+                let ids = items.compactMap { eachitem in
+                    if let docItem = eachitem as? FTDocumentItemProtocol, docItem.isDownloaded, let docID = docItem.documentUUID {
+                        return docID;
+                    }
+                    return nil;
+                }
+                
+                do {
+                    let paths = try FileManager().contentsOfDirectory(at: URL.cacheLocation, includingPropertiesForKeys: nil, options: .producesRelativePathURLs)
+                    paths.forEach({ eachItem in
+                        let item = eachItem.relativePath.deletingPathExtension;
+                        if !ids.contains(item), Date().timeIntervalSinceReferenceDate - eachItem.fileModificationDate.timeIntervalSinceReferenceDate > self.cacheExpiryTime {
+                            self.deleteCache(item, cacheLocation: URL.cacheLocation);
+                        }
+                    })
+                }
+                catch {
+                    debugLog("Cache: Failed to verify error: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
 }
