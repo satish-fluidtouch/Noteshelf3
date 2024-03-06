@@ -51,7 +51,7 @@
 #endif
 
 #ifdef DEBUG
-    #define DEBUGLOG(...) //NSLog(__VA_ARGS__)
+    #define DEBUGLOG(...) NSLog(__VA_ARGS__)
 #else
     #define DEBUGLOG(...)
 #endif
