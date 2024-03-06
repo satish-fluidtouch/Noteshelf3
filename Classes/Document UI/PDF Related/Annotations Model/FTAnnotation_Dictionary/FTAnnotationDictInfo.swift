@@ -45,4 +45,11 @@ extension FTAnnotationDictInfo {
         }
         return txTransform;
     }
+    
+    var nonAttrText: String {
+        guard let nonAttrText = self["nonAttrText"] as? String else {
+            return "";
+        }
+        return nonAttrText;
+    }
 }

@@ -31,7 +31,9 @@ extension FTFileItem: FTCacheableFileItemInternal {
                         success = fileItem.saveCache(documentCacheURL);
                     }
                 }
-                self.cleanUpCachedDirectory(destinationPath)
+                if !self.relativePathFromParent().isEmpty {
+                    self.cleanUpCachedDirectory(destinationPath)
+                }
             }
         }
         return success;

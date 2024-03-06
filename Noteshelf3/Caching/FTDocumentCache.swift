@@ -366,6 +366,12 @@ extension URL {
 }
 
 extension FTDocumentCache {
+    func cachedDocument(_ documentID: String) -> FTCachedDocument? {
+        let cachedFileURl = URL.cacheLocation.appending(path: documentID).appendingPathExtension(FTFileExtension.ns3);
+        let document = FTDocumentFactory.cachedDocument(url: cachedFileURl);
+        return document;
+    }
+    
     private func configure() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.appWillEnterForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
     }

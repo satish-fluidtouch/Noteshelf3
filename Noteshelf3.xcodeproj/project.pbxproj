@@ -22,6 +22,8 @@
 
 /* Begin PBXBuildFile section */
 		0900ABF72B9740D900457B46 /* FTCachedDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0900ABF62B9740D900457B46 /* FTCachedDocument.swift */; };
+		0900ABFA2B9849D800457B46 /* FTNonStrokeAnnotationFileItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0900ABF92B9849D800457B46 /* FTNonStrokeAnnotationFileItem.swift */; };
+		0900ABFC2B9849E800457B46 /* FTCachedImageFileItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0900ABFB2B9849E800457B46 /* FTCachedImageFileItem.swift */; };
 		090CC9812AB4609700B43A3F /* FTShortcutPlacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090CC9802AB4609700B43A3F /* FTShortcutPlacement.swift */; };
 		09103B862A86275800739602 /* FTNoteshelfAILocalized.strings in Resources */ = {isa = PBXBuildFile; fileRef = 09103B842A86275800739602 /* FTNoteshelfAILocalized.strings */; };
 		091482BA2A7257EF009E49C2 /* FTCharWrapStrokeRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091482B92A7257EF009E49C2 /* FTCharWrapStrokeRender.swift */; };
@@ -2419,6 +2421,8 @@
 /* Begin PBXFileReference section */
 		004D8C7640CF35A3AF74AFEF /* Pods-Noteshelf3.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Noteshelf3.beta.xcconfig"; path = "Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3.beta.xcconfig"; sourceTree = "<group>"; };
 		0900ABF62B9740D900457B46 /* FTCachedDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCachedDocument.swift; sourceTree = "<group>"; };
+		0900ABF92B9849D800457B46 /* FTNonStrokeAnnotationFileItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNonStrokeAnnotationFileItem.swift; sourceTree = "<group>"; };
+		0900ABFB2B9849E800457B46 /* FTCachedImageFileItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCachedImageFileItem.swift; sourceTree = "<group>"; };
 		0900CDD61EDDA606002F55D0 /* FTZoomSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FTZoomSettingsViewController.xib; sourceTree = "<group>"; };
 		09010C9A218C559B00C3CB6B /* FTApplePencilActionConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTApplePencilActionConstants.swift; sourceTree = "<group>"; };
 		0904BC5F2373F31400239DB8 /* Noteshelf-maccatalyst-frameworks.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "Noteshelf-maccatalyst-frameworks.sh"; sourceTree = "<group>"; };
@@ -4819,6 +4823,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0900ABF82B9849C200457B46 /* private */ = {
+			isa = PBXGroup;
+			children = (
+				0900ABF92B9849D800457B46 /* FTNonStrokeAnnotationFileItem.swift */,
+				0900ABFB2B9849E800457B46 /* FTCachedImageFileItem.swift */,
+			);
+			path = private;
+			sourceTree = "<group>";
+		};
+		0900ABFD2B984C9600457B46 /* Cacheable File Items */ = {
+			isa = PBXGroup;
+			children = (
+				09FBDFEC2B8F5DD900BEE907 /* FTFileItemPlist_FTCacheableFileItem.swift */,
+				09FBDFEF2B91EC0400BEE907 /* FTNSqliteAnnotationFileItem_FTCacheableFileItem.swift */,
+			);
+			path = "Cacheable File Items";
+			sourceTree = "<group>";
+		};
+		0900ABFE2B984CBF00457B46 /* Cached Document */ = {
+			isa = PBXGroup;
+			children = (
+				0900ABF62B9740D900457B46 /* FTCachedDocument.swift */,
+				0900ABF82B9849C200457B46 /* private */,
+			);
+			path = "Cached Document";
+			sourceTree = "<group>";
+		};
 		0904BC5D2373F31400239DB8 /* MacCatalyst */ = {
 			isa = PBXGroup;
 			children = (
@@ -6318,16 +6349,15 @@
 			path = TextLists;
 			sourceTree = "<group>";
 		};
-		09FBDFE72B8F229C00BEE907 /* FTNSDocument_Cache */ = {
+		09FBDFE72B8F229C00BEE907 /* FTDocument Cache */ = {
 			isa = PBXGroup;
 			children = (
 				09FBDFE82B8F241200BEE907 /* FTCacheableDocument.swift */,
 				09FBDFEA2B8F242000BEE907 /* FTCacheableFileItem.swift */,
-				09FBDFEC2B8F5DD900BEE907 /* FTFileItemPlist_FTCacheableFileItem.swift */,
-				09FBDFEF2B91EC0400BEE907 /* FTNSqliteAnnotationFileItem_FTCacheableFileItem.swift */,
-				0900ABF62B9740D900457B46 /* FTCachedDocument.swift */,
+				0900ABFD2B984C9600457B46 /* Cacheable File Items */,
+				0900ABFE2B984CBF00457B46 /* Cached Document */,
 			);
-			path = FTNSDocument_Cache;
+			path = "FTDocument Cache";
 			sourceTree = "<group>";
 		};
 		09FD71761EB44AD8008ACB6B /* FTThemesModel */ = {
@@ -10026,7 +10056,7 @@
 				BA6C51CD28DC728E006504EB /* FileManager+Async.swift */,
 				BA6C51CE28DC728E006504EB /* Cache+Log.swift */,
 				BA6C51CF28DC728E006504EB /* FTDocumentCache.swift */,
-				09FBDFE72B8F229C00BEE907 /* FTNSDocument_Cache */,
+				09FBDFE72B8F229C00BEE907 /* FTDocument Cache */,
 				09A535552B0B80BC0004CA09 /* private */,
 				47CD5413293760F700BE0963 /* FTCacheTagsProcessor.swift */,
 				BA6A427F293768130018BC2A /* FTCachedSqliteAnnotationFileItem.swift */,
@@ -13161,6 +13191,7 @@
 				BAF390D02859ADF00067CA9F /* FTShapeLineStrip.swift in Sources */,
 				BAF390D12859ADF00067CA9F /* FTShelfCategoryCollection.swift in Sources */,
 				BAF390D22859ADF00067CA9F /* FTImportOperation.swift in Sources */,
+				0900ABFC2B9849E800457B46 /* FTCachedImageFileItem.swift in Sources */,
 				BAF390D32859ADF00067CA9F /* FTThumbnailGenerationRequest.swift in Sources */,
 				09ABDCA72A790F93008F144D /* FTOpenAI.swift in Sources */,
 				BAF390D42859ADF00067CA9F /* FTNotebookUtils.swift in Sources */,
@@ -13576,6 +13607,7 @@
 				9715E0142AEA9D2C00EC48D4 /* ENSearchRequest.m in Sources */,
 				97F5D0742B15CA9F003ED67D /* FTPlanner2024DiaryTemplateAssetGenerator.swift in Sources */,
 				144AA3332A44279E00C969AC /* FTSettingsAboutViewModel.swift in Sources */,
+				0900ABFA2B9849D800457B46 /* FTNonStrokeAnnotationFileItem.swift in Sources */,
 				E7AE4DA728995093004CF608 /* FTFavoriteShapeView.swift in Sources */,
 				14C76ADC2A092DBA004251B5 /* FTWrittingAndStylusModel.swift in Sources */,
 				E7B9C38929DEE8C300866FFE /* Extensions.swift in Sources */,

@@ -53,3 +53,12 @@ extension FTDocument: FTCacheableDocument {
         }
     }
 }
+
+extension FTDocumentFactory {
+    static func cachedDocument(url: URL) -> FTCachedDocument? {
+        guard FileManager().fileExists(atPath: url.path(percentEncoded: false)) else {
+            return nil;
+        }
+        return FTCachedDocument(fileURL: url);
+    }
+}

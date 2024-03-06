@@ -11,66 +11,18 @@ import UIKit
 class FTImageResourceCacheHandler: NSObject {
     private let imageCache = NSCache<AnyObject, AnyObject>();
     private let recursiveLock = NSRecursiveLock()
-    private let maxImageSize = CGSize(width: 500, height: 500);
-    
-    private(set) lazy var resourceReadQueue: OperationQueue = {
-        let operationqueue = OperationQueue();
-        operationqueue.maxConcurrentOperationCount = 1;
-        return operationqueue;
-    }();
 
-    func mediaResource(_ documentID: String, resourceURL: URL,onCompletion: @escaping (UIImage?)->()) {
-        if let cachedImage = self.cachedImage(resourceURL) {
-            onCompletion(cachedImage);
-            return;
-        }
-        
-        let documentURL = FTDocumentCache.shared.cachedLocation(for: documentID);
-        let fileCoorinator = NSFileCoordinator.init(filePresenter: nil)
-        var imageToReturn: UIImage?;
-        let writeIntent = NSFileAccessIntent.readingIntent(with: documentURL, options: .withoutChanges);
-        fileCoorinator.coordinate(with: [writeIntent], queue: self.resourceReadQueue) { error in
-            guard nil == error else {
-                onCompletion(imageToReturn);
-                return;
-            }
-            let imagePath = resourceURL.path(percentEncoded: false);
-            if let image = UIImage(contentsOfFile: imagePath) {
-                if image.size.width > self.maxImageSize.width || image.size.height > self.maxImageSize.height {
-                    imageToReturn = image.preparingThumbnail(of: self.maxImageSize);
-                    let modifiedTime = resourceURL.fileModificationDate;
-                    if let data = imageToReturn?.pngData() {
-                        do {
-                            try data.write(to: resourceURL, options: .atomic)
-                            try FileManager().setAttributes([.modificationDate:modifiedTime], ofItemAtPath: imagePath);
-                            self.addImage(image, imageURL: resourceURL);
-                            debugLog("image updated: \(resourceURL.lastPathComponent)");
-                        }
-                        catch {
-                            debugLog("error: \(error)");
-                        }
-                    }
-                }
-                else {
-                    imageToReturn = image;
-                    self.addImage(image, imageURL: resourceURL);
-                }
-            }
-            onCompletion(imageToReturn);
-        }
-    }
-    
-    private func cachedImage(_ imageURL: URL) -> UIImage? {
-        recursiveLock.lock();
-        defer {
-            recursiveLock.unlock();
-        }
+    func cachedImage(_ imageURL: URL) -> UIImage? {
         let hash = imageURL.hashKey as AnyObject
+        recursiveLock.lock();
         let cachedEntry = self.imageCache.object(forKey: hash)
+        recursiveLock.unlock();
         if let imageFromCache = cachedEntry?.object(forKey: "image") as? UIImage
             , let storedDate = cachedEntry?.object(forKey: "date") as? Date {
             if storedDate.compare(imageURL.fileModificationDate) == .orderedAscending {
+                recursiveLock.lock();
                 self.imageCache.removeObject(forKey: hash);
+                recursiveLock.unlock();
                 return nil;
             } else {
                 return imageFromCache;
@@ -80,7 +32,7 @@ class FTImageResourceCacheHandler: NSObject {
         }
     }
     
-    private func addImage(_ image: UIImage,imageURL: URL) {
+    func addImage(_ image: UIImage,imageURL: URL) {
         let hash = imageURL.hashKey as AnyObject
         let entry: [String : Any] = ["image": image, "date": imageURL.fileModificationDate]
         recursiveLock.lock();

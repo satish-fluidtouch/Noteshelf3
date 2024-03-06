@@ -158,12 +158,3 @@ private extension FTNonStrokeAnnotationCache {
         return info;
     }
 }
-
-private extension FTAnnotationDictInfo {
-    var nonAttrText: String {
-        guard let nonAttrText = self["nonAttrText"] as? String else {
-            return "";
-        }
-        return nonAttrText;
-    }
-}

@@ -14,13 +14,17 @@ extension FTNSqliteAnnotationFileItem {
         guard super.saveItemToCache(destination) else {
             return false;
         }
-        var nontStrokePlist = self.cacheLocation(destination);
         guard FileManager().fileExists(atPath: destination.path(percentEncoded: false)) else {
+            let nontStrokePlist = self.cacheLocation(destination);
             try? FileManager().removeItem(at: nontStrokePlist)
             return true;
         }
-        
+        return self.cacheNonStrokeAnnotations(destination)
+    }
+
+    func cacheNonStrokeAnnotations(_ destination: URL) -> Bool {
         do {
+            var nontStrokePlist = self.cacheLocation(destination);
             let modifiedDate = destination.fileModificationDate;
             let itemsToStroe = self.cacheSqliteAnnotations(destination);
             if itemsToStroe.isEmpty {
@@ -37,8 +41,9 @@ extension FTNSqliteAnnotationFileItem {
         }
         catch {
             debugPrint("error: \(error)");
+            return false
         }
-        return true;
+        return true
     }
     
     private func cacheSqliteAnnotations(_ sqlitePath: URL) -> [FTAnnotationDictInfo] {

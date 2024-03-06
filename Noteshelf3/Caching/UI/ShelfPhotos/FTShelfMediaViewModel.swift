@@ -30,9 +30,20 @@ class FTShelfMedia: NSObject, Identifiable, ObservableObject {
     
     func fetchImage() {
         if let documentID = document?.documentUUID {
-            FTDocumentCache.shared.imageResourceCache.mediaResource(documentID, resourceURL: imageURL) { image in
-                runInMainThread {
+            if let doc = FTDocumentCache.shared.cachedDocument(documentID)
+                , let fileItem = doc.resourceFileItem(imageURL.lastPathComponent) as? FTCachedImageFileItem {
+                if let image = FTDocumentCache.shared.imageResourceCache.cachedImage(fileItem.fileItemURL!) {
                     self.mediaImage = image;
+                }
+                else {
+                    fileItem.image { image in
+                        runInMainThread {
+                            if let img = image {
+                                FTDocumentCache.shared.imageResourceCache.addImage(img, imageURL: fileItem.fileItemURL!);
+                            }
+                            self.mediaImage = image;
+                        }
+                    }
                 }
             }
         }
@@ -129,19 +140,28 @@ private extension FTShelfContentPhotosViewModel {
     func fetchMedia(docItem: FTDocumentItemProtocol, onMediaFound: (_ media: [FTShelfMedia]) -> Void) throws {
         guard let docUUID = docItem.documentUUID, docItem.isDownloaded else { throw FTCacheError.documentNotDownloaded }
 
-        let cachedLocationURL = FTDocumentCache.shared.cachedLocation(for: docUUID)
-        let annotationsFolder = cachedLocationURL.path.appending("/Annotations/")
-        guard FileManager.default.fileExists(atPath: annotationsFolder) else {
+        guard let doc = FTDocumentCache.shared.cachedDocument(docUUID) else {
             onMediaFound([])
             return
         }
-        let sqliteFiles = try FileManager.default.contentsOfDirectory(atPath: annotationsFolder)
-
-        for sqliteFile in sqliteFiles where !progress.isCancelled {
-            let sqlitePath = annotationsFolder.appending(sqliteFile)
-            let cachedFile = FTCachedSqliteAnnotationFileItem(url: URL(fileURLWithPath: sqlitePath), isDirectory: false, documentItem: docItem)
-            let media = cachedFile.annotataionsWithResources()
-            onMediaFound(media)
+        
+        doc.pages().forEach { eachpage in
+            if let fileItem = doc.nonStrokeFileItem(eachpage.pageUUID) {
+                let annotaionts = fileItem.annotations(types: [.image]);
+                var mediaItems = [FTShelfMedia]()
+                annotaionts.forEach { eachItem in
+                    if let fileItem = doc.resourceFileItem(eachItem.uuid.appending(".png")) {
+                        let media = FTShelfMedia(imageURL: fileItem.fileItemURL,
+                                                 page: eachpage.pageIndex,
+                                                 document: docItem)
+                        mediaItems.append(media)
+                    }
+                }
+                if !mediaItems.isEmpty {
+                    onMediaFound(mediaItems)
+                }
+            }
+            
         }
     }
 }

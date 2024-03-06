@@ -1,36 +1,12 @@
 //
-//  FTCachedDocument.swift
+//  FTCachedImageFileItem.swift
 //  Noteshelf3
 //
-//  Created by Amar Udupa on 05/03/24.
+//  Created by Amar Udupa on 06/03/24.
 //  Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.
 //
 
 import UIKit
-import FTDocumentFramework
-
-class FTCachedDocument: FTDocument {
-    override func fileItemFactory() -> FTFileItemFactory! {
-        return FTNSCacheDocumentFactory();
-    }
-}
-
-class FTNSCacheDocumentFactory: FTFileItemFactory {
-    override func imageFileItem(with url: URL!) -> FTFileItem! {
-        return FTCachedImageFileItem(url: url, isDirectory: false);
-    }
-    
-    override func fileItem(with url: URL!, canLoadSubdirectory: Bool) -> FTFileItem! {
-        if url.deletingLastPathComponent().lastPathComponent == FTNSqliteAnnotationFileItem.NON_STROKE_ANNOTATION_CACHE {
-            return FTNonStrokeAnnotationFileItem(url: url, isDirectory: false);
-        }
-        return super.fileItem(with: url, canLoadSubdirectory: false);
-    }
-}
-
-class FTNonStrokeAnnotationFileItem: FTFileItemPlist {
-    
-}
 
 class FTCachedImageFileItem: FTFileItemImage {
     private var _image: UIImage?;
@@ -53,11 +29,11 @@ class FTCachedImageFileItem: FTFileItemImage {
                 onCompletion?(nil);
                 return;
             }
-            if resourceImage.size.width > self.maxImageSize.width || resourceImage.size.height > self.maxImageSize.height {
-                var imageToReturn = resourceImage.preparingThumbnail(of: self.maxImageSize);
-                self._image = resourceImage;
+            if resourceImage.size.width > self.maxImageSize.width || resourceImage.size.height > self.maxImageSize.height
+            , let imageToReturn = resourceImage.preparingThumbnail(of: self.maxImageSize) {
+                self._image = imageToReturn;
                 let modifiedTime = writingURL.fileModificationDate;
-                if let data = imageToReturn?.pngData() {
+                if let data = imageToReturn.pngData() {
                     do {
                         try data.write(to: writingURL, options: .atomic)
                         try FileManager().setAttributes([.modificationDate:modifiedTime], ofItemAtPath: imagePath);
@@ -74,5 +50,9 @@ class FTCachedImageFileItem: FTFileItemImage {
                 onCompletion?(self._image);
             }
         }
+    }
+    
+    override func saveContentsOfFileItem() -> Bool {
+        fatalError("No saving of cache fileItem")
     }
 }

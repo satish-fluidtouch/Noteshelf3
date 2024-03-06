@@ -110,19 +110,37 @@ private extension FTShelfContentAudioViewModel {
     func fetchMedia(docItem: FTDocumentItemProtocol, onMediaFound: (_ media: [FTShelfAudio]) -> Void) throws {
         guard let docUUID = docItem.documentUUID, docItem.isDownloaded else { throw FTCacheError.documentNotDownloaded }
 
-        let cachedLocationURL = FTDocumentCache.shared.cachedLocation(for: docUUID)
-        let annotationsFolder = cachedLocationURL.path.appending("/Annotations/")
-        guard FileManager.default.fileExists(atPath: annotationsFolder) else {
-            onMediaFound([])
-            return
+        guard let doc = FTDocumentCache.shared.cachedDocument(docUUID) else {
+            onMediaFound([]);
+            return;
         }
-        let sqliteFiles = try FileManager.default.contentsOfDirectory(atPath: annotationsFolder)
-
-        for sqliteFile in sqliteFiles where !progress.isCancelled {
-            let sqlitePath = annotationsFolder.appending(sqliteFile)
-            let cachedFile = FTCachedSqliteAnnotationFileItem(url: URL(fileURLWithPath: sqlitePath), isDirectory: false, documentItem: docItem)
-            let media = cachedFile.audioAnnotataions()
-            onMediaFound(media)
+        
+        doc.pages().forEach { eachpage in
+            if let nonStrokeFleItem = doc.nonStrokeFileItem(eachpage.pageUUID) {
+                let annotations = nonStrokeFleItem.annotations(types: [.audio])
+                var mediaToReturn = [FTShelfAudio]();
+                annotations.forEach { eachAnnotation in
+                    if  let audio = eachAnnotation as? FTAudioAnnotation
+                            , let resource = doc.resourceFileItem(eachAnnotation.uuid.appending(".plist")) as? FTFileItemPlist
+                            , let info = resource.contentDictionary["recordingModel"] as? Dictionary<String,Any>
+                            , let model = FTAudioRecordingModel(dict: info) {
+                        let name = audio.audioName
+                        let dateAndTime = DateFormatter.localizedString(from: Date(timeIntervalSinceReferenceDate: audio.modifiedTimeInterval), dateStyle: .short, timeStyle: .short)
+                        
+                        let duration =  FTUtils.timeFormatted(UInt(model.audioDurationWithoutCheckingFileExistance()))
+                        
+                        let media = FTShelfAudio(audioTitle: name,
+                                                 duration: duration,
+                                                 page: eachpage.pageIndex,
+                                                 document: docItem,
+                                                 dateAndTime: dateAndTime)
+                        mediaToReturn.append(media)
+                    }
+                }
+                if !mediaToReturn.isEmpty {
+                    onMediaFound(mediaToReturn)
+                }
+            }
         }
     }
 }

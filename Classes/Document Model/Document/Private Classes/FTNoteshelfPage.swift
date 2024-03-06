@@ -886,7 +886,7 @@ extension FTNoteshelfPage : FTPageSearchProtocol
             self.searchLock.signal();
             return false;
         }
-
+        
         guard !searchKey.isEmpty else {
             self.searchLock.signal();
             return true;
@@ -896,14 +896,22 @@ extension FTNoteshelfPage : FTPageSearchProtocol
         //If any tags are present and found in this page, proceed further search is specific tagged page
         //If no tags, also continue search with searchKey
         let textAnnotations: [FTAnnotation];
+#if !NOTESHELF_ACTION
         let USE_SQLITE = !isGlobalSearch;
         if USE_SQLITE {
             textAnnotations = self.sqliteFileItem()?.textAnnotationsContainingKeyword(searchKey) ?? [FTAnnotation]();
         }
         else {
-            let annotationCache = FTNonStrokeAnnotationCache.init(documentID: self.documentUUID, pageID: self.uuid);
-            textAnnotations = annotationCache.searchForTextAnnotation(contains: searchKey);
+            if let doc = FTDocumentCache.shared.cachedDocument(self.documentUUID), let fileItem = doc.nonStrokeFileItem(self.uuid) {
+                textAnnotations = fileItem.searchForTextAnnotation(contains: searchKey);
+            }
+            else {
+                textAnnotations = self.sqliteFileItem()?.textAnnotationsContainingKeyword(searchKey) ?? [FTAnnotation]();
+            }
         }
+#else
+        textAnnotations = self.sqliteFileItem()?.textAnnotationsContainingKeyword(searchKey) ?? [FTAnnotation]();
+#endif
         found = !textAnnotations.isEmpty;
         textAnnotations.forEach({ (textAnnotation) in
             autoreleasepool(invoking: {
