@@ -47,34 +47,42 @@ class FTCachedDocument: FTDocument {
     }
 
     func resourceFileItem(_ fileName: String) -> FTFileItem? {
-        return self.rootFileItem.childFileItem(withName: RESOURCES_FOLDER_NAME)?.childFileItem(withName: fileName);
+        return self.resourceFolder?.childFileItem(withName: fileName);
     }
     
+    private var annotationsFolder: FTFileItem? {
+        return self.rootFileItem.childFileItem(withName: ANNOTATIONS_FOLDER_NAME);
+    }
+
+    private var resourceFolder: FTFileItem? {
+        return self.rootFileItem.childFileItem(withName: RESOURCES_FOLDER_NAME);
+    }
+
+    private var nonStrokeAnnotationsFolder: FTFileItem? {
+        return self.rootFileItem.childFileItem(withName: FTNSqliteAnnotationFileItem.NON_STROKE_ANNOTATION_CACHE);
+    }
+
+    
     func nonStrokeFileItem(_ pageID: String) -> FTNonStrokeAnnotationFileItem? {
-        var shouldCache: Bool = false;
         var _nonStrokeItem: FTNonStrokeAnnotationFileItem?;
-        var nonStrokeFolder = self.rootFileItem.childFileItem(withName: FTNSqliteAnnotationFileItem.NON_STROKE_ANNOTATION_CACHE)
-        if nil == nonStrokeFolder , let itme = FTFileItem(fileName: FTNSqliteAnnotationFileItem.NON_STROKE_ANNOTATION_CACHE, isDirectory: true) {
+        var nonStrokeFolder = self.nonStrokeAnnotationsFolder
+        if nil == nonStrokeFolder
+            , let itme = FTFileItem(fileName: FTNSqliteAnnotationFileItem.NON_STROKE_ANNOTATION_CACHE, isDirectory: true) {
             self.rootFileItem.addChildItem(itme)
             nonStrokeFolder = itme;
         }
-        
-        
-        if let annotationFile = self.rootFileItem.childFileItem(withName: ANNOTATIONS_FOLDER_NAME)?.childFileItem(withName: pageID) as? FTNSqliteAnnotationFileItem {
-            shouldCache = true;
-            if let nonStrokeItem = nonStrokeFolder?.childFileItem(withName: pageID) as? FTNonStrokeAnnotationFileItem {
-                _nonStrokeItem = nonStrokeItem;
-                if annotationFile.fileItemURL.fileModificationDate.compare(nonStrokeItem.fileItemURL.fileModificationDate) == .orderedAscending {
-                    shouldCache = false;
-                }
+
+        if let annotationFile = self.annotationsFolder?.childFileItem(withName: pageID) as? FTNSqliteAnnotationFileItem {
+            annotationFile.cacheNonStrokeAnnotations(annotationFile.fileItemURL);
+            guard let cachePath = nonStrokeFolder?.fileItemURL.appending(path: pageID) else {
+                return _nonStrokeItem;
             }
-            if shouldCache {
-                _ = annotationFile.cacheNonStrokeAnnotations(annotationFile.fileItemURL);
-                if nil == _nonStrokeItem {
-                    let item = FTNonStrokeAnnotationFileItem(fileName: pageID);
-                    nonStrokeFolder?.addChildItem(item)
-                    _nonStrokeItem = item;
-                }
+            if let fileItem = nonStrokeFolder?.childFileItem(withName: pageID) as? FTNonStrokeAnnotationFileItem {
+                _nonStrokeItem = fileItem
+            }
+            else if FileManager().fileExists(atPath: cachePath.path(percentEncoded: false))
+                        , let fileItem = self.fileItemFactory().fileItem(with: cachePath, canLoadSubdirectory: false) as? FTNonStrokeAnnotationFileItem {
+                _nonStrokeItem = fileItem
             }
         }
         return _nonStrokeItem;

@@ -22,21 +22,24 @@ extension FTNSqliteAnnotationFileItem {
         return self.cacheNonStrokeAnnotations(destination)
     }
 
-    func cacheNonStrokeAnnotations(_ destination: URL) -> Bool {
+    @discardableResult
+    func cacheNonStrokeAnnotations(_ sqlitePath: URL) -> Bool {
         do {
-            var nontStrokePlist = self.cacheLocation(destination);
-            let modifiedDate = destination.fileModificationDate;
-            let itemsToStroe = self.cacheSqliteAnnotations(destination);
-            if itemsToStroe.isEmpty {
-                try? FileManager().removeItem(at: nontStrokePlist)
-            }
-            else {
-                let data = try PropertyListSerialization.data(fromPropertyList: itemsToStroe, format: .xml, options: 0);
-                try data.write(to: nontStrokePlist, options: Data.WritingOptions.atomic);
+            var nontStrokePlist = self.cacheLocation(sqlitePath);
+            if shouldCache(sqlitePath, cachePath: nontStrokePlist) {
+                let modifiedDate = sqlitePath.fileModificationDate;
+                let itemsToStroe = self.cacheSqliteAnnotations(sqlitePath);
+                if itemsToStroe.isEmpty {
+                    try? FileManager().removeItem(at: nontStrokePlist)
+                }
+                else {
+                    let data = try PropertyListSerialization.data(fromPropertyList: itemsToStroe, format: .xml, options: 0);
+                    try data.write(to: nontStrokePlist, options: Data.WritingOptions.atomic);
 
-                var val = URLResourceValues.init()
-                val.contentModificationDate = modifiedDate;
-                try? nontStrokePlist.setResourceValues(val);
+                    var val = URLResourceValues.init()
+                    val.contentModificationDate = modifiedDate;
+                    try? nontStrokePlist.setResourceValues(val);
+                }
             }
         }
         catch {
@@ -97,4 +100,19 @@ extension FTNSqliteAnnotationFileItem {
         nonStrokePath = nonStrokePath.appending(path: fileName);
         return nonStrokePath;
     }
+    
+    private func shouldCache(_ sqlitePath: URL,cachePath: URL) -> Bool {
+        let pathString = cachePath.path(percentEncoded: false)
+        if !FileManager().fileExists(atPath: pathString) {
+            return true;
+        }
+        guard FileManager().fileExists(atPath: sqlitePath.path) else {
+            return false;
+        }
+        
+        let cacheModifiedDate = cachePath.fileModificationDate;
+        let annotationModifiedDate = sqlitePath.fileModificationDate;
+        return annotationModifiedDate.compare(cacheModifiedDate) == .orderedAscending;
+    }
+
 }

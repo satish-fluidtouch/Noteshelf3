@@ -45,7 +45,7 @@ extension FTDocument: FTCacheableDocument {
                     let sourceDate = readingURL.fileModificationDate;
                     try? filemanager.setAttributes([.modificationDate:sourceDate], ofItemAtPath: writingURL.path(percentEncoded: false));
                 }
-                else if let properttyFileItem = rootFileItem.childFileItem(withName: METADATA_FOLDER_NAME).childFileItem(withName: PROPERTIES_PLIST), properttyFileItem.saveCache(writingURL) {
+                else if let properttyFileItem = rootFileItem.childFileItem(withName: METADATA_FOLDER_NAME)?.childFileItem(withName: PROPERTIES_PLIST), properttyFileItem.saveCache(writingURL) {
                     let sourceDate = readingURL.fileModificationDate;
                     try? filemanager.setAttributes([.modificationDate:sourceDate], ofItemAtPath: writingURL.path(percentEncoded: false));
                 }
