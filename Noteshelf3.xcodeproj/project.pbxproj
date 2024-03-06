@@ -1961,7 +1961,7 @@
 		E75CD84F2B8F0B4600D59F21 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75CD84E2B8F0B4600D59F21 /* ContentView.swift */; };
 		E75CD8512B8F0B4700D59F21 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E75CD8502B8F0B4700D59F21 /* Assets.xcassets */; };
 		E75CD8542B8F0B4700D59F21 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E75CD8532B8F0B4700D59F21 /* Preview Assets.xcassets */; };
-		E75CD8572B8F0B4700D59F21 /* Noteshelf3 WatchApp Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = E75CD84A2B8F0B4300D59F21 /* Noteshelf3 WatchApp Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E75CD8572B8F0B4700D59F21 /* Noteshelf3 WatchApp.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = E75CD84A2B8F0B4300D59F21 /* Noteshelf3 WatchApp.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E75E1EB32AFA0781008CAD44 /* FTFavoritePenTypeEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75E1EB22AFA0781008CAD44 /* FTFavoritePenTypeEditController.swift */; };
 		E75E67BD2A9F7442009F5B2E /* FTTextStyle.plist in Resources */ = {isa = PBXBuildFile; fileRef = E75E67BC2A9F7442009F5B2E /* FTTextStyle.plist */; };
 		E760040D2B4EAAB100B268AC /* FTDocumentPagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E760040C2B4EAAB100B268AC /* FTDocumentPagesController.swift */; };
@@ -1978,6 +1978,8 @@
 		E7780F212B96F38100DD134D /* FTFileItemPDFTemp.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E41AB21F9712CB00A591F1 /* FTFileItemPDFTemp.m */; };
 		E779DE3B2B5143B1007FBFE1 /* FTLinkPageThumbnailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E779DE3A2B5143B1007FBFE1 /* FTLinkPageThumbnailCell.swift */; };
 		E788FBBF29768585004A526D /* FTNotebookTagsSearchProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E788FBBE29768585004A526D /* FTNotebookTagsSearchProcessor.swift */; };
+		E78DE6CC2B984EE7000DAA1B /* FTRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78DE6CB2B984EE7000DAA1B /* FTRecordView.swift */; };
+		E78DE6CE2B985135000DAA1B /* FTRecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78DE6CD2B985135000DAA1B /* FTRecordViewModel.swift */; };
 		E78EEF5A28DC46990042DCE7 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78EEF5928DC46990042DCE7 /* UIView+Extension.swift */; };
 		E79D21352B8F311A00712028 /* FTRecordingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79D21342B8F311A00712028 /* FTRecordingsView.swift */; };
 		E79D21382B8F31AA00712028 /* FTRecordingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79D21372B8F31AA00712028 /* FTRecordingsViewModel.swift */; };
@@ -2297,7 +2299,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				E75CD8572B8F0B4700D59F21 /* Noteshelf3 WatchApp Watch App.app in Embed Watch Content */,
+				E75CD8572B8F0B4700D59F21 /* Noteshelf3 WatchApp.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4231,7 +4233,7 @@
 		E75BAE252769BE4E0084043F /* FTEvernoteFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTEvernoteFooterView.swift; sourceTree = "<group>"; };
 		E75BAE272769BE840084043F /* FTEvernoteFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTEvernoteFooterView.xib; sourceTree = "<group>"; };
 		E75BD63D2A56905A0006DFA2 /* FTShelfBaseHostingController_MacExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfBaseHostingController_MacExtension.swift; sourceTree = "<group>"; };
-		E75CD84A2B8F0B4300D59F21 /* Noteshelf3 WatchApp Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Noteshelf3 WatchApp Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E75CD84A2B8F0B4300D59F21 /* Noteshelf3 WatchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Noteshelf3 WatchApp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E75CD84C2B8F0B4600D59F21 /* Noteshelf3_WatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Noteshelf3_WatchApp.swift; sourceTree = "<group>"; };
 		E75CD84E2B8F0B4600D59F21 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E75CD8502B8F0B4700D59F21 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -4275,6 +4277,8 @@
 		E77CE2882A86648400092774 /* FTNetworkPathMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNetworkPathMonitor.swift; sourceTree = "<group>"; };
 		E77D4E0D27E1B0CC008EF72A /* FTMorePopoverSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTMorePopoverSections.swift; sourceTree = "<group>"; };
 		E788FBBE29768585004A526D /* FTNotebookTagsSearchProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNotebookTagsSearchProcessor.swift; sourceTree = "<group>"; };
+		E78DE6CB2B984EE7000DAA1B /* FTRecordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTRecordView.swift; sourceTree = "<group>"; };
+		E78DE6CD2B985135000DAA1B /* FTRecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTRecordViewModel.swift; sourceTree = "<group>"; };
 		E78EEF5928DC46990042DCE7 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		E7929BD9273CE55800BF7545 /* FTPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPasswordViewController.swift; sourceTree = "<group>"; };
 		E795D5472805924A002DA202 /* FTShapeParallelogram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShapeParallelogram.swift; sourceTree = "<group>"; };
@@ -6476,7 +6480,7 @@
 				BAF0DCCA2A6FE2A9006D293B /* FTNewNotebook.framework */,
 				BAF0DD6D2A6FE675006D293B /* FTTemplatesStore.framework */,
 				0964D0682AB9C27400C79C01 /* Noteshelf3 Thumbnail.appex */,
-				E75CD84A2B8F0B4300D59F21 /* Noteshelf3 WatchApp Watch App.app */,
+				E75CD84A2B8F0B4300D59F21 /* Noteshelf3 WatchApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -10568,11 +10572,10 @@
 		E75CD84B2B8F0B4600D59F21 /* Noteshelf3 WatchApp Watch App */ = {
 			isa = PBXGroup;
 			children = (
+				E78DE6C62B983ABF000DAA1B /* Screens */,
 				E79D21362B8F318F00712028 /* ViewModels */,
 				E75CD84C2B8F0B4600D59F21 /* Noteshelf3_WatchApp.swift */,
 				E75CD84E2B8F0B4600D59F21 /* ContentView.swift */,
-				E79D21342B8F311A00712028 /* FTRecordingsView.swift */,
-				E79D21392B8F426000712028 /* FTPlayerView.swift */,
 				E75CD8502B8F0B4700D59F21 /* Assets.xcassets */,
 				E75CD85E2B8F115800D59F21 /* Info.plist */,
 				E75CD8522B8F0B4700D59F21 /* Preview Content */,
@@ -10642,10 +10645,21 @@
 			path = Modern;
 			sourceTree = "<group>";
 		};
+		E78DE6C62B983ABF000DAA1B /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				E79D21342B8F311A00712028 /* FTRecordingsView.swift */,
+				E79D21392B8F426000712028 /* FTPlayerView.swift */,
+				E78DE6CB2B984EE7000DAA1B /* FTRecordView.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
 		E79D21362B8F318F00712028 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				E79D21372B8F31AA00712028 /* FTRecordingsViewModel.swift */,
+				E78DE6CD2B985135000DAA1B /* FTRecordViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -11819,9 +11833,9 @@
 			productReference = C8140D31232667B60053FC86 /* Noteshelf3 Action.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		E75CD8492B8F0B4300D59F21 /* Noteshelf3 WatchApp Watch App */ = {
+		E75CD8492B8F0B4300D59F21 /* Noteshelf3 WatchApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E75CD8582B8F0B4900D59F21 /* Build configuration list for PBXNativeTarget "Noteshelf3 WatchApp Watch App" */;
+			buildConfigurationList = E75CD8582B8F0B4900D59F21 /* Build configuration list for PBXNativeTarget "Noteshelf3 WatchApp" */;
 			buildPhases = (
 				E75CD8462B8F0B4300D59F21 /* Sources */,
 				E75CD8472B8F0B4300D59F21 /* Frameworks */,
@@ -11831,9 +11845,9 @@
 			);
 			dependencies = (
 			);
-			name = "Noteshelf3 WatchApp Watch App";
+			name = "Noteshelf3 WatchApp";
 			productName = "Noteshelf3 WatchApp Watch App";
-			productReference = E75CD84A2B8F0B4300D59F21 /* Noteshelf3 WatchApp Watch App.app */;
+			productReference = E75CD84A2B8F0B4300D59F21 /* Noteshelf3 WatchApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -11913,7 +11927,7 @@
 			projectRoot = "";
 			targets = (
 				BAF38F492859ADF00067CA9F /* Noteshelf3 */,
-				E75CD8492B8F0B4300D59F21 /* Noteshelf3 WatchApp Watch App */,
+				E75CD8492B8F0B4300D59F21 /* Noteshelf3 WatchApp */,
 				C8140D30232667B60053FC86 /* Noteshelf3 Action */,
 				0964D0672AB9C27400C79C01 /* Noteshelf3 Thumbnail */,
 				BAB689A72862E7A400FACF11 /* GenerateLocalization */,
@@ -14357,8 +14371,10 @@
 				E79D21382B8F31AA00712028 /* FTRecordingsViewModel.swift in Sources */,
 				E79D21352B8F311A00712028 /* FTRecordingsView.swift in Sources */,
 				E75CD84F2B8F0B4600D59F21 /* ContentView.swift in Sources */,
+				E78DE6CC2B984EE7000DAA1B /* FTRecordView.swift in Sources */,
 				E79D213A2B8F426000712028 /* FTPlayerView.swift in Sources */,
 				E75CD84D2B8F0B4600D59F21 /* Noteshelf3_WatchApp.swift in Sources */,
+				E78DE6CE2B985135000DAA1B /* FTRecordViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14447,7 +14463,7 @@
 		};
 		E75CD8562B8F0B4700D59F21 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E75CD8492B8F0B4300D59F21 /* Noteshelf3 WatchApp Watch App */;
+			target = E75CD8492B8F0B4300D59F21 /* Noteshelf3 WatchApp */;
 			targetProxy = E75CD8552B8F0B4700D59F21 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -17136,7 +17152,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E75CD8582B8F0B4900D59F21 /* Build configuration list for PBXNativeTarget "Noteshelf3 WatchApp Watch App" */ = {
+		E75CD8582B8F0B4900D59F21 /* Build configuration list for PBXNativeTarget "Noteshelf3 WatchApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E75CD8592B8F0B4900D59F21 /* Debug */,

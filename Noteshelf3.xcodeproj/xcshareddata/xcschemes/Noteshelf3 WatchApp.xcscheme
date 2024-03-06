@@ -52,9 +52,19 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
-      allowLocationSimulation = "YES">
+      allowLocationSimulation = "YES"
+      notificationPayloadFile = "PushNotificationPayload.apns">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "E75CD8492B8F0B4300D59F21"
+            BuildableName = "Noteshelf3 WatchApp.app"
+            BlueprintName = "Noteshelf3 WatchApp"
+            ReferencedContainer = "container:Noteshelf3.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0E4FDECF2AC1B3AA0097FE16"
@@ -62,7 +72,7 @@
             BlueprintName = "Noteshelf3 WatchApp"
             ReferencedContainer = "container:Noteshelf3.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

@@ -12,7 +12,8 @@ import SwiftUI
 struct Noteshelf3_WatchApp: App {
     var body: some Scene {
         WindowGroup {
-            FTRecordingsView(viewModel: FTRecordingsViewModel())
+            FTRecordView(viewModel: FTRecordViewModel())
+//            FTRecordingsView(viewModel: FTRecordingsViewModel())
         }
     }
 }
