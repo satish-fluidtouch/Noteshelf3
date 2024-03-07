@@ -1537,23 +1537,6 @@ extension FTRootViewController {
         self.docuemntViewController?.startRecordingOnAudioNotebook()
     }
 
-    private func getTopOffset() -> CGFloat {
-        var topOffset: CGFloat = 0.0
-        if UIDevice().isIphone() || self.view.frame.width < FTToolbarConfig.compactModeThreshold {
-            var extraHeight: CGFloat = 0.0
-            if UIDevice.current.isPhone() {
-                if let window = UIApplication.shared.keyWindow {
-                    let topSafeAreaInset = window.safeAreaInsets.top
-                    if topSafeAreaInset > 0 {
-                        extraHeight = topSafeAreaInset
-                    }
-                }
-            }
-            topOffset = FTToolbarConfig.Height.compact + extraHeight
-        }
-        return topOffset
-    }
-
     func switchToPDFViewer(_ documentInfo : FTDocumentOpenInfo,
                            animate anim: Bool,
                            onCompletion : (() -> Void)?) {
