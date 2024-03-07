@@ -9,39 +9,44 @@
 import SwiftUI
 
 struct FTRecordingsView: View {
-    @ObservedObject var viewModel: FTRecordingsViewModel
+    @StateObject private var viewModel = FTRecordingsViewModel()
 
     var body: some View {
-        NavigationView {
-            VStack {
-                HStack {
-                    Text(viewModel.title)
-                        .font(Font.system(size: 14))
-                        .padding(.leading, 12)
-                    Spacer()
-                }
+        if viewModel.recordings.isEmpty {
+            Text("No Recordings!")
+                .font(Font.system(size: 18))
+        } else {
+            NavigationView {
+                VStack {
+                    HStack {
+                        Text(viewModel.title)
+                            .font(Font.system(size: 14))
+                            .padding(.leading, 12)
+                        Spacer()
+                    }
 
-                List {
-                    ForEach(viewModel.recordings, id: \.uuid) { recording in
-                        NavigationLink(destination: FTPlayerView(recording: recording)) {
-                            recordingView(for: recording)
+                    List {
+                        ForEach(viewModel.recordings, id: \.GUID) { recording in
+                            NavigationLink(destination: FTPlayerView(recording: recording)) {
+                                recordingView(for: recording)
+                            }
                         }
                     }
                 }
             }
-        }
+        }       
     }
 
-    private func recordingView(for recording: FTRecording) -> some View {
+    private func recordingView(for recording: FTWatchRecording) -> some View {
         VStack {
             HStack {
-                Text(recording.duration)
+                Text(FTWatchUtils.timeFormatted(totalSeconds: UInt(recording.duration)))
                     .font(Font.system(size: 16))
                     .bold()
                 Spacer()
             }
             HStack {
-                Text(recording.dateTimeInfo)
+                Text(recording.date.nsAudioFormatTitle())
                     .font(Font.system(size: 16))
                 Spacer()
             }
@@ -50,5 +55,5 @@ struct FTRecordingsView: View {
 }
 
 #Preview {
-    FTRecordingsView(viewModel: FTRecordingsViewModel())
+    FTRecordingsView()
 }

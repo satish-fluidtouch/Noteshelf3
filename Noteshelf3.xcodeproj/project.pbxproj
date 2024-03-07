@@ -1944,6 +1944,8 @@
 		E740163F29700B82003D3D7D /* FTGlobalSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E740163E29700B82003D3D7D /* FTGlobalSearchController.swift */; };
 		E740164129700DD7003D3D7D /* FTGlobalSearchController+Suggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E740164029700DD7003D3D7D /* FTGlobalSearchController+Suggestions.swift */; };
 		E746A99129A48248009B95B4 /* FTStickersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E746A99029A48248009B95B4 /* FTStickersViewController.swift */; };
+		E75329C72B99968D00C22267 /* FTWatchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75329C62B99968D00C22267 /* FTWatchUtils.swift */; };
+		E75329C92B999E8F00C22267 /* FTWatchLandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75329C82B999E8F00C22267 /* FTWatchLandView.swift */; };
 		E755B7592B7B7D15007DDC30 /* FTTextView_MenuHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E755B7582B7B7D15007DDC30 /* FTTextView_MenuHandler.swift */; };
 		E75705D92AF5104900699764 /* FTFavoriteShortcutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75705D82AF5104900699764 /* FTFavoriteShortcutController.swift */; };
 		E75705DB2AF51E8F00699764 /* FTFavoriteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75705DA2AF51E8F00699764 /* FTFavoriteEditViewController.swift */; };
@@ -4236,6 +4238,8 @@
 		E743C12125A6EADF00D59BBF /* FTInfoTipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTInfoTipView.swift; sourceTree = "<group>"; };
 		E743C12A25A7039300D59BBF /* FTQuickCreateInfoTipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTQuickCreateInfoTipViewController.swift; sourceTree = "<group>"; };
 		E746A99029A48248009B95B4 /* FTStickersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStickersViewController.swift; sourceTree = "<group>"; };
+		E75329C62B99968D00C22267 /* FTWatchUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWatchUtils.swift; sourceTree = "<group>"; };
+		E75329C82B999E8F00C22267 /* FTWatchLandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWatchLandView.swift; sourceTree = "<group>"; };
 		E75516D9274F8F9800401F45 /* FTExportDataInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTExportDataInfoCell.swift; sourceTree = "<group>"; };
 		E75516DA274F8F9800401F45 /* FTExportDataInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTExportDataInfoCell.xib; sourceTree = "<group>"; };
 		E75516E1274F90B600401F45 /* FTExportDataFailedItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTExportDataFailedItemCell.swift; sourceTree = "<group>"; };
@@ -10679,9 +10683,10 @@
 		E78DE6C62B983ABF000DAA1B /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				E75329C82B999E8F00C22267 /* FTWatchLandView.swift */,
+				E78DE6CB2B984EE7000DAA1B /* FTRecordView.swift */,
 				E79D21342B8F311A00712028 /* FTRecordingsView.swift */,
 				E79D21392B8F426000712028 /* FTPlayerView.swift */,
-				E78DE6CB2B984EE7000DAA1B /* FTRecordView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -10704,6 +10709,7 @@
 			children = (
 				E79D21372B8F31AA00712028 /* FTRecordingsViewModel.swift */,
 				E78DE6CD2B985135000DAA1B /* FTRecordViewModel.swift */,
+				E75329C62B99968D00C22267 /* FTWatchUtils.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -14415,6 +14421,7 @@
 				E79D21382B8F31AA00712028 /* FTRecordingsViewModel.swift in Sources */,
 				E79D21352B8F311A00712028 /* FTRecordingsView.swift in Sources */,
 				E78DE6F92B987BCB000DAA1B /* FTHashTable.swift in Sources */,
+				E75329C72B99968D00C22267 /* FTWatchUtils.swift in Sources */,
 				E78DE6ED2B9878C0000DAA1B /* FTWatchRecordingProvider.swift in Sources */,
 				E78DE6F32B987B04000DAA1B /* FTFetchRequestProtocol.swift in Sources */,
 				E78DE6FD2B987DCF000DAA1B /* URL+Extension.swift in Sources */,
@@ -14439,6 +14446,7 @@
 				E78DE6DF2B985822000DAA1B /* FTAudioService.swift in Sources */,
 				E78DE6CE2B985135000DAA1B /* FTRecordViewModel.swift in Sources */,
 				E78DE6DE2B985819000DAA1B /* FTAudioDataProcessor.m in Sources */,
+				E75329C92B999E8F00C22267 /* FTWatchLandView.swift in Sources */,
 				E78DE6EC2B987679000DAA1B /* FTWatchRecordedAudio.swift in Sources */,
 				E78DE6F42B987B0B000DAA1B /* FTFetchAudioRequest.swift in Sources */,
 			);

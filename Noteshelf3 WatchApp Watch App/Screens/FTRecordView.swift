@@ -10,9 +10,9 @@ import SwiftUI
 
 struct FTRecordView: View {
     @State private var isRecording: Bool = false
+    @StateObject private var viewModel = FTRecordViewModel()
 
     private let recordColor = Color(red: 224/255, green: 110/255, blue: 81/255)
-    var viewModel: FTRecordViewModel
 
     var body: some View {
         VStack {
@@ -56,5 +56,5 @@ struct FTRecordView: View {
 }
 
 #Preview {
-    FTRecordView(viewModel: FTRecordViewModel())
+    FTRecordView()
 }

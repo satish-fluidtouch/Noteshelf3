@@ -9,15 +9,15 @@
 import SwiftUI
 
 struct FTPlayerView: View {
-    let recording: FTRecording
+    let recording: FTWatchRecording
     var progress: CGFloat = 0.3
 
     var body: some View {
         VStack {
             Spacer()
 
-            Text(recording.duration)
-            Text(recording.dateTimeInfo)
+            Text(FTWatchUtils.timeFormatted(totalSeconds: UInt(recording.duration)))
+            Text(recording.date.nsAudioFormatTitle())
 
             Spacer()
 
@@ -76,8 +76,4 @@ struct FTPlayerView: View {
             }
         }
     }
-}
-
-#Preview {
-    FTPlayerView(recording: FTRecording(duration: "35m 23s", dateTimeInfo: "06 Feb 24,  12:50"))
 }

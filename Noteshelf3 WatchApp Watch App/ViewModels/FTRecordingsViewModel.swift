@@ -15,17 +15,19 @@ struct FTRecording {
 }
 
 class FTRecordingsViewModel: ObservableObject {
-   @Published var recordings: [FTRecording]
+   @Published var recordings: [FTWatchRecording] = []
 
     var title: String {
         "Recordings"
     }
     
     init() {
-        // dummy data
-        let recording1 = FTRecording(duration: "35m 23s", dateTimeInfo: "06 Feb 24, 10:30")
-        let recording2 = FTRecording(duration: "01h 2m 23s", dateTimeInfo: "02 Feb 24, 10:30")
-        let recording3 = FTRecording(duration: "45m 30s", dateTimeInfo: "31 Jan 24, 15:00")
-        self.recordings = [recording1, recording2, recording3]
+        FTWatchRecordingProvider.shared.allRecordings({ [weak self] (allRecordings) in
+            guard let self else { return }
+            self.recordings = allRecordings
+            if (allRecordings.count > 0) {
+                    
+            } 
+        })
     }
 }
