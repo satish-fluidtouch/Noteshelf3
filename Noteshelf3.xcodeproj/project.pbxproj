@@ -14783,7 +14783,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 EE Dev";
-				APP_VERSION = 1.5.3;
+				APP_VERSION = 1.5.4;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -15228,7 +15228,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Noteshelf 3";
-				APP_VERSION = 1.5.3;
+				APP_VERSION = 1.5.4;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -16597,7 +16597,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Dev";
-				APP_VERSION = 1.5.3;
+				APP_VERSION = 1.5.4;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -16663,7 +16663,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Noteshelf 3";
-				APP_VERSION = 1.5.3;
+				APP_VERSION = 1.5.4;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -17276,8 +17276,9 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/dropbox/SwiftyDropbox.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 9.0.0;
+				kind = versionRange;
+				maximumVersion = 11.0.0;
+				minimumVersion = 10.0.0;
 			};
 		};
 		BA8BA66B29794C6400946CFE /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {

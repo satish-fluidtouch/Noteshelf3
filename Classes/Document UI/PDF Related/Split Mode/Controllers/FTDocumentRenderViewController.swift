@@ -136,7 +136,7 @@ class FTDocumentRenderViewController: UIViewController {
         if mode == .shortCompact {
             var extraHeight: CGFloat = 0.0
             if UIDevice.current.isPhone() {
-                if let window = UIApplication.shared.keyWindow {
+                if let window = UIApplication.shared.keyWindow ?? self.view.window {
                     let topSafeAreaInset = window.safeAreaInsets.top
                     if topSafeAreaInset > 0 {
                         extraHeight = topSafeAreaInset
