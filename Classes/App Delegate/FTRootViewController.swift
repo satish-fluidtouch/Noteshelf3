@@ -11,6 +11,7 @@ import FTCommon
 import SafariServices
 import FTDocumentFramework
 import FTNewNotebook
+import CoreSpotlight
 
 protocol FTOpenCloseDocumentProtocol : NSObjectProtocol {
     func openRecentItem(shelfItemManagedObject: FTDocumentItemWrapperObject, addToRecent: Bool)
@@ -52,6 +53,8 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     override func viewDidLoad() {
         super.viewDidLoad()
         FTImportStorageManager.clearImportFilesIfNeeded();
+        FTDocumentsSpotlightIndexManager.shared.configure();
+        
         self.contentView = UIView.init(frame: self.view.bounds);
         self.contentView.backgroundColor = UIColor.clear;
 
@@ -370,7 +373,11 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         if self.isFirstTime {
             self.isFirstTime = false;
             self.setupSafeModeIfNeeded()
-            if let document = self.lastOpenedDocument() {
+            if self.userActivity?.activityType == CSSearchableItemActionType,
+               let shelfItemUUID = self.userActivity?.userInfo?[CSSearchableItemActivityIdentifier] as? String {
+                self.openShelfItem(spotLightHash: shelfItemUUID);
+            }
+            else if let document = self.lastOpenedDocument() {
                 self.showLastOpenedDocument(relativePath: document, animate: false);
             }
             else if let isInNonCollectionMode = self.isInNonCollectionMode(),
@@ -1395,7 +1402,6 @@ extension FTRootViewController: FTSceneBackgroundHandling {
         if(!self.canProceedSceneNotification(notification)) {
             return;
         }
-
         FTAppConfigHelper.sharedAppConfig().updateAppConfig()
         if FTWhatsNewManger.canShowWelcomeScreen(onViewController: self) {
             FTGetstartedHostingViewcontroller.showWelcome(presenterController: self, onDismiss: nil);
