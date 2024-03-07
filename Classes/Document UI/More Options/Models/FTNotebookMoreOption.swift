@@ -262,6 +262,9 @@ class FTNotebookOptionSettings: FTNotebookMoreOption {
 }
 
 class FTNotebookStatusBarSetting: FTNotebookOptionToggle {
+    var eventName: String {
+        return "Status Bar"
+    }
 
     var type: FTNotebookMoreOptionType {
         return .toggleAccessory
