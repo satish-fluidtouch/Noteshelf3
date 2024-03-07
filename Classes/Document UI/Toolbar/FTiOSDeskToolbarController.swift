@@ -156,7 +156,13 @@ protocol FTDeskPanelActionDelegate: AnyObject {
             }
         }
     }
-
+    
+    func didChangePageLayout() {
+        if let parent = self.parent as? FTDocumentRenderViewController {
+            parent.didChangePageLayout()
+        }
+    }
+    
     private func updatePanels() {
         if self.screenMode == .shortCompact {
             self.centerPanelContainerWidthConstraint?.constant = self.view.frame.width

@@ -123,9 +123,6 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
         if let _setting = setting as? FTNotebookStatusBarSetting {
             _setting.updateToggleStatus(with: isOn)
             UserDefaults().showStatusBar = !isOn
-            if let rootVc = self.presentingViewController?.presentingViewController as? FTRootViewController {
-                rootVc.setNeedsStatusBarAppearanceUpdate()
-            }
         }
     }
     

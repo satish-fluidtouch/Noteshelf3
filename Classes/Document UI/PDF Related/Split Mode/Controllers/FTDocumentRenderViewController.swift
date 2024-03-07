@@ -97,11 +97,16 @@ class FTDocumentRenderViewController: UIViewController {
         }
     }
     
+    private var keyValueObserver: NSKeyValueObservation?
     override func viewDidLoad() {
         super.viewDidLoad()
         self.addToolbar()
         self.navigationController?.navigationBar.isHidden = true
         self.showRenderingIndicator = true
+        
+        self.keyValueObserver = UserDefaults.standard.observe(\.showStatusBar, options: [.new]) { [weak self] (userdefaults, change) in
+            self?.updateTopConstraint();
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -121,18 +126,34 @@ class FTDocumentRenderViewController: UIViewController {
             options = .curveEaseIn
         }
         UIView.animate(withDuration: 0.3, delay: 0.0, options: options, animations: {
-            if mode == .focus {
-                self.toolbarTopConstraint?.constant = -200.0
-            } else {
-                self.toolbarTopConstraint?.constant = 0.0
-            }
-            self.view.layoutIfNeeded()
+            self.updateTopConstraint();
         })
     }
 
+    func didChangePageLayout() {
+        self.updateTopConstraint();
+    }
+    
+    private func updateTopConstraint() {
+        guard let mode = self.toolBarView?.screenMode else {
+            return
+        }
+        if mode == .focus {
+            self.toolbarTopConstraint?.constant = -200.0
+        } else {
+            if UserDefaults.standard.showStatusBar, UserDefaults.standard.pageLayoutType == .vertical {
+                self.toolbarTopConstraint?.constant = 10
+            }
+            else {
+                self.toolbarTopConstraint?.constant = 0;
+            }
+        }
+        self.view.layoutIfNeeded()
+    }
+    
     func updateScreenModeIfNeeded(_ mode: FTScreenMode) {
-        self.updateUIWithMode(mode)
         self.toolBarView?.screenMode = mode
+        self.updateUIWithMode(mode)
         if mode == .shortCompact {
             var extraHeight: CGFloat = 0.0
             if UIDevice.current.isPhone() {
@@ -221,8 +242,11 @@ class FTDocumentRenderViewController: UIViewController {
             (documentViewController.pdfDocument as? FTRecognitionHelper)?.visionRecognitionHelper?.startImageTextRecognition()
         }
     }
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
+        self.keyValueObserver?.invalidate();
+        self.keyValueObserver = nil;
 #if DEBUG
         debugPrint("deinit \(self.classForCoder)");
 #endif

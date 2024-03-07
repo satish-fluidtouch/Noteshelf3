@@ -41,10 +41,8 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     private weak var noteBookSplitController: FTNoteBookSplitViewController?
     var contentView : UIView!;
 
-    override var preferredStatusBarStyle : UIStatusBarStyle {
-        return FTShelfThemeStyle.defaultTheme().preferredStatusBarStyle;
-    }
-
+    private var keyValueObserver: NSKeyValueObservation?;
+    
     override func isAppearingThroughModelScale() {
          (self.rootContentViewController as? FTShelfSplitViewController)?.isAppearingThroughModelScale()
      }
@@ -87,6 +85,10 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         if #available(iOS 12.1, *) {
             self.addPencilInteractionDelegate();
         }
+        
+        self.keyValueObserver = UserDefaults.standard.observe(\.showStatusBar, options: [.new]) { [weak self] (userdefaults, change) in
+            self?.refreshStatusBarAppearnce();
+        }
     }
 
     fileprivate func themeDidChange() {
@@ -105,6 +107,8 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                 self.pencilInteraction = nil;
             }
         }
+        self.keyValueObserver?.invalidate();
+        self.keyValueObserver = nil
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -132,7 +136,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         if let splitVC = self.noteBookSplitController,
            !(splitVC.isBeingDismissed || splitVC.isBeingPresented),
            let docController = self.docuemntViewController {
-            return docController.prefersStatusBarHidden;
+            return splitVC.prefersStatusBarHidden;
         }
         return super.prefersStatusBarHidden;
     }

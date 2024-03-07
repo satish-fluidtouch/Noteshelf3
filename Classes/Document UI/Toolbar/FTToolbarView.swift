@@ -56,6 +56,7 @@ class FTToolbarView: UIView {
                 return;
             }
             strongSelf.updateUIConfig()
+            strongSelf.deskToolbarController?.didChangePageLayout();
         }
     }
 
@@ -121,15 +122,28 @@ class FTToolbarView: UIView {
 }
 
 class FTFocusModeView: FTToolbarVisualEffectView {
+    private var keyValueObserver: NSKeyValueObservation?;
     let size = CGSize(width: 44.0, height: 44.0)
     func styleView() {
         super.stylePanel()
         self.layer.masksToBounds = true
         self.frame.size = size
+        self.keyValueObserver = UserDefaults.standard.observe(\.showStatusBar, options: [.new]) { [weak self] (userdefaults, change) in
+            if let strongSelf = self {
+                var frame = strongSelf.frame;
+                frame.origin.y = strongSelf.topOffset;
+                strongSelf.frame = frame;
+            }
+        }
     }
 
+    deinit {
+        self.keyValueObserver?.invalidate();
+        self.keyValueObserver = nil;
+    }
+    
     var topOffset: CGFloat {
-        var offset: CGFloat = 10.0
+        var offset: CGFloat = 14.0
         if UIDevice.current.isPhone() {
             if let window = UIApplication.shared.keyWindow {
                 let topSafeAreaInset = window.safeAreaInsets.top
@@ -137,6 +151,9 @@ class FTFocusModeView: FTToolbarVisualEffectView {
                     offset += topSafeAreaInset
                 }
             }
+        }
+        else if UserDefaults.standard.showStatusBar {
+            offset += 10
         }
         return offset
     }
