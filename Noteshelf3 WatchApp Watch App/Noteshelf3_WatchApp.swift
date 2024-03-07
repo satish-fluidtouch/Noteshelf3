@@ -13,9 +13,6 @@ struct Noteshelf3_WatchApp: App {
     var body: some Scene {
         WindowGroup {
             FTWatchLandView()
-//            FTRecordView()
-//            FTRecordingsView()
-//            FTPlayerView()
         }
     }
 }

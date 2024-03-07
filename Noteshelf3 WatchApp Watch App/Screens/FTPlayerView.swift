@@ -59,6 +59,21 @@ struct FTPlayerView: View {
                 Spacer()
                 .frame(width: 12.0)
             }
+        }.toolbar {
+            toolBar()
+        }
+    }
+
+    private func toolBar() -> some ToolbarContent {
+        if #available(watchOS 10.0, *) {
+            return ToolbarItem(placement: .automatic) {
+                Text("Playing")
+                    .foregroundStyle(Color.white)
+            }
+        } else {
+            return ToolbarItem(placement: .automatic) {
+                Text("Playing")
+            }
         }
     }
 
