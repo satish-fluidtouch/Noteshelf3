@@ -14844,7 +14844,7 @@
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_WORKSPACE = YES;
 				VERSIONING_SYSTEM = "apple-generic";
-				WATCHOS_DEPLOYMENT_TARGET = 7.0;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = "Debug Enterprise";
 		};
@@ -14914,6 +14914,7 @@
 					"$(inherited)",
 					"-Wno-nullability-completeness",
 				);
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = "Debug Enterprise";
 		};
@@ -15280,7 +15281,7 @@
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_WORKSPACE = YES;
 				VERSIONING_SYSTEM = "apple-generic";
-				WATCHOS_DEPLOYMENT_TARGET = 7.0;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = "Release Enterprise";
 		};
@@ -15363,6 +15364,7 @@
 					"$(inherited)",
 					"-Wno-nullability-completeness",
 				);
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = "Release Enterprise";
 		};
@@ -15718,7 +15720,7 @@
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_WORKSPACE = YES;
 				VERSIONING_SYSTEM = "apple-generic";
-				WATCHOS_DEPLOYMENT_TARGET = 7.0;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Beta;
 		};
@@ -16422,6 +16424,7 @@
 					"$(inherited)",
 					"-Wno-nullability-completeness",
 				);
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Debug;
 		};
@@ -16512,6 +16515,7 @@
 					"$(inherited)",
 					"-Wno-nullability-completeness",
 				);
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Release;
 		};
@@ -16585,6 +16589,7 @@
 					"$(inherited)",
 					"-Wno-nullability-completeness",
 				);
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Beta;
 		};
@@ -16650,7 +16655,7 @@
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_WORKSPACE = YES;
 				VERSIONING_SYSTEM = "apple-generic";
-				WATCHOS_DEPLOYMENT_TARGET = 7.0;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Debug;
 		};
@@ -16710,7 +16715,7 @@
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_WORKSPACE = YES;
 				VERSIONING_SYSTEM = "apple-generic";
-				WATCHOS_DEPLOYMENT_TARGET = 7.0;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Release;
 		};
@@ -16880,6 +16885,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf3 WatchApp";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Used to record audio as you take notes in Noteshelf.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.fluidtouch.noteshelf3-dev";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -16900,7 +16906,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Noteshelf3 WatchApp Watch App/Noteshelf3 WatchApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Debug;
 		};
@@ -16937,8 +16943,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf3 WatchApp";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Used to record audio as you take notes in Noteshelf.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.fluidtouch.noteshelf3-dev";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -16957,7 +16964,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Noteshelf3 WatchApp Watch App/Noteshelf3 WatchApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = "Debug Enterprise";
 		};
@@ -16990,8 +16997,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf3 WatchApp";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Used to record audio as you take notes in Noteshelf.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.fluidtouch.noteshelf3-dev";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17010,7 +17018,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Release;
 		};
@@ -17043,8 +17051,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf3 WatchApp";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Used to record audio as you take notes in Noteshelf.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.fluidtouch.noteshelf3-dev";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17063,7 +17072,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = "Release Enterprise";
 		};
@@ -17096,8 +17105,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf3 WatchApp";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Used to record audio as you take notes in Noteshelf.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.fluidtouch.noteshelf3-dev";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17116,7 +17126,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Beta;
 		};

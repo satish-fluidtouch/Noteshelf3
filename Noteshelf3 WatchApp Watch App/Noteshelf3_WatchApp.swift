@@ -15,6 +15,7 @@ struct Noteshelf3_WatchApp: App {
             FTWatchLandView()
 //            FTRecordView()
 //            FTRecordingsView()
+//            FTPlayerView()
         }
     }
 }

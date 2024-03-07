@@ -21,31 +21,43 @@ struct FTPlayerView: View {
 
             Spacer()
 
-            HStack {
+            HStack(spacing: 0) {
+                Spacer()
+                    .frame(width: 12.0)
+
                 Button {
 
                 } label: {
-                    Image("backward15")
+                    Image(systemName: "gobackward.15")
                         .resizable()
-                        .frame(width: 36, height: 36)
+                        .frame(width: 24, height: 24)
                 }
-                .padding(.leading, 10)
+                .frame(width: 36, height: 36)
+                .background(Color(red: 29/255, green: 29/255, blue: 29/255))
+                .clipShape(RoundedRectangle(cornerRadius: 18))
+                .buttonStyle(.plain)
 
                 Spacer()
 
                 playPauseProgressView
-                    .background(.clear)
+                    .buttonStyle(.plain)
 
                 Spacer()
 
                 Button {
 
                 } label: {
-                    Image("forward15")
+                    Image(systemName: "goforward.15")
                         .resizable()
-                        .frame(width: 36, height: 36)
+                        .frame(width: 24, height: 24)
                 }
-                .padding(.trailing, 10)
+                .frame(width: 36, height: 36)
+                .background(Color(red: 29/255, green: 29/255, blue: 29/255))
+                .clipShape(RoundedRectangle(cornerRadius: 18))
+                .buttonStyle(.plain)
+
+                Spacer()
+                .frame(width: 12.0)
             }
         }
     }
