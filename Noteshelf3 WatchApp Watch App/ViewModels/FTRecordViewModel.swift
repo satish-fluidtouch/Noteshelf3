@@ -25,14 +25,6 @@ class FTRecordViewModel: NSObject, ObservableObject {
         do {
             try self.recordingSession.setCategory(AVAudioSession.Category.playAndRecord,mode : .default)
             try self.recordingSession.setActive(true)
-            self.recordingSession.requestRecordPermission() { allowed in
-                DispatchQueue.main.async {
-                    if allowed {
-                    } else {
-                        // failed to record!
-                    }
-                }
-            }
         } catch let error as NSError{
             debugPrint(error)
         }
