@@ -78,22 +78,21 @@ protocol FTDeskPanelActionDelegate: AnyObject {
         super.viewDidLayoutSubviews()
         let currentFrameSize = self.view.frame.size
         if(currentFrameSize.width != self.currentSize.width) {
-            self.currentSize = currentFrameSize
+            var space: CGFloat = 0.0
+            if UIDevice.current.isPhone() {
+                if let window = UIApplication.shared.keyWindow ?? self.view.window {
+                    self.currentSize = currentFrameSize
+                    space = window.safeAreaInsets.top
+                }
+            } else {
+                self.currentSize = currentFrameSize
+            }
+            self.updateScreenModeIfNeeded(self.screenMode)
 #if targetEnvironment(macCatalyst)
             self.contentTopConstraint?.constant = 0.0
 #else
-            var space: CGFloat = 0.0
-            if UIDevice.current.isPhone() {
-                if let window = UIApplication.shared.keyWindow {
-                    let topSafeAreaInset = window.safeAreaInsets.top
-                    if topSafeAreaInset > 0 {
-                        space = topSafeAreaInset
-                    }
-                }
-            }
             self.contentTopConstraint?.constant = 14.0 + space
 #endif
-            self.updateScreenModeIfNeeded(self.screenMode)
         }
     }
 
@@ -144,6 +143,7 @@ protocol FTDeskPanelActionDelegate: AnyObject {
             } else {
                 strongSelf.updateScreenModeIfNeeded(.focus)
                 strongSelf.actionDelegate?.didTapRightPanelTool(.focus, source: strongSelf.fullScreenModeButton, mode: .focus)
+                FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.focusmode_gesture_toggle, params: ["toggle": "on"])
             }
         }
         
@@ -287,8 +287,10 @@ private extension FTiOSDeskToolbarController {
     @IBAction private func leftPanelButtonTapped(_ sender : UIButton) {
         if(sender == self.undoButton) {
             self.performUndoIfNeeded()
+            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_undo_tap)
         } else if (sender == self.redoButton) {
             self.performRedoIfNeeded()
+            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_redo_tap)
         } else {
             if let button = FTDeskLeftPanelTool.init(rawValue: sender.tag) {
                 self.actionDelegate?.didTapLeftPanelTool(button, source: sender)
@@ -299,6 +301,7 @@ private extension FTiOSDeskToolbarController {
     @IBAction private func rightPanelButtonTapped(_ sender: UIButton) {
         if sender == self.fullScreenModeButton {
             self.updateScreenModeIfNeeded(.focus)
+            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_focusmode_toggle, params: ["toggle": "on"])
             if let button = FTDeskRightPanelTool(rawValue: sender.tag) {
                 self.actionDelegate?.didTapRightPanelTool(button, source: sender, mode: .focus)
             }
@@ -341,6 +344,7 @@ extension FTiOSDeskToolbarController {
         if let parent = self.parent as? FTDocumentRenderViewController {
             if let focusModeView = parent.view.subviews.first(where: { $0 is FTFocusModeView }) {
                 self.updateScreenModeIfNeeded(.normal)
+                FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_focusmode_toggle, params: ["toggle": "off"])
                 UIView.animate(withDuration: 0.3) {
                     self.actionDelegate?.didTapRightPanelTool(FTDeskRightPanelTool.focus, source: focusModeView, mode: .normal)
                     focusModeView.removeFromSuperview()

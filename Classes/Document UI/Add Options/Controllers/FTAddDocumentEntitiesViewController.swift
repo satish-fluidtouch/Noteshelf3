@@ -114,6 +114,18 @@ extension FTAddDocumentEntitiesViewController {
         self.updateSegmentControlUI()
         self.removeRequiredChildren()
         self.addRequiredViewController()
+        var segmentName = ""
+        switch self.segmentIndex {
+        case 0:
+            segmentName = "page"
+        case 1:
+            segmentName = "media"
+        case 2:
+            segmentName = "web"
+        default:
+            break
+        }
+        FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.nbk_addmenu_segment_tap, params: ["segment": segmentName])
     }
 
     private func removeRequiredChildren() {
@@ -148,6 +160,7 @@ extension FTAddDocumentEntitiesViewController: FTAddMenuPageViewControllerDelega
         }
         pageViewController.delegate = self
         pageViewController.dataManager = dataManager
+        pageViewController.source = .addPopover
         addViewToParent(pageViewController)
     }
     
@@ -336,8 +349,9 @@ extension FTAddDocumentEntitiesViewController: FTPHPickerDelegate {
 }
 
 extension FTAddDocumentEntitiesViewController: FTStickerdelegate {
-    func didTapSticker(with image: UIImage) {
+    func didTapSticker(with image: UIImage, title: String) {
         self.delegate?.didFinishPickingUIImages([image], source: FTInsertImageSourceSticker)
+        FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.nbk_addmenu_stickers_sticker_tap, params: ["title": title])
         if let navVc = self.presentingViewController{
             navVc.dismiss(animated: true)
         }

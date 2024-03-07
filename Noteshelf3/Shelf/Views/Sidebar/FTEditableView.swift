@@ -15,10 +15,9 @@ struct FTEditableView: View {
     var onButtonSubmit: (_ title:String)-> Void?
     let useTextfieldForEditing: Bool = false
     let keyboardHideNotification = NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)
-
     @FocusState private var titleIsFocused: Bool
     @State var showEditableField: Bool = false
-    var originalTitle: String = ""
+    @State var textFieldText: String = ""
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @EnvironmentObject var viewModel: FTSidebarViewModel
 
@@ -26,7 +25,7 @@ struct FTEditableView: View {
                 Label {
                     HStack {
                         if showEditableField {
-                            TextField(placeHolder, text: $item.title)
+                            TextField(placeHolder, text: $textFieldText)
                                 .font(.appFont(for: .regular, with: 17))
                                 .focused($titleIsFocused)
                                 .foregroundColor(.appColor(.black1))
@@ -80,17 +79,12 @@ struct FTEditableView: View {
         }
     }
     private func didTapSubmitOrKeyboardHideOption(){
-        let newTitle = item.title
-        if !item.title.isEmpty {
-            if originalTitle.isEmpty { // New categpry case
-                item.title = ""
-            }
-        } else {
-            if !originalTitle.isEmpty {
-                item.title = originalTitle
-            }
+        let isTextEmpty = textFieldText.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty
+        if !isTextEmpty, item.type != .addnewCategory {
+            item.title = textFieldText
         }
-        self.onButtonSubmit(newTitle)
+        self.onButtonSubmit(textFieldText)
+        textFieldText = ""
         showEditableField = false
     }
 }

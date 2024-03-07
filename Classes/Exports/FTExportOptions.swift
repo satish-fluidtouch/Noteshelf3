@@ -31,4 +31,20 @@ enum FTExportOptions: Int, Identifiable {
         }
         return reqTitle.localized
     }
+    
+    var eventName : String {
+        let string: String
+
+        switch self {
+        case .pageFooter:
+            string = FTNotebookEventTracker.share_options_titleandpageno_toggle
+        case .pageTemplate:
+            string = FTNotebookEventTracker.share_options_pagetemplate_toggle
+        case .exportFormat:
+            string = ""
+        case .coverPage:
+            string = ""
+        }
+        return string
+    }
 }

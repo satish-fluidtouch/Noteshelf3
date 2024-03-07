@@ -75,7 +75,7 @@ class FTSidebarViewModel: NSObject, ObservableObject {
                              icon: FTIcon.folder,
                              isEditable: true,
                              isEditing: false,
-                             type: .category,
+                             type: .addnewCategory,
                              allowsItemDropping: false)
     }()
    weak var selectedShelfItemCollection: FTShelfItemCollection? {

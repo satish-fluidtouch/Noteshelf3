@@ -20,7 +20,7 @@ extension NSNotification.Name {
     static let didChangeURL =  NSNotification.Name(rawValue: "DidChangeURL")
 }
 
-@objcMembers class FTDocumentItem : NSObject,FTDocumentItemProtocol,FTShelfImage,FTDocumentItemTempAttributes
+@objcMembers class FTDocumentItem : NSObject,FTDocumentItemProtocol,FTDocumentItemTempAttributes
 {
     var uuid : String = FTUtils.getUUID();
     var documentUUID: String?
@@ -40,7 +40,17 @@ extension NSNotification.Name {
     private var _fileLastOpenedDate: Date?;
     var fileLastOpenedDate: Date {
         if isDownloaded, nil == _fileLastOpenedDate {
-            _fileLastOpenedDate = self.URL.fileLastOpenedDate;
+            if let docID = self.documentUUID {
+#if !NOTESHELF_ACTION
+                debugLog("fileModDate: reading lastOpenedDocument : \(self.URL.title)")
+                let cache = FTDocumentCache.shared.cachedLocation(for: docID);
+                _fileLastOpenedDate = cache.fileLastOpenedDate;
+#endif
+            }
+        }
+        if let inlastopenedDate = _fileLastOpenedDate
+            , inlastopenedDate.compare(self.fileModificationDate) == .orderedAscending {
+            _fileLastOpenedDate = self.fileModificationDate;
         }
         return _fileLastOpenedDate ?? self.fileModificationDate;
     }
@@ -49,26 +59,23 @@ extension NSNotification.Name {
     {
         URL = fileURL;
         super.init();
-        // TODO: (Optimize) This notification needs to be refactored as the launch time is affecting due to URL comparison
         // This is Mainly used to set the download status for the starred items.
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "FinishedDownload"),
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "FinishedDownload_\(self.URL.hashKey)"),
                                                object: nil,
                                                queue: nil,
                                                using:
-            { [weak self] (notification) in
-                if self?.downloaded == false,
-                    let object = notification.object as? FTDocumentItem,
-                    object != self,
-                    object.URL == self?.URL {
-                    self?.documentUUID = object.documentUUID;
-                    self?.downloaded = object.downloaded;
-                    
-                    NotificationCenter.default.post(name: Notification.Name(rawValue: "RefreshRecent"),
-                                                    object: self,
-                                                    userInfo: nil);
-                }
+                                                { [weak self] (notification) in
+            if self?.downloaded == false
+                ,let object = notification.object as? FTDocumentItem
+                ,object != self {
+                self?.documentUUID = object.documentUUID;
+                self?.downloaded = object.downloaded;
+                
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "RefreshRecent"),
+                                                object: self,
+                                                userInfo: nil);
+            }
         })
-        
     }
 
     override var hash: Int {
@@ -85,7 +92,7 @@ extension NSNotification.Name {
             if(oldValue != self.downloaded) {
                 self.didChangeValue(forKey: "downloaded");
                 if(self.downloaded) {
-                    NotificationCenter.default.post(name: Notification.Name(rawValue: "FinishedDownload"),
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: "FinishedDownload_\(self.URL.hashKey)"),
                                                     object: self,
                                                     userInfo: nil);
                 }
@@ -94,9 +101,7 @@ extension NSNotification.Name {
     };
 
     func updateLastOpenedDate() {
-        let newDate = Date();
-        _fileLastOpenedDate = newDate;
-        self.URL.updateLastOpenedDate(newDate);
+        self.setLastOpenedDate(Date());
         if nil != self.parent {
             (self.parent as? FTGroupItem)?.resetCachedDates(modified: false, lastOpened: true);
         }
@@ -111,28 +116,41 @@ extension NSNotification.Name {
             if(nil == self.documentUUID
                 && newValue == true
                 && self.isDownloaded == false) {
-                if(nil != metadataItem) {
-                    FTDocumentUUIDReader.shared.readDocumentUUID(self.URL) { (documentUUID) in
-                        self.documentUUID = documentUUID;
-                        self._fileLastOpenedDate = self.URL.fileLastOpenedDate;
-                        self.downloaded = newValue;
-                        if let shelfCollection = self.shelfCollection as? FTShelfItemDocumentStatusChangePublisher {
-                            shelfCollection.documentItem(self, didChangeDownloadStatus: newValue);
+                
+                FTDocumentPropertiesReader.shared.readDocumentUUID(self.URL) { (docProperties) in
+                    self.documentUUID = docProperties.documentID;
+                    if FTDocumentPropertiesReader.USE_EXTENDED_ATTRIBUTE {
+                        self._fileLastOpenedDate = nil;
+                        if let date = docProperties.lastOpnedDate {
+                            self.setLastOpenedDate(date)
                         }
                     }
-                }
-                else {
-                    FTDocumentUUIDReader.shared.readDocumentUUID(self.URL) { (documentUUID) in
-                        self._fileLastOpenedDate = self.URL.fileLastOpenedDate;
-                        self.documentUUID = documentUUID
-                        self.downloaded = newValue;
+                    self.downloaded = newValue;
+                    if nil != self.metadataItem
+                        , let shelfCollection = self.shelfCollection as? FTShelfItemDocumentStatusChangePublisher {
+                        shelfCollection.documentItem(self, didChangeDownloadStatus: newValue);
                     }
                 }
             }
             else {
                 if(newValue) {
-                    self._fileLastOpenedDate = nil;
-                    self.downloaded = newValue;
+                    if FTDocumentPropertiesReader.USE_EXTENDED_ATTRIBUTE {
+                        FTDocumentPropertiesReader.shared.readDocumentUUID(self.URL) { (docProperties) in
+                            debugLog("fileModDate: Updating last openDate : \(self.URL.title)")
+                            self._fileLastOpenedDate = nil;
+                            if let date = docProperties.lastOpnedDate {
+                                self.setLastOpenedDate(date)
+                            }
+                            self.downloaded = newValue;
+                            if nil != self.metadataItem
+                                , let shelfCollection = self.shelfCollection as? FTShelfItemDocumentStatusChangePublisher {
+                                shelfCollection.documentItem(self, didChangeDownloadStatus: newValue);
+                            }
+                        }
+                    }
+                    else {
+                        self.downloaded = newValue;
+                    }
                 }
                 else {
                     self.downloaded = newValue;
@@ -329,5 +347,40 @@ private extension FTDocumentItem {
                 self.uploadProgress = value;
             }
         }
+    }
+}
+
+private extension FTDocumentItem {
+    func setLastOpenedDate(_ date: Date) {
+#if !NOTESHELF_ACTION
+        guard let docID = self.documentUUID else {
+            _fileLastOpenedDate = date;
+            return;
+        }
+        var cache = FTDocumentCache.shared.cachedLocation(for: docID);
+        guard FileManager().fileExists(atPath: cache.path(percentEncoded: false))  else {
+            _fileLastOpenedDate = date;
+            return;
+        }
+        if let fileModDate = cache.getExtendedAttribute(for: .lastOpenDateKey)?.dateValue {
+            if fileModDate.compare(date) == ComparisonResult.orderedAscending {
+                debugLog("fileModDate: income date is lastest :\(self.URL.relativePathWRTCollection())  - \(fileModDate) -\(date)")
+                _fileLastOpenedDate = date;
+                debugLog("fifileModDate: before update: \(cache.fileModificationDate)")
+                try? cache.updateLastOpenedDate(date)
+                debugLog("fifileModDate: after update: \(cache.fileModificationDate)")
+            }
+            else {
+                debugLog("fileModDate: cache date is lastest :\(self.URL.relativePathWRTCollection())  - \(fileModDate) -\(date)")
+                _fileLastOpenedDate = fileModDate;
+            }
+        }
+        else {
+            _fileLastOpenedDate = date;
+            try? cache.updateLastOpenedDate(date)
+        }
+#else
+        _fileLastOpenedDate = date;
+#endif
     }
 }

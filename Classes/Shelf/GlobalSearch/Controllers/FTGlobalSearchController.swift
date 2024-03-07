@@ -561,7 +561,6 @@ extension FTGlobalSearchController: FTSearchResultActionDelegate {
                 selectedPageIndex = pageItem.searchingInfo?.pageIndex ?? 0
             }
 
-            FTNoteshelfDocumentProvider.shared.addShelfItemToList(shelfItem, mode: .recent);
             let docInfo = FTDocumentOpenInfo(document: notebookToOpen,
                                              shelfItem: shelfItem,
                                              index: selectedPageIndex);

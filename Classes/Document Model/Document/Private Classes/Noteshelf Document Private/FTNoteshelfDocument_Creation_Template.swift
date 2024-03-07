@@ -155,6 +155,7 @@ extension FTNoteshelfDocument
                                             pdfTemplateFileItem.securityDelegate = self;
                                             self.templateFolderItem()!.addChildItem(pdfTemplateFileItem);
                                             
+                                            FTCLSLog("NFC - Update page template from NSTemplate: \(self.addressString)");
                                             FileManager.coordinatedCopyAtURL(toCopyPageItem.fileItemURL,
                                                                              toURL: pdfTemplateFileItem.fileItemURL,
                                                                              onCompletion:

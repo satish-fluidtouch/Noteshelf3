@@ -11,17 +11,25 @@ import SwiftUI
 enum FTShelfItemsPurpose {
     case shelf
     case finder
+    case linking
 }
+
 protocol FTShelfItemsViewDelegate: AnyObject{
     func openShelfItemsOf(collection: FTShelfItemCollection?,group:FTGroupItemProtocol?)
     func dismisspopover()
+    func didSelectShelfItem(_ item: FTShelfItemProtocol)
+}
+
+extension FTShelfItemsViewDelegate {
+    func didSelectShelfItem(_ item: FTShelfItemProtocol) {
+        print("Implement if needed")
+    }
 }
 
 struct FTShelfItemsView: View {
     @ObservedObject var viewModel: FTShelfItemsViewModel
 
     weak var viewDelegate: FTShelfItemsViewDelegate?
-    var purpose: FTShelfItemsPurpose = .shelf
     var body: some View {
         ZStack {
             ScrollView {
@@ -50,8 +58,13 @@ struct FTShelfItemsView: View {
                                 FTShelfItemNotebookView(isLastItemInList: islastItemInList, notebookItem: notebookItem)
                                     .environmentObject(viewModel)
                                     .onTapGesture {
-                                        if purpose == .finder {
-                                            viewModel.selectedShelfItemToMove = notebookItem.notebook
+                                        if let item = notebookItem.notebook {
+                                            if notebookItem.notDownloaded {
+                                                notebookItem.downloadNotebook()
+                                            } else if item.URL.downloadStatus() == .downloaded {
+                                                viewModel.selectedShelfItemToMove = notebookItem.notebook
+                                                self.viewDelegate?.didSelectShelfItem(item)
+                                            }
                                         }
                                     }
                             }else {
@@ -78,27 +91,29 @@ struct FTShelfItemsView: View {
                         .foregroundColor(.primary)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    if viewModel.collection == nil && purpose == .shelf {
-                        Button {
-                            viewModel.showNewCategoryCreationAlert()
-                        } label: {
-                            Image(systemName: "folder.badge.plus")
-                                .frame(width:44,height: 44,alignment: .center)
-                                .font(Font.appFont(for: .regular, with: 16))
-                                .foregroundColor(Color.appColor(.accent))
-                        }
-                    } else if viewModel.collection != nil {
-                        Button {
-                            if self.purpose == .finder {
-                                viewModel.showNewNoteBookCreationAlert()
-                            } else {
-                                viewModel.showNewGroupCreationAlert()
+                    if viewModel.purpose != .linking {
+                        if viewModel.collection == nil && viewModel.purpose == .shelf {
+                            Button {
+                                viewModel.showNewCategoryCreationAlert()
+                            } label: {
+                                Image(systemName: "folder.badge.plus")
+                                    .frame(width:44,height: 44,alignment: .center)
+                                    .font(Font.appFont(for: .regular, with: 16))
+                                    .foregroundColor(Color.appColor(.accent))
                             }
-                        } label: {
-                            Image(systemName: "plus")
-                                .frame(width:44,height: 44,alignment: .center)
-                                .font(Font.appFont(for: .regular, with: 16))
-                                .foregroundColor(Color.appColor(.accent))
+                        } else if viewModel.collection != nil {
+                            Button {
+                                if viewModel.purpose == .finder {
+                                    viewModel.showNewNoteBookCreationAlert()
+                                } else {
+                                    viewModel.showNewGroupCreationAlert()
+                                }
+                            } label: {
+                                Image(systemName: "plus")
+                                    .frame(width:44,height: 44,alignment: .center)
+                                    .font(Font.appFont(for: .regular, with: 16))
+                                    .foregroundColor(Color.appColor(.accent))
+                            }
                         }
                     }
                 }
@@ -111,7 +126,7 @@ struct FTShelfItemsView: View {
                                 .frame(alignment: .center)
                                 .font(Font.appFont(for: .regular, with: 17))
                                 .foregroundColor(Color.appColor(.accent))
-                        }
+                        }.isHidden(viewModel.purpose == .linking)
                     }
                 }
             }

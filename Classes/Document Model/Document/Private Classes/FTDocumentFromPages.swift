@@ -11,10 +11,10 @@ import UIKit
 class FTDocumentFromPages: NSObject {
 
     private var document: FTNoteshelfDocument;
-    private var purpose: FTDocumentCreationPurpose = .default;
+    private var purpose: FTItemPurpose = .default;
     private var recoveryInfoPlist: FTNotebookRecoverPlist?
     
-    init(with doc: FTNoteshelfDocument,purpose inPurpose: FTDocumentCreationPurpose) {
+    init(with doc: FTNoteshelfDocument,purpose inPurpose: FTItemPurpose) {
         purpose = inPurpose;
         document = doc;
     }
@@ -52,7 +52,8 @@ class FTDocumentFromPages: NSObject {
                                 subProgress = ftdocument.recursivelyCopyPages(fromPages,
                                                                               currentPageIndex: 0,
                                                                               startingInsertIndex: 0,
-                                                                              pageInsertPosition: .none)
+                                                                              pageInsertPosition: .none,
+                                                                              purpose: self.purpose)
                                 { (_, error, _) in
                                     ftdocument.isInDocCreationMode = false;
                                     ftdocument.closeDocument{ _ in
@@ -125,7 +126,7 @@ class FTDocumentFromPages: NSObject {
                 onCompletion(FTDocumentCreateErrorCode.error(.saveFailed));
                 return
             }
-            let newPage = page.copyPage(toDocument);
+            let newPage = page.copyPage(toDocument, purpose: self.purpose);
             newPage.recognitionInfo = page.recognitionInfo;
             let error = page.copyResource(from: document,
                                           to: toDocument,
@@ -215,6 +216,7 @@ private class FTCopySource: NSObject {
         let fileManager = FileManager();
         if fileManager.fileExists(atPath: self.sourceURL.path),
             !fileManager.fileExists(atPath: self.destinationURL.path) {
+            FTCLSLog("FM Copy file doc From pages: \(self.sourceURL.title) - \(self.destinationURL.title)")
             try fileManager.copyItem(at: self.sourceURL, to: self.destinationURL);
         }
     }

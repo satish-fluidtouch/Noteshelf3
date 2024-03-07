@@ -31,6 +31,7 @@ let textContainerTag: Int = 9001
     func addRecordingToPage(actionType: FTAudioActionType,
                             audio: FTAudioFileToImport,
                             onCompletion : ((Bool,NSError?) -> Void)?);
+    func navigateToPage(with pageId: String)
 }
 
 protocol FTToolbarElements : NSObjectProtocol {
@@ -135,7 +136,7 @@ class FTDocumentRenderViewController: UIViewController {
         if mode == .shortCompact {
             var extraHeight: CGFloat = 0.0
             if UIDevice.current.isPhone() {
-                if let window = UIApplication.shared.keyWindow {
+                if let window = UIApplication.shared.keyWindow ?? self.view.window {
                     let topSafeAreaInset = window.safeAreaInsets.top
                     if topSafeAreaInset > 0 {
                         extraHeight = topSafeAreaInset
@@ -315,7 +316,11 @@ extension FTDocumentRenderViewController: FTToolbarElements {
 
 
 //MARK:- fileprivate member Variable Access methods
-extension FTDocumentRenderViewController: FTDocumentViewPresenter {    
+extension FTDocumentRenderViewController: FTDocumentViewPresenter {
+    func navigateToPage(with pageId: String) {
+        self.documentViewController.navigateToPage(with: pageId)
+    }
+
     func didCompleteDocumentPresentation() {
         isReady = true;
         self.documentViewController.didCompleteDocumentPresentation();

@@ -76,6 +76,7 @@ struct FTShareContentView: View {
                         .background(Color.appColor(.cellBackgroundColor))
 
                         .onTapGesture {
+                          trackFormat(option)
                             viewModel.selectedFormat = option
                             if option == kExportFormatNBK {
                                 isExapanded = false
@@ -90,6 +91,12 @@ struct FTShareContentView: View {
         }
         .cornerRadius(10)
         .padding(.horizontal, FTSpacing.extraLarge)
+    }
+    
+    private func trackFormat(_ format: RKExportFormat) {
+        if viewModel.selectedFormat != format {
+            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.share_format_tap, params: ["format": format.param])
+        }
     }
 
     @ViewBuilder
@@ -149,6 +156,7 @@ struct FTShareContentView: View {
     private var shareButton : some View {
         Button(action: {
             self.viewModel.handleShareAction()
+            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.share_share_tap, params: ["format": viewModel.selectedFormat.param])
         }) {
             Text(viewModel.share)
                 .appFont(for: .medium, with: 15.0)
@@ -166,6 +174,7 @@ struct FTShareContentView: View {
         HStack(spacing: 16.0){
             Button(action: {
                 self.viewModel.handleAddCameraRollAction()
+                FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.share_savetocamera_tap)
             }) {
                 Text(viewModel.saveToCameraroll)
                     .appFont(for: .medium, with: 15.0)
@@ -192,6 +201,7 @@ struct FTShareContentView: View {
                 .foregroundColor(.appColor(.accent))
                 .onTapGesture {
                     self.viewModel.handleCancelAction()
+                    FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.share_cancel_tap)
                 }
         }
         ToolbarItem(placement: .principal) {
@@ -218,6 +228,10 @@ struct FTExportOptionsView: View {
                     Toggle(isOn: $options[index].status) {
                     }
                     .greenStyle()
+                    .onChange(of: options[index].status) { _ in
+                        let str = options[index].status ? "on" : "off"
+                        FTNotebookEventTracker.trackNotebookEvent(with: options[index].option.eventName, params: ["toggle": str])
+                    }
                 }.frame(height: 44)
                     .padding(.horizontal, FTSpacing.large)
                     .onChange(of: status, perform: { newStatus in

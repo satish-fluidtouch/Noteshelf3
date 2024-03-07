@@ -10,11 +10,16 @@ import OpenAI
 import Reachability
 
 class FTOpenAI: NSObject {
-    private static let OPEN_API_TOKEN = "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";
-//    private static let OPEN_API_TOKEN = "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";
+    private static let OPEN_API_TOKEN = "iNjifsU5TqNBH1nmsgW5/8qFS4Z/wq3+qYU6rk2UwsOAEklKL3/HEcUOWs2wWGrZdz+Mg4HNulwj6nhzMd4YFg==";
+//    private static let OPEN_API_TOKEN = "4+FtplzHDydfBYWfA394OmfY9A6JjNNzZ1DSzYxTwKVEpqq2hUpYgX15qjQd7LSxk5fWlcxI4aWfAJo/emgffA==";
 
     private lazy var openAI: OpenAI = {
-        return OpenAI(apiToken: FTOpenAI.OPEN_API_TOKEN);
+        //Generate Encrypted key by adding proper one to Open api token
+        //Once generated store the encrupted key as a value to the same
+        //going forward use the encrypted key as a token
+        //let encryptedKey = FTUtils.encryptString(FTOpenAI.OPEN_API_TOKEN, allowDefaultValue: false, privateKey: nil)
+        let decryptedKey = FTUtils.decryptString(FTOpenAI.OPEN_API_TOKEN, allowDefaultValue: false, privateKey: nil)
+        return OpenAI(apiToken: decryptedKey ?? "");
     }();
     static let shared = FTOpenAI();
     private var currentcommand: FTAICommand?;

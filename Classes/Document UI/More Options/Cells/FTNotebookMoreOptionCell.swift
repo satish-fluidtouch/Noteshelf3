@@ -173,6 +173,7 @@ extension FTNotebookTitleCell: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.handleEndEdit(textField: textField)
+        FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.nbk_more_getinfo_gotopage_tap)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

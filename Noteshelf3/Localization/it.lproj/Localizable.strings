@@ -958,6 +958,16 @@
 "bookmark.removebookMark" = "Rimuovi segnalibro";
 "bujoessentials" = "Bujo Essentials";
 "cancel" = "Annulla";
+"clip.addClip" = "Aggiungi clip";
+"clip.deleteCategory" = "Elimina categoria";
+"clip.deleteCategory.message" = "";
+"clip.deleteCategory.title" = "L'eliminazione di questa categoria cancellerà tutti i clip @% in questa categoria e non potranno essere recuperati.";
+"clip.newCategory" = "Nuova categoria...";
+"clip.noCategory" = "Questa categoria è vuota.";
+"clip.noSavedClips" = "Nessun clip salvato";
+"clip.noSavedClips.description" = "Seleziona qualsiasi cosa e tocca 'Salva Clip' per l'uso successivo.";
+"clip.saveClip" = "Salva Clip";
+"clip.savedClips" = "Clip salvati";
 "clipart404" = "Server occupato, riprova più tardi.";
 "cloud.backup.error.contentPreviouslyCrashed" = "Si è verificato un errore durante il backup. Riprova più tardi.";
 "cloud.backup.error.failedToCreateBackup" = "Impossibile creare il file di backup. Controlla lo spazio disponibile sul tuo dispositivo.";
@@ -1521,6 +1531,21 @@
 "text.font.setAsDefault.menuTitle" = "Imposta come predefinito per:";
 "text.font.setAsDefault.thisAndFutureBooks" = "Questo e tutti i futuri notebook";
 "text.font.setAsDefault.thisBook" = "Questo notebook";
+"textLink_brokenLink_message" = "Il link associato a questo contenuto è rotto.";
+"textLink_closingCurrentDocument_title" = "Vuoi continuare?";
+"textLink_continueConfirmation" = "Questo chiuderà il notebook corrente e ti reindirizzerà a %@.";
+"textLink_documentDeleted_title" = "Il notebook è stato eliminato";
+"textLink_documentItselfNotAvailable_message" = "Il notebook collegato al contenuto è stato eliminato.";
+"textLink_editLink" = "Modifica Link";
+"textLink_linkTo" = "Agguini Link";
+"textLink_linktext" = "Testo del Link";
+"textLink_notebookDeletedOrUndownloaded" = "Impossibile accedere al taccuino associato a questo collegamento.";
+"textLink_notebookNotDownloadedMessage" = "Il notebook collegato a questo contenuto non è stato ancora scaricato da iCloud. Per favore riprova più tardi.";
+"textLink_notebookUnavailable" = "Notebook non disponibile";
+"textLink_otherbook_firstPageConfirmation_message" = "La pagina collegata al contenuto è stata eliminata. Vuoi navigare al notebook in cui si trovava la pagina?";
+"textLink_pageDeleted_title" = "La pagina è stata eliminata";
+"textLink_pageNotAvailable" = "La pagina collegata al contenuto è stata eliminata.";
+"textLink_removeLink" = "Rimuovi Link";
 "textmode.fonttitle" = "Stile carattere/testo";
 "texttoolbar.fontselectionTitle" = "Seleziona Carattere";
 "theams.unsplashDescription" = "Seleziona da Unsplash, scatta una foto o seleziona dalla tua Libreria di foto per creare le tue copertine personalizzate.";
@@ -1577,4 +1602,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 17 January 2024 at 10:56 AM
+// Last Synced by Narayana on 20 February 2024 at 6:21 PM

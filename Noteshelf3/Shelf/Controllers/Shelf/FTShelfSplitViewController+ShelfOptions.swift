@@ -315,6 +315,7 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
                 if let parent = shelfItem.parent as? FTGroupItem {
                     parent.invalidateTop3Notebooks()
                 }
+                FTCLSLog("Doc Open - Update Cover : \(shelfItem.URL.title)")
                 let request = FTDocumentOpenRequest(url: shelfItem.URL, purpose: .write);
                 request.pin = pin;
                 FTNoteshelfDocumentManager.shared.openDocument(request: request) { (token, document, error) in
@@ -445,7 +446,7 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
         let shelfItemsViewModel = FTShelfItemsViewModel(selectedShelfItems: selectedShelfItems)
         shelfItemsViewModel.selectedShelfItemsForMove = selectedShelfItems
         shelfItemsViewModel.delegate = self
-        let controller = FTShelfItemsViewControllerNew(shelfItemsViewModel: shelfItemsViewModel, purpose: .shelf)
+        let controller = FTShelfItemsViewControllerNew(shelfItemsViewModel: shelfItemsViewModel)
         controller.title = ""
         let navController = UINavigationController(rootViewController: controller)
         navController.modalPresentationStyle = .formSheet
@@ -796,8 +797,8 @@ extension FTShelfSplitViewController: FTShelfItemsViewModelDelegate {
             if(nil != title) {
                 categoryTitle = title!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines);
             }
-            if(nil == title || title!.isEmpty) {
-                categoryTitle = NSLocalizedString("NewCategory", comment: "Untitle");
+            if(nil == categoryTitle || categoryTitle!.isEmpty) {
+                categoryTitle = NSLocalizedString("Untitled", comment: "Untitle");
             }
             viewController.dismiss(animated: true) {
                 self.currentShelfViewModel?.addObserversForShelfItems()

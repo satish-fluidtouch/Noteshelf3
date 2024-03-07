@@ -147,6 +147,7 @@ extension FTNoteshelfDocumentProvider {
     fileprivate func copyItemAtURL(sourceURL: URL, toURL destination: URL, onCompletion : @escaping (NSError?) -> Void) {
         DispatchQueue.global().async {
             var error: NSError?;
+            FTCLSLog("NFC - Copy icloud to local");
             let fileCoordinator = NSFileCoordinator(filePresenter: nil);
             fileCoordinator.coordinate(readingItemAt: sourceURL,
                                        options: NSFileCoordinator.ReadingOptions.withoutChanges,
@@ -169,6 +170,7 @@ extension FTNoteshelfDocumentProvider {
 
                                                 dict?[DOCUMENT_ID_KEY] = newdocumentUUID;
                                                 dict?.write(to: propertyPlist, atomically: true);
+                                                try? destination.setExtendedAttributes(attributes: [FileAttributeKey.ExtendedAttribute(key: .documentUUIDKey, string: newdocumentUUID)])
 
                                                 //update dropbox/evernote/thumbanil as the document uuid is changed
                                                 if(oldDocumentUUID != nil) {

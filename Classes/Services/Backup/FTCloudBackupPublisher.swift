@@ -29,6 +29,7 @@ typealias FTGenericCompletionBlockWithStatus = ((Bool) -> Void)
 }
 
 class FTCloudBackupPublisher: NSObject {
+    private let minimumTimeDuration: TimeInterval = 60 * 5; //in minutes
     var backupEntryDictionary = [String: Any]()
     var ignoreList = FTCloudBackupIgnoreList()
     var backUpFilePath: String {
@@ -132,7 +133,7 @@ class FTCloudBackupPublisher: NSObject {
     }
     
     func publishNextRequest() {
-        if shouldCancelPublishing {
+        if shouldCancelPublishing || !FTNoteshelfDocumentProvider.shared.isProviderReady {
             publishDidCancel()
             return
         }
@@ -175,7 +176,7 @@ class FTCloudBackupPublisher: NSObject {
                                 isIgnored = true;
                             }
                             if !isIgnored,
-                                (lastBackupDate < lastUpdatedDate && currentTime - lastUpdatedDate > 60)
+                               (lastBackupDate < lastUpdatedDate && currentTime - lastUpdatedDate > self.minimumTimeDuration)
                                 || refObject.relativeFilePath != eachItem.URL.relativePathWRTCollection() {
                                 self.ignoreList.remove(fromIgnoreList: docId);
                                 refObject.relativeFilePath = eachItem.URL.relativePathWRTCollection();

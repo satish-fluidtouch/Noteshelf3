@@ -44,7 +44,7 @@ extension URL {
         try? self.setExtendedAttributes(attributes: [lastOpenAttribute])
     }
 
-    public func readLastOpenedDate() -> Date? {
+    private func readLastOpenedDate() -> Date? {
         if let date = self.getExtendedAttribute(for: .lastOpenDateKey)?.dateValue {
             return date
         } else {

@@ -12,8 +12,8 @@
 
 @interface FTCSIndexCacheManager()
 
-@property(nonatomic,strong)NSMutableDictionary *searchIndexDictionary;
-@property(nonatomic,assign)BOOL isDirty;
+@property(strong)NSMutableDictionary *searchIndexDictionary;
+@property(assign)BOOL isDirty;
 
 @end
 
@@ -26,16 +26,6 @@
         [self load];
     }
     return self;
-}
-
-+(id)sharedManager
-{
-    static dispatch_once_t pred = 0;
-    __strong static id _sharedObject = nil;
-    dispatch_once(&pred, ^{
-        _sharedObject = [[self alloc] init];
-    });
-    return _sharedObject;
 }
 
 -(FTCSIndexItem*)modelForUniqueID:(NSString*)uniqueID

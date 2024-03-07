@@ -22,6 +22,7 @@ protocol FTNotebookMoreOption {
     var localizedSubtitle: String? { get }
     var imageIcon: FTIcon { get }
     var isViewed: Bool { get set }
+    var eventName: String {get}
 }
 
 extension UserDefaults {
@@ -54,6 +55,10 @@ extension FTNotebookMoreOption {
 }
 
 class FTNotebookOptionChangeTemplate: FTNotebookMoreOption {
+    var eventName: String {
+        return FTNotebookEventTracker.nbk_more_changetemplate_tap
+    }
+    
     var type: FTNotebookMoreOptionType {
         return .basic
     }
@@ -69,6 +74,10 @@ class FTNotebookOptionChangeTemplate: FTNotebookMoreOption {
 }
 
 class FTNotebookOptionTag: FTNotebookMoreOption {
+    var eventName: String {
+        return ""
+    }
+    
     var type: FTNotebookMoreOptionType {
         return .disclosure
     }
@@ -87,6 +96,10 @@ class FTNotebookOptionTag: FTNotebookMoreOption {
 }
 
 class FTNotebookOptionSaveAsTemplate: FTNotebookMoreOption {
+    var eventName: String {
+        return FTNotebookEventTracker.nbk_more_saveastemplate_tap
+    }
+    
     var type: FTNotebookMoreOptionType {
         return .basic
     }
@@ -105,7 +118,10 @@ class FTNotebookOptionSaveAsTemplate: FTNotebookMoreOption {
 }
 
 class FTNotebookOptionRotate: FTNotebookMoreOption {
-
+    var eventName: String {
+        return FTNotebookEventTracker.nbk_more_rotatepage_tap
+    }
+    
     var type: FTNotebookMoreOptionType {
         return .disclosure
     }
@@ -129,7 +145,10 @@ class FTNotebookOptionRotate: FTNotebookMoreOption {
     }
 }
 class FTNotebookOptionGoToPage: FTNotebookMoreOption {
-
+    var eventName: String {
+        return FTNotebookEventTracker.nbk_more_gotopage_tap
+    }
+    
     var type: FTNotebookMoreOptionType {
         return .basic
     }
@@ -158,7 +177,19 @@ class FTNotebookOptionGoToPage: FTNotebookMoreOption {
 }
 
 class FTNotebookOptionRotationAngle: FTNotebookMoreOption {
-
+    var eventName: String {
+        let stringToReturn : String
+        switch rotation {
+        case .nintetyClockwise:
+            stringToReturn = FTNotebookEventTracker.nbk_more_rotate_clockwise_tap
+        case .nintetyCounterClockwise:
+            stringToReturn = FTNotebookEventTracker.nbk_more_rotate_anticlockwise_tap
+        case .oneEighty:
+            stringToReturn = FTNotebookEventTracker.nbk_more_rotate_180_tap
+        }
+        return stringToReturn
+    }
+    
     var type: FTNotebookMoreOptionType {
         return .basic
     }
@@ -191,7 +222,10 @@ class FTNotebookOptionRotationAngle: FTNotebookMoreOption {
 }
 
 class FTNotebookOptionGetInfo: FTNotebookMoreOption {
-
+    var eventName: String {
+        return FTNotebookEventTracker.nbk_more_getinfo_tap
+    }
+    
     var type: FTNotebookMoreOptionType {
         return .disclosure
     }
@@ -208,7 +242,10 @@ class FTNotebookOptionGetInfo: FTNotebookMoreOption {
 }
 
 class FTNotebookOptionSettings: FTNotebookMoreOption {
-
+    var eventName: String {
+        return FTNotebookEventTracker.nbk_more_moresettings_tap
+    }
+    
     var type: FTNotebookMoreOptionType {
         return .disclosure
     }
@@ -256,7 +293,10 @@ class FTNotebookStatusBarSetting: FTNotebookOptionToggle {
 }
 
 class FTNotebookOptionShare: FTNotebookMoreOption {
-
+    var eventName: String {
+        return FTNotebookEventTracker.nbk_more_share_tap
+    }
+    
     var type: FTNotebookMoreOptionType {
         return .disclosure
     }
@@ -273,7 +313,10 @@ class FTNotebookOptionShare: FTNotebookMoreOption {
 }
 
 class FTNotebookOptionGesture: FTNotebookMoreOption {
-
+    var eventName: String {
+        return FTNotebookEventTracker.nbk_more_gestures_tap
+    }
+    
     var type: FTNotebookMoreOptionType {
         return .basic
     }
@@ -301,7 +344,10 @@ class FTNotebookOptionGesture: FTNotebookMoreOption {
 }
 
 class FTNotebookOptionHelp: FTNotebookMoreOption {
-
+    var eventName: String {
+        return FTNotebookEventTracker.nbk_more_help_tap
+    }
+    
     var type: FTNotebookMoreOptionType {
         return .basic
     }
@@ -329,6 +375,9 @@ class FTNotebookOptionHelp: FTNotebookMoreOption {
 }
 
 class FTNotebookOptionZoomBox : FTNotebookOptionToggle {
+    var eventName: String {
+        return FTNotebookEventTracker.nbk_more_zoombox_tap
+    }
     
     var type: FTNotebookMoreOptionType {
         return .basic
@@ -358,6 +407,10 @@ class FTNotebookOptionZoomBox : FTNotebookOptionToggle {
 }
 
 class FTNotebookOptionPresentMode : FTNotebookMoreOption {
+    var eventName: String {
+        return FTNotebookEventTracker.nbk_more_present_tap
+    }
+    
     var type: FTNotebookMoreOptionType {
         return .basic
     }
@@ -386,6 +439,10 @@ class FTNotebookOptionPresentMode : FTNotebookMoreOption {
 }
 
 class FTCustomizeToolbarSetting: FTNotebookMoreOption {
+    var eventName: String {
+        return ""
+    }
+    
     var type: FTNotebookMoreOptionType {
         return .basic
     }
