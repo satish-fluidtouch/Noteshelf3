@@ -39,20 +39,15 @@ struct FTPinnedNotebookOptionsWidgetView: View {
     private var sideView: some View {
         return VStack {
             Spacer()
-            VStack(spacing: 3) {
-                Text(entry.name)
-                    .lineLimit(2)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .foregroundColor(color.isLightColor() ? Color.black : Color.systemBackground)
-                    .font(.appFont(for: .medium, with: 14))
+            VStack(spacing: 0) {
                 Text(entry.time)
                     .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.appFont(for: .regular, with: 12))
-                    .foregroundColor(color.isLightColor() ? Color.black.opacity(0.5) : Color.systemBackground.opacity(0.7))
+                    .foregroundColor(color.isLightColor() ? Color.black.opacity(0.5) : Color.white.opacity(0.7))
             }
-            .padding(.leading, 18)
-            .padding(.bottom, 18)
+            .padding(.leading, 20)
+            .padding(.bottom, 12)
         }
         .frame(width: 190, height: 155)
         .background(Color(uiColor: color))
@@ -65,20 +60,32 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                         Color.white.opacity(0.2)
                     }
                 }
-                VStack {
-                    HStack {
-                        Image(uiImage: image)
-                            .resizable()
-                            .frame(width: imageSize(for: entry).width,height: imageSize(for: entry).height)
-                            .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
-                            .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .bottomRight]))
-                            .padding(.leading, 18)
-                            .padding(.top, image.size.width > image.size.height ? 30 : 20)
-                            .shadow(color: .black.opacity(0.15), radius: 4, x: 0, y: 3)
+                HStack{
+                    VStack(spacing:0) {
+                        HStack {
+                            Image(uiImage: image)
+                                .resizable()
+                                .frame(width: imageSize(for: entry).width,height: imageSize(for: entry).height)
+                                .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
+                                .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .bottomRight]))
+                                .padding(.top, image.size.width > image.size.height ? 30 : 18)
+                                .shadow(color: .black.opacity(0.15), radius: 4, x: 0, y: 3)
+                            Spacer()
+                        }
+                        HStack {
+                            Text(entry.name)
+                                .lineLimit(2)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .foregroundColor(color.isLightColor() ? Color.black : Color.white)
+                                .padding(.top, 14)
+                                .font(.appFont(for: .medium, with: 14))
+                            Spacer(minLength: 14)
+                        }
                         Spacer()
-                    }
+                    }.padding(.leading, 20)
                     Spacer()
                 }
+                
             }
         }.isHidden(entry.relativePath.isEmpty)
     }

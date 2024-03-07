@@ -20,14 +20,29 @@ struct FTPinnedWidgetView : View {
             }
         }.overlay(alignment: .topLeading) {
             if !entry.relativePath.isEmpty {
-                Image(uiImage: image)
-                    .resizable()
-                    .frame(width: imageSize(for: entry).width,height: imageSize(for: entry).height)
-                    .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
-                    .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .bottomRight]))
-                    .padding(.top, image.size.width > image.size.height ? 34 : 20)
-                    .padding(.leading, 24)
-                    .shadow(color: .black.opacity(0.15), radius: 4, x: 0, y: 3)
+                HStack {
+                    VStack(spacing:0) {
+                        HStack {
+                            Image(uiImage: image)
+                                .resizable()
+                                .frame(width: imageSize(for: entry).width,height: imageSize(for: entry).height)
+                                .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
+                                .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .bottomRight]))
+                                .padding(.top, image.size.width > image.size.height ? 34 : 22)
+                                .shadow(color: .black.opacity(0.15), radius: 4, x: 0, y: 3)
+                            Spacer()
+                        }
+                        HStack {
+                            Text(entry.name)
+                                .lineLimit(2)
+                                .padding(.top,15)
+                                .foregroundColor(Color.label)
+                                .font(.appFont(for: .medium, with: 14))
+                            Spacer(minLength: 16)
+                        }
+                    }.padding(.leading, 20)
+                    Spacer()
+                }
             }
         }.onAppear {
             image = imageFrom(entry : entry)
@@ -109,13 +124,8 @@ struct NoteBookInfoView: View {
     let entry: FTPinnedBookEntry
     var body: some View {
         HStack {
-            VStack(spacing: 3) {
+            VStack() {
                 Spacer()
-                Text(entry.name)
-                    .lineLimit(2)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .foregroundColor(Color.label)
-                    .font(.appFont(for: .medium, with: 14))
                 Text(entry.time)
                     .lineLimit(1)
                     .font(.appFont(for: .regular, with: 12))

@@ -22,7 +22,7 @@ struct FTQuickNoteCreateView: View {
                 .lineSpacing(6)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .font(.clearFaceFont(for: .bold, with: 17))
-                .foregroundColor(Color.systemBackground)
+                .foregroundColor(Color.white)
                 .padding([.bottom, .leading], 16.0)
         }
         .frame(width: 155, height: 155)
