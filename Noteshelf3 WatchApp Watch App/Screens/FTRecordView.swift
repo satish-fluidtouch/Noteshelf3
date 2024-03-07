@@ -25,8 +25,8 @@ struct FTRecordView: View {
                     timerView
                 }
 
-                Circle()
-                    .stroke(style: StrokeStyle(lineWidth: 2, dash: [5]))
+                RoundedDashedCircle()
+                    .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round, dash: [1, 10]))
                     .foregroundStyle(recordColor)
                     .frame(width: 110, height: 110)
             }
@@ -55,6 +55,22 @@ struct FTRecordView: View {
     }
 }
 
+struct RoundedDashedCircle: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        let radius = min(rect.size.width, rect.size.height) / 2
+        let center = CGPoint(x: rect.midX, y: rect.midY)
+        for angle in stride(from: 0, to: CGFloat.pi * 2, by: CGFloat.pi / 20) {
+            let start = CGPoint(x: center.x + radius * cos(angle), y: center.y + radius * sin(angle))
+            let end = CGPoint(x: center.x + (radius - 4) * cos(angle), y: center.y + (radius - 4) * sin(angle))
+            path.move(to: start)
+            path.addArc(tangent1End: start, tangent2End: end, radius: 2)
+            path.addLine(to: end)
+        }
+        return path
+    }
+}
+ 
 #Preview {
     FTRecordView()
 }

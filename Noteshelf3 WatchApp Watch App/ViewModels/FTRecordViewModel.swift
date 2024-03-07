@@ -93,15 +93,7 @@ class FTRecordViewModel: NSObject, ObservableObject {
 private extension FTRecordViewModel {
     func updateRecordingTime() {
         self.recordingDuration = Int(self.audioActivity!.currentTime)
-        let seconds:Int = self.recordingDuration % 60;
-        let minutes:Int = (self.recordingDuration / 60) % 60;
-        let hours:Int = (self.recordingDuration / 3600) % 60;
-        if(hours > 0) {
-            durationStr = String.init(format: "%0.2ld:%0.2ld:%0.2ld",hours, minutes, seconds)
-        }
-        else {
-            durationStr = String.init(format: "%0.2ld:%0.2ld",minutes, seconds)
-        }
+        self.durationStr = FTWatchUtils.timeFormatted(totalSeconds: UInt(self.recordingDuration))
     }
 
      func addObservers() {
