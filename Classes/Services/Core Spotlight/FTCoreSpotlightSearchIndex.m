@@ -13,8 +13,8 @@
 +(BOOL)isCoreSpotlightAvailable
 {
 //TODO: temporarily masked the core spot light query
- //   return ([CSSearchableIndex class] && [CSSearchableIndex isIndexingAvailable])?true:false;
-    return false;
+    return ([CSSearchableIndex class] && [CSSearchableIndex isIndexingAvailable])?true:false;
+//    return false;
 }
 
 +(CSSearchableItemAttributeSet*)createSearchableItemAttributeSet:(NSString*)title
@@ -27,9 +27,8 @@
     }
     
     CSSearchableItemAttributeSet *attributeSet;
-    attributeSet = [[CSSearchableItemAttributeSet alloc]
-                    initWithItemContentType:(NSString *)kUTTypeItem];
-    
+    attributeSet = [[CSSearchableItemAttributeSet alloc] initWithContentType:[UTType typeWithFilenameExtension:@"ns3"]];
+
     attributeSet.title = title;
     attributeSet.contentDescription = content;
     if(keywords.count > 0){
@@ -77,6 +76,16 @@
                            completion:(void (^ __nullable)(NSError * __nullable error))completionHandler
 {
     if(![self isCoreSpotlightAvailable]){
+        if(completionHandler){
+            completionHandler(nil);
+        }
+        return;
+    }
+    
+    if([identifiers count] == 0) {
+        if(completionHandler){
+            completionHandler(nil);
+        }
         return;
     }
     
