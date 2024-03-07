@@ -20,8 +20,22 @@ class FTRecordViewModel: NSObject, ObservableObject {
 
     override init() {
         super.init()
-        self.recordingSession = AVAudioSession.sharedInstance()
         NotificationCenter.default.addObserver(self, selector: #selector(didClickOnRecording(_:)), name: NSNotification.Name(rawValue: FTRecordingButtonDidClick), object: nil)
+        self.recordingSession = AVAudioSession.sharedInstance()
+        do {
+            try self.recordingSession.setCategory(AVAudioSession.Category.playAndRecord,mode : .default)
+            try self.recordingSession.setActive(true)
+            self.recordingSession.requestRecordPermission() { allowed in
+                DispatchQueue.main.async {
+                    if allowed {
+                    } else {
+                        // failed to record!
+                    }
+                }
+            }
+        } catch let error as NSError{
+            debugPrint(error)
+        }
     }
 
     func recordAudio() {
