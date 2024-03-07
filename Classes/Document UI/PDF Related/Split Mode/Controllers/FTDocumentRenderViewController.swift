@@ -141,7 +141,7 @@ class FTDocumentRenderViewController: UIViewController {
         if mode == .focus {
             self.toolbarTopConstraint?.constant = -200.0
         } else {
-            if UserDefaults.standard.showStatusBar, UserDefaults.standard.pageLayoutType == .vertical {
+            if UserDefaults.standard.showStatusBar, UserDefaults.standard.pageLayoutType == .vertical, mode != .shortCompact {
                 self.toolbarTopConstraint?.constant = 10
             }
             else {

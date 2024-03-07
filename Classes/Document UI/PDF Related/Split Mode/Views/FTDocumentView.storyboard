@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2MJ-ct-QPx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2MJ-ct-QPx">
     <device id="ipad12_9" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -251,7 +251,6 @@
                         <constraints>
                             <constraint firstItem="cVe-rT-6vY" firstAttribute="centerX" secondItem="YCW-dA-tY2" secondAttribute="centerX" id="6wQ-rm-kh6"/>
                             <constraint firstItem="ToC-1w-gD8" firstAttribute="centerX" secondItem="KLf-47-W5E" secondAttribute="centerX" id="8en-Sw-bQR"/>
-                            <constraint firstItem="ToC-1w-gD8" firstAttribute="top" secondItem="cVe-rT-6vY" secondAttribute="top" id="Jyw-TN-h4F"/>
                             <constraint firstItem="ToC-1w-gD8" firstAttribute="top" secondItem="KLf-47-W5E" secondAttribute="top" id="Ner-Y2-Gw9"/>
                             <constraint firstItem="cVe-rT-6vY" firstAttribute="top" secondItem="KLf-47-W5E" secondAttribute="top" id="cbX-JT-rsL"/>
                             <constraint firstItem="ToC-1w-gD8" firstAttribute="width" secondItem="KLf-47-W5E" secondAttribute="width" id="dvF-Ea-otO"/>
@@ -445,7 +444,7 @@
             <color red="0.066666666666666666" green="0.066666666666666666" blue="0.066666666666666666" alpha="0.10000000149011612" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>
