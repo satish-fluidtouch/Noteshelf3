@@ -35,6 +35,7 @@ class FTFileItemImageTemporary: FTFileItemImage, FTFileItemCacheble {
             // Force set to nil, to make this file item as dirty
             self.updateContent(nil)
         } catch {
+            debugLog("Unable to temp copy image error \(error)")
             return nil
         }
     }
@@ -83,6 +84,7 @@ class FTFileItemAudioTemporary: FTFileItemAudio, FTFileItemCacheble {
             // Force set to nil, to make this file item as dirty
             self.updateContent(nil)
         } catch {
+            debugLog("Unable to temp copy audio error \(error)")
             return nil
         }
     }
