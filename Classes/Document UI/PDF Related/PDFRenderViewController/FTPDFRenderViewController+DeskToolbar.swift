@@ -52,6 +52,7 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
         switch buttonType {
         case .back:
             self.backButtonAction(with: source)
+            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_back_tap)
             break
         case .finder:
             self.finderButtonAction(true)
@@ -201,12 +202,13 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
         switch buttonType {
         case .add:
             self.addAnnotationButtonAction(source: source)
+            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_addmenu_tap)
             break
-
         case .share:
             break
         case .more:
             self.settingsButtonAction()
+            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_more_tap)
             break
         case .focus:
             UIView.animate(withDuration: 0.3) {

@@ -48,7 +48,7 @@ extension FTNoteshelfDocument
                                     });
         });
     }
-    
+        
     internal func updatePageTemplateFromInfo(page : FTPageProtocol,
                                              info : FTDocumentInputInfo,
                                              onCompletion: @escaping ((NSError?, Bool) -> Void))
@@ -62,85 +62,35 @@ extension FTNoteshelfDocument
             #endif
         }
         else {
-            let docName = FTUtils.getUUID().appending(".\(nsPDFExtension)");
-            let destinationURL = self.templateFolderItem()!.fileItemURL.appendingPathComponent(docName);
-            
-            let blockToExecute : ((URL,String?) -> Void) = { (writeURL, password) in
-                do {
-                    _ = try FileManager.default.copyItem(at: info.inputFileURL!, to: writeURL);
-                    self.propertyInfoPlist()?.setObject(DOC_VERSION as AnyObject, forKey: DOCUMENT_VERSION_KEY);
-                    
-                    let docName = writeURL.lastPathComponent;
-                    let templateInfo = FTTemplateInfo(documentInfo: info)
-                    templateInfo.password = password;
-                    self.setTemplateValues(docName, values:templateInfo);
+            let blockToExecute : ((FTPDFKitFileItemPDF) -> Void) = { (fileItem) in
+                page.associatedPDFPageIndex = 1;
+                page.associatedPDFFileName = fileItem.fileName;
+                page.resetRotation()
+                
+                page.lineHeight = info.pageProperties.lineHeight;
+                page.bottomMargin = info.pageProperties.bottomMargin;
+                page.topMargin = info.pageProperties.topMargin;
+                page.leftMargin = info.pageProperties.leftMargin;
 
-                    var fileItem = self.templateFolderItem()!.childFileItem(withName: docName) as? FTPDFKitFileItemPDF;
-                    if(nil == fileItem)
-                    {
-                        fileItem = FTPDFKitFileItemPDF.init(fileName: docName, isDirectory: false)
-                        fileItem?.documentPassword = password;
-                        fileItem?.securityDelegate = self;
-                        self.templateFolderItem()!.addChildItem(fileItem);
-                    }
-                    
-                    page.associatedPDFPageIndex = 1;
-                    page.associatedPDFFileName = docName;
-                    page.resetRotation()
-                    
-                    page.lineHeight = info.pageProperties.lineHeight;
-                    page.bottomMargin = info.pageProperties.bottomMargin;
-                    page.topMargin = info.pageProperties.topMargin;
-                    page.leftMargin = info.pageProperties.leftMargin;
-
-                    page.pdfPageRect = fileItem!.pageRectOfPage(atNumber: page.associatedPDFKitPageIndex);
-                    page.isCover = info.isCover
-                    DispatchQueue.main.async(execute: {
-                        page.isDirty = true;
-                        self.saveDocument(completionHandler: { (success) in
-                            onCompletion(nil,true);
-                        });
+                page.pdfPageRect = fileItem.pageRectOfPage(atNumber: page.associatedPDFKitPageIndex);
+                page.isCover = info.isCover
+                DispatchQueue.main.async(execute: {
+                    page.isDirty = true;
+                    self.saveDocument(completionHandler: { (success) in
+                        onCompletion(nil,true);
                     });
+                });
+            }
+
+            FTCLSLog("Updating template: \(self.addressString)")
+            self.copyInputFileToTemplateFolder(info: info) { (filePath, error) in
+                if let _filePath = filePath {
+                    blockToExecute(_filePath);
                 }
-                catch let error as NSError {
-                    DispatchQueue.main.async(execute: {
-                        onCompletion(error,false);
-                    });
+                else {
+                    FTCLSLog("Updating template failed: \(self.addressString) - \(error?.localizedDescription ?? "")")
+                    onCompletion(error,false);
                 }
-            }
-
-            let copyFileBlock : ((String?)-> Void) = { password in
-                DispatchQueue.global(qos: DispatchQoS.background.qosClass).async {
-                    FTCLSLog("NFC - update page template: \(self.fileURL.title)");
-                    let fileCoordinator = NSFileCoordinator.init(filePresenter: self);
-                    var coordinateError : NSError?;
-                    fileCoordinator.coordinate(writingItemAt: destinationURL, options: NSFileCoordinator.WritingOptions.forReplacing, error: &coordinateError, byAccessor: { (writeURL) in
-                        blockToExecute(writeURL, password);
-                    });
-                    if(nil != coordinateError) {
-                        DispatchQueue.main.async(execute: {
-                            onCompletion(coordinateError,false);
-                        });
-                    }
-                };
-            }
-
-            if let writeURL = info.inputFileURL, FTNoteshelfDocument.isPDFDocumentPasswordProtected(writeURL) {
-                runInMainThread {
-                    self.askPasswordForDocument(writeURL,
-                                                viewController: info.rootViewController,
-                                                onCompletion: { (password, error) in
-                                                    if(nil != error) {
-                                                        onCompletion(error,false);
-                                                    }
-                                                    else {
-                                                        copyFileBlock(password)
-                                                    }
-                                                });
-                };
-            }
-            else {
-                copyFileBlock(nil)
             }
         }
     }
@@ -148,69 +98,16 @@ extension FTNoteshelfDocument
     fileprivate func importFileWithInfo(_ info : FTDocumentInputInfo,
                                          onCompletion : @escaping ((Bool,NSError?) ->Void))
     {
-        let docName = FTUtils.getUUID().appending(".\(nsPDFExtension)");
-        let destinationURL = self.templateFolderItem()!.fileItemURL.appendingPathComponent(docName);
-
-        
-        let blockToExecute : ((URL)->Void) = { (writeURL) in
-            do {
-                if(info.isTemplate) {
-                    _ = try FileManager.default.copyItem(at: info.inputFileURL!, to: writeURL);
-                }
-                else {
-                    #if targetEnvironment(macCatalyst)
-                    _ = try FileManager.default.copyItem(at: info.inputFileURL!, to: writeURL);
-                    #else
-                    _ = try FileManager.default.moveItem(at: info.inputFileURL!, to: writeURL);
-                    #endif
-                }
-                if(FTNoteshelfDocument.isPDFDocumentPasswordProtected(writeURL)) {
-                    runInMainThread {
-                    self.askPasswordForDocument(writeURL,
-                                                viewController: info.rootViewController,
-                                                onCompletion: { (password, error) in
-                        if(nil != error) {
-                            onCompletion(false,error);
-                        }
-                        else {
-                            let error = self.startImporting(writeURL,
-                                                            password: password,
-                                                            info : info);
-                            
-                            onCompletion((error == nil) ? true : false,error);
-                        }
-                    });
-                    };
-                }
-                else {
-                    let error = self.startImporting(writeURL,
-                                                    password: nil,
-                                                    info : info);
-                    onCompletion((error == nil) ? true : false,error);
-                }
+        FTCLSLog("import File: \(self.addressString)")
+        self.copyInputFileToTemplateFolder(info: info) { (filePath, error) in
+            if let _filePath = filePath {
+                let error = self.startImporting(_filePath, info : info);
+                onCompletion((error == nil) ? true : false,error);
             }
-            catch let error as NSError {
+            else {
+                FTCLSLog("import File failed: \(self.addressString) - \(error?.localizedDescription ?? "")")
                 onCompletion(false,error);
             }
-        }
-        
-        if(info.isNewBook) {
-            blockToExecute(destinationURL);
-        }
-        else {
-            DispatchQueue.global(qos: DispatchQoS.background.qosClass).async {
-                FTCLSLog("NFC - insert file: \(self.fileURL.title)");
-                let fileCoordinator = NSFileCoordinator.init(filePresenter: self);
-                var coordinateError : NSError?;
-                fileCoordinator.coordinate(writingItemAt: destinationURL, options: NSFileCoordinator.WritingOptions.forReplacing, error: &coordinateError, byAccessor: { (writeURL) in
-                    blockToExecute(writeURL);
-                });
-                if(nil != coordinateError) {
-                    DispatchQueue.main.async(execute: {
-                        onCompletion(false,coordinateError);
-                    });
-                }
-            };
         }
     }
     
@@ -261,27 +158,9 @@ extension FTNoteshelfDocument
         #endif
     }
     
-    fileprivate func startImporting(_ url : Foundation.URL,
-                                password : String?,
-                                info : FTDocumentInputInfo) -> NSError?
+    fileprivate func startImporting(_ fileItem : FTPDFKitFileItemPDF, info : FTDocumentInputInfo) -> NSError?
     {
-        self.propertyInfoPlist()?.setObject(DOC_VERSION as AnyObject, forKey: DOCUMENT_VERSION_KEY);
-
-        let templateInfo = FTTemplateInfo(documentInfo: info);
-        templateInfo.password = password;
-
-        let docName = url.lastPathComponent;
-        self.setTemplateValues(docName, values: templateInfo);
-
-        var fileItem = self.templateFolderItem()!.childFileItem(withName: docName) as? FTPDFKitFileItemPDF;
-        if(nil == fileItem)
-        {
-            fileItem = FTPDFKitFileItemPDF.init(fileName: docName, isDirectory: false)
-            fileItem?.documentPassword = password;
-            fileItem?.securityDelegate = self;
-            self.templateFolderItem()!.addChildItem(fileItem);
-        }
-        let page = fileItem!.pdfDocumentRef();
+        let page = fileItem.pdfDocumentRef();
         var error : NSError?;
         
         if(nil == page) {
@@ -289,7 +168,7 @@ extension FTNoteshelfDocument
         }
         else {
             error = self.createPageEntities(page!,
-                                            url: url,
+                                            fileName: fileItem.fileName,
                                             index: info.insertAt,
                                             info : info);
         }
@@ -297,9 +176,9 @@ extension FTNoteshelfDocument
     }
     
     fileprivate func createPageEntities(_ pdfDocument : PDFDocument,
-                                    url : Foundation.URL,
-                                    index : Int,
-                                    info : FTDocumentInputInfo) -> NSError?
+                                        fileName : String,
+                                        index : Int,
+                                        info : FTDocumentInputInfo) -> NSError?
     {
         //This should never happen
         if (self.pages().count < index) {
@@ -320,7 +199,7 @@ extension FTNoteshelfDocument
                 let page = FTNoteshelfPage.init(parentDocument: self);
                 page.associatedPDFPageIndex = i+1;
                 page.isCover = info.isCover
-                page.associatedPDFFileName = url.lastPathComponent;
+                page.associatedPDFFileName = fileName;
                 
                 page.lineHeight = info.pageProperties.lineHeight;
                 page.bottomMargin = info.pageProperties.bottomMargin;
@@ -407,4 +286,80 @@ extension FTNoteshelfDocument
         return isValidPassword;
     }
 
+}
+
+private extension FTNoteshelfDocument {
+    private func copyInputFileToTemplateFolder(info: FTDocumentInputInfo, onCompletion: @escaping (FTPDFKitFileItemPDF?,NSError?)->()) {
+        guard let inputFilePath = info.inputFileURL else {
+            onCompletion (nil,FTDocumentCreateErrorCode.error(.failedToImport));
+            return;
+        }
+        
+        func generateFileItem(_ password:String?) {
+            var fileItem: FTFileItemPDFTemp?;
+            var _error: NSError?;
+            do {
+                let url = try self.copyFileToTempLocation(inputFilePath, isTemplate: info.isTemplate);
+                let docName = url.lastPathComponent;
+
+                fileItem = FTFileItemPDFTemp.init(fileName: docName, isDirectory: false)
+                fileItem?.setSourceFileURL(url);
+                fileItem?.documentPassword = password;
+                fileItem?.securityDelegate = self;
+                self.templateFolderItem()!.addChildItem(fileItem);
+                
+                self.propertyInfoPlist()?.setObject(DOC_VERSION as AnyObject, forKey: DOCUMENT_VERSION_KEY);
+                
+                let templateInfo = FTTemplateInfo(documentInfo: info)
+                templateInfo.password = password;
+                self.setTemplateValues(docName, values:templateInfo);
+            }
+            catch {
+                _error  = error as NSError
+            }
+            onCompletion(fileItem,_error);
+        }
+        
+        if(FTNoteshelfDocument.isPDFDocumentPasswordProtected(inputFilePath)) {
+            runInMainThread {
+                self.askPasswordForDocument(inputFilePath,
+                                            viewController: info.rootViewController,
+                                            onCompletion: { (password, error) in
+                    if(nil == error) {
+                        generateFileItem(password)
+                    }
+                    else {
+                        onCompletion(nil,error);
+                    }
+                });
+            };
+        }
+        else {
+            generateFileItem(nil)
+        }
+    }
+    
+    func copyFileToTempLocation(_ inputFilePath: URL, isTemplate: Bool) throws -> URL {
+        guard let tempPath = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true).first else {
+            throw FTDocumentCreateErrorCode.error(.failedToImport);
+        }
+        
+        let fileManager = FileManager();
+        
+        let docName = FTUtils.getUUID().appending(".\(nsPDFExtension)");
+        let tempFilePath = Foundation.URL(filePath:tempPath).appending(path: docName);
+        try? fileManager.removeItem(at: tempFilePath);
+      
+        if(isTemplate) {
+            _ = try fileManager.copyItem(at: inputFilePath, to: tempFilePath);
+        }
+        else {
+            #if targetEnvironment(macCatalyst)
+            _ = try fileManager.copyItem(at: inputFilePath, to: tempFilePath);
+            #else
+            _ = try fileManager.moveItem(at: inputFilePath, to: tempFilePath);
+            #endif
+        }
+        return tempFilePath;
+    }
 }

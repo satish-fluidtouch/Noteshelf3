@@ -125,6 +125,7 @@
 		09DEFBD92A725E9600F41C1E /* FTWordStrokeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEFBD82A725E9600F41C1E /* FTWordStrokeInfo.swift */; };
 		09DEFBDB2A725EC200F41C1E /* FTStrokeGlyphInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEFBDA2A725EC200F41C1E /* FTStrokeGlyphInfo.swift */; };
 		09F81DC4291544ED0040E023 /* FTToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F81DC3291544ED0040E023 /* FTToolbarView.swift */; };
+		09FBDFEE2B90BA6400BEE907 /* FTFileItemPDFTemp.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E41AB21F9712CB00A591F1 /* FTFileItemPDFTemp.m */; };
 		0E4FDED42AC1B3AA0097FE16 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E4FDED22AC1B3AA0097FE16 /* Interface.storyboard */; };
 		0E4FDED62AC1B3AC0097FE16 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E4FDED52AC1B3AC0097FE16 /* Assets.xcassets */; };
 		0E4FDEDD2AC1B3AC0097FE16 /* Noteshelf3 WatchApp Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0E4FDEDC2AC1B3AC0097FE16 /* Noteshelf3 WatchApp Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -516,6 +517,7 @@
 		5238E7D42A0B712900F8F171 /* FTNoteBookSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5238E7D32A0B712900F8F171 /* FTNoteBookSettings.storyboard */; };
 		5238E7D72A0B7C2A00F8F171 /* FTNoteBookSegmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5238E7D62A0B7C2A00F8F171 /* FTNoteBookSegmentCell.swift */; };
 		523DFE8B2A6FCED100924E9A /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAA84E2628730FA800DE801B /* Colors.xcassets */; };
+		524B27C22B6CEED3003AE5A6 /* FTNotebookEventTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524B27C12B6CEED3003AE5A6 /* FTNotebookEventTracker.swift */; };
 		52550E872A70FCAD00E7A1E7 /* FTNewNotebook.docc in Sources */ = {isa = PBXBuildFile; fileRef = 52550E402A70FCAD00E7A1E7 /* FTNewNotebook.docc */; };
 		52550E882A70FCAD00E7A1E7 /* FTNewNotebookConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550E422A70FCAD00E7A1E7 /* FTNewNotebookConstants.swift */; };
 		52550E892A70FCAD00E7A1E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52550E442A70FCAD00E7A1E7 /* Assets.xcassets */; };
@@ -927,6 +929,7 @@
 		BA50E03B2959CB3F00CDC0FD /* FTSidebarViewModel+Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CB62BC294869F600E7CAE4 /* FTSidebarViewModel+Tags.swift */; };
 		BA50E03C2959CB4800CDC0FD /* FTShelfTagsRepresentableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D259E4292F49A0001E4E29 /* FTShelfTagsRepresentableView.swift */; };
 		BA50E03D2959CB4B00CDC0FD /* FTShelfTagsUpdateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F4E952292E324B00DDD64B /* FTShelfTagsUpdateHandler.swift */; };
+		BA531A152B8F6E9D00F4E8C5 /* FTFileItemTemporary.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA531A142B8F6E9C00F4E8C5 /* FTFileItemTemporary.swift */; };
 		BA56E9282A65139600BC603C /* AllAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA56E9272A65139600BC603C /* AllAssets.xcassets */; };
 		BA666A4C2A790B96002FF383 /* FTDocumentMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA666A4B2A790B96002FF383 /* FTDocumentMigration.swift */; };
 		BA6A4280293768140018BC2A /* FTCachedSqliteAnnotationFileItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6A427F293768130018BC2A /* FTCachedSqliteAnnotationFileItem.swift */; };
@@ -3395,6 +3398,7 @@
 		5238E7D12A0B705000F8F171 /* FTNoteBookSettingsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNoteBookSettingsHelper.swift; sourceTree = "<group>"; };
 		5238E7D32A0B712900F8F171 /* FTNoteBookSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FTNoteBookSettings.storyboard; sourceTree = "<group>"; };
 		5238E7D62A0B7C2A00F8F171 /* FTNoteBookSegmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNoteBookSegmentCell.swift; sourceTree = "<group>"; };
+		524B27C12B6CEED3003AE5A6 /* FTNotebookEventTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNotebookEventTracker.swift; sourceTree = "<group>"; };
 		52550E402A70FCAD00E7A1E7 /* FTNewNotebook.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = FTNewNotebook.docc; sourceTree = "<group>"; };
 		52550E422A70FCAD00E7A1E7 /* FTNewNotebookConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTNewNotebookConstants.swift; sourceTree = "<group>"; };
 		52550E442A70FCAD00E7A1E7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -4030,6 +4034,7 @@
 		BA51F62D218B2241009618F9 /* FTWhatsNewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTWhatsNewViewController.swift; sourceTree = "<group>"; };
 		BA51F634218B2241009618F9 /* FTWhatsNewButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTWhatsNewButton.swift; sourceTree = "<group>"; };
 		BA51F635218B2241009618F9 /* FTWhatsNew.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FTWhatsNew.storyboard; sourceTree = "<group>"; };
+		BA531A142B8F6E9C00F4E8C5 /* FTFileItemTemporary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTFileItemTemporary.swift; sourceTree = "<group>"; };
 		BA550F0125C7FEAA004D3B2D /* FTDeveloperOptions.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FTDeveloperOptions.storyboard; sourceTree = "<group>"; };
 		BA56E9272A65139600BC603C /* AllAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AllAssets.xcassets; sourceTree = "<group>"; };
 		BA57454122F9875300310882 /* FTAppIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAppIntentHandler.swift; sourceTree = "<group>"; };
@@ -5155,6 +5160,7 @@
 		09953E861F1F2A7F00753F70 /* File Items */ = {
 			isa = PBXGroup;
 			children = (
+				BA531A142B8F6E9C00F4E8C5 /* FTFileItemTemporary.swift */,
 				09953E871F1F2A7F00753F70 /* FTDocumentFileItemFactory.swift */,
 				09953E881F1F2A7F00753F70 /* FTNSDocumentInfoPlistItem.swift */,
 				09953E891F1F2A7F00753F70 /* FTNSqliteAnnotationFileItem.swift */,
@@ -10203,6 +10209,7 @@
 				ED5C65B0248A5E0D00CDC85A /* FTNotebookInfoModels.swift */,
 				E743C12A25A7039300D59BBF /* FTQuickCreateInfoTipViewController.swift */,
 				E762F6E4272FA5C700F46DCE /* FTQuickNoteSaveViewController.swift */,
+				524B27C12B6CEED3003AE5A6 /* FTNotebookEventTracker.swift */,
 			);
 			path = "More Options";
 			sourceTree = "<group>";
@@ -13273,6 +13280,7 @@
 				97C73415294745FA00F18497 /* FTShelfSplitViewController+Sidebar.swift in Sources */,
 				E7B5A343299E3EBD0031A87E /* FTConvertToTextViewController+MenuHandler.swift in Sources */,
 				BAF3911E2859ADF00067CA9F /* FTPageProtocol.swift in Sources */,
+				524B27C22B6CEED3003AE5A6 /* FTNotebookEventTracker.swift in Sources */,
 				42835D432892C23900B041A3 /* FTFinderPresentable.swift in Sources */,
 				9715E0332AEA9D2C00EC48D4 /* TProtocolException.m in Sources */,
 				BAF391202859ADF00067CA9F /* FTRecognitionCachePlistItem.swift in Sources */,
@@ -13414,6 +13422,7 @@
 				BAF3918F2859ADF00067CA9F /* FTQuickPageNavigatorViewController.swift in Sources */,
 				BAF391912859ADF00067CA9F /* FTAccountInfoRequestGoogleDrive.swift in Sources */,
 				09DEFBD92A725E9600F41C1E /* FTWordStrokeInfo.swift in Sources */,
+				BA531A152B8F6E9D00F4E8C5 /* FTFileItemTemporary.swift in Sources */,
 				BA2D9113285CAFCC001BB495 /* FTNewNoteViewModel.swift in Sources */,
 				1439371C29D6E02700D93033 /* FTStickerSubCategoryView.swift in Sources */,
 				BAF391932859ADF00067CA9F /* FTAudioTrackModel.m in Sources */,
@@ -14644,6 +14653,7 @@
 				4209FE86295C609A00ACC02E /* NSURL_Application_Specific_Paths.swift in Sources */,
 				5283D3A32A5E6D3600C6C125 /* FTBaseCommunicationManager.swift in Sources */,
 				4209FE61295C5CA800ACC02E /* FTShelfItemCollection.swift in Sources */,
+				09FBDFEE2B90BA6400BEE907 /* FTFileItemPDFTemp.m in Sources */,
 				4209FE84295C606500ACC02E /* FTNSDocumentInfoPlistItem.swift in Sources */,
 				423EE1E0253491AF007967F9 /* NSData256+Extension.swift in Sources */,
 				4209FE6B295C5EDB00ACC02E /* FTGroupItem.swift in Sources */,
@@ -15066,7 +15076,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 EE Dev";
-				APP_VERSION = 1.5.1;
+				APP_VERSION = 1.5.4;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -15509,7 +15519,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Noteshelf 3";
-				APP_VERSION = 1.5.1;
+				APP_VERSION = 1.5.4;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -16288,7 +16298,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Beta";
-				APP_VERSION = 1.5.1;
+				APP_VERSION = 1.5.4;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -17211,7 +17221,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Dev";
-				APP_VERSION = 1.5.1;
+				APP_VERSION = 1.5.4;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -17277,7 +17287,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Noteshelf 3";
-				APP_VERSION = 1.5.1;
+				APP_VERSION = 1.5.4;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

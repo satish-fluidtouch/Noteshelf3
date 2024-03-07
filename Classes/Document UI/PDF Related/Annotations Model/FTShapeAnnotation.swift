@@ -213,6 +213,7 @@ final class FTShapeAnnotation: FTStroke, FTShapeAnnotationProtocol {
         shape.rotatedAngle = self.rotatedAngle
         shape.properties = self.properties
         shape.shapeData = self.shapeData
+        shape.shapeTransformMatrix = self.shapeTransformMatrix
         onCompletion(shape);
     }
 

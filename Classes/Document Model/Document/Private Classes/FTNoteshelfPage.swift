@@ -1314,27 +1314,25 @@ extension FTNoteshelfPage {
                                           copiedAnnotations : [FTAnnotation],
                                           onCompletion : @escaping  (([FTAnnotation])->()))
     {
-        
-        autoreleasepool{
-            var pageAnnotations = annotations;
-            var copyAnnotations = copiedAnnotations;
-            if let annotation = pageAnnotations.first {
-                pageAnnotations.removeFirst();
-                annotation.deepCopyAnnotation(self, onCompletion: { (copiedAnnotation) in
-                    if let copiedAnnotation = copiedAnnotation {
-                        copyAnnotations.append(copiedAnnotation)
-                    }
-                    DispatchQueue.main.async {
-                        self._startCopyingAnnotations(pageAnnotations,
-                                                      copiedAnnotations : copyAnnotations,
-                                                      onCompletion: onCompletion)
-                    }
-                });
-            }
-            else {
-                onCompletion(copyAnnotations);
-            }
-        };
+        var pageAnnotations = annotations;
+        var copyAnnotations = copiedAnnotations;
+        guard let annotation = pageAnnotations.first else {
+            onCompletion(copyAnnotations);
+            return;
+        }
+        pageAnnotations.removeFirst();
+        DispatchQueue.global().async {
+            annotation.deepCopyAnnotation(self, onCompletion: { (copiedAnnotation) in
+                if let copiedAnnotation = copiedAnnotation {
+                    copyAnnotations.append(copiedAnnotation)
+                }
+                DispatchQueue.main.async {
+                    self._startCopyingAnnotations(pageAnnotations,
+                                                  copiedAnnotations : copyAnnotations,
+                                                  onCompletion: onCompletion)
+                }
+            });
+        }
     }
 }
 

@@ -147,6 +147,7 @@ extension FTEmojisViewController: FTSegmentedControlDelegate {
     
     func didTapSegment(_ index: Int) {
         self.selectedSegmentIndex = index
+        FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.nbk_addmenu_emojis_category_tap)
     }
 }
 
@@ -186,6 +187,7 @@ extension FTEmojisViewController {
         })
         self.emojis = emojies
         self.collectionView.reloadData()
+        FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.nbk_addmenu_emojis_search_tap)
     }
 }
 
@@ -260,6 +262,7 @@ extension FTEmojisViewController: UICollectionViewDelegate, UICollectionViewData
         let emojiText = emojiItem.emojiSymbol as String
         let emojiImage = emojiesManager.image(forEmojiString: emojiText, size: 32)
         delegate?.stickerSelected(emojiImage, emojiID: UInt(emojiText.hash))
+        FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.nbk_addmenu_emojis_emoji_tap)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
