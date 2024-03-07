@@ -29,7 +29,7 @@ struct FTPinnedWidgetView : View {
                                 .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
                                 .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .bottomRight]))
                                 .padding(.top, image.size.width > image.size.height ? 34 : 22)
-                                .shadow(color: .black.opacity(0.15), radius: 4, x: 0, y: 3)
+                                .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 3)
                             Spacer()
                         }
                         HStack {
