@@ -270,7 +270,7 @@ class FTNotebookStatusBarSetting: FTNotebookOptionToggle {
         return .toggleAccessory
     }
     var imageIcon: FTIcon {
-        return .gearShape
+        return .showstatusbar
     }
     
     var localizedTitle: String {
@@ -278,7 +278,7 @@ class FTNotebookStatusBarSetting: FTNotebookOptionToggle {
     }
     
     var identifier: String {
-        return "setting"
+        return "statusbar"
     }
     
     var isToggleTurnedOn: Bool {
