@@ -19,6 +19,9 @@ class FTNSDocumentFileItemFactory : FTFileItemFactory
         if(url.pathExtension == nsPDFExtension) {
             return super.pdfFileItem(with: url);
         }
+        else if(url.pathExtension == "sqlite" || url.deletingLastPathComponent().lastPathComponent == ANNOTATIONS_FOLDER_NAME) {
+            return self.sqliteFileItem(with: url)
+        }
         else {
            return super.fileItem(with: url, canLoadSubdirectory: canLoadSubdirectory);
         }

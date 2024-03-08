@@ -146,13 +146,18 @@ private class FTDropboxFilePublishRequest: FTCloudFilePublishRequest {
                 }
                 if nil == error {
                     if let requestError = fileUrlsToRequestErrors[sourceFileURL] {
+                        let description: String
                         switch requestError {
-                        case .routeError(let pollError, _, _, _):
-                            error = pollError.unboxed.nserrorMapped()
-
-                        default:
-                            error = NSError(domain: "dropbox.com", code: 105, userInfo: [NSLocalizedDescriptionKey : requestError.description])
+                        case .appendError(let error):
+                            description = error.description
+                        case .clientError(let error):
+                            description = error.description
+                        case .startError(let error):
+                            description = error.description
+                        case .finishError(let error):
+                            description = error.description
                         }
+                        error = NSError(domain: "dropbox.com", code: 105, userInfo: [NSLocalizedDescriptionKey : description])
                     }
                 }
                 //Lastest SDK this is not being posted

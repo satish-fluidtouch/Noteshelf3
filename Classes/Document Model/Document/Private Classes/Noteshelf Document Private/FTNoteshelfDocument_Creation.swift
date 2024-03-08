@@ -300,7 +300,9 @@ private extension FTNoteshelfDocument {
             var _error: NSError?;
             do {
                 let url = try self.copyFileToTempLocation(inputFilePath, isTemplate: info.isTemplate);
-                fileItem = FTFileItemPDFTemp.init(fileName: inputFilePath.lastPathComponent, isDirectory: false)
+                let docName = url.lastPathComponent;
+
+                fileItem = FTFileItemPDFTemp.init(fileName: docName, isDirectory: false)
                 fileItem?.setSourceFileURL(url);
                 fileItem?.documentPassword = password;
                 fileItem?.securityDelegate = self;
@@ -308,7 +310,6 @@ private extension FTNoteshelfDocument {
                 
                 self.propertyInfoPlist()?.setObject(DOC_VERSION as AnyObject, forKey: DOCUMENT_VERSION_KEY);
                 
-                let docName = inputFilePath.lastPathComponent;
                 let templateInfo = FTTemplateInfo(documentInfo: info)
                 templateInfo.password = password;
                 self.setTemplateValues(docName, values:templateInfo);

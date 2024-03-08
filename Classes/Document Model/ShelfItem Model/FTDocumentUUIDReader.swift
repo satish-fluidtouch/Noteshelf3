@@ -15,6 +15,7 @@ class FTDocumentProperties: NSObject {
 }
 
 class FTDocumentPropertiesReader: NSObject {
+    static let USE_EXTENDED_ATTRIBUTE = false;
     private let USE_COORDINATED_RED = true;
     
     static let shared = FTDocumentPropertiesReader();
@@ -28,6 +29,11 @@ class FTDocumentPropertiesReader: NSObject {
     
     func readDocumentUUID(_ url: URL,onCompletion: @escaping ((FTDocumentProperties) -> ()))
     {
+        guard FTDocumentPropertiesReader.USE_EXTENDED_ATTRIBUTE else {
+            let operation = FTDocumentPropertiesReaderOperation(url: url, onCompletion: onCompletion);
+            operationQueue.addOperation(operation);
+            return;
+        }
         // Try to read from the URL extended attributes.
         if !USE_COORDINATED_RED, let uuid = url.getExtendedAttribute(for: .documentUUIDKey)?.stringValue {
             let item = FTDocumentProperties();
@@ -85,7 +91,8 @@ private class FTDocumentPropertiesReaderOperation: Operation
                                             ,options:.withoutChanges
                                             ,error: &error
                                             ,byAccessor: { (readingURL) in
-            if let docUUID = readingURL.getExtendedAttribute(for: .documentUUIDKey)?.stringValue {
+            if FTDocumentPropertiesReader.USE_EXTENDED_ATTRIBUTE
+                ,let docUUID = readingURL.getExtendedAttribute(for: .documentUUIDKey)?.stringValue {
                 docProperties.documentID = docUUID
             }
             let metaURL = readingURL.appendingPathComponent("\(METADATA_FOLDER_NAME)/\(PROPERTIES_PLIST)");
@@ -95,11 +102,12 @@ private class FTDocumentPropertiesReaderOperation: Operation
                     // Storing document UUID for older notebooks, once it is retrieved.
 //                    let uuidAttribute = FileAttributeKey.ExtendedAttribute(key: .documentUUIDKey,  string: docUUID)
 //                    try? self.URL.setExtendedAttributes(attributes: [uuidAttribute])
-                    debugLog("fileModDate: docID mismatch: \(self.URL.title) curID: \(docProperties.documentID) newID: \(docUUID)")
+//                    debugLog("fileModDate: docID mismatch: \(self.URL.title) curID: \(docProperties.documentID) newID: \(docUUID)")
                     docProperties.documentID = docUUID
                 }
             }
-            if let lastOpenedDate = readingURL.getExtendedAttribute(for: .lastOpenDateKey)?.dateValue {
+            if FTDocumentPropertiesReader.USE_EXTENDED_ATTRIBUTE
+                ,let lastOpenedDate = readingURL.getExtendedAttribute(for: .lastOpenDateKey)?.dateValue {
                 docProperties.lastOpnedDate = lastOpenedDate;
             }
         });
