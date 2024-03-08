@@ -26,6 +26,15 @@ class FTLassoInfo: NSObject {
 @objcMembers class FTPageViewController: UIViewController {
     private let THUMBNAIL_SIZE = CGSize(width: 200, height: 248);
     
+    private weak var didChangePageDisplayNotifcationObserver : NSObjectProtocol?
+    internal weak var didEndTouchNotificationObserver: NSObjectProtocol?;
+    internal weak var didMoveTouchNotificationObserver: NSObjectProtocol?;
+
+    internal weak var disableLongPressNotificationObserver: NSObjectProtocol?;
+    internal weak var disableGestureNotificationObserver: NSObjectProtocol?;
+    internal weak var enableGestureNotificationObserver: NSObjectProtocol?;
+    internal weak var quickPageNavigationShowNotificationObserver: NSObjectProtocol?;
+
     private weak var page : FTPageProtocol?
     weak var delegate : FTPDFRenderViewController?;
 
@@ -150,6 +159,29 @@ class FTLassoInfo: NSObject {
     
     deinit {
         NSObject.cancelPreviousPerformRequests(withTarget: self);
+        if let observer = self.didChangePageDisplayNotifcationObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+        if let observer = self.didEndTouchNotificationObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+        if let observer = self.didMoveTouchNotificationObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+
+        if let observer = self.disableGestureNotificationObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+        if let observer = self.enableGestureNotificationObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+        if let observer = self.disableLongPressNotificationObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+        if let observer = self.quickPageNavigationShowNotificationObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+
         NotificationCenter.default.removeObserver(self);
     }
     
@@ -506,7 +538,7 @@ private extension FTPageViewController
     private func configureOnLoad() {
         self.configureForPDFLinks();
         self.configureGestures();
-        NotificationCenter.default.addObserver(forName: FTWhiteboardDisplayManager.didChangePageDisplay,
+        self.didChangePageDisplayNotifcationObserver = NotificationCenter.default.addObserver(forName: FTWhiteboardDisplayManager.didChangePageDisplay,
                                                object: nil,
                                                queue: nil)
         { [weak self] (notification) in

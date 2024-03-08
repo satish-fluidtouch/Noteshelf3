@@ -10,15 +10,22 @@ import UIKit
 import FTCommon
 
 class FTThemeableLabel: FTStyledLabel {
+    private weak var themeChangeObserver: NSObjectProtocol?;
     override func awakeFromNib() {
         super.awakeFromNib();
         
         self.updateUI();
         
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.FTShelfThemeDidChange, object: nil, queue: nil) { [weak self] (_) in
+        self.themeChangeObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.FTShelfThemeDidChange, object: nil, queue: nil) { [weak self] (_) in
             runInMainThread {
                 self?.updateUI();
             }
+        }
+    }
+    
+    deinit {
+        if let observer = self.themeChangeObserver {
+            NotificationCenter.default.removeObserver(observer);
         }
     }
     

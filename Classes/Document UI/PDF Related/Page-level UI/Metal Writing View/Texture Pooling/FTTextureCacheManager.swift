@@ -112,9 +112,11 @@ final class FTTextureCacheManager: NSObject {
 
     private var cacheMap = [NSString:FTTextureCacheable]()
 
+    private weak var memoryWarningNotificationObserver: NSObjectProtocol?
+    
     override init() {
         super.init()
-        NotificationCenter.default.addObserver(forName: UIApplication.didReceiveMemoryWarningNotification,
+        self.memoryWarningNotificationObserver = NotificationCenter.default.addObserver(forName: UIApplication.didReceiveMemoryWarningNotification,
                                                object: nil,
                                                queue: nil) { [weak self] _ in
             guard let strongSelf = self else {
@@ -126,6 +128,12 @@ final class FTTextureCacheManager: NSObject {
         }
     }
 
+    deinit {
+        if let observer = self.memoryWarningNotificationObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+    }
+    
     func object(forKey key: NSString) -> FTTextureCacheable? {
         var texture : FTTextureCacheable?
         objc_sync_enter(self)

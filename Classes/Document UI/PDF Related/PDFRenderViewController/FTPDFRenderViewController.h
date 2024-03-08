@@ -82,6 +82,7 @@ FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {}
 @property (weak) id openCloseDocumentDelegate;
 @property (weak) id textToolbarDelegate;
 @property (weak,readonly) FTZoomOverlayViewController *zoomOverlayController;
+@property (weak) id<NSObject> pageLayoutDidChangeNotificationObserver;
 
 @property (nullable, strong) NSString *currentSceneID;
 @property (strong) FTDocumentOpenToken *openDocToken;

@@ -42,6 +42,9 @@ class FTNotebookRecognitionHelper: NSObject {
     }
     
     deinit {
+        if let observer = self.myscriptActivateObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
         NotificationCenter.default.removeObserver(self)
         #if DEBUG
         debugPrint("\(type(of: self)) is deallocated");
@@ -58,6 +61,8 @@ class FTNotebookRecognitionHelper: NSObject {
         return false;
     }
     
+    private weak var myscriptActivateObserver: NSObjectProtocol?;
+    
     convenience init(withDocument document:FTNoteshelfDocument) {
         self.init()
         self.documentUUID = document.documentUUID;
@@ -65,7 +70,7 @@ class FTNotebookRecognitionHelper: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(FTNotebookRecognitionHelper.handleLanguageChange(_:)), name: NSNotification.Name(rawValue: FTRecognitionLanguageDidChange), object: nil)
         self.currentDocument = document
         
-        NotificationCenter.default.addObserver(forName: FTNotebookRecognitionHelper.myScriptActivatedNotification,
+        self.myscriptActivateObserver = NotificationCenter.default.addObserver(forName: FTNotebookRecognitionHelper.myScriptActivatedNotification,
                                                object: nil,
                                                queue: nil) { [weak self] (_) in
             self?.wakeUpRecognitionHelperIfNeeded();

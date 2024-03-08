@@ -10,7 +10,15 @@ import Foundation
 import UIKit
 import FTCommon
 
-class ActionLabel: UILabel {}
+class ActionLabel: UILabel {
+    private weak var notificationObserver: NSObjectProtocol?
+    
+    deinit {
+        if let observer = self.notificationObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+    }
+}
 
 extension ActionLabel {
     override open func awakeFromNib() {
@@ -18,7 +26,7 @@ extension ActionLabel {
         
         self.updateUI();
         
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.FTShelfThemeDidChange, object: nil, queue: nil) { [weak self] (_) in
+        self.notificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.FTShelfThemeDidChange, object: nil, queue: nil) { [weak self] (_) in
             runInMainThread {
                 self?.updateUI();
             }

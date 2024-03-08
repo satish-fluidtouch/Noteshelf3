@@ -42,7 +42,8 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     var contentView : UIView!;
 
     private var keyValueObserver: NSKeyValueObservation?;
-    
+    private weak var themeNotificationObserver: NSObjectProtocol?;
+
     override func isAppearingThroughModelScale() {
          (self.rootContentViewController as? FTShelfSplitViewController)?.isAppearingThroughModelScale()
      }
@@ -77,7 +78,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         }
         FTUserDefaults.defaults().addObserver(self, forKeyPath: "iCloudOn", options: .new, context: nil);
 
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.FTShelfThemeDidChange, object: nil, queue: nil) { [weak self] _ in
+        self.themeNotificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.FTShelfThemeDidChange, object: nil, queue: nil) { [weak self] _ in
             runInMainThread {
                 self?.themeDidChange();
             }
@@ -107,6 +108,10 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                 self.pencilInteraction = nil;
             }
         }
+        if let _themeObserver = self.themeNotificationObserver {
+            NotificationCenter.default.removeObserver(_themeObserver);
+        }
+        
         self.keyValueObserver?.invalidate();
         self.keyValueObserver = nil
     }

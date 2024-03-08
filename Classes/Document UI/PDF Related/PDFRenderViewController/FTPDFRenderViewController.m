@@ -273,6 +273,7 @@
 #if DEBUG
     printf("\ndealloc : FTPDFRrenderViewController\n");
 #endif
+    [self removeLayoutChangeObserver];
     [self.pdfDocument removeListner:self];
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     self.mainScrollView.scrollViewDelegate = nil;

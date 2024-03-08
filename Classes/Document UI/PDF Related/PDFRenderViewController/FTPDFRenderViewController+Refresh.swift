@@ -16,9 +16,15 @@ import FTCommon
 }
 
 extension FTPDFRenderViewController {
+    @objc func removeLayoutChangeObserver() {
+        if let observer = self.pageLayoutDidChangeNotificationObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+    }
+    
     @objc func addObserverForPageLayoutChange()
     {
-        NotificationCenter.default.addObserver(forName: .pageLayoutDidChange,
+        self.pageLayoutDidChangeNotificationObserver = NotificationCenter.default.addObserver(forName: .pageLayoutDidChange,
                                                object: nil,
                                                queue: nil)
         { [weak self] (_) in
