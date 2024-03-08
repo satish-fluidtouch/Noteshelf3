@@ -108,8 +108,8 @@ protocol FTAnnotationStrokeErase
             self.uuid = uniqueId;
         }
 
-        if let groupId = aDecoder.decodeObject(forKey: "groupId") as? String {
-            self.groupId = groupId;
+        if aDecoder.decodeObject(forKey: "groupId") != nil {
+            self.groupId = UUID().uuidString;
         }
 
         self.isReadonly = aDecoder.decodeBool(forKey: "isReadonly");
