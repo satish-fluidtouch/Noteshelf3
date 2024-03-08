@@ -200,7 +200,8 @@ class FTNoteshelfAIViewController: UIViewController {
         self.title = "noteshelf.ai.noteshelfAI".aiLocalizedString;
         let doneButton = FTNavBarButtonItem(type: .right, title: "Done".localized, delegate: self);
         self.navigationItem.rightBarButtonItem = doneButton;
-#if DEBUG || BETA
+        //TODO :- Add Beta check, removed to give beta build for apple
+#if DEBUG
         self.addDebugCommandButton();
 #endif
         updateContentView();

@@ -32,7 +32,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
         }
         .onAppear {
             image = imageFrom(entry: entry)
-            color = entry.hasCover ? adaptiveColorFromImage() : UIColor(hexString: "#E06E51",alpha: 0.9)
+            color = entry.hasCover ? adaptiveColorFromImage() : UIColor(hexString: "#E06E51",alpha: 0.85)
         }
     }
     
@@ -119,7 +119,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
     private func adaptiveColorFromImage() -> UIColor {
         var uiColor = UIColor(hexString: "#E06E51")
         if  let colors = ColorThief.getPalette(from: image, colorCount: 5), colors.count >= 2 {
-            uiColor = colors[1].makeUIColor().withAlphaComponent(0.8)
+            uiColor = colors[1].makeUIColor()//.withAlphaComponent(0.8)
         }
         return uiColor
     }

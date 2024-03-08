@@ -88,6 +88,10 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         if #available(iOS 12.1, *) {
             self.addPencilInteractionDelegate();
         }
+        //TODO: Adding this to enable premium which giving beta to apple
+#if BETA
+        FTIAPurchaseHelper.shared.isPremiumUser  = true
+#endif
     }
 
     fileprivate func themeDidChange() {

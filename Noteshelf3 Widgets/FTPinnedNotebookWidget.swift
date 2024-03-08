@@ -128,7 +128,7 @@ struct NoteBookInfoView: View {
                 Spacer()
                 Text(entry.time)
                     .lineLimit(1)
-                    .font(.appFont(for: .regular, with: 12))
+                    .font(.appFont(for: .medium, with: 12))
                     .foregroundColor(Color("black50"))
                     .frame(maxWidth: .infinity, alignment: .leading)
             }.padding(.leading, 20)
