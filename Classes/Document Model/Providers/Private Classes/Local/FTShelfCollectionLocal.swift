@@ -94,11 +94,47 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
                 onCompletion(collection);
             }
             else {
-                UserDefaults.standard.set(true, forKey: "DefaultShelfCreated");
-                UserDefaults.standard.synchronize();
-                onCompletion(collection);
+                let url1 = Bundle.main.url(forResource: "SampleNoteBooks", withExtension: "bundle")!;
+                var subFiles = try? FileManager.default.contentsOfDirectory(at: url1, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
+                func moveSampleBooks() {
+                    if let eachFile = subFiles?.first, eachFile.pathExtension == "noteshelf" {
+                        copyNoteShelfFileToCollection(sourceURL: eachFile, destUrl: collection.URL) { url, error in
+                            if let collection = collection as? FTShelfItemCollectionLocal, let url {
+                                collection.addItemsToCache([url])
+                            }
+                            subFiles?.removeFirst()
+                            if subFiles?.isEmpty ?? false {
+                                UserDefaults.standard.set(true, forKey: "DefaultShelfCreated");
+                                UserDefaults.standard.synchronize();
+                                onCompletion(collection);
+                            } else {
+                                moveSampleBooks()
+                            }
+                        }
+                    } else {
+                        UserDefaults.standard.set(true, forKey: "DefaultShelfCreated");
+                        UserDefaults.standard.synchronize();
+                        onCompletion(collection);
+                    }
+                }
+                moveSampleBooks()
             }
         });
+    }
+    
+    func copyNoteShelfFileToCollection(sourceURL: URL, destUrl: URL, onCompletion:@escaping (URL?,NSError?)->Void) {
+        let temporaryDirectoryURL = URL(fileURLWithPath: NSTemporaryDirectory())
+        let temporaryFileURL = temporaryDirectoryURL.appendingPathComponent(sourceURL.lastPathComponent)
+        do {
+            try FileManager.default.copyItem(at: sourceURL, to: temporaryFileURL)
+            FTNSDocumentUnzipper.unzipFile(atPath: sourceURL.path(percentEncoded: false), onUpdate: nil) { path, error in
+                do {
+                    let destinationFileURL = destUrl.appendingPathComponent(path!.lastPathComponent)
+                    try FileManager.default.copyItem(at: URL(filePath: path!), to: destinationFileURL)
+                    onCompletion(destinationFileURL, error)
+                } catch {}
+            }
+        } catch {}
     }
     
     func createShelf(_ title: String, onCompletion:  @escaping ((NSError?, FTShelfItemCollection?) -> Void))
@@ -281,16 +317,6 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
                 try fileManager.createDirectory(at: defaultCollectionURL, withIntermediateDirectories: true, attributes: nil);
                 let model = self.addItemToCache(defaultCollectionURL);
                 onCompletion(nil,model as? FTShelfItemCollection);
-                let url1 = Bundle.main.url(forResource: "SampleNoteBooks", withExtension: "bundle")!;
-                let subFiles = try? FileManager.default.contentsOfDirectory(at: url1, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
-                subFiles?.forEach({ eachFile in
-                    if eachFile.pathExtension == "noteshelf" {
-                        copyNoteShelfFileToTemporaryLocation(sourceURL: eachFile, destUrl: defaultCollectionURL)
-//                        copyNoteShelfFileToFolder(eachFile, destinationFolderURL: defaultCollectionURL)
-                    }
-                })
-                //make change here
-//                let items =
                 if(ENABLE_SHELF_RPOVIDER_LOGS) {
                     debugPrint("\(#file.components(separatedBy: "/").last ?? ""): Created shelf :\(shelfName)");
                 }
@@ -311,32 +337,6 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
             onCompletion(nil,collectionModel);
             if(ENABLE_SHELF_RPOVIDER_LOGS) {
                 debugPrint("\(#file.components(separatedBy: "/").last ?? ""): Create Shelf :\(shelfName) Availbale");
-            }
-        }
-    }
-    
-    func copyNoteShelfFileToTemporaryLocation(sourceURL: URL, destUrl: URL) {
-        let temporaryDirectoryURL = URL(fileURLWithPath: NSTemporaryDirectory())
-        let temporaryFileURL = temporaryDirectoryURL.appendingPathComponent(sourceURL.lastPathComponent)
-
-        do {
-            try FileManager.default.copyItem(at: sourceURL, to: temporaryFileURL)
-            print("NoteShelf file copied to temporary location:", temporaryFileURL)
-            
-            copyNoteShelfFileToFolder(temporaryFileURL, destinationFolderURL: destUrl)
-        } catch {
-            print("Error copying NoteShelf file:", error.localizedDescription)
-        }
-    }
-
-    func copyNoteShelfFileToFolder(_ sourceURL: URL, destinationFolderURL: URL) {
-        FTNSDocumentUnzipper.unzipFile(atPath: sourceURL.path(percentEncoded: false), onUpdate: nil) { path, error in
-            do {
-                let destinationFileURL = destinationFolderURL.appendingPathComponent(path!.lastPathComponent)
-                try FileManager.default.copyItem(at: URL(filePath: path!), to: destinationFileURL)
-                print("NoteShelf file copied to destination folder:", destinationFileURL)
-            } catch {
-                print("Error copying NoteShelf file to folder:", error.localizedDescription)
             }
         }
     }
