@@ -28,8 +28,8 @@ struct FTMorePopoverSections {
         section.append(FTNotebookOptionGetInfo())
         section.append(FTNotebookOptionGesture())
         section.append(FTNotebookOptionHelp())
-        section.append(FTNotebookOptionSettings())
         section.append(FTNotebookStatusBarSetting(isEnabled: UserDefaults().showStatusBar))
+        section.append(FTNotebookOptionSettings())
         return section
     }
         

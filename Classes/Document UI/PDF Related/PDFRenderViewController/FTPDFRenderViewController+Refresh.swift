@@ -26,9 +26,25 @@ extension FTPDFRenderViewController {
                 return;
             }
             strongSelf.updatePageLayout();
+            strongSelf.didChangeStatusBarVisibility();
         }
     }
     
+    func didChangeStatusBarVisibility() {
+        self.updatePageNumberLabelFrame();
+        self.updateAudioPlayerFrame();
+    }
+    
+    @objc func updateAudioPlayerFrame() {
+        guard let player = self.playerController else {
+            return;
+        }
+        var tempFrame = player.view.frame;
+        tempFrame.origin.y = self.deskToolBarFrame().maxY + FTToolBarConstants.subtoolbarOffset;
+        tempFrame.size.width = self.view.frame.width
+        player.view.frame = tempFrame;
+    }
+
     @objc func updatePageLayout() {
         guard let docScrollView = self.mainScrollView else {
             fatalError("scrollview should be of type: FTDocumentScrollView");

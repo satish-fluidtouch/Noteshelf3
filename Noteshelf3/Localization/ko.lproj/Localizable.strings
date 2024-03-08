@@ -1197,6 +1197,7 @@
 "notebook.quickPageNavigator.pageNumber.Text" = "%d / %d";
 "notebook.restoring" = "복원 중...";
 "notebook.settings.moresettings" = "더 많은 설정";
+"notebook.settings.showstatusbbar" = "상태 표시 줄 표시";
 "notebook.shapesRack.NavTitle" = "모양";
 "notebook.share.NoteshelfFile" = "노트셀프 파일";
 "notebook.share.image" = "이미지";

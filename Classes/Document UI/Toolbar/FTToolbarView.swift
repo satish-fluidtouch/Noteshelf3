@@ -8,6 +8,15 @@
 
 import UIKit
 
+struct FTToolBarConstants {
+    static var statusBarOffset: CGFloat  {
+        return UserDefaults.standard.showStatusBar ? 8 : 0;
+    }
+    static let yOffset: CGFloat = 14;
+    static let subtoolbarOffset: CGFloat = 8; //used for audio player
+}
+
+
 class FTToolbarView: UIView {
     weak var deskToolbarController: FTiOSDeskToolbarController?
 
@@ -46,9 +55,11 @@ class FTToolbarView: UIView {
         return self.deskToolbarController?.visualEffectView(for: .center)
     }
 
+    private weak var pageLayoutObserver: NSObjectProtocol?;
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        NotificationCenter.default.addObserver(forName: .pageLayoutDidChange,
+        self.pageLayoutObserver = NotificationCenter.default.addObserver(forName: .pageLayoutDidChange,
                                                object: nil,
                                                queue: nil)
         { [weak self] (_) in
@@ -60,6 +71,11 @@ class FTToolbarView: UIView {
         }
     }
 
+    deinit {
+        if let observer = pageLayoutObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+    }
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         if self.screenMode == .shortCompact || UserDefaults.standard.pageLayoutType == .horizontal {
             return super.hitTest(point, with: event)
@@ -143,7 +159,7 @@ class FTFocusModeView: FTToolbarVisualEffectView {
     }
     
     var topOffset: CGFloat {
-        var offset: CGFloat = 14.0
+        var offset: CGFloat = FTToolBarConstants.yOffset
         if UIDevice.current.isPhone() {
             if let window = UIApplication.shared.keyWindow {
                 let topSafeAreaInset = window.safeAreaInsets.top
@@ -152,8 +168,8 @@ class FTFocusModeView: FTToolbarVisualEffectView {
                 }
             }
         }
-        else if UserDefaults.standard.showStatusBar {
-            offset += 10
+        else {
+            offset += FTToolBarConstants.statusBarOffset
         }
         return offset
     }

@@ -1197,6 +1197,7 @@
 "notebook.quickPageNavigator.pageNumber.Text" = "%d de %d";
 "notebook.restoring" = "Restaurando...";
 "notebook.settings.moresettings" = "Más ajustes";
+"notebook.settings.showstatusbbar" = "Mostrar barra de estado";
 "notebook.shapesRack.NavTitle" = "Formas";
 "notebook.share.NoteshelfFile" = "Archivo de Noteshelf";
 "notebook.share.image" = "Imagen";

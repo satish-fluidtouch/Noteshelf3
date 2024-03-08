@@ -81,7 +81,7 @@
 @property (nonatomic,strong) FTCloudDocumentConflictScreen *conflictViewController;
 
 //Audio player
-@property (weak)FTAudioPlayerController *playerController;
+@property (readwrite,weak)FTAudioPlayerController *playerController;
 
 @property (weak) FTNS1MigrationInfoView *migrationInfoView;
 
@@ -3605,10 +3605,7 @@
     self.playerController.recordingModel = recordingModel;
     self.playerController.annotation = [self audioAnnotationForModel:recordingModel];
     
-    CGRect tempFrame = self.playerController.view.frame;
-    tempFrame.origin.y = [self deskToolBarHeight] + 8.0;
-    tempFrame.size.width = CGRectGetWidth(self.view.frame);
-    self.playerController.view.frame = tempFrame;
+    [self updateAudioPlayerFrame];
 
     [self addChildViewController:self.playerController];
     [self setOverrideTraitCollection:self.traitCollection forChildViewController:self.playerController];
@@ -3619,8 +3616,6 @@
     }];
     
     [self.playerController resetControllerForState:state];
-    
-    
 }
 
 - (UITraitCollection *)overrideTraitCollectionForChildViewController:(UIViewController *)childViewController

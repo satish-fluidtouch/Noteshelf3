@@ -105,7 +105,12 @@ class FTDocumentRenderViewController: UIViewController {
         self.showRenderingIndicator = true
         
         self.keyValueObserver = UserDefaults.standard.observe(\.showStatusBar, options: [.new]) { [weak self] (userdefaults, change) in
-            self?.updateTopConstraint();
+            UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseIn) {
+                self?.updateTopConstraint()
+                self?.documentViewController.didChangeStatusBarVisibility()
+            } completion: { _ in
+                
+            }
         }
     }
 
@@ -141,8 +146,8 @@ class FTDocumentRenderViewController: UIViewController {
         if mode == .focus {
             self.toolbarTopConstraint?.constant = -200.0
         } else {
-            if UserDefaults.standard.showStatusBar, UserDefaults.standard.pageLayoutType == .vertical, mode != .shortCompact {
-                self.toolbarTopConstraint?.constant = 10
+            if UserDefaults.standard.pageLayoutType == .vertical, mode != .shortCompact {
+                self.toolbarTopConstraint?.constant = FTToolBarConstants.statusBarOffset;
             }
             else {
                 self.toolbarTopConstraint?.constant = 0;
@@ -179,6 +184,13 @@ class FTDocumentRenderViewController: UIViewController {
         return toolBarView?.frame.height ?? 0
     }
 
+    func deskToolBarFrame() -> CGRect {
+        if self.toolBarView?.screenMode == .focus {
+            return self.deskToolbarController?.focusModeView?.frame ?? .zero
+        }
+        return self.toolBarView?.frame ?? .zero;
+    }
+    
     func currentToolBarState() -> FTScreenMode {
         return deskToolbarController?.screenMode ?? .normal
     }

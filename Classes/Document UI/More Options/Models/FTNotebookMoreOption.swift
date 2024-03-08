@@ -272,8 +272,9 @@ class FTNotebookStatusBarSetting: FTNotebookOptionToggle {
     var imageIcon: FTIcon {
         return .gearShape
     }
+    
     var localizedTitle: String {
-        return "Show Status Bar" //"notebook.settings.moresettings".localized
+        return "notebook.settings.showstatusbbar".localized
     }
     
     var identifier: String {

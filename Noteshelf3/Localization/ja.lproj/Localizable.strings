@@ -1197,6 +1197,7 @@
 "notebook.quickPageNavigator.pageNumber.Text" = "%d / %d";
 "notebook.restoring" = "復元中";
 "notebook.settings.moresettings" = "その他の設定";
+"notebook.settings.showstatusbbar" = "ステータスバーを表示";
 "notebook.shapesRack.NavTitle" = "図形";
 "notebook.share.NoteshelfFile" = "ノートシェルフファイル";
 "notebook.share.image" = "イメージ";

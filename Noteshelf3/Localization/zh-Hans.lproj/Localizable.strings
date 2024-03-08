@@ -1197,6 +1197,7 @@
 "notebook.quickPageNavigator.pageNumber.Text" = "%d的%d";
 "notebook.restoring" = "恢复中...";
 "notebook.settings.moresettings" = "更多设置";
+"notebook.settings.showstatusbbar" = "显示状态栏";
 "notebook.shapesRack.NavTitle" = "形状";
 "notebook.share.NoteshelfFile" = "笔记本文件";
 "notebook.share.image" = "图像";
