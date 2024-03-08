@@ -25,7 +25,7 @@ struct FTPlayerView: View {
                     .frame(width: 12.0)
 
                 Button {
-                    self.viewModel.backwardPlayBy15Sec()
+                    self.viewModel.backwardPlayBy(15)
                 } label: {
                     Image(systemName: "gobackward.15")
                         .resizable()
@@ -44,7 +44,7 @@ struct FTPlayerView: View {
                 Spacer()
 
                 Button {
-                    self.viewModel.forwardPlayBy15Sec()
+                    self.viewModel.forwardPlayBy(15)
                 } label: {
                     Image(systemName: "goforward.15")
                         .resizable()

@@ -11,6 +11,7 @@ import Foundation
 @objc enum FTAudioServiceStatus: Int {
     case none
     case playing
+    case playingPaused
     case recording
     case recordingPaused
 }
@@ -31,7 +32,7 @@ class FTAudioActivity: NSObject {
             audioServiceCurrentState = audioServiceStatus
             self.didChangeValue(forKey: #keyPath(FTAudioActivity.audioServiceStatus))
 #if DEBUG
-            debugPrint("audioServiceCurrentState: \(["none","playing","recording","recordingPaused"][audioServiceCurrentState.rawValue])")
+            debugPrint("audioServiceCurrentState: \(["none","playing","recording","playingPaused", "recordingPaused"][audioServiceCurrentState.rawValue])")
 #endif
         }
     }

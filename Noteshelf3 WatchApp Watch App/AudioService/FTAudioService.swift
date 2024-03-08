@@ -20,22 +20,20 @@ class FTAudioService: NSObject {
         }
     }
 
-    var audioTimer:Timer!
-    weak var delegate: FTAudioServiceDelegate?
-    var audioDataProcessor: FTAudioDataProcessor!
-    var isVisualizerActive: Bool = false //To stop/resume processing when app goes background/foregorund state
-    var isRecording: Bool = false
+    private var audioTimer:Timer!
+    private var isRecording: Bool = false
+    private var audioActivity = FTAudioActivity()
 
-    var audioActivity = FTAudioActivity()
-    var audioRecorder: AVAudioRecorder!
-    var audioEngine: AVAudioEngine!
-    var playerNode: AVAudioPlayerNode!
-    var audioFileBuffer: AVAudioPCMBuffer!
-    var audioFile : AVAudioFile!
+    private var audioRecorder: AVAudioRecorder!
+    private var audioEngine: AVAudioEngine!
+    private var playerNode: AVAudioPlayerNode!
+    private var audioFileBuffer: AVAudioPCMBuffer!
+    private var audioFile : AVAudioFile!
+
+    weak var delegate: FTAudioServiceDelegate?
 
     override init() {
         super.init()
-        //        self.audioDataProcessor = FTAudioDataProcessor.service(with: FTVisualizationSettings.histogramVisualizerSettings())
         if(UserDefaults.standard.value(forKey: "defaultVolume") == nil){
             UserDefaults.standard.setValue(0.5, forKey: "defaultVolume")
             UserDefaults.standard.synchronize()
@@ -55,7 +53,6 @@ class FTAudioService: NSObject {
             self.audioEngine.connect(self.playerNode, to:self.audioEngine.mainMixerNode, format: AVAudioFormat.init(standardFormatWithSampleRate: 12000, channels: 1))
             self.audioEngine.prepare()
             try self.audioEngine.start()
-//            self.audioDataProcessor.engine = self.audioEngine
         }
         catch (let error){
             print (error.localizedDescription)
@@ -64,25 +61,6 @@ class FTAudioService: NSObject {
 
     deinit {
         NotificationCenter.default.removeObserver(self, name: AVAudioSession.interruptionNotification, object: nil)
-    }
-
-    //MARK:- Visualization
-    func startVisualization(){
-        self.startProcessingAudioData()
-        self.isVisualizerActive = true
-    }
-
-    func stopVisualization(){
-        self.isVisualizerActive = false
-        self.stopProcessingAudioData()
-    }
-
-    private func startProcessingAudioData(){
-        //        self.audioDataProcessor.startProcessingAudioData(self.isVisualizerActive)
-    }
-
-    private func stopProcessingAudioData(){
-        //        self.audioDataProcessor.stopProcessingAudioData()
     }
 }
 
@@ -118,7 +96,6 @@ extension FTAudioService: AVAudioRecorderDelegate{
             WKInterfaceDevice.current().play(.click)
 
             self.audioTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateAudioTimer), userInfo: nil, repeats: true)
-            self.startVisualization()
             return self.audioActivity
         }
         catch let error as NSError{
@@ -139,9 +116,6 @@ extension FTAudioService: AVAudioRecorderDelegate{
         else if(self.audioActivity.audioServiceStatus == FTAudioServiceStatus.playing){
             self.audioActivity.currentTime = self.audioActivity.currentTime + 1.0
         }
-#if DEBUG
-        debugPrint("self.audioActivity.currentTime:: \(self.audioActivity.currentTime)")
-#endif
     }
 
     func pauseOrContinueRecording() {
@@ -174,7 +148,6 @@ extension FTAudioService: AVAudioRecorderDelegate{
 
     func finishRecording(success: Bool) {
         self.audioActivity.audioServiceStatus = FTAudioServiceStatus.none
-        self.stopVisualization()
         WKInterfaceDevice.current().play(.click)
         if(success){
             self.delegate?.audioServiceDidFinishRecording(withURL: self.audioActivity.audioURL!)
@@ -193,17 +166,17 @@ extension FTAudioService: AVAudioRecorderDelegate{
 
 extension FTAudioService{
     //MARK:- AudioPlaying
-    func playAudioWithURL(audioURL:URL) -> FTAudioActivity {
+    func playAudioWithURL(audioURL:URL, at time: Double = 0.0) -> FTAudioActivity {
         self.audioFile = try? AVAudioFile.init(forReading: audioURL)
         weak var weakSelf = self
 
         let sampleRate = self.playerNode.outputFormat(forBus: 0).sampleRate
-        let newsampletime = AVAudioFramePosition(sampleRate * max((recentPlayedAudio["currentTime"] as! Double)-1.0, 0.0))
+        let newsampletime = AVAudioFramePosition(sampleRate * max((recentPlayedAudio["currentTime"] as! Double)-1.0, time))
         let framestoplay = self.audioFile.length - newsampletime
-        self.audioActivity.currentTime = max((recentPlayedAudio["currentTime"] as! Double)-1.0, 0.0)
+        self.audioActivity.currentTime = max((recentPlayedAudio["currentTime"] as! Double)-1.0, time)
 
         self.playerNode.scheduleSegment(self.audioFile, startingFrame: newsampletime, frameCount: AVAudioFrameCount(framestoplay), at: nil, completionCallbackType: AVAudioPlayerNodeCompletionCallbackType.dataPlayedBack) { (completionType) in
-
+            print("zzzz - completion type: \(completionType)")
             DispatchQueue.main.async {
                 if(weakSelf?.audioActivity.audioServiceStatus == FTAudioServiceStatus.playing){
 
@@ -215,26 +188,31 @@ extension FTAudioService{
                         weakSelf?.audioActivity.audioServiceStatus = FTAudioServiceStatus.none
                         audioServiceCurrentState = FTAudioServiceStatus.none
                     }
-                    weakSelf?.stopVisualization()
                     weakSelf?.delegate?.audioServiceDidFinishPlaying(withError: nil)
                 }
             }
         }
 
         self.audioActivity.totalDuration = 0
-
         self.audioTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateAudioTimer), userInfo: nil, repeats: true)
-
         self.playerNode.play()
         self.playerNode.volume = self.playerVolume
-        //WKInterfaceDevice.current().play(.click)
-
         self.audioActivity.audioServiceStatus = FTAudioServiceStatus.playing
-        //        self.audioDataProcessor.engine = self.audioEngine
-        //        self.audioDataProcessor.audioTapNode = self.playerNode
-        //        self.startVisualization()
-
         return self.audioActivity
+    }
+
+    func pausePlayingAudio() {
+        if self.playerNode.isPlaying {
+            self.playerNode.pause()
+            self.audioActivity.audioServiceStatus = .playingPaused
+        }
+    }
+
+    func resumePlayingAudio() {
+        if self.audioActivity.audioServiceStatus == .playingPaused {
+            self.playerNode.play()
+            self.audioActivity.audioServiceStatus = .playing
+        }
     }
 
     func stopPlayingAudio() {
@@ -242,24 +220,15 @@ extension FTAudioService{
             self.playerNode.stop()
         }
         DispatchQueue.main.async {
-            if(self.audioTimer != nil && self.audioActivity.audioServiceStatus == FTAudioServiceStatus.playing){
+            if(self.audioTimer != nil && self.audioActivity.audioServiceStatus == .playing){
                 if self.audioTimer.isValid{
                     self.audioTimer.invalidate()
                     self.audioTimer = nil
                 }
 
-                self.audioActivity.audioServiceStatus = FTAudioServiceStatus.none
-                self.stopVisualization()
+                self.audioActivity.audioServiceStatus = .none
                 self.delegate?.audioServiceDidFinishPlaying(withError: nil)
             }
         }
-    }
-
-    func forwardAudio(bySeconds seconds: TimeInterval) {
-
-    }
-
-    func backwardAudio(bySeconds seconds: TimeInterval) {
-
     }
 }

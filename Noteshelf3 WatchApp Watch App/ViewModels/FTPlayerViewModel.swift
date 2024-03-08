@@ -25,48 +25,42 @@ class FTPlayerViewModel: NSObject, ObservableObject {
         self.playDurationStr = FTWatchUtils.timeFormatted(totalSeconds: UInt(self.recording.duration))
     }
 
-    deinit {
-        print("zzzz - deinit FTPlayerViewModel")
-    }
-
     func handlePlayTapAction() {
-        if(self.audioService == nil) {
-            self.audioService = FTAudioService()
-            self.audioService.delegate = self
+        guard let path = recording.filePath else {
+            return
         }
-
-        if self.audioActivity == nil || self.audioActivity?.audioServiceStatus == FTAudioServiceStatus.none, let path = recording.filePath {
+        self.createAudioServiceIfNeeded()
+        if self.audioActivity == nil || self.audioActivity?.audioServiceStatus == FTAudioServiceStatus.none {
             self.audioActivity = self.audioService.playAudioWithURL(audioURL: path)
-            if let recentAudioGUID = recentPlayedAudio["GUID"] as? String, recentAudioGUID != recording.GUID {
-                recentPlayedAudio["currentTime"] = 0.0
-                recentPlayedAudio["GUID"] = recording.GUID
-            }
-            recentPlayedAudio["currentTime"] = 0.0
+            self.updateRecentPlayedCurrentTime(0.0)
             self.addObservers()
-        } else if(self.audioActivity != nil && self.audioActivity?.audioServiceStatus == .playing) {
-            self.audioService.stopPlayingAudio()
+        } else {
+            guard let activity = self.audioActivity else {
+                return
+            }
+            if activity.audioServiceStatus == .playing {
+                self.audioService.pausePlayingAudio()
+            } else {
+                self.audioService.resumePlayingAudio()
+            }
         }
     }
 
-    func forwardPlayBy15Sec() {
-        if let service = self.audioService {
-            service.forwardAudio(bySeconds: 15)
-        }
+    func forwardPlayBy(_ seconds: Double) {
     }
 
-    func backwardPlayBy15Sec() {
-        if let service = self.audioService {
-            service.backwardAudio(bySeconds: 15)
-        }
+    func backwardPlayBy(_ seconds: Double) {
     }
 
     func resetPlay() {
-        self.audioService = nil
-        self.audioActivity = nil
+        self.audioService?.stopPlayingAudio()
         self.removeObservers()
         self.playDurationStr = "00: 00"
         self.isPlaying = false
         self.progress = 0.0
+        self.playbackCurrentTime = 0
+        self.audioService = nil
+        self.audioActivity = nil
     }
 
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -77,6 +71,20 @@ class FTPlayerViewModel: NSObject, ObservableObject {
 }
 
 private extension FTPlayerViewModel {
+    func createAudioServiceIfNeeded() {
+        if(self.audioService == nil) {
+            self.audioService = FTAudioService()
+            self.audioService.delegate = self
+        }
+    }
+
+    func updateRecentPlayedCurrentTime(_ time: Double) {
+        if let recentAudioGUID = recentPlayedAudio["GUID"] as? String, recentAudioGUID != recording.GUID {
+            recentPlayedAudio["GUID"] = recording.GUID
+        }
+        recentPlayedAudio["currentTime"] = time
+    }
+
     func addObservers() {
         if(self.isObserversAdded == false) {
             self.audioActivity?.addObserver(self, forKeyPath: "audioServiceStatus", options: [NSKeyValueObservingOptions.new,NSKeyValueObservingOptions.old], context: nil);
@@ -96,9 +104,11 @@ private extension FTPlayerViewModel {
     }
 
     func updatePlayTime() {
-        self.playbackCurrentTime = Int(self.audioActivity!.currentTime)
-        self.playDurationStr = FTWatchUtils.timeFormatted(totalSeconds: UInt(self.playbackCurrentTime))
-        self.progress = CGFloat(Double(self.playbackCurrentTime)/self.recording.duration)
+        if let activity = self.audioActivity, Double(self.playbackCurrentTime) < recording.duration {
+            self.playbackCurrentTime = Int(activity.currentTime)
+            self.playDurationStr = FTWatchUtils.timeFormatted(totalSeconds: UInt(self.playbackCurrentTime))
+            self.progress = CGFloat(Double(self.playbackCurrentTime)/self.recording.duration)
+        }
     }
 }
 
@@ -109,9 +119,6 @@ extension FTPlayerViewModel: FTAudioServiceDelegate {
     func audioServiceDidFinishPlaying(withError error: Error?) {
         self.audioService = nil
         self.audioActivity = nil
-#if DEBUG
-        debugPrint("audioServiceDidFinishPlaying")
-#endif
         self.removeObservers()
         self.playDurationStr = self.recording.duration.formatSecondsToString()
         self.isPlaying = false
