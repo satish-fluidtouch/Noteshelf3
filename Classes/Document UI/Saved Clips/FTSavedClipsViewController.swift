@@ -31,7 +31,7 @@ class FTSavedClipsViewController: UIViewController {
     @IBOutlet weak var categoryTitleTextField: UITextField!
 
     private let viewModel = FTSavedClipsViewModel()
-    lazy private var layout = FTCollectionViewWaterfallLayout()
+    lazy private var layout = MosaicLayout()
     private var minimumColumnSpacing : CGFloat = 12.0
     private var minimumInterItemSpacing : CGFloat = 12.0
     private var cellType: FTSavedClipsCellType = .normal
@@ -70,8 +70,8 @@ class FTSavedClipsViewController: UIViewController {
         let emptyClipsView = UINib(nibName: "FTEmptyClipsView", bundle: nil)
         self.collectionView.register(emptyClipsView, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "FTEmptyClipsView")
 
-        layout.minimumColumnSpacing = minimumColumnSpacing
-        layout.minimumInteritemSpacing = minimumInterItemSpacing
+//        layout.minimumColumnSpacing = minimumColumnSpacing
+//        layout.minimumInteritemSpacing = minimumInterItemSpacing
 
         collectionView.collectionViewLayout  = layout
         collectionView.dragInteractionEnabled = true
