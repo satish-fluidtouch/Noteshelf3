@@ -35,9 +35,7 @@ struct FTRecordView: View {
                 .frame(height: 24)
 
             Button(action: {
-                if !isRecording {
-                    self.viewModel.recordAudio()
-                }
+                self.viewModel.handleRecordTapAction()
                 self.isRecording.toggle()
             }) {
                 Text(isRecording ? "Pause" : "Record")

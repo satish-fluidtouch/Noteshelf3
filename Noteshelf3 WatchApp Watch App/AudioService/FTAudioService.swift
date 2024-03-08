@@ -35,7 +35,7 @@ class FTAudioService: NSObject {
 
     override init() {
         super.init()
-        self.audioDataProcessor = FTAudioDataProcessor.service(with: FTVisualizationSettings.histogramVisualizerSettings())
+        //        self.audioDataProcessor = FTAudioDataProcessor.service(with: FTVisualizationSettings.histogramVisualizerSettings())
         if(UserDefaults.standard.value(forKey: "defaultVolume") == nil){
             UserDefaults.standard.setValue(0.5, forKey: "defaultVolume")
             UserDefaults.standard.synchronize()
@@ -78,11 +78,11 @@ class FTAudioService: NSObject {
     }
 
     private func startProcessingAudioData(){
-        self.audioDataProcessor.startProcessingAudioData(self.isVisualizerActive)
+        //        self.audioDataProcessor.startProcessingAudioData(self.isVisualizerActive)
     }
 
     private func stopProcessingAudioData(){
-        self.audioDataProcessor.stopProcessingAudioData()
+        //        self.audioDataProcessor.stopProcessingAudioData()
     }
 }
 
@@ -230,10 +230,10 @@ extension FTAudioService{
         //WKInterfaceDevice.current().play(.click)
 
         self.audioActivity.audioServiceStatus = FTAudioServiceStatus.playing
-        self.audioDataProcessor.engine = self.audioEngine
-        self.audioDataProcessor.audioTapNode = self.playerNode
-        self.startVisualization()
-        
+        //        self.audioDataProcessor.engine = self.audioEngine
+        //        self.audioDataProcessor.audioTapNode = self.playerNode
+        //        self.startVisualization()
+
         return self.audioActivity
     }
 
@@ -253,5 +253,13 @@ extension FTAudioService{
                 self.delegate?.audioServiceDidFinishPlaying(withError: nil)
             }
         }
+    }
+
+    func forwardAudio(bySeconds seconds: TimeInterval) {
+
+    }
+
+    func backwardAudio(bySeconds seconds: TimeInterval) {
+
     }
 }

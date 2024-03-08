@@ -10,7 +10,7 @@ import AVFAudio
 import WatchKit
 
 class FTRecordViewModel: NSObject, ObservableObject {
-    private var recordingSession: AVAudioSession!
+    private let recordingSession: AVAudioSession = AVAudioSession.sharedInstance()
     private var audioService:FTAudioService?
     private var audioActivity: FTAudioActivity?
     private var isObserversAdded:Bool = false
@@ -21,7 +21,6 @@ class FTRecordViewModel: NSObject, ObservableObject {
     override init() {
         super.init()
         NotificationCenter.default.addObserver(self, selector: #selector(didClickOnRecording(_:)), name: NSNotification.Name(rawValue: FTRecordingButtonDidClick), object: nil)
-        self.recordingSession = AVAudioSession.sharedInstance()
         do {
             try self.recordingSession.setCategory(AVAudioSession.Category.playAndRecord,mode : .default)
             try self.recordingSession.setActive(true)
@@ -30,7 +29,7 @@ class FTRecordViewModel: NSObject, ObservableObject {
         }
     }
 
-    func recordAudio() {
+    func handleRecordTapAction() {
         NSObject.cancelPreviousPerformRequests(withTarget: self)
         self.recordingSession.requestRecordPermission() { [unowned self] allowed in
             DispatchQueue.main.async {
@@ -118,7 +117,7 @@ private extension FTRecordViewModel {
     @objc func watchComplicationDidReceived() {
         if(audioServiceCurrentState != FTAudioServiceStatus.recording){
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                self.recordAudio()
+                self.handleRecordTapAction()
             }
         }
     }

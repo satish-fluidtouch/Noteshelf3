@@ -9,14 +9,13 @@
 import SwiftUI
 
 struct FTPlayerView: View {
-    let recording: FTWatchRecording
-    var progress: CGFloat = 0.3
+    @ObservedObject var viewModel: FTPlayerViewModel
 
     var body: some View {
         VStack {
             Spacer()
 
-            Text(FTWatchUtils.timeFormatted(totalSeconds: UInt(recording.duration)))
+            Text(self.viewModel.playDurationStr)
             Text(recording.date.nsAudioFormatTitle())
 
             Spacer()
@@ -26,7 +25,7 @@ struct FTPlayerView: View {
                     .frame(width: 12.0)
 
                 Button {
-
+                    self.viewModel.backwardPlayBy15Sec()
                 } label: {
                     Image(systemName: "gobackward.15")
                         .resizable()
@@ -45,7 +44,7 @@ struct FTPlayerView: View {
                 Spacer()
 
                 Button {
-
+                    self.viewModel.forwardPlayBy15Sec()
                 } label: {
                     Image(systemName: "goforward.15")
                         .resizable()
@@ -61,7 +60,13 @@ struct FTPlayerView: View {
             }
         }.toolbar {
             toolBar()
+        }.onDisappear {
+            self.viewModel.resetPlay()
         }
+    }
+
+    private var recording: FTWatchRecording {
+        self.viewModel.recording
     }
 
     private func toolBar() -> some ToolbarContent {
@@ -85,17 +90,16 @@ struct FTPlayerView: View {
                     .frame(width: 54, height: 54)
 
                 Circle()
-                    .trim(from: 0, to: progress)
+                    .trim(from: 0, to: self.viewModel.progress)
                     .stroke(Color.blue, style: StrokeStyle(lineWidth: 2))
                     .frame(width: 54, height: 54)
                     .rotationEffect(.degrees(-90))
 
                 Button(action: {
-                    //                    withAnimation {
-                    //                        self.progress =
-                    //                    }
+                    self.viewModel.isPlaying.toggle()
+                    self.viewModel.handlePlayTapAction()
                 }) {
-                    Image(systemName: "pause")
+                    Image(systemName: viewModel.isPlaying ? "pause" : "play")
                         .resizable()
                         .frame(width: 18, height: 20)
                         .foregroundColor(.white)

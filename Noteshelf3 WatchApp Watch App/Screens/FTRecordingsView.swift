@@ -12,29 +12,33 @@ struct FTRecordingsView: View {
     @StateObject private var viewModel = FTRecordingsViewModel()
 
     var body: some View {
-        if viewModel.recordings.isEmpty {
-            Text("No Recordings!")
-                .font(Font.system(size: 18))
-        } else {
-            NavigationView {
-                VStack {
-                    HStack {
-                        Text(viewModel.title)
-                            .font(Font.system(size: 14))
-                            .padding(.leading, 12)
-                        Spacer()
-                    }
+        ZStack {
+            if viewModel.recordings.isEmpty {
+                Text("No Recordings!")
+                    .font(Font.system(size: 18))
+            } else {
+                NavigationView {
+                    VStack {
+                        HStack {
+                            Text(viewModel.title)
+                                .font(Font.system(size: 14))
+                                .padding(.leading, 12)
+                            Spacer()
+                        }
 
-                    List {
-                        ForEach(viewModel.recordings, id: \.GUID) { recording in
-                            NavigationLink(destination: FTPlayerView(recording: recording)) {
-                                recordingView(for: recording)
+                        List {
+                            ForEach(viewModel.recordings, id: \.GUID) { recording in
+                                NavigationLink(destination: FTPlayerView(viewModel: FTPlayerViewModel(recording: recording))) {
+                                    recordingView(for: recording)
+                                }
                             }
                         }
                     }
                 }
             }
-        }       
+        }.onAppear {
+            self.viewModel.reloadRecordings()
+        }
     }
 
     private func recordingView(for recording: FTWatchRecording) -> some View {
