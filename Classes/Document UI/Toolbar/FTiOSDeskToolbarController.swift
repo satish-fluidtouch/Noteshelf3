@@ -78,22 +78,21 @@ protocol FTDeskPanelActionDelegate: AnyObject {
         super.viewDidLayoutSubviews()
         let currentFrameSize = self.view.frame.size
         if(currentFrameSize.width != self.currentSize.width) {
-            self.currentSize = currentFrameSize
+            var space: CGFloat = 0.0
+            if UIDevice.current.isPhone() {
+                if let window = UIApplication.shared.keyWindow ?? self.view.window {
+                    self.currentSize = currentFrameSize
+                    space = window.safeAreaInsets.top
+                }
+            } else {
+                self.currentSize = currentFrameSize
+            }
+            self.updateScreenModeIfNeeded(self.screenMode)
 #if targetEnvironment(macCatalyst)
             self.contentTopConstraint?.constant = 0.0
 #else
-            var space: CGFloat = 0.0
-            if UIDevice.current.isPhone() {
-                if let window = UIApplication.shared.keyWindow {
-                    let topSafeAreaInset = window.safeAreaInsets.top
-                    if topSafeAreaInset > 0 {
-                        space = topSafeAreaInset
-                    }
-                }
-            }
             self.contentTopConstraint?.constant = 14.0 + space
 #endif
-            self.updateScreenModeIfNeeded(self.screenMode)
         }
     }
 

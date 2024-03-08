@@ -139,7 +139,7 @@ final class FTAppIntentHandler {
                    return true
                 }
             #endif
-            DropboxClientsManager.handleRedirectURL(url, completion: { (result) in
+            DropboxClientsManager.handleRedirectURL(url, includeBackgroundClient: true, completion: { (result) in
                 switch result {
                 case .success:
                     NotificationCenter.default.post(name: .didCompleteDropBoxAuthetication, object: nil)
