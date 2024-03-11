@@ -768,7 +768,7 @@
 "SettingOptionTheme" = "主題";
 "SettingShowDateOnShelf" = "在書架上顯示日期";
 "Settings" = "設定";
-"SettingsApplePencil" = "Apple鉛筆";
+"SettingsApplePencil" = "Apple Pencil";
 "SettingsGeneral" = "一般";
 "SettingsNoteShelfHelp" = "幫助";
 "SettingsRateOnTheAppstore" = "在App Store上評分";
@@ -1197,7 +1197,6 @@
 "notebook.quickPageNavigator.pageNumber.Text" = "%d的%d";
 "notebook.restoring" = "恢復中...";
 "notebook.settings.moresettings" = "更多設定";
-"notebook.settings.showstatusbbar" = "顯示狀態列";
 "notebook.shapesRack.NavTitle" = "形狀";
 "notebook.share.NoteshelfFile" = "筆記本文件";
 "notebook.share.image" = "影像";
@@ -1438,6 +1437,7 @@
 "shortcut.toast.rotatePage" = "頁面已旋轉";
 "shortcut.toast.saveAllPagesAsPhotos" = "所有頁面都保存在照片庫中";
 "shortcut.toast.savePageAsPhoto" = "頁面已儲存至照片庫";
+"show_status_bar" = "顯示狀態列";
 "sidebar.allTags" = "所有標籤";
 "sidebar.allTags.contextualMenu.editTags" = "編輯標籤";
 "sidebar.allTags.contextualMenu.openInNewWindow" = "在新視窗打開";
@@ -1474,10 +1474,14 @@
 "sidebar.photos" = "照片";
 "sidebar.recording" = "記錄";
 "sidebar.recordings" = "記錄";
-"sidebar.topSection.home" = "家";
+"sidebar.topSection.home" = "主页";
 "sidebar.topSection.starred" = "標記";
 "sidebar.topSection.unfiled" = "未歸檔";
 "speechbubbles" = "對話框";
+"status_bar_info_footer" = "喜歡 Noteshelf 嗎？%@ 在 App Store 上為我們評分。 它對我們的幫助將超越您的想像。";
+"status_bar_info_subtitle" = "許多人在記筆記時都要求使用狀態列。 現在您可以選擇從更多選單中顯示狀態列。";
+"status_bar_info_title" = "我們聽到您了";
+"status_bar_tap_here" = "點擊此處";
 "stickers.alert.error" = "錯誤";
 "stickers.alert.ok" = "好的";
 "stickersTitle" = "貼紙";
@@ -1538,7 +1542,7 @@
 "textLink_documentDeleted_title" = "筆記本已被刪除";
 "textLink_documentItselfNotAvailable_message" = "連結到該內容的筆記本已被刪除。";
 "textLink_editLink" = "編輯連結";
-"textLink_linkTo" = "連結至";
+"textLink_linkTo" = "添加連結";
 "textLink_linktext" = "連結文字";
 "textLink_notebookDeletedOrUndownloaded" = "無法存取與此連結關聯的筆記本。";
 "textLink_notebookNotDownloadedMessage" = "尚未從 iCloud 下載連結到此內容的筆記本。 請稍後再試。";
@@ -1603,4 +1607,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 20 February 2024 at 6:21 PM
+// Last Synced by Sameer Hussain on 11 March 2024 at 5:24 PM

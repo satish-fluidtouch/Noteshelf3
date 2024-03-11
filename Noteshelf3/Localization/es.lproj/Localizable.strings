@@ -1197,7 +1197,6 @@
 "notebook.quickPageNavigator.pageNumber.Text" = "%d de %d";
 "notebook.restoring" = "Restaurando...";
 "notebook.settings.moresettings" = "Más ajustes";
-"notebook.settings.showstatusbbar" = "Mostrar barra de estado";
 "notebook.shapesRack.NavTitle" = "Formas";
 "notebook.share.NoteshelfFile" = "Archivo de Noteshelf";
 "notebook.share.image" = "Imagen";
@@ -1438,6 +1437,7 @@
 "shortcut.toast.rotatePage" = "La página está rotada.";
 "shortcut.toast.saveAllPagesAsPhotos" = "Todas las páginas se guardan en la biblioteca de fotos.";
 "shortcut.toast.savePageAsPhoto" = "La página se guarda en la biblioteca de fotos.";
+"show_status_bar" = "Mostrar barra de estado";
 "sidebar.allTags" = "Todas las etiquetas";
 "sidebar.allTags.contextualMenu.editTags" = "Editar etiquetas";
 "sidebar.allTags.contextualMenu.openInNewWindow" = "Abierto en nueva ventana";
@@ -1478,6 +1478,10 @@
 "sidebar.topSection.starred" = "Destacado";
 "sidebar.topSection.unfiled" = "Desordenado";
 "speechbubbles" = "Burbujas de diálogo";
+"status_bar_info_footer" = "¿Disfrutando de Noteshelf? %@ para calificarnos en la App Store. Nos ayudará más de lo que imaginas.";
+//"status_bar_info_subtitle" = "Muchos de ustedes nos solicitaron la barra de estado al tomar notas. Ahora tiene la opción de mostrar la barra de estado desde el menú Más.";
+"status_bar_info_title" = "¡Te hemos escuchado!";
+"status_bar_tap_here" = "Toque aquí";
 "stickers.alert.error" = "Error";
 "stickers.alert.ok" = "Ok.";
 "stickersTitle" = "Etiquetas";
@@ -1603,4 +1607,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 20 February 2024 at 6:21 PM
+// Last Synced by Sameer Hussain on 11 March 2024 at 5:24 PM

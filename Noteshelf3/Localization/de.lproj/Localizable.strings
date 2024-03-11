@@ -738,7 +738,7 @@
 "SearchPapersCovers" = "Änderungen sind nicht synchron. Wählen Sie aus, welche Dokumente beibehalten werden sollen.";
 "SearchText" = "Wiederherstellen";
 "SearchTitles" = "Ergebnisse für '%@'";
-"Select" = "Richtig";
+"Select" = "Auswählen";
 "SelectADocument" = "Wählen Sie ein Dokument.";
 "SelectAll" = "Alles auswählen";
 "SelectBackupAccount" = "Auto-Backup nicht eingerichtet.";
@@ -1197,7 +1197,6 @@
 "notebook.quickPageNavigator.pageNumber.Text" = "%d von %d'";
 "notebook.restoring" = "Wiederherstellen...";
 "notebook.settings.moresettings" = "Weitere Einstellungen";
-"notebook.settings.showstatusbbar" = "Statusleiste anzeigen";
 "notebook.shapesRack.NavTitle" = "Formen";
 "notebook.share.NoteshelfFile" = "Notizbuchdatei";
 "notebook.share.image" = "Bild";
@@ -1438,6 +1437,7 @@
 "shortcut.toast.rotatePage" = "Die Seite ist gedreht.";
 "shortcut.toast.saveAllPagesAsPhotos" = "Alle Seiten werden in der Fotobibliothek gespeichert.";
 "shortcut.toast.savePageAsPhoto" = "Die Seite wird in der Fotobibliothek gespeichert.";
+"show_status_bar" = "Statusleiste anzeigen";
 "sidebar.allTags" = "Alle Tags";
 "sidebar.allTags.contextualMenu.editTags" = "Tags bearbeiten";
 "sidebar.allTags.contextualMenu.openInNewWindow" = "In neuem Fenster öffnen";
@@ -1478,6 +1478,10 @@
 "sidebar.topSection.starred" = "Hervorgehoben";
 "sidebar.topSection.unfiled" = "Ungeordnet";
 "speechbubbles" = "Sprechblasen";
+"status_bar_info_footer" = "Genießen Sie Noteshelf? %@, um uns im App Store zu bewerten. Es wird uns mehr helfen, als Sie sich vorstellen können.";
+"status_bar_info_subtitle" = "Viele von Ihnen haben uns beim Notieren nach der Statusleiste gefragt. Sie haben jetzt die Möglichkeit, die Statusleiste über das Menü Mehr anzuzeigen.";
+"status_bar_info_title" = "Wir haben dich gehört!";
+"status_bar_tap_here" = "Tippen Sie hier";
 "stickers.alert.error" = "Fehler";
 "stickers.alert.ok" = "Ok";
 "stickersTitle" = "Aufkleber";
@@ -1603,4 +1607,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 20 February 2024 at 6:21 PM
+// Last Synced by Sameer Hussain on 11 March 2024 at 5:24 PM
