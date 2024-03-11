@@ -2316,7 +2316,6 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="footerLabel" destination="t8h-AK-fbk" id="OsX-sM-Tmp"/>
                         <outlet property="footerTextView" destination="0na-WY-vrc" id="JaC-uh-ZmI"/>
                         <outlet property="statusBarLabel" destination="Zhd-JS-jwG" id="VQg-If-zJP"/>
                         <outlet property="subtitleLabel" destination="i1T-Lb-WPf" id="ktq-qK-ksN"/>
@@ -2326,14 +2325,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7zp-a1-O3K" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enjoying Noteshelf? Tap here to rate us on the App Store. It will help us more than you’d imagine." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="t8h-AK-fbk">
-                    <rect key="frame" x="0.0" y="0.0" width="622.5" height="16"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="tintColor" name="accent"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                    <color key="textColor" name="black50"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </objects>
             <point key="canvasLocation" x="-1399" y="-103"/>
         </scene>
