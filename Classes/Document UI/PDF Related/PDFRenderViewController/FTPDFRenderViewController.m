@@ -1387,6 +1387,25 @@
     }
     isRequiredLoader = (backAction == FTSaveAction);
     
+    if(backAction != FTNormalAction) {
+        NSString *saveAction = @"Normal";
+        switch (backAction) {
+            case FTSaveAction:
+                saveAction = @"Rename";
+                break;
+            case FTDeletePermanentlyAction:
+                saveAction = @"Delete";
+                break;;
+            case FTMoveToTrashAction:
+                saveAction = @"Move to Trash";
+                break;
+            default:
+                saveAction = @"Normal";
+                break;
+        }
+        FTCLSLog([NSString stringWithFormat:@"Save Action: %@",saveAction]);
+    }
+    
     if (isRequiredLoader) {
         loadingIndicator = [FTLoadingIndicatorViewController showOnMode:FTLoadingIndicatorStyleActivityIndicator from:[self loadingPresentController]
                                                                withText:NSLocalizedString(@"Saving", @"Saving...") andDelay:0];
