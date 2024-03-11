@@ -616,7 +616,7 @@
         [self performSelector:@selector(performLayout) withObject:nil afterDelay:0.01];
     }
     [[self navigationController]setNavigationBarHidden:YES animated:NO];
-    [[self toolTypeContainerVc] updatePositionOnScreenSizeChange];
+    [[self toolTypeContainerVc] updatePositionOnScreenSizeChangeWithForcibly:FALSE];
 }
 
 -(void)performLayout
