@@ -453,11 +453,6 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
 
             }
         }
-        EvernoteNoteStore(session: session).getNoteWithGuid(parentGUID, withContent: true, withResourcesData: true, withResourcesRecognition: true, withResourcesAlternateData: false) { note in
-
-        } failure: { error in
-
-        }
     }
     #endif
     

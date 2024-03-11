@@ -659,6 +659,10 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
             completionHandler?(true);
             return;
         }
+        if self.documentState.contains(.editingDisabled) {
+            FTLogError("Doc_Saved_Edit_Disabled: \(self.addressString) - \(self.URL.title)");
+        }
+        
         if(self.hasAnyUnsavedChanges) {
             (self.delegate as? FTNoteshelfDocumentDelegate)?.documentWillStartSaving(self);
         }
@@ -860,6 +864,9 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
         if(self.openPurpose == .read) {
             FTLogError("Doc writeContents in Readonly");
             return;
+        }
+        if self.documentState.contains(.editingDisabled) {
+            FTLogError("Doc_writeContents_Edit_Disabled: \(self.addressString) - \(self.URL.title)");
         }
         #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
         if(url.urlByDeleteingPrivate() != self.fileURL.urlByDeleteingPrivate()) {

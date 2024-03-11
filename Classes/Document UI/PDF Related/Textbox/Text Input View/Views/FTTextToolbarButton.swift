@@ -41,24 +41,12 @@ class FTTextInputAccessoryButton: UIButton {
 
 extension UIBarButtonItem {
     convenience init(button: UIButton) {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        button.translatesAutoresizingMaskIntoConstraints = false
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
+        button.frame = CGRect(x: 0, y: 10, width: 36, height: 36)
         view.addSubview(button)
-        NSLayoutConstraint.activate([
-            button.widthAnchor.constraint(equalToConstant: 36),
-            button.heightAnchor.constraint(equalToConstant: 36),
-
-            view.widthAnchor.constraint(equalToConstant: 44),
-            view.heightAnchor.constraint(equalToConstant: 44),
-
-            button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            button.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
         self.init(customView: view)
     }
 }
-
 
 extension UIButton.Configuration {
    static func plainConfiguration(with image: UIImage?) -> UIButton.Configuration {
