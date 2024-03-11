@@ -841,10 +841,9 @@ extension FTPDFRenderViewController: FTQuickNoteSaveDelegate {
                 backAction = FTNormalAction //Normal action
             }
             //****************************** AutoBackup & AutoPublish
-            if let shelfItem = self.shelfItemManagedObject.documentItem as? FTDocumentItemProtocol {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
-                    FTENPublishManager.applyDefaultBackupPreferences(forItem: shelfItem, documentUUID: self.pdfDocument.documentUUID)
-                })
+            if self.pdfDocument.URL.title == noteTitle
+                , let shelfItem = self.shelfItemManagedObject.documentItem as? FTDocumentItemProtocol {
+                FTENPublishManager.applyDefaultBackupPreferences(forItem: shelfItem, documentUUID: self.pdfDocument.documentUUID)
             }
             //******************************
             self.back(toShelfButtonAction: backAction, with: noteTitle)
@@ -865,16 +864,7 @@ extension FTPDFRenderViewController: FTQuickNoteSaveDelegate {
                     //**************************
                     if let documentItem = updatedShelfItem as? FTDocumentItemProtocol, let docUUID = documentItem.documentUUID {
                         FTCloudBackUpManager.shared.startPublish();
-                        
-                        if let shelfItem = updatedShelfItem,
-                            FTENPublishManager.shared.isSyncEnabled(forDocumentUUID: docUUID) {
-                            FTENPublishManager.recordSyncLog("User renamed notebook: \(String(describing: shelfItem.displayTitle))");
-                            
-                            let evernotePublishManager = FTENPublishManager.shared;
-                            evernotePublishManager.updateSyncRecord(forShelfItem: shelfItem,
-                                                                    withDocumentUUID: docUUID);
-                            evernotePublishManager.startPublishing();
-                        }
+                        FTENPublishManager.applyDefaultBackupPreferences(forItem: documentItem, documentUUID: docUUID);
                         onCompletion(true);
                     }
                 }
