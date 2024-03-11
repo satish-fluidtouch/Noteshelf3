@@ -1197,6 +1197,7 @@
 "notebook.quickPageNavigator.pageNumber.Text" = "%d / %d";
 "notebook.restoring" = "복원 중...";
 "notebook.settings.moresettings" = "더 많은 설정";
+"notebook.settings.showstatusbbar" = "상태 표시 줄 표시";
 "notebook.shapesRack.NavTitle" = "모양";
 "notebook.share.NoteshelfFile" = "노트셀프 파일";
 "notebook.share.image" = "이미지";
@@ -1607,4 +1608,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 11 March 2024 at 5:24 PM
+// Last Synced by Amar Udupa on 11 March 2024 at 7:30 PM

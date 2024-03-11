@@ -1197,6 +1197,7 @@
 "notebook.quickPageNavigator.pageNumber.Text" = "%d von %d'";
 "notebook.restoring" = "Wiederherstellen...";
 "notebook.settings.moresettings" = "Weitere Einstellungen";
+"notebook.settings.showstatusbbar" = "Statusleiste anzeigen";
 "notebook.shapesRack.NavTitle" = "Formen";
 "notebook.share.NoteshelfFile" = "Notizbuchdatei";
 "notebook.share.image" = "Bild";
@@ -1607,4 +1608,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 11 March 2024 at 5:24 PM
+// Last Synced by Amar Udupa on 11 March 2024 at 7:30 PM

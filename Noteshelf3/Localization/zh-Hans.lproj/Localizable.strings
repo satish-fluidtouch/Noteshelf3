@@ -1197,6 +1197,7 @@
 "notebook.quickPageNavigator.pageNumber.Text" = "%d的%d";
 "notebook.restoring" = "恢复中...";
 "notebook.settings.moresettings" = "更多设置";
+"notebook.settings.showstatusbbar" = "显示状态栏";
 "notebook.shapesRack.NavTitle" = "形状";
 "notebook.share.NoteshelfFile" = "笔记本文件";
 "notebook.share.image" = "图像";
@@ -1607,4 +1608,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 11 March 2024 at 5:24 PM
+// Last Synced by Amar Udupa on 11 March 2024 at 7:30 PM

@@ -1197,6 +1197,7 @@
 "notebook.quickPageNavigator.pageNumber.Text" = "%d / %d";
 "notebook.restoring" = "復元中";
 "notebook.settings.moresettings" = "その他の設定";
+"notebook.settings.showstatusbbar" = "ステータスバーを表示";
 "notebook.shapesRack.NavTitle" = "図形";
 "notebook.share.NoteshelfFile" = "ノートシェルフファイル";
 "notebook.share.image" = "イメージ";
@@ -1607,4 +1608,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 11 March 2024 at 5:24 PM
+// Last Synced by Amar Udupa on 11 March 2024 at 7:30 PM
