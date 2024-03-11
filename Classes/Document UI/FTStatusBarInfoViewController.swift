@@ -35,7 +35,7 @@ class FTStatusBarInfoViewController: UIViewController, UITextViewDelegate {
         if let range = originalString.range(of: "%@") {
             let attributedString = NSMutableAttributedString(string: originalString)
             let linkAttributes: [NSAttributedString.Key: Any] = [
-                NSAttributedString.Key.link: URL.init(string: "http://www.noteshelf.net/")!,
+                NSAttributedString.Key.link: appStoreLink(),
                 .foregroundColor: UIColor.appColor(.accent),
                 .strokeColor: UIColor.appColor(.accent),
                 .underlineStyle: NSUnderlineStyle.single.rawValue,
@@ -51,6 +51,14 @@ class FTStatusBarInfoViewController: UIViewController, UITextViewDelegate {
             attributedString.replaceCharacters(in: nsRange, with: tapHereLocalized)
             footerTextView.attributedText = attributedString
         }
+    }
+    
+    private func appStoreLink() -> URL {
+        #if ENTERPRISE_EDITION
+        return URL(string: "https://itunes.apple.com/us/app/noteshelf-3/id6471592545?mt=8")!
+        #else
+        return URL(string: "https://itunes.apple.com/us/app/noteshelf-3/id6458735203?mt=8")!
+        #endif
     }
     
    static func makeUIViewController() -> FTStatusBarInfoViewController {
