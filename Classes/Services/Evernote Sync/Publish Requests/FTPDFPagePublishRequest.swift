@@ -62,8 +62,10 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
             self.delegate?.didCompletePublishRequestWithError?(request: self,error:FTENPublishError.unexpectedError);
             return;
         }
+        FTENSyncUtilities.recordSyncLog("Page-getNoteWithGuid", prefix: "API-▶️")
         EvernoteNoteStore(session: session).getNoteWithGuid(parentGUID, withContent: true, withResourcesData: true, withResourcesRecognition: false, withResourcesAlternateData: false) { note in
             self.executeBlock {
+                FTENSyncUtilities.recordSyncLog("Page-getNoteWithGuid", prefix: "API-✅")
                 if let note,!note.active {
                     self.noteDidGetDeletedFromEvernote();
                     return;
@@ -103,8 +105,10 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                                 self.delegate?.didCompletePublishRequestWithError?(request: self,error:error);
                                 return;
                             }
+                            FTENSyncUtilities.recordSyncLog("Page-update", prefix: "API-▶️")
                             EvernoteNoteStore(session: session).update(note) { updatedNote in
                                 self.executeBlock {
+                                    FTENSyncUtilities.recordSyncLog("Page-update", prefix: "API-✅")
                                     do {
                                         if let pageRecord = try self.managedObjectContext()?.existingObject(with: self.objectID!) as? ENSyncRecord {
                                             self.managedObjectContext()?.delete(pageRecord);
@@ -126,6 +130,7 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                                 }
                             } failure: { error in
                                 self.executeBlock {
+                                    FTENSyncUtilities.recordSyncLog("Page-update", prefix: "API-🔴")
                                     FTENSyncUtilities.recordSyncLog("Failed with Error:\(error)");
                                     self.delegate?.didCompletePublishRequestWithError?(request: self,error:error);
                                 }
@@ -153,6 +158,7 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
             }
         } failure: { error in
             self.executeBlock {
+                FTENSyncUtilities.recordSyncLog("Page-getNoteWithGuid", prefix: "API-🔴")
                 if let nsError = error as? NSError, nsError.code == Int(EDAMErrorCode_UNKNOWN.rawValue) {
                     self.noteDidGetDeletedFromEvernote();
                 }
@@ -210,8 +216,10 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
             return;
         }
         if FTENPublishManager.shared.ftENNotebook?.edamNote == nil {
+            FTENSyncUtilities.recordSyncLog("Page-getNoteWithGuid", prefix: "API-▶️")
             EvernoteNoteStore(session: session).getNoteWithGuid(parentGUID, withContent: true, withResourcesData: true, withResourcesRecognition: true, withResourcesAlternateData: false) { note in
                 self.executeBlock {
+                    FTENSyncUtilities.recordSyncLog("Page-getNoteWithGuid", prefix: "API-✅")
                     FTENPublishManager.shared.ftENNotebook?.edamNote = note
                     if let resources = note?.resources as? [EDAMResource] {
                         FTENPublishManager.shared.ftENNotebook?.edamResources = resources
@@ -220,6 +228,7 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                 }
             } failure: { error in
                 self.executeBlock(onPublishQueue: {
+                    FTENSyncUtilities.recordSyncLog("Page-getNoteWithGuid", prefix: "API-🔴")
                     if let nserror = error as? NSError, (nserror.code == Int(EDAMErrorCode_UNKNOWN.rawValue)) {
                         self.noteDidGetDeletedFromEvernote();
                     }
@@ -360,8 +369,10 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                                     self.delegate?.didCompletePublishRequestWithError?(request: self,error:error);
                                     return;
                                 }
+                                FTENSyncUtilities.recordSyncLog("update", prefix: "API-▶️")
                                 EvernoteNoteStore(session: session).update(note) { updatedNote in
                                     self.executeBlock {
+                                        FTENSyncUtilities.recordSyncLog("update", prefix: "API-✅")
                                         do {
                                             if let updatedNote, let pageRecord = try self.managedObjectContext()?.existingObject(with: self.objectID!) as? ENSyncRecord {
                                                 if(pageContentWasDirty) {
@@ -399,6 +410,7 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                                     }
                                 } failure: { error in
                                     self.executeBlock(onPublishQueue: {
+                                        FTENSyncUtilities.recordSyncLog("update", prefix: "API-🔴")
                                         FTENSyncUtilities.recordSyncLog("Failed to update page with error: \(error)");
                                         do {
                                             if let pageRecord = try self.managedObjectContext()?.existingObject(with: self.objectID!) as? ENSyncRecord {

@@ -53,8 +53,10 @@ extension FTShelfItemPublishRequest {
                 self.delegate?.didCompletePublishRequestWithError?(request: self,error:error);
                 return;
             }
+            FTENSyncUtilities.recordSyncLog("shelf-createNote", prefix: "API-▶️")
             EvernoteNoteStore(session: session).createNote(newNote) { note in
                 self.executeBlock(onPublishQueue: {
+                    FTENSyncUtilities.recordSyncLog("shelf-createNote", prefix: "API-✅")
                     do {
                         let shelfItemRecord = try self.managedObjectContext()?.existingObject(with: self.objectID!) as! ENSyncRecord;
                         
@@ -76,6 +78,7 @@ extension FTShelfItemPublishRequest {
                 });
             } failure: { error in
                 self.executeBlock(onPublishQueue: {
+                    FTENSyncUtilities.recordSyncLog("shelf-createNote", prefix: "API-🔴")
                     FTENSyncUtilities.recordSyncLog(String(format: "Failed to create a note with error %@",error?.localizedDescription ?? ""));
                     self.delegate?.didCompletePublishRequestWithError?(request: self,error:error);
                 });
@@ -103,9 +106,10 @@ extension FTShelfItemPublishRequest {
                 self.delegate?.didCompletePublishRequestWithError?(request: self,error:error);
                 return;
             }
-            
+            FTENSyncUtilities.recordSyncLog("Shelf-getNoteWithGuid", prefix: "API-▶️")
             EvernoteNoteStore(session: session).getNoteWithGuid(shelfItemRecord.enGUID, withContent: false, withResourcesData: true, withResourcesRecognition: true, withResourcesAlternateData: false) { note in
                 self.executeBlock(onPublishQueue: {
+                    FTENSyncUtilities.recordSyncLog("Shelf-getNoteWithGuid", prefix: "API-✅")
                     do {
                         let shelfItemRecord = try self.managedObjectContext()?.existingObject(with: self.objectID!) as! ENSyncRecord;
                         
@@ -124,9 +128,10 @@ extension FTShelfItemPublishRequest {
                             self.delegate?.didCompletePublishRequestWithError?(request: self,error:error);
                             return;
                         }
-                        
+                        FTENSyncUtilities.recordSyncLog("shelf-update", prefix: "API-▶️")
                         EvernoteNoteStore(session: session).update(note) { updatedNote in
                             self.executeBlock(onPublishQueue: {
+                                FTENSyncUtilities.recordSyncLog("shelf-update", prefix: "API-✅")
                                 shelfItemRecord.isDirty = false;
                                 self.commitDataChanges();
                                 FTENSyncUtilities.recordSyncLog("Note updated successfully");
@@ -134,6 +139,7 @@ extension FTShelfItemPublishRequest {
                             });
                         } failure: { error in
                             self.executeBlock(onPublishQueue: {
+                                FTENSyncUtilities.recordSyncLog("shelf-update", prefix: "API-🔴")
                                 FTENSyncUtilities.recordSyncLog("Failed with error \(error)");
                                 self.delegate?.didCompletePublishRequestWithError?(request: self,error:error);
                             });
@@ -141,6 +147,7 @@ extension FTShelfItemPublishRequest {
                     }
                     catch let error as NSError {
                         self.executeBlock(onPublishQueue: {
+                            FTENSyncUtilities.recordSyncLog("shelf-update", prefix: "API-🔴")
                             FTENSyncUtilities.recordSyncLog("Failed with error \(error)");
                             self.delegate?.didCompletePublishRequestWithError?(request: self,error:error);
                         });

@@ -31,9 +31,12 @@ extension FTEvernoteExporter : FTExporterProtocol{
         }
         else {
             let guid = folderInfo!["guid"] as! String;
+            FTENSyncUtilities.recordSyncLog("ENX-getNotebookWithGuid", prefix: "API-▶️")
             EvernoteNoteStore(session: session).getNotebookWithGuid(guid) { notebook in
+                FTENSyncUtilities.recordSyncLog("ENX-getNotebookWithGuid", prefix: "API-✅")
                 self.setAsCurrentNotebook(notebook);
             } failure: { error in
+                FTENSyncUtilities.recordSyncLog("ENX-getNotebookWithGuid", prefix: "API-🔴")
                 self.fetchDefaultNotebook();
             }
         }
@@ -47,7 +50,9 @@ extension FTEvernoteExporter : FTExporterProtocol{
             FTENSyncUtilities.recordSyncLog(String(format: "Failed with Error:%@",error as CVarArg));
             return;
         }
+        FTENSyncUtilities.recordSyncLog("ENX-listNotebooks", prefix: "API-▶️")
         EvernoteNoteStore(session: session).listNotebooks { [self] notebooks in
+            FTENSyncUtilities.recordSyncLog("ENX-listNotebooks", prefix: "API-✅")
             if let notebooks = notebooks as? [EDAMNotebook]  {
                 let noteshelfNotebooks = notebooks.filter {$0.name == EvernoteRootFolder};
                 if noteshelfNotebooks.count > 0 {
@@ -59,6 +64,7 @@ extension FTEvernoteExporter : FTExporterProtocol{
             }
 
         } failure: { error in
+            FTENSyncUtilities.recordSyncLog("ENX-listNotebooks", prefix: "API-🔴")
             self.folderSearchCompletionHandler(nil, false);
         }
         #endif
@@ -73,9 +79,12 @@ extension FTEvernoteExporter : FTExporterProtocol{
         }
         let newNotebook = EDAMNotebook();
         newNotebook?.name = EvernoteRootFolder;
+        FTENSyncUtilities.recordSyncLog("ENX-createNotebook", prefix: "API-▶️")
         EvernoteNoteStore(session: session).createNotebook(newNotebook) { notebook in
+            FTENSyncUtilities.recordSyncLog("ENX-createNotebook", prefix: "API-✅")
             self.setAsCurrentNotebook(notebook);
         } failure: { error in
+            FTENSyncUtilities.recordSyncLog("ENX-createNotebook", prefix: "API-🔴")
             self.folderSearchCompletionHandler(nil, false);
         }
         #endif

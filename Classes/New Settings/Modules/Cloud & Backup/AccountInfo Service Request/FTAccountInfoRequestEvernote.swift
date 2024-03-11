@@ -59,8 +59,9 @@ class FTAccountInfoRequestEvernote: FTAccountInfoRequest {
             completionBlock(account, nil)
             return
         }
-
+        FTENSyncUtilities.recordSyncLog("getSyncState", prefix: "API-▶️")
         EvernoteNoteStore(session: evernoteSession).getSyncState { edamSyncState in
+            FTENSyncUtilities.recordSyncLog("getSyncState", prefix: "API-✅")
             var accountingInfo = user?.accounting;
             if let businessUser = evernoteSession.businessUser, businessUser.active {
                 accountingInfo = evernoteSession.businessUser?.accounting;
@@ -74,6 +75,7 @@ class FTAccountInfoRequestEvernote: FTAccountInfoRequest {
             UserDefaults.standard.set(account.percentage, forKey: EN_USEDSPACEPERCENT)
             completionBlock(account, nil);
         } failure: { error in
+            FTENSyncUtilities.recordSyncLog("getSyncState", prefix: "API-🔴")
             account.statusText = NSLocalizedString("ErrorConnecting", comment: "Error Connecting");
             completionBlock(account, error as NSError?);
         }

@@ -23,8 +23,10 @@ class FTNoteshelfNotebookPublishRequest : FTBasePublishRequest {
             self.delegate?.didCompletePublishRequestWithError?(request: self,error:error)
             return
         }
+        FTENSyncUtilities.recordSyncLog("NBK-listNotebooks", prefix: "API-▶️")
         EvernoteNoteStore(session: evernoteSession).listNotebooks { [self] notebooks in
             self.executeBlock(onPublishQueue: { [self] in
+                FTENSyncUtilities.recordSyncLog("NBK-listNotebooks", prefix: "API-✅")
                 if let noteBooks = notebooks as? [EDAMNotebook] {
                     for notebook in noteBooks {
                         if notebook.name.lowercased() == "noteshelf" {
@@ -37,8 +39,10 @@ class FTNoteshelfNotebookPublishRequest : FTBasePublishRequest {
                     FTENPublishManager.recordSyncLog("Creating Noteshelf notebook")
                     let newNoteBook = EDAMNotebook()
                     newNoteBook?.name = "Noteshelf"
+                    FTENSyncUtilities.recordSyncLog("NBK-createNotebook", prefix: "API-▶️")
                     EvernoteNoteStore(session: evernoteSession).createNotebook(newNoteBook) { notebook in
                         self.executeBlock(onPublishQueue: { [self] in
+                            FTENSyncUtilities.recordSyncLog("NBK-createNotebook", prefix: "API-✅")
                             FTENSyncUtilities.recordSyncLog("Successfully created notebook")
                             if let notebook = notebook{
                                 FTENPublishManager.shared.noteshelfNotebookGuid = notebook.guid
@@ -47,6 +51,7 @@ class FTNoteshelfNotebookPublishRequest : FTBasePublishRequest {
                         })
                     } failure: { error in
                         self.executeBlock(onPublishQueue: { [self] in
+                            FTENSyncUtilities.recordSyncLog("NBK-createNotebook", prefix: "API-🔴")
                             FTENSyncUtilities.recordSyncLog("Failed to create Noteshelf notebook:\(String(describing: error))")
                             self.delegate?.didCompletePublishRequestWithError?(request: self,error:error)
                         })
@@ -58,6 +63,7 @@ class FTNoteshelfNotebookPublishRequest : FTBasePublishRequest {
 
         } failure: { error in
             self.executeBlock(onPublishQueue: { [self] in
+                FTENSyncUtilities.recordSyncLog("NBK-listNotebooks", prefix: "API-🔴")
                 if let error = error {
                     FTENSyncUtilities.recordSyncLog("Failed to fetch notebooks from Evernote: \(error)")
                 }
