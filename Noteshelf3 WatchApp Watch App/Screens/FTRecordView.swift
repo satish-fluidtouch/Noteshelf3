@@ -38,7 +38,7 @@ struct FTRecordView: View {
                 self.viewModel.handleRecordTapAction()
                 self.isRecording.toggle()
             }) {
-                Text(isRecording ? "Pause" : "Record")
+                Text(isRecording ? "Stop" : "Record")
                     .padding()
                     .foregroundColor(.white)
             }

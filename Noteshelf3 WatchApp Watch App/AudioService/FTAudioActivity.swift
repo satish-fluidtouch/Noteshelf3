@@ -32,7 +32,7 @@ class FTAudioActivity: NSObject {
             audioServiceCurrentState = audioServiceStatus
             self.didChangeValue(forKey: #keyPath(FTAudioActivity.audioServiceStatus))
 #if DEBUG
-            debugPrint("audioServiceCurrentState: \(["none","playing","recording","playingPaused", "recordingPaused"][audioServiceCurrentState.rawValue])")
+            debugPrint("audioServiceCurrentState: \(["none","playing","playingPaused","recording", "recordingPaused"][audioServiceCurrentState.rawValue])")
 #endif
         }
     }

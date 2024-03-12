@@ -96,7 +96,6 @@ struct FTPlayerView: View {
                     .rotationEffect(.degrees(-90))
 
                 Button(action: {
-                    self.viewModel.isPlaying.toggle()
                     self.viewModel.handlePlayTapAction()
                 }) {
                     Image(systemName: viewModel.isPlaying ? "pause" : "play")
