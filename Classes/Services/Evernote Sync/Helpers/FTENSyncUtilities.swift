@@ -206,8 +206,9 @@ let SYNC_LOG_TRUNCATE_RECORDS = 4000
         return nil
     }
     class func recordSyncLog(_ log: String?, prefix: String = "EN") {
-        if let log = log {
-            FTCLSLog("\(prefix): \(log)")
+        if var log = log {
+            log = prefix + ": " + log
+            FTCLSLog(log)
             if let syncLog = NSEntityDescription.insertNewObject(forEntityName: "SyncLog", into: FTENPublishManager.shared.managedObjectContext()) as? SyncLog{
                 syncLog.date = NSNumber(value: Date().timeIntervalSinceReferenceDate)
                 syncLog.log = log
