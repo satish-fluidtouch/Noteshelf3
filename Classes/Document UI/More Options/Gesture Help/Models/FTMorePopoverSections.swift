@@ -29,7 +29,9 @@ struct FTMorePopoverSections {
         section.append(FTNotebookOptionGesture())
         section.append(FTNotebookOptionHelp())
 #if !targetEnvironment(macCatalyst)
-        section.append(FTNotebookStatusBarSetting(isEnabled: FTUserDefaults.defaults().showStatusBar))
+        if !UIDevice.current.isIphone() {
+            section.append(FTNotebookStatusBarSetting(isEnabled: FTUserDefaults.defaults().showStatusBar))
+        }
 #endif
         section.append(FTNotebookOptionSettings())
         return section
