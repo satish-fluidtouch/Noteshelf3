@@ -128,7 +128,7 @@ class FTNoteBookSplitViewController: UISplitViewController, UISplitViewControlle
         if UIDevice.current.isIphone(){
             return super.prefersStatusBarHidden;
         }
-        if UserDefaults().showStatusBar {
+        if FTUserDefaults.defaults().showStatusBar {
             return false
         }
         return true;

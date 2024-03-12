@@ -10,7 +10,7 @@ import UIKit
 
 struct FTToolBarConstants {
     static var statusBarOffset: CGFloat  {
-        return UserDefaults.standard.showStatusBar ? 8 : 0;
+        return FTUserDefaults.defaults().showStatusBar ? 8 : 0;
     }
     static let yOffset: CGFloat = 14;
     static let subtoolbarOffset: CGFloat = 8; //used for audio player
@@ -144,7 +144,7 @@ class FTFocusModeView: FTToolbarVisualEffectView {
         super.stylePanel()
         self.layer.masksToBounds = true
         self.frame.size = size
-        self.keyValueObserver = UserDefaults.standard.observe(\.showStatusBar, options: [.new]) { [weak self] (userdefaults, change) in
+        self.keyValueObserver = FTUserDefaults.defaults().observe(\.showStatusBar, options: [.new]) { [weak self] (userdefaults, change) in
             if let strongSelf = self {
                 var frame = strongSelf.frame;
                 frame.origin.y = strongSelf.topOffset;

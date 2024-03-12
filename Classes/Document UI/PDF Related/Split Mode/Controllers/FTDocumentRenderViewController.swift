@@ -104,7 +104,7 @@ class FTDocumentRenderViewController: UIViewController {
         self.navigationController?.navigationBar.isHidden = true
         self.showRenderingIndicator = true
         
-        self.keyValueObserver = UserDefaults.standard.observe(\.showStatusBar, options: [.new]) { [weak self] (userdefaults, change) in
+        self.keyValueObserver = FTUserDefaults.defaults().observe(\.showStatusBar, options: [.new]) { [weak self] (userdefaults, change) in
             UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseIn) {
                 self?.updateTopConstraint()
                 self?.documentViewController.didChangeStatusBarVisibility()
@@ -122,6 +122,12 @@ class FTDocumentRenderViewController: UIViewController {
         if showRenderingIndicator {
             self.showRenderingIndicator = false
             loadingIndicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: NSLocalizedString("Loading", comment: "Loading..."), andDelay: 0.5);
+        }
+        let currentTimeInterval = Date().timeIntervalSince1970
+        let oneWeekAgoTimeInterval = currentTimeInterval - (7 * 24 * 60 * 60)
+        if (FTUserDefaults.appInstalledDate > oneWeekAgoTimeInterval) && !FTUserDefaults.defaults().isStatusBarScreenViewed {
+            FTStatusBarInfoViewController.present(on: self)
+            FTUserDefaults.defaults().isStatusBarScreenViewed = true
         }
     }
     
@@ -213,7 +219,7 @@ class FTDocumentRenderViewController: UIViewController {
         if UIDevice.current.isPhone() {
             toHide = false
         }
-        if UserDefaults().showStatusBar {
+        if FTUserDefaults.defaults().showStatusBar {
             toHide = false
         }
         return toHide

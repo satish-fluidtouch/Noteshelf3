@@ -122,7 +122,7 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
     fileprivate func toggleSettingTapped(isOn: Bool, setting: FTNotebookMoreOption) {
         if let _setting = setting as? FTNotebookStatusBarSetting {
             _setting.updateToggleStatus(with: isOn)
-            UserDefaults().showStatusBar = !isOn
+            FTUserDefaults.defaults().showStatusBar = !isOn
         }
     }
     

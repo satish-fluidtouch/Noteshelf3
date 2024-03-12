@@ -9,7 +9,6 @@
 import Foundation
 
 class FTStatusBarInfoViewController: UIViewController, UITextViewDelegate {
-    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var footerTextView: UITextView!
     @IBOutlet weak var statusBarLabel: UILabel!
@@ -24,9 +23,10 @@ class FTStatusBarInfoViewController: UIViewController, UITextViewDelegate {
         constructFooterText()
         toggleView.layer.cornerRadius = 10
         subtitleLabel.addLineSpacing(5)
-        uiSwitch.isOn = UserDefaults().showStatusBar
+        uiSwitch.isOn = FTUserDefaults.defaults().showStatusBar
         footerTextView.delegate = self
         footerTextView.textAlignment = .center
+        self.isModalInPresentation = true
     }
     
     private func constructFooterText() {
@@ -61,17 +61,17 @@ class FTStatusBarInfoViewController: UIViewController, UITextViewDelegate {
         #endif
     }
     
-   static func makeUIViewController() -> FTStatusBarInfoViewController {
+    static func present(on parentController: UIViewController)  {
         let storyBoard = UIStoryboard.init(name: "FTDocumentEntity", bundle: nil)
         if let controller: FTStatusBarInfoViewController = storyBoard.instantiateViewController(withIdentifier: "FTStatusBarInfoViewController") as? FTStatusBarInfoViewController {
-            return controller
+            parentController.ftPresentFormsheet(vcToPresent: controller, contentSize: CGSize(width: 700, height: 740))
         } else {
             fatalError("FTStatusBarInfoViewController doesnt exist")
         }
     }
     
     @IBAction func onSwitchChanged(_ sender: UISwitch) {
-        UserDefaults().showStatusBar = sender.isOn
+        FTUserDefaults.defaults().showStatusBar = sender.isOn
     }
     
     @IBAction func closeButtonTapped(_ sender: Any) {

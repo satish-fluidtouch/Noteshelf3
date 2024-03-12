@@ -87,7 +87,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             self.addPencilInteractionDelegate();
         }
         
-        self.keyValueObserver = UserDefaults.standard.observe(\.showStatusBar, options: [.new]) { [weak self] (userdefaults, change) in
+        self.keyValueObserver = FTUserDefaults.defaults().observe(\.showStatusBar, options: [.new]) { [weak self] (userdefaults, change) in
             self?.refreshStatusBarAppearnce();
         }
     }
