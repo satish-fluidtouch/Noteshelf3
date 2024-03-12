@@ -123,11 +123,22 @@ class FTDocumentRenderViewController: UIViewController {
             self.showRenderingIndicator = false
             loadingIndicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: NSLocalizedString("Loading", comment: "Loading..."), andDelay: 0.5);
         }
-        let currentTimeInterval = Date().timeIntervalSince1970
-        let oneWeekAgoTimeInterval = currentTimeInterval - (7 * 24 * 60 * 60)
-        if (FTUserDefaults.appInstalledDate > oneWeekAgoTimeInterval) && !FTUserDefaults.defaults().isStatusBarScreenViewed {
-            FTStatusBarInfoViewController.present(on: self)
-            FTUserDefaults.defaults().isStatusBarScreenViewed = true
+        showWhatsnewForStatusBar()
+    }
+    
+    private func showWhatsnewForStatusBar() {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            let currentTimeInterval = Date().timeIntervalSinceReferenceDate
+            let oneWeekAgoTimeInterval = currentTimeInterval - (7 * 24 * 60 * 60)
+            if  FTIAPurchaseHelper.shared.isPremiumUser
+                    && FTUserDefaults.appInstalledDate < oneWeekAgoTimeInterval
+                    && !FTUserDefaults.defaults().isStatusBarScreenViewed {
+                FTStatusBarInfoViewController.present(on: self)
+                FTUserDefaults.defaults().isStatusBarScreenViewed = true
+                track("whatsnew_status_bar_viewed",screenName: FTScreenNames.notebook)
+            } else {
+                FTUserDefaults.defaults().isStatusBarScreenViewed = true
+            }
         }
     }
     
