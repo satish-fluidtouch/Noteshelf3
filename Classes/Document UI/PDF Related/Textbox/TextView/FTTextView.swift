@@ -503,7 +503,7 @@ class FTTextView: UITextView, UIGestureRecognizerDelegate, NSTextStorageDelegate
             point.x -= self.textContainerInset.left
             point.y -= self.textContainerInset.top
             let index = self.layoutManager.characterIndex(for: point, in: self.textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
-            if index != NSNotFound {
+            if index != NSNotFound, index < self.textStorage.length {
                 var glyrange: NSRange = NSRange(location: NSNotFound, length: 0)
                 if nil != self.textStorage.attribute(.link, at: index, effectiveRange: &glyrange) {
                     if glyrange.location != NSNotFound {
