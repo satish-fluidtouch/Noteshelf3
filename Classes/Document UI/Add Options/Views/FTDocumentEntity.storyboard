@@ -2223,7 +2223,7 @@
                                 <color key="tintColor" name="black40"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain">
-                                    <imageReference key="image" image="xmark.circle.fill" catalog="system" renderingMode="hierarchical">
+                                    <imageReference key="image" image="status_bar_close_icon" renderingMode="hierarchical">
                                         <hierarchicalColors>
                                             <color name="white100"/>
                                             <color systemColor="secondaryLabelColor"/>
@@ -2239,19 +2239,19 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We heard you!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ih-ru-m0L">
-                                <rect key="frame" x="109" y="483" width="212" height="31.666666666666629"/>
+                                <rect key="frame" x="109.33333333333333" y="483" width="211.66666666666669" height="31.333333333333371"/>
                                 <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="Clearface Serial" pointSize="34"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Many of you asked for status bar" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i1T-Lb-WPf" userLabel="Many of you asked for status bar">
-                                <rect key="frame" x="72.333333333333343" y="538.66666666666663" width="285.66666666666663" height="18.666666666666629"/>
+                                <rect key="frame" x="72.333333333333343" y="538.33333333333337" width="285.66666666666663" height="18.666666666666629"/>
                                 <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="Clearface Serial" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a9b-v0-xKT" userLabel="ToggleView">
-                                <rect key="frame" x="65" y="581.33333333333337" width="300" height="44"/>
+                                <rect key="frame" x="65" y="581" width="300" height="44"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show Status Bar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zhd-JS-jwG">
                                         <rect key="frame" x="16" y="11.666666666666629" width="128.66666666666666" height="21"/>
@@ -2279,7 +2279,7 @@
                                 </constraints>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Enjoying Noteshelf? Tap here to rate us on the App Store. It will help us more than you’d imagine." textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="0na-WY-vrc">
-                                <rect key="frame" x="30" y="690.33333333333337" width="370" height="40"/>
+                                <rect key="frame" x="30" y="690" width="370" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="IFr-iY-6LF"/>
@@ -2357,9 +2357,9 @@
         <image name="popiconAddnew" width="28" height="28"/>
         <image name="sample_toolbar" width="656" height="356"/>
         <image name="selection_checkMark" width="32" height="32"/>
+        <image name="status_bar_close_icon" width="44" height="44"/>
         <image name="status_info_screen_gradient" width="698" height="180"/>
         <image name="wifi" catalog="system" width="128" height="90"/>
-        <image name="xmark.circle.fill" catalog="system" width="128" height="123"/>
         <namedColor name="000000_5">
             <color red="0.0" green="0.0" blue="0.0" alpha="0.05000000074505806" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

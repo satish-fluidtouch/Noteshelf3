@@ -16,6 +16,10 @@ class FTStatusBarInfoViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var toggleView: UIView!
     @IBOutlet weak var subtitleLabel: UILabel!
     
+    override var shouldAvoidDismissOnSizeChange: Bool {
+        return true
+    }
+    
     override func viewDidLoad() {
         titleLabel.text = "status_bar_info_title".localized
         subtitleLabel.text = "status_bar_info_subtitle".localized

@@ -130,9 +130,9 @@ class FTDocumentRenderViewController: UIViewController {
         if UIDevice.current.userInterfaceIdiom == .pad {
             let currentTimeInterval = Date().timeIntervalSinceReferenceDate
             let oneWeekAgoTimeInterval = currentTimeInterval - (7 * 24 * 60 * 60)
-            if  FTIAPurchaseHelper.shared.isPremiumUser
+            if  (FTIAPurchaseHelper.shared.isPremiumUser
                     && FTUserDefaults.appInstalledDate < oneWeekAgoTimeInterval
-                    && !FTUserDefaults.defaults().isStatusBarScreenViewed {
+                 && !FTUserDefaults.defaults().isStatusBarScreenViewed) || FTUserDefaults.defaults().statusBarwhatsNewSwitch {
                 FTStatusBarInfoViewController.present(on: self)
                 FTUserDefaults.defaults().isStatusBarScreenViewed = true
                 track("whatsnew_status_bar_viewed",screenName: FTScreenNames.notebook)

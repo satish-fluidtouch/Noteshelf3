@@ -555,6 +555,16 @@ extension UserDefaults {
         }
     }
     
+    @objc dynamic var statusBarwhatsNewSwitch: Bool {
+        get {
+            return self.bool(forKey: "statusBarwhatsNewSwitch")
+        }
+        set {
+            self.set(newValue, forKey: "statusBarwhatsNewSwitch")
+            self.synchronize()
+        }
+    }
+    
     @objc dynamic var isStatusBarScreenViewed: Bool {
         get {
             return self.bool(forKey: "isStatusBarScreenViewed")
