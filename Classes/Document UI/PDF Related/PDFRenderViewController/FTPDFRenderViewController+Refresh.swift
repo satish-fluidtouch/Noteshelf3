@@ -39,7 +39,7 @@ extension FTPDFRenderViewController {
     func didChangeStatusBarVisibility() {
         self.updatePageNumberLabelFrame();
         self.updateAudioPlayerFrame();
-        self.toolTypeContainerVc.updatePositionOnScreenSizeChange(forcibly: true)
+        self.toolTypeContainerVc?.updatePositionOnScreenSizeChange(forcibly: true)
     }
     
     @objc func updateAudioPlayerFrame() {
