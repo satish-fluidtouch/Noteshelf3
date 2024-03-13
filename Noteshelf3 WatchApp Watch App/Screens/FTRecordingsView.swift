@@ -32,12 +32,19 @@ struct FTRecordingsView: View {
                                     recordingView(for: recording)
                                 }
                             }
+                            .onDelete(perform: deleteItem)
                         }
                     }
                 }
             }
         }.onAppear {
             self.viewModel.reloadRecordings()
+        }
+    }
+
+    private func deleteItem(at offsets: IndexSet) {
+        if let recordingToDelete = offsets.map({ self.viewModel.recordings[$0] }).first {
+            self.viewModel.deleteRecording(recordingToDelete)
         }
     }
 

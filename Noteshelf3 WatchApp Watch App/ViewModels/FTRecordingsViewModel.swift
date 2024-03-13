@@ -27,4 +27,12 @@ class FTRecordingsViewModel: ObservableObject {
             self.recordings = allRecordings
         })
     }
+
+    func deleteRecording(_ recording: FTWatchRecording) {
+        FTWatchRecordingProvider.shared.deleteRecording(item: recording) { error in
+            if nil == error {
+                self.recordings.removeAll(where: { $0.GUID == recording.GUID })
+            }
+        }
+    }
 }

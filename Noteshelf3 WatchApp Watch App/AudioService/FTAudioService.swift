@@ -267,6 +267,7 @@ extension FTAudioService {
         }
         self.playerNode.volume = self.playerVolume
         self.playerNode.play()
+        self.audioActivity.audioServiceStatus = FTAudioServiceStatus.playing
         self.audioActivity.currentTime = timeToPlay
     }
 

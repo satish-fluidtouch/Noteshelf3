@@ -15,6 +15,20 @@ struct FTWatchLandView: View {
         TabView(selection: $selectedPage) {
             FTRecordView()
             FTRecordingsView()
-        }.tabViewStyle(.page)
+        }.watchOS10OnlyVerticalTabStyle()
+    }
+}
+
+extension View {
+    func watchOS10OnlyVerticalTabStyle() -> some View {
+        return self.modifier(Watch10OnlySupported())
+    }
+}
+
+struct Watch10OnlySupported: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(watchOS 10.0, *) {
+            content.tabViewStyle(.verticalPage)
+        }
     }
 }
