@@ -250,7 +250,9 @@ extension FTSavedClipsViewController: UICollectionViewDelegate, UICollectionView
             }
             controller.setPreviewImage(clip.image)
             if let size = clip.image?.size {
-                controller.preferredContentSize = size
+                let width = max(size.width, 250)
+                let height = max(size.height, 250)
+                controller.preferredContentSize = CGSize(width: width + 20, height: height + 20)
             }
             return controller
         }, actionProvider: actionProvider)
