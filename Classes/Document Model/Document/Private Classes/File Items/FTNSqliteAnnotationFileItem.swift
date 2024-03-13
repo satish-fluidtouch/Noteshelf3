@@ -13,7 +13,7 @@ import FTDocumentFramework
 class FTNSqliteAnnotationFileItem : FTFileItemSqlite
 {
     fileprivate var annotationsArray : [FTAnnotation]?;
-    fileprivate var _annotationGroups : FTAnnotationGroups<String, Set<FTAnnotation>>?;
+    fileprivate var _annotationGroups : FTAnnotationGroups<String, NSMutableOrderedSet>?;
     weak var associatedPage : FTPageProtocol?;
     
     var annotations : [FTAnnotation] {
@@ -33,7 +33,7 @@ class FTNSqliteAnnotationFileItem : FTFileItemSqlite
         }
     }
 
-    private var annotationGroups : FTAnnotationGroups<String, Set<FTAnnotation>> {
+    private var annotationGroups : FTAnnotationGroups<String, NSMutableOrderedSet> {
         get{
             objc_sync_enter(self);
             if nil == self._annotationGroups {
@@ -62,7 +62,7 @@ class FTNSqliteAnnotationFileItem : FTFileItemSqlite
         // If the annotation contains a groupID, add it to a group
         if let groupId = annotation.groupId {
             if var groupAnnotations = annotationGroups.value(forKey: groupId) {
-                groupAnnotations.insert(annotation)
+                groupAnnotations.add(annotation)
                 annotationGroups.setValue(groupAnnotations, forKey: groupId)
             } else {
                 annotationGroups.setValue([annotation], forKey: groupId)
@@ -164,7 +164,7 @@ class FTNSqliteAnnotationFileItem : FTFileItemSqlite
         (self.associatedPage as? FTPageTileAnnotationMap)?.clearMapCache();
         #endif
         var annotations = [FTAnnotation]();
-        var annotationGroups: FTAnnotationGroups<String, Set<FTAnnotation>> = FTAnnotationGroups();
+        var annotationGroups: FTAnnotationGroups<String, NSMutableOrderedSet> = FTAnnotationGroups();
         if (false == self.schemaExists()) {
             self.annotationsArray = annotations;
             self._annotationGroups = annotationGroups;
@@ -191,7 +191,7 @@ class FTNSqliteAnnotationFileItem : FTFileItemSqlite
                             // If the annotation contains a groupID, add it to a group
                             if let groupId = annotation.groupId {
                                 if var groupAnnotations = annotationGroups.value(forKey: groupId) {
-                                    groupAnnotations.insert(annotation)
+                                    groupAnnotations.add(annotation)
                                     annotationGroups.setValue(groupAnnotations, forKey: groupId)
                                 } else {
                                     annotationGroups.setValue([annotation], forKey: groupId)
@@ -350,7 +350,7 @@ class FTNSqliteAnnotationFileItem : FTFileItemSqlite
     func group(annotations: [FTAnnotation]) {
         let groupId = UUID().uuidString
         annotations.forEach{ $0.groupId = groupId }
-        self.annotationGroups.setValue(Set(annotations), forKey: groupId)
+        self.annotationGroups.setValue(NSMutableOrderedSet(array: annotations), forKey: groupId)
     }
 
     func ungroup(annotations: [FTAnnotation]) {
@@ -369,7 +369,7 @@ class FTNSqliteAnnotationFileItem : FTFileItemSqlite
 
     func annotations(groupId: String) -> [FTAnnotation]? {
         if let annotations = annotationGroups.value(forKey: groupId) {
-            return Array(annotations)
+            return annotations.array as? [FTAnnotation]
         }
         return nil
     }

@@ -134,7 +134,6 @@ class FTLassoSelectionView: UIView {
         let openAI = UIMenuItem(title: "noteshelf.ai.noteshelfAI".aiLocalizedString, action: #selector(self.openAIAction(_:)));
         let saveClip = UIMenuItem(title: "clip.saveClip".localized, action: #selector(self.saveClip(_:)));
 
-// (AK): Hiding these items temporarily, these will provide the behind the scenes functionality.
         let groupMenuItem = UIMenuItem(title: NSLocalizedString("Group", comment: "Group"), action: #selector(self.groupMenuAction(_:)));
         let ungroupMenuItem = UIMenuItem(title: NSLocalizedString("Ungroup", comment: "Group"), action: #selector(self.ungroupMenuAction(_:)));
 
@@ -198,10 +197,18 @@ class FTLassoSelectionView: UIView {
             retValue = !FTNoteshelfAI.supportsNoteshelfAI ? false : delegate.lassoSelectionView(self, canPerform: .openAI)
         }
         else if action == #selector(FTLassoSelectionView.groupMenuAction(_:)) {
+#if DEBUG || BETA
             retValue = self.delegate?.lassoSelectionView(self, canPerform: .group) ?? true;
+#else
+            retValue = false
+#endif
         }
         else if action == #selector(FTLassoSelectionView.ungroupMenuAction(_:)) {
+#if DEBUG || BETA
             retValue = self.delegate?.lassoSelectionView(self, canPerform: .ungroup) ?? true;
+#else
+            retValue = false
+#endif
         }
         return retValue;
     }

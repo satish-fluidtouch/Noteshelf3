@@ -12,14 +12,16 @@ class FTSavedClipsCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var thumbnail: UIImageView!
     @IBOutlet weak var closeButton: UIButton!
-    var deleteSavedClip:(() -> Void)?
+    var deleteSavedClip:((_ clip: FTSavedClipModel) -> Void)?
+    private var clip: FTSavedClipModel?
 
     func configureCellWith(clip: FTSavedClipModel, isEditing: Bool)  {
+        self.clip = clip
         self.contentView.backgroundColor = .white
         self.contentView.layer.cornerRadius = 8
         self.contentView.layer.borderColor = UIColor.appColor(.grayDim).cgColor
         self.contentView.layer.borderWidth = 1.0
-        self.thumbnail.contentMode = .scaleAspectFit
+        self.thumbnail.contentMode = .topLeft
         if let image = clip.image {
             self.thumbnail.image = image
         }
@@ -33,17 +35,9 @@ class FTSavedClipsCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    @objc func startWiggle(_ notification:Notification) {
-        closeButton.isHidden = false
-        self.startWiggle()
-    }
-
-    @objc func stopWiggle(_ notification:Notification) {
-        closeButton.isHidden = true
-          self.stopWiggle()
-      }
-
     @IBAction func closeAction(_ sender: Any) {
-        deleteSavedClip?()
+        if let clip {
+            deleteSavedClip?(clip)
+        }
     }
 }

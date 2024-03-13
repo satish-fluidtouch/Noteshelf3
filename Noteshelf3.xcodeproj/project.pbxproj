@@ -907,6 +907,7 @@
 		BA2D9133285CB1E5001BB495 /* FTShelfItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09953F021F1F2D2A00753F70 /* FTShelfItemTableViewCell.swift */; };
 		BA2D9134285CB221001BB495 /* FTShelfItemAddNewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AA73A21F8B49A000B41144 /* FTShelfItemAddNewTableViewCell.swift */; };
 		BA2D9135285CB24F001BB495 /* FTRecentItemEditMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA799912216F65FC001DC0D5 /* FTRecentItemEditMenuCell.swift */; };
+		BA3BA8B32BA191E1003EBBF4 /* FTClipPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3BA8B22BA191E1003EBBF4 /* FTClipPreviewViewController.swift */; };
 		BA3F7FB1299E2F51003964C6 /* libMyScriptText.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA3F7FA8299E2F4F003964C6 /* libMyScriptText.xcframework */; };
 		BA3F7FB2299E2F51003964C6 /* libMyScriptPrediction.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA3F7FA9299E2F4F003964C6 /* libMyScriptPrediction.xcframework */; };
 		BA3F7FB3299E2F51003964C6 /* libMyScriptGesture.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA3F7FAA299E2F4F003964C6 /* libMyScriptGesture.xcframework */; };
@@ -4013,6 +4014,7 @@
 		BA3360CD2657BBF900F94E2B /* FTShapeAnnotationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShapeAnnotationController.swift; sourceTree = "<group>"; };
 		BA3430E42164DC8E00AE9CF8 /* UIColor+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Additions.swift"; sourceTree = "<group>"; };
 		BA35A28926022057002581BF /* FTRenderKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = FTRenderKit.xcframework; sourceTree = "<group>"; };
+		BA3BA8B22BA191E1003EBBF4 /* FTClipPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTClipPreviewViewController.swift; sourceTree = "<group>"; };
 		BA3F7FA8299E2F4F003964C6 /* libMyScriptText.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = libMyScriptText.xcframework; sourceTree = "<group>"; };
 		BA3F7FA9299E2F4F003964C6 /* libMyScriptPrediction.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = libMyScriptPrediction.xcframework; sourceTree = "<group>"; };
 		BA3F7FAA299E2F4F003964C6 /* libMyScriptGesture.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = libMyScriptGesture.xcframework; sourceTree = "<group>"; };
@@ -8065,6 +8067,7 @@
 				47377BDA2B4FE62900585BC3 /* FTEmptyCategoriesView.xib */,
 				4785127C2B5A33F000141544 /* FTEmptyClipsView.swift */,
 				4785127D2B5A33F000141544 /* FTEmptyClipsView.xib */,
+				BA3BA8B22BA191E1003EBBF4 /* FTClipPreviewViewController.swift */,
 			);
 			path = "Saved Clips";
 			sourceTree = "<group>";
@@ -14096,6 +14099,7 @@
 				BA2D910B285CAFCC001BB495 /* FTShelfViewModel.swift in Sources */,
 				BAF393C12859ADF00067CA9F /* FTFiveMinJournalSampleTemplate.swift in Sources */,
 				BAF393C22859ADF00067CA9F /* FTShelfItemDragPreview.swift in Sources */,
+				BA3BA8B32BA191E1003EBBF4 /* FTClipPreviewViewController.swift in Sources */,
 				BAA3C79328DDD527005B10E6 /* FTImageProcessor.swift in Sources */,
 				BAF393C52859ADF00067CA9F /* FTBrushBuilder_v5.swift in Sources */,
 				14CC43092AF50F85004D3A31 /* FTAdBannerView.swift in Sources */,
