@@ -86,10 +86,18 @@ extension FTPenShortcutViewModel {
     }
 
     func updateCurrentSelection(colorHex: String) {
-        self.currentSelectedColor = colorHex
-        self.currentPenset.color = colorHex
-        self.rackData.currentPenset = self.currentPenset
-        self.editDelegate?.didChangeCurrentPenset(self.currentPenset)
+        if let currentPresetIndex = self.presetEditIndex
+            , currentPresetIndex < self.presetColors.count
+            , self.presetColors[currentPresetIndex].hex != colorHex {
+            self.updatePresetColor(hex: colorHex, index: currentPresetIndex);
+            self.updateCurrentColors();
+        }
+        if self.currentSelectedColor != colorHex {
+            self.currentSelectedColor = colorHex
+            self.currentPenset.color = colorHex
+            self.rackData.currentPenset = self.currentPenset
+            self.editDelegate?.didChangeCurrentPenset(self.currentPenset)
+        }
     }
 }
 
