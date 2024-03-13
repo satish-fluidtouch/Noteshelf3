@@ -1215,12 +1215,14 @@
     [self saveChangesOnCompletion:completion
               shouldCloseDocument:shouldClose
                     waitUntilSave: false
+                       saveAction:FTNormalAction
           shouldGenerateThumbnail:generateThumbnail];
 }
 
 -(void)saveChangesOnCompletion:(void (^)(BOOL success) )completion
            shouldCloseDocument:(BOOL)shouldClose
                  waitUntilSave:(BOOL)waitUntilDone
+                    saveAction:(FTNotebookBackAction)backAction
        shouldGenerateThumbnail:(BOOL)generateThumbnail
 {
     [[self.pdfDocument localMetadataCache] saveMetadataCache];
@@ -1233,7 +1235,8 @@
     
     void (^blocktoExecute)(void) = ^{
         FTENPublishManager *evernotePublishManager = [FTENPublishManager shared];
-        if([evernotePublishManager isSyncEnabledForDocumentUUID:self.shelfItemManagedObject.documentUUID]) {
+        if([evernotePublishManager isSyncEnabledForDocumentUUID:self.shelfItemManagedObject.documentUUID]
+           && (backAction == FTNormalAction)) {
             [FTENPublishManager recordSyncLog:[NSString stringWithFormat:@"User is saving notebook: %@", self.shelfItemManagedObject.title]];
             
             [evernotePublishManager updateSyncRecordForShelfItemAtURL:self.shelfItemManagedObject.URL withDocumentUUID:[documentToSave documentUUID] andEnSyncEnabled:true];
@@ -1265,9 +1268,8 @@
             }
         }
         
-        BOOL shouldGenerateThumbnail = [documentToSave shouldGenerateCoverThumbnail];
+        BOOL shouldGenerateCover = (backAction != FTDeletePermanentlyAction && [documentToSave shouldGenerateCoverThumbnail]);
         UIBackgroundTaskIdentifier task = [self startBackgroundTask];
-        
         void(^continueSaving)(BOOL, UIImage*) = ^(BOOL coverPageUpdated, UIImage* coverImage){
             void (^onCompletionBlock)(BOOL) = ^(BOOL success){
                 if(coverPageUpdated) {
@@ -1299,7 +1301,7 @@
             }
         };
         
-        if(shouldGenerateThumbnail) {
+        if(shouldGenerateCover) {
             [self coverImage:documentToSave
                   background:!waitUntilDone
                 onCompletion:^(UIImage *image) {
@@ -1378,12 +1380,31 @@
     
     BOOL isRequiredLoader = YES;
     isRequiredLoader = NO;//[self.pdfDocument hasAnyUnsavedChanges] ? YES : NO;
-
+    
     NSString *fileName = self.shelfItemManagedObject.URL.lastPathComponent.stringByDeletingPathExtension;
     if(backAction == FTSaveAction && [title isEqualToString:fileName]) {
         backAction = FTNormalAction;
     }
     isRequiredLoader = (backAction == FTSaveAction);
+    
+    if(backAction != FTNormalAction) {
+        NSString *saveAction = @"Normal";
+        switch (backAction) {
+            case FTSaveAction:
+                saveAction = @"Rename";
+                break;
+            case FTDeletePermanentlyAction:
+                saveAction = @"Delete";
+                break;;
+            case FTMoveToTrashAction:
+                saveAction = @"Move to Trash";
+                break;
+            default:
+                saveAction = @"Normal";
+                break;
+        }
+        FTCLSLog([NSString stringWithFormat:@"Save Action: %@",saveAction]);
+    }
     
     if (isRequiredLoader) {
         loadingIndicator = [FTLoadingIndicatorViewController showOnMode:FTLoadingIndicatorStyleActivityIndicator from:[self loadingPresentController]
@@ -1409,13 +1430,16 @@
     // If the action is save and no rename to make then save and exit as in production
     //if the action is save and rename then wait till save complete , wait till rename and then exit
     
+    BOOL isDeleteOperation = (backAction == FTDeletePermanentlyAction || backAction == FTMoveToTrashAction);
     [self saveChangesOnCompletion:^(BOOL success) {
-        //***************************************************
-        // Core Spotlight registration
-        //***************************************************
-        FTDocumentItemSpotLightWrapper *object = [[FTDocumentItemSpotLightWrapper alloc] initWithDocumentItem:self.shelfItemManagedObject.documentItem];
-        [[FTSearchIndexManager sharedManager] updateSearchIndex:object completion:nil];
-        //***************************************************
+        if (!isDeleteOperation) {
+            //***************************************************
+            // Core Spotlight registration
+            //***************************************************
+            FTDocumentItemSpotLightWrapper *object = [[FTDocumentItemSpotLightWrapper alloc] initWithDocumentItem:self.shelfItemManagedObject.documentItem];
+            [[FTSearchIndexManager sharedManager] updateSearchIndex:object completion:nil];
+            //***************************************************
+        }
         
         void (^callBack)(void) = ^ {
             [self closeDocumentWithShelfItemManagedObject:self.shelfItemManagedObject animate:true onCompletion: ^{
@@ -1442,7 +1466,8 @@
     }
               shouldCloseDocument:true
                     waitUntilSave:isRequiredLoader
-          shouldGenerateThumbnail:YES];
+                       saveAction:backAction
+          shouldGenerateThumbnail:!isDeleteOperation];
 }
 
 #pragma mark - Button actions -

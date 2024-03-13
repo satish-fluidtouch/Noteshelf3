@@ -67,9 +67,9 @@ extension FTENPublishManager {
                         else {
                             FTCLSLog("EN: sema signal");
                             semaphore.signal();
-                            runInMainThread {
-                                UIAlertController.showAlert(withTitle: "", message: NSLocalizedString("FailedToOpenDocumentUnexpectedError", comment: "Failed to open the document due to unexpected error"), from: Application.keyWindow?.visibleViewController, withCompletionHandler: nil);
-                            }
+//                            runInMainThread {
+//                                UIAlertController.showAlert(withTitle: "", message: NSLocalizedString("FailedToOpenDocumentUnexpectedError", comment: "Failed to open the document due to unexpected error"), from: Application.keyWindow?.visibleViewController, withCompletionHandler: nil);
+//                            }
                         }
                     }
                 }
@@ -81,6 +81,7 @@ extension FTENPublishManager {
                             openDocument(pin: pin);
                         }
                         else {
+                            semaphore.signal();
                             FTLogError("EN: Failed to retrive Pin from keychain")
                             loggingPrint("Failed to retrive Pin from keychain.")
                         }

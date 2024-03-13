@@ -296,6 +296,7 @@ class FTTextAnnotationViewController: UIViewController {
             self.setTextBackgroundColor(UIColor.clear)
             track("textmode_page_tapped", params: ["postit_color" : "clear"], screenName: FTScreenNames.textbox)
         }
+        FTCLSLog("IS REGULAR CLASS \(self.isRegularClass())")
         
         func updateTextConfig() {
             if let defaultFont = page?.parentDocument?.localMetadataCache?.defaultBodyFont {
