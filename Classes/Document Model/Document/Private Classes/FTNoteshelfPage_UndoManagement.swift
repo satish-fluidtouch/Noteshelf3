@@ -86,7 +86,7 @@ extension FTNoteshelfPage: FTPageUndoManagement {
                 selfObject.postUndoRedoNotification(filteredItem.refreshArea)
             })
         }
-        NotificationCenter.default.post(name: .didAddMedia, object: nil, userInfo: ["page" : self, "annotations": annotations])
+        NotificationCenter.default.post(name: .didAddMedia, object: self.parentDocument, userInfo: ["page" : self, "annotations": annotations])
         self.isDirty = pageModified;
     }
 

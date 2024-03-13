@@ -576,47 +576,56 @@ private extension FTPageViewController  {
 
 extension FTPageViewController: FTSaveClipDelegate {
     func didSelectCategory(name: String) {
-        let selectedAnnotations = self.lassoInfo.selectedAnnotations;
-        guard !selectedAnnotations.isEmpty else {
-            return;
-        }
-        var boundingRect = CGRect.zero
+        pdfPage?.parentDocument?.saveDocument(completionHandler: { isSuccess in
+            guard isSuccess else {
+                return
+            }
+            performClipCreation()
+        })
 
-        let tempDocURL = FTDocumentFactory.tempDocumentPath(FTUtils.getUUID());
-        let ftdocument = FTDocumentFactory.documentForItemAtURL(tempDocURL);
+        func performClipCreation() {
+            let selectedAnnotations = self.lassoInfo.selectedAnnotations;
+            guard !selectedAnnotations.isEmpty else {
+                return;
+            }
+            var boundingRect = CGRect.zero
 
-        let totalBoundingRect: CGRect = selectedAnnotations.reduce(.null) { partialResult, annotation in
-            partialResult.union(annotation.boundingRect)
-        }
+            let tempDocURL = FTDocumentFactory.tempDocumentPath(FTUtils.getUUID());
+            let ftdocument = FTDocumentFactory.documentForItemAtURL(tempDocURL);
 
-        let pdfGenerator = PDFGenerator()
-        let pdfPath = pdfGenerator.createPDF(pageSize: totalBoundingRect.size)
+            let totalBoundingRect: CGRect = selectedAnnotations.reduce(.null) { partialResult, annotation in
+                partialResult.union(annotation.boundingRect)
+            }
 
-        let info = FTDocumentInputInfo();
-        info.isTemplate = false
-        info.inputFileURL = pdfPath
-        info.overlayStyle = .clearWhite
-        info.isNewBook = true;
-        ftdocument.createDocument(info) { (error, _) in
-            let doc = (ftdocument as? FTNoteshelfDocument)
-            doc?.openDocument(purpose: .write, completionHandler: { success, error in
-                if let page = doc?.pages().first as? FTNoteshelfPage {
-                    let groupId = UUID().uuidString
-                    page.deepCopyAnnotations(selectedAnnotations, onCompletion: { copiedAnnotations in
-                        copiedAnnotations.forEach { annotation in
-                            annotation.groupId = groupId
-                            annotation.setOffset(CGPoint(x: -totalBoundingRect.origin.x, y: -totalBoundingRect.origin.y))
-                        }
-                        FTPDFExportView.snapshot(forPage: page, size: page.pdfPageRect.size, screenScale: 1, offscreenRenderer: nil, purpose: FTSnapshotPurposeThumbnail, windowHash: nil) { image, _ in
-                            doc?.saveAndCloseWithCompletionHandler({ success in
-                                if let selectedImage = image {
-                                    _ = try? FTSavedClipsProvider.shared.saveFileFrom(url: tempDocURL, to: name, thumbnail: selectedImage)
-                                }
-                            })
-                        }
-                    })
-                }
-            })
+            let pdfGenerator = PDFGenerator()
+            let pdfPath = pdfGenerator.createPDF(pageSize: totalBoundingRect.size)
+
+            let info = FTDocumentInputInfo();
+            info.isTemplate = false
+            info.inputFileURL = pdfPath
+            info.overlayStyle = .clearWhite
+            info.isNewBook = true;
+            ftdocument.createDocument(info) { (error, _) in
+                let doc = (ftdocument as? FTNoteshelfDocument)
+                doc?.openDocument(purpose: .write, completionHandler: { success, error in
+                    if let page = doc?.pages().first as? FTNoteshelfPage {
+                        let groupId = UUID().uuidString
+                        page.deepCopyAnnotations(selectedAnnotations, onCompletion: { copiedAnnotations in
+                            copiedAnnotations.forEach { annotation in
+                                annotation.groupId = groupId
+                                annotation.setOffset(CGPoint(x: -totalBoundingRect.origin.x, y: -totalBoundingRect.origin.y))
+                            }
+                            FTPDFExportView.snapshot(forPage: page, size: page.pdfPageRect.size, screenScale: 1, offscreenRenderer: nil, purpose: FTSnapshotPurposeThumbnail, windowHash: nil) { image, _ in
+                                doc?.saveAndCloseWithCompletionHandler({ success in
+                                    if let selectedImage = image {
+                                        _ = try? FTSavedClipsProvider.shared.saveFileFrom(url: tempDocURL, to: name, thumbnail: selectedImage)
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+            }
         }
     }
 }
