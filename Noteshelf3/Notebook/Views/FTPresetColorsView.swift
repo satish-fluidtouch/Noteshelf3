@@ -64,12 +64,6 @@ struct FTPresetSectionView: View {
                     }
                     .onDrop(of: [.text],
                             delegate: FTColorDropInDelegate(item: presetColor, viewModel: viewModel))
-                    .onChange(of: viewModel.currentSelectedColor) { hex in
-                        if let index = self.viewModel.presetEditIndex {
-                            self.viewModel.updatePresetColor(hex: hex, index: index)
-                            self.viewModel.updateCurrentColors()
-                        }
-                    }
                     .onChange(of: viewModel.presetColors) { colors in
                         if nil != self.viewModel.presetEditIndex {
                             self.findSectionColors()
