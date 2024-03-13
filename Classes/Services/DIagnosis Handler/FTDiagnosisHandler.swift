@@ -126,7 +126,7 @@ import MessageUI
     fileprivate func generateDocumentsDirectoryLog(_ toPath : String)
     {
         let filePath = toPath + "/DocumentsDirectory.log";
-        let directory = FTNoteshelfDocumentProvider.shared.generateDocumentsDirectoryLog()
+        let directory = FTNoteshelfDocumentProvider.shared.generateDocumentsDirectoryLog().0
         let combinedString = directory.joined(separator: "\n")
         do {
             try combinedString.write(toFile: filePath, atomically: true, encoding: .utf8)

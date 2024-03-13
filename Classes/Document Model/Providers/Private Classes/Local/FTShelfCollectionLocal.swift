@@ -141,6 +141,20 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
         NotificationCenter.default.post(name: Notification.Name.collectionUpdated, object: self, userInfo: [FTShelfItemsKey : [collection.URL]])
     }
     
+    func recoverShelf(_ corruptedURL: URL,title: String)
+    {
+        let uniqueName = FileManager.uniqueFileName(title+".shelf", inFolder: self.localDocumentsURL);
+        let destURL = self.localDocumentsURL.appendingPathComponent(uniqueName).urlByDeleteingPrivate();
+        var fileError : NSError?;
+        do {
+            try FileManager.init().moveItem(at: corruptedURL, to: destURL);
+        }
+        catch let error as NSError {
+            fileError = error;
+        }
+        self.addItemsToCache([destURL] as [AnyObject])
+    }
+    
     func deleteShelf(_ collection: FTShelfItemCollection, onCompletion:  @escaping ((NSError?, FTShelfItemCollection?) -> Void))
     {
         var fileError : NSError?;

@@ -80,7 +80,7 @@ struct FTEditableView: View {
     }
     private func didTapSubmitOrKeyboardHideOption(){
         let isTextEmpty = textFieldText.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty
-        if !isTextEmpty, item.type != .addnewCategory {
+        if item.type != .addnewCategory {
             item.title = textFieldText
         }
         self.onButtonSubmit(textFieldText)

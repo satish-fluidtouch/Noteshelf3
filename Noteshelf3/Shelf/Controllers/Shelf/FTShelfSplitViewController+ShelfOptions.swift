@@ -726,7 +726,9 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
     }
 
     func showGlobalSearchController() {
-        self.navigateToGlobalSearch()
+        FTNoteshelfDocumentProvider.shared.recoverBooksIfneeded()
+//        FTNoteshelfDocumentProvider.shared.generateDocumentsDirectoryLog()
+       // self.navigateToGlobalSearch()
     }
     
     func openGetInspiredPDF(_ url: URL,title: String) {

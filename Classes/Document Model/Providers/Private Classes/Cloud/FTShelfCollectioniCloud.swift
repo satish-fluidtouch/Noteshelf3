@@ -118,6 +118,32 @@ extension FTShelfCollectioniCloud: FTShelfCollection {
             });
         };
     }
+    
+    func recoverShelf(_ corruptedURL: URL, title: String) {
+        self.disableUpdates()
+        self.shelfs { items in
+            let name = self.uniqueFileName(title+".shelf", inItems: items);
+            let destURL = self.iCloudDocumentsURL.appendingPathComponent(name)
+            DispatchQueue.global().async(execute: {
+//                FTCLSLog("NFC - Rename Shelf: \(corruptedURL)");
+                let fileCoordinator = NSFileCoordinator(filePresenter: nil);
+                fileCoordinator.coordinate(writingItemAt: corruptedURL, options: NSFileCoordinator.WritingOptions.forMoving, writingItemAt: destURL, options: NSFileCoordinator.WritingOptions.forReplacing, error: nil, byAccessor: { newURL1, newURL2 in
+                    var error: NSError?;
+                    do {
+                        try FileManager().moveItem(at: newURL1, to: newURL2);
+//                        _ = self.moveItemInCache(collection, toURL: newURL2);
+                    } catch let failError as NSError {
+                        error = failError;
+                    }
+
+                    DispatchQueue.main.async(execute: {
+//                        onCompletion(error, collection);
+                        self.enableUpdates();
+                    });
+                });
+            });
+        }
+    }
 
     func deleteShelf(_ collection: FTShelfItemCollection, onCompletion: @escaping ((NSError?, FTShelfItemCollection?) -> Void)) {
         self.disableUpdates()

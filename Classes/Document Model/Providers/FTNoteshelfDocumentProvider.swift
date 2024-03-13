@@ -115,8 +115,9 @@ class FTNoteshelfDocumentProvider: NSObject {
         self.currentCollection().refreshShelfCollection(onCompletion: onCompletion);
     }
     
-    func generateDocumentsDirectoryLog() -> [String] {
+    func generateDocumentsDirectoryLog() -> ([String], [URL]) {
         var url =  FTUtils.noteshelfDocumentsDirectory().appendingPathComponent("User Documents")
+        var pathUrls = [URL]()
         if FTUserDefaults.defaults().iCloudOn, let iCloudUrl = FTNSiCloudManager.shared().iCloudRootURL() {
             url = iCloudUrl
         }
@@ -126,9 +127,29 @@ class FTNoteshelfDocumentProvider: NSObject {
             let item = eachItem.element;
             if let pathURL = (item as? URL)?.relativePath {
                 relativePaths.append(pathURL);
+                pathUrls.append(item as! URL)
             }
         })
-        return relativePaths
+        return (relativePaths, pathUrls)
+    }
+    
+    func recoverBooksIfneeded() {
+        var url =  FTUtils.noteshelfDocumentsDirectory().appendingPathComponent("User Documents")
+        if FTUserDefaults.defaults().iCloudOn, let iCloudUrl = FTNSiCloudManager.shared().iCloudRootURL() {
+            url = iCloudUrl
+        }
+        let urls = generateDocumentsDirectoryLog().1
+        var recoverableURLs = [URL]()
+        urls.forEach { eachUrl in
+            if eachUrl.relativePath.pathExtension == "ns3", eachUrl.relativePath.deletingLastPathComponent.lastPathComponent.hasPrefix(".shelf") {
+                recoverableURLs.append(eachUrl)
+            }
+        }
+        recoverableURLs.forEach { eachUrl in
+            let corruptedUrl = url.appending(path: eachUrl.relativePath.deletingLastPathComponent)
+            self.currentCollection().recoverShelf(corruptedUrl, title: "Recovered")
+            print(corruptedUrl)
+        }
     }
 
     fileprivate static func documentProvider(_ onCompletion : @escaping ((FTNoteshelfDocumentProvider) -> Void)) {

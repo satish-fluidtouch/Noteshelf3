@@ -26,9 +26,15 @@ protocol FTShelfCollection: NSObjectProtocol {
     func renameShelf(_ shelf: FTShelfItemCollection,
                      title: String,
                      onCompletion : @escaping ((NSError?, FTShelfItemCollection?) -> Void));
+    
+    func recoverShelf(_ corruptedURL: URL,title: String)
 }
 
 extension FTShelfCollection {
+    func recoverShelf(_ corruptedURL: URL,title: String)
+    {
+        
+    }
     func collection(withTitle title: String) -> FTShelfItemCollection? {
         assert(false, "collection: is not supported by default")
         return nil;
