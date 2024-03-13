@@ -21,15 +21,14 @@ class FTSavedClipsCollectionViewCell: UICollectionViewCell {
         self.contentView.layer.cornerRadius = 8
         self.contentView.layer.borderColor = UIColor.appColor(.grayDim).cgColor
         self.contentView.layer.borderWidth = 1.0
-        self.thumbnail.contentMode = .center
+
         if let image = clip.image {
             if thumbnail.bounds.width < image.size.width || thumbnail.bounds.height < image.size.height {
-                let width = min(image.size.width, image.size.height)
-                let cropped = image.croppedImage(at: CGRect(origin: .zero, size: CGSize(width: width, height: width)))
-                self.thumbnail.image = cropped
+                self.thumbnail.contentMode = .scaleAspectFit
             } else {
-                self.thumbnail.image = image
+                self.thumbnail.contentMode = .center
             }
+            self.thumbnail.image = image
         }
 
         if isEditing {

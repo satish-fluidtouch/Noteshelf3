@@ -768,7 +768,7 @@
 "SettingOptionTheme" = "主题";
 "SettingShowDateOnShelf" = "在书架上显示日期";
 "Settings" = "设置";
-"SettingsApplePencil" = "Apple铅笔";
+"SettingsApplePencil" = "Apple Pencil";
 "SettingsGeneral" = "通用";
 "SettingsNoteShelfHelp" = "帮助";
 "SettingsRateOnTheAppstore" = "在App Store上评分";
@@ -1197,6 +1197,7 @@
 "notebook.quickPageNavigator.pageNumber.Text" = "%d的%d";
 "notebook.restoring" = "恢复中...";
 "notebook.settings.moresettings" = "更多设置";
+"notebook.settings.showstatusbbar" = "显示状态栏";
 "notebook.shapesRack.NavTitle" = "形状";
 "notebook.share.NoteshelfFile" = "笔记本文件";
 "notebook.share.image" = "图像";
@@ -1437,6 +1438,7 @@
 "shortcut.toast.rotatePage" = "页面已旋转";
 "shortcut.toast.saveAllPagesAsPhotos" = "所有页面都保存在照片库中";
 "shortcut.toast.savePageAsPhoto" = "页面已保存至照片库";
+"show_status_bar" = "显示状态栏";
 "sidebar.allTags" = "所有标签";
 "sidebar.allTags.contextualMenu.editTags" = "编辑标签";
 "sidebar.allTags.contextualMenu.openInNewWindow" = "在新窗口打开";
@@ -1473,10 +1475,15 @@
 "sidebar.photos" = "照片";
 "sidebar.recording" = "记录";
 "sidebar.recordings" = "记录";
-"sidebar.topSection.home" = "家";
+"sidebar.topSection.home" = "主页";
 "sidebar.topSection.starred" = "标记";
 "sidebar.topSection.unfiled" = "未归档";
+"snippets.addtopage" = "添加到页面";
 "speechbubbles" = "对话框";
+"status_bar_info_footer" = "喜欢 Noteshelf 吗？%@ 在 App Store 上对我们进行评分。 它对我们的帮助将超出您的想象。";
+"status_bar_info_subtitle" = "许多人在记笔记时都要求使用状态栏。 您现在可以选择从更多菜单中显示状态栏。";
+"status_bar_info_title" = "我们听到你了！";
+"status_bar_tap_here" = "点击此处";
 "stickers.alert.error" = "错误";
 "stickers.alert.ok" = "好的";
 "stickersTitle" = "贴纸";
@@ -1537,7 +1544,7 @@
 "textLink_documentDeleted_title" = "笔记本已被删除";
 "textLink_documentItselfNotAvailable_message" = "链接到该内容的笔记本已被删除。";
 "textLink_editLink" = "编辑链接";
-"textLink_linkTo" = "链接到";
+"textLink_linkTo" = "添加链接";
 "textLink_linktext" = "链接文本";
 "textLink_notebookDeletedOrUndownloaded" = "无法访问与此链接关联的笔记本。";
 "textLink_notebookNotDownloadedMessage" = "尚未从 iCloud 下载链接到此内容的笔记本。 请稍后再试。";
@@ -1602,4 +1609,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 20 February 2024 at 6:21 PM
+// Last Synced by Akshay on 13 March 2024 at 19:23

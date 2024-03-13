@@ -29,7 +29,14 @@ class FTSaveClipPreviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.previewImageContainer.layer.cornerRadius = 8.0
-        self.previewImageView.image = previewImage
+        if let previewImage {
+            if previewImageView.bounds.width < previewImage.size.width || previewImageView.bounds.height < previewImage.size.height {
+                self.previewImageView.contentMode = .scaleAspectFit
+            } else {
+                self.previewImageView.contentMode = .center
+            }
+            self.previewImageView.image = previewImage
+        }
 
         addClipButton.layer.cornerRadius = 10.0
 

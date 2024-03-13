@@ -32,6 +32,7 @@ class FTSavedClipsViewController: UIViewController {
     @IBOutlet weak var categoryTitleTextField: UITextField!
 
     @IBOutlet weak var emptyClipsView: UIView!
+    @IBOutlet weak var emptyCategoryLabel: UILabel!
     private var cellType: FTSavedClipsCellType = .normal
     private let viewModel = FTSavedClipsViewModel()
     private var minimumColumnSpacing : CGFloat = 12.0
@@ -53,7 +54,6 @@ class FTSavedClipsViewController: UIViewController {
         collectionView.dragInteractionEnabled = true
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.backgroundView = emptyClipsView
     }
 
     @IBAction func tapOnBackButton(_ sender: UIButton) {
@@ -86,6 +86,7 @@ class FTSavedClipsViewController: UIViewController {
             } else {
                 self.segmentHeightConstraint.constant = 0
             }
+            self.cellType == .normal
             self.endEditing()
         }
         let rows = viewModel.numberOfRowsForSection(section: self.selectedSegmentIndex)
@@ -182,12 +183,17 @@ extension FTSavedClipsViewController: UICollectionViewDelegate, UICollectionView
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let rows = viewModel.numberOfRowsForSection(section: self.selectedSegmentIndex)
-        if rows == 0 {
-            collectionView.backgroundView?.isHidden = false
+        if viewModel.categoryNames().isEmpty {
+            collectionView.backgroundView = emptyClipsView
             editButton.isHidden = true
         } else {
-            collectionView.backgroundView?.isHidden = true
+            collectionView.backgroundView = emptyCategoryLabel
             editButton.isHidden = false
+        }
+        if rows == 0 {
+            collectionView.backgroundView?.isHidden = false
+        } else {
+            collectionView.backgroundView?.isHidden = true
         }
         return rows
     }
@@ -231,7 +237,7 @@ extension FTSavedClipsViewController: UICollectionViewDelegate, UICollectionView
         let identifier = indexPath as NSIndexPath
 
         let actionProvider : ([UIMenuElement]) -> UIMenu? = { _ in
-            let addACtion = UIAction(title: NSLocalizedString("Add", comment: "Add"),
+            let addACtion = UIAction(title: NSLocalizedString("snippets.addtopage", comment: "Add"),
                                      image: nil,
                                      identifier: nil,
                                      discoverabilityTitle: nil,
@@ -242,7 +248,16 @@ extension FTSavedClipsViewController: UICollectionViewDelegate, UICollectionView
                     self?.delegate?.didTapSavedClip(clip: clip)
                 }
             }
-            return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: [addACtion])
+            let deleteACtion = UIAction(title: NSLocalizedString("delete", comment: "delete"),
+                                     image: nil,
+                                     identifier: nil,
+                                     discoverabilityTitle: nil,
+                                     attributes: .destructive,
+                                     state: .off) { [weak self] _ in
+                guard let self = self else { return }
+                    self.removeItem(indexPath: indexPath)
+            }
+            return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: [addACtion, deleteACtion])
         }
         contextMenu = UIContextMenuConfiguration(identifier: identifier, previewProvider: {
             guard let controller = UIStoryboard(name: "FTDocumentEntity", bundle: nil).instantiateViewController(withIdentifier: "FTClipPreviewViewController") as? FTClipPreviewViewController else {

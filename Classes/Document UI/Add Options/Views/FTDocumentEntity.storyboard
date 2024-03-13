@@ -2343,6 +2343,7 @@
                         <outlet property="deleteCategory" destination="wVI-66-KGf" id="m5L-CC-QZf"/>
                         <outlet property="deleteHeightConstraint" destination="BHi-Ss-uRr" id="mpe-vQ-q0b"/>
                         <outlet property="editButton" destination="okn-zL-Xc5" id="Xy9-iV-grc"/>
+                        <outlet property="emptyCategoryLabel" destination="xVC-wg-3Un" id="uge-Du-IhK"/>
                         <outlet property="emptyClipsView" destination="h9c-ri-m9j" id="B23-tR-bxs"/>
                         <outlet property="segmentHeightConstraint" destination="gcr-wD-hum" id="oW7-9D-5vT"/>
                         <outlet property="segmentedControl" destination="Dq1-Sx-RzI" id="vm0-bQ-Qde"/>
@@ -2394,11 +2395,17 @@
                         <constraint firstItem="1Uk-sm-VG8" firstAttribute="top" secondItem="lld-BR-bFy" secondAttribute="bottom" constant="32" id="stO-OL-U6f"/>
                         <constraint firstItem="ImX-Wq-JFH" firstAttribute="top" secondItem="1Uk-sm-VG8" secondAttribute="bottom" constant="8" symbolic="YES" id="wu1-Ka-dsj"/>
                     </constraints>
-                    <connections>
-                        <outlet property="subTitleLabel" destination="ImX-Wq-JFH" id="cTy-L5-Vdo"/>
-                        <outlet property="titleLabel" destination="1Uk-sm-VG8" id="D8Y-ns-aTY"/>
-                    </connections>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="clip.noCategory" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xVC-wg-3Un" customClass="FTCustomLabel" customModule="FTCommon">
+                    <rect key="frame" x="0.0" y="0.0" width="174" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" name="black70"/>
+                    <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="clip.noCategory"/>
+                    </userDefinedRuntimeAttributes>
+                </label>
             </objects>
             <point key="canvasLocation" x="2898.5507246376815" y="1529.4642857142856"/>
         </scene>
@@ -2453,7 +2460,7 @@
                                                     <rect key="frame" x="5" y="5" width="364" height="176"/>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" name="white60"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="h0W-ix-r9P" firstAttribute="top" secondItem="uwH-L3-WpN" secondAttribute="top" constant="5" id="0uZ-cA-Xeh"/>
                                                 <constraint firstAttribute="trailing" secondItem="h0W-ix-r9P" secondAttribute="trailing" constant="5" id="QE5-Xj-2Hp"/>

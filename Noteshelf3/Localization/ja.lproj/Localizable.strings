@@ -1197,6 +1197,7 @@
 "notebook.quickPageNavigator.pageNumber.Text" = "%d / %d";
 "notebook.restoring" = "復元中";
 "notebook.settings.moresettings" = "その他の設定";
+"notebook.settings.showstatusbbar" = "ステータスバーを表示";
 "notebook.shapesRack.NavTitle" = "図形";
 "notebook.share.NoteshelfFile" = "ノートシェルフファイル";
 "notebook.share.image" = "イメージ";
@@ -1437,6 +1438,7 @@
 "shortcut.toast.rotatePage" = "ページが回転しています";
 "shortcut.toast.saveAllPagesAsPhotos" = "すべてのページは写真ライブラリに保存されます。";
 "shortcut.toast.savePageAsPhoto" = "ページは写真ライブラリに保存されました";
+"show_status_bar" = "ステータスバーを表示";
 "sidebar.allTags" = "すべてのタグ";
 "sidebar.allTags.contextualMenu.editTags" = "タグを編集";
 "sidebar.allTags.contextualMenu.openInNewWindow" = "新しいウィンドウで開く";
@@ -1476,7 +1478,12 @@
 "sidebar.topSection.home" = "ホーム";
 "sidebar.topSection.starred" = "お気に入り";
 "sidebar.topSection.unfiled" = "未整理";
+"snippets.addtopage" = "ページに追加する";
 "speechbubbles" = "吹き出し";
+"status_bar_info_footer" = "Noteshelf を楽しんでいますか? App Store で評価するには %@ してください。 それはあなたが想像している以上に私たちを助けてくれるでしょう。";
+"status_bar_info_subtitle" = "ユーザーの多くが、ノートを取る際にステータスバーを要望しました。 もっとメニューからステータスバーを表示するオプションを追加しました。";
+"status_bar_info_title" = "私たちはあなたの声を聞きました！";
+"status_bar_tap_here" = "ここをタップ";
 "stickers.alert.error" = "エラー";
 "stickers.alert.ok" = "OK";
 "stickersTitle" = "ステッカー";
@@ -1537,7 +1544,7 @@
 "textLink_documentDeleted_title" = "ノートブックは削除されました";
 "textLink_documentItselfNotAvailable_message" = "コンテンツにリンクされているノートブックが削除されました。";
 "textLink_editLink" = "編集リンク";
-"textLink_linkTo" = "リンク先";
+"textLink_linkTo" = "リンクを追加";
 "textLink_linktext" = "リンクテキスト";
 "textLink_notebookDeletedOrUndownloaded" = "このリンクに関連付けられたノートブックにアクセスできません。";
 "textLink_notebookNotDownloadedMessage" = "このコンテンツにリンクされているノートブックは、まだ iCloud からダウンロードされていません。 しばらくしてからもう一度お試しください。";
@@ -1602,4 +1609,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 20 February 2024 at 6:21 PM
+// Last Synced by Akshay on 13 March 2024 at 19:23
