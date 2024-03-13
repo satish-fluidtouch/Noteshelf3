@@ -123,7 +123,7 @@ class FTSavedClipsViewController: UIViewController {
             do {
                 try self.viewModel.removeItemFor(indexPath: IndexPath(item: index, section: self.selectedSegmentIndex))
                 collectionView.deleteItems(at: [IndexPath(row: index, section: 0)])
-                if self.collectionView.numberOfItems(inSection: self.selectedSegmentIndex) == 0 {
+                if self.collectionView.numberOfItems(inSection: 0) == 0 {
                     self.endEditing()
                 }
             } catch {
