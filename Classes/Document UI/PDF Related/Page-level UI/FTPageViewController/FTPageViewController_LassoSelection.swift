@@ -824,7 +824,7 @@ private extension FTPageViewController
             pbInfo[UIPasteboard.pdfAnnotationUTI()] = pbData;
             var rect = CGRect.null;
             if let img = self.snapshotOf(annotations: selectedAnnotations, enclosedRect: &rect) {
-                pbInfo[kUTTypePNG as String] = img;
+                pbInfo[UTType.png.identifier] = img;
             }
             pasteBoard.items = [pbInfo];
         }
@@ -1101,11 +1101,17 @@ private extension FTPageViewController
                 
                 let offset = CGPoint(x:antsViewOrigin.x-lastAnnotationBoundingRect.origin.x-offsetFromlastAnnotation.x,y: antsViewOrigin.y-lastAnnotationBoundingRect.origin.y-offsetFromlastAnnotation.y);
                 let hashKey = self.windowHash;
+                var groups = [String: String]()
                 pastedAnnotations.forEach { (annotation) in
                     annotation.setSelected(true, for: hashKey);
                     annotation.uuid = FTUtils.getUUID();
                     annotation.setOffset(offset);
                     annotation.associatedPage = self.pdfPage;
+                    if let gid = annotation.groupId {
+                        let newGid = groups[gid] ?? UUID().uuidString
+                        annotation.groupId = newGid
+                        groups[gid] = newGid
+                    }
                 }
                 self.lassoInfo.selectedAnnotations = pastedAnnotations;
                 self.addAnnotations(pastedAnnotations, refreshView: false);
