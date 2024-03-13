@@ -20,7 +20,6 @@ class FTRecordViewModel: NSObject, ObservableObject {
 
     override init() {
         super.init()
-        NotificationCenter.default.addObserver(self, selector: #selector(didClickOnRecording(_:)), name: NSNotification.Name(rawValue: FTRecordingButtonDidClick), object: nil)
         do {
             try self.recordingSession.setCategory(AVAudioSession.Category.playAndRecord,mode : .default)
             try self.recordingSession.setActive(true)
@@ -37,7 +36,6 @@ class FTRecordViewModel: NSObject, ObservableObject {
                     if (self.audioService == nil) {
                         self.audioService = FTAudioService()
                         self.audioService!.delegate = self
-                        NotificationCenter.default.post(Notification.init(name: Notification.Name(rawValue: FTRecordingButtonDidClick)))
                     }
 
                     if self.audioActivity == nil ||
@@ -62,12 +60,6 @@ class FTRecordViewModel: NSObject, ObservableObject {
 //                                      actions: [okAction])
                 }
             }
-        }
-    }
-
-    @objc func didClickOnRecording(_ notification:Notification){
-        if(audioServiceCurrentState == FTAudioServiceStatus.playing){
-            self.audioService?.stopPlayingAudio()
         }
     }
 

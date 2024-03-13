@@ -9,8 +9,14 @@
 import Foundation
 import WatchKit
 
-class FTAudioService: NSObject {
+private class FTAudioFileInfo: NSObject{
+    var samplerRate: Double = 12000
+    var fileLength: AVAudioFramePosition = AVAudioFramePosition(0);
+    var currentFrame: AVAudioFramePosition?
+    var duration: Double = 0.0
+}
 
+class FTAudioService: NSObject {
     var playerVolume: Float{
         set {
             UserDefaults.standard.setValue(newValue, forKey: "defaultVolume")
@@ -22,13 +28,15 @@ class FTAudioService: NSObject {
 
     private var audioTimer:Timer!
     private var isRecording: Bool = false
-    private var audioActivity = FTAudioActivity()
 
     private var audioRecorder: AVAudioRecorder!
     private var audioEngine: AVAudioEngine!
     private var playerNode: AVAudioPlayerNode!
     private var audioFileBuffer: AVAudioPCMBuffer!
     private var audioFile : AVAudioFile!
+
+    private var audioInfo = FTAudioFileInfo()
+    private var audioActivity = FTAudioActivity()
 
     weak var delegate: FTAudioServiceDelegate?
 
@@ -45,12 +53,13 @@ class FTAudioService: NSObject {
                                                name: AVAudioSession.interruptionNotification,
                                                object: sessionInstance)
 
-        self.audioEngine = AVAudioEngine.init()
-        do
-        {
-            self.playerNode =  AVAudioPlayerNode()
+        self.audioEngine = AVAudioEngine()
+        self.playerNode =  AVAudioPlayerNode()
+        do {
             self.audioEngine.attach(self.playerNode)
-            self.audioEngine.connect(self.playerNode, to:self.audioEngine.mainMixerNode, format: AVAudioFormat.init(standardFormatWithSampleRate: 12000, channels: 1))
+            self.audioEngine.connect(self.playerNode,
+                                     to:self.audioEngine.mainMixerNode,
+                                     format: AVAudioFormat(standardFormatWithSampleRate: 12000, channels: 1))
             self.audioEngine.prepare()
             try self.audioEngine.start()
         }
@@ -64,9 +73,8 @@ class FTAudioService: NSObject {
     }
 }
 
-extension FTAudioService: AVAudioRecorderDelegate{
-    //MARK:- AudioRecording
-    @objc internal func handleInterruption(_ notification: Notification) {
+private extension FTAudioService {
+    @objc func handleInterruption(_ notification: Notification) {
         let theInterruptionType = notification.userInfo![AVAudioSessionInterruptionTypeKey] as! UInt
 #if DEBUG
         NSLog("Session interrupted > --- %@ ---\n", theInterruptionType == AVAudioSession.InterruptionType.began.rawValue ? "Begin Interruption" : "End Interruption")
@@ -81,9 +89,68 @@ extension FTAudioService: AVAudioRecorderDelegate{
         }
     }
 
+    @objc func updateAudioTimer() {
+        if(self.audioActivity.audioServiceStatus == FTAudioServiceStatus.recording){
+            self.audioActivity.currentTime = self.audioRecorder.currentTime
+            self.audioActivity.totalDuration = 0
+        }
+        else if(self.audioActivity.audioServiceStatus == FTAudioServiceStatus.playing){
+            //self.audioActivity.currentTime = self.currentTime()
+            self.audioActivity.currentTime = self.audioActivity.currentTime + 1.0
+        }
+    }
+
+     func handleAudioPlayCompletion() {
+        DispatchQueue.main.async {
+            if self.audioTimer.isValid {
+                self.audioTimer.invalidate()
+                self.audioTimer = nil
+            }
+            if(audioServiceCurrentState != FTAudioServiceStatus.recording) {
+                self.audioActivity.audioServiceStatus = FTAudioServiceStatus.none
+                audioServiceCurrentState = FTAudioServiceStatus.none
+            }
+            self.delegate?.audioServiceDidFinishPlaying(withError: nil)
+        }
+    }
+
+    func currentTime() -> Double {
+        guard self.playerNode.isPlaying else {
+            return 0
+        }
+        if let lastRenderTime = self.playerNode.lastRenderTime,
+           let playerTime = self.playerNode.playerTime(forNodeTime: lastRenderTime) {
+            var currentTime = Double(playerTime.sampleTime) / playerTime.sampleRate
+            if let currentFrame = self.audioInfo.currentFrame {
+                let start = Double(currentFrame)/self.audioInfo.samplerRate
+                currentTime += start
+            }
+            return floor(currentTime)
+        }
+        return 0
+    }
+
+    func isAudioPlaybackCompleted() -> Bool {
+        let remainingTime = self.audioInfo.duration - self.audioActivity.currentTime
+        let threshold: Double = 0.1
+        return remainingTime <= threshold
+    }
+}
+
+// MARK: AVAudioRecorderDelegate
+extension FTAudioService: AVAudioRecorderDelegate {
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        self.finishRecording(success: true)
+    }
+}
+
+// MARK: Recorder related
+extension FTAudioService {
     func recordAudio(atURL audioURL:URL) -> FTAudioActivity {
         let settings = [
-            AVFormatIDKey: Int(kAudioFormatMPEG4AAC)]
+            AVFormatIDKey: Int(kAudioFormatMPEG4AAC)
+            , AVSampleRateKey: Int(12000)
+        ]
 
         do {
             self.audioRecorder = try AVAudioRecorder(url: audioURL, settings: settings)
@@ -93,8 +160,6 @@ extension FTAudioService: AVAudioRecorderDelegate{
             self.audioActivity.audioServiceStatus = FTAudioServiceStatus.recording
             self.audioActivity.currentTime = 0
             self.audioActivity.totalDuration = 0
-            WKInterfaceDevice.current().play(.click)
-
             self.audioTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateAudioTimer), userInfo: nil, repeats: true)
             return self.audioActivity
         }
@@ -105,16 +170,6 @@ extension FTAudioService: AVAudioRecorderDelegate{
 #endif
             finishRecording(success: false)
             return self.audioActivity
-        }
-    }
-
-    @objc func updateAudioTimer(){
-        if(self.audioActivity.audioServiceStatus == FTAudioServiceStatus.recording){
-            self.audioActivity.currentTime = self.audioRecorder.currentTime
-            self.audioActivity.totalDuration = 0
-        }
-        else if(self.audioActivity.audioServiceStatus == FTAudioServiceStatus.playing){
-            self.audioActivity.currentTime = self.audioActivity.currentTime + 1.0
         }
     }
 
@@ -148,57 +203,71 @@ extension FTAudioService: AVAudioRecorderDelegate{
 
     func finishRecording(success: Bool) {
         self.audioActivity.audioServiceStatus = FTAudioServiceStatus.none
-        WKInterfaceDevice.current().play(.click)
         if(success){
             self.delegate?.audioServiceDidFinishRecording(withURL: self.audioActivity.audioURL!)
         }
     }
-
-    //MARK:- AVAudioRecorderDelegate
-    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-        if flag {
-            self.finishRecording(success: true)
-        } else {
-            self.finishRecording(success: true)// Just to save recording
-        }
-    }
 }
 
-extension FTAudioService{
-    //MARK:- AudioPlaying
+// MARK: - Player related
+extension FTAudioService {
     func playAudioWithURL(audioURL:URL, at time: Double = 0.0) -> FTAudioActivity {
         self.audioFile = try? AVAudioFile.init(forReading: audioURL)
-        weak var weakSelf = self
+        self.audioInfo.samplerRate = self.audioFile.processingFormat.sampleRate
+        self.audioInfo.fileLength = self.audioFile.length
+        self.audioInfo.duration = floor(Double(self.audioInfo.fileLength)/self.audioInfo.samplerRate)
+        
+        let startFrame = AVAudioFramePosition(self.audioInfo.samplerRate * time)
+        let framestoplay = self.audioInfo.fileLength - startFrame
+        self.audioInfo.currentFrame = startFrame
 
-        let sampleRate = self.playerNode.outputFormat(forBus: 0).sampleRate
-        let newsampletime = AVAudioFramePosition(sampleRate * max((recentPlayedAudio["currentTime"] as! Double)-1.0, time))
-        let framestoplay = self.audioFile.length - newsampletime
-        self.audioActivity.currentTime = max((recentPlayedAudio["currentTime"] as! Double)-1.0, time)
-
-        self.playerNode.scheduleSegment(self.audioFile, startingFrame: newsampletime, frameCount: AVAudioFrameCount(framestoplay), at: nil, completionCallbackType: AVAudioPlayerNodeCompletionCallbackType.dataPlayedBack) { (completionType) in
-            print("zzzz - completion type: \(completionType)")
-            DispatchQueue.main.async {
-                if(weakSelf?.audioActivity.audioServiceStatus == FTAudioServiceStatus.playing){
-
-                    if self.audioTimer.isValid{
-                        self.audioTimer.invalidate()
-                        self.audioTimer = nil
-                    }
-                    if(audioServiceCurrentState != FTAudioServiceStatus.recording){
-                        weakSelf?.audioActivity.audioServiceStatus = FTAudioServiceStatus.none
-                        audioServiceCurrentState = FTAudioServiceStatus.none
-                    }
-                    weakSelf?.delegate?.audioServiceDidFinishPlaying(withError: nil)
-                }
+        self.audioActivity.currentTime = time
+        self.playerNode.scheduleSegment(self.audioFile,
+                                        startingFrame: startFrame,
+                                        frameCount: AVAudioFrameCount(framestoplay),
+                                        at: nil,
+                                        completionCallbackType: AVAudioPlayerNodeCompletionCallbackType.dataPlayedBack) { [weak self] (completionType) in
+            guard let self else {
+                return
+            }
+            print("zzzz - scheduleSegment completion - play audio")
+            if self.isAudioPlaybackCompleted() {
+                self.handleAudioPlayCompletion()
             }
         }
-
-        self.audioActivity.totalDuration = 0
         self.audioTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateAudioTimer), userInfo: nil, repeats: true)
         self.playerNode.play()
         self.playerNode.volume = self.playerVolume
         self.audioActivity.audioServiceStatus = FTAudioServiceStatus.playing
         return self.audioActivity
+    }
+
+    func seekAudio(by time: Double) {
+        let sampleRate = self.audioInfo.samplerRate
+        let currentTime = self.audioActivity.currentTime //self.currentTime()
+        let timeToPlay = currentTime + time
+        let framePosition = AVAudioFramePosition(timeToPlay * sampleRate)
+        let songLengthSamples = audioFile.length
+        let framesToPlay = songLengthSamples - framePosition
+        self.playerNode.stop()
+
+        self.audioInfo.currentFrame = framePosition
+        self.playerNode.scheduleSegment(self.audioFile,
+                                        startingFrame: framePosition,
+                                        frameCount: AVAudioFrameCount(framesToPlay),
+                                        at: nil,
+                                        completionCallbackType: AVAudioPlayerNodeCompletionCallbackType.dataPlayedBack) { [weak self] (completionType) in
+            guard let self else {
+                return
+            }
+            print("zzzz - scheduleSegment completion - seek audio")
+            if self.isAudioPlaybackCompleted() {
+                self.handleAudioPlayCompletion()
+            }
+        }
+        self.playerNode.volume = self.playerVolume
+        self.playerNode.play()
+        self.audioActivity.currentTime = timeToPlay
     }
 
     func pausePlayingAudio() {

@@ -8,8 +8,6 @@
 
 import Foundation
 
-public let FTRecordingButtonDidClick  = "FTRecordingButtonDidClick"
-
 @objc class FTVisualizationSettings: NSObject {
     @objc var maxFrequency: Float = 7000.0
     @objc var minFrequency: Float = 400.0

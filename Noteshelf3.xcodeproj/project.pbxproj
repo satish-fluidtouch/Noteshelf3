@@ -1984,7 +1984,6 @@
 		E78DE6CC2B984EE7000DAA1B /* FTRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78DE6CB2B984EE7000DAA1B /* FTRecordView.swift */; };
 		E78DE6CE2B985135000DAA1B /* FTRecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78DE6CD2B985135000DAA1B /* FTRecordViewModel.swift */; };
 		E78DE6DE2B985819000DAA1B /* FTAudioDataProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = E78DE6DA2B9856D9000DAA1B /* FTAudioDataProcessor.m */; };
-		E78DE6DF2B985822000DAA1B /* FTAudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78DE6D72B985621000DAA1B /* FTAudioService.swift */; };
 		E78DE6E02B985827000DAA1B /* FTAudioServiceProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78DE6DC2B985757000DAA1B /* FTAudioServiceProtocols.swift */; };
 		E78DE6E32B9858EC000DAA1B /* FTVisualizationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78DE6E12B9858DD000DAA1B /* FTVisualizationSettings.swift */; };
 		E78DE6E82B9870FC000DAA1B /* FTAudioActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78DE6E62B987077000DAA1B /* FTAudioActivity.swift */; };
@@ -2153,6 +2152,7 @@
 		E7C71A75288E795A00AF2598 /* ValueTrackConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C71A5E288E795900AF2598 /* ValueTrackConfiguration.swift */; };
 		E7C71A76288E795A00AF2598 /* EnvironmentValues+TrackValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C71A5F288E795900AF2598 /* EnvironmentValues+TrackValue.swift */; };
 		E7C71A77288E795A00AF2598 /* VerticalValueTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C71A61288E795900AF2598 /* VerticalValueTrack.swift */; };
+		E7C8FF2D2BA08E4400B4A6AE /* FTAudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C8FF2C2BA08E4300B4A6AE /* FTAudioService.swift */; };
 		E7CCA90D29DC007B0010D619 /* FTToolbarConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CCA90C29DC007B0010D619 /* FTToolbarConfig.swift */; };
 		E7CD243D2AF8EA7100BB8AE5 /* FTFavoriteSizeEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CD243C2AF8EA7100BB8AE5 /* FTFavoriteSizeEditController.swift */; };
 		E7CD243F2AF8F37500BB8AE5 /* FTFavoriteColorEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CD243E2AF8F37500BB8AE5 /* FTFavoriteColorEditController.swift */; };
@@ -4307,7 +4307,6 @@
 		E788FBBE29768585004A526D /* FTNotebookTagsSearchProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNotebookTagsSearchProcessor.swift; sourceTree = "<group>"; };
 		E78DE6CB2B984EE7000DAA1B /* FTRecordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTRecordView.swift; sourceTree = "<group>"; };
 		E78DE6CD2B985135000DAA1B /* FTRecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTRecordViewModel.swift; sourceTree = "<group>"; };
-		E78DE6D72B985621000DAA1B /* FTAudioService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAudioService.swift; sourceTree = "<group>"; };
 		E78DE6D92B9856D9000DAA1B /* FTAudioDataProcessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FTAudioDataProcessor.h; sourceTree = "<group>"; };
 		E78DE6DA2B9856D9000DAA1B /* FTAudioDataProcessor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FTAudioDataProcessor.m; sourceTree = "<group>"; };
 		E78DE6DC2B985757000DAA1B /* FTAudioServiceProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAudioServiceProtocols.swift; sourceTree = "<group>"; };
@@ -4455,6 +4454,7 @@
 		E7C71A5E288E795900AF2598 /* ValueTrackConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueTrackConfiguration.swift; sourceTree = "<group>"; };
 		E7C71A5F288E795900AF2598 /* EnvironmentValues+TrackValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+TrackValue.swift"; sourceTree = "<group>"; };
 		E7C71A61288E795900AF2598 /* VerticalValueTrack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerticalValueTrack.swift; sourceTree = "<group>"; };
+		E7C8FF2C2BA08E4300B4A6AE /* FTAudioService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTAudioService.swift; sourceTree = "<group>"; };
 		E7C980C3251DE2F600AA37C9 /* FTShapeUtility+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTShapeUtility+extension.swift"; sourceTree = "<group>"; };
 		E7CCA90C29DC007B0010D619 /* FTToolbarConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTToolbarConfig.swift; sourceTree = "<group>"; };
 		E7CD243C2AF8EA7100BB8AE5 /* FTFavoriteSizeEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoriteSizeEditController.swift; sourceTree = "<group>"; };
@@ -10697,7 +10697,7 @@
 			isa = PBXGroup;
 			children = (
 				E78DE6E62B987077000DAA1B /* FTAudioActivity.swift */,
-				E78DE6D72B985621000DAA1B /* FTAudioService.swift */,
+				E7C8FF2C2BA08E4300B4A6AE /* FTAudioService.swift */,
 				E78DE6D92B9856D9000DAA1B /* FTAudioDataProcessor.h */,
 				E78DE6DA2B9856D9000DAA1B /* FTAudioDataProcessor.m */,
 				E78DE6DC2B985757000DAA1B /* FTAudioServiceProtocols.swift */,
@@ -14422,6 +14422,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E79D21382B8F31AA00712028 /* FTRecordingsViewModel.swift in Sources */,
+				E7C8FF2D2BA08E4400B4A6AE /* FTAudioService.swift in Sources */,
 				E79D21352B8F311A00712028 /* FTRecordingsView.swift in Sources */,
 				E78DE6F92B987BCB000DAA1B /* FTHashTable.swift in Sources */,
 				E75329C72B99968D00C22267 /* FTWatchUtils.swift in Sources */,
@@ -14447,7 +14448,6 @@
 				E78DE6EE2B9878CD000DAA1B /* FTWatchRecordingCollection_Local.swift in Sources */,
 				E78DE6EF2B9878D6000DAA1B /* FTWatchRecordingCollection.swift in Sources */,
 				E75CD84D2B8F0B4600D59F21 /* Noteshelf3_WatchApp.swift in Sources */,
-				E78DE6DF2B985822000DAA1B /* FTAudioService.swift in Sources */,
 				E78DE6CE2B985135000DAA1B /* FTRecordViewModel.swift in Sources */,
 				E78DE6DE2B985819000DAA1B /* FTAudioDataProcessor.m in Sources */,
 				E75329C92B999E8F00C22267 /* FTWatchLandView.swift in Sources */,
