@@ -8,67 +8,110 @@
 
 import SwiftUI
 
-struct FTRecordView: View {
-    @State private var isRecording: Bool = false
-    @StateObject private var viewModel = FTRecordViewModel()
+private let opacityValues: [Double] = [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0]
+private let gradientColors: [Color] = opacityValues.map { opacity in
+    Color(red: 224/255, green: 110/255, blue: 81/255)
+        .opacity(opacity)
+}
+private let gradient = AngularGradient(gradient: Gradient(colors: gradientColors), center: .center, angle: .degrees(0))
 
-    private let recordColor = Color(red: 224/255, green: 110/255, blue: 81/255)
+struct FTRecordView: View {
+    @StateObject private var viewModel = FTRecordViewModel()
+    @State private var isRecording: Bool = false
 
     var body: some View {
-        VStack {
+        if !isRecording {
+            FTStartRecordView(isRecording: $isRecording)
+                .environmentObject(viewModel)
+        } else {
+            FTStopRecordView(isRecording: $isRecording)
+                .environmentObject(viewModel)
+        }
+    }
+}
+
+struct FTStartRecordView: View {
+    @Binding var isRecording: Bool
+    @EnvironmentObject var viewModel: FTRecordViewModel
+
+    private let borderWidth: CGFloat = 4.0
+    private let gradient = AngularGradient(gradient: Gradient(colors: gradientColors), center: .center, angle: .degrees(0))
+
+    var body: some View {
+        ZStack {
+            Circle()
+                .fill(gradientColors[8])
+                .frame(width: 118.0)
+
+            Circle()
+                .fill(gradientColors[0])
+                .frame(width: 74)
+
+            Circle()
+                .stroke(style: StrokeStyle(lineWidth: borderWidth))
+                .foregroundStyle(gradientColors[7])
+                .frame(width: 122)
+        }
+        .onTapGesture {
+            self.viewModel.handleRecordTapAction()
+            self.isRecording = true
+        }
+    }
+}
+
+struct FTStopRecordView: View {
+    @Binding var isRecording: Bool
+    @State private var angle: Double = 0.0
+    @EnvironmentObject var viewModel: FTRecordViewModel
+
+    private let borderWidth: CGFloat = 4.0
+
+    var body: some View {
+        VStack(spacing: 16.0) {
             ZStack {
-                if !isRecording {
-                    Circle()
-                        .fill(recordColor)
-                        .frame(width: 74, height: 74)
-                } else {
-                    timerView
-                }
+                Text(viewModel.durationStr)
+                    .foregroundColor(.white)
+                    .font(Font.system(size: 30.0))
 
-                RoundedDashedCircle()
-                    .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round, dash: [1, 10]))
-                    .foregroundStyle(recordColor)
-                    .frame(width: 110, height: 110)
+                Circle()
+                    .fill(gradientColors[8])
+                    .frame(width: 96)
+
+                outerCircle
+                    .frame(width: 100)
             }
-
-            Spacer()
-                .frame(height: 24)
 
             Button(action: {
                 self.viewModel.handleRecordTapAction()
-                self.isRecording.toggle()
+                self.isRecording = false
             }) {
-                Text(isRecording ? "Stop" : "Record")
+                Text("Stop")
                     .padding()
                     .foregroundColor(.white)
             }
             .frame(width: 143, height: 45)
         }
-        .padding()
-    }
-
-    private var timerView: some View {
-        Text(viewModel.durationStr)
-            .foregroundColor(.white)
-    }
-}
-
-struct RoundedDashedCircle: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        let radius = min(rect.size.width, rect.size.height) / 2
-        let center = CGPoint(x: rect.midX, y: rect.midY)
-        for angle in stride(from: 0, to: CGFloat.pi * 2, by: CGFloat.pi / 20) {
-            let start = CGPoint(x: center.x + radius * cos(angle), y: center.y + radius * sin(angle))
-            let end = CGPoint(x: center.x + (radius - 4) * cos(angle), y: center.y + (radius - 4) * sin(angle))
-            path.move(to: start)
-            path.addArc(tangent1End: start, tangent2End: end, radius: 2)
-            path.addLine(to: end)
+        .onAppear {
+            withAnimation(Animation.linear(duration: 3).repeatForever(autoreverses: false)) {
+                angle = 360
+            }
         }
-        return path
+    }
+
+    var outerCircle: some View {
+        Circle()
+            .stroke(style: StrokeStyle(lineWidth: borderWidth))
+            .foregroundStyle(gradientColors[7])
+            .overlay {
+                Circle()
+                    .trim(from: 0.25, to: 0.75)
+                    .stroke(gradient, style: StrokeStyle(lineWidth: borderWidth))
+                    .rotationEffect(.degrees(angle))
+            }
+            .rotationEffect(.degrees(-90))
     }
 }
- 
+
 #Preview {
     FTRecordView()
 }

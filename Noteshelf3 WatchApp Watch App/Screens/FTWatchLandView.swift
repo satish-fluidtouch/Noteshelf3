@@ -23,6 +23,14 @@ extension View {
     func watchOS10OnlyVerticalTabStyle() -> some View {
         return self.modifier(Watch10OnlySupported())
     }
+
+    @ViewBuilder func isHidden(_ isHidden: Bool) -> some View {
+        if isHidden {
+            self.hidden()
+        } else {
+            self
+        }
+    }
 }
 
 struct Watch10OnlySupported: ViewModifier {
