@@ -3,7 +3,7 @@
     <device id="ipad10_5" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -1776,7 +1776,7 @@
                                 <rect key="frame" x="0.0" y="20" width="834" height="65"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tags" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999998807907104" translatesAutoresizingMaskIntoConstraints="NO" id="1Dy-xV-bjD" customClass="FTStaticTextLabel" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="397.5" y="21" width="39" height="23"/>
+                                        <rect key="frame" x="396.5" y="21" width="41.5" height="23"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="23" id="C8m-rV-O7x"/>
                                         </constraints>
@@ -2046,7 +2046,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unsplash" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eip-rp-aMz">
-                                        <rect key="frame" x="166.5" y="13" width="81.5" height="18.5"/>
+                                        <rect key="frame" x="166.5" y="12.5" width="81" height="19"/>
                                         <color key="tintColor" systemColor="labelColor"/>
                                         <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="20"/>
                                         <nil key="textColor"/>
@@ -2451,14 +2451,14 @@
                                 <rect key="frame" x="0.0" y="63.5" width="834" height="956.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="E7Y-mh-AIm">
-                                    <rect key="frame" x="0.0" y="0.0" width="834" height="226"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="834" height="242"/>
+                                    <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uwH-L3-WpN">
-                                            <rect key="frame" x="20" y="20" width="794" height="186"/>
+                                            <rect key="frame" x="20" y="20" width="794" height="193.5"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="h0W-ix-r9P">
-                                                    <rect key="frame" x="5" y="5" width="784" height="176"/>
+                                                    <rect key="frame" x="5" y="5" width="784" height="183.5"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2480,7 +2480,7 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FTSaveClipCategoriesCell" rowHeight="51" id="p8x-Zl-O5q" customClass="FTSaveClipCategoriesCell" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="16" y="281.5" width="802" height="51"/>
+                                        <rect key="frame" x="16" y="297" width="802" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="p8x-Zl-O5q" id="woi-eV-HGq">
                                             <rect key="frame" x="0.0" y="0.0" width="802" height="51"/>
@@ -2743,7 +2743,7 @@
         <image name="arrow.up.right.square" catalog="system" width="128" height="114"/>
         <image name="backDark" width="16" height="28"/>
         <image name="camera" catalog="system" width="128" height="93"/>
-        <image name="chevron.left" catalog="system" width="32" height="32"/>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="empty_clip_categories" width="64" height="64"/>
         <image name="iconCheckBadge" width="25" height="25"/>
         <image name="iconChevron" width="13" height="16"/>
@@ -2770,11 +2770,11 @@
         <namedColor name="black20">
             <color red="0.0" green="0.0" blue="0.0" alpha="0.20000000298023224" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="black5">
-            <color red="0.0" green="0.0" blue="0.0" alpha="0.05000000074505806" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="black40">
             <color red="0.0" green="0.0" blue="0.0" alpha="0.40000000596046448" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="black5">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.05000000074505806" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="black50">
             <color red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2833,14 +2833,11 @@
         <namedColor name="titleColor">
             <color red="0.2199999988079071" green="0.2199999988079071" blue="0.2199999988079071" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="white60">
-            <color red="1" green="1" blue="1" alpha="0.60000002384185791" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <namedColor name="white100">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="white60">
+            <color red="1" green="1" blue="1" alpha="0.60000002384185791" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
