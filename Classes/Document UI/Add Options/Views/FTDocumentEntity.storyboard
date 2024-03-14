@@ -2046,7 +2046,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unsplash" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eip-rp-aMz">
-                                        <rect key="frame" x="166.5" y="12.5" width="81" height="19"/>
+                                        <rect key="frame" x="166.5" y="13" width="81.5" height="18.5"/>
                                         <color key="tintColor" systemColor="labelColor"/>
                                         <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="20"/>
                                         <nil key="textColor"/>
@@ -2284,10 +2284,10 @@
                                 </constraints>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Enjoying Noteshelf? Tap here to rate us on the App Store. It will help us more than you’d imagine." textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="0na-WY-vrc">
-                                <rect key="frame" x="138" y="851.5" width="558" height="40"/>
+                                <rect key="frame" x="138" y="851.5" width="558" height="100"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="IFr-iY-6LF"/>
+                                    <constraint firstAttribute="height" constant="100" id="IFr-iY-6LF"/>
                                 </constraints>
                                 <color key="textColor" name="black50"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
@@ -2299,6 +2299,7 @@
                         <color key="backgroundColor" name="formSheetBgColor"/>
                         <constraints>
                             <constraint firstItem="a9b-v0-xKT" firstAttribute="centerX" secondItem="XME-HO-Z6A" secondAttribute="centerX" id="71b-t4-lY9"/>
+                            <constraint firstItem="XME-HO-Z6A" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="7ih-ru-m0L" secondAttribute="trailing" constant="8" id="79U-05-7eg"/>
                             <constraint firstItem="7ih-ru-m0L" firstAttribute="centerX" secondItem="XME-HO-Z6A" secondAttribute="centerX" id="DoP-IL-Tkw"/>
                             <constraint firstItem="XME-HO-Z6A" firstAttribute="trailing" secondItem="0na-WY-vrc" secondAttribute="trailing" constant="30" id="HQK-fJ-Iae">
                                 <variation key="heightClass=regular-widthClass=regular" constant="138"/>
@@ -2308,6 +2309,7 @@
                             <constraint firstItem="rSQ-Ea-Cb7" firstAttribute="top" secondItem="XME-HO-Z6A" secondAttribute="top" constant="32" id="Oo5-t6-t5n"/>
                             <constraint firstItem="XME-HO-Z6A" firstAttribute="trailing" secondItem="Fda-1e-ThE" secondAttribute="trailing" id="Rit-CI-vYD"/>
                             <constraint firstItem="i1T-Lb-WPf" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="XME-HO-Z6A" secondAttribute="leading" constant="30" id="Ua1-eB-nWx"/>
+                            <constraint firstItem="7ih-ru-m0L" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="XME-HO-Z6A" secondAttribute="leading" constant="8" id="XAI-JM-fPR"/>
                             <constraint firstItem="a9b-v0-xKT" firstAttribute="trailing" secondItem="XME-HO-Z6A" secondAttribute="trailing" constant="30" id="Yfh-8J-2NT"/>
                             <constraint firstItem="Fda-1e-ThE" firstAttribute="leading" secondItem="XME-HO-Z6A" secondAttribute="leading" id="aH1-hs-Xx5"/>
                             <constraint firstItem="Fda-1e-ThE" firstAttribute="top" secondItem="XME-HO-Z6A" secondAttribute="top" id="dLo-w7-3gD"/>
@@ -2319,7 +2321,9 @@
                             <constraint firstItem="Fda-1e-ThE" firstAttribute="height" secondItem="aVg-D6-I82" secondAttribute="height" multiplier="0.54" id="jol-Vd-aF4"/>
                             <constraint firstItem="a9b-v0-xKT" firstAttribute="top" secondItem="i1T-Lb-WPf" secondAttribute="bottom" constant="24" id="oM2-Iu-Err"/>
                             <constraint firstItem="XME-HO-Z6A" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="i1T-Lb-WPf" secondAttribute="trailing" constant="30" id="rU8-Hh-48k"/>
-                            <constraint firstItem="0na-WY-vrc" firstAttribute="top" secondItem="a9b-v0-xKT" secondAttribute="bottom" constant="65" id="utH-GR-C3b"/>
+                            <constraint firstItem="0na-WY-vrc" firstAttribute="top" secondItem="a9b-v0-xKT" secondAttribute="bottom" constant="50" id="utH-GR-C3b">
+                                <variation key="heightClass=regular-widthClass=regular" constant="65"/>
+                            </constraint>
                             <constraint firstItem="XME-HO-Z6A" firstAttribute="trailing" secondItem="rSQ-Ea-Cb7" secondAttribute="trailing" constant="28" id="zOm-pn-Pyd"/>
                         </constraints>
                         <variation key="default">

@@ -60,9 +60,9 @@ class FTStatusBarInfoViewController: UIViewController, UITextViewDelegate {
     
     private func appStoreLink() -> URL {
         #if ENTERPRISE_EDITION
-        return URL(string: "https://itunes.apple.com/us/app/noteshelf-3/id6471592545?mt=8")!
+        return URL(string: "https://itunes.apple.com/us/app/noteshelf-3/id6471592545?mt=8&action=write-review")!
         #else
-        return URL(string: "https://itunes.apple.com/us/app/noteshelf-3/id6458735203?mt=8")!
+        return URL(string: "https://itunes.apple.com/us/app/noteshelf-3/id6458735203?mt=8&action=write-review")!
         #endif
     }
     
