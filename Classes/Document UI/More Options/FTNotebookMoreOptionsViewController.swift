@@ -123,6 +123,8 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
         if let _setting = setting as? FTNotebookStatusBarSetting {
             _setting.updateToggleStatus(with: isOn)
             FTUserDefaults.defaults().showStatusBar = !isOn
+            let value = FTUserDefaults.defaults().showStatusBar ? "on" : "off"
+            track("nbk_statusbar_toggle", params: ["toggle": value], screenName: FTScreenNames.notebook)
         }
     }
     
