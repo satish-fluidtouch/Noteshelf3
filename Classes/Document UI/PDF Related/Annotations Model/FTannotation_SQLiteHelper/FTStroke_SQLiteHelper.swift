@@ -21,8 +21,6 @@ extension FTStroke {
     }
     
     override func saveToDatabase(_ db : FMDatabase) -> Bool {
-        let ids = identifiers()
-
         return db.executeUpdate(strokeInsertQuery, withArgumentsIn: [
             NSNumber.init(value: FTAnnotationType.stroke.rawValue), //Changed to stroke, as we're subclssing this to FTShape and saving intermediately.
             NSNumber.init(value: Float(self.strokeWidth) as Float),
@@ -38,8 +36,8 @@ extension FTStroke {
             NSNumber.init(value: self.modifiedTimeInterval as Double),
             NSNumber.init(value: self.isReadonly),
             NSNumber.init(value: self.version),
-            ids.uuid,
-            ids.groupId
+            self.uuid,
+            self.groupId ?? NSNull()
             ]);
         
     }

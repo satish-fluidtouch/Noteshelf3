@@ -13,10 +13,9 @@ private let audioInsertQuery = "INSERT INTO annotation (id,groupId,annotationTyp
 
 extension FTAudioAnnotation  {
     override func saveToDatabase(_ db : FMDatabase)  -> Bool {
-        let ids = self.identifiers()
         return db.executeUpdate(audioInsertQuery, withArgumentsIn: [
-            ids.uuid,
-            ids.groupId,
+            self.uuid,
+            self.groupId ?? NSNull(),
             NSNumber.init(value: self.annotationType.rawValue),
             NSNumber.init(value: Float(self.boundingRect.origin.x) as Float),
             NSNumber.init(value: Float(self.boundingRect.origin.y) as Float),

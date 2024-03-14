@@ -13,11 +13,9 @@ let stickyInsertQuery = "INSERT INTO annotation (id,groupId,annotationType,bound
 
 extension FTStickyAnnotation {
     override func saveToDatabase(_ db : FMDatabase)  -> Bool {
-        let ids = identifiers()
-
         return db.executeUpdate(stickyInsertQuery, withArgumentsIn: [
-            ids.uuid,
-            ids.groupId,
+            self.uuid,
+            self.groupId ?? NSNull(),
             NSNumber.init(value: self.annotationType.rawValue),
             NSNumber.init(value: Float(self.boundingRect.origin.x) as Float),
             NSNumber.init(value: Float(self.boundingRect.origin.y) as Float),

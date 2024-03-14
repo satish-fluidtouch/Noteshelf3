@@ -13,11 +13,9 @@ private let textInsertQuery = "INSERT INTO annotation (id,groupId,annotationType
 
 extension FTTextAnnotation  {
     override func saveToDatabase(_ db : FMDatabase)  -> Bool {
-        let ids = identifiers()
-
         return db.executeUpdate(textInsertQuery, withArgumentsIn:[
-            ids.uuid,
-            ids.groupId,
+            self.uuid,
+            self.groupId ?? NSNull(),
             NSNumber.init(value: self.annotationType.rawValue),
             NSNumber.init(value: Float(self.boundingRect.origin.x) as Float),
             NSNumber.init(value: Float(self.boundingRect.origin.y) as Float),

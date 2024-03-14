@@ -24,7 +24,6 @@ extension FTShapeAnnotation {
         guard !self.hasErasedSegments() else {
             return super.saveToDatabase(db)
         }
-        let ids = identifiers()
         do {
         try db.executeUpdate(shapeInsertQuery, values: [
             NSNumber.init(value: FTAnnotationType.shape.rawValue),
@@ -42,8 +41,8 @@ extension FTShapeAnnotation {
             NSNumber.init(value: self.modifiedTimeInterval as Double),
             NSNumber.init(value: self.isReadonly),
             NSNumber.init(value: self.version),
-            ids.uuid,
-            ids.groupId
+            self.uuid,
+            self.groupId ?? NSNull(),
             ]);
             return true
         } catch {
