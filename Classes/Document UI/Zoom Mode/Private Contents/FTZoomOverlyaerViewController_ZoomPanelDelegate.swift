@@ -12,7 +12,7 @@ private let stdOffset: CGFloat = 20;
 
 extension FTZoomOverlayViewController {
     func addZoomTouchesNotificationHandlers() {
-        NotificationCenter.default.addObserver(forName: Notification.Name(FTZoomRenderViewDidEndTouches),
+        self.zoomDidEndTouchesObserver = NotificationCenter.default.addObserver(forName: Notification.Name(FTZoomRenderViewDidEndTouches),
                                                object: nil,
                                                queue: nil)
         { [weak self] (notification) in
@@ -52,7 +52,7 @@ extension FTZoomOverlayViewController {
             }
         };
         
-        NotificationCenter.default.addObserver(forName: Notification.Name(FTZoomRenderViewDidBeginTouches),
+        self.zoomDidBeginTouchesObserver = NotificationCenter.default.addObserver(forName: Notification.Name(FTZoomRenderViewDidBeginTouches),
                                                object: nil,
                                                queue: nil)
         { [weak self] (notification) in

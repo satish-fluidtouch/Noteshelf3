@@ -34,7 +34,7 @@ enum FTCloudPublishErrorType: Int {
 
 class FTCloudBackupENPublishError: NSObject,ObservableObject {
     @Published var hasError: Bool = false;
-    private var ignoreListObserver: NSObjectProtocol?;
+    private weak var ignoreListObserver: NSObjectProtocol?;
     private var errorTrackType: FTCloudPublishErrorType;
     
     required init(type: FTCloudPublishErrorType) {

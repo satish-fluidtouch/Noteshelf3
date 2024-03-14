@@ -224,6 +224,17 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
         }
     }
     
+    @objc func deskToolBarFrame() -> CGRect {
+#if !targetEnvironment(macCatalyst)
+        if let documentController = self.parent as? FTDocumentRenderViewController {
+            return documentController.deskToolBarFrame()
+        }
+        return CGRect.zero
+#else
+        return CGRect.zero
+#endif
+    }
+    
     @objc func deskToolBarHeight() -> CGFloat {
     #if !targetEnvironment(macCatalyst)
         if let documentController = self.parent as? FTDocumentRenderViewController {
@@ -267,7 +278,7 @@ extension FTPDFRenderViewController: UITextFieldDelegate {
 }
 extension FTPDFRenderViewController {
     @objc func getTopOffset() -> CGFloat {
-        let yPadding: CGFloat = 8.0
+        let yPadding: CGFloat = FTToolBarConstants.subtoolbarOffset
         var offset: CGFloat = 0.0
         if self.currentToolBarState() == .shortCompact {
             var extraHeight: CGFloat = 0.0
@@ -284,10 +295,10 @@ extension FTPDFRenderViewController {
 #if targetEnvironment(macCatalyst)
             offset = 0.0 + yPadding
 #else
-            offset = FTToolbarConfig.Height.regular + yPadding
+            offset = self.deskToolBarFrame().maxY + yPadding
 #endif
         } else {
-            offset = yPadding
+            offset = FTToolBarConstants.yOffset + FTToolBarConstants.statusBarOffset;
         }
         return offset
     }

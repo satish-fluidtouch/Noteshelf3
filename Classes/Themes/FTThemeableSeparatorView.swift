@@ -10,15 +10,22 @@ import UIKit
 import FTCommon
 
 class FTThemeableSeparatorView: UIView {
+    private weak var themeChangeObserver: NSObjectProtocol?;
     override func awakeFromNib() {
         super.awakeFromNib();
         
         self.backgroundColor = FTShelfThemeStyle.defaultTheme().separatorColor;
         
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.FTShelfThemeDidChange, object: nil, queue: nil) { [weak self] (_) in
+        self.themeChangeObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.FTShelfThemeDidChange, object: nil, queue: nil) { [weak self] (_) in
             runInMainThread {
                 self?.backgroundColor = FTShelfThemeStyle.defaultTheme().separatorColor;
             }
+        }
+    }
+    
+    deinit {
+        if let observer = self.themeChangeObserver {
+            NotificationCenter.default.removeObserver(observer);
         }
     }
 }

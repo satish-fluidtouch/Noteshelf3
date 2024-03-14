@@ -11,7 +11,7 @@ import FTCommon
 
 let MIN_SAVE_DURATION: TimeInterval = 3.0
 class FTRecognitionCache: NSObject {
-
+    
     private var recursiveLock = NSRecursiveLock();
     
     private weak var currentDocument: FTNoteshelfDocument?
@@ -45,18 +45,23 @@ class FTRecognitionCache: NSObject {
         }
     }
     
+    private weak var recognitionCacheObserver: NSObjectProtocol?;
     required init(withDocument document:FTNoteshelfDocument, language: String?) {
         super.init();
         self.currentDocument = document
         self.languageCode = language ?? "en_US"
         self.addObserverForPlistReload(document.documentUUID);
     }
-
+    
     deinit {
+        if let observer = self.recognitionCacheObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+        
         NotificationCenter.default.removeObserver(self)
         NSObject.cancelPreviousPerformRequests(withTarget: self);
     }
-        
+    
     private func copyFileFromPackageToCache(forFileName fileName: String) {
         if(nil == self.currentDocument?.rootFileItem) {
             return
@@ -71,7 +76,7 @@ class FTRecognitionCache: NSObject {
             }
             if(self.documentIDFolder != nil){
                 try? self.recognitionCacheRoot.writeUpdates(to: self.recognitionCacheRoot.fileItemURL)
-
+                
                 let cachePlistFileName = String.init(format: "%@_%@.plist", fileName, self.languageCode)
                 let recognitionCacheURL = self.documentIDFolder!.fileItemURL.appendingPathComponent(cachePlistFileName)
                 if FileManager.default.fileExists(atPath: recognitionCacheURL.path){
@@ -81,7 +86,7 @@ class FTRecognitionCache: NSObject {
             }
         }
     }
-
+    
     func recognitionCachePlist() -> FTRecognitionCachePlistItem?
     {
         var itemToReturn: FTRecognitionCachePlistItem?;
@@ -97,7 +102,7 @@ class FTRecognitionCache: NSObject {
     
     private func getPlistFileItem(forFileName fileName: String) -> FTFileItemPlist? {
         guard let currentDoc = self.currentDocument, let rootFileItem = currentDoc.rootFileItem,
-            (!self.languageCode.isEmpty && self.languageCode != languageCodeNone)  else {
+              (!self.languageCode.isEmpty && self.languageCode != languageCodeNone)  else {
             return nil;
         }
         if self.documentIDFolder == nil  {
@@ -123,7 +128,7 @@ class FTRecognitionCache: NSObject {
         if let docUUIDFolder = self.documentIDFolder {
             var recognitionCachePlist = docUUIDFolder.childFileItem(withName: plistFileName) as? FTFileItemPlist;
             let cachePlistURL: URL = docUUIDFolder.fileItemURL.appendingPathComponent(plistFileName)
-
+            
             if(!FileManager.default.fileExists(atPath: cachePlistURL.path)){
                 self.copyFileFromPackageToCache(forFileName: fileName)
             }
@@ -210,12 +215,12 @@ class FTRecognitionCache: NSObject {
     //
     private func addObserverForPlistReload(_ docID : String)
     {
-        NotificationCenter.default.addObserver(forName: self.notificationName(docID),
-                                               object: nil,
-                                               queue: nil) { [weak self] (not) in
-                                                if let plistItem = not.object as? FTRecognitionCache,plistItem != self {
-                                                    self?.cachePlistItem?.unloadContentsOfFileItem();
-                                                }
+        self.recognitionCacheObserver = NotificationCenter.default.addObserver(forName: self.notificationName(docID),
+                                                                               object: nil,
+                                                                               queue: nil) { [weak self] (not) in
+            if let plistItem = not.object as? FTRecognitionCache,plistItem != self {
+                self?.cachePlistItem?.unloadContentsOfFileItem();
+            }
         }
     }
     

@@ -98,13 +98,6 @@ class FTShelfThemeStyle : NSObject {
         }
     };
     
-    var preferredStatusBarStyle : UIStatusBarStyle {
-        if self.isLightTheme() {
-            return .default;
-        }
-        return .lightContent;
-    }
-    
     init(_ color : String,
          title : String,
          shelfThemeColor: String? = nil,

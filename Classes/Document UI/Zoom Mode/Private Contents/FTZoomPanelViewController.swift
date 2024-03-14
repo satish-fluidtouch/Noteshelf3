@@ -73,8 +73,15 @@ class FTZoomPanelViewController: UIViewController {
         self.addObservers()
     }
 
+    deinit {
+        if let observer = validateToolbarObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+    }
+    private weak var validateToolbarObserver: NSObjectProtocol?;
+    
     private func addObservers() {
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: FTValidateToolBarNotificationName), object: nil, queue: nil) { [weak self] (_) in
+        self.validateToolbarObserver = NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: FTValidateToolBarNotificationName), object: nil, queue: nil) { [weak self] (_) in
             self?.validateUI()
         }
     }

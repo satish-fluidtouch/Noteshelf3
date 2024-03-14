@@ -26,6 +26,8 @@ extension NSNotification.Name {
     var documentUUID: String?
     var tempFileModificationDate: Date?
 
+    private weak var finishDownloadNotificationObserver: NSObjectProtocol?;
+    
     weak var metadataItem: NSMetadataItem?;
     var fileCreationDate: Date {
         if let metadata = metadataItem {
@@ -60,7 +62,7 @@ extension NSNotification.Name {
         URL = fileURL;
         super.init();
         // This is Mainly used to set the download status for the starred items.
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "FinishedDownload_\(self.URL.hashKey)"),
+        self.finishDownloadNotificationObserver = NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "FinishedDownload_\(self.URL.hashKey)"),
                                                object: nil,
                                                queue: nil,
                                                using:
@@ -253,6 +255,9 @@ extension NSNotification.Name {
     weak var shelfCollection: FTShelfItemCollection!
 
     deinit {
+        if let observer = self.finishDownloadNotificationObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
         #if DEBUG
         debugPrint("deinit :\(self.URL.path.removingPercentEncoding ?? ""))");
         #endif
