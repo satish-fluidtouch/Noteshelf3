@@ -86,7 +86,7 @@ class FTSavedClipsViewController: UIViewController {
             } else {
                 self.segmentHeightConstraint.constant = 0
             }
-            self.cellType == .normal
+            self.cellType = .normal
             self.endEditing()
         }
         let rows = viewModel.numberOfRowsForSection(section: self.selectedSegmentIndex)

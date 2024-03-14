@@ -992,7 +992,6 @@
 		BAB46652296FD98A004FCBDC /* OpenCV in Frameworks */ = {isa = PBXBuildFile; productRef = BAB46651296FD98A004FCBDC /* OpenCV */; };
 		BAB4D5052AFFF337009124EF /* FTMigrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB4D5042AFFF337009124EF /* FTMigrationViewController.swift */; };
 		BAB4D5072AFFF34D009124EF /* Migration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAB4D5062AFFF34D009124EF /* Migration.storyboard */; };
-		BAD5BA932B74D6D900CFA8AA /* MosaicLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD5BA922B74D6D900CFA8AA /* MosaicLayout.swift */; };
 		BAF0DCD02A6FE2A9006D293B /* FTNewNotebook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF0DCCA2A6FE2A9006D293B /* FTNewNotebook.framework */; };
 		BAF0DCD12A6FE2A9006D293B /* FTNewNotebook.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BAF0DCCA2A6FE2A9006D293B /* FTNewNotebook.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BAF0DD542A6FE30D006D293B /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = BAF0DD532A6FE30D006D293B /* SDWebImage */; };
@@ -4215,7 +4214,6 @@
 		BAD2DCE422CF80D700C3D446 /* NoteshelfApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteshelfApplication.swift; sourceTree = "<group>"; };
 		BAD2DCE622CF80EE00C3D446 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		BAD422F122D5E452000D0137 /* UIWindow+VisibleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+VisibleViewController.swift"; sourceTree = "<group>"; };
-		BAD5BA922B74D6D900CFA8AA /* MosaicLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MosaicLayout.swift; sourceTree = "<group>"; };
 		BAD5F862266CE5380053FB0C /* FTShapeLineStrip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShapeLineStrip.swift; sourceTree = "<group>"; };
 		BAD77DDC2460003600A2BE73 /* FTRotatePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTRotatePageViewController.swift; sourceTree = "<group>"; };
 		BAE13BF82215AC9C0056E599 /* FTHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FTHeaderView.swift; path = "Common UI/FTHeaderView.swift"; sourceTree = "<group>"; };
@@ -8049,7 +8047,6 @@
 		477E51692B32EE4D00579D4A /* Saved Clips */ = {
 			isa = PBXGroup;
 			children = (
-				BAD5BA922B74D6D900CFA8AA /* MosaicLayout.swift */,
 				477E51662B32D6ED00579D4A /* FTSavedClipsProvider.swift */,
 				477E516A2B32EE7200579D4A /* FTSavedClipsViewController.swift */,
 				477E51702B34113A00579D4A /* FTSavedClipsCollectionViewCell.swift */,
@@ -13892,7 +13889,6 @@
 				9715E0432AEA9D2D00EC48D4 /* EDAMLimits.m in Sources */,
 				42A971DA28B782D600EDAC90 /* FTAudioTrackController.swift in Sources */,
 				BAF393112859ADF00067CA9F /* FTAudioRecordingModel.m in Sources */,
-				BAD5BA932B74D6D900CFA8AA /* MosaicLayout.swift in Sources */,
 				BAF393132859ADF00067CA9F /* FTSearchResultCategoryCell.swift in Sources */,
 				BAF393142859ADF00067CA9F /* FTPDFExportView.m in Sources */,
 				BAF393152859ADF00067CA9F /* FTExternMethods.m in Sources */,
