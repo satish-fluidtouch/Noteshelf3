@@ -283,7 +283,7 @@ private extension FTShortcutToolPresenter {
             self.toolbarOffset = FTToolbarConfig.Height.compact + offset + extraOffset
         } else {
             self.toolbarOffset = FTToolbarConfig.Height.regular + offset
-            if UserDefaults.standard.showStatusBar {
+            if FTUserDefaults.defaults().showStatusBar {
                 self.toolbarOffset += FTToolBarConstants.statusBarOffset
             }
         }

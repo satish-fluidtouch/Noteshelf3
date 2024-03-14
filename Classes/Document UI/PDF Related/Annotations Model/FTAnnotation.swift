@@ -204,10 +204,6 @@ protocol FTAnnotationStrokeErase
     func canSelectUnderLassoSelection() -> Bool {
         return true
     }
-    
-    func canCancelEndEditingAnnotaionWhenPopOverPresents() -> Bool {
-        return false
-    }
 }
 
 extension FTAnnotation : FTAnnotationDidAddToPageProtocol

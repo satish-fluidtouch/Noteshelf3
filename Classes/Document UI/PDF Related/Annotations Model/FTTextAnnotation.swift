@@ -196,11 +196,6 @@ class FTTextAnnotation: FTAnnotation,FTImageRenderingProtocol {
     override func canSelectUnderLassoSelection() -> Bool {
         return FTRackPreferenceState.allowAnnotations().contains(annotationType)
     }
-    
-    override func canCancelEndEditingAnnotaionWhenPopOverPresents() -> Bool {
-        return true
-    }
-
 }
 
 //MARK:- Private

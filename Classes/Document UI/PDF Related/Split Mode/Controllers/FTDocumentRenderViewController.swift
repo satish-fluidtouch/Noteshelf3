@@ -135,7 +135,7 @@ class FTDocumentRenderViewController: UIViewController {
                  && !FTUserDefaults.defaults().isStatusBarScreenViewed) || FTUserDefaults.defaults().statusBarwhatsNewSwitch {
                 FTStatusBarInfoViewController.present(on: self)
                 FTUserDefaults.defaults().isStatusBarScreenViewed = true
-                track("whatsnew_status_bar_viewed",screenName: FTScreenNames.notebook)
+                track("statusbar_popup_viewed",screenName: FTScreenNames.notebook)
             } else {
                 FTUserDefaults.defaults().isStatusBarScreenViewed = true
             }

@@ -31,6 +31,7 @@ class FTStatusBarInfoViewController: UIViewController, UITextViewDelegate {
         footerTextView.delegate = self
         footerTextView.textAlignment = .center
         self.isModalInPresentation = true
+        footerTextView.delegate = self
     }
     
     private func constructFooterText() {
@@ -59,9 +60,9 @@ class FTStatusBarInfoViewController: UIViewController, UITextViewDelegate {
     
     private func appStoreLink() -> URL {
         #if ENTERPRISE_EDITION
-        return URL(string: "https://itunes.apple.com/us/app/noteshelf-3/id6471592545?mt=8")!
+        return URL(string: "https://itunes.apple.com/us/app/noteshelf-3/id6471592545?mt=8&action=write-review")!
         #else
-        return URL(string: "https://itunes.apple.com/us/app/noteshelf-3/id6458735203?mt=8")!
+        return URL(string: "https://itunes.apple.com/us/app/noteshelf-3/id6458735203?mt=8&action=write-review")!
         #endif
     }
     
@@ -76,10 +77,19 @@ class FTStatusBarInfoViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func onSwitchChanged(_ sender: UISwitch) {
         FTUserDefaults.defaults().showStatusBar = sender.isOn
+        let value = FTUserDefaults.defaults().showStatusBar ? "on": "off"
+        track("statusbar_popup_toggle",params: ["toggle":value],screenName: FTScreenNames.notebook)
     }
     
     @IBAction func closeButtonTapped(_ sender: Any) {
         self.dismiss(animated: true)
+        let value = FTUserDefaults.defaults().showStatusBar ? "on": "off"
+        track("statusbar_popup_close_tap",params: ["toggle":value],screenName: FTScreenNames.notebook)
+    }
+    
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        track("statusbar_popup_review_tap",screenName: FTScreenNames.notebook)
+        return true
     }
 }
 
