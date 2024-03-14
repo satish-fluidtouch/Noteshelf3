@@ -10,6 +10,8 @@ import SwiftUI
 
 struct FTRecordingsView: View {
     @StateObject private var viewModel = FTRecordingsViewModel()
+    @State private var isShowingPlayerView = false
+    @State private var selectedRecording: FTWatchRecording?
 
     var body: some View {
         ZStack {
@@ -17,22 +19,32 @@ struct FTRecordingsView: View {
                 Text("No Recordings!")
                     .font(Font.system(size: 18))
             } else {
-                NavigationView {
-                    VStack {
-                        HStack {
-                            Text(viewModel.title)
-                                .font(Font.system(size: 14))
-                                .padding(.leading, 12)
-                            Spacer()
-                        }
+                VStack {
+                    HStack {
+                        Text(viewModel.title)
+                            .font(Font.system(size: 14))
+                            .padding(.leading, 12)
+                        Spacer()
+                    }
 
-                        List {
-                            ForEach(viewModel.recordings, id: \.GUID) { recording in
-                                NavigationLink(destination: FTPlayerView(viewModel: FTPlayerViewModel(recording: recording))) {
-                                    recordingView(for: recording)
+                    List {
+                        ForEach(viewModel.recordings, id: \.GUID) { recording in
+                            recordingView(for: recording)
+                                .onTapGesture {
+                                    isShowingPlayerView = true
+                                    self.selectedRecording = recording
                                 }
+                                .fullScreenCover(isPresented: $isShowingPlayerView) {
+                                    FTPlayerView(viewModel: FTPlayerViewModel(recording: recording))
+                                }
+                        }
+                        .onDelete(perform: deleteItem)
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            Button {
+                            } label: {
+                                Image(systemName: "trash")
                             }
-                            .onDelete(perform: deleteItem)
+                            .tint(.red)
                         }
                     }
                 }
@@ -51,13 +63,13 @@ struct FTRecordingsView: View {
     private func recordingView(for recording: FTWatchRecording) -> some View {
         VStack {
             HStack {
-                Text(FTWatchUtils.timeFormatted(totalSeconds: UInt(recording.duration)))
+                Text(recording.duration.formatSecondsToString())
                     .font(Font.system(size: 16))
                     .bold()
                 Spacer()
             }
             HStack {
-                Text(recording.date.nsAudioFormatTitle())
+                Text(recording.audioTitle)
                     .font(Font.system(size: 16))
                 Spacer()
             }

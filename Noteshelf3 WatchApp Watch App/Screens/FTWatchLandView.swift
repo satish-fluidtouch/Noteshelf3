@@ -21,7 +21,7 @@ struct FTWatchLandView: View {
 
 extension View {
     func watchOS10OnlyVerticalTabStyle() -> some View {
-        return self.modifier(Watch10OnlySupported())
+        return self.modifier(WatchOS10OnlyVerticalTabStyle())
     }
 
     @ViewBuilder func isHidden(_ isHidden: Bool) -> some View {
@@ -33,7 +33,7 @@ extension View {
     }
 }
 
-struct Watch10OnlySupported: ViewModifier {
+struct WatchOS10OnlyVerticalTabStyle: ViewModifier {
     func body(content: Content) -> some View {
         if #available(watchOS 10.0, *) {
             content.tabViewStyle(.verticalPage)

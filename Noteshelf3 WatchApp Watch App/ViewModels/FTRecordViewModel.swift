@@ -16,7 +16,7 @@ class FTRecordViewModel: NSObject, ObservableObject {
     private var isObserversAdded:Bool = false
     private var recordingDuration:Int = 0
     
-    @Published var durationStr: String = "00: 00"
+    @Published var durationStr: String = "00:00"
 
     override init() {
         super.init()

@@ -10,13 +10,16 @@ import SwiftUI
 
 struct FTPlayerView: View {
     @ObservedObject var viewModel: FTPlayerViewModel
+    @State var isEditOptionsShowing: Bool = false
+
+    private let progressColor = Color(red: 224/255, green: 110/255, blue: 81/255)
 
     var body: some View {
         VStack {
             Spacer()
 
             Text(self.viewModel.playDurationStr)
-            Text(recording.date.nsAudioFormatTitle())
+            Text(recording.audioTitle)
 
             Spacer()
 
@@ -56,11 +59,17 @@ struct FTPlayerView: View {
                 .buttonStyle(.plain)
 
                 Spacer()
-                .frame(width: 12.0)
+                    .frame(width: 12.0)
             }
-        }.toolbar {
+        }
+        .padding(.vertical)
+        .toolbar {
             toolBar()
-        }.onDisappear {
+        }
+        .fullScreenCover(isPresented: $isEditOptionsShowing, content: {
+            FTRecordingEditView(viewModel: FTRecordingEditViewModel(recording: self.recording))
+        })
+        .onDisappear {
             self.viewModel.resetPlay()
         }
     }
@@ -71,14 +80,21 @@ struct FTPlayerView: View {
 
     private func toolBar() -> some ToolbarContent {
         if #available(watchOS 10.0, *) {
-            return ToolbarItem(placement: .automatic) {
-                Text("Playing")
-                    .foregroundStyle(Color.white)
+            return ToolbarItem(placement: .topBarTrailing) {
+                editOptionsButton
             }
         } else {
             return ToolbarItem(placement: .automatic) {
-                Text("Playing")
+                editOptionsButton
             }
+        }
+    }
+
+    private var editOptionsButton: some View {
+        Button {
+            self.isEditOptionsShowing = true
+        } label: {
+            Image(systemName: "ellipsis")
         }
     }
 
@@ -91,7 +107,7 @@ struct FTPlayerView: View {
 
                 Circle()
                     .trim(from: 0, to: self.viewModel.progress)
-                    .stroke(Color.blue, style: StrokeStyle(lineWidth: 2))
+                    .stroke(progressColor, style: StrokeStyle(lineWidth: 2))
                     .frame(width: 54, height: 54)
                     .rotationEffect(.degrees(-90))
 

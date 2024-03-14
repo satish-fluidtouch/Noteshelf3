@@ -16,13 +16,13 @@ class FTPlayerViewModel: NSObject, ObservableObject {
     private var isObserversAdded: Bool = false
     private var playbackCurrentTime: Int = 0
 
-    @Published var playDurationStr: String = "00: 00"
+    @Published var playDurationStr: String = "00:00"
     @Published var isPlaying: Bool = false
     @Published var progress: CGFloat = 0.0
 
     init(recording: FTWatchRecording) {
         self.recording = recording
-        self.playDurationStr = FTWatchUtils.timeFormatted(totalSeconds: UInt(self.recording.duration))
+        self.playDurationStr = self.recording.duration.formatSecondsToString()
     }
 
     func handlePlayTapAction() {
@@ -79,7 +79,7 @@ class FTPlayerViewModel: NSObject, ObservableObject {
     func resetPlay() {
         self.audioService?.stopPlayingAudio()
         self.removeObservers()
-        self.playDurationStr = "00: 00"
+        self.playDurationStr = "00:00"
         self.isPlaying = false
         self.progress = 0.0
         self.playbackCurrentTime = 0
