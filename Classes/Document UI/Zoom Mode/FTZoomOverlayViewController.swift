@@ -42,6 +42,11 @@ extension UIView {
 
 @objcMembers class FTZoomOverlayViewController: UIViewController {
     
+    internal weak var pageLayoutDidChangeObserver: NSObjectProtocol?;
+    internal weak var pageLayoutWillChangeObserver: NSObjectProtocol?;
+    internal weak var zoomDidBeginTouchesObserver: NSObjectProtocol?;
+    internal weak var zoomDidEndTouchesObserver: NSObjectProtocol?;
+
     internal var zoomRectUpdateInProgress = false;
     private var oldSize = CGSize.zero;
     private var isWindowResizeInProgress = false;
@@ -134,6 +139,18 @@ extension UIView {
     
     deinit {
         self.removeZoomManagerView();
+        if let observer = self.pageLayoutDidChangeObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+        if let observer = self.pageLayoutWillChangeObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+        if let observer = self.zoomDidEndTouchesObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+        if let observer = self.zoomDidBeginTouchesObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
     }
     
     override func viewDidLoad() {

@@ -12,24 +12,6 @@ class FTRecognitionServiceProvider: NSObject {
     static let shared = FTRecognitionServiceProvider()
     private var runningServices: [String: FTNotebookRecognitionHelper] = [:]
     private var visionRunningServices: [String: FTVisionNotebookRecognitionHelper] = [:]
-
-    /*private class func sharedInstance() -> FTRecognitionServiceProvider{
-        let sharedObject = FTRecognitionServiceProvider()
-        NotificationCenter.default.addObserver(forName: .FTShouldClearRecognitionHelper, object: nil, queue: nil) { (notification) in
-            if let helper = notification.object as? FTNotebookRecognitionHelper {
-                sharedObject.runningServices.forEach { (key, value) in
-                    if helper == value {
-                        sharedObject.runningServices.removeValue(forKey: key)
-                        return
-                    }
-                }
-            }
-            #if DEBUG
-            debugPrint("runningServices: \(sharedObject.runningServices)")
-            #endif
-        }
-        return sharedObject
-    }*/
     
     func getRecognitionService(forDocument document: FTNoteshelfDocument) -> FTNotebookRecognitionHelper? {
         NotificationCenter.default.post(name: UIApplication.releaseRecognitionHelperNotification, object: nil)

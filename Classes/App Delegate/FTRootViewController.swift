@@ -41,9 +41,8 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     private weak var noteBookSplitController: FTNoteBookSplitViewController?
     var contentView : UIView!;
 
-    override var preferredStatusBarStyle : UIStatusBarStyle {
-        return FTShelfThemeStyle.defaultTheme().preferredStatusBarStyle;
-    }
+    private var keyValueObserver: NSKeyValueObservation?;
+    private weak var themeNotificationObserver: NSObjectProtocol?;
 
     override func isAppearingThroughModelScale() {
          (self.rootContentViewController as? FTShelfSplitViewController)?.isAppearingThroughModelScale()
@@ -79,13 +78,17 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         }
         FTUserDefaults.defaults().addObserver(self, forKeyPath: "iCloudOn", options: .new, context: nil);
 
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.FTShelfThemeDidChange, object: nil, queue: nil) { [weak self] _ in
+        self.themeNotificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.FTShelfThemeDidChange, object: nil, queue: nil) { [weak self] _ in
             runInMainThread {
                 self?.themeDidChange();
             }
         }
         if #available(iOS 12.1, *) {
             self.addPencilInteractionDelegate();
+        }
+        
+        self.keyValueObserver = FTUserDefaults.defaults().observe(\.showStatusBar, options: [.new]) { [weak self] (userdefaults, change) in
+            self?.refreshStatusBarAppearnce();
         }
     }
 
@@ -105,6 +108,12 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                 self.pencilInteraction = nil;
             }
         }
+        if let _themeObserver = self.themeNotificationObserver {
+            NotificationCenter.default.removeObserver(_themeObserver);
+        }
+        
+        self.keyValueObserver?.invalidate();
+        self.keyValueObserver = nil
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -132,10 +141,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         if let splitVC = self.noteBookSplitController,
            !(splitVC.isBeingDismissed || splitVC.isBeingPresented),
            let docController = self.docuemntViewController {
-            return docController.prefersStatusBarHidden;
-        }
-        else if let shelfVC = self.rootContentViewController {
-            return shelfVC.prefersStatusBarHidden;
+            return splitVC.prefersStatusBarHidden;
         }
         return super.prefersStatusBarHidden;
     }

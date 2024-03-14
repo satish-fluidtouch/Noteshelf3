@@ -554,6 +554,37 @@ extension UserDefaults {
             self.synchronize()
         }
     }
+    
+    
+    @objc dynamic var showStatusBar: Bool {
+        get {
+            return self.bool(forKey: "showStatusBar")
+        }
+        set {
+            self.set(newValue, forKey: "showStatusBar")
+            self.synchronize()
+        }
+    }
+    
+    @objc dynamic var statusBarwhatsNewSwitch: Bool {
+        get {
+            return self.bool(forKey: "statusBarwhatsNewSwitch")
+        }
+        set {
+            self.set(newValue, forKey: "statusBarwhatsNewSwitch")
+            self.synchronize()
+        }
+    }
+    
+    @objc dynamic var isStatusBarScreenViewed: Bool {
+        get {
+            return self.bool(forKey: "isStatusBarScreenViewed")
+        }
+        set {
+            self.set(newValue, forKey: "isStatusBarScreenViewed")
+            self.synchronize()
+        }
+    }
 
     @objc class func isApplePencilEnabled() -> Bool
     {

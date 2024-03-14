@@ -14,7 +14,7 @@ import FTCommon
     
     fileprivate var pageNumberInfoLabel : UILabel = UILabel()
     fileprivate var page : FTPageProtocol?
-    fileprivate var labelFrame: CGRect = .zero
+
     override init(effect: UIVisualEffect?) {
         super.init(effect: effect)
     }
@@ -36,7 +36,6 @@ import FTCommon
         self.pageNumberInfoLabel.textColor = UIColor.appColor(.black70)
         self.pageNumberInfoLabel.backgroundColor = .clear
         self.page = page
-        self.labelFrame = frame
         self.setCurrentPage(page)
         self.updateTextColor();
     }
@@ -51,7 +50,6 @@ import FTCommon
 
             let pageNumberInfo = attributedPageNumberInfo.string
             self.pageNumberInfoLabel.frame.size = CGSize(width: (attributedPageNumberInfo.size().width + 32), height: 24)
-            self.frame = CGRect(x:labelFrame.minX,y: labelFrame.minY,width: (attributedPageNumberInfo.size().width + 32), height: 24)
             self.pageNumberInfoLabel.text =  pageNumberInfo
         }
         else {
@@ -60,10 +58,10 @@ import FTCommon
         self.setNeedsLayout()
     }
     func udpateLabelFramesYPosition(_ newYPosition: CGFloat) {
-        self.labelFrame.origin = CGPoint(x: self.labelFrame.minX, y: newYPosition)
-        self.pageNumberInfoLabel.frame.size = CGSize(width: ((pageNumberInfoLabel.text?.size().width ?? 0) + 32), height: 24)
-        self.frame = CGRect(x: labelFrame.minX, y: labelFrame.minY, width: ((pageNumberInfoLabel.text?.size().width ?? 0) + 32), height: 24)
-        self.setNeedsLayout()
+        var labelFrame = self.frame;
+        labelFrame.origin.y = newYPosition;
+        labelFrame.size = CGSize(width: ((pageNumberInfoLabel.text?.size().width ?? 0) + 32), height: 24)
+        self.frame = labelFrame
     }
     
     private func updateTextColor()

@@ -8,6 +8,15 @@
 
 import UIKit
 
+struct FTToolBarConstants {
+    static var statusBarOffset: CGFloat  {
+        return FTUserDefaults.defaults().showStatusBar ? 8 : 0;
+    }
+    static let yOffset: CGFloat = 14;
+    static let subtoolbarOffset: CGFloat = 8; //used for audio player
+}
+
+
 class FTToolbarView: UIView {
     weak var deskToolbarController: FTiOSDeskToolbarController?
 
@@ -46,9 +55,11 @@ class FTToolbarView: UIView {
         return self.deskToolbarController?.visualEffectView(for: .center)
     }
 
+    private weak var pageLayoutObserver: NSObjectProtocol?;
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        NotificationCenter.default.addObserver(forName: .pageLayoutDidChange,
+        self.pageLayoutObserver = NotificationCenter.default.addObserver(forName: .pageLayoutDidChange,
                                                object: nil,
                                                queue: nil)
         { [weak self] (_) in
@@ -56,9 +67,15 @@ class FTToolbarView: UIView {
                 return;
             }
             strongSelf.updateUIConfig()
+            strongSelf.deskToolbarController?.didChangePageLayout();
         }
     }
 
+    deinit {
+        if let observer = pageLayoutObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+    }
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         if self.screenMode == .shortCompact || UserDefaults.standard.pageLayoutType == .horizontal {
             return super.hitTest(point, with: event)
@@ -121,15 +138,28 @@ class FTToolbarView: UIView {
 }
 
 class FTFocusModeView: FTToolbarVisualEffectView {
+    private var keyValueObserver: NSKeyValueObservation?;
     let size = CGSize(width: 44.0, height: 44.0)
     func styleView() {
         super.stylePanel()
         self.layer.masksToBounds = true
         self.frame.size = size
+        self.keyValueObserver = FTUserDefaults.defaults().observe(\.showStatusBar, options: [.new]) { [weak self] (userdefaults, change) in
+            if let strongSelf = self {
+                var frame = strongSelf.frame;
+                frame.origin.y = strongSelf.topOffset;
+                strongSelf.frame = frame;
+            }
+        }
     }
 
+    deinit {
+        self.keyValueObserver?.invalidate();
+        self.keyValueObserver = nil;
+    }
+    
     var topOffset: CGFloat {
-        var offset: CGFloat = 10.0
+        var offset: CGFloat = FTToolBarConstants.yOffset
         if UIDevice.current.isPhone() {
             if let window = UIApplication.shared.keyWindow {
                 let topSafeAreaInset = window.safeAreaInsets.top
@@ -137,6 +167,9 @@ class FTFocusModeView: FTToolbarVisualEffectView {
                     offset += topSafeAreaInset
                 }
             }
+        }
+        else {
+            offset += FTToolBarConstants.statusBarOffset
         }
         return offset
     }

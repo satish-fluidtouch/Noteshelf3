@@ -156,11 +156,6 @@
     
 }
 
--(UIStatusBarStyle)preferredStatusBarStyle
-{
-    return UIStatusBarStyleLightContent;
-}
-
 -(void)validateMenuItems
 {
     

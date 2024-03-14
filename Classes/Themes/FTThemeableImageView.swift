@@ -11,7 +11,8 @@ import FTCommon
 
 class FTThemeableImageView: UIImageView {
     @IBInspectable var normalImageName: String?
-    
+    private weak var themeChangeObserver: NSObjectProtocol?;
+
     override init(frame: CGRect) {
         super.init(frame: frame);
         
@@ -31,10 +32,16 @@ class FTThemeableImageView: UIImageView {
     }
     
     private func registerForThemeUpdateNotification() {
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.FTShelfThemeDidChange, object: nil, queue: nil) { [weak self] (_) in
-            runInMainThread { 
+        themeChangeObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.FTShelfThemeDidChange, object: nil, queue: nil) { [weak self] (_) in
+            runInMainThread {
                 self?.updateUI();
             }
+        }
+    }
+    
+    deinit {
+        if let observer = self.themeChangeObserver {
+            NotificationCenter.default.removeObserver(observer);
         }
     }
     

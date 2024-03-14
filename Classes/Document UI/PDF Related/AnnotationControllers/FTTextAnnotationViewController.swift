@@ -178,6 +178,9 @@ class FTTextAnnotationViewController: UIViewController {
     
     weak var textSelectionDelegate: FTTextAnnotationDelegate?
     
+    private weak var updateAnnotationObserver: NSObjectProtocol?;
+    private weak var resignTextAnnotationObserver: NSObjectProtocol?;
+    
     required init(withAnnotation annotation: FTAnnotation,
                   delegate: FTAnnotationEditControllerDelegate?,
                   mode: FTAnnotationMode)
@@ -216,14 +219,14 @@ class FTTextAnnotationViewController: UIViewController {
         
         self.updateResizeMode();
         
-        NotificationCenter.default.addObserver(forName: Notification.Name.didUpdateAnnotationNotification,
+        self.updateAnnotationObserver = NotificationCenter.default.addObserver(forName: Notification.Name.didUpdateAnnotationNotification,
                                                object: annotation,
                                                queue: nil) { [weak self] (notification) in
             self?.refreshView();
         }
        
         #if targetEnvironment(macCatalyst)
-        NotificationCenter.default.addObserver(forName: Notification.Name.shouldResignTextfieldNotification,
+        self.resignTextAnnotationObserver = NotificationCenter.default.addObserver(forName: Notification.Name.shouldResignTextfieldNotification,
                                                object: nil,
                                                queue: nil) { [weak self] (notification) in
             self?.forceEndEditing = true
@@ -231,6 +234,14 @@ class FTTextAnnotationViewController: UIViewController {
         #endif
     }
 
+    deinit {
+        if let observer = self.updateAnnotationObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+        if let observer = self.updateAnnotationObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+    }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

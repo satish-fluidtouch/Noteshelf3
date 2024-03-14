@@ -70,7 +70,7 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
     }
     
     private func fetchSize() -> CGSize {
-        var height: CGFloat = 608.0
+        var height: CGFloat = 652.0
 #if targetEnvironment(macCatalyst)
         height -= 170.0
 #endif
@@ -120,6 +120,10 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
     }
 
     fileprivate func toggleSettingTapped(isOn: Bool, setting: FTNotebookMoreOption) {
+        if let _setting = setting as? FTNotebookStatusBarSetting {
+            _setting.updateToggleStatus(with: isOn)
+            FTUserDefaults.defaults().showStatusBar = !isOn
+        }
     }
     
     private func addTableHeaderview() {

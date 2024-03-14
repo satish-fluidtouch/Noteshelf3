@@ -62,7 +62,16 @@ private let USE_DEFAULT_COLOR = true;
         FTConvertToTextViewModel.convertPreferredFont
     }
 
+    private weak var keyboardShowObserver: NSObjectProtocol?;
+    private weak var keyboardHideObserver: NSObjectProtocol?;
+    
     deinit {
+        if let observer = self.keyboardShowObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+        if let observer = self.keyboardHideObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
         NotificationCenter.default.removeObserver(self)
         #if DEBUG
         debugPrint("\(type(of: self)) is deallocated");
@@ -286,7 +295,7 @@ extension FTConvertToTextViewController {
     }
     //MARK:- KeyboardRelated
     func registerForKeyboardDidShowNotification() {
-        NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidShowNotification, object: nil, queue: nil, using: { [weak self] (notification) -> Void in
+        self.keyboardShowObserver = NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidShowNotification, object: nil, queue: nil, using: { [weak self] (notification) -> Void in
             guard let strongSelf = self,let _textView = self?.textView, let userInfo = notification.userInfo else {
                 return;
             }
@@ -303,7 +312,7 @@ extension FTConvertToTextViewController {
     }
     
     func registerForKeyboardWillHideNotification() {
-        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: nil, using: { [weak self] (_) -> Void in
+        self.keyboardHideObserver = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: nil, using: { [weak self] (_) -> Void in
             guard let _textView = self?.textView else {
                 return;
             }

@@ -38,10 +38,12 @@ class FTRecognitionLanguageViewController: UIViewController, UITableViewDataSour
     private var filteredLanguages = [FTRecognitionLangResource]();
     private var isInSearchMode = false
     
+    private weak var resourceDownloadObserver: NSObjectProtocol?;
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.seachBar?.isHidden = true
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: FTResourceDownloadStatusDidChange), object: nil, queue: nil) { [weak self] (_) in
+        self.resourceDownloadObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: FTResourceDownloadStatusDidChange), object: nil, queue: nil) { [weak self] (_) in
             DispatchQueue.main.async {
                 self?.supportedLanguages = FTLanguageResourceManager.shared.languageResources
                 self?.tableView?.reloadData()
@@ -54,6 +56,11 @@ class FTRecognitionLanguageViewController: UIViewController, UITableViewDataSour
         self.tableView?.separatorColor = UIColor.appColor(.black10)
     }
     
+    deinit {
+        if let observer = self.resourceDownloadObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.configureNewNavigationBar(hideDoneButton: false, title: FTLanguageLocalizedString("Languages", comment: ""))

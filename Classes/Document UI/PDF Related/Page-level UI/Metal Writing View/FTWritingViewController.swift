@@ -124,7 +124,8 @@ class FTWritingViewController: UIViewController,FTViewControllerSupportsScene {
 
     private weak var pageUpdatePropertyObserver: NSObjectProtocol?;
     private weak var pageReleasedObserver: NSObjectProtocol?;
-    
+    private weak var pageChangeObserver: NSObjectProtocol?;
+    private weak var zoomDidEndCurrentStrokeObserver: NSObjectProtocol?
     weak var pageToDisplay : FTPageProtocol? {
         didSet {
             if(oldValue?.uuid != self.pageToDisplay?.uuid) {
@@ -230,7 +231,7 @@ class FTWritingViewController: UIViewController,FTViewControllerSupportsScene {
                         self.addOnScreenViewController();
                     }
                     if(self.mode == FTRenderModeDefault) {
-                        NotificationCenter.default.addObserver(forName: Notification.Name.FTZoomRenderViewDidEndCurrentStroke,
+                        self.zoomDidEndCurrentStrokeObserver = NotificationCenter.default.addObserver(forName: Notification.Name.FTZoomRenderViewDidEndCurrentStroke,
                                                                object: nil,
                                                                queue: nil)
                         { [weak self] (notification) in
@@ -251,7 +252,10 @@ class FTWritingViewController: UIViewController,FTViewControllerSupportsScene {
                 }
                 else {
                     self.removeOnScreenViewController();
-                    NotificationCenter.default.removeObserver(self, name: Notification.Name.FTZoomRenderViewDidEndCurrentStroke, object: nil);
+                    if let observer = self.zoomDidEndCurrentStrokeObserver {
+                        NotificationCenter.default.removeObserver(observer, name: Notification.Name.FTZoomRenderViewDidEndCurrentStroke, object: nil);
+                    }
+
                 }
             }
         }
@@ -619,7 +623,7 @@ private extension FTWritingViewController
                 }
             }
             
-            NotificationCenter.default.addObserver(forName: NSNotification.Name.FTPageDidChangePageTemplate,
+            self.pageChangeObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.FTPageDidChangePageTemplate,
                                                    object: page,
                                                    queue: nil) { [weak self] (_) in
                 if let selfObject = self, selfObject.isCurrentPage {
@@ -646,6 +650,9 @@ private extension FTWritingViewController
         if let _observer = self.pageReleasedObserver {
             NotificationCenter.default.removeObserver(_observer);
             self.pageReleasedObserver = nil;
+        }
+        if let observer = self.pageChangeObserver {
+            NotificationCenter.default.removeObserver(observer);
         }
     }
 
