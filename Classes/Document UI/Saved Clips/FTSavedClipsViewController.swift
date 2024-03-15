@@ -113,6 +113,7 @@ class FTSavedClipsViewController: UIViewController {
         self.collectionView.stopWiggle()
         self.deleteHeightConstraint.constant = 0
         self.deleteCategory.isHidden = true
+        categoryTitleTextField.endEditing(true)
         categoryTitleTextField.isHidden = true
         self.segmentedControl.isHidden = false
         self.collectionView.reloadData()
