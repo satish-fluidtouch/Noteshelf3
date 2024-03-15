@@ -78,6 +78,13 @@ class FTSavedClipsViewModel {
         }
     }
 
+    func removeClip(clip: FTSavedClipModel, in section: Int) throws {
+        try handler.removeClip(clip: clip)
+        if section < self.categories.count {
+            self.categories[section].savedClips.removeAll(where: {$0.url == clip.url})
+        }
+    }
+
     func removeCategory(index: Int) throws {
         if categories.count > 0 {
             let category = categories[index]

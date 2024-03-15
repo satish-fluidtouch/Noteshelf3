@@ -111,7 +111,7 @@ extension FTSavedClipsProvider {
             }
             savedClipsCategories.append(clipCategoryModel)
         }
-        return savedClipsCategories
+        return savedClipsCategories.sorted(by: {$0.title.lowercased() < $1.title.lowercased()})
     }
 
     func savedClipsFor(category: String) throws -> [FTSavedClipModel] {
@@ -125,7 +125,7 @@ extension FTSavedClipsProvider {
             let clipModel = FTSavedClipModel(title: url.lastPathComponent, url: url, categoryTitle: category, image: image)
             savedClips.append(clipModel)
         }
-        return savedClips
+        return savedClips.sorted(by: {$0.url.fileCreationDate > $1.url.fileCreationDate})
     }
 
 
