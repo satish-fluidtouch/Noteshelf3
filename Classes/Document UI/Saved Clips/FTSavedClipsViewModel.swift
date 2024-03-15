@@ -69,13 +69,12 @@ class FTSavedClipsViewModel {
         return nil
     }
 
-    func removeItemFor(indexPath: IndexPath) throws {
-        if categories.count > indexPath.section {
-            let savedClips = categories[indexPath.section].savedClips
-            let clip = savedClips[indexPath.item]
-            try handler.removeClip(clip: clip)
-            self.categories[indexPath.section].savedClips.remove(at: indexPath.item)
+    func index(for clip: FTSavedClipModel, in section: Int) -> Int? {
+        if categories.count > section {
+            let savedClips = categories[section].savedClips
+            return self.categories[section].savedClips.firstIndex(where: { $0.title == clip.title })
         }
+        return nil
     }
 
     func removeClip(clip: FTSavedClipModel, in section: Int) throws {

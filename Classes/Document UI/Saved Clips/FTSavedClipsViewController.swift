@@ -118,8 +118,10 @@ class FTSavedClipsViewController: UIViewController {
         self.collectionView.reloadData()
     }
 
-    func removeItem(clip: FTSavedClipModel, indexPath: IndexPath) {
-        let index = indexPath.item
+    func removeItem(clip: FTSavedClipModel) {
+        guard let index = viewModel.index(for: clip, in: selectedSegmentIndex) else {
+            return
+        }
         if index < viewModel.numberOfRowsForSection(section: selectedSegmentIndex) {
             do {
                 try self.viewModel.removeClip(clip: clip, in: selectedSegmentIndex)
@@ -192,8 +194,6 @@ extension FTSavedClipsViewController: UICollectionViewDelegate, UICollectionView
         }
         if rows == 0 {
             collectionView.backgroundView?.isHidden = false
-            self.endEditing()
-
         } else {
             collectionView.backgroundView?.isHidden = true
         }
@@ -207,7 +207,7 @@ extension FTSavedClipsViewController: UICollectionViewDelegate, UICollectionView
         if let clip = viewModel.itemFor(indexPath: IndexPath(item: indexPath.item, section: self.selectedSegmentIndex)) {
             cell.configureCellWith(clip: clip, isEditing: self.cellType == .editing ? true : false)
             cell.deleteSavedClip = { [weak self] clip in
-                self?.removeItem(clip: clip, indexPath: indexPath)
+                self?.removeItem(clip: clip)
             }
         }
         return cell
@@ -257,7 +257,7 @@ extension FTSavedClipsViewController: UICollectionViewDelegate, UICollectionView
                                      attributes: .destructive,
                                      state: .off) { [weak self] _ in
                 guard let self = self else { return }
-                self.removeItem(clip: clip, indexPath: indexPath)
+                self.removeItem(clip: clip)
             }
             return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: [addACtion, deleteACtion])
         }
