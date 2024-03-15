@@ -60,7 +60,10 @@ import FTCommon
     func udpateLabelFramesYPosition(_ newYPosition: CGFloat) {
         var labelFrame = self.frame;
         labelFrame.origin.y = newYPosition;
-        labelFrame.size = CGSize(width: ((pageNumberInfoLabel.text?.size().width ?? 0) + 32), height: 24)
+        if let pdfPage = self.page, let document = pdfPage.parentDocument {
+            let attributedPageNumberInfo = NSAttributedString(string: String.init(format: NSLocalizedString("NofNAlt", comment: "%d of %d"),pdfPage.pageIndex()+1,document.pages().count))
+            labelFrame.size = CGSize(width: (attributedPageNumberInfo.size().width + 32), height: 24)
+        }
         self.frame = labelFrame
     }
     
