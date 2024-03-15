@@ -10,7 +10,9 @@ import SwiftUI
 
 struct FTPlayerView: View {
     @ObservedObject var viewModel: FTPlayerViewModel
-    @State var isEditOptionsShowing: Bool = false
+    @Binding var isShowingPlayerView: Bool
+
+    @State private var isEditOptionsShowing = false
 
     private let progressColor = Color(red: 224/255, green: 110/255, blue: 81/255)
 
@@ -67,7 +69,7 @@ struct FTPlayerView: View {
             toolBar()
         }
         .fullScreenCover(isPresented: $isEditOptionsShowing, content: {
-            FTRecordingEditView(viewModel: FTRecordingEditViewModel(recording: self.recording))
+            FTRecordingEditView(viewModel: FTRecordingEditViewModel(recording: self.recording), isEditOptionsShowing: $isEditOptionsShowing, isShowingPlayerView: $isShowingPlayerView)
         })
         .onDisappear {
             self.viewModel.resetPlay()

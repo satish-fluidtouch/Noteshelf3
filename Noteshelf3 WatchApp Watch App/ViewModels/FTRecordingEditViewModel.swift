@@ -19,11 +19,32 @@ class FTRecordingEditViewModel: NSObject {
         self.recording = recording
     }
 
+    func deleteRecording(completion:@escaping ((Bool?)->Void)) {
+        FTWatchRecordingProvider.shared.deleteRecording(item: recording) { error in
+            if let err = error {
+                debugLog(err.localizedDescription)
+                completion(false)
+            } else {
+                completion(true)
+            }
+        }
+    }
+
+    func renameRecording(with name: String, completion:@escaping ((Bool?)->Void)) {
+        // TODO: To update name here
+//        self.recording.audioTitle = name
+        FTWatchRecordingProvider.shared.updateRecording(item: self.recording) { error in
+            if let err = error {
+                debugLog(err.localizedDescription)
+                completion(false)
+            } else {
+                completion(true)
+            }
+        }
+    }
+
     func handleAction(for option: FTRecordingEditOption) {
         if option == .delete {
-            FTWatchRecordingProvider.shared.deleteRecording(item: recording) { error in
-                debugLog(error?.localizedDescription ?? "")
-            }
         }
     }
 

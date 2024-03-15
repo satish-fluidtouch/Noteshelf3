@@ -11,7 +11,6 @@ import SwiftUI
 struct FTRecordingsView: View {
     @StateObject private var viewModel = FTRecordingsViewModel()
     @State private var isShowingPlayerView = false
-    @State private var selectedRecording: FTWatchRecording?
 
     var body: some View {
         ZStack {
@@ -31,11 +30,8 @@ struct FTRecordingsView: View {
                         ForEach(viewModel.recordings, id: \.GUID) { recording in
                             recordingView(for: recording)
                                 .onTapGesture {
+                                    viewModel.selectedRecording = recording
                                     isShowingPlayerView = true
-                                    self.selectedRecording = recording
-                                }
-                                .fullScreenCover(isPresented: $isShowingPlayerView) {
-                                    FTPlayerView(viewModel: FTPlayerViewModel(recording: recording))
                                 }
                         }
                         .onDelete(perform: deleteItem)
@@ -48,9 +44,18 @@ struct FTRecordingsView: View {
                         }
                     }
                 }
+                .fullScreenCover(isPresented: $isShowingPlayerView) {
+                    if let recording = self.viewModel.selectedRecording {
+                        FTPlayerView(viewModel: FTPlayerViewModel(recording: recording), isShowingPlayerView: $isShowingPlayerView)
+                    }
+                }
             }
         }.onAppear {
             self.viewModel.reloadRecordings()
+        } .onChange(of: isShowingPlayerView) { newValue in
+            if !newValue {
+                self.viewModel.reloadRecordings()
+            }
         }
     }
 

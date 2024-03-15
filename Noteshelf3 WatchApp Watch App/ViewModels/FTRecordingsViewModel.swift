@@ -16,6 +16,7 @@ struct FTRecording {
 
 class FTRecordingsViewModel: ObservableObject {
    @Published var recordings: [FTWatchRecording] = []
+    var selectedRecording: FTWatchRecording?
 
     var title: String {
         "Recordings"

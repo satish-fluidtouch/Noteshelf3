@@ -10,67 +10,81 @@ import SwiftUI
 
 struct FTRecordingEditView: View {
     let viewModel: FTRecordingEditViewModel
-    @State var isShowingDeleteView: Bool = false
-    @State var isShowingRenameView: Bool = false
+    @Binding var isEditOptionsShowing: Bool
+    @Binding var isShowingPlayerView: Bool
+
+    @State private var isShowingDeleteView = false
+    @State private  var isShowingRenameView = false
+    @FocusState private var keyboardFocused: Bool
+
+    @State private var text: String = ""
 
     var body: some View {
-        List {
-            ForEach(FTRecordingEditOption.allCases, id: \.rawValue) { option in
+        VStack {
+            Spacer()
+
+            ZStack {
                 HStack {
-                    Text(option.title)
+                    Text(FTRecordingEditOption.rename.title)
+                        .padding(.leading, 4)
                     Spacer()
-                    Image(systemName: option.imageName)
-                        .tint(option == .delete ? .red : .white)
+                    Image(systemName: FTRecordingEditOption.rename.imageName)
+                        .padding(.trailing, 4)
                 }
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    if option == .delete {
-                        self.isShowingDeleteView = true
-                    } else if option == .rename {
-                        self.isShowingRenameView = true
+
+                TextField("", text: $text)
+                    .onSubmit {
+                        self.viewModel.renameRecording(with: text) { _ in
+                            self.isEditOptionsShowing = false
+                        }
                     }
-                }
-                .fullScreenCover(isPresented: $isShowingDeleteView, content: {
-                    FTRecordingDeleteView(viewModel: viewModel)
-                })
-                .fullScreenCover(isPresented: $isShowingRenameView, content: {
-                    FTRecordingRenameView(viewModel: viewModel)
-                })
             }
+
+            HStack {
+                Text(FTRecordingEditOption.delete.title)
+                    .padding(.leading, 4)
+                Spacer()
+                Image(systemName: FTRecordingEditOption.delete.imageName)
+                    .foregroundStyle(.red)
+                    .padding(.trailing, 4)
+            }
+            .frame(height: 48.0)
+            .background(RoundedRectangle(cornerRadius: 8).fill(Color.white.opacity(0.12)))
+
+            .onTapGesture {
+                self.isShowingDeleteView = true
+            }
+
+            Spacer()
         }
+        .padding(.horizontal)
+        .fullScreenCover(isPresented: $isShowingDeleteView, content: {
+            FTRecordingDeleteView(viewModel: viewModel, isShowingPlayerView: $isShowingPlayerView)
+        })
     }
 }
 
 struct FTRecordingDeleteView: View {
     let viewModel: FTRecordingEditViewModel
+    @Binding var isShowingPlayerView: Bool
 
     var body: some View {
         VStack {
             Text(viewModel.deleteConfirmInfo)
             Spacer()
             Button(action: {
-                self.viewModel.handleAction(for: .delete)
+                self.viewModel.deleteRecording { _ in
+                    self.isShowingPlayerView = false
+                }
             }) {
                 Text("Delete")
-                    .foregroundColor(.white)
+                    .foregroundColor(.red)
             }
             .frame(width: 143, height: 45)
         }
     }
 }
 
-struct FTRecordingRenameView: View {
-    let viewModel: FTRecordingEditViewModel
-    @State var text: String = ""
-
-    var body: some View {
-        TextField("", text: $text)
-            .onSubmit {
-                print("zzzz - Rename")
-            }
-    }
-}
-
 #Preview {
-    FTRecordingEditView(viewModel: FTRecordingEditViewModel(recording: FTWatchRecordedAudio(GUID: "12", date: Date(), duration: 2.0)))
+    FTRecordingEditView(viewModel: FTRecordingEditViewModel(recording: FTWatchRecordedAudio(GUID: "12", date: Date(), duration: 2.0)), isEditOptionsShowing: .constant(false), isShowingPlayerView: .constant(false))
 }
