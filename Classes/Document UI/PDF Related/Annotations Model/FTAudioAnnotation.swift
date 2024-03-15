@@ -415,15 +415,12 @@ extension FTAudioAnnotation
 
         let targetFileName = targetTrackNames[index];
 
-        guard let copiedFileItem = FTFileItemAudioTemporary(fileName: targetFileName, sourceURL: sourceFileItem.fileItemURL) else {
+        guard let copiedFileItem = FTFileItemAudioTemporary(fileName: targetFileName, sourceURL: sourceFileItem.fileItemURL, content: NSObject()) else {
             completion(nil);
             return
         }
         copiedFileItem.securityDelegate = document
         destinationResourceFolder.addChildItem(copiedFileItem);
-
-        // TODO: (AK) Work around to make the FileItem modfied to true, as we are not using direct approach for audio file items
-        copiedFileItem.updateContent(NSObject())
 
         currentIndex += 1;
 

@@ -158,9 +158,14 @@ extension FTStickyAnnotation
            let sourceResourceFolder = sourceDocument.resourceFolderItem(),
            let resourceFolder = document.resourceFolderItem() {
 
+            var contentImage: UIImage?
+            if(sourceDocument.isSecured() || document.isSecured()) {
+                contentImage = sourceFileItem.image()
+            }
+
             let sourceFileItemURL = sourceResourceFolder.fileItemURL.appending(path: self.imageContentFileName(), directoryHint: .notDirectory)
 
-            guard let copiedFileItem = FTFileItemImageTemporary(fileName: annotation.imageContentFileName(), sourceURL: sourceFileItemURL) else {
+            guard let copiedFileItem = FTFileItemImageTemporary(fileName: annotation.imageContentFileName(), sourceURL: sourceFileItemURL, content: contentImage) else {
                 onCompletion(nil)
                 return
             }

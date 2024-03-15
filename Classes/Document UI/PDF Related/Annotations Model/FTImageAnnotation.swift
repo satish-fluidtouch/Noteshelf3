@@ -504,7 +504,12 @@ extension FTImageAnnotation
 
             let sourceFileItemURL = sourceResourceFolder.fileItemURL.appending(path: self.imageContentFileName(), directoryHint: .notDirectory)
 
-            guard let copiedFileItem = FTFileItemImageTemporary(fileName: imageAnnotation.imageContentFileName(), sourceURL: sourceFileItemURL) else {
+            var contentImage: UIImage?
+            if(sourceDocument.isSecured() || document.isSecured()) {
+                contentImage = sourceFileItem.image()
+            }
+
+            guard let copiedFileItem = FTFileItemImageTemporary(fileName: imageAnnotation.imageContentFileName(), sourceURL: sourceFileItemURL, content: contentImage) else {
                 onCompletion(nil);
                 return
             }
@@ -514,8 +519,12 @@ extension FTImageAnnotation
             copiedFileItem.setImage(sourceFileItem.image())
 
             if let trasnformmedFileItem = self.transformedContentFileItem() {
+                var transformImage: UIImage?
+                if(sourceDocument.isSecured() || document.isSecured()) {
+                    transformImage = sourceFileItem.image()
+                }
 
-                guard let copiedTrasnformmedFileItem = FTFileItemImageTemporary(fileName: imageAnnotation.transformedContentFileName(), sourceURL: trasnformmedFileItem.fileItemURL) else {
+                guard let copiedTrasnformmedFileItem = FTFileItemImageTemporary(fileName: imageAnnotation.transformedContentFileName(), sourceURL: trasnformmedFileItem.fileItemURL, content: transformImage) else {
                     onCompletion(nil);
                     return
                 }

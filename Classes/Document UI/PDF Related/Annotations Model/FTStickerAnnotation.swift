@@ -53,10 +53,14 @@ extension FTStickerAnnotation
         if let sourceFileItem = self.imageContentFileItem(),
            let document = toPage.parentDocument as? FTNoteshelfDocument,
            let sourceDocument = self.associatedPage?.parentDocument as? FTNoteshelfDocument,
-           let sourceResourceFolder = sourceDocument.resourceFolderItem(),
            let resourceFolder = document.resourceFolderItem() {
+            
+            var contentImage: UIImage?
+            if(sourceDocument.isSecured() || document.isSecured()) {
+                contentImage = sourceFileItem.image()
+            }
 
-            guard let copiedFileItem = FTFileItemImageTemporary(fileName: annotation.imageContentFileName(), sourceURL: sourceFileItem.fileItemURL) else {
+            guard let copiedFileItem = FTFileItemImageTemporary(fileName: annotation.imageContentFileName(), sourceURL: sourceFileItem.fileItemURL, content: contentImage) else {
                 onCompletion(nil)
                 return
             }

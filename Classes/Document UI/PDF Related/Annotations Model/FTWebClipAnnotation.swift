@@ -47,7 +47,8 @@ extension FTWebClipAnnotation
         
         guard let document = toPage.parentDocument as? FTNoteshelfDocument,
               let sourceFileItem = self.imageContentFileItem(),
-              let sourceResourceFolder = (self.associatedPage?.parentDocument as? FTNoteshelfDocument)?.resourceFolderItem(),
+              let sourceDocument = self.associatedPage?.parentDocument as? FTNoteshelfDocument,
+              let sourceResourceFolder = sourceDocument.resourceFolderItem(),
               let resourceFolder = document.resourceFolderItem()
         else {
             onCompletion(nil)
@@ -55,8 +56,13 @@ extension FTWebClipAnnotation
         }
 
         let sourceFileItemURL = sourceResourceFolder.fileItemURL.appending(path: self.imageContentFileName(), directoryHint: .notDirectory)
+        
+        var contentImage: UIImage?
+        if(sourceDocument.isSecured() || document.isSecured()) {
+            contentImage = sourceFileItem.image()
+        }
 
-        guard let copiedFileItem = FTFileItemImageTemporary(fileName: annotation.imageContentFileName(), sourceURL: sourceFileItemURL) else {
+        guard let copiedFileItem = FTFileItemImageTemporary(fileName: annotation.imageContentFileName(), sourceURL: sourceFileItemURL, content: contentImage) else {
             onCompletion(nil)
             return
         }

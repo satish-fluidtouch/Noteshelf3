@@ -43,7 +43,6 @@
 {
     NSFileManager *fileManager = [[NSFileManager alloc] init];
     NSError *error = nil;
-    // TODO: AK - Why not coordinated move here?
     [fileManager moveItemAtURL:self.sourcePDFURL toURL:self.fileItemURL error:&error];
     if(nil != error) {
         return false;

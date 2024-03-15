@@ -8,11 +8,11 @@
 
 import FTDocumentFramework
 
-protocol FTFileItemCacheble {
-    init?(fileName: String, sourceURL: URL)
+protocol FTFileItemTemporary {
+    init?(fileName: String, sourceURL: URL, content: NSObject?)
 }
 
-private extension FTFileItemCacheble {
+private extension FTFileItemTemporary {
     static func temporaryLocationForFile() -> URL {
         let temporaryLocation = URL.libraryDirectory.appending(path: "DeepCopy")
         var isDir = ObjCBool(false);
@@ -23,36 +23,22 @@ private extension FTFileItemCacheble {
     }
 }
 
-class FTFileItemImageTemporary: FTFileItemImage, FTFileItemCacheble {
+class FTFileItemImageTemporary: FTFileItemImage, FTFileItemTemporary {
     private var temporaryLocation: URL?
 
-    required init?(fileName: String, sourceURL: URL) {
+    required init?(fileName: String, sourceURL: URL, content: NSObject?) {
         let temporaryLocation = Self.temporaryLocationForFile()
         do {
-            try FileManager.default.coordinatedCopy(fromURL: sourceURL, toURL: temporaryLocation)
-            self.temporaryLocation = temporaryLocation
+            if content == nil {
+                try FileManager.default.coordinatedCopy(fromURL: sourceURL, toURL: temporaryLocation)
+                self.temporaryLocation = temporaryLocation
+            }
             super.init(fileName: fileName, isDirectory: false)
-            // Force set to nil, to make this file item as dirty
-            self.updateContent(nil)
+            self.updateContent(content)
         } catch {
             debugLog("Unable to temp copy image error \(error)")
             return nil
         }
-    }
-
-    override func loadContentsOfFileItem() -> Any! {
-        guard let temporaryLocation else {
-            return super.loadContentsOfFileItem()
-        }
-
-        if var data = try? Data(contentsOf: temporaryLocation) {
-            if self.shouldDecryptWhileLoading(),
-               let securityDel = self.securityDelegate {
-                data = securityDel.decrypt(data)
-            }
-            return UIImage(data: data)
-        }
-        return nil
     }
 
     override func saveContentsOfFileItem() -> Bool {
@@ -72,36 +58,20 @@ class FTFileItemImageTemporary: FTFileItemImage, FTFileItemCacheble {
     }
 }
 
-class FTFileItemAudioTemporary: FTFileItemAudio, FTFileItemCacheble {
+class FTFileItemAudioTemporary: FTFileItemAudio, FTFileItemTemporary {
     private var temporaryLocation: URL?
 
-    required init?(fileName: String, sourceURL: URL) {
+    required init?(fileName: String, sourceURL: URL, content: NSObject?) {
         let temporaryLocation = Self.temporaryLocationForFile()
         do {
             try FileManager.default.coordinatedCopy(fromURL: sourceURL, toURL: temporaryLocation)
             self.temporaryLocation = temporaryLocation
             super.init(fileName: fileName, isDirectory: false)
-            // Force set to nil, to make this file item as dirty
-            self.updateContent(nil)
+            self.updateContent(content)
         } catch {
             debugLog("Unable to temp copy audio error \(error)")
             return nil
         }
-    }
-    
-    override func loadContentsOfFileItem() -> Any! {
-        guard let temporaryLocation else {
-            return super.loadContentsOfFileItem()
-        }
-
-        if var data = try? Data(contentsOf: temporaryLocation) {
-            if self.shouldDecryptWhileLoading(),
-               let securityDel = self.securityDelegate {
-                data = securityDel.decrypt(data)
-            }
-            return data
-        }
-        return nil
     }
 
     override func saveContentsOfFileItem() -> Bool {
