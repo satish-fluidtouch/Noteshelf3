@@ -87,7 +87,7 @@ internal extension FTZoomOverlayViewController {
                                                name: NSNotification.Name(rawValue: FTZoomRenderViewDidFinishMoving),
                                                object: nil);
         
-        NotificationCenter.default.addObserver(forName: .pageLayoutDidChange,
+        self.pageLayoutDidChangeObserver = NotificationCenter.default.addObserver(forName: .pageLayoutDidChange,
                                                object: nil,
                                                queue: nil)
         { [weak self] (_) in
@@ -95,13 +95,12 @@ internal extension FTZoomOverlayViewController {
             self?.currentPageControllerDidChanged();
        }
         
-         NotificationCenter.default.addObserver(forName: .pageLayoutWillChange,
+        self.pageLayoutWillChangeObserver = NotificationCenter.default.addObserver(forName: .pageLayoutWillChange,
                                                 object: nil,
                                                 queue: nil)
          { [weak self] (_) in
              self?.updateZoomOriginForCurrentPage()
         }
-
     }
 
     func addZoomManagerView(to pageVC: FTPageViewController) {

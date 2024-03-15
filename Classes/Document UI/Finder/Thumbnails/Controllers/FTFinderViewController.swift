@@ -270,7 +270,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     private func hideStandardNavBarAppearance() {
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.backgroundColor =  .appColor(.finderBgColor)
     }
 
     private func updateHeaderUI() {

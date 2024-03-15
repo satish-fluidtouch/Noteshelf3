@@ -113,4 +113,5 @@ extension FTIcon {
     static let checkmark = FTIcon(systemName: "checkmark")
     static let photoIcon = FTIcon(systemName: "photo")
     static let richTextfill = FTIcon(systemName: "doc.richtext.fill")
+    static let showstatusbar: FTIcon = FTIcon(bundleName: "statusbar_icon")
 }

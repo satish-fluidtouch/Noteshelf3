@@ -12,7 +12,7 @@ extension FTPageViewController {
     func configureGestures()
     {
         self.addGestures();
-        NotificationCenter.default.addObserver(forName: Notification.Name("FTDisableLongPressGestureNotification"),
+        self.disableLongPressNotificationObserver = NotificationCenter.default.addObserver(forName: Notification.Name("FTDisableLongPressGestureNotification"),
                                                object: nil,
                                                queue: nil)
         { [weak self] (notification) in
@@ -20,7 +20,7 @@ extension FTPageViewController {
             self?.longPressGestureRecognizer?.isEnabled = false;
         };
         
-        NotificationCenter.default.addObserver(forName: Notification.Name(FTPDFDisableGestures),
+        self.disableGestureNotificationObserver = NotificationCenter.default.addObserver(forName: Notification.Name(FTPDFDisableGestures),
                                                object: nil,
                                                queue: nil)
         { [weak self] (notification) in
@@ -29,7 +29,7 @@ extension FTPageViewController {
             self?.singleTapSelectionGestureRecognizer?.isEnabled = false;
         };
 
-        NotificationCenter.default.addObserver(forName: Notification.Name(FTPDFEnableGestures),
+        self.enableGestureNotificationObserver = NotificationCenter.default.addObserver(forName: Notification.Name(FTPDFEnableGestures),
                                                object: nil,
                                                queue: nil)
         { [weak self] (notification) in
@@ -357,22 +357,17 @@ extension FTPageViewController : UIGestureRecognizerDelegate
                         return false;
                     }
                 }
-                
-                if (self.delegate?.activeAnnotationController() as? FTShapeAnnotationController) != nil  {
-                    if nil != self.annotation(type: .singleTapSelection, atPoint: locationInView) {
-                        return true;
-                    }
-                }
-
+              
                 if let activeController = self.delegate?.activeAnnotationController() {
                     let controller = self.delegate?.pageControllerFor(activeAnnotationController: activeController);
-                    if self.presentedViewController?.children.count ?? 0 > 0 {
-                        if activeController.annotation.canCancelEndEditingAnnotaionWhenPopOverPresents() {
-                            return false
-                        }
-                    }
                     controller?.endEditingActiveAnnotation(activeController.annotation, refreshView: true)
-                    return false;
+                    if touch.type == .direct
+                        ,nil != self.annotation(type: .singleTapSelection, atPoint: locationInView) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
                 }
 
                 if !contentView.bounds.contains(locationInView) {
@@ -465,7 +460,7 @@ extension FTPageViewController : UIGestureRecognizerDelegate
 extension FTPageViewController {
     
     private func addObserverForQuickPageNavigator() {
-        NotificationCenter.default.addObserver(forName: .quickPageNavigatorShowNotification,
+        self.quickPageNavigationShowNotificationObserver = NotificationCenter.default.addObserver(forName: .quickPageNavigatorShowNotification,
                                                object: nil,
                                                queue: nil)
         { [weak self] (_) in

@@ -34,6 +34,7 @@ class FTShelfItemViewModel: NSObject, Identifiable, ObservableObject, FTShelfIte
     var isVisible: Bool = false {
         didSet {
             if isVisible {
+                self.updateDownloadStatusFor(item: self.model);
                 self.addObservers();
                 self.addUrlObserversIfNeeded();
                 self.startObservingProgressUpdates();

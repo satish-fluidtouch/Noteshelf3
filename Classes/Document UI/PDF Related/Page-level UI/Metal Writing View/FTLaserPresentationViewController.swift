@@ -23,6 +23,11 @@ protocol FTLaserPresentationDelegate: NSObjectProtocol {
 
 @objcMembers class FTLaserPresentationViewController: UIViewController {
 
+    private weak var cancelStrokeNotificationObserver: NSObjectProtocol?;
+    private weak var resetLaserNotificationObserver: NSObjectProtocol?;
+    private weak var clearLaserNotificationObserver: NSObjectProtocol?
+    private weak var refreshNotificationObserver: NSObjectProtocol?;
+    
     private var currentStroke : FTLaserStroke?;
     private var displayLink: CADisplayLink?;
     private var currentExecutingID : String?;
@@ -49,6 +54,18 @@ protocol FTLaserPresentationDelegate: NSObjectProtocol {
     deinit {
         self.displayLink?.invalidate();
         self.displayLink = nil;
+        if let observer = self.cancelStrokeNotificationObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+        if let observer = self.resetLaserNotificationObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+        if let observer = self.clearLaserNotificationObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+        if let observer = self.refreshNotificationObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
     }
     
     private var scale: CGFloat {
@@ -246,7 +263,7 @@ private extension FTLaserPresentationViewController {
     }
     
     func registerrForCurrentStrokeCancellation() {
-        NotificationCenter.default.addObserver(forName: .cancelCurrentLaserStroke,
+        self.cancelStrokeNotificationObserver = NotificationCenter.default.addObserver(forName: .cancelCurrentLaserStroke,
                                                object: nil,
                                                queue: nil) {[weak self]  (notification) in
             guard let strongSelf = self,
@@ -271,7 +288,7 @@ private extension FTLaserPresentationViewController {
     }
     
     func registerResetAnnotationObserver() {
-        NotificationCenter.default.addObserver(forName: .didResetLaserAnnotations,
+        self.resetLaserNotificationObserver = NotificationCenter.default.addObserver(forName: .didResetLaserAnnotations,
                                                object: nil,
                                                queue: nil) {[weak self]  (notification) in
             guard let strongSelf = self,
@@ -296,7 +313,7 @@ private extension FTLaserPresentationViewController {
     }
 
     func registerClearAnnotationObserver() {
-        NotificationCenter.default.addObserver(forName: .didClearLaserAnnotations,
+        self.clearLaserNotificationObserver = NotificationCenter.default.addObserver(forName: .didClearLaserAnnotations,
                                                object: nil,
                                                queue: nil) {[weak self]  (notification) in
             guard let strongSelf = self,
@@ -323,7 +340,7 @@ private extension FTLaserPresentationViewController {
     }
     
     func registerUndoObserver() {
-        NotificationCenter.default.addObserver(forName: .refreshPresentation, object: nil, queue: nil) { [weak self ](notification) in
+        self.refreshNotificationObserver = NotificationCenter.default.addObserver(forName: .refreshPresentation, object: nil, queue: nil) { [weak self ](notification) in
             guard let userInfo = notification.userInfo,
                   let strongSelf = self,
                   let window = userInfo[FTRefreshWindowKey] as? UIWindow,

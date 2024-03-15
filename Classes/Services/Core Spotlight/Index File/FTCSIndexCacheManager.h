@@ -11,8 +11,6 @@
 
 @interface FTCSIndexCacheManager : NSObject
 
-+(id)sharedManager;
-
 -(void)addIndexItem:(FTCSIndexItem*)item;
 -(void)removeIndexItem:(FTCSIndexItem*)item;
 -(FTCSIndexItem*)modelForUniqueID:(NSString*)uniqueID;

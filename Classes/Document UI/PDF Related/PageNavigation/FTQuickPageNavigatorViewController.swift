@@ -67,12 +67,20 @@ private let gapBetweenPageTipAndThumbnail: CGFloat = 8.0
             return _currentPageIndex
         }
     }
+    
+    private weak var pageNavigationShowNotificationObserver: NSObjectProtocol?
+    private weak var pageNavigationHideNotificationObserver: NSObjectProtocol?;
+    
     //MARK:- View Life Cycle
     deinit {
         self.removeThumbnailObservers()
         
-        NotificationCenter.default.removeObserver(self, name: .quickPageNavigatorShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .quickPageNavigatorHideNotification, object: nil)
+        if let observer = self.pageNavigationHideNotificationObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+        if let observer = self.pageNavigationShowNotificationObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
         #if DEBUG
         debugPrint("\(type(of: self)) is deallocated");
         #endif
@@ -84,7 +92,7 @@ private let gapBetweenPageTipAndThumbnail: CGFloat = 8.0
         self.configureNavigatorAppearance()
         self.pageSlider?.minimumValue = 1.0
         
-        NotificationCenter.default.addObserver(forName: .quickPageNavigatorShowNotification, object: nil, queue: nil) { [weak self] (notification) in
+        self.pageNavigationShowNotificationObserver = NotificationCenter.default.addObserver(forName: .quickPageNavigatorShowNotification, object: nil, queue: nil) { [weak self] (notification) in
             var currentSessionID = ""
             if #available(iOS 13.0, *) {
                 if let sessionIdentifier = self?.view.window?.windowScene?.session.persistentIdentifier {
@@ -97,7 +105,7 @@ private let gapBetweenPageTipAndThumbnail: CGFloat = 8.0
             self.activateNavigatorHandle()
         }
         
-        NotificationCenter.default.addObserver(forName: .quickPageNavigatorHideNotification, object: nil, queue: nil) { [weak self] (notification) in
+        self.pageNavigationHideNotificationObserver = NotificationCenter.default.addObserver(forName: .quickPageNavigatorHideNotification, object: nil, queue: nil) { [weak self] (notification) in
             var currentSessionID = ""
             if #available(iOS 13.0, *) {
                 if let sessionIdentifier = self?.view.window?.windowScene?.session.persistentIdentifier {

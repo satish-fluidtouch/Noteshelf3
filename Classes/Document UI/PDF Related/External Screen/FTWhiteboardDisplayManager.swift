@@ -52,14 +52,35 @@ extension UIApplication
     func configure() {
         
     }
+    
+    private weak var whiteboadScreenNotificationObserver: NSObjectProtocol?
+    private weak var windowbecomeKeyNotificationObserver: NSObjectProtocol?
+    private weak var screenDidConnectionNotificationObserver: NSObjectProtocol?
+    private weak var screenDidDisconnectNotificationObserver: NSObjectProtocol?;
+    
     override init() {
         super.init();
         self.checkForExternalScreens();
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.FTDidChangeWhiteBoardScreenValue,
+        self.whiteboadScreenNotificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.FTDidChangeWhiteBoardScreenValue,
                                                object: nil,
                                                queue: nil) { [weak self] (_) in
                                                 self?.checkForExternalScreens();
         };
+    }
+    
+    deinit {
+        if let observer = self.whiteboadScreenNotificationObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+        if let observer = self.windowbecomeKeyNotificationObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+        if let observer = self.screenDidConnectionNotificationObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+        if let observer = self.screenDidDisconnectNotificationObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
     }
     
     func setPage(page : FTPageProtocol,
@@ -97,7 +118,7 @@ private extension FTWhiteboardDisplayManager
 {
     func checkForExternalScreens() {
         if(UserDefaults.standard.bool(forKey: whiteBoardEnableKey)) {
-            NotificationCenter.default.addObserver(forName: UIWindow.didBecomeKeyNotification,
+            self.windowbecomeKeyNotificationObserver = NotificationCenter.default.addObserver(forName: UIWindow.didBecomeKeyNotification,
                                                    object: nil,
                                                    queue: nil) { [weak self] (_) in
                 if !(self?.maintainPrevStateOnExit ?? false) {
@@ -105,7 +126,7 @@ private extension FTWhiteboardDisplayManager
                 }
             };
 
-            NotificationCenter.default.addObserver(forName: UIScreen.didConnectNotification,
+            self.screenDidConnectionNotificationObserver = NotificationCenter.default.addObserver(forName: UIScreen.didConnectNotification,
                                                    object: nil,
                                                    queue: nil)
             { [weak self] (note) in
@@ -119,7 +140,7 @@ private extension FTWhiteboardDisplayManager
                 }
             };
             
-            NotificationCenter.default.addObserver(forName: UIScreen.didDisconnectNotification,
+            self.screenDidDisconnectNotificationObserver = NotificationCenter.default.addObserver(forName: UIScreen.didDisconnectNotification,
                                                    object: nil,
                                                    queue: nil)
             { [weak self] (_) in

@@ -1,15 +1,6 @@
 {
   "pins" : [
     {
-      "identity" : "alamofire",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Alamofire/Alamofire.git",
-      "state" : {
-        "revision" : "3dc6a42c7727c49bf26508e29b0a0b35f9c7e1ad",
-        "version" : "5.8.1"
-      }
-    },
-    {
       "identity" : "appauth-ios",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/openid/AppAuth-iOS.git",
@@ -86,8 +77,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/dropbox/SwiftyDropbox.git",
       "state" : {
-        "revision" : "5bda01b02a87568801a5b2af07e3fdb075dce69c",
-        "version" : "9.2.0"
+        "revision" : "900b1d88168d8bbda73485c9723c09f5f7f1bc76",
+        "version" : "10.0.4"
       }
     },
     {

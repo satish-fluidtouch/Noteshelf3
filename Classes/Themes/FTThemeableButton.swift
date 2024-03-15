@@ -14,16 +14,24 @@ import FTCommon
     @IBInspectable var selectedImageName: String?
     @IBInspectable var supportsTint: Bool = false
     
+    private weak var themeChangeObserver: NSObjectProtocol?;
+    
     override func awakeFromNib() {
         super.awakeFromNib();
         self.updateUI();
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.FTShelfThemeDidChange, object: nil, queue: nil) { [weak self] (_) in
+        self.themeChangeObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.FTShelfThemeDidChange, object: nil, queue: nil) { [weak self] (_) in
             runInMainThread {
                 self?.updateUI();
             }
         }
     }
     
+    deinit {
+        if let observer = self.themeChangeObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+    }
+
     private func updateUI() {
         #if !targetEnvironment(macCatalyst)
         let theme = FTShelfThemeStyle.defaultTheme();

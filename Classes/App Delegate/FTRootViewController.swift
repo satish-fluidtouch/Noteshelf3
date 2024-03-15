@@ -11,6 +11,7 @@ import FTCommon
 import SafariServices
 import FTDocumentFramework
 import FTNewNotebook
+import CoreSpotlight
 
 protocol FTOpenCloseDocumentProtocol : NSObjectProtocol {
     func openRecentItem(shelfItemManagedObject: FTDocumentItemWrapperObject, addToRecent: Bool)
@@ -40,9 +41,8 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     private weak var noteBookSplitController: FTNoteBookSplitViewController?
     var contentView : UIView!;
 
-    override var preferredStatusBarStyle : UIStatusBarStyle {
-        return FTShelfThemeStyle.defaultTheme().preferredStatusBarStyle;
-    }
+    private var keyValueObserver: NSKeyValueObservation?;
+    private weak var themeNotificationObserver: NSObjectProtocol?;
 
     override func isAppearingThroughModelScale() {
          (self.rootContentViewController as? FTShelfSplitViewController)?.isAppearingThroughModelScale()
@@ -52,6 +52,8 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     override func viewDidLoad() {
         super.viewDidLoad()
         FTImportStorageManager.clearImportFilesIfNeeded();
+        FTDocumentsSpotlightIndexManager.shared.configure();
+        
         self.contentView = UIView.init(frame: self.view.bounds);
         self.contentView.backgroundColor = UIColor.clear;
 
@@ -76,13 +78,17 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         }
         FTUserDefaults.defaults().addObserver(self, forKeyPath: "iCloudOn", options: .new, context: nil);
 
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.FTShelfThemeDidChange, object: nil, queue: nil) { [weak self] _ in
+        self.themeNotificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.FTShelfThemeDidChange, object: nil, queue: nil) { [weak self] _ in
             runInMainThread {
                 self?.themeDidChange();
             }
         }
         if #available(iOS 12.1, *) {
             self.addPencilInteractionDelegate();
+        }
+        
+        self.keyValueObserver = FTUserDefaults.defaults().observe(\.showStatusBar, options: [.new]) { [weak self] (userdefaults, change) in
+            self?.refreshStatusBarAppearnce();
         }
     }
 
@@ -102,6 +108,12 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                 self.pencilInteraction = nil;
             }
         }
+        if let _themeObserver = self.themeNotificationObserver {
+            NotificationCenter.default.removeObserver(_themeObserver);
+        }
+        
+        self.keyValueObserver?.invalidate();
+        self.keyValueObserver = nil
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -129,10 +141,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         if let splitVC = self.noteBookSplitController,
            !(splitVC.isBeingDismissed || splitVC.isBeingPresented),
            let docController = self.docuemntViewController {
-            return docController.prefersStatusBarHidden;
-        }
-        else if let shelfVC = self.rootContentViewController {
-            return shelfVC.prefersStatusBarHidden;
+            return splitVC.prefersStatusBarHidden;
         }
         return super.prefersStatusBarHidden;
     }
@@ -370,7 +379,11 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         if self.isFirstTime {
             self.isFirstTime = false;
             self.setupSafeModeIfNeeded()
-            if let document = self.lastOpenedDocument() {
+            if self.userActivity?.activityType == CSSearchableItemActionType,
+               let shelfItemUUID = self.userActivity?.userInfo?[CSSearchableItemActivityIdentifier] as? String {
+                self.openShelfItem(spotLightHash: shelfItemUUID);
+            }
+            else if let document = self.lastOpenedDocument() {
                 self.showLastOpenedDocument(relativePath: document, animate: false);
             }
             else if let isInNonCollectionMode = self.isInNonCollectionMode(),
@@ -1395,7 +1408,6 @@ extension FTRootViewController: FTSceneBackgroundHandling {
         if(!self.canProceedSceneNotification(notification)) {
             return;
         }
-
         FTAppConfigHelper.sharedAppConfig().updateAppConfig()
         if FTWhatsNewManger.canShowWelcomeScreen(onViewController: self) {
             FTGetstartedHostingViewcontroller.showWelcome(presenterController: self, onDismiss: nil);
@@ -1529,23 +1541,6 @@ extension FTRootViewController {
 
     func startRecordingOnAudioNotebook() {
         self.docuemntViewController?.startRecordingOnAudioNotebook()
-    }
-
-    private func getTopOffset() -> CGFloat {
-        var topOffset: CGFloat = 0.0
-        if UIDevice().isIphone() || self.view.frame.width < FTToolbarConfig.compactModeThreshold {
-            var extraHeight: CGFloat = 0.0
-            if UIDevice.current.isPhone() {
-                if let window = UIApplication.shared.keyWindow {
-                    let topSafeAreaInset = window.safeAreaInsets.top
-                    if topSafeAreaInset > 0 {
-                        extraHeight = topSafeAreaInset
-                    }
-                }
-            }
-            topOffset = FTToolbarConfig.Height.compact + extraHeight
-        }
-        return topOffset
     }
 
     func switchToPDFViewer(_ documentInfo : FTDocumentOpenInfo,

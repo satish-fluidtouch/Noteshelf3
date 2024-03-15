@@ -53,6 +53,8 @@ class FTShelfCategoryViewController : UIViewController, FTCustomPresentable
     var isEnableTextFiled : Bool = true
     fileprivate var scrollingCompletionBlock : ( () -> Void)?;
     
+    private weak var categoryUpdateObserver: NSObjectProtocol?;
+    
     override func viewDidLoad() {
         super.viewDidLoad();
         disableWidthConstraintIfNotRequired()
@@ -109,6 +111,9 @@ class FTShelfCategoryViewController : UIViewController, FTCustomPresentable
     }
     
     deinit{
+        if let observer = self.categoryUpdateObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
         #if DEBUG
         debugPrint("deinit : \(self.classForCoder)")
         #endif
@@ -125,7 +130,7 @@ class FTShelfCategoryViewController : UIViewController, FTCustomPresentable
     private func addCategoriesObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(shelfCategoryDidGetRemoved(_:)), name: NSNotification.Name.collectionRemoved, object: nil)
 
-        NotificationCenter.default.addObserver(forName: FTCategoryItemsDidUpdateNotification,
+        self.categoryUpdateObserver = NotificationCenter.default.addObserver(forName: FTCategoryItemsDidUpdateNotification,
                                                object: nil,
                                                queue: nil)
         { [weak self] (notification) in

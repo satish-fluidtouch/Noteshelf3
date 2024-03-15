@@ -66,17 +66,17 @@ struct FTHandWritingView: View {
                                 let selectedStyleInt:Int
                                 switch selecteStyle{
                                 case .leftdown:
-                                    selectedStyleInt =  0
+                                    selectedStyleInt =  FTWritingStyle.leftTop.rawValue
                                 case .rightDown:
-                                    selectedStyleInt =  1
+                                    selectedStyleInt =  FTWritingStyle.rightTop.rawValue
                                 case .leftStrait:
-                                    selectedStyleInt =  2
+                                    selectedStyleInt =  FTWritingStyle.leftCenter.rawValue
                                 case .rightStrait:
-                                    selectedStyleInt =  3
+                                    selectedStyleInt =  FTWritingStyle.rightCenter.rawValue
                                 case .leftTop:
-                                    selectedStyleInt =  4
+                                    selectedStyleInt =  FTWritingStyle.leftBottom.rawValue
                                 case .rightTop:
-                                    selectedStyleInt =  5
+                                    selectedStyleInt =  FTWritingStyle.rightBottom.rawValue
                                 }
                                 self.updateStyle(selectedStyleInt)
 
@@ -118,19 +118,20 @@ struct FTHandWritingView: View {
     }
     private func updateDisplay() {
         let style = self.getWritingStyle()
-        switch style{
-        case 0:
-            selecteStyle = .leftdown
-        case 1:
-            selecteStyle = .rightDown
-        case 2:
-            selecteStyle = .leftStrait
-        case 3:
-            selecteStyle = .rightStrait
-        case 4:
+        let ftStyle = FTWritingStyle(rawValue: style) ?? .rightBottom;
+        switch ftStyle{
+        case .leftBottom:
             selecteStyle = .leftTop
-        case 5:
+        case .rightBottom:
             selecteStyle = .rightTop
+        case .leftCenter:
+            selecteStyle = .leftStrait
+        case .rightCenter:
+            selecteStyle = .rightStrait
+        case .leftTop:
+            selecteStyle = .leftdown
+        case .rightTop:
+            selecteStyle = .rightDown
         default:
             selecteStyle = .rightTop
         }
