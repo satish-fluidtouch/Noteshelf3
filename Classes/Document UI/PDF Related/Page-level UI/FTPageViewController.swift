@@ -268,6 +268,7 @@ class FTLassoInfo: NSObject {
             self.scrollView?.layoutIfNeeded();
         }
         self.showPageImmediately = false;
+        self.removeObservers()
         self.addObservers();
         self.updateScrollPositionBasedOnCurrentPageViewControllerIndex();
     }
@@ -555,6 +556,13 @@ private extension FTPageViewController
         #if targetEnvironment(macCatalyst)
         self.addContextInteraction();
         #endif
+    }
+    
+    private func removeObservers() {
+        let defaultNotificationCenter = NotificationCenter.default;
+        if(self.renderMode == FTRenderModeDefault) {
+            defaultNotificationCenter.removeObserver(self, name: .willPerformUndoRedoActionNotification, object: self.pdfPage?.parentDocument?.undoManager)
+        }
     }
     
     func addObservers()
