@@ -135,6 +135,10 @@ class FTNoteBookSplitViewController: UISplitViewController, UISplitViewControlle
     }
     
     override var prefersHomeIndicatorAutoHidden: Bool {
-        return self.prefersStatusBarHidden;
+        var toHide: Bool = true
+        if UIDevice.current.isPhone() {
+            toHide = false
+        }
+        return toHide
     }
 }
