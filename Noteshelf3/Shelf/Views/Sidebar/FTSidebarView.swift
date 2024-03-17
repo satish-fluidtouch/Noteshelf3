@@ -102,7 +102,7 @@ struct FTSidebarView: View {
             .environmentObject(item)
             .environmentObject(viewModel)
         }
-        .frame(height: 44.0, alignment: .leading)
+//        .frame(height: 44.0, alignment: .leading)
         .background(Color.clear)
         .padding(.leading,8)
         .contentShape(Rectangle())

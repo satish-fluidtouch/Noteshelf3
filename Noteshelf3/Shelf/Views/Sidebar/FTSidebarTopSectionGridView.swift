@@ -14,26 +14,51 @@ struct FTSidebarTopSectionGridView: View {
 
     @ObservedObject var viewModel: FTSidebarViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
     
     // Templates New Option
     @AppStorage("isTemplatesNewOptionShown") private var isTemplatesNewOptionShown = false
 
     var body: some View {
         Grid(horizontalSpacing: 8,verticalSpacing: 8 ) {
-            GridRow {
-                gridItemFor(sidebarItemForType(.home))
-                gridItemFor(sidebarItemForType(.starred))
-            }
-            GridRow {
-                gridItemFor(sidebarItemForType(.unCategorized))
-                gridItemFor(sidebarItemForType(.trash))
-            }
-            GridRow{
-                templateGridItem(sidebarItemForType(.templates))
-                    .gridCellColumns(2)
+            if isLargeSize() {
+                GridRow {
+                    gridItemFor(sidebarItemForType(.home))
+                }
+                GridRow {
+                    gridItemFor(sidebarItemForType(.starred))
+                }
+                GridRow {
+                    gridItemFor(sidebarItemForType(.unCategorized))
+                }
+                GridRow {
+                    gridItemFor(sidebarItemForType(.trash))
+                }
+                GridRow{
+                    templateGridItem(sidebarItemForType(.templates))
+                }
+            } else {
+                GridRow {
+                    gridItemFor(sidebarItemForType(.home))
+                    gridItemFor(sidebarItemForType(.starred))
+                }
+                GridRow {
+                    gridItemFor(sidebarItemForType(.unCategorized))
+                    gridItemFor(sidebarItemForType(.trash))
+                }
+                GridRow{
+                    templateGridItem(sidebarItemForType(.templates))
+                        .gridCellColumns(2)
+                }
             }
         }.macOnlyPlainButtonStyle()
     }
+    
+    func isLargeSize() -> Bool {
+        let largeSizes: [DynamicTypeSize] = [.accessibility1, .accessibility2, .accessibility3, .accessibility4, .accessibility5]
+        return largeSizes.contains(dynamicTypeSize)
+    }
+    
     private func sidebarItemForType(_ type: FTSideBarItemType) -> FTSideBarItem{
         viewModel.sidebarItemOfType(type)
     }

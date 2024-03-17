@@ -34,14 +34,14 @@ public enum ClearFace: String, CaseIterable {
 
 extension View {
     public func appFont(for weight: Font.Weight, with size: CGFloat) -> some View {
-        let ftFont = Font.system(size: size, weight: weight)
+        let ftFont = Font.system(size: UIFontMetrics.default.scaledValue(for: size), weight: weight)
         return self.font(ftFont)
     }
 }
 
 extension Text {
     public func appFont(for weight: Font.Weight, with size: CGFloat) -> Text {
-        let ftFont = Font.system(size: size, weight: weight)
+        let ftFont = Font.system(size: UIFontMetrics.default.scaledValue(for: size), weight: weight)
         return self.font(ftFont)
     }
 }
@@ -54,7 +54,7 @@ extension Font {
     }
 
     public static func appFont(for weight: Font.Weight, with size: CGFloat) -> Font {
-        return Font.system(size: size, weight: weight)
+        return Font.system(size: UIFontMetrics.default.scaledValue(for: size), weight: weight)
     }
 
     public static func clearFaceFont(for type: ClearFace, with size: CGFloat) -> Font {

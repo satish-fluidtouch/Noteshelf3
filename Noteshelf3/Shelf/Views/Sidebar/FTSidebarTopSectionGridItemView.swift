@@ -17,18 +17,21 @@ struct FTSidebarTopSectionGridItemView: View {
     @State var numberOfChildren: Int = 0
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @EnvironmentObject var item: FTSideBarItem
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
+
 
     var body: some View {
-        FTSideBarItemContextMenuPreview(preview: {
-            gridItemView
-                .ignoresSafeArea()
-        }, onAppearActon: {
-            shelfMenuOverlayInfo.isMenuShown = true
-            viewModel.trackEventForlongpress(item: item)
-        }, onDisappearActon: {
-            shelfMenuOverlayInfo.isMenuShown = false
-        }, cornerRadius: 16,alertInfo: $alertInfo, showTrashAlert: $showTrashAlert)
-        .frame(height: 80)
+        gridItemView
+//        FTSideBarItemContextMenuPreview(preview: {
+//            gridItemView
+//                .ignoresSafeArea()
+//        }, onAppearActon: {
+//            shelfMenuOverlayInfo.isMenuShown = true
+//            viewModel.trackEventForlongpress(item: item)
+//        }, onDisappearActon: {
+//            shelfMenuOverlayInfo.isMenuShown = false
+//        }, cornerRadius: 16,alertInfo: $alertInfo, showTrashAlert: $showTrashAlert)
+//        .frame(height: 80)
         .environmentObject(viewModel)
         .environmentObject(item)
         .environmentObject(viewModel.sidebarItemContexualMenuVM)
@@ -37,7 +40,7 @@ struct FTSidebarTopSectionGridItemView: View {
         VStack(alignment: .leading,spacing:10) {
             HStack(alignment: .top, content: {
                 icon
-                    .frame(width: 24,height: 24,alignment: .top)
+//                    .frame(width: 24,height: 24,alignment: .top)
                     .foregroundColor(getIconTintColorForTopSectionItem(item))
                     .font(.appFont(for: .regular, with: 20))
                 Spacer()
@@ -59,7 +62,7 @@ struct FTSidebarTopSectionGridItemView: View {
             .padding(.horizontal,12)
             .padding(.bottom,10)
         }
-        .frame(maxWidth: .infinity,maxHeight: 80)
+//        .frame(maxWidth: .infinity,maxHeight: 80)
         .background(getBGColorTopSectionItem(item))
         .cornerRadius(16)
         .if(item == viewModel.selectedSideBarItem, transform: { view in
