@@ -29,6 +29,7 @@ struct FTRecordingsView: View {
                     List {
                         ForEach(viewModel.recordings, id: \.GUID) { recording in
                             recordingView(for: recording)
+                                .contentShape(Rectangle())
                                 .onTapGesture {
                                     viewModel.selectedRecording = recording
                                     isShowingPlayerView = true
@@ -68,13 +69,13 @@ struct FTRecordingsView: View {
     private func recordingView(for recording: FTWatchRecording) -> some View {
         VStack {
             HStack {
-                Text(recording.duration.formatSecondsToString())
+                Text(recording.audioTitle)
                     .font(Font.system(size: 16))
                     .bold()
                 Spacer()
             }
             HStack {
-                Text(recording.audioTitle)
+                Text(recording.duration.formatSecondsToString())
                     .font(Font.system(size: 16))
                 Spacer()
             }

@@ -3219,7 +3219,6 @@
 		47AF5CB81EB346A300BEFCF5 /* FTNewNotebookSettingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FTNewNotebookSettingTableViewCell.swift; path = Notebook/FTNewNotebookSettingTableViewCell.swift; sourceTree = "<group>"; };
 		47AF5CB91EB346A300BEFCF5 /* FTNewNotebookSettingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FTNewNotebookSettingTableViewCell.xib; path = Notebook/FTNewNotebookSettingTableViewCell.xib; sourceTree = "<group>"; };
 		47AF5D0A297EB12F0065AFF4 /* FTShelfBookmarksRepresentableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfBookmarksRepresentableView.swift; sourceTree = "<group>"; };
-		47B0AF212AF252A700C15810 /* URL_Watch_Extention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL_Watch_Extention.swift; sourceTree = "<group>"; };
 		47B45EF21E1032B1008095AD /* FTBaseExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTBaseExporter.h; sourceTree = "<group>"; };
 		47B45EF31E1032B1008095AD /* FTBaseExporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTBaseExporter.m; sourceTree = "<group>"; };
 		47B45EF51E10334A008095AD /* FTBaseExporter+FolderSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FTBaseExporter+FolderSearch.swift"; sourceTree = "<group>"; };
@@ -4877,7 +4876,6 @@
 			children = (
 				09591AE2202C4AE6008848DE /* FTWatchRecordingCollection.swift */,
 				09591AE5202C4AE6008848DE /* FTWatchRecordingCollection_Local.swift */,
-				47B0AF212AF252A700C15810 /* URL_Watch_Extention.swift */,
 			);
 			path = Local;
 			sourceTree = "<group>";
