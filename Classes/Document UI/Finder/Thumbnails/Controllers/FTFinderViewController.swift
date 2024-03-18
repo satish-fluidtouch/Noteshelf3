@@ -2030,11 +2030,14 @@ extension FTFinderViewController: FTTagsViewControllerDelegate {
                 }
             }
         }
-        FTDocumentTagUpdater().updatePageTags(addedTags: addedTags
-                                              , removedTags: removedTags
-                                              , document: doc
-                                              , pages: pages);        
-        NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
+        if let item = self.currentShelfItem() as? FTDocumentItemProtocol {
+            FTDocumentTagUpdater().updatePageTags(addedTags: addedTags
+                                                  , removedTags: removedTags
+                                                  , document: doc
+                                                  , docuumentItem: item
+                                                  , pages: pages);
+            NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
+        }
     }
 
     private func refreshTagPills() {

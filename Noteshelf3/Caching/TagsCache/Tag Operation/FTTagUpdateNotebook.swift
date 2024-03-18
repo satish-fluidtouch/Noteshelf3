@@ -11,32 +11,31 @@ import UIKit
 class FTTagUpdateNotebook: FTTagOperation {
     private var addedTags: [FTTagModel];
     private var removedTags: [FTTagModel];
-    private var documentIDs: [String];
+    private var documentItems: [FTDocumentItemProtocol];
     
     required init(_ addedTags: [FTTagModel]
          , removedTags: [FTTagModel]
-         , docIDs: [String]) {
+         , documentItems docItems: [FTDocumentItemProtocol]) {
         self.addedTags = addedTags;
         self.removedTags = removedTags;
-        self.documentIDs = docIDs;
+        self.documentItems = docItems;
     }
     
     override func perfomAction(_ onCompletion: (()->())?) -> Progress? {
         var updatedTags = Set<FTTag>();
-        let progress = self.enumerateDocuments(self.documentIDs) { documentID, document, token, onTaskCompletion in
+        let progress = self.enumerateDocumentItems(self.documentItems) { documentID, document, docItem, token, onTaskCompletion in
             self.addedTags.forEach { eachTag in
                 document.addTag(eachTag.text);
             }
             document.removeTags(self.removedTags.map{$0.text})
-            FTTagsProvider.shared.syncTagWithDocument(document);
+            FTTagsProvider.shared.syncTagWithDocument(document, documentItem: docItem);
             FTNoteshelfDocumentManager.shared.saveAndClose(document: document, token: token) { _ in
                 let tagsToAdd = FTTagsProvider.shared.getTagsfor(self.addedTags.map{$0.text},shouldCreate: true);
                 let tagsToRemove = FTTagsProvider.shared.getTagsfor(self.removedTags.map{$0.text},shouldCreate: false);
 
-                let docName = document.URL.relativePathWRTCollection()
                 tagsToAdd.forEach { eachTag in
                     if let taggedEntity = FTTagsProvider.shared.tagggedEntity(documentID
-                                                                              , documentPath: docName
+                                                                              , docuemntItem: docItem
                                                                               , createIfNotPresent: true) {
                         eachTag.addTaggedItem(taggedEntity);
                         updatedTags = updatedTags.union(taggedEntity.tags);
@@ -44,7 +43,7 @@ class FTTagUpdateNotebook: FTTagOperation {
                 }
                 tagsToRemove.forEach { eachTag in
                     if let taggedEntity = FTTagsProvider.shared.tagggedEntity(documentID
-                                                                                , documentPath: docName) {
+                                                                                , docuemntItem: docItem) {
                         eachTag.removeTaggedItem(taggedEntity);
                         updatedTags = updatedTags.union(taggedEntity.tags);
                     }

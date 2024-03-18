@@ -29,16 +29,16 @@ class FTTaggedEntity: NSObject, Identifiable {
     private var notificationObserver: NSObjectProtocol?;
     
     static func taggedEntity(_ documentID: String
-                             , documentPath: String?
+                             , documentItem: FTShelfItemProtocol
                              , pageID: String? = nil) -> FTTaggedEntity {
         let item: FTTaggedEntity
         if let _pageID = pageID {
             item = FTPageTaggedEntity(documentUUID: documentID
-                                      , documentPath: documentPath
+                                      , documentItem: documentItem
                                       , pageUUID: _pageID);
         }
         else {
-            item = FTDocumentTaggedEntity(documentUUID: documentID, documentPath: documentPath);
+            item = FTDocumentTaggedEntity(documentUUID: documentID, documentItem: documentItem);
         }
         return item;
     }
@@ -47,19 +47,27 @@ class FTTaggedEntity: NSObject, Identifiable {
 
     private(set) var documentUUID: String
     var documentName: String {
-        return relativePath?.lastPathComponent.deletingPathExtension ?? "";
+        return documentItem.displayTitle
     }
     
-    var relativePath: String?;
-
+    private var relativePath: String? {
+        return self.documentItem.URL.relativePathWRTCollection();
+    };
+    
+    private(set) var documentItem: FTShelfItemProtocol;
+    func setDocumentItem(_ item: FTShelfItemProtocol) {
+        self.documentItem = item;
+    }
+    
     var tagType: FTTagsType {
         fatalError("subclass should override")
     };
+    
     private(set) var tags = [FTTag]();
 
-    init(documentUUID: String,documentPath: String?) {
+    init(documentUUID: String,documentItem: FTShelfItemProtocol) {
         self.documentUUID = documentUUID;
-        self.relativePath = documentPath;
+        self.documentItem = documentItem;
         super.init()
         self.updateURLAndDownloadStatusLocally();
     }

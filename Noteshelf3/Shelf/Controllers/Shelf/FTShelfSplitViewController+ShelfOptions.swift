@@ -1567,13 +1567,13 @@ class FTPDFViewController: UIViewController {
 
 extension FTShelfSplitViewController: FTTagsViewControllerDelegate {
     func tagsViewController(_ contorller: FTTagsViewController, addedTags: [FTTagModel], removedTags: [FTTagModel]) {
-        var docIDs = [String]();
+        var docItems = [FTDocumentItemProtocol]();
         self.currentShelfViewModel?.selectedDocItems.forEach({ eachItem in
             if let docItem = eachItem as? FTDocumentItemProtocol, let docID =  docItem.documentUUID {
-                docIDs.append(docID);
+                docItems.append(docItem);
             }
         })
-        guard !docIDs.isEmpty else {
+        guard !docItems.isEmpty else {
             return
         }
         
@@ -1582,7 +1582,7 @@ extension FTShelfSplitViewController: FTTagsViewControllerDelegate {
         }
         let loadingIndicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: "");
         let updater = FTDocumentTagUpdater()
-        _ = updater.updateNotebookTags(addedTags: addedTags, removedTags: removedTags, documentIDs: docIDs) { 
+        _ = updater.updateNotebookTags(addedTags: addedTags, removedTags: removedTags, documentItems: docItems) {
             debugLog("updater: \(updater)");
             loadingIndicator.hide();
         };

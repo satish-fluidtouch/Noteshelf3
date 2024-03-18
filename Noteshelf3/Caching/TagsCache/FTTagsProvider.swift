@@ -167,10 +167,10 @@ private extension FTTagsProvider {
 
 private extension FTTagsProvider {
     func syncNotebookTagsWithLocalCache(documentID: String
-                                        ,documentPath: String?
+                                        , documentItem: FTShelfItemProtocol
                                         , tagNames: Set<FTTag>) {
         guard let documentEntity = self.tagggedEntity(documentID
-                                                      , documentPath: documentPath
+                                                      , docuemntItem: documentItem
                                                       , pageID: nil
                                                       , createIfNotPresent: true) else {
             return;
@@ -183,20 +183,19 @@ private extension FTTagsProvider {
         
         let tagsToAdd = tagNames.subtracting(currentTags);
         tagsToAdd.forEach { eachTag in
-            documentEntity.relativePath = documentPath ?? "";
             eachTag.addTaggedItem(documentEntity);
         }
     }
     
     func syncPageTagsWithLocalCache(documentID: String
-                                    , documentPath: String?
+                                    , documentItem: FTShelfItemProtocol
                                     , pageID: String
                                     , tagNames: Set<FTTag>
                                     , pageProperties: FTTaggedPageProperties) {
         guard let pageEntity = self.tagggedEntity(documentID
-                                                  , documentPath: documentPath
-                                                  ,pageID: pageID
-                                                  ,createIfNotPresent: true) else {
+                                                  , docuemntItem: documentItem
+                                                  , pageID: pageID
+                                                  , createIfNotPresent: true) else {
             return;
         }
         let currentTags = Set(pageEntity.tags);
@@ -207,14 +206,14 @@ private extension FTTagsProvider {
         
         let tagsToAdd = tagNames.subtracting(currentTags);
         tagsToAdd.forEach { eachTag in
-            pageEntity.relativePath = documentPath;
+//            pageEntity.relativePath = documentPath;
             (pageEntity as? FTPageTaggedEntity)?.updatePageProties(pageProperties);
             eachTag.addTaggedItem(pageEntity);
         }
         
         let oldOnces = tagNames.subtracting(tagsToAdd)
         oldOnces.forEach { eachTag in
-            pageEntity.relativePath = documentPath;
+//            pageEntity.relativePath = documentPath;
             (pageEntity as? FTPageTaggedEntity)?.updatePageProties(pageProperties);
             if pageEntity.tags.contains(eachTag), nil == eachTag.pageTaggedEntity(documentID, pageUUID: pageID) {
                 debugLog("tag present item missing")
@@ -241,15 +240,14 @@ private extension FTTag {
 }
 
 internal extension FTTagsProvider {
-    func syncTagWithDocument(_ cacheDocument: FTDocumentProtocol) {
+    func syncTagWithDocument(_ cacheDocument: FTDocumentProtocol,documentItem: FTShelfItemProtocol) {
         let documentID = cacheDocument.documentUUID
-        let relativePath = cacheDocument.relativePath
         let currentTags = Set(self.userTags.values.filter{$0.documentIDs.contains(documentID)});
         var newTagsSet = Set(self.getTagsfor(cacheDocument.documentTags(),shouldCreate: true))
         
         var shouldSave = false;
         self.syncNotebookTagsWithLocalCache(documentID: documentID
-                                            , documentPath: relativePath
+                                            , documentItem: documentItem
                                             , tagNames: newTagsSet);
         let pages = cacheDocument.pages();
         if pages.isEmpty {
@@ -267,7 +265,7 @@ internal extension FTTagsProvider {
                     pageProperties.pageIndex = index;
                     
                     self.syncPageTagsWithLocalCache(documentID: documentID
-                                                    , documentPath: relativePath
+                                                    , documentItem: documentItem
                                                     , pageID: eachpage.uuid
                                                     , tagNames: pageSet
                                                     , pageProperties: pageProperties);
@@ -290,9 +288,18 @@ internal extension FTTagsProvider {
         }
     }
     
+    func syncTagsWithLocalCache(documentID: String,documentitem: FTShelfItemProtocol) {
+        let cacheDocument = FTCachedDocument(documentID: documentID);
+        syncTagWithDocument(cacheDocument,documentItem: documentitem);
+    }
+
     func syncTagsWithLocalCache(documentID: String) {
         let cacheDocument = FTCachedDocument(documentID: documentID);
-        syncTagWithDocument(cacheDocument);
+        FTNoteshelfDocumentProvider.shared.document(with: documentID, orRelativePath: cacheDocument.relativePath, bypassPasswordProtected: true) { shelfItem in
+            if let item = shelfItem {
+                self.syncTagWithDocument(cacheDocument, documentItem: item)
+            }
+        }
     }
     
     func saveCache() {
@@ -300,9 +307,9 @@ internal extension FTTagsProvider {
         save();
         self.lock.unlock()
     }
-    
+        
     func tagggedEntity(_ documentID: String
-                       , documentPath: String?
+                       , docuemntItem: FTShelfItemProtocol
                        , pageID: String? = nil
                        , createIfNotPresent: Bool = false) -> FTTaggedEntity? {
         lock.lock();
@@ -312,14 +319,15 @@ internal extension FTTagsProvider {
         }
         var enity = self.taggedEntitiesInfo[key];
         if nil == enity, createIfNotPresent {
-            let newEntity = FTTaggedEntity.taggedEntity(documentID, documentPath: documentPath, pageID: pageID);
+            let newEntity = FTTaggedEntity.taggedEntity(documentID, documentItem: docuemntItem, pageID: pageID);
             enity = newEntity;
             self.addTaggedEntityToCache(newEntity);
         }
-        enity?.relativePath = documentPath ?? "";
+        enity?.setDocumentItem(docuemntItem);
         lock.unlock();
         return enity;
     }
+
     
     func removeTaggedEntityFromCache(_ taggedEntity: FTTaggedEntity) {
         lock.lock();

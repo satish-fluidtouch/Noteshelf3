@@ -180,13 +180,11 @@ class FTTag: NSObject {
             return;
         }
         
-        self.lockSelf()
         if let block = onCompletion {
+            self.lockSelf()
             self.completionBlocks.append(block);
+            self.unlockSelf()
         }
-        let idsToProcess = self.documentIDs;
-        let _tagName = self.tagName;
-        self.unlockSelf()
         
         if self.loadState == .loading {
             return;
@@ -195,24 +193,51 @@ class FTTag: NSObject {
 
         FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(.none, parent: .none, searchKey: nil) { shelfItems in
             self.tagQueue.async {
-                let validIds = self.validateDocumentItem(documentIDs: idsToProcess, shelfItems: shelfItems);
-                validIds.forEach { eachDocument in
-                    self.processDocument(for: _tagName, documentID: eachDocument);
-                }
-                self.lockSelf()
-                if self.documentIDs.count != validIds.count {
-                    debugLog("docID not same tag: \(self.tagName) >> \(self.documentIDs)  >> \(validIds)");
-                }
-                self.documentIDs = validIds;
-                self.loadState = .loaded;
-                let items = sort ? self.taggedEntitties.sortedTaggedEntities() : self.taggedEntitties;
-                let blockToCalle = self.completionBlocks;
-                self.completionBlocks.removeAll();
-                self.unlockSelf()
-                blockToCalle.forEach { eachBlock in
-                    eachBlock(items,self);
-                }
+                self._taggedEntities(shelfItems, sort: sort,forceLoad: true,onCompletion: onCompletion);
             }
+        }
+    }
+}
+
+internal extension FTTag {
+    func _taggedEntities(_ shelfItems: [FTShelfItemProtocol], sort: Bool, forceLoad: Bool = false, onCompletion: FTTagCompletionHandler?) {
+        if self.loadState == .loaded {
+            self.lockSelf()
+            let items = sort ? self.taggedEntitties.sortedTaggedEntities() : self.taggedEntitties;
+            self.unlockSelf()
+            onCompletion?(items,self);
+            return;
+        }
+        
+        self.lockSelf()
+        if !forceLoad, let block = onCompletion {
+            self.completionBlocks.append(block);
+        }
+        let idsToProcess = self.documentIDs;
+        let _tagName = self.tagName;
+        self.unlockSelf()
+
+        if !forceLoad, self.loadState == .loading {
+            return;
+        }
+        
+        let validIds = self.validateDocumentItem(documentIDs: idsToProcess, shelfItems: shelfItems);
+        validIds.forEach { eachDocument in
+            self.processDocument(for: _tagName, documentID: eachDocument.key,documentItem: eachDocument.value);
+        }
+        
+        self.lockSelf()
+        if self.documentIDs.count != validIds.count {
+            debugLog("docID not same tag: \(self.tagName) >> \(self.documentIDs)  >> \(validIds)");
+        }
+        self.documentIDs = Set(validIds.keys);
+        self.loadState = .loaded;
+        let items = sort ? self.taggedEntitties.sortedTaggedEntities() : self.taggedEntitties;
+        let blockToCalle = self.completionBlocks;
+        self.completionBlocks.removeAll();
+        self.unlockSelf()
+        blockToCalle.forEach { eachBlock in
+            eachBlock(items,self);
         }
     }
 }
@@ -228,8 +253,8 @@ private extension FTTag {
 }
 
 private extension FTTag {
-    func validateDocumentItem(documentIDs: Set<String>, shelfItems:[FTShelfItemProtocol]) -> Set<String> {
-        var validIds = Set<String>();
+    func validateDocumentItem(documentIDs: Set<String>, shelfItems:[FTShelfItemProtocol]) -> [String:FTShelfItemProtocol] {
+        var validIds = [String:FTShelfItemProtocol]();
         var relativePaths = [String:String]()
         documentIDs.forEach { eachItem in
             let doc = FTCachedDocument(documentID: eachItem);
@@ -244,26 +269,25 @@ private extension FTTag {
                 if docItem.isDownloaded
                     , let docId = docItem.documentUUID
                     , documentIDs.contains(docId) {
-                    validIds.insert(docId);
+                    validIds[docId] = docItem;
                 }
                 else if relativePaths.keys.contains(relativePath), let docID = relativePaths[relativePath] {
-                    validIds.insert(docID);
+                    validIds[docID] = docItem;
                 }
             }
         }
         return validIds;
     }
     
-    func processDocument(for tagName: String, documentID:String) {
+    func processDocument(for tagName: String, documentID:String,documentItem: FTShelfItemProtocol) {
         let lowercasedTag = tagName.lowercased();
         
         let doc = FTCachedDocument(documentID: documentID);
-        let documentName = doc.relativePath
         let docuemntTags = doc.documentTags()
         
         if docuemntTags.contains(where: {$0.lowercased() == lowercasedTag}) {
             if let taggedItem = FTTagsProvider.shared.tagggedEntity(documentID
-                                                                    , documentPath: documentName
+                                                                    , docuemntItem: documentItem
                                                                     , createIfNotPresent: true) {
                 let tags = FTTagsProvider.shared.getTagsfor(docuemntTags,shouldCreate: false);
                 tags.forEach { eachItem in
@@ -283,7 +307,7 @@ private extension FTTag {
                 pageProperties.pageIndex = index;
                 
                 if let pageEntity = FTTagsProvider.shared.tagggedEntity(documentID
-                                                                        , documentPath: documentName
+                                                                        , docuemntItem: documentItem
                                                                         , pageID: eachPage.uuid
                                                                         , createIfNotPresent: true) as? FTPageTaggedEntity {
                     pageEntity.updatePageProties(pageProperties);

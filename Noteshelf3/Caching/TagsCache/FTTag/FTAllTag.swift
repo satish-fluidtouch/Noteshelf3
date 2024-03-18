@@ -11,7 +11,7 @@ import UIKit
 class FTAllTag: FTTag {
     private var loadState: FTDataLoadState = .notLoaded;
     private var completionBlocks = [FTTagCompletionHandler]();
-    
+
     override var tagType: FTTagType  {
         .allTag;
     }
@@ -21,6 +21,7 @@ class FTAllTag: FTTag {
     }
     
     override func getTaggedEntities(sort: Bool,_ onCompletion: FTTagCompletionHandler?) {
+        let t1 = Date.timeIntervalSinceReferenceDate
         guard !loadState.isLoaded else {
             return;
         }
@@ -34,24 +35,31 @@ class FTAllTag: FTTag {
         var tags = FTTagsProvider.shared.getTags();
         var items = Set<FTTaggedEntity>();
         
-        func loadTagsRecursively() {
+        func loadTagsRecursively(_ shelfItems: [FTShelfItemProtocol]) {
             guard !tags.isEmpty else {
                 var itemsToReturn = Array(items);
                 itemsToReturn = (sort ? itemsToReturn.sortedTaggedEntities() : itemsToReturn);
                 self.completionBlocks.forEach { eachbloack in
                     eachbloack(itemsToReturn,self);
                 }
+                let t2 = Date.timeIntervalSinceReferenceDate
+                debugPrint("Time Takeb: \(t2-t1)")
                 self.loadState = .notLoaded;
                 return
             }
             let firstTag = tags.removeFirst();
-            firstTag.getTaggedEntities(sort: false) { (taggedEntities,tag) in
-                let newSet = Set(taggedEntities);
+            
+            firstTag._taggedEntities(shelfItems, sort: false) { _taggedEntities, tag in
+                let newSet = Set(_taggedEntities);
                 items.formUnion(newSet);
-                loadTagsRecursively();
+                loadTagsRecursively(shelfItems);
             }
         }
         
-        loadTagsRecursively();
+        FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(.none, parent: nil, searchKey: nil) { shelfItems in
+            self.tagQueue.async {
+                loadTagsRecursively(shelfItems);
+            }
+        }
     }
 }

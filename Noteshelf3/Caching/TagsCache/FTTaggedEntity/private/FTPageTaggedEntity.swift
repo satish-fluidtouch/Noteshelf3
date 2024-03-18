@@ -29,12 +29,12 @@ class FTPageTaggedEntity: FTTaggedEntity {
     private(set) var pageProperties: FTTaggedPageProperties
     
     required init(documentUUID: String
-                  , documentPath: String?
+                  , documentItem: FTShelfItemProtocol
                   , pageUUID: String
                   , pageProperties: FTTaggedPageProperties = FTTaggedPageProperties()) {
         self.pageUUID = pageUUID
         self.pageProperties = pageProperties
-        super.init(documentUUID: documentUUID,documentPath: documentPath);
+        super.init(documentUUID: documentUUID, documentItem: documentItem)
     }
         
     func updatePageProties(_ pageProperties: FTTaggedPageProperties) {

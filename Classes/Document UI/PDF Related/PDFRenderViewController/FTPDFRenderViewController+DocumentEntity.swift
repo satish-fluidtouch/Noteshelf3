@@ -297,7 +297,9 @@ extension FTPDFRenderViewController: FTTagsViewControllerDelegate {
         if addedTags.isEmpty, removedTags.isEmpty {
             return;
         }
-        if let currentPage = self.currentlyVisiblePage(), let tagPage = currentPage as? FTPageTagsProtocol {
+        if let currentPage = self.currentlyVisiblePage()
+            , let tagPage = currentPage as? FTPageTagsProtocol
+            , let docitem = self.shelfItemManagedObject.documentItem as? FTDocumentItemProtocol {
             addedTags.forEach { eachTag in
                 tagPage.addTag(eachTag.text);
             }
@@ -305,8 +307,11 @@ extension FTPDFRenderViewController: FTTagsViewControllerDelegate {
                 tagPage.removeTag(eachTag.text);
             }
             let updater = FTDocumentTagUpdater();
-            updater.updatePageTags(addedTags: addedTags, removedTags: removedTags, document: self.pdfDocument, pages: [currentPage]);
-
+            updater.updatePageTags(addedTags: addedTags
+                                   , removedTags: removedTags
+                                   , document: self.pdfDocument
+                                   , docuumentItem: docitem
+                                   , pages: [currentPage])
             NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
         }
     }

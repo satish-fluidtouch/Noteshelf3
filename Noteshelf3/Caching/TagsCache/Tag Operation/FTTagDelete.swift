@@ -15,9 +15,9 @@ class FTTagDelete: FTTagOperation {
     }
 
     override func perfomAction(_ onCompletion: (()->())?) -> Progress? {
-        let progress = self.enumerateDocuments(Array(self.tag.documentIDs)) { (documentID, document, token, onTaskCompletion) in
+        let progress = self.enumerateDocuments(Array(self.tag.documentIDs)) { (documentID, document, docItem, token, onTaskCompletion) in
             document.deleteTags([self.tag.tagName])
-            FTTagsProvider.shared.syncTagWithDocument(document);
+            FTTagsProvider.shared.syncTagWithDocument(document,documentItem: docItem);
             FTNoteshelfDocumentManager.shared.saveAndClose(document: document, token: token) { _ in
                 self.tag.removeDocumentID(documentID);
                 onTaskCompletion();

@@ -36,18 +36,17 @@ class FTDocumentTagUpdater: NSObject {
 
     func updateNotebookTags(addedTags: [FTTagModel]
                             , removedTags:[FTTagModel]
-                            , documentIDs: [String]
+                            , documentItems: [FTDocumentItemProtocol]
                             , onCompletion: (()->())?) -> Progress? {
-        let operation = FTTagUpdateNotebook(addedTags, removedTags: removedTags, docIDs: documentIDs)
+        let operation = FTTagUpdateNotebook(addedTags, removedTags: removedTags, documentItems:documentItems)
         return operation.perfomAction(onCompletion);
     }
     
-    func updatePageTags( addedTags: [FTTagModel],
-                         removedTags: [FTTagModel],
-                         document: FTDocumentProtocol,
-                         pages: [FTPageProtocol]) {
-        let documentName = document.URL.relativePathWRTCollection()
-        
+    func updatePageTags( addedTags: [FTTagModel]
+                         ,removedTags: [FTTagModel]
+                         ,document: FTDocumentProtocol
+                         ,docuumentItem: FTDocumentItemProtocol
+                         ,pages: [FTPageProtocol]) {
         let addedFTTags = FTTagsProvider.shared.getTagsfor(addedTags.map{$0.text},shouldCreate: true);
         let removedFTTags = FTTagsProvider.shared.getTagsfor(removedTags.map{$0.text},shouldCreate: false);
         
@@ -59,7 +58,7 @@ class FTDocumentTagUpdater: NSObject {
             
             addedFTTags.forEach { eachTag in
                 if let pageEntity = FTTagsProvider.shared.tagggedEntity(document.documentUUID
-                                                                          , documentPath: documentName
+                                                                          , docuemntItem: docuumentItem
                                                                           , pageID: eachPage.uuid
                                                                           , createIfNotPresent: true) as? FTPageTaggedEntity {
                     pageEntity.updatePageProties(docProperties);
@@ -70,7 +69,7 @@ class FTDocumentTagUpdater: NSObject {
             
             removedFTTags.forEach { eachTag in
                 if let pageEntity = FTTagsProvider.shared.tagggedEntity(document.documentUUID
-                                                                          , documentPath: documentName
+                                                                          , docuemntItem: docuumentItem
                                                                           , pageID: eachPage.uuid) as? FTPageTaggedEntity {
                     eachTag.removeTaggedItem(pageEntity);
                     pageEntity.updatePageProties(docProperties);
@@ -79,7 +78,7 @@ class FTDocumentTagUpdater: NSObject {
             }
         }
         FTTagsProvider.shared.saveCache();
-        FTTagsProvider.shared.syncTagWithDocument(document);
+        FTTagsProvider.shared.syncTagWithDocument(document,documentItem: docuumentItem);
         if !tagsUpdated.isEmpty {
             NotificationCenter.default.post(name: Notification.Name("DidChangePageEntities")
                                             , object: nil

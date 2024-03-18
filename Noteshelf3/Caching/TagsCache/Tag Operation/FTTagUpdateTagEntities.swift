@@ -24,15 +24,19 @@ class FTTagUpdateTagEntities: FTTagOperation {
     override func perfomAction(_ onCompletion: (()->())?) -> Progress? {
         var tagGrouped = [String: [FTTaggedEntity]] ();
         var tags = Set<FTTag>();
+        var shelfItems = [FTShelfItemProtocol]();
+        
         self.taggedEntities.forEach { eachEntity in
             var item = tagGrouped[eachEntity.documentUUID] ?? [FTTaggedEntity]();
             item.append(eachEntity);
             tagGrouped[eachEntity.documentUUID] = item;
             tags = tags.union(Set(eachEntity.tags));
+            if !shelfItems.contains(where: { item in return item.URL.hashKey == eachEntity.documentUUID.hashKey}) {
+                shelfItems.append(eachEntity.documentItem)
+            }
         }
         let keys = tagGrouped.map({$0.key});
-        
-        let progress = self.enumerateDocuments(keys) { (documentID, document, token, onTaskCompletion) in
+        let progress = self.enumerateDocumentItems(shelfItems) { documentID, document, documentItem, token, onTaskCompletion in
             let docPages =  document.pages()
             let taggedEntities = tagGrouped[documentID] ?? [FTTaggedEntity]();
             taggedEntities.forEach { eachItem in
@@ -53,7 +57,7 @@ class FTTagUpdateTagEntities: FTTagOperation {
                     }
                 }
             }
-            FTTagsProvider.shared.syncTagWithDocument(document);
+            FTTagsProvider.shared.syncTagWithDocument(document,documentItem: documentItem);
             FTNoteshelfDocumentManager.shared.saveAndClose(document: document, token: token) { _ in
                 let tagsToAdd = FTTagsProvider.shared.getTagsfor(self.addedTags.map{$0.text},shouldCreate: true);
                 let tagsToRemove = FTTagsProvider.shared.getTagsfor(self.removedTags.map{$0.text},shouldCreate: false);
