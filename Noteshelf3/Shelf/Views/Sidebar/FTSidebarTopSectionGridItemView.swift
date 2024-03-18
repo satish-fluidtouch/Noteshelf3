@@ -94,6 +94,8 @@ struct FTSidebarTopSectionGridItemView: View {
             Image(systemName: item.type.iconName)
         } else {
             Image(item.type.iconName)
+                .resizable()
+                .frame(width: 34, height: 34)
         }
     }
     private func getBGColorTopSectionItem(_ item: FTSideBarItem) -> Color {

@@ -20,7 +20,7 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
     @State private var showingPopover:Bool = false
     @State private  var isAnyPopoverShown: Bool = false
     @State private var toolbarID: String = UUID().uuidString
-
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     var appState : AppState
 
@@ -80,6 +80,7 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                                 Image(icon: .plus)
                                     .font(Font.appFont(for: .regular , with: 15.5))
                                     .foregroundColor(Color.appColor(.accent))
+                                    .frame(maxWidth: 30, maxHeight: 30)
                             }
                             .popover(isPresented: $showingPopover) {
                                 NavigationStack{
@@ -107,13 +108,14 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                             Image(icon: .search)
                                 .font(Font.appFont(for: .regular , with: 15.5))
                                 .foregroundColor(Color.appColor(.accent))
+                                .frame(maxWidth: 30, maxHeight: 30)
                         }
-                        .frame(width: 44,height: 44,alignment: .center)
+//                        .frame(width: 44,height: 44,alignment: .center)
                     }
                     ToolbarItem(id:"Menu options" + toolbarID,
                                 placement: ToolbarItemPlacement.navigationBarTrailing)  {
                         FTShelfSelectAndSettingsView(viewModel: shelfViewModel)
-                            .frame(width: 44,height: 44,alignment: .center)
+//                            .frame(width: 44,height: 44,alignment: .center)
                     }
                 }
             })

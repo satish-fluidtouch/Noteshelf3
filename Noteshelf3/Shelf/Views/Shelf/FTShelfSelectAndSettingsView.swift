@@ -22,6 +22,7 @@ struct FTShelfSelectAndSettingsView: View {
             Image(icon: .ellipsis)
                 .foregroundColor(Color.appColor(.accent))
                 .font(Font.appFont(for: .regular , with: 15.5))
+                .frame(maxWidth: 30, maxHeight: 30)
         })
         .onTapGesture {
             //Track Event

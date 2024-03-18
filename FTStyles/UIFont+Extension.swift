@@ -12,13 +12,19 @@ import UIKit
 extension UIFont {
     public static func clearFaceFont(for type: ClearFace, with size: CGFloat) -> UIFont {
         if let font = UIFont(name: type.rawValue, size: size) {
-            return font
+            let style = UIFont.textStyle(for: font.pointSize)
+            let scaledFont = UIFont.scaledFont(for: font, with: style)
+            return scaledFont
         }
         return UIFont.systemFont(ofSize: size)
     }
 
     public static func appFont(for weight: UIFont.Weight, with size: CGFloat) -> UIFont {
-        return UIFont.systemFont(ofSize: size, weight: weight)
+        let font = UIFont.systemFont(ofSize: size, weight: weight)
+        let style = UIFont.textStyle(for: font.pointSize)
+        let scaledFont = UIFont.scaledFont(for: font, with: style)
+        return scaledFont
+//        return UIFont.systemFont(ofSize: size, weight: weight)
     }
     
     public static func appFont(for weight: UIFont.Weight, with size: CGFloat, trait: UIFontDescriptor.SymbolicTraits) -> UIFont {

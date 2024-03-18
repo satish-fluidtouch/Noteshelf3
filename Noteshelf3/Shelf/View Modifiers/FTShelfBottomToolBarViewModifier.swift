@@ -13,7 +13,7 @@ struct FTShelfBottomToolBarViewModifier: ViewModifier {
     @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
-
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     @State private var orientation = UIDevice.current.orientation
 
