@@ -22,7 +22,7 @@ struct FTNotebookTitleView: View {
                     .appFont(for: .medium, with: 16)
 //                    .fixedSize(horizontal: false, vertical: true)
                     .foregroundColor(.primary)
-                    .lineLimit(titleLineLimit)
+                    .lineLimit(isLargeSize() ? 2 : titleLineLimit)
                     .padding(.top,2)
                     .if(shelfViewModel.displayStlye != .List, transform: { view in
                         view.multilineTextAlignment(.center)
@@ -35,7 +35,8 @@ struct FTNotebookTitleView: View {
                 if shelfViewModel.showNotebookModifiedDate {
                     Text(formatter.shortStyleFormat(for: shelfItem.model.fileModificationDate))
                         .appFont(for: .regular, with: 13)
-                        .frame(height: 18,alignment:.center)
+                        .frame(minHeight: 18,alignment:.center)
+                        .lineLimit(isLargeSize() ? 2 : 1)
                         .foregroundColor(Color.appColor(.black70))
                 }
                 if shelfViewModel.collection.isAllNotesShelfItemCollection {
@@ -43,7 +44,7 @@ struct FTNotebookTitleView: View {
                         .appFont(for: .regular, with: 13)
 //                        .fixedSize(horizontal: false, vertical: true)
                         .foregroundColor(Color.appColor(.black50))
-                        .lineLimit(1)
+                        .lineLimit(isLargeSize() ? 2 : 1)
                 }
             }
         }

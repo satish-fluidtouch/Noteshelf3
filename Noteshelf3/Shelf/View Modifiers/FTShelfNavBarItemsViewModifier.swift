@@ -87,8 +87,9 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                                         .background(.regularMaterial)
                                 }
                                 .frame(minWidth: 340.0,maxWidth: .infinity)
-                                .frame(height: popOverHeight)
-                                .presentationDetents([.height(popOverHeight)])
+                                .frame(minHeight: popOverHeight)
+                                //.frame(height: popOverHeight)
+//                                .presentationDetents([.height(popOverHeight)])
                                 .presentationDragIndicator(.hidden)
                                 .popoverApperanceOperations(popoverIsShown: $isAnyPopoverShown)
                             }

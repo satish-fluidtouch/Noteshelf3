@@ -55,14 +55,32 @@ struct FTShelfTopSectionItem: View {
             .frame(minHeight: 60)
 //            .frame(height: shelfViewModel.isInHomeMode && shelfViewModel.shouldShowGetStartedInfo ? 135.0 : 60.0)
         }else{
-            HStack{
-                gridcomponetImageView
-                VStack(alignment: .leading){
-                    gridcomponettitleAndDescription
+//            if isLargeSize() {
+//                VStack(alignment: .leading){
+//                    gridcomponetImageView
+//                    VStack(alignment: .leading){
+//                        gridcomponettitleAndDescription
+//                    }
+//                }
+//                .frame(maxWidth: .infinity,alignment: .leading)
+//                .frame(minHeight: 60)
+//                .padding(.top, 10)
+//                .padding(.bottom, 10)
+//            } else {
+                HStack{
+                    gridcomponetImageView
+                    VStack(alignment: .leading){
+                        gridcomponettitleAndDescription
+                    }
                 }
-            }
-            .frame(maxWidth: .infinity,maxHeight: .infinity,alignment: .leading)
+                .frame(maxWidth: .infinity,maxHeight: .infinity,alignment: .leading)
+            //}
         }
+    }
+    
+    func isLargeSize() -> Bool {
+        let largeSizes: [DynamicTypeSize] = [.accessibility1, .accessibility2, .accessibility3, .accessibility4, .accessibility5]
+        return largeSizes.contains(dynamicTypeSize)
     }
 }
 
@@ -88,7 +106,7 @@ extension FTShelfTopSectionItem {
         Image(isFirsttime ? type.largeiconName : type.iconName)
             .resizable()
             .scaledToFit()
-            .frame(width: imageSize(),height: imageSize())
+            .frame(minWidth: imageSize(),minHeight: imageSize())
     }
     private func imageSize() -> CGFloat {
         if shelfViewModel.isInHomeMode && isFirsttime && geometrySize > 500 {
