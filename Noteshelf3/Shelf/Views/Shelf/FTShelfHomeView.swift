@@ -37,6 +37,7 @@ struct FTShelfHomeView: FTShelfBaseView {
                         }
                     }
                     homeShelfItemsViewForGeometrySize(geometry.size, scrollViewProxy: proxy)
+                        .padding(.top, 10)
                     if viewModel.shelfDidLoad {
                         FTDiscoverWhatsNewView()
                             .environmentObject(viewModel)

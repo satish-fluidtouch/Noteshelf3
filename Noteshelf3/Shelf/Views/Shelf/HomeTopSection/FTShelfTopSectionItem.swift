@@ -11,7 +11,8 @@ struct FTShelfTopSectionItem: View {
     var type: FTShelfHomeTopSectionModel
     let isFirsttime: Bool
     let geometrySize: CGFloat
-    
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
+
     @StateObject var shelfViewModel: FTShelfViewModel
     
     var body: some View {
@@ -51,7 +52,8 @@ struct FTShelfTopSectionItem: View {
                 }
             }
             .frame(maxWidth: .infinity,alignment: .leading)
-            .frame(height: shelfViewModel.isInHomeMode && shelfViewModel.shouldShowGetStartedInfo ? 135.0 : 60.0)
+            .frame(minHeight: 60)
+//            .frame(height: shelfViewModel.isInHomeMode && shelfViewModel.shouldShowGetStartedInfo ? 135.0 : 60.0)
         }else{
             HStack{
                 gridcomponetImageView
@@ -64,13 +66,14 @@ struct FTShelfTopSectionItem: View {
     }
 }
 
-extension FTShelfTopSectionItem{
+extension FTShelfTopSectionItem {
     @ViewBuilder
     var gridcomponettitleAndDescription: some View {
         Text(type.displayTitle)
             .foregroundColor(.appColor(.black1))
             .font(Font.appFont(for: .medium, with: 15))
             .padding(.bottom,1)
+            .lineLimit(2)
         
         if isFirsttime && shelfViewModel.isInHomeMode{
             Text(type.description)

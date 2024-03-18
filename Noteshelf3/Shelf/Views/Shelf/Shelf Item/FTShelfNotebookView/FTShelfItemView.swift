@@ -33,7 +33,7 @@ struct FTShelfItemView: View {
                     .frame(width: shelfItemWidth , height: shelfItemHeight , alignment: Alignment(horizontal: .center, vertical: .bottom))
             } else {
                 notebookView(item: shelfItem)
-                    .frame(width: shelfItemWidth , height: shelfItemHeight , alignment: Alignment(horizontal: .center, vertical: .bottom))
+                    .frame(width: shelfItemWidth , alignment: Alignment(horizontal: .center, vertical: .bottom))
             }
         }
     }
@@ -74,6 +74,8 @@ struct FTShelfItemView: View {
         }
         else {
             FTNotebookItemView(shelfItemWidth: shelfItemWidth,shelfItemHeight: shelfItemHeight,isAnyNBActionPopoverShown: $isAnyNBActionPopoverShown)
+//            FTNotebookItemView()
+//                .background(.red)
         }
     }
     
@@ -81,7 +83,7 @@ struct FTShelfItemView: View {
     func notebookView(item: FTShelfItemViewModel) -> some View
     {
         notebookView()
-            .frame(width:shelfItemWidth, height: shelfItemHeight , alignment: .center)
+            .frame(width:shelfItemWidth, alignment: .center)
             .environmentObject(item)
             .opacity(opacity)
             .onDrop(of: [.data],
