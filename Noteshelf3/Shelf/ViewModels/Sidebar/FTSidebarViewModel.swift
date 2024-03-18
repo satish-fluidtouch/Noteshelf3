@@ -253,6 +253,7 @@ extension FTSidebarViewModel {
         } else if item.type == .category {
             self.renameCategory(item,newTitle: newTitle)
         }
+        item.isEditing = false;
     }
     
     func emptyTrash(_ sideBarItem: FTSideBarItem){
@@ -357,6 +358,10 @@ extension FTSidebarViewModel {
                     self?.delegate?.didSidebarItemRenamed(category)
                 }
             }
+        }
+        else {
+            let item = self.selectedSideBarItem;
+            self.selectedSideBarItem = item
         }
     }
     func deleteCategory(_ category: FTSideBarItem){

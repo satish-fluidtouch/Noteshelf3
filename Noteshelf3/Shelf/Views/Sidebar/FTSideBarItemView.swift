@@ -13,17 +13,16 @@ import FTCommon
 struct SideBarItemView : View {
     @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
     @EnvironmentObject var viewModel: FTSidebarViewModel
-    @EnvironmentObject var section: FTSidebarSection
-    @EnvironmentObject var item: FTSideBarItem
+    @ObservedObject var section: FTSidebarSection
+    @ObservedObject var item: FTSideBarItem
     // alerts
     @State private var showTrashAlert: Bool = false
     @State private var alertInfo: TrashAlertInfo?
     @State var itemBgColor: Color = .clear
     @State var itemTitleTint: Color = .clear
     @State var numberOfChildren: Int = 0
-    @State var showChildrenNumber: Bool
-    
-    private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
+    @State var showChildrenNumber: Bool = false
+
     var viewWidth: CGFloat
     var body: some View {
         Button {
@@ -38,12 +37,17 @@ struct SideBarItemView : View {
             VStack(spacing:0) {
                 sideBarItem
             }
+            .onAppear(perform: {
+                self.updateItemBGAndTintColor();
+                self.updateShowChildrenNumberStatus();
+            })
             .frame(height: 44)
         }
         .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: .littleslow))
     }
+    
     @ViewBuilder
-    private var sideBarItem: some View {
+    private var sideBarTitleItem: some View {
         HStack(alignment: .center) {
             Label {
                 Text(item.title)
@@ -66,39 +70,34 @@ struct SideBarItemView : View {
         .frame(height: 44.0, alignment: .leading)
         .frame(maxWidth: .infinity,maxHeight: .infinity)
         .contentShape(Rectangle())
-        .onDrop(of: [.data],
-                delegate: SideBarItemDropDelegate(viewModel: viewModel,
-                                                  droppedItem: item))
-
-        .contentShape([.dragPreview], RoundedRectangle(cornerRadius: 10))
-        .if(section.supportsRearrangeOfItems, transform: { view in
-            view.onDrag {
-                self.viewModel.currentDraggedSidebarItem = item
-                self.viewModel.activeReorderingSidebarSectionType = section.type
-                return NSItemProvider(item: nil, typeIdentifier: item.shelfCollection?.uuid)
-            }
-        preview: {
-                HStack {
-                    SideBarItemView(itemBgColor:viewModel.getRowSelectionColorFor(item: item),
-                                    itemTitleTint:viewModel.getRowForegroundColorFor(item: item),
-                                    numberOfChildren: (item.shelfCollection?.childrens.count ?? 0),
-                                    showChildrenNumber: ((item.shelfCollection?.childrens.count ?? 0) > 0 && viewModel.selectedSideBarItem?.id == item.id),
-                                    viewWidth: 0.0)
-                        .environmentObject(viewModel)
-                        .environmentObject(item)
-                        .environmentObject(section)
-                    .frame(height: 44.0, alignment: .leading)
-                    Spacer(minLength: 140)
+        .background(RoundedRectangle(cornerRadius: 10,style: .continuous).fill(itemBgColor))
+        .foregroundColor(itemTitleTint)
+    }
+    
+    @ViewBuilder
+    private var sideBarItem: some View {
+        sideBarTitleItem
+            .onDrop(of: [.data],
+                    delegate: SideBarItemDropDelegate(viewModel: viewModel,
+                                                      droppedItem: item))
+            .contentShape([.dragPreview], RoundedRectangle(cornerRadius: 10))
+            .if(section.supportsRearrangeOfItems, transform: { view in
+                view.onDrag {
+                    self.viewModel.currentDraggedSidebarItem = item
+                    self.viewModel.activeReorderingSidebarSectionType = section.type
+                    return NSItemProvider(item: nil, typeIdentifier: item.shelfCollection?.uuid)
+                } preview: {
+                    HStack {
+                        sideBarTitleItem
+                    }
+                    .frame(idealWidth:viewWidth,maxWidth: .infinity,idealHeight:44, maxHeight: .infinity)
                 }
-                .frame(maxWidth: .infinity,maxHeight: 44)
-                .contentShape([.dragPreview], RoundedRectangle(cornerRadius: 10))
-            }
-        })
-        .if(viewModel.fadeDraggedSidebarItem == item, transform: { view in
-            withAnimation(.default) {
-                view.opacity(0.0)
-            }
-        })
+            })
+            .if(viewModel.fadeDraggedSidebarItem == item, transform: { view in
+                withAnimation(.default) {
+                    view.opacity(0.0)
+                }
+            })
             .if(viewModel.fadeDraggedSidebarItem == nil, transform: { view in
                 withAnimation(.default) {
                     view.opacity(1.0)
@@ -116,23 +115,17 @@ struct SideBarItemView : View {
                     updateItemBGAndTintColor()
                 }
             })
-            .background(RoundedRectangle(
-                cornerRadius: 10,
-                style: .continuous
-            ).fill(itemBgColor))
-            .foregroundColor(itemTitleTint)
             .if(item.isEditable, transform: { view in
                 view.contextMenu(menuItems: {
-                    FTSideBarItemContexualMenuButtons(showTrashAlert: $showTrashAlert,
-                                                      alertInfo: $alertInfo,
-                                                      longPressOptions: viewModel.getContextualOptionsForSideBarType(item.type))
-                    .environmentObject(item)
-                    .environmentObject(viewModel.sidebarItemContexualMenuVM)
-                },preview: {
+                    FTSideBarItemContexualMenuButtons(showTrashAlert: $showTrashAlert
+                                                      , item: item
+                                                      , alertInfo: $alertInfo
+                                                      ,longPressOptions:viewModel.getContextualOptionsForSideBarType(item.type))
+                }, preview: {
                     HStack(alignment: .center) {
-                        view
+                        sideBarTitleItem
                     }
-                    .frame(idealWidth:viewWidth,maxWidth: .infinity,idealHeight:44, maxHeight: .infinity)
+                    .frame(idealWidth:viewWidth,maxWidth: .infinity,minHeight:44, maxHeight: .infinity)
                     .onAppear {
                         viewModel.trackEventForlongpress(item: item)
                         shelfMenuOverlayInfo.isMenuShown = true;
@@ -142,31 +135,33 @@ struct SideBarItemView : View {
                     }
                 })
             })
-        .alert(alertInfo?.title ?? "", isPresented: $showTrashAlert, presenting: alertInfo) { _ in
-            let title = item.type == .trash ? NSLocalizedString("shelf.emptyTrash", comment: "Empty Trash") : NSLocalizedString("shelf.alerts.delete", comment: "Delete")
-            Button(title, role: .destructive) {
-                if item.type == .trash {
-                    viewModel.emptyTrash(item)
-                } else {
-                    viewModel.deleteSideBarItem(item)
+            .alert(alertInfo?.title ?? "", isPresented: $showTrashAlert, presenting: alertInfo) { _ in
+                let title = item.type == .trash ? NSLocalizedString("shelf.emptyTrash", comment: "Empty Trash") : NSLocalizedString("shelf.alerts.delete", comment: "Delete")
+                Button(title, role: .destructive) {
+                    if item.type == .trash {
+                        viewModel.emptyTrash(item)
+                    } else {
+                        viewModel.deleteSideBarItem(item)
+                    }
                 }
+            } message: { info in
+                Text(info.message)
             }
-        } message: { info in
-            Text(info.message)
-        }
-        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name(rawValue:shelfCollectionItemsCountNotification)), perform: { notification in
-            if let userInfo = notification.userInfo {
-                if let collectionName = userInfo["shelfCollectionTitle"] as? String, collectionName == item.shelfCollection?.displayTitle, let count = userInfo["shelfItemsCount"] as? Int {
+            .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name(rawValue:shelfCollectionItemsCountNotification)), perform: { notification in
+                if let userInfo = notification.userInfo {
+                    if let collectionName = userInfo["shelfCollectionTitle"] as? String, collectionName == item.shelfCollection?.displayTitle, let count = userInfo["shelfItemsCount"] as? Int {
                         numberOfChildren = count
-                    showChildrenNumber = (numberOfChildren > 0 && viewModel.selectedSideBarItem?.id == item.id)
+                        showChildrenNumber = (numberOfChildren > 0 && viewModel.selectedSideBarItem?.id == item.id)
+                    }
                 }
-            }
-        })
+            })
     }
+    
     private func updateItemBGAndTintColor() {
         itemBgColor = viewModel.getRowSelectionColorFor(item: item);
         itemTitleTint = viewModel.getRowForegroundColorFor(item: item)
     }
+    
     private func updateShowChildrenNumberStatus(){
         numberOfChildren  = item.shelfCollection?.childrens.count ?? 0
         showChildrenNumber = (numberOfChildren > 0 && viewModel.selectedSideBarItem?.id == item.id)

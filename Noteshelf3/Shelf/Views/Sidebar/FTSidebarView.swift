@@ -140,15 +140,11 @@ struct FTDisclosureView: View {
                             }
                         }
                     } else {
-                        SideBarItemView(itemBgColor:viewModel.getRowSelectionColorFor(item: item),
-                                        itemTitleTint:viewModel.getRowForegroundColorFor(item: item),
-                                        numberOfChildren: (item.shelfCollection?.childrens.count ?? 0),
-                                        showChildrenNumber: ((item.shelfCollection?.childrens.count ?? 0) > 0 && viewModel.selectedSideBarItem?.id == item.id),
-                                        viewWidth: availableWidth)
+                        SideBarItemView(section: menuSection
+                                        , item: item
+                                        , viewWidth: availableWidth)
                         .frame(idealWidth: availableWidth, idealHeight: 44)
                         .environmentObject(viewModel)
-                        .environmentObject(menuSection)
-                        .environmentObject(item)
                     }
                 }
                 if menuSection.type == .categories {

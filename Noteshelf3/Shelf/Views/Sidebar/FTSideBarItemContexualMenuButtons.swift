@@ -10,42 +10,42 @@ import SwiftUI
 
 struct FTSideBarItemContexualMenuButtons: View {
     @Binding var showTrashAlert: Bool
-    @EnvironmentObject var item: FTSideBarItem
+    @ObservedObject var item: FTSideBarItem
     @Binding var alertInfo: TrashAlertInfo?
 
-    @EnvironmentObject var viewModel: FTSidebarItemContextualMenuVM
     @EnvironmentObject var sidebarViewModel: FTSidebarViewModel
 
     var longPressOptions: [FTSidebarItemContextualOption] = []
     var body: some View {
-            ForEach(longPressOptions,id: \.self) { menuOption in
-                Button(role: menuOption.isDestructiveOption ? .destructive : nil) {
-                    sidebarViewModel.trackEventForLongPressOptions(item: item, option: menuOption)
-                    #if targetEnvironment(macCatalyst)
-                    hideKeyboard() // dismissing edit action on sidebar item if any
-                    #endif
-                    if menuOption == .trashCategory || menuOption == .emptyTrash || menuOption == .deleteTag {
-                        showTrashAlert = true
-                        setAlertInfoForOption(menuOption)
-                    } else {
-                        viewModel.sideBarItem = item
-                        viewModel.performAction = menuOption
-                    }
-                } label: {
-                    Label {
-                        Text(menuOption.displayTitle)
-                            .fontWeight(.regular)
-                            .appFont(for: .regular, with: 15)
-                            .foregroundColor(Color(menuOption.foreGroundColor))
-                    } icon: {
-                        Image(icon: menuOption.icon)
-                            .frame(width: 16, height: 24, alignment: SwiftUI.Alignment.center)
-                            .foregroundColor(Color(menuOption.foreGroundColor))
-                            .font(Font.appFont(for: .regular, with: 15))
-                    }
+        ForEach(longPressOptions,id: \.self) { menuOption in
+            Button(role: menuOption.isDestructiveOption ? .destructive : nil) {
+                sidebarViewModel.trackEventForLongPressOptions(item: item, option: menuOption)
+#if targetEnvironment(macCatalyst)
+                hideKeyboard() // dismissing edit action on sidebar item if any
+#endif
+                if menuOption == .trashCategory || menuOption == .emptyTrash || menuOption == .deleteTag {
+                    showTrashAlert = true
+                    setAlertInfoForOption(menuOption)
+                } else {
+                    sidebarViewModel.sidebarItemContexualMenuVM.sideBarItem = item
+                    sidebarViewModel.sidebarItemContexualMenuVM.performAction = menuOption
+                }
+            } label: {
+                Label {
+                    Text(menuOption.displayTitle)
+                        .fontWeight(.regular)
+                        .appFont(for: .regular, with: 15)
+                        .foregroundColor(Color(menuOption.foreGroundColor))
+                } icon: {
+                    Image(icon: menuOption.icon)
+                        .frame(width: 16, height: 24, alignment: SwiftUI.Alignment.center)
+                        .foregroundColor(Color(menuOption.foreGroundColor))
+                        .font(Font.appFont(for: .regular, with: 15))
                 }
             }
+        }
     }
+    
     private func setAlertInfoForOption(_ option: FTSidebarItemContextualOption) {
         if option == .emptyTrash {
             alertInfo = TrashAlertInfo(title: "trash.alert.title".localized,
