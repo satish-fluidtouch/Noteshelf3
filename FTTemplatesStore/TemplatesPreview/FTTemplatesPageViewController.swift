@@ -97,6 +97,9 @@ class FTTemplatesPageViewController: UIViewController {
     }
 
     override var prefersStatusBarHidden: Bool {
+        if let presentingController = self.presentedViewController as? UISplitViewController {
+            return presentingController.prefersStatusBarHidden;
+        }
         return true
     }
 

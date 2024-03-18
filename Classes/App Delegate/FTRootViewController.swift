@@ -139,15 +139,15 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 
     override var prefersStatusBarHidden: Bool {
         if let splitVC = self.noteBookSplitController,
-           !(splitVC.isBeingDismissed || splitVC.isBeingPresented),
-           let docController = self.docuemntViewController {
+           !(splitVC.isBeingDismissed || splitVC.isBeingPresented) {
             return splitVC.prefersStatusBarHidden;
         }
         return super.prefersStatusBarHidden;
     }
 
     override var prefersHomeIndicatorAutoHidden: Bool {
-        if(self.prefersStatusBarHidden) {
+        if let splitVC = self.noteBookSplitController,
+           !(splitVC.isBeingDismissed || splitVC.isBeingPresented) {
             return true;
         }
         return super.prefersHomeIndicatorAutoHidden;

@@ -237,7 +237,11 @@ class FTDocumentRenderViewController: UIViewController {
     }
 
     override var prefersHomeIndicatorAutoHidden: Bool {
-        return self.prefersStatusBarHidden;
+        var toHide: Bool = true
+        if UIDevice.current.isPhone() {
+            toHide = false
+        }
+        return toHide
     }
 
     override func didMove(toParent parent: UIViewController?) {
