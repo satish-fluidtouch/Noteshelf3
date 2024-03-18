@@ -11,8 +11,10 @@ import FTCommon
 final class FTiRateManager: NSObject {
     static func configureiRate(delegate : iRateDelegate?) {
         iRate.sharedInstance()?.delegate = delegate
-        if FTIAPManager.shared.premiumUser.isPremiumUser {
-            iRate.sharedInstance()?.promptAtLaunch = FTAppConfigHelper.sharedAppConfig().shouldShowiRate();
+        if FTIAPManager.shared.premiumUser.isPremiumUser
+            , !(iRate.sharedInstance().declinedAnyVersion || iRate.sharedInstance().ratedAnyVersion) {
+            iRate.sharedInstance()?.promptForNewVersionIfUserRated = false;
+            iRate.sharedInstance()?.promptAtLaunch = true;
             iRate.sharedInstance()?.eventsUntilPrompt = 5
             iRate.sharedInstance()?.daysUntilPrompt = 0
             iRate.sharedInstance()?.usesUntilPrompt = 30
