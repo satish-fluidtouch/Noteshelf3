@@ -87,9 +87,9 @@ private let offset: CGFloat = 8.0
         self.configurePanGesture()
     }
 
-    func updatePositionOnScreenSizeChange() {
+    func updatePositionOnScreenSizeChange(forcibly: Bool = false) {
         let curSize = self.parentVC?.view.frame.size ?? .zero;
-        if(!curSize.equalTo(contentSize)) {
+        if(!curSize.equalTo(contentSize) || forcibly) {
             contentSize = curSize
             self.updateMinOffsetIfNeeded()
             self.configureShortcutView(with: screenMode)
@@ -283,6 +283,9 @@ private extension FTShortcutToolPresenter {
             self.toolbarOffset = FTToolbarConfig.Height.compact + offset + extraOffset
         } else {
             self.toolbarOffset = FTToolbarConfig.Height.regular + offset
+            if FTUserDefaults.defaults().showStatusBar {
+                self.toolbarOffset += FTToolBarConstants.statusBarOffset
+            }
         }
 #endif
     }

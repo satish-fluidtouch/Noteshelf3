@@ -32,6 +32,8 @@ protocol FTDeskPanelActionDelegate: AnyObject {
     @IBOutlet private weak var contentView: UIView?
     @IBOutlet private weak var contentTopConstraint: NSLayoutConstraint?
 
+    private(set)var focusModeView: FTFocusModeView?;
+    
     //Left Panel
     @IBOutlet private weak var leftPanelBlurView: FTToolbarVisualEffectView?
     @IBOutlet private weak var leftPanel: UIStackView?
@@ -78,26 +80,34 @@ protocol FTDeskPanelActionDelegate: AnyObject {
         super.viewDidLayoutSubviews()
         let currentFrameSize = self.view.frame.size
         if(currentFrameSize.width != self.currentSize.width) {
-            self.currentSize = currentFrameSize
+            var space: CGFloat = 0.0
+            if UIDevice.current.isPhone() {
+                if let window = UIApplication.shared.keyWindow ?? self.view.window {
+                    self.currentSize = currentFrameSize
+                    space = window.safeAreaInsets.top
+                }
+            } else {
+                self.currentSize = currentFrameSize
+            }
+            self.updateScreenModeIfNeeded(self.screenMode)
 #if targetEnvironment(macCatalyst)
             self.contentTopConstraint?.constant = 0.0
 #else
-            var space: CGFloat = 0.0
-            if UIDevice.current.isPhone() {
-                if let window = UIApplication.shared.keyWindow {
-                    let topSafeAreaInset = window.safeAreaInsets.top
-                    if topSafeAreaInset > 0 {
-                        space = topSafeAreaInset
-                    }
-                }
-            }
             self.contentTopConstraint?.constant = 14.0 + space
 #endif
-            self.updateScreenModeIfNeeded(self.screenMode)
         }
     }
 
     deinit {
+        if let observer = self.validateToolbarObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+        if let observer = self.validateFinderButtonObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+        if let observer = self.toggleToolbarObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
         NotificationCenter.default.removeObserver(self)
     }
 
@@ -125,8 +135,11 @@ protocol FTDeskPanelActionDelegate: AnyObject {
         return view
     }
 
+    private weak var validateToolbarObserver: NSObjectProtocol?;
+    private weak var toggleToolbarObserver: NSObjectProtocol?;
+    private weak var validateFinderButtonObserver: NSObjectProtocol?;
     private func handleObservers() {
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: FTValidateToolBarNotificationName), object: nil, queue: .main) { [weak self] notification in
+        self.validateToolbarObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: FTValidateToolBarNotificationName), object: nil, queue: .main) { [weak self] notification in
             guard let strongSelf = self else {
                 return
             }
@@ -135,7 +148,7 @@ protocol FTDeskPanelActionDelegate: AnyObject {
             }
         }
 
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: FTToggleToolbarModeNotificationName), object: nil, queue: .main) { [weak self] notification in
+        self.toggleToolbarObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: FTToggleToolbarModeNotificationName), object: nil, queue: .main) { [weak self] notification in
             guard let strongSelf = self else {
                 return
             }
@@ -148,7 +161,7 @@ protocol FTDeskPanelActionDelegate: AnyObject {
             }
         }
         
-        NotificationCenter.default.addObserver(forName: .validationFinderButtonNotification, object: nil, queue: .main) { [weak self] notification in
+        self.validateFinderButtonObserver = NotificationCenter.default.addObserver(forName: .validationFinderButtonNotification, object: nil, queue: .main) { [weak self] notification in
             guard let strongSelf = self else {
                 return
             }
@@ -157,7 +170,13 @@ protocol FTDeskPanelActionDelegate: AnyObject {
             }
         }
     }
-
+    
+    func didChangePageLayout() {
+        if let parent = self.parent as? FTDocumentRenderViewController {
+            parent.didChangePageLayout()
+        }
+    }
+    
     private func updatePanels() {
         if self.screenMode == .shortCompact {
             self.centerPanelContainerWidthConstraint?.constant = self.view.frame.width
@@ -318,11 +337,12 @@ private extension FTiOSDeskToolbarController {
 extension FTiOSDeskToolbarController {
     private func configureNormalModeView(toAnimate: Bool = true) {
         if let parent = self.parent as? FTDocumentRenderViewController {
-            if let focusModeView = parent.view.subviews.first(where: { $0 is FTFocusModeView }) {
+            if let focusModeView = self.focusModeView {
                 focusModeView.removeFromSuperview()
             }
 
             let focusView = FTFocusModeView()
+            self.focusModeView = focusView
             focusView.styleView()
             let focusViewOrigin = CGPoint(x: parent.view.frame.width + focusView.size.width, y: focusView.topOffset)
             focusView.frame.origin = focusViewOrigin
@@ -342,14 +362,12 @@ extension FTiOSDeskToolbarController {
     }
 
     @objc private func focusViewTapped() {
-        if let parent = self.parent as? FTDocumentRenderViewController {
-            if let focusModeView = parent.view.subviews.first(where: { $0 is FTFocusModeView }) {
-                self.updateScreenModeIfNeeded(.normal)
-                FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_focusmode_toggle, params: ["toggle": "off"])
-                UIView.animate(withDuration: 0.3) {
-                    self.actionDelegate?.didTapRightPanelTool(FTDeskRightPanelTool.focus, source: focusModeView, mode: .normal)
-                    focusModeView.removeFromSuperview()
-                }
+        if let focusModeView = self.focusModeView {
+            self.updateScreenModeIfNeeded(.normal)
+            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_focusmode_toggle, params: ["toggle": "off"])
+            UIView.animate(withDuration: 0.3) {
+                self.actionDelegate?.didTapRightPanelTool(FTDeskRightPanelTool.focus, source: focusModeView, mode: .normal)
+                focusModeView.removeFromSuperview()
             }
         }
     }

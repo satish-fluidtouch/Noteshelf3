@@ -156,7 +156,8 @@ class FTNotebookCreation: NSObject {
                                             }
 
                                             //****************************** AutoBackup & AutoPublish
-                                            FTENPublishManager.applyDefaultBackupPreferences(forItem: item, documentUUID: ftdocument.documentUUID)
+                                            //Amar: Commented below code to avoid ununcessary adding the quick note to EN list without knowing if it is going to be deleted of not
+//                                            FTENPublishManager.applyDefaultBackupPreferences(forItem: item, documentUUID: ftdocument.documentUUID)
                                             //******************************
                                             completion(error,item)
                                         }

@@ -39,11 +39,16 @@ class FTConvertPreferencesViewController: UIViewController {
     }
 
     deinit {
+        if let observer = self.resourceDownloadObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+
         #if DEBUG
         debugPrint("\(type(of: self)) is deallocated")
         #endif
     }
 
+    private weak var resourceDownloadObserver: NSObjectProtocol?;
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView?.register(UINib.init(nibName: "FTConvertPreferencesCell", bundle: nil), forCellReuseIdentifier: "FTConvertPreferencesCell")
@@ -53,7 +58,7 @@ class FTConvertPreferencesViewController: UIViewController {
     }
 
     private func addObservers() {
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: FTResourceDownloadStatusDidChange), object: nil, queue: nil) { [weak self] (notification) in
+        self.resourceDownloadObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: FTResourceDownloadStatusDidChange), object: nil, queue: nil) { [weak self] (notification) in
             DispatchQueue.main.async {
                 self?.supportedLanguages = FTLanguageResourceManager.shared.languageResources
                 self?.tableView?.reloadData()

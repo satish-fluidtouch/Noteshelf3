@@ -15,6 +15,7 @@ private var instance_Counter = Int(0);
 class FTOnScreenWritingViewController: UIViewController {
     
     weak var delegate : FTContentDelegate?;
+    internal weak var pageNavigationShowObserver: NSObjectProtocol?;
     
     private weak var metalView: FTMetalView!;
     fileprivate var currentExecutingRequest : FTOnScreenRenderRequest?;
@@ -172,6 +173,10 @@ class FTOnScreenWritingViewController: UIViewController {
         FTRendererProvider.shared.enqueOnscreenRenderer(_onScreenRenderer);
         self.currentExecutingRequest?.cancelRequest();
         NotificationCenter.default.removeObserver(self);
+        
+        if let observer = self.pageNavigationShowObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
         
         NSObject.cancelPreviousPerformRequests(withTarget: self);
         if(SHOW_INSTANCE_COUNTER) {

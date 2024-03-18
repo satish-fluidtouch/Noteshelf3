@@ -20,7 +20,7 @@ extension FTPageViewController {
     private static var linkTappedTimer : Timer?;
     func configureForPDFLinks()
     {
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "DidEndTouches"),
+        self.didEndTouchNotificationObserver = NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "DidEndTouches"),
                                                object: nil,
                                                queue: nil)
         { [weak self] notification in
@@ -28,7 +28,7 @@ extension FTPageViewController {
             self?.removeActionAnnotationSelectionRect();
         }
         
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "DidMoveTouches"),
+        self.didMoveTouchNotificationObserver = NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "DidMoveTouches"),
                                                object: nil,
                                                queue: nil)
         { [weak self] (notification) in

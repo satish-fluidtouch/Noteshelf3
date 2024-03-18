@@ -10,6 +10,7 @@ import UIKit
 
 #if targetEnvironment(macCatalyst)
 class FTNotebookToolbar: NSToolbar {
+    private weak var validateToolbarObserver: NSObjectProtocol?;
     weak var toolbarActionDelegate: FTToolbarActionDelegate? {
         didSet {
             if let mode = self.toolbarActionDelegate?.toolbarCurrentDeskMode(self) {
@@ -31,13 +32,19 @@ class FTNotebookToolbar: NSToolbar {
         self.autosavesConfiguration = true;
         windowScene.titlebar?.titleVisibility = .hidden;
         self.selectedItemIdentifier = FTDeskCenterPanelTool.pen.toolbarIdentifier;
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: FTValidateToolBarNotificationName), object: nil, queue: .main) { [weak self] notification in
+        validateToolbarObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: FTValidateToolBarNotificationName), object: nil, queue: .main) { [weak self] notification in
             guard let strongSelf = self else {
                 return
             }
             if let mode = strongSelf.toolbarActionDelegate?.toolbarCurrentDeskMode(strongSelf) {
                 strongSelf.selectItem(with: mode)
             }
+        }
+    }
+    
+    deinit {
+        if let observer = self.validateToolbarObserver {
+            NotificationCenter.default.removeObserver(observer);
         }
     }
     

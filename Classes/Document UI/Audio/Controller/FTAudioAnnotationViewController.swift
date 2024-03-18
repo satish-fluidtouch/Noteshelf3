@@ -35,6 +35,8 @@ class FTtestView : UIView {
     private var isSelected: Bool = false
     private var isMenuVisible: Bool = false
     
+    private weak var updateAnnotationNotificationObserver: NSObjectProtocol?;
+    
     required init(withAnnotation annotation: FTAnnotation,
          delegate: FTAnnotationEditControllerDelegate?,
          mode: FTAnnotationMode) {
@@ -62,13 +64,19 @@ class FTtestView : UIView {
         #endif
         self.handleAnnotationChanges()
         
-        NotificationCenter.default.addObserver(forName: Notification.Name.didUpdateAnnotationNotification,
+        self.updateAnnotationNotificationObserver = NotificationCenter.default.addObserver(forName: Notification.Name.didUpdateAnnotationNotification,
                                                object: annotation,
                                                queue: nil) { [weak self] (notification) in
             self?.refreshView();
         }
     }
     
+    deinit {
+        if let observer = self.updateAnnotationNotificationObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+    }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented for FTAudioAnnotationViewController")
     }

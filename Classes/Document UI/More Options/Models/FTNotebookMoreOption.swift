@@ -261,6 +261,41 @@ class FTNotebookOptionSettings: FTNotebookMoreOption {
     }
 }
 
+class FTNotebookStatusBarSetting: FTNotebookOptionToggle {
+    var eventName: String {
+        return "Status Bar"
+    }
+
+    var type: FTNotebookMoreOptionType {
+        return .toggleAccessory
+    }
+    var imageIcon: FTIcon {
+        return .showstatusbar
+    }
+    
+    var localizedTitle: String {
+        return "notebook.settings.showstatusbbar".localized
+    }
+    
+    var identifier: String {
+        return "statusbar"
+    }
+    
+    var isToggleTurnedOn: Bool {
+        return isSwitchOn
+    }
+
+    func updateToggleStatus(with isOn: Bool) {
+        self.isSwitchOn = !isOn
+    }
+
+    fileprivate var isSwitchOn: Bool
+
+    init(isEnabled: Bool) {
+        self.isSwitchOn = isEnabled
+    }
+}
+
 class FTNotebookOptionShare: FTNotebookMoreOption {
     var eventName: String {
         return FTNotebookEventTracker.nbk_more_share_tap

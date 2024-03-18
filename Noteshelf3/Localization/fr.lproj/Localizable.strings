@@ -1197,6 +1197,7 @@
 "notebook.quickPageNavigator.pageNumber.Text" = "%d de %d'";
 "notebook.restoring" = "Restauration...";
 "notebook.settings.moresettings" = "Plus de paramètres";
+"notebook.settings.showstatusbbar" = "Afficher la barre d'état";
 "notebook.shapesRack.NavTitle" = "Formes";
 "notebook.share.NoteshelfFile" = "Fichier Noteshelf";
 "notebook.share.image" = "Image";
@@ -1437,6 +1438,7 @@
 "shortcut.toast.rotatePage" = "La page est tournée.";
 "shortcut.toast.saveAllPagesAsPhotos" = "Toutes les pages sont enregistrées dans la bibliothèque de photos.";
 "shortcut.toast.savePageAsPhoto" = "La page est enregistrée dans la bibliothèque de photos.";
+"show_status_bar" = "Afficher la barre d'état";
 "sidebar.allTags" = "Toutes les étiquettes ";
 "sidebar.allTags.contextualMenu.editTags" = "Modifier les étiquettes ";
 "sidebar.allTags.contextualMenu.openInNewWindow" = "Ouvrir dans une nouvelle fenêtre";
@@ -1477,6 +1479,10 @@
 "sidebar.topSection.starred" = "Favoris";
 "sidebar.topSection.unfiled" = "Non classé";
 "speechbubbles" = "Bulles de dialogue";
+"status_bar_info_footer" = "Appréciez-vous Noteshelf 3 ? %@ pour nous évaluer sur l'App Store. Cela nous aidera plus que vous ne l’imaginez.";
+"status_bar_info_subtitle" = "Vous avez été nombreux à nous demander la barre d'état lors de la prise de notes. Vous avez maintenant la possibilité d'afficher la barre d'état dans le menu Plus.";
+"status_bar_info_title" = "Nous vous avons entendu !";
+"status_bar_tap_here" = "Appuyez ici";
 "stickers.alert.error" = "Erreur";
 "stickers.alert.ok" = "D'accord";
 "stickersTitle" = "Autocollants";
@@ -1537,7 +1543,7 @@
 "textLink_documentDeleted_title" = "Le cahier a été supprimé";
 "textLink_documentItselfNotAvailable_message" = "Le cahier lié au contenu a été supprimé.";
 "textLink_editLink" = "Modifier le lien";
-"textLink_linkTo" = "Lien vers";
+"textLink_linkTo" = "Lier à";
 "textLink_linktext" = "Texte du lien";
 "textLink_notebookDeletedOrUndownloaded" = "Impossible d'accéder au chaier associé à ce lien.";
 "textLink_notebookNotDownloadedMessage" = "Le cahier lié à ce contenu n'a pas encore été téléchargé depuis iCloud. Veuillez réessayer après un certain temps.";
@@ -1602,4 +1608,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 20 February 2024 at 6:21 PM
+// Last Synced by Amar Udupa on 11 March 2024 at 7:30 PM

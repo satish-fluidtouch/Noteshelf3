@@ -16,6 +16,9 @@ class FTShareCoordinator: NSObject {
 
     weak var presentingVc: UIViewController!
 
+    private weak var sceneForgroundObserver: NSObjectProtocol?;
+    private weak var scenebackgroundObserver: NSObjectProtocol?;
+    
     init(shelfItems: [FTShelfItemProtocol], pages: [FTPageProtocol]? = [], presentingController: UIViewController, sourceView: Any? = nil) {
         self.shelfItems = shelfItems
         self.pages = pages
@@ -25,8 +28,17 @@ class FTShareCoordinator: NSObject {
         self.addObservers()
     }
 
+    deinit {
+        if let observer = self.scenebackgroundObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+        if let observer = self.sceneForgroundObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+    }
+
     private func addObservers() {
-        NotificationCenter.default.addObserver(forName: UIApplication.sceneWillEnterForeground,
+        self.sceneForgroundObserver = NotificationCenter.default.addObserver(forName: UIApplication.sceneWillEnterForeground,
                                                object: self,
                                                queue: OperationQueue.main,
                                                using:
@@ -34,7 +46,7 @@ class FTShareCoordinator: NSObject {
             self?.exportManager?.resumeExportOperation()
         })
 
-        NotificationCenter.default.addObserver(forName: UIApplication.sceneDidEnterBackground,
+        self.scenebackgroundObserver = NotificationCenter.default.addObserver(forName: UIApplication.sceneDidEnterBackground,
                                                object: self,
                                                queue: OperationQueue.main,
                                                using:
