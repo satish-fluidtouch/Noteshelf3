@@ -63,7 +63,7 @@ extension FTShelfBaseView {
                                     shelfItemWidth:gridItemSize.width,
                                     shelfItemHeight: gridItemSize.height)
                                         .frame(width: gridItemSize.width, alignment: Alignment(horizontal: .center, vertical: .bottom))
-//                    .frame(width: gridItemSize.width , height: gridItemSize.height, alignment: Alignment(horizontal: .center, vertical: .bottom))
+                    .frame(minWidth: gridItemSize.width , minHeight: gridItemSize.height, alignment: Alignment(horizontal: .center, vertical: .bottom))
                     .onChange(of: viewModel.scrollToItemID) { newValue in
                         if let newValue {
                             scrollViewProxy?.scrollTo(newValue)

@@ -88,7 +88,6 @@ struct FTNotebookItemView: View {
             VStack(alignment: .center, content: {
                 FTNotebookTitleView()
                     .frame(minHeight: 60)
-                //                .frame(height: 60)
                     .onTapGesture {
                         shelfViewModel.renameShelfItem(shelfItem)
                     }

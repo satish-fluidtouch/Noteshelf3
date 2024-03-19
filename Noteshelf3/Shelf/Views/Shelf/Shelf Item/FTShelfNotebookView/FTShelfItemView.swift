@@ -74,8 +74,6 @@ struct FTShelfItemView: View {
         }
         else {
             FTNotebookItemView(shelfItemWidth: shelfItemWidth,shelfItemHeight: shelfItemHeight,isAnyNBActionPopoverShown: $isAnyNBActionPopoverShown)
-//            FTNotebookItemView()
-//                .background(.red)
         }
     }
     

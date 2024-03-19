@@ -22,10 +22,13 @@ struct FTNotebookViewList : View {
     @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
     @State var hideShadow: Bool = false
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
     @Binding var isAnyNBActionPopoverShown: Bool
 
     var body: some View {
+//        contentView
+//            .isHidden(true)
         FTShelfItemContextMenuPreview(preview: {
             contentView
             .padding(.horizontal, listGridViewHorizontalPadding)
