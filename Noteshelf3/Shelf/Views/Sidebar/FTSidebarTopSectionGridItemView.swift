@@ -19,7 +19,6 @@ struct FTSidebarTopSectionGridItemView: View {
     @EnvironmentObject var item: FTSideBarItem
     @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
-
     var body: some View {
         gridItemView
 //        FTSideBarItemContextMenuPreview(preview: {
@@ -42,7 +41,7 @@ struct FTSidebarTopSectionGridItemView: View {
                 icon
 //                    .frame(width: 24,height: 24,alignment: .top)
                     .foregroundColor(getIconTintColorForTopSectionItem(item))
-                    .font(.appFont(for: .regular, with: 20))
+                    .font(.appFixedFont(for: .regular, with: isLargerTextEnabled(for: dynamicTypeSize) ? 30 : 20))
                 Spacer()
                 if (canShowNoOfBooksForItem(item) && numberOfChildren > 0) {
                     Text("\(numberOfChildren)")
@@ -95,7 +94,7 @@ struct FTSidebarTopSectionGridItemView: View {
         } else {
             Image(item.type.iconName)
                 .resizable()
-                .frame(width: 34, height: 34)
+                .frame(width: viewModel.imageSize(isLargeSize: isLargerTextEnabled(for: dynamicTypeSize)), height: viewModel.imageSize(isLargeSize: isLargerTextEnabled(for: dynamicTypeSize)))
         }
     }
     private func getBGColorTopSectionItem(_ item: FTSideBarItem) -> Color {

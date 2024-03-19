@@ -194,6 +194,10 @@ class FTSidebarViewModel: NSObject, ObservableObject {
         NotificationCenter.default.removeObserver(self, name: .refresSideMenuNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: .didChangeUnfiledCategoryLocation, object: nil)
     }
+    
+    func imageSize(isLargeSize: Bool) -> CGFloat {
+        return isLargeSize ? 32 : 22
+    }
 }
 private extension FTSidebarViewModel {
     func updateCurrentSidebarItemCollection(){

@@ -38,7 +38,7 @@ struct SideBarItemView : View {
             VStack(spacing:0) {
                 sideBarItem
             }
-//            .frame(height: 44)
+            .frame(minHeight: 44)
         }
         .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: .littleslow))
     }
@@ -53,7 +53,7 @@ struct SideBarItemView : View {
 //                    .frame(width: 24, height: 24, alignment: SwiftUI.Alignment.center)
                     .padding(.leading,8)
                     .padding(.trailing, 4)
-                    .font(Font.appFont(for: .regular, with: 20))
+                    .font(Font.appFixedFont(for: .regular, with: isLargerTextEnabled(for: dynamicTypeSize) ? 26 : 20))
             }
             Spacer()
                 Text("\(numberOfChildren)")
@@ -63,9 +63,7 @@ struct SideBarItemView : View {
                     .padding(.leading,8)
                     .isHidden(!showChildrenNumber)
         }
-        .padding(.top, 16)
-        .padding(.bottom, 16)
-//        .frame(height: 44.0, alignment: .leading)
+        .frame(minHeight: 44.0, alignment: .leading)
         .contentShape(Rectangle())
         .onDrop(of: [.data],
                 delegate: SideBarItemDropDelegate(viewModel: viewModel,

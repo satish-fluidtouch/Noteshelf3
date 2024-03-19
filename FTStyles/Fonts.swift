@@ -56,6 +56,10 @@ extension Font {
     public static func appFont(for weight: Font.Weight, with size: CGFloat) -> Font {
         return Font.system(size: UIFontMetrics.default.scaledValue(for: size), weight: weight)
     }
+    
+    public static func appFixedFont(for weight: Font.Weight, with size: CGFloat) -> Font {
+        return Font.system(size: size, weight: weight)
+    }
 
     public static func clearFaceFont(for type: ClearFace, with size: CGFloat) -> Font {
         return Font.custom(type.rawValue, size: size)

@@ -104,8 +104,8 @@ extension FTShelfTopSectionItem {
     @ViewBuilder
     var gridcomponetImageView: some View {
         Image(isFirsttime ? type.largeiconName : type.iconName)
-            .resizable()
-            .scaledToFit()
+//            .resizable()
+//            .scaledToFit()
             .frame(minWidth: imageSize(),minHeight: imageSize())
     }
     private func imageSize() -> CGFloat {

@@ -53,7 +53,7 @@ struct FTTemplatesSidebarItemView: View {
             HStack(alignment: .top, content: {
                 Image(icon: .templates)
                     .foregroundColor(iconTintColor)
-                    .font(.appFont(for: .regular, with: 22))
+                    .font(.appFixedFont(for: .regular, with: isLargerTextEnabled(for: dynamicTypeSize) ? 30 : 22))
                 Spacer()
                 // once the user taps on templates do not show this
                 NewBadgeView()

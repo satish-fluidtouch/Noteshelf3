@@ -21,7 +21,7 @@ struct FTSidebarTopSectionGridView: View {
 
     var body: some View {
         Grid(horizontalSpacing: 8,verticalSpacing: 8 ) {
-            if isLargeSize() {
+            if isLargerTextEnabled(for: dynamicTypeSize) {
                 GridRow {
                     gridItemFor(sidebarItemForType(.home))
                 }
@@ -53,12 +53,7 @@ struct FTSidebarTopSectionGridView: View {
             }
         }.macOnlyPlainButtonStyle()
     }
-    
-    func isLargeSize() -> Bool {
-        let largeSizes: [DynamicTypeSize] = [.accessibility1, .accessibility2, .accessibility3, .accessibility4, .accessibility5]
-        return largeSizes.contains(dynamicTypeSize)
-    }
-    
+
     private func sidebarItemForType(_ type: FTSideBarItemType) -> FTSideBarItem{
         viewModel.sidebarItemOfType(type)
     }

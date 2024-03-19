@@ -11,7 +11,8 @@ import SwiftUI
 struct FTShelfSelectAndSettingsView: View {
     @ObservedObject var viewModel: FTShelfViewModel
     @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
-
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
+    var isLargeText = false
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     var sortOptions: [FTShelfSortOrder] = FTShelfSortOrder.supportedSortOptions()
     
@@ -20,9 +21,8 @@ struct FTShelfSelectAndSettingsView: View {
             menuView
         }, label: {
             Image(icon: .ellipsis)
+                .font(Font.appFixedFont(for: .regular , with: isLargeText ? 20 : 15.5))
                 .foregroundColor(Color.appColor(.accent))
-                .font(Font.appFont(for: .regular , with: 15.5))
-                .frame(maxWidth: 30, maxHeight: 30)
         })
         .onTapGesture {
             //Track Event
@@ -33,7 +33,7 @@ struct FTShelfSelectAndSettingsView: View {
             }
         }
     }
-    
+
     var sortView: some View{
         ForEach(sortOptions, id: \.displayTitle) { sortOption in
             Button(action: {

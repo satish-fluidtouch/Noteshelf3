@@ -47,8 +47,7 @@ struct FTNewNoteTopSectionView: View {
     }
     
     func isLargeSize() -> Bool {
-        let largeSizes: [DynamicTypeSize] = [.accessibility1, .accessibility2, .accessibility3, .accessibility4, .accessibility5]
-        return largeSizes.contains(dynamicTypeSize)
+        return isLargerTextEnabled(for: dynamicTypeSize)
     }
 }
 struct FTNewNoteTopSectionView_Previews: PreviewProvider {

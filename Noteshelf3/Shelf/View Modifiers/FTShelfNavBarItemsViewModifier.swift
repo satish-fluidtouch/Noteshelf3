@@ -78,9 +78,8 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                                 track(EventName.shelf_addmenu_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
                             } label: {
                                 Image(icon: .plus)
-                                    .font(Font.appFont(for: .regular , with: 15.5))
+                                    .font(Font.appFixedFont(for: .regular , with: isLargerTextEnabled() ? 20 : 15.5))
                                     .foregroundColor(Color.appColor(.accent))
-                                    .frame(maxWidth: 30, maxHeight: 30)
                             }
                             .popover(isPresented: $showingPopover) {
                                 NavigationStack{
@@ -106,16 +105,14 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                             }
                         } label: {
                             Image(icon: .search)
-                                .font(Font.appFont(for: .regular , with: 15.5))
+                                .font(Font.appFixedFont(for: .regular , with: isLargerTextEnabled() ? 20 : 15.5))
                                 .foregroundColor(Color.appColor(.accent))
-                                .frame(maxWidth: 30, maxHeight: 30)
                         }
-//                        .frame(width: 44,height: 44,alignment: .center)
+                        .frame(maxWidth: 44,maxHeight: 44,alignment: .center)
                     }
                     ToolbarItem(id:"Menu options" + toolbarID,
                                 placement: ToolbarItemPlacement.navigationBarTrailing)  {
-                        FTShelfSelectAndSettingsView(viewModel: shelfViewModel)
-//                            .frame(width: 44,height: 44,alignment: .center)
+                        FTShelfSelectAndSettingsView(viewModel: shelfViewModel, isLargeText: isLargerTextEnabled())
                     }
                 }
             })
@@ -176,4 +173,8 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                     toolbarID = UUID().uuidString
                 }
     }
-}
+    
+    func isLargerTextEnabled() -> Bool {
+        let sizes: [DynamicTypeSize] = [.accessibility1, .accessibility2, .accessibility3, .accessibility4, .accessibility5]
+        return sizes.contains(dynamicTypeSize)
+    }}
