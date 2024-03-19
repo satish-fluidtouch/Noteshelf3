@@ -13,6 +13,8 @@ struct FTPlayerView: View {
     @Binding var isShowingPlayerView: Bool
 
     @State private var isEditOptionsShowing = false
+    @EnvironmentObject var recordVm: FTRecordViewModel
+    @State private var showInProgressRecordAlert = false
 
     private let progressColor = Color(red: 224/255, green: 110/255, blue: 81/255)
 
@@ -30,7 +32,11 @@ struct FTPlayerView: View {
                     .frame(width: 12.0)
 
                 Button {
-                    self.viewModel.backwardPlayBy(15)
+                    if self.recordVm.isRecording {
+                        self.showInProgressRecordAlert = true
+                    } else {
+                        self.viewModel.backwardPlayBy(15)
+                    }
                 } label: {
                     Image(systemName: "gobackward.15")
                         .resizable()
@@ -49,7 +55,11 @@ struct FTPlayerView: View {
                 Spacer()
 
                 Button {
-                    self.viewModel.forwardPlayBy(15)
+                    if self.recordVm.isRecording {
+                        self.showInProgressRecordAlert = true
+                    } else {
+                        self.viewModel.forwardPlayBy(15)
+                    }
                 } label: {
                     Image(systemName: "goforward.15")
                         .resizable()
@@ -74,6 +84,14 @@ struct FTPlayerView: View {
                     self.viewModel.updateRecording(self.recording)
                 }
         })
+        .alert(isPresented: $showInProgressRecordAlert) {
+            Alert(
+                title: Text(""),
+                message: Text("Recording is in progress..."),
+                dismissButton: .default(Text(NSLocalizedString("OK", comment: "OK"))) {
+                }
+            )
+        }
         .onDisappear {
             self.viewModel.resetPlay()
         }
@@ -97,7 +115,11 @@ struct FTPlayerView: View {
 
     private var editOptionsButton: some View {
         Button {
-            self.isEditOptionsShowing = true
+            if self.recordVm.isRecording {
+                self.showInProgressRecordAlert = true
+            } else {
+                self.isEditOptionsShowing = true
+            }
         } label: {
             Image(systemName: "ellipsis")
         }
@@ -117,7 +139,11 @@ struct FTPlayerView: View {
                     .rotationEffect(.degrees(-90))
 
                 Button(action: {
-                    self.viewModel.handlePlayTapAction()
+                    if self.recordVm.isRecording {
+                        self.showInProgressRecordAlert = true
+                    } else {
+                        self.viewModel.handlePlayTapAction()
+                    }
                 }) {
                     Image(systemName: viewModel.isPlaying ? "pause" : "play")
                         .resizable()

@@ -11,6 +11,7 @@ import SwiftUI
 struct FTRecordingsView: View {
     @StateObject private var viewModel = FTRecordingsViewModel()
     @State private var isShowingPlayerView = false
+    @EnvironmentObject var recordVm: FTRecordViewModel
 
     var body: some View {
         ZStack {
@@ -48,6 +49,7 @@ struct FTRecordingsView: View {
                 .fullScreenCover(isPresented: $isShowingPlayerView) {
                     if let recording = self.viewModel.selectedRecording {
                         FTPlayerView(viewModel: FTPlayerViewModel(recording: recording), isShowingPlayerView: $isShowingPlayerView)
+                            .environmentObject(recordVm)
                     }
                 }
             }
