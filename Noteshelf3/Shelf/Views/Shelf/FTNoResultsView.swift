@@ -14,6 +14,7 @@ struct FTNoResultsView: View {
     var description: String = ""
     var learnMoreLink: String = ""
     var showLearnMoreLink: Bool = false
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
     var body: some View {
         VStack {
             Spacer()
@@ -32,7 +33,7 @@ struct FTNoResultsView: View {
                 Text(description)
                     .fontWeight(.regular)
                     .appFont(for: .regular, with: 15)
-                    .frame(width: 234, alignment: .center)
+                    .frameStyle(isLargeSize: isLargerTextEnabled(for: dynamicTypeSize))
                     .multilineTextAlignment(.center)
                     .lineSpacing(0)
                     .kerning(-0.41)
@@ -56,5 +57,25 @@ struct FTNoResultsView: View {
 struct FTNoResultsView_Previews: PreviewProvider {
     static var previews: some View {
         FTNoResultsView(noResultsImageName: "trash", title: "Trash is Empty", description: "", learnMoreLink: "Learn More", showLearnMoreLink: false)
+    }
+}
+
+private struct FrameStyleModifier: ViewModifier {
+    var isLargeSize = false
+    func body(content: Content) -> some View {
+        if isLargeSize {
+            content
+                .frame(minWidth: 234, alignment: .center)
+                .padding(.horizontal, 8)
+        } else {
+            content
+                .frame(width: 234, alignment: .center)
+        }
+    }
+}
+
+private extension View {
+    func frameStyle(isLargeSize: Bool) -> some View {
+        self.modifier(FrameStyleModifier(isLargeSize: isLargeSize))
     }
 }

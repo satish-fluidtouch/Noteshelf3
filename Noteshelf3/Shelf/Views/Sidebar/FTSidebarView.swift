@@ -40,6 +40,7 @@ struct FTSidebarView: View {
     @State private var expanded: Set<String> = []
     @State private var orientation = UIDevice.current.orientation
     @State private var reloadView: Bool = false
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
     weak var delegate: FTSidebarViewDelegate?
 
@@ -126,7 +127,7 @@ struct FTSidebarView: View {
                 }
             )
         ) {
-            VStack(spacing:2.0){
+            VStack(spacing: isLargerTextEnabled(for: dynamicTypeSize) ? 4.0 : 2){
                 ForEach(menuSection.items, id:\.id) { item in
                     if item.isEditing {
                         let oldTitle = item.title
