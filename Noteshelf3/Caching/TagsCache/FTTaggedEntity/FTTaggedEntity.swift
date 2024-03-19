@@ -72,7 +72,7 @@ class FTTaggedEntity: NSObject, Identifiable {
         self.updateURLAndDownloadStatusLocally();
     }
     
-    func thumbnail(onCompletion: ((UIImage?,String)->())?) -> String {
+    func thumbnail(onCompletion: ((UIImage?,String?)->())?) -> String {
         fatalError("Subclass should override")
     }
     

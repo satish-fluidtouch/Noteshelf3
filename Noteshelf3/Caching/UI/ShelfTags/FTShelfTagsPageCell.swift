@@ -172,7 +172,7 @@ extension FTShelfTagsPageCell {
             var token : String?
             self.thumbnail?.contentMode = .scaleAspectFit
             token = taggedEntity.thumbnail { [weak self] (image, intoken) in
-//                if intoken == token {
+                if intoken == token {
                     if let img = image {
                         var height = FTShelfTagsConstants.Book.potraitSize.height
                         if img.size.width > img.size.height {// Landscape
@@ -195,7 +195,7 @@ extension FTShelfTagsPageCell {
                         
                         self?.thumbnail?.image = UIImage(named: "no_cover", in: Bundle(for: FTCreateNotebookViewController.self), with: nil);
                     }
-//                }
+                }
             }
         }
     }

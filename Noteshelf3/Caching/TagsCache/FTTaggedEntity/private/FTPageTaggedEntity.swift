@@ -21,6 +21,10 @@ class FTTaggedPageProperties: NSObject {
 }
 
 class FTPageTaggedEntity: FTTaggedEntity {
+    
+    private var image: UIImage?
+    private var lastModifiedTime: TimeInterval = 0;
+    
     override var tagType: FTTagsType {
         .page
     };
@@ -35,8 +39,14 @@ class FTPageTaggedEntity: FTTaggedEntity {
         self.pageUUID = pageUUID
         self.pageProperties = pageProperties
         super.init(documentUUID: documentUUID, documentItem: documentItem)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didRecieveMemoryWarning(_:)), name: UIApplication.didReceiveMemoryWarningNotification, object: nil);
     }
         
+    @objc private func didRecieveMemoryWarning(_ notification: Notification) {
+        self.image = nil;
+        self.lastModifiedTime = 0;
+    }
+    
     func updatePageProties(_ pageProperties: FTTaggedPageProperties) {
         if !self.pageProperties.isSame(pageProperties) {
             self.pageProperties = pageProperties;
@@ -51,15 +61,27 @@ class FTPageTaggedEntity: FTTaggedEntity {
         return super.description+">>"+self.documentUUID+"_"+self.pageUUID;
     }
     
-    override func thumbnail(onCompletion: ((UIImage?,String) -> ())?) -> String {
-        let thumbnailPath = self.thumbnailURL.appending(path: self.pageUUID);
+    override func thumbnail(onCompletion: ((UIImage?,String?) -> ())?) -> String {
+        if(nil != self.image) {
+            onCompletion?(self.image,nil);
+        }
         let token = UUID().uuidString;
-        DispatchQueue.global().async {
-            let img = UIImage(contentsOfFile: thumbnailPath.path(percentEncoded: false));
-            DispatchQueue.main.async {
-                onCompletion?(img, token)
+        let thumbnailPath = self.thumbnailURL.appending(path: self.pageUUID);
+        var currentTime = Date.timeIntervalSinceReferenceDate;
+        if FileManager().fileExists(atPath: thumbnailPath.path(percentEncoded: false)) {
+            currentTime  = thumbnailPath.fileModificationDate.timeIntervalSinceReferenceDate;
+            if currentTime > lastModifiedTime || nil == self.image {
+                DispatchQueue.global().async {
+                    let img = UIImage(contentsOfFile: thumbnailPath.path(percentEncoded: false));
+                    DispatchQueue.main.async {
+                        self.image = img;
+                        self.lastModifiedTime = currentTime;
+                        onCompletion?(img, token)
+                    }
+                }
             }
         }
+
         return token;
     }
 }
