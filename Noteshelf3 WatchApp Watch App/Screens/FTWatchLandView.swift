@@ -10,11 +10,16 @@ import SwiftUI
 
 struct FTWatchLandView: View {
     @State var selectedPage: Int = 0
+    @StateObject private var viewModel = FTRecordViewModel()
 
     var body: some View {
         TabView(selection: $selectedPage) {
-            FTRecordView()
-            FTRecordingsView()
+            FTRecordView(viewModel: viewModel)
+            if viewModel.isRecording {
+                Text("Recording in progress")
+            } else {
+                FTRecordingsView()
+            }
         }.watchOS10OnlyVerticalTabStyle()
     }
 }

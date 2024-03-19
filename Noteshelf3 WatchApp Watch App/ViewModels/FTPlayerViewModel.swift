@@ -25,6 +25,10 @@ class FTPlayerViewModel: NSObject, ObservableObject {
         self.playDurationStr = self.recording.duration.formatSecondsToString()
     }
 
+    func updateRecording(_ recording: FTWatchRecording) {
+        self.playDurationStr = self.recording.duration.formatSecondsToString()
+    }
+
     func handlePlayTapAction() {
         guard let path = recording.filePath else {
             return

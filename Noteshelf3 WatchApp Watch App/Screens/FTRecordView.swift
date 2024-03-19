@@ -15,24 +15,21 @@ private let gradient = AngularGradient(gradient: Gradient(colors:
                                                                    gradientColor.opacity(1.0)]), center: .center, angle: .degrees(0))
 
 struct FTRecordView: View {
-    @StateObject private var viewModel = FTRecordViewModel()
-    @State private var isRecording: Bool = false
+    @ObservedObject var viewModel: FTRecordViewModel
 
     var body: some View {
-        if !isRecording {
-            FTStartRecordView(isRecording: $isRecording)
+        if !viewModel.isRecording {
+            FTStartRecordView()
                 .environmentObject(viewModel)
         } else {
-            FTStopRecordView(isRecording: $isRecording)
+            FTStopRecordView()
                 .environmentObject(viewModel)
         }
     }
 }
 
 struct FTStartRecordView: View {
-    @Binding var isRecording: Bool
     @EnvironmentObject var viewModel: FTRecordViewModel
-
     private let borderWidth: CGFloat = 4.0
 
     var body: some View {
@@ -52,13 +49,20 @@ struct FTStartRecordView: View {
         }
         .onTapGesture {
             self.viewModel.handleRecordTapAction()
-            self.isRecording = true
+        }
+        .alert(isPresented:self.viewModel.showCustomAlert) {
+            Alert(
+                title: Text(""),
+                message: Text("Allow microphone access to continue..."),
+                dismissButton: .default(Text(NSLocalizedString("OK", comment: "OK"))) {
+                    self.viewModel.showPermissionAlert = false
+                }
+            )
         }
     }
 }
 
 struct FTStopRecordView: View {
-    @Binding var isRecording: Bool
     @State private var angle: Double = 0.0
     @EnvironmentObject var viewModel: FTRecordViewModel
 
@@ -81,7 +85,6 @@ struct FTStopRecordView: View {
 
             Button(action: {
                 self.viewModel.handleRecordTapAction()
-                self.isRecording = false
             }) {
                 Text("Stop")
                     .padding()
@@ -124,5 +127,5 @@ struct SemiCircleShape: Shape {
 }
 
 #Preview {
-    FTRecordView()
+    FTRecordView(viewModel: FTRecordViewModel())
 }

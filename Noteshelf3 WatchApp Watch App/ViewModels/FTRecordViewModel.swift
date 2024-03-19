@@ -8,6 +8,7 @@
 
 import AVFAudio
 import WatchKit
+import SwiftUI
 
 class FTRecordViewModel: NSObject, ObservableObject {
     private let recordingSession: AVAudioSession = AVAudioSession.sharedInstance()
@@ -17,6 +18,19 @@ class FTRecordViewModel: NSObject, ObservableObject {
     private var recordingDuration:Int = 0
     
     @Published var durationStr: String = "00:00"
+    @Published var showPermissionAlert = false
+    @Published var isRecording = false
+
+    var showCustomAlert: Binding<Bool> {
+        Binding<Bool>(
+            get: {
+                self.showPermissionAlert
+            },
+            set: { newValue in
+                self.showPermissionAlert = newValue
+            }
+        )
+    }
 
     override init() {
         super.init()
@@ -33,31 +47,9 @@ class FTRecordViewModel: NSObject, ObservableObject {
         self.recordingSession.requestRecordPermission() { [unowned self] allowed in
             DispatchQueue.main.async {
                 if allowed {
-                    if (self.audioService == nil) {
-                        self.audioService = FTAudioService()
-                        self.audioService!.delegate = self
-                    }
-
-                    if self.audioActivity == nil ||
-                        self.audioActivity?.audioServiceStatus == FTAudioServiceStatus.none {
-                        let newGUID = FTWatchRecordedAudio.getGUID()
-                        let tempRecordingURL = FTWatchRecordedAudio.temporaryRecordingURL(withGUID: newGUID)
-                        self.audioActivity = self.audioService?.recordAudio(atURL: tempRecordingURL)
-                        self.addObservers()
-                    } else if (self.audioActivity != nil &&
-                               self.audioActivity?.audioServiceStatus == .recording) {
-                        self.audioService?.stopRecording()
-                    } else if(self.audioActivity?.audioServiceStatus == .recordingPaused) {
-                        self.audioService?.pauseOrContinueRecording()
-                    }
+                    self.handleRecording()
                 } else {
-                    // to show alert
-//                    let okAction = WKAlertAction(title: NSLocalizedString("OK", comment: "OK"), style: .default) {
-//                    }
-//                    self.presentAlert(withTitle: "",
-//                                      message:NSLocalizedString("MicrophoneAccessInfo", comment: "Allow microphone access...") ,
-//                                      preferredStyle: WKAlertControllerStyle.alert,
-//                                      actions: [okAction])
+                    self.showPermissionAlert = true
                 }
             }
         }
@@ -82,9 +74,33 @@ class FTRecordViewModel: NSObject, ObservableObject {
 }
 
 private extension FTRecordViewModel {
+    func handleRecording() {
+        if (self.audioService == nil) {
+            self.audioService = FTAudioService()
+            self.audioService!.delegate = self
+        }
+
+        if self.audioActivity == nil ||
+            self.audioActivity?.audioServiceStatus == FTAudioServiceStatus.none {
+            let newGUID = FTWatchRecordedAudio.getGUID()
+            let tempRecordingURL = FTWatchRecordedAudio.temporaryRecordingURL(withGUID: newGUID)
+            self.audioActivity = self.audioService?.recordAudio(atURL: tempRecordingURL)
+            self.addObservers()
+            self.isRecording = true
+        } else if (self.audioActivity != nil &&
+                   self.audioActivity?.audioServiceStatus == .recording) {
+            self.audioService?.stopRecording()
+            self.isRecording = false
+            self.recordingDuration = 0
+            self.durationStr = "00:00"
+        }
+    }
+
     func updateRecordingTime() {
-        self.recordingDuration = Int(self.audioActivity!.currentTime)
-        self.durationStr = FTWatchUtils.timeFormatted(totalSeconds: UInt(self.recordingDuration))
+        DispatchQueue.main.async {
+            self.recordingDuration = Int(self.audioActivity!.currentTime)
+            self.durationStr = FTWatchUtils.timeFormatted(totalSeconds: UInt(self.recordingDuration))
+        }
     }
 
      func addObservers() {
