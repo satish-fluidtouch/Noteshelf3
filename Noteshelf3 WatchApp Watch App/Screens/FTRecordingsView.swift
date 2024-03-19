@@ -19,30 +19,15 @@ struct FTRecordingsView: View {
                 Text("No Recordings!")
                     .font(Font.system(size: 18))
             } else {
-                VStack {
-                    HStack {
-                        Text(viewModel.title)
-                            .font(Font.system(size: 14))
-                            .padding(.leading, 12)
-                        Spacer()
-                    }
-
-                    List {
-                        ForEach(viewModel.recordings, id: \.GUID) { recording in
-                            recordingView(for: recording)
-                                .contentShape(Rectangle())
-                                .onTapGesture {
-                                    viewModel.selectedRecording = recording
-                                    isShowingPlayerView = true
-                                }
+                ZStack {
+                    // TODO: Narayana - to be removed once minimum deployment target set to 9.0
+                    if #available(watchOS 9.0, *) {
+                        NavigationStack {
+                            listView
                         }
-                        .onDelete(perform: deleteItem)
-                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                            Button {
-                            } label: {
-                                Image(systemName: "trash")
-                            }
-                            .tint(.red)
+                    } else {
+                        NavigationView {
+                            listView
                         }
                     }
                 }
@@ -62,9 +47,16 @@ struct FTRecordingsView: View {
         }
     }
 
-    private func deleteItem(at offsets: IndexSet) {
-        if let recordingToDelete = offsets.map({ self.viewModel.recordings[$0] }).first {
-            self.viewModel.deleteRecording(recordingToDelete)
+    private var listView: some View {
+        List {
+            ForEach(viewModel.recordings, id: \.GUID) { recording in
+                recordingView(for: recording)
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        viewModel.selectedRecording = recording
+                        isShowingPlayerView = true
+                    }
+            }
         }
     }
 

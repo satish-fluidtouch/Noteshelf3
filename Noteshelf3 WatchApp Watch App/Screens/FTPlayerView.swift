@@ -22,8 +22,11 @@ struct FTPlayerView: View {
         VStack {
             Spacer()
 
-            Text(self.viewModel.playDurationStr)
             Text(recording.audioTitle)
+                .font(Font.system(size: 17))
+                .bold()
+            Text(self.viewModel.playDurationStr)
+                .font(Font.system(size: 17))
 
             Spacer()
 
@@ -145,7 +148,7 @@ struct FTPlayerView: View {
                         self.viewModel.handlePlayTapAction()
                     }
                 }) {
-                    Image(systemName: viewModel.isPlaying ? "pause" : "play")
+                    Image(systemName: viewModel.isPlaying ? "pause" : "play.fill")
                         .resizable()
                         .frame(width: 18, height: 20)
                         .foregroundColor(.white)

@@ -22,6 +22,7 @@ struct FTRecordingEditView: View {
     var body: some View {
         VStack {
             Spacer()
+                .frame(height: 16.0)
 
             ZStack {
                 HStack {
@@ -69,9 +70,8 @@ struct FTRecordingDeleteView: View {
     @Binding var isShowingPlayerView: Bool
 
     var body: some View {
-        VStack {
+        VStack(spacing: 16.0) {
             Text(viewModel.deleteConfirmInfo)
-            Spacer()
             Button(action: {
                 self.viewModel.deleteRecording { _ in
                     self.isShowingPlayerView = false

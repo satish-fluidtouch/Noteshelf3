@@ -18,10 +18,6 @@ class FTRecordingsViewModel: ObservableObject {
    @Published var recordings: [FTWatchRecording] = []
     var selectedRecording: FTWatchRecording?
 
-    var title: String {
-        "Recordings"
-    }
-
     func reloadRecordings() {
         FTWatchRecordingProvider.shared.allRecordings({ [weak self] (allRecordings) in
             guard let self else { return }
