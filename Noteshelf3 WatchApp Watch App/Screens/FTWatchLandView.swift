@@ -15,11 +15,8 @@ struct FTWatchLandView: View {
     var body: some View {
         TabView(selection: $selectedPage) {
             FTRecordView(viewModel: viewModel)
-            if viewModel.isRecording {
-                Text("Recording in progress")
-            } else {
-                FTRecordingsView()
-            }
+            FTRecordingsView()
+                .environmentObject(viewModel)
         }.watchOS10OnlyVerticalTabStyle()
     }
 }

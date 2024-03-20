@@ -11,20 +11,24 @@ import SwiftUI
 private let gradientColor = Color(red: 224/255, green: 110/255, blue: 81/255)
 private let gradient = AngularGradient(gradient: Gradient(colors:
                                                                    [gradientColor.opacity(0.1),
-                                                                   gradientColor.opacity(0.5),
+                                                                    gradientColor.opacity(0.4),
+                                                                   gradientColor.opacity(0.7),
                                                                    gradientColor.opacity(1.0)]), center: .center, angle: .degrees(0))
 
 struct FTRecordView: View {
     @ObservedObject var viewModel: FTRecordViewModel
 
     var body: some View {
-        if !viewModel.isRecording {
+        ZStack {
             FTStartRecordView()
                 .environmentObject(viewModel)
-        } else {
+                .opacity(viewModel.isRecording ? 0.0 : 1.0)
+                .animation(.easeInOut(duration: 0.4), value: viewModel.isRecording)
             FTStopRecordView()
                 .environmentObject(viewModel)
-        }
+                .opacity(viewModel.isRecording ? 1.0 : 0.0)
+                .animation(.easeInOut(duration: 0.4), value: viewModel.isRecording)
+         }
     }
 }
 
@@ -35,17 +39,12 @@ struct FTStartRecordView: View {
     var body: some View {
         ZStack {
             Circle()
-                .fill(gradientColor.opacity(0.2))
-                .frame(width: 118.0)
+                .fill(gradientColor.opacity(0.3))
+                .frame(width: 134)
 
             Circle()
                 .fill(gradientColor)
-                .frame(width: 74)
-
-            Circle()
-                .stroke(style: StrokeStyle(lineWidth: borderWidth))
-                .foregroundStyle(gradientColor.opacity(0.3))
-                .frame(width: 122)
+                .frame(width: 82)
         }
         .onTapGesture {
             self.viewModel.handleRecordTapAction()
@@ -69,18 +68,23 @@ struct FTStopRecordView: View {
     private let borderWidth: CGFloat = 4.0
 
     var body: some View {
-        VStack(spacing: 16.0) {
+        VStack(spacing: 22.0) {
             ZStack {
+                Circle()
+                    .strokeBorder(.white.opacity(0.2), lineWidth: borderWidth)
+                    .background(Circle().foregroundColor(gradientColor.opacity(0.3)))
+                    .frame(width: 96)
+                    .overlay {
+                        SemiCircleShape(radius: 92/2)
+                            .stroke(gradient, style: StrokeStyle(lineWidth: borderWidth))
+                            .frame(width: 92)
+                            .rotationEffect(.degrees(angle))
+                    }
+                    .rotationEffect(.degrees(-90))
+
                 Text(viewModel.durationStr)
                     .foregroundColor(.white)
                     .font(Font.system(size: 30.0))
-
-                Circle()
-                    .fill(gradientColor.opacity(0.2))
-                    .frame(width: 96)
-
-                outerCircle
-                    .frame(width: 100)
             }
 
             Button(action: {
@@ -98,23 +102,10 @@ struct FTStopRecordView: View {
             }
         }
     }
-
-    var outerCircle: some View {
-        Circle()
-            .stroke(style: StrokeStyle(lineWidth: borderWidth))
-            .foregroundStyle(gradientColor.opacity(0.3))
-            .overlay {
-                SemiCircleShape(radius: 100/2, cornerRadius: 10)
-                    .stroke(gradient, style: StrokeStyle(lineWidth: borderWidth, lineCap: .butt))
-                    .rotationEffect(.degrees(angle))
-            }
-            .rotationEffect(.degrees(-90))
-    }
 }
 
 struct SemiCircleShape: Shape {
     let radius: CGFloat
-    let cornerRadius: CGFloat
 
     func path(in rect: CGRect) -> Path {
         var path = Path()
