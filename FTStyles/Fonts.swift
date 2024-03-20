@@ -37,6 +37,11 @@ extension View {
         let ftFont = Font.system(size: UIFontMetrics.default.scaledValue(for: size), weight: weight)
         return self.font(ftFont)
     }
+    
+    public func appFixedFont(for weight: Font.Weight, with size: CGFloat) -> some View {
+        let ftFont = Font.system(size: size, weight: weight)
+        return self.font(ftFont)
+    }
 }
 
 extension Text {
@@ -68,6 +73,10 @@ extension Font {
 
     public static func clearFaceFont(for type: ClearFace, with size: CGFloat) -> Font {
         return Font.custom(type.rawValue, size: size)
+    }
+    
+    public static func clearFaceFixedFont(for type: ClearFace, with size: CGFloat) -> Font {
+        return Font.custom(type.rawValue, fixedSize: size)
     }
 }
 
