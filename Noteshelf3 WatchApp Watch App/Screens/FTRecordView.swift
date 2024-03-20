@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-private let gradientColor = Color(red: 224/255, green: 110/255, blue: 81/255)
+private let gradientColor = Color(red: 255/255, green: 113/255, blue: 83/255)
 private let gradient = AngularGradient(gradient: Gradient(colors:
                                                                    [gradientColor.opacity(0.1),
                                                                     gradientColor.opacity(0.4),
@@ -37,15 +37,19 @@ struct FTStartRecordView: View {
     private let borderWidth: CGFloat = 4.0
 
     var body: some View {
-        ZStack {
-            Circle()
-                .fill(gradientColor.opacity(0.3))
-                .frame(width: 134)
+        GeometryReader { proxy in
+            ZStack {
+                Circle()
+                    .fill(gradientColor.opacity(0.3))
+                    .frame(width: proxy.size.width * 0.75)
 
-            Circle()
-                .fill(gradientColor)
-                .frame(width: 82)
-        }
+                Circle()
+                    .fill(gradientColor)
+                    .frame(width: proxy.size.width * 0.45)
+            }
+            .frame(width: proxy.size.width, height: proxy.size.height)
+        }.ignoresSafeArea()
+        
         .onTapGesture {
             self.viewModel.handleRecordTapAction()
         }
