@@ -44,6 +44,11 @@ extension Text {
         let ftFont = Font.system(size: UIFontMetrics.default.scaledValue(for: size), weight: weight)
         return self.font(ftFont)
     }
+    
+    public func appFixedFont(for weight: Font.Weight, with size: CGFloat) -> Text {
+        let ftFont = Font.system(size: size, weight: weight)
+        return self.font(ftFont)
+    }
 }
 
 extension Font {

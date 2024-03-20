@@ -13,6 +13,7 @@ struct FTShelfHomeView: FTShelfBaseView {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @EnvironmentObject var viewModel: FTShelfViewModel
     @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
     let supportedDropTypes = FTDragAndDropHelper.supportedTypesForDrop()
 
@@ -28,7 +29,7 @@ struct FTShelfHomeView: FTShelfBaseView {
                         if viewModel.shouldShowGetStartedInfo{
                             FTShelfGetStartedDescription()
                         }
-                        if viewModel.mode == .normal, (viewModel.shouldShowGetStartedInfo || geometry.size.width > 450) {
+                        if viewModel.mode == .normal, (viewModel.shouldShowGetStartedInfo || geometry.size.width > 450), showTopSectionForLargerText() {
                             FTShelfTopSectionView()
                                 .frame(height: showMinHeight(geometrySize: geometry.size.width))
                                 .padding(.horizontal,gridHorizontalPadding)
@@ -140,5 +141,13 @@ struct FTShelfHomeView: FTShelfBaseView {
 
     private func showSeeAllOption(shelfItemsCount:Int) -> Bool {
         viewModel.shelfItems.count > shelfItemsCount
+    }
+    
+    func showTopSectionForLargerText() -> Bool {
+        if !viewModel.shelfItems.isEmpty {
+            let sizes:[DynamicTypeSize] = [.accessibility3, .accessibility4, .accessibility5]
+            return !sizes.contains(dynamicTypeSize)
+        }
+       return true
     }
 }

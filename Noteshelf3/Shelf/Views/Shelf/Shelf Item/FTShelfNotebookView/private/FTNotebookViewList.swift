@@ -27,32 +27,31 @@ struct FTNotebookViewList : View {
     @Binding var isAnyNBActionPopoverShown: Bool
 
     var body: some View {
-//        contentView
-//            .isHidden(true)
-        FTShelfItemContextMenuPreview(preview: {
-            contentView
-            .padding(.horizontal, listGridViewHorizontalPadding)
-            .overlay(content: {
-                if(shelfViewModel.highlightItem == shelfItem) {
-                    FTShelfItemDropOverlayView()
-                        .cornerRadius(10, corners: .allCorners)
-                }
-            })
-            .ignoresSafeArea()
-
-        }, notebookShape: {
-            return FTPreviewShape(raidus: 10);
-        }, onAppearActon: {
-            shelfMenuOverlayInfo.isMenuShown = true;
-            hideShadow = true
-            // Track event
-            track(EventName.shelf_book_longpress, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
-        }, onDisappearActon: {
-            if !isAnyNBActionPopoverShown {
-                shelfMenuOverlayInfo.isMenuShown = false;
-                hideShadow = false
-            }
-        }, shelfItem: shelfItem)
+        contentView
+//        FTShelfItemContextMenuPreview(preview: {
+//            contentView
+//            .padding(.horizontal, listGridViewHorizontalPadding)
+//            .overlay(content: {
+//                if(shelfViewModel.highlightItem == shelfItem) {
+//                    FTShelfItemDropOverlayView()
+//                        .cornerRadius(10, corners: .allCorners)
+//                }
+//            })
+//            .ignoresSafeArea()
+//
+//        }, notebookShape: {
+//            return FTPreviewShape(raidus: 10);
+//        }, onAppearActon: {
+//            shelfMenuOverlayInfo.isMenuShown = true;
+//            hideShadow = true
+//            // Track event
+//            track(EventName.shelf_book_longpress, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
+//        }, onDisappearActon: {
+//            if !isAnyNBActionPopoverShown {
+//                shelfMenuOverlayInfo.isMenuShown = false;
+//                hideShadow = false
+//            }
+//        }, shelfItem: shelfItem)
     }
 
     @ViewBuilder

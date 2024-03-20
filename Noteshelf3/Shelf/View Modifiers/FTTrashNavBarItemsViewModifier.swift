@@ -13,6 +13,7 @@ struct FTTrashNavBarItemsViewModifier: ViewModifier {
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
     @State private var toolbarID: String = UUID().uuidString
     func body(content: Content) -> some View {
             content
@@ -27,7 +28,7 @@ struct FTTrashNavBarItemsViewModifier: ViewModifier {
 
                         } label: {
                             Text(NSLocalizedString("shelf.emptyTrash", comment: "Empty Trash"))
-                                .appFont(for: .regular, with: 17)
+                                .appFixedFont(for: .regular, with: isLargerTextEnabled ? FTFontSize.largeSize : FTFontSize.regularSize)
                         }
                         .disabled(shelfViewModel.shelfItems.isEmpty)
                         .if(!shelfViewModel.shelfItems.isEmpty, transform: { view in
@@ -40,7 +41,7 @@ struct FTTrashNavBarItemsViewModifier: ViewModifier {
                             shelfViewModel.mode = .selection
                         } label: {
                             Text(NSLocalizedString("shelf.navBar.select", comment: "Select"))
-                                .appFont(for: .regular, with: 17)
+                                .appFixedFont(for: .regular, with: isLargerTextEnabled ? FTFontSize.largeSize : FTFontSize.regularSize)
                         }
                         .frame(height: 44)
                         .disabled(shelfViewModel.shelfItems.isEmpty)
@@ -61,7 +62,7 @@ struct FTTrashNavBarItemsViewModifier: ViewModifier {
                                 track(EventName.shelf_select_done_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
                             } label: {
                                 Text(NSLocalizedString("done", comment: "Done"))
-                                    .appFont(for: .regular, with: 17)
+                                    .appFixedFont(for: .regular, with: isLargerTextEnabled ? FTFontSize.largeSize : FTFontSize.regularSize)
                                     .foregroundColor(Color.appColor(.accent))
                             }
                             .frame(height: 44)
@@ -75,7 +76,7 @@ struct FTTrashNavBarItemsViewModifier: ViewModifier {
                                     track(EventName.shelf_select_selectnone_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
                                 } label: {
                                     Text(NSLocalizedString("shelf.navBar.selectNone", comment: "Select None"))
-                                        .appFont(for: .regular, with: 17)
+                                        .appFixedFont(for: .regular, with: isLargerTextEnabled ? FTFontSize.largeSize : FTFontSize.regularSize)
                                         .foregroundColor(Color.appColor(.accent))
                                 }
                                 .frame(height: 44)
@@ -86,7 +87,7 @@ struct FTTrashNavBarItemsViewModifier: ViewModifier {
                                     track(EventName.shelf_select_selectall_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
                                 } label: {
                                     Text(NSLocalizedString("shelf.navBar.selectAll", comment: "Select All"))
-                                        .appFont(for: .regular, with: 17)
+                                        .appFixedFont(for: .regular, with: isLargerTextEnabled ? FTFontSize.largeSize : FTFontSize.regularSize)
                                         .foregroundColor(Color.appColor(.accent))
                                 }
                                 .frame(height: 44)
@@ -101,4 +102,17 @@ struct FTTrashNavBarItemsViewModifier: ViewModifier {
                     toolbarID = UUID().uuidString
                 }
     }
+    
+    var isLargerTextEnabled : Bool {
+        let sizes: [DynamicTypeSize] = [.accessibility1, .accessibility2, .accessibility3, .accessibility4, .accessibility5]
+        return sizes.contains(dynamicTypeSize)
+    }
+}
+
+extension ViewModifier {
+    func isLargerTextEnabled(_ dynamicTypeSize: DynamicTypeSize) -> Bool {
+        let sizes: [DynamicTypeSize] = [.accessibility1, .accessibility2, .accessibility3, .accessibility4, .accessibility5]
+        return sizes.contains(dynamicTypeSize)
+    }
+
 }

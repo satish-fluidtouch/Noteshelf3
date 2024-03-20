@@ -11,7 +11,9 @@ struct FTShelfBottomBarMoreOptionsView: View {
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
     @EnvironmentObject var toolBarViewModel: FTShelfBottomToolbarViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
     @State private var orientation = UIDevice.current.orientation
+    var isLargeTextEnabled = false
 
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     var body: some View {
@@ -38,13 +40,13 @@ struct FTShelfBottomBarMoreOptionsView: View {
                     Label {
                         Text(option.displayTitle)
                             .fontWeight(.regular)
-                            .appFont(for: .regular, with: 15)
+                            .appFixedFont(for: .regular, with: isLargeTextEnabled ? FTFontSize.largeSize : FTFontSize.regularSize)
                             .foregroundColor(Color.black)
                     } icon: {
                         Image(icon: option.icon)
                             .frame(width: 16, height: 24, alignment: SwiftUI.Alignment.center)
                             .foregroundColor(Color.black)
-                            .font(Font.appFont(for: .regular , with: 15))
+                            .font(.appFixedFont(for: .regular, with: isLargeTextEnabled ? 22 : 15))
                     }
                 })
                 .disabled(!shelfViewModel.shouldSupportBottomBarOption(option))
@@ -56,14 +58,14 @@ struct FTShelfBottomBarMoreOptionsView: View {
                         .if(!shelfViewModel.disableBottomBarItems) { view in
                             view.foregroundColor(.appColor(.accent))
                         }
-                        .font(Font.appFont(for: .regular , with: 15))
+                        .font(.appFixedFont(for: .regular, with: isLargeTextEnabled ? 22 : 15))
                 }else {
                     HStack(alignment: .center,spacing: 0.0) {
                         Image(systemName: "ellipsis.circle")
-                            .frame(width: 44,height: 30,alignment: .center)
-                            .font(Font.appFont(for: .regular , with: 15))
+                            .frame(minWidth: 44,minHeight: 30,alignment: .center)
+                            .font(.appFixedFont(for: .regular, with: isLargeTextEnabled ? 22 : 15))
                         Text("more".localized)
-                            .appFont(for: .regular, with: 15)
+                            .appFixedFont(for: .regular, with: isLargeTextEnabled ? FTFontSize.largeSize : FTFontSize.regularSize)
                     }
                     .if(!shelfViewModel.disableBottomBarItems) { view in
                         view.foregroundColor(Color.appColor(.accent))

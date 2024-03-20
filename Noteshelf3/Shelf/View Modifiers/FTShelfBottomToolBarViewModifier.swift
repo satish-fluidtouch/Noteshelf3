@@ -64,7 +64,7 @@ struct FTShelfBottomToolBarViewModifier: ViewModifier {
 
                             Spacer()
 
-                            FTShelfBottomBarMoreOptionsView()
+                            FTShelfBottomBarMoreOptionsView(isLargeTextEnabled: isLargerTextEnabled(dynamicTypeSize))
                                 .environmentObject(shelfViewModel)
                                 .disabled(shelfViewModel.disableBottomBarItems)
                                 .onTapGesture {
@@ -116,15 +116,15 @@ struct FTShelfBottomToolBarViewModifier: ViewModifier {
         return  HStack(alignment: .center, spacing:0.0) {
             if self.toShowCompactModeView() {
                 Image(icon: icon)
-                    .font(Font.appFont(for: .regular , with: 15))
+                    .font(.appFixedFont(for: .regular, with: isLargerTextEnabled(dynamicTypeSize) ? 22 : 15))
                     .frame(width: 44,height: 30,alignment: .center)
 
-            }else {
+            } else {
                 Image(icon: icon)
-                    .font(Font.appFont(for: .regular , with: 15))
+                    .font(.appFixedFont(for: .regular, with: isLargerTextEnabled(dynamicTypeSize) ? 22 : 15))
                     .frame(width: 44,height: 30,alignment: .center)
                 Text(title)
-                    .appFont(for: .regular, with: 17)
+                    .appFixedFont(for: .regular, with: isLargerTextEnabled(dynamicTypeSize) ? FTFontSize.largeSize : FTFontSize.regularSize)
             }
         }
     }
