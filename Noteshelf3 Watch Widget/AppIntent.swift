@@ -10,10 +10,16 @@ import WidgetKit
 import AppIntents
 
 struct ConfigurationAppIntent: WidgetConfigurationIntent {
+//struct ConfigurationAppIntent: AppIntent {
     static var title: LocalizedStringResource = "Configuration"
     static var description = IntentDescription("This is an example widget.")
 
     // An example configurable parameter.
     @Parameter(title: "Favorite Emoji", default: "😃")
     var favoriteEmoji: String
+
+//    func perform() async throws -> some IntentResult {
+//        print("zzzz - ConfigurationAppIntent ")
+//        return .result()
+//    }
 }
