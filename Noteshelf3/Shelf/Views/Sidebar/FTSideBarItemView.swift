@@ -50,7 +50,7 @@ struct SideBarItemView : View {
                     .font(.appFont(for: .regular, with: 17))
             } icon: {
                 Image(icon: item.icon)
-//                    .frame(width: 24, height: 24, alignment: SwiftUI.Alignment.center)
+                    .frame(maxWidth: 36, maxHeight: 36, alignment: SwiftUI.Alignment.center)
                     .padding(.leading,8)
                     .padding(.trailing, 4)
                     .font(Font.appFixedFont(for: .regular, with: isLargerTextEnabled(for: dynamicTypeSize) ? 26 : 20))
