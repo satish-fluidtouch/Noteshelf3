@@ -76,6 +76,7 @@ struct FTGroupItemView: View {
                     .foregroundColor(.primary)
                     .fixedSize(horizontal: false, vertical: false)
                     .lineLimit(2)
+                    .multilineTextAlignment(.center)
                     .padding(.top,2)
             }
             HStack(alignment: .center) {
