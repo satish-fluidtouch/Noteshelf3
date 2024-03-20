@@ -85,7 +85,6 @@ private class FTDocumentPropertiesReaderOperation: Operation
         self.taskExecuting = true;
         let docProperties = FTDocumentProperties();
         FTCLSLog("NFC - UUID reader: \(self.URL.title)");
-//        let metaURL = self.URL.appendingPathComponent("\(METADATA_FOLDER_NAME)/\(PROPERTIES_PLIST)");
         var error : NSError?;
         NSFileCoordinator.init().coordinate(readingItemAt: self.URL
                                             ,options:.withoutChanges
