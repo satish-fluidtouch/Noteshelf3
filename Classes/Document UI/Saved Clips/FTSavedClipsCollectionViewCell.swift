@@ -23,11 +23,7 @@ class FTSavedClipsCollectionViewCell: UICollectionViewCell {
         self.contentView.layer.borderWidth = 1.0
 
         if let image = clip.image {
-            if thumbnail.bounds.width < image.size.width || thumbnail.bounds.height < image.size.height {
-                self.thumbnail.contentMode = .scaleAspectFit
-            } else {
-                self.thumbnail.contentMode = .center
-            }
+            updateContentMode()
             self.thumbnail.image = image
         }
 
@@ -43,6 +39,16 @@ class FTSavedClipsCollectionViewCell: UICollectionViewCell {
     @IBAction func closeAction(_ sender: Any) {
         if let clip {
             deleteSavedClip?(clip)
+        }
+    }
+    
+    func updateContentMode() {
+        if let clip, let image = clip.image {
+            if thumbnail.bounds.width < image.size.width || thumbnail.bounds.height < image.size.height {
+                self.thumbnail.contentMode = .scaleAspectFit
+            } else {
+                self.thumbnail.contentMode = .center
+            }
         }
     }
 }

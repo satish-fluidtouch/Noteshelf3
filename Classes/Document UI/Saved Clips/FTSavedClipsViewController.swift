@@ -117,6 +117,7 @@ class FTSavedClipsViewController: UIViewController {
         categoryTitleTextField.isHidden = true
         self.segmentedControl.isHidden = false
         self.collectionView.reloadData()
+        segmentedControl.textCornerRadius = 10.0
     }
 
     func removeItem(clip: FTSavedClipModel) {
@@ -212,6 +213,12 @@ extension FTSavedClipsViewController: UICollectionViewDelegate, UICollectionView
             }
         }
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let cell = cell as? FTSavedClipsCollectionViewCell {
+            cell.updateContentMode()
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, emptyCellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
