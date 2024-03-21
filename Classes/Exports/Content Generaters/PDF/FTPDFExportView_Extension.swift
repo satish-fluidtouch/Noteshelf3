@@ -421,8 +421,8 @@ extension FTPDFExportView {
             context.restoreGState()
     }
 
-    static func renderFooterInfo(image: UIImage, screenScale: CGFloat, title: String, currentPage: Int, totalPages: Int, textColor: UIColor = .black) -> UIImage? {
-        guard let ftcontext = FTImageContext.imageContext(image.size, scale: screenScale) else {
+    static func renderFooterInfo(image: UIImage, title: String, currentPage: Int, totalPages: Int, textColor: UIColor = .black) -> UIImage? {
+        guard let ftcontext = FTImageContext.imageContext(image.size, scale: image.scale) else {
             return image;
         }
         let context = ftcontext.cgContext;
