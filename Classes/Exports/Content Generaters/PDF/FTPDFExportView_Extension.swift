@@ -317,16 +317,17 @@ extension FTPDFExportView {
     
     fileprivate static func resizeImage(image : UIImage?, toSize size : CGSize,screenScale : CGFloat) -> UIImage?
     {
-        UIGraphicsBeginImageContextWithOptions(size, false, screenScale);
-        let context = UIGraphicsGetCurrentContext();
-        context?.interpolationQuality = CGInterpolationQuality.high;
+        guard let ftcontext = FTImageContext.imageContext(size, scale: screenScale) else {
+            return image;
+        }
+        let context = ftcontext.cgContext;
+        context.interpolationQuality = CGInterpolationQuality.high;
         
         let flipVertical = CGAffineTransform.init(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: size.height);
-        context?.concatenate(flipVertical);
+        context.concatenate(flipVertical);
         
-        context?.draw(image!.cgImage!, in: CGRect.init(origin: CGPoint.zero, size: size));
-        let newImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
+        context.draw(image!.cgImage!, in: CGRect.init(origin: CGPoint.zero, size: size));
+        let newImage = ftcontext.uiImage()
         return newImage;
     }
 }
@@ -421,20 +422,20 @@ extension FTPDFExportView {
     }
 
     static func renderFooterInfo(image: UIImage, screenScale: CGFloat, title: String, currentPage: Int, totalPages: Int, textColor: UIColor = .black) -> UIImage? {
-        UIGraphicsBeginImageContextWithOptions(image.size, false, screenScale)
-        if let context = UIGraphicsGetCurrentContext() {
-            context.interpolationQuality = CGInterpolationQuality.high;
-            image.draw(in: CGRect(origin:.zero, size: image.size))
-            renderFooterInfo(context: context,
-                             isFlipped: false,
-                             scale: 1,
-                             pageSize: image.size,
-                             title: title,
-                             currentPage: currentPage,
-                             totalPages: totalPages, textColor: textColor)
+        guard let ftcontext = FTImageContext.imageContext(image.size, scale: screenScale) else {
+            return image;
         }
-        let imageToReturn = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext()
+        let context = ftcontext.cgContext;
+        context.interpolationQuality = CGInterpolationQuality.high;
+        image.draw(in: CGRect(origin:.zero, size: image.size))
+        renderFooterInfo(context: context,
+                         isFlipped: false,
+                         scale: 1,
+                         pageSize: image.size,
+                         title: title,
+                         currentPage: currentPage,
+                         totalPages: totalPages, textColor: textColor)
+        let imageToReturn = ftcontext.uiImage();
         return imageToReturn
     }
 

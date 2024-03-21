@@ -9,6 +9,7 @@
 import Combine
 import SwiftUI
 import UIKit
+import FTCommon
 
 extension Bundle {
     func decode<T: Decodable>(_ type: T.Type, from file: String) -> T {
@@ -160,13 +161,12 @@ class FTEmojiesManager: FTEmojiesManagerProtocol {
     }
 
     func image(from view: UIView?) -> UIImage? {
-        UIGraphicsBeginImageContextWithOptions(view?.bounds.size ?? CGSize.zero, view?.isOpaque ?? false, 0.0)
-        if let context = UIGraphicsGetCurrentContext() {
-            view?.layer.render(in: context)
+        guard let _view = view,let context = FTImageContext.imageContext(_view.bounds.size) else {
+            return nil;
         }
-        let img = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return img
+        _view.layer.render(in: context.cgContext);
+        let image = context.uiImage();
+        return image
     }
 
     // Migrate old recent data to New
@@ -181,14 +181,7 @@ class FTEmojiesManager: FTEmojiesManagerProtocol {
         }
         return []
     }
-    
-//  private func addEmoji(toRecent emoji: String?) {
-//        var recentEmoji = UserDefaults.standard.array(forKey: "RECENT_EMOJI") ?? []
-//        recentEmoji.insert(emoji , at: 0)
-//        UserDefaults.standard.set(recentEmoji as! NSArray, forKey: "RECENT_EMOJI")
-//        UserDefaults.standard.synchronize()
-//    }
-    
+        
    private func recentEmoji() -> [AnyHashable]? {
         return UserDefaults.standard.array(forKey: "RECENT_EMOJI") as? [AnyHashable]
     }

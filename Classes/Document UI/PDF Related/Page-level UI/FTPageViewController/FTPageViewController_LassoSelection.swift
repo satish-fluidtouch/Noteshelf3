@@ -146,13 +146,12 @@ extension FTPageViewController
                                             screenScale: UIScreen.main.scale,
                                             withAnnotations: selectedAnnotations) {
             //Crop the image to the final rect and render the image.
-            UIGraphicsBeginImageContextWithOptions(integralRect.size, false, 0);
-            let context = UIGraphicsGetCurrentContext();
+            let ftcontext = FTImageContext.imageContext(integralRect.size, scale: 0);
+            let context = ftcontext?.cgContext;
             context?.translateBy(x: -integralRect.origin.x, y: -integralRect.origin.y);
             context?.scaleBy(x: scale, y: scale);
             img.draw(in: CGRect.init(origin: CGPoint.zero, size: img.size))
-            snapshot = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
+            snapshot = ftcontext?.uiImage()
         }
         
         rect = finalRect;
@@ -727,13 +726,12 @@ private extension FTPageViewController
         var useAlternateApproach = viewMaxSize > maxScreenSize;
         
         if !useAlternateApproach {
-            UIGraphicsBeginImageContextWithOptions(visibleRect.size, true, 0);
+            let ftContext = FTImageContext.imageContext(visibleRect.size, scale: 0);
             var screenRect = contentHolderView.bounds;
             screenRect.origin.x -= visibleRect.origin.x;
             screenRect.origin.y -= visibleRect.origin.y;
             let success = contentHolderView.drawHierarchy(in: screenRect, afterScreenUpdates: true);
-            snapshot = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
+            snapshot = ftContext?.uiImage();
             useAlternateApproach = !success;
         }
         
