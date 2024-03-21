@@ -47,6 +47,7 @@ class FTiCloudQueryObserver: FTQueryListenerProtocol {
         #if DEBUG
             //print("☁️ Query Started");
         #endif
+        FTCLSLog("Provider -Initial Gather Started");
         NotificationCenter.default.addObserver(self, selector: #selector(FTiCloudQueryObserver.processiCloudFilesForInitialGathering(_:)), name: NSNotification.Name.NSMetadataQueryDidFinishGathering, object: nil);
         self.query?.start();
     }
@@ -77,6 +78,7 @@ class FTiCloudQueryObserver: FTQueryListenerProtocol {
 
     // MARK: - Notifications
     @objc fileprivate func processiCloudFilesForInitialGathering(_ notification: Notification) {
+        FTCLSLog("Provider -Initial Gather Ended");
         self.disableUpdates();
 
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.NSMetadataQueryDidFinishGathering, object: nil);

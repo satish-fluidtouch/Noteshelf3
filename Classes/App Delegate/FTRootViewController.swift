@@ -61,6 +61,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         self.view.addSubview(self.contentView);
 
         if(self.isFirstTime) {
+            FTCLSLog("Launch Screen Added");
             let launchInstanceStoryboard = UIStoryboard(name: "Launch Screen", bundle: nil);
             let viewController = launchInstanceStoryboard.instantiateInitialViewController();
             self.addChild(viewController!);
@@ -227,9 +228,13 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         if(UserDefaults.standard.bool(forKey: WelcomeScreenViewed)
            || (!UserDefaults.standard.bool(forKey: WelcomeScreenViewed)
                && UserDefaults.standard.double(forKey: WelcomeScreenReminderTime) > 0)) {
+            FTCLSLog("Update Provider - Start");
+            self.scheduleLaunchWaitError()
             self.updateProvider({
-                    FTBetaAlertHandler.showiOS13BetaAlertIfNeeded(onViewController: self);
-                    FTOneDriveAlertHandler.showOneDriveAuthenticationAlertIfNeeded(self)
+                self.cancelLaunchWaitError()
+                FTCLSLog("Update Provider - End");
+                FTBetaAlertHandler.showiOS13BetaAlertIfNeeded(onViewController: self);
+                FTOneDriveAlertHandler.showOneDriveAuthenticationAlertIfNeeded(self)
             });
         }
     }
@@ -246,26 +251,28 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         FTNoteshelfDocumentProvider.shared.updateProviderIfRequired { isUpdated in
             if(isUpdated || nil == self.rootContentViewController) {
                 FTMobileCommunicationManager.shared.startWatchSession()
-                    let collectionName = self.lastSelectedCollectionName();
-                    self.shelfCollection(title: collectionName, pickDefault: false, onCompeltion: { collectionToShow in
-                        NotificationCenter.default.post(name: .didChangeUnfiledCategoryLocation, object: nil);
-                        if let isInNonCollectionMode = self.isInNonCollectionMode(),
-                           isInNonCollectionMode {
-                            let lastSelectedContentTypeRawString = (self.lastSelectedNonCollectionType() ?? "home")
-                            self.showShelf(isInNonCollectionMode: isInNonCollectionMode,
-                                           lastSelectedSideBarContentType: FTSideBarItemType(rawValue: lastSelectedContentTypeRawString) ?? .home,
-                                           lastSelectedTag: (self.lastSelectedTag() ?? ""))
-                        } else if collectionName == collectionToShow?.title, let collection = collectionToShow {
-                            self.showShelf(updateWithLastSelected: collection);
-                        } else {
-                            // if collection from user activity is nil we are showing "Home" now instead of "All Notes" collection
-                            self.showShelf(isInNonCollectionMode: true,
-                                           lastSelectedSideBarContentType: .home,
-                                           lastSelectedTag: "")
-                        }
-                        self.showIcloudMessage();
-                        onCompletion?(true);
-                    });
+                let collectionName = self.lastSelectedCollectionName();
+                FTCLSLog("Fetching Collection");
+                self.shelfCollection(title: collectionName, pickDefault: false, onCompeltion: { collectionToShow in
+                    FTCLSLog("Collection Fetched");
+                    NotificationCenter.default.post(name: .didChangeUnfiledCategoryLocation, object: nil);
+                    if let isInNonCollectionMode = self.isInNonCollectionMode(),
+                       isInNonCollectionMode {
+                        let lastSelectedContentTypeRawString = (self.lastSelectedNonCollectionType() ?? "home")
+                        self.showShelf(isInNonCollectionMode: isInNonCollectionMode,
+                                       lastSelectedSideBarContentType: FTSideBarItemType(rawValue: lastSelectedContentTypeRawString) ?? .home,
+                                       lastSelectedTag: (self.lastSelectedTag() ?? ""))
+                    } else if collectionName == collectionToShow?.title, let collection = collectionToShow {
+                        self.showShelf(updateWithLastSelected: collection);
+                    } else {
+                        // if collection from user activity is nil we are showing "Home" now instead of "All Notes" collection
+                        self.showShelf(isInNonCollectionMode: true,
+                                       lastSelectedSideBarContentType: .home,
+                                       lastSelectedTag: "")
+                    }
+                    self.showIcloudMessage();
+                    onCompletion?(true);
+                });
             }
             else {
                 onCompletion?(false);
@@ -377,13 +384,16 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 
     fileprivate func maintainPreviousLaunchStateIfNeeded() {
         if self.isFirstTime {
+            FTCLSLog("Maintaining Previous State");
             self.isFirstTime = false;
             self.setupSafeModeIfNeeded()
             if self.userActivity?.activityType == CSSearchableItemActionType,
                let shelfItemUUID = self.userActivity?.userInfo?[CSSearchableItemActivityIdentifier] as? String {
+                FTCLSLog("Opening Book from spotlight");
                 self.openShelfItem(spotLightHash: shelfItemUUID);
             }
             else if let document = self.lastOpenedDocument() {
+                FTCLSLog("Opening last opened book");
                 self.showLastOpenedDocument(relativePath: document, animate: false);
             }
             else if let isInNonCollectionMode = self.isInNonCollectionMode(),
@@ -404,6 +414,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                                isInNonCollectionMode: Bool = false,
                                lastSelectedSideBarContentType sideBarContentType: FTSideBarItemType = .home,
                                lastSelectedTag: String = "") {
+        FTCLSLog("Shelf UI Created");
         // Upodating created notebok count here, assuming, by this time provider will be ready and the books count is updated.
         FTIAPManager.shared.premiumUser.updateNoOfBooks(nil)
         //Instantiate Shelf view controller
@@ -1182,6 +1193,7 @@ extension FTRootViewController {
     fileprivate func removeLaunchScreen(_ animated : Bool)
     {
         if let launchscreen = self.launchScreenController {
+            FTCLSLog("Update Provider - Launch Screen Removed");
             if(!animated) {
                 launchscreen.view.removeFromSuperview();
                 launchscreen.removeFromParent();
@@ -1710,5 +1722,29 @@ extension FTRootViewController: SFSafariViewControllerDelegate {
 
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
         self.retryiCloudUnavaialbility()
+    }
+}
+
+private extension FTRootViewController {
+    @objc func log5SecondWaitError() {
+        FTLogError("App Launch Failed - 5")
+    }
+    @objc func log10SecondWaitError() {
+        FTLogError("App Launch Failed - 10")
+    }
+    @objc func log20SecondWaitError() {
+        FTLogError("App Launch Failed - 20")
+    }
+
+    func scheduleLaunchWaitError() {
+        self.perform(#selector(self.log5SecondWaitError), with: nil, afterDelay: 5);
+        self.perform(#selector(self.log10SecondWaitError), with: nil, afterDelay: 10);
+        self.perform(#selector(self.log20SecondWaitError), with: nil, afterDelay: 20);
+    }
+    
+    func cancelLaunchWaitError() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.log5SecondWaitError), object: nil);
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.log10SecondWaitError), object: nil);
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.log20SecondWaitError), object: nil);
     }
 }

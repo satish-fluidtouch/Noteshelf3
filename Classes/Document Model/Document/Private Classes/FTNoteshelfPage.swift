@@ -1249,21 +1249,25 @@ extension FTNoteshelfPage : FTCopying {
         //copy pdf file if needed
         let copiedPageTempateFileItem = newPage.templateFileItem();
         if(nil == copiedPageTempateFileItem) {
-            let pdfTemplateFileItem = FTPDFKitFileItemPDF.init(fileName: newPage.associatedPDFFileName)!
-            pdfTemplateFileItem.securityDelegate = self._parent;
+            let tempPath = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true).first!
+            let tempFilePath = URL(filePath:tempPath).appending(path: newPage.associatedPDFFileName!);
+            try? FileManager().removeItem(at: tempFilePath);
             
             FTCLSLog("NFC - Page deepcopy");
-            newPage._parent!.templateFolderItem()!.addChildItem(pdfTemplateFileItem);
             FileManager.coordinatedCopyAtURL(self.templateFileItem()!.fileItemURL,
-                                             toURL: pdfTemplateFileItem.fileItemURL,
-                                             onCompletion:
-                { (_, _) in
-                    newPage.deepCopyAnnotations(pageAnnotations){
-                        newPage.isInitializationInprogress = false;
-                        DispatchQueue.main.async {
-                            onCompletion(newPage);
-                        }
+                                             toURL: tempFilePath,
+                                             onCompletion: { (_, _) in
+                let pdfTemplateFileItem = FTFileItemPDFTemp(fileName: newPage.associatedPDFFileName);
+                pdfTemplateFileItem?.securityDelegate = self._parent;
+                pdfTemplateFileItem?.setSourceFileURL(tempFilePath)
+                
+                newPage._parent!.templateFolderItem()!.addChildItem(pdfTemplateFileItem);
+                newPage.deepCopyAnnotations(pageAnnotations){
+                    newPage.isInitializationInprogress = false;
+                    DispatchQueue.main.async {
+                        onCompletion(newPage);
                     }
+                }
             });
         }
         else {
