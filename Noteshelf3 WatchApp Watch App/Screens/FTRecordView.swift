@@ -17,94 +17,95 @@ private let gradient = AngularGradient(gradient: Gradient(colors:
 
 struct FTRecordView: View {
     @ObservedObject var viewModel: FTRecordViewModel
+    @State private var size: CGFloat = 0.0
+    @State private var angle: Double = 0.0
 
-    var body: some View {
-        ZStack {
-            FTStartRecordView()
-                .environmentObject(viewModel)
-                .opacity(viewModel.isRecording ? 0.0 : 1.0)
-                .animation(.easeInOut(duration: 0.4), value: viewModel.isRecording)
-            FTStopRecordView()
-                .environmentObject(viewModel)
-                .opacity(viewModel.isRecording ? 1.0 : 0.0)
-                .animation(.easeInOut(duration: 0.4), value: viewModel.isRecording)
-         }
-    }
-}
-
-struct FTStartRecordView: View {
-    @EnvironmentObject var viewModel: FTRecordViewModel
     private let borderWidth: CGFloat = 4.0
+    private let animDuration: CGFloat = 0.3
 
     var body: some View {
         GeometryReader { proxy in
-            ZStack {
-                Circle()
-                    .fill(gradientColor.opacity(0.3))
-                    .frame(width: proxy.size.width * 0.75)
+            VStack(spacing: viewModel.isRecording ? 22 : 0) {
+                if viewModel.isRecording {
+                    Spacer()
+                }
 
-                Circle()
-                    .fill(gradientColor)
-                    .frame(width: proxy.size.width * 0.45)
+                ZStack {
+                    Circle()
+                        .fill(viewModel.isRecording ? .clear : gradientColor.opacity(0.3))
+                        .overlay(
+                            Circle()
+                                .strokeBorder(.white.opacity(0.2), lineWidth: borderWidth)
+                                .background(Circle().foregroundColor(gradientColor.opacity(0.3)))
+                                .opacity(viewModel.isRecording ? 1.0 : 0.0)
+                        )
+                        .overlay {
+                            SemiCircleShape(radius: (size - borderWidth)/2)
+                                .stroke(gradient, style: StrokeStyle(lineWidth: borderWidth))
+                                .frame(width: size - borderWidth)
+                                .rotationEffect(.degrees(angle))
+                                .opacity(viewModel.isRecording ? 1.0 : 0.0)
+                        }
+                        .rotationEffect(.degrees(viewModel.isRecording ? -90 : 0))
+                        .onChange(of: viewModel.isRecording) { newValue in
+                            if newValue {
+                                withAnimation(Animation.linear(duration: 3).repeatForever(autoreverses: false)) {
+                                    angle = 360
+                                }
+                            }
+                        }
+
+                    Circle()
+                        .fill(gradientColor)
+                        .frame(width: proxy.size.width * 0.45)
+                        .opacity(viewModel.isRecording ? 0.0 : 1.0)
+
+                    Text(viewModel.durationStr)
+                        .foregroundColor(.white)
+                        .font(Font.system(size: 30.0))
+                        .opacity(viewModel.isRecording ? 1.0 : 0.0)
+                }
+                .frame(width: self.size)
+
+                Button(action: {
+                    self.viewModel.handleRecordTapAction()
+                    self.size = proxy.size.width * 0.75
+                }) {
+                    Text("Stop")
+                        .padding()
+                        .foregroundColor(.white)
+                }
+                .frame(width: viewModel.isRecording ? 143 : 0, height: viewModel.isRecording ? 45 : 0)
+                .opacity(viewModel.isRecording ? 1.0 : 0.0)
+
+                Spacer()
+                    .frame(height: viewModel.isRecording ? 17.0 : 0.0)
             }
             .frame(width: proxy.size.width, height: proxy.size.height)
-        }.ignoresSafeArea()
-        
-        .onTapGesture {
-            self.viewModel.handleRecordTapAction()
-        }
-        .alert(isPresented:self.viewModel.showCustomAlert) {
-            Alert(
-                title: Text(""),
-                message: Text("Allow microphone access to continue..."),
-                dismissButton: .default(Text(NSLocalizedString("OK", comment: "OK"))) {
-                    self.viewModel.showPermissionAlert = false
+            .animation(Animation.easeInOut(duration: animDuration), value: self.size)
+
+            .onAppear {
+                if !viewModel.isRecording {
+                    self.size = proxy.size.width * 0.75
                 }
-            )
-        }
-    }
-}
-
-struct FTStopRecordView: View {
-    @State private var angle: Double = 0.0
-    @EnvironmentObject var viewModel: FTRecordViewModel
-
-    private let borderWidth: CGFloat = 4.0
-
-    var body: some View {
-        VStack(spacing: 22.0) {
-            ZStack {
-                Circle()
-                    .strokeBorder(.white.opacity(0.2), lineWidth: borderWidth)
-                    .background(Circle().foregroundColor(gradientColor.opacity(0.3)))
-                    .frame(width: 96)
-                    .overlay {
-                        SemiCircleShape(radius: 92/2)
-                            .stroke(gradient, style: StrokeStyle(lineWidth: borderWidth))
-                            .frame(width: 92)
-                            .rotationEffect(.degrees(angle))
+            }
+            .onTapGesture {
+                if !viewModel.isRecording {
+                    self.size = proxy.size.height * 0.38
+                    self.viewModel.handleRecordTapAction()
+                }
+            }
+            .alert(isPresented:self.viewModel.showCustomAlert) {
+                Alert(
+                    title: Text(""),
+                    message: Text("Allow microphone access to continue..."),
+                    dismissButton: .default(Text(NSLocalizedString("OK", comment: "OK"))) {
+                        self.viewModel.showPermissionAlert = false
+                        self.size = proxy.size.width * 0.75
                     }
-                    .rotationEffect(.degrees(-90))
-
-                Text(viewModel.durationStr)
-                    .foregroundColor(.white)
-                    .font(Font.system(size: 30.0))
+                )
             }
-
-            Button(action: {
-                self.viewModel.handleRecordTapAction()
-            }) {
-                Text("Stop")
-                    .padding()
-                    .foregroundColor(.white)
-            }
-            .frame(width: 143, height: 45)
-        }
-        .onAppear {
-            withAnimation(Animation.linear(duration: 3).repeatForever(autoreverses: false)) {
-                angle = 360
-            }
-        }
+        }.ignoresSafeArea()
     }
 }
 

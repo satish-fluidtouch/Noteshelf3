@@ -151,6 +151,7 @@ struct FTPlayerView: View {
                     Image(systemName: viewModel.isPlaying ? "pause" : "play.fill")
                         .resizable()
                         .frame(width: 18, height: 20)
+                        .offset(x: viewModel.isPlaying ? 1 : 2)
                         .foregroundColor(.white)
                 }
             }
