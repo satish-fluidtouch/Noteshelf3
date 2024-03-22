@@ -13,13 +13,12 @@ import FTCommon
 private extension UIDropSession
 {
     var hasImageUTITypes : Bool {
-        let imageUTITypes : [String] = [(kUTTypePNG as String),
-                                           (kUTTypeJPEG as String)];
+        let imageUTITypes : [String] = [UTType.image.identifier];
         return self.hasItemsConforming(toTypeIdentifiers: imageUTITypes);
     }
     
     var hasTextUTITypes : Bool {
-        let textUTITypes : [String] = [(kUTTypeText as String)];
+        let textUTITypes : [String] = [UTType.text.identifier];
         return self.hasItemsConforming(toTypeIdentifiers: textUTITypes);
     }
 
@@ -34,7 +33,7 @@ private extension UIDropSession
     }
     
     var hasUrlUTITypes : Bool {
-        let textUTITypes : [String] = [(kUTTypeURL as String)];
+        let textUTITypes : [String] = [UTType.url.identifier];
         return self.hasItemsConforming(toTypeIdentifiers: textUTITypes);
     }
 

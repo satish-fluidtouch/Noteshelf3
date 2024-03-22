@@ -1266,7 +1266,7 @@ extension FTNoteshelfPage : FTCopying {
                 pdfTemplateFileItem?.setSourceFileURL(tempFilePath)
                 
                 newPage._parent!.templateFolderItem()!.addChildItem(pdfTemplateFileItem);
-                newPage.deepCopyAnnotations(pageAnnotations){
+                newPage.deepCopyAnnotations(pageAnnotations){ _ in
                     newPage.isInitializationInprogress = false;
                     DispatchQueue.main.async {
                         onCompletion(newPage);
