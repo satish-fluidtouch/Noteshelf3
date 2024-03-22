@@ -444,6 +444,11 @@ extension FTPageViewController : UIGestureRecognizerDelegate
                     valueToReturn = true
 
                 }
+                if nil != self.lassoSelectionView?.antsView ||
+                    nil != self.lassoContentSelectionViewController {
+                    self.normalizeLassoView()
+                    valueToReturn = false;
+                }
             }
             self.perform(#selector(self.hideQuickPageNavigator), with: nil, afterDelay: 0.1)
             return valueToReturn;
