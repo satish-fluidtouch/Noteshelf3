@@ -959,9 +959,9 @@
 "bujoessentials" = "Elementos esenciales del bujo";
 "cancel" = "Cancelar";
 "clip.addClip" = "Añadir clip";
+"clip.clipAdded" = "Clip añadido";
 "clip.deleteCategory" = "Eliminar categoría";
-"clip.deleteCategory.message" = "";
-"clip.deleteCategory.title" = "Eliminar esta categoría eliminará todos los clips @% en esta categoría y no se podrán recuperar.";
+"clip.deleteCategory.title" = "Eliminar esta categoría eliminará todos los clips %@ en esta categoría y no se podrán recuperar.";
 "clip.newCategory" = "Nueva categoría...";
 "clip.noCategory" = "Esta categoría está vacía.";
 "clip.noSavedClips" = "No hay clips guardados";
@@ -1609,4 +1609,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 13 March 2024 at 19:23
+// Last Synced by Sameer Hussain on 22 March 2024 at 11:59 AM

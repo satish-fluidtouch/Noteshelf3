@@ -959,9 +959,9 @@
 "bujoessentials" = "Bujoの必需品";
 "cancel" = "キャンセル";
 "clip.addClip" = "クリップを追加";
+"clip.clipAdded" = "クリップを追加されました";
 "clip.deleteCategory" = "カテゴリーを削除";
-"clip.deleteCategory.message" = "";
-"clip.deleteCategory.title" = "このカテゴリを削除すると、このカテゴリ内のすべての@%クリップが削除され、復元することはできません。";
+"clip.deleteCategory.title" = "このカテゴリを削除すると、このカテゴリ内のすべての%@クリップが削除され、復元することはできません。";
 "clip.newCategory" = "新しいカテゴリ...";
 "clip.noCategory" = "このカテゴリーは空です。";
 "clip.noSavedClips" = "保存されたクリップはありません。";
@@ -1609,4 +1609,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 13 March 2024 at 19:23
+// Last Synced by Sameer Hussain on 22 March 2024 at 11:59 AM

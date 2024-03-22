@@ -959,8 +959,8 @@
 "bujoessentials" = "Bujo Essentials";
 "cancel" = "Cancel";
 "clip.addClip" = "Add Clip";
+"clip.clipAdded" = "Clip Added";
 "clip.deleteCategory" = "Delete Category";
-"clip.deleteCategory.message" = "Would you like to continue?";
 "clip.deleteCategory.title" = "Deleting this category will delete all %@ clips in this category and cannot be recovered.";
 "clip.newCategory" = "New Category...";
 "clip.noCategory" = "This category is empty";
@@ -1609,4 +1609,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 13 March 2024 at 19:23
+// Last Synced by Sameer Hussain on 22 March 2024 at 11:59 AM

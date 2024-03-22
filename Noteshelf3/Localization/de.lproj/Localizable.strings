@@ -959,9 +959,9 @@
 "bujoessentials" = "Bujo Grundlagen";
 "cancel" = "Abbrechen";
 "clip.addClip" = "Clip hinzufügen";
+"clip.clipAdded" = "Clip hinzugefügt";
 "clip.deleteCategory" = "Kategorie löschen";
-"clip.deleteCategory.message" = "";
-"clip.deleteCategory.title" = "Das Löschen dieser Kategorie löscht alle @% Clips in dieser Kategorie und kann nicht wiederhergestellt werden.";
+"clip.deleteCategory.title" = "Das Löschen dieser Kategorie löscht alle %@ Clips in dieser Kategorie und kann nicht wiederhergestellt werden.";
 "clip.newCategory" = "Neue Kategorie...";
 "clip.noCategory" = "Diese Kategorie ist leer.";
 "clip.noSavedClips" = "Keine gespeicherten Clips";
@@ -1609,4 +1609,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 13 March 2024 at 19:23
+// Last Synced by Sameer Hussain on 22 March 2024 at 11:59 AM

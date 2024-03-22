@@ -959,9 +959,9 @@
 "bujoessentials" = "부조 필수품";
 "cancel" = "취소";
 "clip.addClip" = "클립 추가";
+"clip.clipAdded" = "클립 추가";
 "clip.deleteCategory" = "카테고리 삭제";
-"clip.deleteCategory.message" = "";
-"clip.deleteCategory.title" = "이 카테고리를 삭제하면 이 카테고리의 모든 @% 클립이 삭제되며 복구할 수 없습니다.";
+"clip.deleteCategory.title" = "이 카테고리를 삭제하면 이 카테고리의 모든 %@ 클립이 삭제되며 복구할 수 없습니다.";
 "clip.newCategory" = "새로운 카테고리...";
 "clip.noCategory" = "이 카테고리는 비어 있습니다.";
 "clip.noSavedClips" = "저장된 클립 없음";
@@ -1609,4 +1609,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 13 March 2024 at 19:23
+// Last Synced by Sameer Hussain on 22 March 2024 at 11:59 AM

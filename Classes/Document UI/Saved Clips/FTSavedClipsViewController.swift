@@ -48,6 +48,7 @@ class FTSavedClipsViewController: UIViewController {
 
         self.setupCollectionView()
         self.setupSegmentedControl()
+        titleLabel.text = "clip.savedClips".localized
     }
 
     private func setupCollectionView() {
@@ -88,8 +89,7 @@ class FTSavedClipsViewController: UIViewController {
         }
         let rows = viewModel.numberOfRowsForSection(section: self.selectedSegmentIndex)
         let title = String(format: "clip.deleteCategory.title".localized, "\"\(rows)\"")
-        let message = "clip.deleteCategory.message".localized
-        UIAlertController.showDeleteDialog(with: title, message: message, from: self) {
+        UIAlertController.showDeleteDialog(with: title, message: "", from: self) {
             do {
                 try self.viewModel.removeCategory(index: self.selectedSegmentIndex)
             } catch {
@@ -101,6 +101,7 @@ class FTSavedClipsViewController: UIViewController {
     private func startEditing() {
         cellType = .editing
         self.editButton.isSelected = true
+        editButton.setTitle("Done".localized, for: .selected)
         deleteHeightConstraint.constant = 35
         deleteCategory.isHidden = false
         categoryTitleTextField.isHidden = false

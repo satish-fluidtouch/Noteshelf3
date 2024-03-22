@@ -54,13 +54,13 @@ class FTInlineTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     let attributedPlaceHolder = {
         return NSAttributedString(
-            string: "New Category...",
+            string: "clip.newCategory".localized,
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.appColor(.accent)]
         )
     }
     let lightAttributedPlaceHolder = {
         return NSAttributedString(
-            string: "New Category...",
+            string: "clip.newCategory".localized,
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
         )
     }

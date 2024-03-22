@@ -959,9 +959,9 @@
 "bujoessentials" = "筆記本要點";
 "cancel" = "取消";
 "clip.addClip" = "添加片段";
+"clip.clipAdded" = "片段已添加";
 "clip.deleteCategory" = "刪除類別";
-"clip.deleteCategory.message" = "";
-"clip.deleteCategory.title" = "刪除此類別將刪除此類別中的所有@％剪輯，且無法恢復。";
+"clip.deleteCategory.title" = "刪除此類別將刪除此類別中的所有%@片段，且無法復原。";
 "clip.newCategory" = "新分類...";
 "clip.noCategory" = "這個類別為空";
 "clip.noSavedClips" = "沒有已儲存的片段";
@@ -1609,4 +1609,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 13 March 2024 at 19:23
+// Last Synced by Sameer Hussain on 22 March 2024 at 11:59 AM

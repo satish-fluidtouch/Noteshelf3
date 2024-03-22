@@ -26,6 +26,7 @@ class FTSaveClipPreviewViewController: UIViewController {
     @IBOutlet weak var addClipButton: UIButton!
     @IBOutlet weak var previewImageContainer: UIView!
 
+    @IBOutlet weak var cancelButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         self.previewImageContainer.layer.cornerRadius = 8.0
@@ -56,7 +57,7 @@ class FTSaveClipPreviewViewController: UIViewController {
         self.tableView.reloadData()
 
         tableView.selectRow(at: selectedIndexPath, animated: false, scrollPosition: .none)
-
+        cancelButton.setTitle("Cancel".localized, for: .normal)
         // Do any additional setup after loading the view.
     }
 
@@ -71,7 +72,7 @@ class FTSaveClipPreviewViewController: UIViewController {
         let category = categories[self.selectedIndexPath.row]
         FTUserDefaults.selectedClipCategory = category.title
         delegate?.didSelectCategory(name: category.title)
-        let toastView = FTToastConfiguration(title: "Clip Added")
+        let toastView = FTToastConfiguration(title: "clip.clipAdded".localized)
         FTToastHostController.showToast(from: self, toastConfig: toastView)
         self.dismiss(animated: true)
     }
