@@ -125,7 +125,7 @@
         __block __weak FTPDFRenderViewController *weakSelf = self;
         [[NSNotificationCenter defaultCenter] addObserverForName:@"FTPressuePenActionChangedNotification"
                                                           object:nil
-                                                           queue:nil
+                                                           queue:[NSOperationQueue mainQueue]
                                                       usingBlock:^(NSNotification * _Nonnull note)
          {
             RKAccessoryButtonAction eventType = [[note.userInfo objectForKey:@"PressurePenAction"] integerValue];
@@ -395,7 +395,7 @@
     __block __weak FTPDFRenderViewController *weakSelf = self;
     [[NSNotificationCenter defaultCenter] addObserverForName:@"FTDocumentDidAddedPageIndices"
                                                       object:(id)self.pdfDocument
-                                                       queue:nil
+                                                       queue:[NSOperationQueue mainQueue]
                                                   usingBlock:^(NSNotification * _Nonnull note)
      {
         [weakSelf clearSearchOptionsInfo];
@@ -420,7 +420,7 @@
 
     [[NSNotificationCenter defaultCenter] addObserverForName:@"FTDocumentDidRemovePageIndices"
                                                       object:(id)self.pdfDocument
-                                                       queue:nil
+                                                       queue:[NSOperationQueue mainQueue]
                                                   usingBlock:^(NSNotification * _Nonnull note)
      {
         [weakSelf clearSearchOptionsInfo];
@@ -459,7 +459,7 @@
 
     [[NSNotificationCenter defaultCenter] addObserverForName:@"FTDocumentDidMovedPageIndices"
                                                       object:(id)self.pdfDocument
-                                                       queue:nil
+                                                       queue:[NSOperationQueue mainQueue]
                                                   usingBlock:^(NSNotification * _Nonnull note)
      {
         [weakSelf clearSearchOptionsInfo];
@@ -484,7 +484,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserverForName:FTPageDidChangePageTemplateNotification
                                                       object:nil
-                                                       queue:nil
+                                                       queue:[NSOperationQueue mainQueue]
                                                   usingBlock:^(NSNotification * _Nonnull note)
      {
         id<FTPageProtocol> currentPage = note.object;
@@ -3251,7 +3251,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserverForName:FTExternalDisplayDidConnectedNotification
                                                       object:nil
-                                                       queue:nil
+                                                       queue:[NSOperationQueue mainQueue]
                                                   usingBlock:^(NSNotification * _Nonnull note)
      {
         weakSelf.extDisplayID = [[FTWhiteboardDisplayManager shared] setPageWithPage:weakSelf.currentlyVisiblePage
@@ -3261,7 +3261,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserverForName:[FTWhiteboardDisplayManager didRecieveTouchOnPage]
                                                       object:nil
-                                                       queue:nil
+                                                       queue:[NSOperationQueue mainQueue]
                                                   usingBlock:^(NSNotification * _Nonnull note)
      {
         FTPageViewController *controller = (FTPageViewController*)note.object;
