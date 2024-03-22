@@ -147,7 +147,7 @@ extension FTPageViewController
         
         //Get the snapshot of the whole page in normal size, with selected annotations and without pdf background
         if let img = FTPDFExportView.snapshot(forPage: page,
-                                            screenScale: 1,
+                                            screenScale: UIScreen.main.scale,
                                             withAnnotations: selectedAnnotations) {
             //Crop the image to the final rect and render the image.
             UIGraphicsBeginImageContextWithOptions(integralRect.size, false, 0);
