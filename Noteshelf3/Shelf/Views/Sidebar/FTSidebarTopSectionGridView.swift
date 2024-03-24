@@ -9,16 +9,16 @@ import SwiftUI
 import FTCommon
 
 struct FTSidebarTopSectionGridView: View {
-
+    
     weak var delegate: FTSidebarViewDelegate?
-
+    
     @ObservedObject var viewModel: FTSidebarViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.dynamicTypeSize) var dynamicTypeSize
     
     // Templates New Option
     @AppStorage("isTemplatesNewOptionShown") private var isTemplatesNewOptionShown = false
-
+    
     var body: some View {
         Grid(horizontalSpacing: 8,verticalSpacing: 8 ) {
             if isLargerTextEnabled(for: dynamicTypeSize) {
@@ -53,7 +53,7 @@ struct FTSidebarTopSectionGridView: View {
             }
         }.macOnlyPlainButtonStyle()
     }
-
+    
     private func sidebarItemForType(_ type: FTSideBarItemType) -> FTSideBarItem{
         viewModel.sidebarItemOfType(type)
     }
@@ -67,8 +67,9 @@ struct FTSidebarTopSectionGridView: View {
             FTTemplatesSidebarItemView(viewModel: viewModel,delegate:delegate)
         }
         .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: .littleslow))
+        .accessibilityLabel(accesibilityLabel(item: sideBarItem))
     }
-
+    
     private func gridItemFor(_ sideBarItem: FTSideBarItem) -> some View {
         Button {
             viewModel.endEditingActions()
@@ -77,9 +78,19 @@ struct FTSidebarTopSectionGridView: View {
         } label: {
             FTSidebarTopSectionGridItemView(viewModel: viewModel,
                                             numberOfChildren: sideBarItem.shelfCollection?.childrens.count ?? 0)
-                .environmentObject(sideBarItem)
+            .environmentObject(sideBarItem)
         }
         .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: .littleslow))
+        .accessibilityLabel(accesibilityLabel(item: sideBarItem))
+        .accessibilityHint(sideBarItem.type.accesibilityHint)
+    }
+    
+    func accesibilityLabel(item: FTSideBarItem) -> String {
+        var title = item.type.displayTitle
+        if item == viewModel.selectedSideBarItem {
+            title = "Selected \(title) \(item.shelfCollection?.childrens.count ?? 0) notebooks"
+        }
+        return title
     }
 }
 

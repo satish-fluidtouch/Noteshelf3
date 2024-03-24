@@ -64,6 +64,34 @@ enum FTSideBarItemType: String {
         }
         return title
     }
+    
+    var accesibilityHint: String {
+        let title: String
+        switch self {
+        case .home:
+            title = FTAccessibilityHelper.HomeButtonHint
+        case .trash:
+            title = FTAccessibilityHelper.TrashButtonHint
+        case .unCategorized:
+            title = FTAccessibilityHelper.UnfiledButtonHint
+        case .starred:
+            title = FTAccessibilityHelper.StarredButtonHint
+        case .templates:
+            title = FTAccessibilityHelper.TemplatesButtonHint
+        case .media:
+            title = FTAccessibilityHelper.PhotoHint
+        case .audio:
+            title = FTAccessibilityHelper.RecordingHint
+        case .bookmark:
+            title = FTAccessibilityHelper.BookmarksHint
+        case .allTags:
+            title = FTAccessibilityHelper.AllTagsHint
+        default:
+            title = ""
+        }
+        return title
+    }
+    
     var iconName: String {
         let name: String
         switch self {

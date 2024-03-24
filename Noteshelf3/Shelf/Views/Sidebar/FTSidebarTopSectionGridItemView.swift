@@ -46,6 +46,7 @@ struct FTSidebarTopSectionGridItemView: View {
                 if (canShowNoOfBooksForItem(item) && numberOfChildren > 0) {
                     Text("\(numberOfChildren)")
                         .foregroundColor(.white)
+                        .accessibilityHidden(true)
                 }else {
                     EmptyView()
                 }
