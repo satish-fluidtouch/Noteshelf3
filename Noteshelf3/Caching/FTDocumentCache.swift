@@ -37,9 +37,10 @@ struct FTCacheFiles {
     static let cachePropertyPlist: String = "Metadata/Properties.plist"
 }
 
- class FTItemToCache {
+class FTItemToCache {
     var fileUrl: URL;
     var documentID : String;
+    var shelfItem: FTShelfItemProtocol?
     init(url: URL, documentID docID: String) {
         fileUrl = url;
         documentID = docID;
@@ -147,7 +148,9 @@ final class FTDocumentCache {
         var cacheItems = [FTItemToCache]()
         items.forEach { item in
             if let docId = item.documentUUID {
-                cacheItems.append(FTItemToCache(url: item.URL, documentID: docId))
+                let itemToCache = FTItemToCache(url: item.URL, documentID: docId);
+                itemToCache.shelfItem = item
+                cacheItems.append(itemToCache)
             }
         }
 
@@ -182,9 +185,7 @@ extension FTDocumentCache {
 
         if self.cacheDisabled {
             self.lock.lock()
-            items.forEach { eachItem in
-                self.itemsToCache.append(FTItemToCache(url: eachItem.fileUrl, documentID: eachItem.documentID))
-            }
+            self.itemsToCache.append(contentsOf: items)
             self.lock.unlock()
             return;
         }
@@ -194,19 +195,19 @@ extension FTDocumentCache {
             var itemsCached = [FTItemToCache]();
             items.forEach { eachItem in
                 dispatchGroup.enter()
-                    do {
-                        try self.cacheShelfItemIfRequired(url: eachItem.fileUrl, documentUUID: eachItem.documentID )
-                        itemsCached.append(eachItem)
-                        dispatchGroup.leave()
-                    } catch {
-                        cacheLog(.error, error.localizedDescription, eachItem.fileUrl.lastPathComponent)
-                        dispatchGroup.leave()
-                    }
+                do {
+                    try self.cacheShelfItemIfRequired(url: eachItem.fileUrl, documentUUID: eachItem.documentID )
+                    itemsCached.append(eachItem)
+                    dispatchGroup.leave()
+                } catch {
+                    cacheLog(.error, error.localizedDescription, eachItem.fileUrl.lastPathComponent)
+                    dispatchGroup.leave()
+                }
             }
             dispatchGroup.notify(queue: self.queue) {
                 if itemsCached.count > 0 {
                     itemsCached.forEach { eachItem in
-                        FTTagsProvider.shared.syncTagsWithLocalCache(documentID: eachItem.documentID);
+                        FTTagsProvider.shared.syncTagsWithLocalCache(documentID: eachItem.documentID,documentitem: eachItem.shelfItem);
                     }
                     FTBookmarksProvider.shared.updateBookmarkItemsFor(cacheItems: itemsCached)
                 }
@@ -334,7 +335,7 @@ private extension FTDocumentCache {
                 do {
                     FTBookmarksProvider.shared.removeBookmarkFor(documentId: docUUID)
                     try _fileManger.removeItem(at: destinationURL)
-                    FTTagsProvider.shared.syncTagsWithLocalCache(documentID: docUUID);
+                    FTTagsProvider.shared.syncTagsWithLocalCache(documentID: docUUID, documentitem: doc);
                     cacheLog(.success, "Remove", doc.URL.lastPathComponent)
                 } catch {
                     cacheLog(.error, "Remove", doc.URL.lastPathComponent)
@@ -342,5 +343,13 @@ private extension FTDocumentCache {
             }
         }
     }
+}
 
+extension FTDocumentCache {
+    func prepareTagsCacheOnLaunch() {
+        let prepareCache = FTCacheTagsProcessor();
+        prepareCache.createCacheTagsPlistIfNeeded {
+            debugLog("Tag creation completed: \(prepareCache)");
+        }
+    }
 }

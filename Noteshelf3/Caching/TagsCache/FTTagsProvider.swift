@@ -288,12 +288,17 @@ internal extension FTTagsProvider {
         }
     }
     
-    func syncTagsWithLocalCache(documentID: String,documentitem: FTShelfItemProtocol) {
-        let cacheDocument = FTCachedDocument(documentID: documentID);
-        syncTagWithDocument(cacheDocument,documentItem: documentitem);
+    func syncTagsWithLocalCache(documentID: String,documentitem: FTShelfItemProtocol? = nil) {
+        if let shelfItem = documentitem {
+            let cacheDocument = FTCachedDocument(documentID: documentID);
+            syncTagWithDocument(cacheDocument,documentItem: shelfItem);
+        }
+        else {
+            self.syncTagsWithLocalCache(documentID: documentID);
+        }
     }
 
-    func syncTagsWithLocalCache(documentID: String) {
+    private func syncTagsWithLocalCache(documentID: String) {
         let cacheDocument = FTCachedDocument(documentID: documentID);
         FTNoteshelfDocumentProvider.shared.document(with: documentID, orRelativePath: cacheDocument.relativePath, bypassPasswordProtected: true) { shelfItem in
             if let item = shelfItem {

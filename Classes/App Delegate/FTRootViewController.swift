@@ -445,7 +445,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             }
         }
         configureSceneNotifications()
-        FTCacheTagsProcessor.shared.createCacheTagsPlistIfNeeded()
+        FTDocumentCache.shared.prepareTagsCacheOnLaunch();
         return
     }
     private func showLastOpenedGroup(_ group: FTShelfItemProtocol) {
