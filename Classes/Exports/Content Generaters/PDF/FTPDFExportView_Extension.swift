@@ -187,6 +187,8 @@ extension FTPDFExportView {
             return;
         };
 
+        let _screenScale = screenScale == 0 ? UIScreen.main.scale : screenScale;
+        
         var offscreenRenderToUse = offscreenRenderer;
         //Create an offscreen render view with specified size.
         //calculate the size that fits the current page's aspect ratio
@@ -257,7 +259,7 @@ extension FTPDFExportView {
             request.label = "PAGE_SNAPSHOT"
             request.backgroundColor = bgColor
             request.annotations = annotaionsToRender;
-            request.screenScale = screenScale;
+            request.screenScale = _screenScale;
             request.imageSize = finalRect.size;
             if FTRenderConstants.USE_BG_TILING {
                 request.backgroundTextureTileContent = backgroundTextureTileContent;
@@ -273,7 +275,7 @@ extension FTPDFExportView {
                     autoreleasepool{
                         let downSizeScale = min(finalRectSize.width/pageRect.width, finalRectSize.height/pageRect.height);
                         if(downSizeScale != scaleWrtNorm) {
-                            newImage = self.resizeImage(image: newImage, toSize: finalRectSize, screenScale: screenScale);
+                            newImage = self.resizeImage(image: newImage, toSize: finalRectSize, screenScale: _screenScale);
                         }
                     }
                 }
