@@ -265,10 +265,18 @@ extension FTAudioService {
                 self.handleAudioPlayCompletion()
             }
         }
-        self.playerNode.volume = self.playerVolume
+        self.updateNodeVolume(self.playerVolume)
         self.playerNode.play()
         self.audioActivity.audioServiceStatus = FTAudioServiceStatus.playing
         self.audioActivity.currentTime = timeToPlay
+    }
+
+    func updateNodeVolume(_ volume: Float) {
+        self.playerNode.volume = volume
+        if volume != self.playerVolume {
+            self.playerVolume = volume
+        }
+        print("zzzz: \(self.playerVolume)")
     }
 
     func pausePlayingAudio() {

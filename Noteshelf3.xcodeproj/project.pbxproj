@@ -1937,6 +1937,7 @@
 		C85AFDF423324C0E00D25D5F /* NSString_Backup_Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 211E30201E027D73007B5CAD /* NSString_Backup_Additions.m */; };
 		DDAD78EC2A08C550001D8B21 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = DDAD78EB2A08C550001D8B21 /* SDWebImage */; };
 		E70705FA2AC2B7D500A7B341 /* FTFavoritebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70705F92AC2B7D500A7B341 /* FTFavoritebarViewController.swift */; };
+		E70B909D2BAAED05002B5292 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CCFF6A2BA975E100DB59CE /* AppIntent.swift */; };
 		E70FACB12B3B04BC009B88C9 /* FTShapeCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70FACB02B3B04BC009B88C9 /* FTShapeCurve.swift */; };
 		E70FACB32B3B05C2009B88C9 /* FTShapeCurveAnnotationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70FACB22B3B05C2009B88C9 /* FTShapeCurveAnnotationController.swift */; };
 		E713D9AB299CC1CF008FDC77 /* FTConvertPreferencesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E713D9AA299CC1CF008FDC77 /* FTConvertPreferencesCell.xib */; };
@@ -14558,6 +14559,7 @@
 				E78DE6CE2B985135000DAA1B /* FTRecordViewModel.swift in Sources */,
 				E78DE6DE2B985819000DAA1B /* FTAudioDataProcessor.m in Sources */,
 				E75329C92B999E8F00C22267 /* FTWatchLandView.swift in Sources */,
+				E70B909D2BAAED05002B5292 /* AppIntent.swift in Sources */,
 				E78DE6EC2B987679000DAA1B /* FTWatchRecordedAudio.swift in Sources */,
 				E78DE6F42B987B0B000DAA1B /* FTFetchAudioRequest.swift in Sources */,
 			);
@@ -17037,7 +17039,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Noteshelf3 WatchApp Watch App/Noteshelf3 WatchApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
@@ -17096,7 +17098,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Noteshelf3 WatchApp Watch App/Noteshelf3 WatchApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = "Debug Enterprise";
 		};
@@ -17151,7 +17153,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};
@@ -17206,7 +17208,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = "Release Enterprise";
 		};
@@ -17261,7 +17263,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Beta;
 		};
@@ -17314,7 +17316,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
 		};
@@ -17369,7 +17371,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = "Debug Enterprise";
 		};
@@ -17420,7 +17422,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
 		};
@@ -17471,7 +17473,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = "Release Enterprise";
 		};
@@ -17522,7 +17524,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Beta;
 		};

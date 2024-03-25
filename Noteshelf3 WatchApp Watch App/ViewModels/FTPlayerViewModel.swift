@@ -7,11 +7,12 @@
 //
 
 import Foundation
+import WatchKit
 
 class FTPlayerViewModel: NSObject, ObservableObject {
     let recording: FTWatchRecording
 
-    private var audioService:FTAudioService!
+    private var audioService:FTAudioService?
     private var audioActivity: FTAudioActivity?
     private var isObserversAdded: Bool = false
     private var playbackCurrentTime: Int = 0
@@ -19,10 +20,16 @@ class FTPlayerViewModel: NSObject, ObservableObject {
     @Published var playDurationStr: String = "00:00"
     @Published var isPlaying: Bool = false
     @Published var progress: CGFloat = 0.0
+    
+    var currentVolume: Float {
+        self.audioService?.playerVolume ?? 0.0
+    }
 
     init(recording: FTWatchRecording) {
         self.recording = recording
         self.playDurationStr = self.recording.duration.formatSecondsToString()
+        super.init()
+        self.createAudioServiceIfNeeded()
     }
 
     func updateRecording(_ recording: FTWatchRecording) {
@@ -36,16 +43,16 @@ class FTPlayerViewModel: NSObject, ObservableObject {
         self.createAudioServiceIfNeeded()
         self.isPlaying.toggle()
         if self.audioActivity == nil || self.audioActivity?.audioServiceStatus == FTAudioServiceStatus.none {
-            self.audioActivity = self.audioService.playAudioWithURL(audioURL: path, at: 0.0)
+            self.audioActivity = self.audioService?.playAudioWithURL(audioURL: path, at: 0.0)
             self.addObservers()
         } else {
             guard let activity = self.audioActivity else {
                 return
             }
             if activity.audioServiceStatus == .playing {
-                self.audioService.pausePlayingAudio()
+                self.audioService?.pausePlayingAudio()
             } else {
-                self.audioService.resumePlayingAudio()
+                self.audioService?.resumePlayingAudio()
             }
         }
     }
@@ -58,7 +65,7 @@ class FTPlayerViewModel: NSObject, ObservableObject {
         // If audio is not played
         if self.audioActivity == nil ||
             self.audioActivity?.audioServiceStatus == FTAudioServiceStatus.none {
-            self.audioActivity = self.audioService.playAudioWithURL(audioURL: path, at: seconds)
+            self.audioActivity = self.audioService?.playAudioWithURL(audioURL: path, at: seconds)
             self.isPlaying = true
             self.addObservers()
         } else if let activity = self.audioActivity,
@@ -91,6 +98,10 @@ class FTPlayerViewModel: NSObject, ObservableObject {
         self.audioActivity = nil
     }
 
+    func updateVolumeLevel(_ volume: Float) {
+        self.audioService?.updateNodeVolume(volume)
+    }
+
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if(keyPath == "currentTime") {
             self.updatePlayTime()
@@ -102,7 +113,7 @@ private extension FTPlayerViewModel {
     func createAudioServiceIfNeeded() {
         if(self.audioService == nil) {
             self.audioService = FTAudioService()
-            self.audioService.delegate = self
+            self.audioService?.delegate = self
         }
     }
 

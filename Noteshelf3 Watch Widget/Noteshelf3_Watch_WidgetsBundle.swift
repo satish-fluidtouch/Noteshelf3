@@ -20,23 +20,19 @@ struct FTWatchComplication: Widget {
     let kind: String = "FT-Complication"
 
     var body: some WidgetConfiguration {
-        AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: Provider()) { entry in
+        StaticConfiguration(kind: kind, provider: Provider()) { entry in
             FTComplicationView(entry: entry)
-                .containerBackground(.fill.tertiary, for: .widget)
+                .widgetBackground(Color.clear)
         }
+        .configurationDisplayName("Noteshelf3")
+        .description("Opens Noteshelf3 app")
+        .supportedFamilies([.accessoryCircular, .accessoryCorner, .accessoryInline, .accessoryRectangular])
     }
-
-//        StaticConfiguration(kind: kind, provider: Provider()) { entry in
-//            FTComplicationView(entry: entry)
-//        }
-//        .configurationDisplayName("NS3 Opener")
-//        .description("Opens Noteshelf3 app")
-//        .supportedFamilies([.accessoryCircular, .accessoryCorner, .accessoryInline, .accessoryRectangular])
-//    }
 }
 
+
 struct FTComplicationView: View {
-    var entry: Provider.Entry
+    var entry: SimpleEntry
     @Environment(\.widgetFamily) var widgetFamily
 
     var body: some View {
@@ -50,42 +46,52 @@ struct FTComplicationView: View {
         case .accessoryRectangular:
             FTComplicationRectangular(entry: entry)
         @unknown default:
-            //mandatory as there are more widget families as in lockscreen widgets etc
-            Text("Not an implemented widget yet")
+            Text("unknown")
         }
     }
-
 }
 
 struct FTComplicationInline : View {
     var entry: Provider.Entry
 
     var body: some View {
-        Text(entry.date.formatted())
+        Text("Noteshelf3")
     }
 }
 
 struct FTComplicationCircular : View {
-    var entry: Provider.Entry
+    var entry: SimpleEntry
+    @Environment(\.widgetRenderingMode) var widgetRenderingMode
 
     var body: some View {
-        Image("watch_complication")
+        if widgetRenderingMode == .fullColor {
+            Image("circular_complication")
+                .widgetLabel("Noteshelf3")
+
+        } else {
+            Image("circular_complication_gray")
+                .widgetLabel("Noteshelf3")
+        }
     }
 }
 
 struct FTComplicationCorner : View {
-    var entry: Provider.Entry
+    var entry: SimpleEntry
+    @Environment(\.widgetRenderingMode) var widgetRenderingMode
 
     var body: some View {
-        Image("watch_complication")
+        if widgetRenderingMode == .fullColor {
+            Image("corner_complication")
+        } else {
+            Image("corner_complication_gray")
+        }
     }
 }
 
 struct FTComplicationRectangular : View {
-    var entry: Provider.Entry
+    var entry: SimpleEntry
 
     var body: some View {
-        Image("watch_complication")
+        Text("Noteshelf3")
     }
 }
-

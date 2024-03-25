@@ -8,18 +8,31 @@
 
 import WidgetKit
 import AppIntents
+import Combine
 
-struct ConfigurationAppIntent: WidgetConfigurationIntent {
-//struct ConfigurationAppIntent: AppIntent {
+struct ConfigurationAppIntent: AppIntent {
     static var title: LocalizedStringResource = "Configuration"
     static var description = IntentDescription("This is an example widget.")
 
-    // An example configurable parameter.
-    @Parameter(title: "Favorite Emoji", default: "😃")
-    var favoriteEmoji: String
+    func perform() async throws -> some IntentResult {
+        FTWatchWidgetActionController.shared.performAction(action: .record)
+        return .result()
+    }
+}
 
-//    func perform() async throws -> some IntentResult {
-//        print("zzzz - ConfigurationAppIntent ")
-//        return .result()
-//    }
+enum FTWatchWidgetActionType {
+    case record
+}
+
+class FTWatchWidgetActionController {
+    static var shared : FTWatchWidgetActionController = FTWatchWidgetActionController()
+    private(set) var actionToExecute : FTWatchWidgetActionType?
+    private init() {}
+
+    func performAction(action : FTWatchWidgetActionType) {
+        self.actionToExecute = action
+    }
+    func resetWidgetAction() {
+        self.actionToExecute = nil
+    }
 }

@@ -1,0 +1,25 @@
+{
+  "images" : [
+    {
+      "filename" : "modularsmall-simple-44.png",
+      "idiom" : "watch",
+      "screen-width" : "<=145"
+    },
+    {
+      "idiom" : "watch",
+      "screen-width" : ">161"
+    },
+    {
+      "idiom" : "watch",
+      "screen-width" : ">145"
+    },
+    {
+      "idiom" : "watch",
+      "screen-width" : ">183"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

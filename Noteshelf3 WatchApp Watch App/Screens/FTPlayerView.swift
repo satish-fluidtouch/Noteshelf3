@@ -17,6 +17,8 @@ struct FTPlayerView: View {
     @State private var showInProgressRecordAlert = false
 
     private let progressColor = Color(red: 224/255, green: 110/255, blue: 81/255)
+    @State private var crownFloat: Float = 0.0
+    @State private var isIdle = true
 
     var body: some View {
         VStack {
@@ -76,10 +78,17 @@ struct FTPlayerView: View {
                 Spacer()
                     .frame(width: 12.0)
             }
+            .padding(.vertical)
         }
-        .padding(.vertical)
+        .blur(radius: isIdle ? 0 : 5)
         .toolbar {
             toolBar()
+        }
+        .onAppear {
+            self.crownFloat = self.viewModel.currentVolume
+        }
+        .onDisappear {
+            self.viewModel.resetPlay()
         }
         .fullScreenCover(isPresented: $isEditOptionsShowing, content: {
             FTRecordingEditView(viewModel: FTRecordingEditViewModel(recording: self.recording), isEditOptionsShowing: $isEditOptionsShowing, isShowingPlayerView: $isShowingPlayerView)
@@ -95,9 +104,14 @@ struct FTPlayerView: View {
                 }
             )
         }
-        .onDisappear {
-            self.viewModel.resetPlay()
-        }
+        .focusable()
+        .digitalCrownRotation(detent: $crownFloat, from: -50, through: 0, by: 1, onChange: { event in
+            let volume = abs(crownFloat) * 0.02
+            self.viewModel.updateVolumeLevel(volume)
+            self.isIdle = false
+        }, onIdle: {
+            self.isIdle = true
+        })
     }
 
     private var recording: FTWatchRecording {
@@ -157,4 +171,8 @@ struct FTPlayerView: View {
             }
         }
     }
+}
+
+#Preview {
+    FTPlayerView(viewModel: FTPlayerViewModel(recording: FTWatchRecordedAudio(GUID: "", date: Date(), duration: 20)), isShowingPlayerView: .constant(true))
 }
