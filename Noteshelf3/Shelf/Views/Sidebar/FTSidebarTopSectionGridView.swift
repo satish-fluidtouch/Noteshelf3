@@ -87,7 +87,9 @@ struct FTSidebarTopSectionGridView: View {
     
     func accesibilityLabel(item: FTSideBarItem) -> String {
         var title = item.type.displayTitle
-        if item == viewModel.selectedSideBarItem {
+        if item.type == .templates && !isTemplatesNewOptionShown {
+            title += "New Templates added"
+        } else if item == viewModel.selectedSideBarItem {
             title = "Selected \(title) \(item.shelfCollection?.childrens.count ?? 0) notebooks"
         }
         return title

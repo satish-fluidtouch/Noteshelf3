@@ -54,6 +54,7 @@ struct FTEditableView: View {
                                     track(EventName.sidebar_addnewcategory_tap, screenName: ScreenName.sidebar)
                                 }
                             }
+                            .accessibilityHint(FTAccessibilityHelper.NewCategoryHint)
                         }
                     }
 //                    .frame(height: 44,alignment:.leading)

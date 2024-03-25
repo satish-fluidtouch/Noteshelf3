@@ -89,6 +89,8 @@ struct FTShelfContentAudioView: View {
                                         menuOverlayInfo.isMenuShown = false
                                     }
                             }
+                            .accessibilityElement(children: .ignore)
+                            .accessibilityLabel("Audio recording \(audio.audioTitle), Duration \(audio.duration), in Notebook \(audio.title)")
                     }
                 }
             }

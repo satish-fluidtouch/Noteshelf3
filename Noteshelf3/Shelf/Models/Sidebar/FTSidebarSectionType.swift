@@ -59,6 +59,8 @@ enum FTSideBarItemType: String {
             title = NSLocalizedString("Trash", comment: "Trash")
         case .unCategorized:
             title = NSLocalizedString("sidebar.topSection.unfiled", comment: "Unfiled")
+        case .templates:
+            title = "Templates"
         default:
             title = ""
         }

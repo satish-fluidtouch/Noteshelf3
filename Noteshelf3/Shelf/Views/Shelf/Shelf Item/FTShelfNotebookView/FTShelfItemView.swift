@@ -64,6 +64,8 @@ struct FTShelfItemView: View {
                     opacity = 1.0
                 }
             })
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(groupItemAccessibilityLabel())
     }
     
     
@@ -74,7 +76,38 @@ struct FTShelfItemView: View {
         }
         else {
             FTNotebookItemView(shelfItemWidth: shelfItemWidth,shelfItemHeight: shelfItemHeight,isAnyNBActionPopoverShown: $isAnyNBActionPopoverShown)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(shelfItemAccessibilityLabel())
         }
+    }
+    
+    private var displayTitle: String {
+        let displayTitle: String
+        if let collection = shelfItem.model.shelfCollection, collection.isUnfiledNotesShelfItemCollection {
+            displayTitle = shelfItem.model.URL.displayRelativePathWRTCollection().deletingLastPathComponent.replacingOccurrences(of: uncategorizedShefItemCollectionTitle, with: NSLocalizedString("sidebar.topSection.unfiled", comment: "Unfiled"));
+        } else  {
+           displayTitle = shelfItem.model.URL.displayRelativePathWRTCollection().deletingLastPathComponent
+        }
+        return displayTitle
+    }
+    
+    func shelfItemAccessibilityLabel() -> String {
+        var title = "Notebook \(shelfItem.title) ,"
+        if shelfItem.isFavorited {
+            title += "Starred ,"
+        }
+        title += "Modified \(FTShortStyleDateFormatter.shared.shortStyleFormat(for: shelfItem.model.fileModificationDate)) ,"
+        if shelfViewModel.collection.isAllNotesShelfItemCollection {
+            title += "in Category \(displayTitle)"
+        }
+        return title
+    }
+    
+    func groupItemAccessibilityLabel() -> String {
+        if let group = shelfItem as? FTGroupItemViewModel {
+            return "Notebook group \(shelfItem.title) \(group.noOfNotes)"
+        }
+        return ""
     }
     
     @ViewBuilder

@@ -41,7 +41,18 @@ struct SideBarItemView : View {
             .frame(minHeight: 44)
         }
         .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: .littleslow))
+        .accessibilityLabel(accessibilityLabel())
+        .accessibilityHint(item.type.accesibilityHint)
     }
+    
+    func accessibilityLabel() -> String {
+        var title = item.title
+        if self.viewModel.selectedSideBarItem == item {
+            title = "Selected \(item.title) \(numberOfChildren) items"
+        }
+        return title
+    }
+    
     @ViewBuilder
     private var sideBarItem: some View {
         HStack(alignment: .center) {
