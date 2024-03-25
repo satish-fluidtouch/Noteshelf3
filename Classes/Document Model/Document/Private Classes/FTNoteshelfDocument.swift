@@ -104,7 +104,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
         #if DEBUG
         debugPrint("\(type(of: self)) is deallocated");
         #endif
-        NotificationCenter.default.removeObserver(self);
+        self.removeObservers();
         self.searchOperationQueue.cancelAllOperations();
         #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
         self.releaseRecognitionHelperIfNeeded()
@@ -655,10 +655,16 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     func saveDocument(completionHandler : ((Bool) -> Void)?)
     {
         if(self.openPurpose == .read) {
-            FTLogError("Doc Saved in Readonly: \(self.addressString) - \(self.URL.title)");
+            FTCLSLog("Doc Saved in Readonly: \(self.addressString) - \(self.URL.title)");
+            FTLogError("Doc Saved in Readonly");
             completionHandler?(true);
             return;
         }
+        if self.documentState.contains(.editingDisabled) {
+            FTCLSLog("Doc_Saved_Edit_Disabled: \(self.addressString) - \(self.URL.title)");
+            FTLogError("Doc_Saved_Edit_Disabled");
+        }
+        
         if(self.hasAnyUnsavedChanges) {
             (self.delegate as? FTNoteshelfDocumentDelegate)?.documentWillStartSaving(self);
         }
@@ -860,6 +866,10 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
         if(self.openPurpose == .read) {
             FTLogError("Doc writeContents in Readonly");
             return;
+        }
+        if self.documentState.contains(.editingDisabled) {
+            FTCLSLog("Doc_writeContents_Edit_Disabled: \(self.addressString) - \(self.URL.title)");
+            FTLogError("Doc_writeContents_Edit_Disabled:")
         }
         #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
         if(url.urlByDeleteingPrivate() != self.fileURL.urlByDeleteingPrivate()) {
@@ -1128,10 +1138,13 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
         }
     }
    
+    private weak var changePageNotificationObserver: NSObjectProtocol?;
+    private weak var memoryWarningNotificationObserver: NSObjectProtocol?;
+    
     //MARK:- Observer add/remove -
     fileprivate func addObservers()
     {
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.FTDidChangePageProperties, object: self, queue: nil) { [weak self] (_) in
+        self.changePageNotificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.FTDidChangePageProperties, object: self, queue: nil) { [weak self] (_) in
             if let documentInfoPlist = self?.documentInfoPlist() {
                 let pages = documentInfoPlist.pages;
                 documentInfoPlist.pages = pages;
@@ -1139,7 +1152,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
         }
         
         #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
-        NotificationCenter.default.addObserver(forName: UIApplication.didReceiveMemoryWarningNotification, object: nil, queue: nil) { [weak self] (_) in
+        self.memoryWarningNotificationObserver = NotificationCenter.default.addObserver(forName: UIApplication.didReceiveMemoryWarningNotification, object: nil, queue: nil) { [weak self] (_) in
             guard let weakSelfObject = self else {
                 return;
             }
@@ -1166,6 +1179,12 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     
     fileprivate func removeObservers()
     {
+        if let observer = self.changePageNotificationObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+        if let observer = self.memoryWarningNotificationObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
         NotificationCenter.default.removeObserver(self);
     }
     

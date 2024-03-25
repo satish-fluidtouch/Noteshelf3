@@ -13,7 +13,6 @@ import FTTemplatesStore
 
 // TODO: (AK) Rename this later
 protocol FTShelfPresentable {
-    var prefersStatusBarHidden: Bool { get }
     var isInSearchMode: Bool { get }
     var isInGroupMode: Bool { get }
     var currentShelfViewModel: FTShelfViewModel? { get }
@@ -536,9 +535,11 @@ extension FTShelfSplitViewController {
                     }
                 }
                 else if(inError.isNotDownloadedError) {
+                    FTCLSLog("Book: \(notebookName): Not Downloaded")
                     self.downloadShelfItem(shelfItem)
                 }
                 else if inError.isNotExistError {
+                    FTCLSLog("Book: \(notebookName): Not Exits")
                     runInMainThread {
                         self.showAlertForError(inError as NSError)
                     }
@@ -560,6 +561,7 @@ extension FTShelfSplitViewController {
             }
             let shouldInsertCover = doc.propertyInfoPlist()?.object(forKey: INSERTCOVER) as? Bool ?? false
             if shouldInsertCover {
+                FTCLSLog("Book: Inserting cover")
                 doc.insertCoverForPasswordProtectedBooks { success, error in
                     doc.propertyInfoPlist()?.setObject(false, forKey: INSERTCOVER)
                     processDocumentOpen()
@@ -624,8 +626,8 @@ extension FTShelfSplitViewController {
                         onCompletion?(nil,false)
                         return
                     }
-
                     if let docContorller = rootController.docuemntViewController {
+                        FTCLSLog("Book: Other book UI")
                         docContorller.saveApplicationStateByClosingDocument(true, keepEditingOn: false) { canClose in
                             if canClose {
                                 openPDFViewer()
@@ -638,7 +640,9 @@ extension FTShelfSplitViewController {
                     }
 
                     func openPDFViewer() {
+                        FTCLSLog("Book: Launch Book UI")
                         rootController.switchToPDFViewer(docInfo, animate: shouldAnimate ,onCompletion: {
+                            FTCLSLog("Book: Launched UI")
                             self.openingBookInProgress = false
                             self.view.isUserInteractionEnabled = true
                             NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)

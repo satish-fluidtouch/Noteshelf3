@@ -80,47 +80,26 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
     }
     //TODO: RK Remove this default collection creation once we get confirmation from amar or akshay.
     fileprivate func defaultCollection(_ onCompletion : @escaping ((FTShelfItemCollection) -> Void))
-    {
+      {
         let myNotesCollectionName = "DefaultCategoryName".localized;
         self._createShelf(myNotesCollectionName.appending(".shelf"), onCompletion: { (error, collection) in
-            guard let collection = collection else {
-                debugPrint("error: \(String(describing: error))")
-                return
+          guard let collection = collection else {
+            debugPrint("error: \(String(describing: error))")
+            return
+          }
+          if(nil != error) {
+            if(ENABLE_SHELF_RPOVIDER_LOGS) {
+              debugPrint("error: \(String(describing: error))");
             }
-            if(nil != error) {
-                if(ENABLE_SHELF_RPOVIDER_LOGS) {
-                    debugPrint("error: \(String(describing: error))");
-                }
-                onCompletion(collection);
-            }
-            else {
-                let url1 = Bundle.main.url(forResource: "SampleNoteBooks", withExtension: "bundle")!;
-                var subFiles = try? FileManager.default.contentsOfDirectory(at: url1, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
-                func moveSampleBooks() {
-                    if let eachFile = subFiles?.first, eachFile.pathExtension == "noteshelf" {
-                        copyNoteShelfFileToCollection(sourceURL: eachFile, destUrl: collection.URL) { url, error in
-                            if let collection = collection as? FTShelfItemCollectionLocal, let url {
-                                collection.addItemsToCache([url])
-                            }
-                            subFiles?.removeFirst()
-                            if subFiles?.isEmpty ?? false {
-                                UserDefaults.standard.set(true, forKey: "DefaultShelfCreated");
-                                UserDefaults.standard.synchronize();
-                                onCompletion(collection);
-                            } else {
-                                moveSampleBooks()
-                            }
-                        }
-                    } else {
-                        UserDefaults.standard.set(true, forKey: "DefaultShelfCreated");
-                        UserDefaults.standard.synchronize();
-                        onCompletion(collection);
-                    }
-                }
-                moveSampleBooks()
-            }
+            onCompletion(collection);
+          }
+          else {
+            UserDefaults.standard.set(true, forKey: "DefaultShelfCreated");
+            UserDefaults.standard.synchronize();
+            onCompletion(collection);
+          }
         });
-    }
+      }
     
     func copyNoteShelfFileToCollection(sourceURL: URL, destUrl: URL, onCompletion:@escaping (URL?,NSError?)->Void) {
         let temporaryDirectoryURL = URL(fileURLWithPath: NSTemporaryDirectory())

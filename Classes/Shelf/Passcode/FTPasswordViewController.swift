@@ -69,7 +69,7 @@ class FTPasswordViewController: FTPasswordKeypadController, FTCustomPresentable 
     var toDisablePassword = false
     var newPassword: String?
     var attemptsCounter: UInt = 1
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.registerForKeyboardDidShowNotification(scrollView: self.tableView)
@@ -88,7 +88,7 @@ class FTPasswordViewController: FTPasswordKeypadController, FTCustomPresentable 
             NotificationCenter.default.addObserver(self, selector: #selector(didFailedToAuthentication(notification:)), name: ftDidFailedToAuthenticate, object: nil)
         }
     }
-
+    
     private func configureEnablePwdView() {
         if passwordFlow == .setPassword && passwordCreation == .existingNotebook {
             self.headerView.enableSwitch?.isOn = false
@@ -525,8 +525,11 @@ extension FTPasswordViewController {
 }
 
 class FTPasswordKeypadController: UIViewController {
+    private weak var keyboardShowObserver: NSObjectProtocol?;
+    private weak var keyboardHideObserver: NSObjectProtocol?;
+
     func registerForKeyboardDidShowNotification(scrollView: UIScrollView, usingBlock block: ((CGSize?) -> Void)? = nil) {
-        NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidShowNotification, object: nil, queue: nil, using: { [weak scrollView] (notification) -> Void in
+        self.keyboardShowObserver = NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidShowNotification, object: nil, queue: nil, using: { [weak scrollView] (notification) -> Void in
             if let inScrollView = scrollView {
                 let userInfo = notification.userInfo!
                 let keyboardSize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as AnyObject).cgRectValue.size
@@ -539,7 +542,7 @@ class FTPasswordKeypadController: UIViewController {
     }
     
     func registerForKeyboardWillHideNotification(scrollView: UIScrollView, usingBlock block: (() -> Void)? = nil) {
-        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: nil, using: { [weak scrollView] (notification) -> Void in
+        self.keyboardHideObserver = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: nil, using: { [weak scrollView] (notification) -> Void in
             if let inScrollView = scrollView {
                 let contentInsets = UIEdgeInsets(top: inScrollView.contentInset.top, left: inScrollView.contentInset.left, bottom: 0, right: inScrollView.contentInset.right)
                 inScrollView.contentInset = contentInsets
@@ -547,5 +550,14 @@ class FTPasswordKeypadController: UIViewController {
                 block?()
             }
         })
+    }
+    
+    deinit {
+        if let observer = self.keyboardHideObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+        if let observer = self.keyboardShowObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
     }
 }

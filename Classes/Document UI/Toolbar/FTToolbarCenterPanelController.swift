@@ -17,6 +17,8 @@ protocol FTToolbarCenterPanelDelegate: AnyObject {
 }
 
 class FTToolbarCenterPanelController: UIViewController {
+    private weak var customToolbarObserver: NSObjectProtocol?;
+
     @IBOutlet private weak var containerView: FTToolbarVisualEffectView?
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var leftNavBtn: UIButton?
@@ -65,6 +67,9 @@ class FTToolbarCenterPanelController: UIViewController {
     }
 
     deinit {
+        if let observer = self.customToolbarObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
         NotificationCenter.default.removeObserver(self)
     }
 
@@ -126,9 +131,9 @@ private extension FTToolbarCenterPanelController {
         self.leftNavBtn?.isHidden = !show
         self.rightNavBtn?.isHidden = !show
     }
-
+    
     private func addObservers() {
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: notifyToolbarCustomization)
+        self.customToolbarObserver = NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: notifyToolbarCustomization)
                                                , object: nil, queue: nil) { [weak self] (_) in
             runInMainThread {
                 guard let strongSelf = self else {

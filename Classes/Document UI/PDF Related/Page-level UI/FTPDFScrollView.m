@@ -503,6 +503,9 @@ parentViewController:(FTPageViewController*)controller
     if(self.mode == FTRenderModeZoom) {
         return YES;
     }
+    else if(self.parentViewController.layoutType == FTPageLayoutVertical) {
+        return FALSE;
+    }
     else if(self.parentViewController.isInZoomMode && (gestureRecognizer == self.pinchGestureRecognizer || gestureRecognizer == self.pinchGestureReuiredToFail)) {
         return NO;
     }
@@ -540,6 +543,9 @@ parentViewController:(FTPageViewController*)controller
 
 -(void)unlockZoom
 {
+    if (self.mode == FTRenderModeDefault && self.parentViewController.layoutType == FTPageLayoutVertical) {
+        return;
+    }
     if([self allowsFreeGestureConditions]) {
         self.toucheGestureRecognizer.enabled = NO;
     }
@@ -570,6 +576,7 @@ parentViewController:(FTPageViewController*)controller
 
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view
 {
+    self.isZoomingInProgress = YES;
     [self.writingView willBeginZooming];
     [self.parentViewController endEditingActiveAnnotation:nil refreshView:TRUE];
     [[self controller] normalizeLassoView];
@@ -925,6 +932,11 @@ parentViewController:(FTPageViewController*)controller
 
 -(void)enablePanDetection
 {
+    if (self.mode == FTRenderModeDefault && self.parentViewController.layoutType == FTPageLayoutVertical) {
+        FTPageViewController *pageViewController = self.parentViewController;
+        [pageViewController.delegate enablePanDetection];
+        return;
+    }
     if([self allowsFreeGestureConditions]) {
         self.panGestureRecognizer.minimumNumberOfTouches = 1;
         self.panGesture.maxNumberOfTouches = 0;
@@ -1015,7 +1027,6 @@ CGPoint lastPoint1,lastPoint2;
                 if(!_isScrolling && !_isZoomingInProgress)
                 {
                     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(disablePinchDetection) object:nil];
-                    self.isZoomingInProgress = YES;
                     self.pinchGestureReuiredToFail.enabled = NO;
                     self.panGesture.enabled = NO;
                     FTCLSLog(@"PDF Page Zoomed");

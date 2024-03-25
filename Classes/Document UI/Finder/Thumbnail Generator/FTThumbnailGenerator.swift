@@ -32,12 +32,15 @@ final class FTThumbnailGenerator: NSObject {
         return renderer
     }()
 
+    private weak var pauseNotificationObserver: NSObjectProtocol?
+    private weak var resumeNotificationObserver: NSObjectProtocol?;
+    
     override init() {
         super.init()
-        NotificationCenter.default.addObserver(forName: .pauseThumbnailGeneration(for: self.notificationObserverID), object: nil, queue: nil) { [weak self] _ in
+        self.pauseNotificationObserver = NotificationCenter.default.addObserver(forName: .pauseThumbnailGeneration(for: self.notificationObserverID), object: nil, queue: nil) { [weak self] _ in
             self?.isPaused = true
         }
-        NotificationCenter.default.addObserver(forName: .resumeThumbnailGeneration(for: self.notificationObserverID), object: nil, queue: nil) { [weak self] _ in
+        self.resumeNotificationObserver = NotificationCenter.default.addObserver(forName: .resumeThumbnailGeneration(for: self.notificationObserverID), object: nil, queue: nil) { [weak self] _ in
             self?.isPaused = false
             self?.startNextRequest()
         }
@@ -46,6 +49,12 @@ final class FTThumbnailGenerator: NSObject {
     deinit {
         if let renderer = _thumnailRenderer {
            FTRendererProvider.shared.enqueOffscreenRenderer(renderer)            
+        }
+        if let observer = self.pauseNotificationObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+        if let observer = self.resumeNotificationObserver {
+            NotificationCenter.default.removeObserver(observer)
         }
     }
 

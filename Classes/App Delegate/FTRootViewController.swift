@@ -42,9 +42,8 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     internal weak var noteBookSplitController: FTNoteBookSplitViewController?
     var contentView : UIView!;
 
-    override var preferredStatusBarStyle : UIStatusBarStyle {
-        return FTShelfThemeStyle.defaultTheme().preferredStatusBarStyle;
-    }
+    private var keyValueObserver: NSKeyValueObservation?;
+    private weak var themeNotificationObserver: NSObjectProtocol?;
 
     override func isAppearingThroughModelScale() {
          (self.rootContentViewController as? FTShelfSplitViewController)?.isAppearingThroughModelScale()
@@ -63,6 +62,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         self.view.addSubview(self.contentView);
 
         if(self.isFirstTime) {
+            FTCLSLog("Launch Screen Added");
             let launchInstanceStoryboard = UIStoryboard(name: "Launch Screen", bundle: nil);
             let viewController = launchInstanceStoryboard.instantiateInitialViewController();
             self.addChild(viewController!);
@@ -80,7 +80,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         }
         FTUserDefaults.defaults().addObserver(self, forKeyPath: "iCloudOn", options: .new, context: nil);
 
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.FTShelfThemeDidChange, object: nil, queue: nil) { [weak self] _ in
+        self.themeNotificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.FTShelfThemeDidChange, object: nil, queue: nil) { [weak self] _ in
             runInMainThread {
                 self?.themeDidChange();
             }
@@ -92,6 +92,9 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 #if BETA
         FTIAPurchaseHelper.shared.isPremiumUser  = true
 #endif
+        self.keyValueObserver = FTUserDefaults.defaults().observe(\.showStatusBar, options: [.new]) { [weak self] (userdefaults, change) in
+            self?.refreshStatusBarAppearnce();
+        }
     }
 
     fileprivate func themeDidChange() {
@@ -110,6 +113,12 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                 self.pencilInteraction = nil;
             }
         }
+        if let _themeObserver = self.themeNotificationObserver {
+            NotificationCenter.default.removeObserver(_themeObserver);
+        }
+        
+        self.keyValueObserver?.invalidate();
+        self.keyValueObserver = nil
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -135,18 +144,15 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 
     override var prefersStatusBarHidden: Bool {
         if let splitVC = self.noteBookSplitController,
-           !(splitVC.isBeingDismissed || splitVC.isBeingPresented),
-           let docController = self.docuemntViewController {
-            return docController.prefersStatusBarHidden;
-        }
-        else if let shelfVC = self.rootContentViewController {
-            return shelfVC.prefersStatusBarHidden;
+           !(splitVC.isBeingDismissed || splitVC.isBeingPresented) {
+            return splitVC.prefersStatusBarHidden;
         }
         return super.prefersStatusBarHidden;
     }
 
     override var prefersHomeIndicatorAutoHidden: Bool {
-        if(self.prefersStatusBarHidden) {
+        if let splitVC = self.noteBookSplitController,
+           !(splitVC.isBeingDismissed || splitVC.isBeingPresented) {
             return true;
         }
         return super.prefersHomeIndicatorAutoHidden;
@@ -226,9 +232,14 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         if(UserDefaults.standard.bool(forKey: WelcomeScreenViewed)
            || (!UserDefaults.standard.bool(forKey: WelcomeScreenViewed)
                && UserDefaults.standard.double(forKey: WelcomeScreenReminderTime) > 0)) {
+            FTCLSLog("Update Provider - Start");
+            let t1 = Date.timeIntervalSinceReferenceDate
+            self.scheduleLaunchWaitError()
             self.updateProvider({
-                    FTBetaAlertHandler.showiOS13BetaAlertIfNeeded(onViewController: self);
-                    FTOneDriveAlertHandler.showOneDriveAuthenticationAlertIfNeeded(self)
+                self.cancelLaunchWaitError()
+                FTCLSLog("Update Provider - End");
+                FTBetaAlertHandler.showiOS13BetaAlertIfNeeded(onViewController: self);
+                FTOneDriveAlertHandler.showOneDriveAuthenticationAlertIfNeeded(self)
             });
         }
     }
@@ -245,26 +256,28 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         FTNoteshelfDocumentProvider.shared.updateProviderIfRequired { isUpdated in
             if(isUpdated || nil == self.rootContentViewController) {
                 FTMobileCommunicationManager.shared.startWatchSession()
-                    let collectionName = self.lastSelectedCollectionName();
-                    self.shelfCollection(title: collectionName, pickDefault: false, onCompeltion: { collectionToShow in
-                        NotificationCenter.default.post(name: .didChangeUnfiledCategoryLocation, object: nil);
-                        if let isInNonCollectionMode = self.isInNonCollectionMode(),
-                           isInNonCollectionMode {
-                            let lastSelectedContentTypeRawString = (self.lastSelectedNonCollectionType() ?? "home")
-                            self.showShelf(isInNonCollectionMode: isInNonCollectionMode,
-                                           lastSelectedSideBarContentType: FTSideBarItemType(rawValue: lastSelectedContentTypeRawString) ?? .home,
-                                           lastSelectedTag: (self.lastSelectedTag() ?? ""))
-                        } else if collectionName == collectionToShow?.title, let collection = collectionToShow {
-                            self.showShelf(updateWithLastSelected: collection);
-                        } else {
-                            // if collection from user activity is nil we are showing "Home" now instead of "All Notes" collection
-                            self.showShelf(isInNonCollectionMode: true,
-                                           lastSelectedSideBarContentType: .home,
-                                           lastSelectedTag: "")
-                        }
-                        self.showIcloudMessage();
-                        onCompletion?(true);
-                    });
+                let collectionName = self.lastSelectedCollectionName();
+                FTCLSLog("Fetching Collection");
+                self.shelfCollection(title: collectionName, pickDefault: false, onCompeltion: { collectionToShow in
+                    FTCLSLog("Collection Fetched");
+                    NotificationCenter.default.post(name: .didChangeUnfiledCategoryLocation, object: nil);
+                    if let isInNonCollectionMode = self.isInNonCollectionMode(),
+                       isInNonCollectionMode {
+                        let lastSelectedContentTypeRawString = (self.lastSelectedNonCollectionType() ?? "home")
+                        self.showShelf(isInNonCollectionMode: isInNonCollectionMode,
+                                       lastSelectedSideBarContentType: FTSideBarItemType(rawValue: lastSelectedContentTypeRawString) ?? .home,
+                                       lastSelectedTag: (self.lastSelectedTag() ?? ""))
+                    } else if collectionName == collectionToShow?.title, let collection = collectionToShow {
+                        self.showShelf(updateWithLastSelected: collection);
+                    } else {
+                        // if collection from user activity is nil we are showing "Home" now instead of "All Notes" collection
+                        self.showShelf(isInNonCollectionMode: true,
+                                       lastSelectedSideBarContentType: .home,
+                                       lastSelectedTag: "")
+                    }
+                    self.showIcloudMessage();
+                    onCompletion?(true);
+                });
             }
             else {
                 onCompletion?(false);
@@ -376,13 +389,16 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 
     fileprivate func maintainPreviousLaunchStateIfNeeded() {
         if self.isFirstTime {
+            FTCLSLog("Maintaining Previous State");
             self.isFirstTime = false;
             self.setupSafeModeIfNeeded()
             if self.userActivity?.activityType == CSSearchableItemActionType,
                let shelfItemUUID = self.userActivity?.userInfo?[CSSearchableItemActivityIdentifier] as? String {
+                FTCLSLog("Opening Book from spotlight");
                 self.openShelfItem(spotLightHash: shelfItemUUID);
             }
             else if let document = self.lastOpenedDocument() {
+                FTCLSLog("Opening last opened book");
                 self.showLastOpenedDocument(relativePath: document, animate: false);
             }
             else if let isInNonCollectionMode = self.isInNonCollectionMode(),
@@ -403,6 +419,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                                isInNonCollectionMode: Bool = false,
                                lastSelectedSideBarContentType sideBarContentType: FTSideBarItemType = .home,
                                lastSelectedTag: String = "") {
+        FTCLSLog("Shelf UI Created");
         // Upodating created notebok count here, assuming, by this time provider will be ready and the books count is updated.
         FTIAPManager.shared.premiumUser.updateNoOfBooks(nil)
         //Instantiate Shelf view controller
@@ -1243,6 +1260,7 @@ extension FTRootViewController {
     fileprivate func removeLaunchScreen(_ animated : Bool)
     {
         if let launchscreen = self.launchScreenController {
+            FTCLSLog("Update Provider - Launch Screen Removed");
             if(!animated) {
                 launchscreen.view.removeFromSuperview();
                 launchscreen.removeFromParent();
@@ -1628,6 +1646,7 @@ extension FTRootViewController {
         DispatchQueue.main.async { [weak self] in
             let oldController = self?.noteBookSplitController;
 
+            FTCLSLog("Book: Preparing Note Split")
             if let splitscreen = self?.deskController(docInfo: documentInfo) {
                 self?.presentNotebookSplitController(splitscreen: splitscreen,
                                                      oldController: oldController,
@@ -1637,6 +1656,7 @@ extension FTRootViewController {
                         docitem.updateLastOpenedDate();
                         (document as? FTNoteshelfDocument)?.setLastOpenedDate(docitem.fileLastOpenedDate)
                     }
+                    FTCLSLog("Book: Note Split Presented")
                     blockToCall();
                 }
             }
@@ -1677,6 +1697,7 @@ private extension FTRootViewController {
            !presentedController.isBeingDismissed {
             if presentedController.isMember(of: FTCreateNotebookViewController.classForCoder()),
                let snapView = presentedController.view.snapshotView(afterScreenUpdates: false) {
+                FTCLSLog("Book: New NB Screen Snapshot")
                 self.contentView.addSubview(snapView);
                 snapshotViews.append(snapView);
                 presentedController.dismiss(animated: false)
@@ -1694,6 +1715,7 @@ private extension FTRootViewController {
         splitscreen.transitioningDelegate = splitscreen.contentTransitionDelegate;
         splitscreen.modalPresentationStyle = .custom;
         #endif
+        FTCLSLog("Book: Presenting UI")
         controllerToPresent?.present(splitscreen, animated: animate,completion: { [weak splitscreen] in
             snapshotViews.forEach { eachView in
                 eachView.removeFromSuperview();
@@ -1775,5 +1797,60 @@ extension FTRootViewController: SFSafariViewControllerDelegate {
 
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
         self.retryiCloudUnavaialbility()
+    }
+}
+
+
+private var launchTracker: FTAppLauncTracker?
+private class FTAppLauncTracker: NSObject {
+    let delayedLaunchKey = "DelayedLaunch";
+    var startTime: TimeInterval = Date.timeIntervalSinceReferenceDate;
+    
+    @objc func log5SecondWaitError() {
+        FTLogError("App Launch Failed - 5")
+    }
+    @objc func log10SecondWaitError() {
+        FTLogError("App Launch Failed - 10")
+    }
+    @objc func log20SecondWaitError() {
+        FTLogError("App Launch Failed - 20")
+    }
+    @objc func log60SecondWaitError() {
+        FTLogError("App Launch Failed - 60")
+        UserDefaults.standard.setValue(true, forKey: delayedLaunchKey)
+    }
+    
+    func scheduleLaunchWaitError() {
+        self.perform(#selector(self.log5SecondWaitError), with: nil, afterDelay: 5);
+        self.perform(#selector(self.log10SecondWaitError), with: nil, afterDelay: 10);
+        self.perform(#selector(self.log20SecondWaitError), with: nil, afterDelay: 20);
+        self.perform(#selector(self.log60SecondWaitError), with: nil, afterDelay: 60);
+    }
+    
+    func cancelLaunchWaitError() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self);
+        self.logTimeTaken();
+    }
+    
+    func logTimeTaken() {
+        let time = Int(Date.timeIntervalSinceReferenceDate - self.startTime)
+        if time >= 60 {
+            FTLogError("App Launch Time", attributes: ["Time" : time])
+        }
+        else if UserDefaults.standard.bool(forKey: delayedLaunchKey) {
+            FTLogError("App Launch Recovered", attributes: ["Time" : time])
+        }
+    }
+}
+
+private extension FTRootViewController {
+    func scheduleLaunchWaitError() {
+        launchTracker = FTAppLauncTracker();
+        launchTracker?.scheduleLaunchWaitError();
+        
+    }
+    func cancelLaunchWaitError() {
+        launchTracker?.cancelLaunchWaitError();
+        launchTracker = nil;
     }
 }

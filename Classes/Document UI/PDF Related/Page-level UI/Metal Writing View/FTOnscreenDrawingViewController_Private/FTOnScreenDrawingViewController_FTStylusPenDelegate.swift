@@ -281,7 +281,7 @@ extension FTOnScreenWritingViewController {
     }
     
     func addObserversForQuickPageNavigator(){
-        NotificationCenter.default.addObserver(forName: .quickPageNavigatorShowNotification,
+        self.pageNavigationShowObserver = NotificationCenter.default.addObserver(forName: .quickPageNavigatorShowNotification,
                                                object: nil,
                                                queue: nil)
         { [weak self] (_) in

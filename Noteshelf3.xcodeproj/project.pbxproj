@@ -657,6 +657,7 @@
 		5288FB4F2A559CC800EBC37C /* StockPapers.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BAA84ECA2873116300DE801B /* StockPapers.bundle */; };
 		5288FB502A559D4600EBC37C /* StockCovers.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BAA84EC92873116200DE801B /* StockCovers.bundle */; };
 		5291391F2B99DC7200BA8108 /* SampleNoteBooks.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5291391E2B99DC7200BA8108 /* SampleNoteBooks.bundle */; };
+		52916EA82B9ED2F500CFC53A /* FTStatusBarInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52916EA72B9ED2F500CFC53A /* FTStatusBarInfoViewController.swift */; };
 		5292B2322A27283C00216330 /* FTNotebookSettingViewController+Siri.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5292B2312A27283C00216330 /* FTNotebookSettingViewController+Siri.swift */; };
 		5292B2362A27323B00216330 /* FTUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211E2C9F1E027D72007B5CAD /* FTUserDefaults.swift */; };
 		52941CA72A84F2A90022243D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7A912E22861F20C00BACD79 /* Localizable.strings */; };
@@ -3571,6 +3572,7 @@
 		5283D3B22A5EC8AB00C6C125 /* FTShareActionAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShareActionAlertView.swift; sourceTree = "<group>"; };
 		5283D3B42A5EC90C00C6C125 /* FTShareActionAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTShareActionAlert.xib; sourceTree = "<group>"; };
 		5291391E2B99DC7200BA8108 /* SampleNoteBooks.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SampleNoteBooks.bundle; sourceTree = "<group>"; };
+		52916EA72B9ED2F500CFC53A /* FTStatusBarInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStatusBarInfoViewController.swift; sourceTree = "<group>"; };
 		5292B2312A27283C00216330 /* FTNotebookSettingViewController+Siri.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTNotebookSettingViewController+Siri.swift"; sourceTree = "<group>"; };
 		52B34DB029E561F600360F10 /* UIFonts+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFonts+Custom.swift"; sourceTree = "<group>"; };
 		52B34DF629E5684100360F10 /* Montserrat-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.otf"; sourceTree = "<group>"; };
@@ -7019,6 +7021,7 @@
 				211E2F2D1E027D73007B5CAD /* Shapes */,
 				211E2F4D1E027D73007B5CAD /* Toolbar */,
 				211E2F6A1E027D73007B5CAD /* Zoom Mode */,
+				52916EA72B9ED2F500CFC53A /* FTStatusBarInfoViewController.swift */,
 			);
 			path = "Document UI";
 			sourceTree = "<group>";
@@ -13963,6 +13966,7 @@
 				E7AE4D9F2899480A004CF608 /* FTShapeShortcutView.swift in Sources */,
 				979BC27F288EAD8600208B21 /* FTShelfItemView.swift in Sources */,
 				E762186F2A4D809D004A8428 /* FTShelfBaseHostingController.swift in Sources */,
+				52916EA82B9ED2F500CFC53A /* FTStatusBarInfoViewController.swift in Sources */,
 				BAF392822859ADF00067CA9F /* FTZenDeskManager.swift in Sources */,
 				BAF392832859ADF00067CA9F /* FTAlphabetTextList.swift in Sources */,
 				BAF392842859ADF00067CA9F /* FTWebdavBackupPublisher.swift in Sources */,
@@ -15334,7 +15338,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 EE Dev";
-				APP_VERSION = 1.5.4;
+				APP_VERSION = 1.5.6;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -15775,7 +15779,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Noteshelf 3";
-				APP_VERSION = 1.5.4;
+				APP_VERSION = 1.5.6;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -17060,7 +17064,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Beta";
-				APP_VERSION = 1.5.4;
+				APP_VERSION = 1.5.6;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -17975,7 +17979,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Dev";
-				APP_VERSION = 1.5.4;
+				APP_VERSION = 1.5.6;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -18041,7 +18045,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Noteshelf 3";
-				APP_VERSION = 1.5.4;
+				APP_VERSION = 1.5.6;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -18113,7 +18117,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "Noteshelf Action/Noteshelf ActionDebug.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -18134,6 +18141,7 @@
 				OTHER_SWIFT_FLAGS = "-D NOTESHELF_ACTION -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3-dev.noteshelf-action";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Noteshelf Action/NoteshelfAction-Bridging-Header.h";

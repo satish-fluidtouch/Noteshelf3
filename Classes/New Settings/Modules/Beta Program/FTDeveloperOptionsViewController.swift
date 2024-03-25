@@ -38,7 +38,9 @@ class FTDeveloperOptionsViewController: UIViewController {
     @IBOutlet private weak var enablePDFSelection: UISwitch?
     @IBOutlet private weak var offScreenRenderSwitch: UISwitch?
     @IBOutlet private weak var onscreenBorderSwitch: UISwitch?
+    @IBOutlet weak var whatsNewStatusSwitch: UISwitch!
     @IBOutlet private weak var showTileBorderSwitch: UISwitch?
+    @IBOutlet weak var whatsNewStatusLabel: UILabel!
     @IBOutlet private weak var showTileInfoSwitch: UISwitch?
     @IBOutlet private weak var bookOpenAnimScale: UISwitch?
     @IBOutlet private weak var enablePremiumMode: UISwitch?
@@ -87,6 +89,7 @@ class FTDeveloperOptionsViewController: UIViewController {
         enablePremiumMode?.isOn = FTIAPurchaseHelper.shared.isPremiumUser
         textToStrokeSnapToLineHeight?.isOn = FTDeveloperOption.textToStrokeWrapChar
         useQLThumbnail?.isOn = FTDeveloperOption.useQuickLookThumbnailing
+        whatsNewStatusSwitch.isOn = FTUserDefaults.defaults().statusBarwhatsNewSwitch
     }
     
     @IBAction func togglePremiumMode(_ swicth: UISwitch) {
@@ -99,6 +102,10 @@ class FTDeveloperOptionsViewController: UIViewController {
         updateSwitches()
     }
 
+    @IBAction func onWhatsNewToggleChanged(_ sender: UISwitch) {
+        FTUserDefaults.defaults().statusBarwhatsNewSwitch = sender.isOn
+    }
+    
     @IBAction func toggleOffScreenRender(swicth: UISwitch) {
         FTRenderConstants.STOP_OFFSCREEN_RENDER = swicth.isOn
     }
