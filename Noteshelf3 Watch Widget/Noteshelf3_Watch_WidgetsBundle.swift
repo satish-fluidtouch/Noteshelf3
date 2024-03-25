@@ -46,7 +46,7 @@ struct FTComplicationView: View {
         case .accessoryRectangular:
             FTComplicationRectangular(entry: entry)
         @unknown default:
-            Text("unknown")
+            Text("Noteshelf3")
         }
     }
 }
