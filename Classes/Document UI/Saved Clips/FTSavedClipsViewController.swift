@@ -295,10 +295,9 @@ extension FTSavedClipsViewController: UICollectionViewDelegateFlowLayout {
 
 extension FTSavedClipsViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
-        let category = viewModel.categoryFor(index: self.selectedSegmentIndex)
-        if category?.title != textField.text {
+        if let category = viewModel.categoryFor(index: self.selectedSegmentIndex) , category.title != textField.text {
             do {
-                try viewModel.renameCategory(category: category!, with: textField.text ?? "")
+                try viewModel.renameCategory(category: category, with: textField.text ?? "")
                 let titles = viewModel.categoryNames()
                 segmentedControl?.setTitles(titles, style: .adaptiveSpace(18))
                 segmentedControl.selectedIndex = selectedSegmentIndex
