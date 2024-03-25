@@ -15,15 +15,21 @@ class FTTagDelete: FTTagOperation {
     }
 
     override func perfomAction(_ onCompletion: (()->())?) -> Progress? {
+        var updatedTags : Set<FTTag>?;
         let progress = self.enumerateDocuments(Array(self.tag.documentIDs)) { (documentID, document, docItem, token, onTaskCompletion) in
             document.deleteTags([self.tag.tagName])
-            FTTagsProvider.shared.syncTagWithDocument(document,documentItem: docItem);
+            updatedTags = FTTagsProvider.shared.syncTagWithDocument(document,documentItem: docItem);
             FTNoteshelfDocumentManager.shared.saveAndClose(document: document, token: token) { _ in
                 self.tag.removeDocumentID(documentID);
                 onTaskCompletion();
             }
         } onCompletion: {
             FTTagsProvider.shared.deleteTags([self.tag]);
+            if let tag = updatedTags, !tag.isEmpty {
+                NotificationCenter.default.post(name: Notification.Name("DidChangePageEntities")
+                                                , object: nil
+                                                , userInfo: ["tags" : Array(tag)]);
+            }
             onCompletion?()
         }
         return progress;

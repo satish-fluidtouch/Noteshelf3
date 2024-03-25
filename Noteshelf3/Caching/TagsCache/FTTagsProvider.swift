@@ -240,7 +240,9 @@ private extension FTTag {
 }
 
 internal extension FTTagsProvider {
-    func syncTagWithDocument(_ cacheDocument: FTDocumentProtocol,documentItem: FTShelfItemProtocol) {
+    @discardableResult
+    func syncTagWithDocument(_ cacheDocument: FTDocumentProtocol,documentItem: FTShelfItemProtocol) -> Set<FTTag> {
+        var updatedTags = Set<FTTag>()
         let documentID = cacheDocument.documentUUID
         let currentTags = Set(self.userTags.values.filter{$0.documentIDs.contains(documentID)});
         var newTagsSet = Set(self.getTagsfor(cacheDocument.documentTags(),shouldCreate: true))
@@ -283,9 +285,13 @@ internal extension FTTagsProvider {
             shouldSave = true;
             eachItem.addDocumentID(documentID);
         }
+        
+        updatedTags = updatedTags.union(tagsToremove);
+        updatedTags = updatedTags.union(newTagsSet);
         if(shouldSave) {
             save();
         }
+        return updatedTags;
     }
     
     func syncTagsWithLocalCache(documentID: String,documentitem: FTShelfItemProtocol? = nil) {
@@ -363,6 +369,7 @@ private extension FTTagsProvider {
         keysToRemove.forEach { eachKey in
             self.taggedEntitiesInfo.removeValue(forKey: eachKey);
         }
+        
         lock.unlock();
     }
 }
