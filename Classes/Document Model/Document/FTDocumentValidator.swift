@@ -22,6 +22,7 @@ class FTDocumentValidator: NSObject {
         func openDoc(_ pin : String?) {
             let openRequest = FTDocumentOpenRequest(url: shelfItem.URL, purpose: .write);
             openRequest.pin = pin;
+            FTCLSLog("Book: \(shelfItem.displayTitle): Opening")
             FTNoteshelfDocumentManager.shared.openDocument(request: openRequest) { (token, document, error) in
                 onCompletion?( ( nil == error) ? document : nil , error,token);
             }

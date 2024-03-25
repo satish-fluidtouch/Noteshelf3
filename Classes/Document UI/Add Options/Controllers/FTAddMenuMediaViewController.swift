@@ -86,7 +86,6 @@ extension FTAddMenuMediaViewController: UITableViewDataSource {
             var config = cell.defaultContentConfiguration().addMenuContentConfig()
             config.image = item.image
             config.text = item.name
-            config.image?.tint(with: UIColor.appColor(.accent))
             cell.contentConfiguration = config
             cell.backgroundColor = UIColor.appColor(.cellBackgroundColor)
             if item.showDiscloser {

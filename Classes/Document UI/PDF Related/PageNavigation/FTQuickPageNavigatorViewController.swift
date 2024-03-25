@@ -434,41 +434,37 @@ extension FTQuickPageNavigatorViewController {
 extension FTQuickPageNavigatorViewController {
     
     @objc private func updateThumbnailImage() {
+        guard isTrackingActive else {
+            return;
+        }
+        removeThumbnailObservers();
         self.thumbnailImageView?.contentMode = UIView.ContentMode.scaleAspectFit;
+
         self.page?.thumbnail()?.thumbnailImage(onUpdate: { [weak self] (image, uuidString) in
-            if let currentPage = self?.page , currentPage.uuid == uuidString {
+            if let currentPage = self?.page, currentPage.uuid == uuidString {
                 self?.thumbnailImageView?.image = image;
                 self?.thumbnailImageView?.backgroundColor = UIColor.clear
-                if nil == image {
-                    self?.thumbnailImageView?.image = nil;
-                    self?.thumbnailImageView?.backgroundColor = UIColor.white
-                    self?.thumbnailImageView?.contentMode = UIView.ContentMode.scaleToFill;
-                }
                 if(currentPage.thumbnail()?.shouldGenerateThumbnail ?? false) {
                     self?.addThumbnailObservers();
                 }
-            }
-
-            if let currentPage = self?.page, currentPage.uuid == uuidString {
-                if nil == image {
+                guard let newImage = image else {
                     self?.thumbnailImageView?.image = nil;
                     self?.thumbnailImageView?.backgroundColor = UIColor.white
                     self?.thumbnailImageView?.contentMode = UIView.ContentMode.scaleToFill;
+                    return;
                 }
-                else {
-                    let originalThumbnailSize: CGSize = CGSize.init(width: 100, height: 125)
-                    if let thumbnailImgView = self?.thumbnailImageView, let newImage = image?.resizedImageWithinRect(originalThumbnailSize), let tipView = self?.pageTipView {
-                        
-                        self?.thumbnailImageView?.image = newImage;
-                        self?.thumbnailImageView?.backgroundColor = UIColor.clear
-                        if let pageinfolabel = self?.pageInfoLabel, let numberofPages = self?.numberOfPages{
-                            if let scrollDirection = self?.direction, scrollDirection == .vertical {
-                                thumbnailImgView.frame = CGRect(origin: CGPoint.init(x:pageinfolabel.frame.maxX - newImage.size.width * 0.8  , y: tipView.frame.maxY + gapBetweenPageTipAndThumbnail), size: newImage.size)
-                              }
-                            else {
-                                thumbnailImgView.frame = CGRect.init(origin: CGPoint.zero, size: newImage.size)
-                                thumbnailImgView.center = CGPoint.init(x: originalThumbnailSize.width * (numberofPages > 99 ? 0.5 : 0.4), y: tipView.frame.minY - (newImage.size.height * 0.5) - gapBetweenPageTipAndThumbnail)
-                            }
+                let originalThumbnailSize: CGSize = CGSize.init(width: 100, height: 125)
+                if let thumbnailImgView = self?.thumbnailImageView
+                    , let tipView = self?.pageTipView {
+                    let aspectRatio = AVMakeRect(aspectRatio: newImage.size, insideRect: CGRect(origin: .zero, size: originalThumbnailSize))
+                    if let pageinfolabel = self?.pageInfoLabel
+                        , let numberofPages = self?.numberOfPages {
+                        if let scrollDirection = self?.direction, scrollDirection == .vertical {
+                            thumbnailImgView.frame = CGRect(origin: CGPoint.init(x:pageinfolabel.frame.maxX - aspectRatio.size.width * 0.8  , y: tipView.frame.maxY + gapBetweenPageTipAndThumbnail), size: aspectRatio.size)
+                        }
+                        else {
+                            thumbnailImgView.frame = CGRect.init(origin: CGPoint.zero, size: aspectRatio.size)
+                            thumbnailImgView.center = CGPoint.init(x: originalThumbnailSize.width * (numberofPages > 99 ? 0.5 : 0.4), y: tipView.frame.minY - (aspectRatio.size.height * 0.5) - gapBetweenPageTipAndThumbnail)
                         }
                     }
                 }

@@ -23,11 +23,19 @@ public class FTRackDataManager {
 
     func getRackData() -> FTRackInfoModel {
         guard let info else {
-            let rackInfo: FTRackInfoModel
+            var rackInfo: FTRackInfoModel
             do {
                 try migrateRackDataIfNecessary()
                 let migratedData = try Data(contentsOf: rackPlistURL)
                 rackInfo = try PropertyListDecoder().decode(FTRackInfoModel.self, from: migratedData)
+                if rackInfo.currentPresetColors.isEmpty && !rackInfo.defaultPresetColors.isEmpty {
+                    FTLogError("Stored Pen Color Empty");
+                    rackInfo.currentPresetColors = rackInfo.defaultPresetColors
+                }
+                if rackInfo.currentHighlighterPresetColors.isEmpty && !rackInfo.defaultHighlighterPresetColors.isEmpty {
+                    FTLogError("Stored Marker Color Empty");
+                    rackInfo.currentHighlighterPresetColors = rackInfo.defaultHighlighterPresetColors
+                }
             } catch {
                 rackInfo = getDefaultStockData()
             }
@@ -55,11 +63,12 @@ public class FTRackDataManager {
 
     func saveRackData(_ rackData: FTRackInfoModel) {
         do {
-            guard !rackData.currentPresetColors.isEmpty else {
+            guard !rackData.currentPresetColors.isEmpty || !rackData.currentHighlighterPresetColors.isEmpty else {
 #if DEBUG || BETA
                 fatalError("some problem while saving color data");
 #else
-                FTLogError("PEN RACK COLOR EMPTY");
+                FTLogError("Rack Color Empty",attributes: ["Pen": rackData.currentPresetColors.isEmpty
+                                                           , "Marker" : rackData.currentHighlighterPresetColors.isEmpty]);
                 return
 #endif
             }
@@ -69,7 +78,6 @@ public class FTRackDataManager {
         }
         catch {
             FTLogError("PEN RACK SAVE FAILED: \(error)")
-            print("Error saving rack data: \(error)")
         }
     }
 }

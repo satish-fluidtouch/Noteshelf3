@@ -668,12 +668,14 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     func saveDocument(completionHandler : ((Bool) -> Void)?)
     {
         if(self.openPurpose == .read) {
-            FTLogError("Doc Saved in Readonly: \(self.addressString) - \(self.URL.title)");
+            FTCLSLog("Doc Saved in Readonly: \(self.addressString) - \(self.URL.title)");
+            FTLogError("Doc Saved in Readonly");
             completionHandler?(true);
             return;
         }
         if self.documentState.contains(.editingDisabled) {
-            FTLogError("Doc_Saved_Edit_Disabled: \(self.addressString) - \(self.URL.title)");
+            FTCLSLog("Doc_Saved_Edit_Disabled: \(self.addressString) - \(self.URL.title)");
+            FTLogError("Doc_Saved_Edit_Disabled");
         }
         
         if(self.hasAnyUnsavedChanges) {
@@ -879,7 +881,8 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
             return;
         }
         if self.documentState.contains(.editingDisabled) {
-            FTLogError("Doc_writeContents_Edit_Disabled: \(self.addressString) - \(self.URL.title)");
+            FTCLSLog("Doc_writeContents_Edit_Disabled: \(self.addressString) - \(self.URL.title)");
+            FTLogError("Doc_writeContents_Edit_Disabled:")
         }
         #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
         if(url.urlByDeleteingPrivate() != self.fileURL.urlByDeleteingPrivate()) {

@@ -133,6 +133,7 @@ class FTNoteshelfDocumentProvider: NSObject {
     }
 
     fileprivate static func documentProvider(_ onCompletion : @escaping ((FTNoteshelfDocumentProvider) -> Void)) {
+        FTCLSLog("Provider - Preparing Default Collections");
         let documentProvider = FTNoteshelfDocumentProvider();
         documentProvider.prepareSystemDefaultCollections {
                 documentProvider.localShelfCollectionRoot = FTShelfCollectionLocalRoot()
@@ -141,10 +142,12 @@ class FTNoteshelfDocumentProvider: NSObject {
                 #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
                 documentProvider.localWatchRecordingCollection = FTWatchRecordingCollection_Local()
                 #endif
+            FTCLSLog("Provider - Checking iCloud status");
                 FTNSiCloudManager.shared().updateiCloudStatus(FTNSiCloudManager.iCloudContainerID.ns3, withCompletionHandler: { available in
-
+                    FTCLSLog("Provider - Verified iCloud status \(available)");
                     // Early exit from the provider creation, when the cloud drive is off inside device settings and iCloud is still on inside the application.
                     if(FTNSiCloudManager.shared().iCloudOn() && FTNSiCloudManager.shared().iCloudRootURL() == nil) {
+                        FTCLSLog("Provider - Cloud on but url nil");
                         onCompletion(documentProvider);
                         return
                     }
