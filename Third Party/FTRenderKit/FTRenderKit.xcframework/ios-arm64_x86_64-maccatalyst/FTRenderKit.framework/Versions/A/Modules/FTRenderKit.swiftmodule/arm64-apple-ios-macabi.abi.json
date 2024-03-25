@@ -23760,154 +23760,154 @@
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 9384,
+      "offset": 9337,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 9442,
+      "offset": 9395,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 9448,
+      "offset": 9401,
       "length": 2,
       "value": "-1"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 9541,
+      "offset": 9494,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 9587,
+      "offset": 9540,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 12606,
+      "offset": 12559,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 12726,
+      "offset": 12679,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 12784,
+      "offset": 12737,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 13089,
+      "offset": 13042,
       "length": 1,
       "value": "4"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 13151,
+      "offset": 13104,
       "length": 1,
       "value": "4"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 13339,
+      "offset": 13292,
       "length": 1,
       "value": "4"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 13665,
+      "offset": 13618,
       "length": 1,
       "value": "8"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 13720,
+      "offset": 13673,
       "length": 2,
       "value": "32"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 13783,
+      "offset": 13736,
       "length": 1,
       "value": "4"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 14156,
+      "offset": 14109,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "StringLiteral",
-      "offset": 14721,
+      "offset": 14674,
       "length": 44,
       "value": "\"Failed to create off-screen command buffer\""
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 15365,
+      "offset": 15318,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 15475,
+      "offset": 15428,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 15863,
+      "offset": 15816,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 16273,
+      "offset": 16226,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 16435,
+      "offset": 16388,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 16467,
+      "offset": 16420,
       "length": 1,
       "value": "0"
     },
