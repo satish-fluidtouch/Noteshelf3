@@ -69,8 +69,10 @@ class FTSavedClipsViewController: UIViewController {
         sender.isSelected.toggle()
         if sender.isSelected {
             startEditing()
+            trackSavedClips(with: FTNotebookEventTracker.nbk_addmenu_savedclips_edit_tap)
         } else {
             endEditing()
+            trackSavedClips(with: FTNotebookEventTracker.nbk_addmenu_savedclips_done_tap)
         }
         collectionView.reloadData()
     }
@@ -92,6 +94,7 @@ class FTSavedClipsViewController: UIViewController {
         UIAlertController.showDeleteDialog(with: title, message: "", from: self) {
             do {
                 try self.viewModel.removeCategory(index: self.selectedSegmentIndex)
+                self.trackSavedClips(with: FTNotebookEventTracker.nbk_savedclips_edit_deletecategory_tap)
             } catch {
                 // Handle error
             }
@@ -137,6 +140,10 @@ class FTSavedClipsViewController: UIViewController {
             }
         }
     }
+    
+    func trackSavedClips(with event: String) {
+        FTNotebookEventTracker.trackNotebookEvent(with: event)
+    }
 }
 
 //MARK:- FTSegmentedControlDelegate
@@ -174,6 +181,7 @@ extension FTSavedClipsViewController: FTSegmentedControlDelegate {
     }
 
     func didTapSegment(_ index: Int) {
+        trackSavedClips(with: FTNotebookEventTracker.nbk_addmenu_savedclips_category_tap)
     }
 
 }
@@ -211,6 +219,7 @@ extension FTSavedClipsViewController: UICollectionViewDelegate, UICollectionView
             cell.configureCellWith(clip: clip, isEditing: self.cellType == .editing ? true : false)
             cell.deleteSavedClip = { [weak self] clip in
                 self?.removeItem(clip: clip)
+                self?.trackSavedClips(with: FTNotebookEventTracker.nbk_savedclips_edit_delete_tap)
             }
         }
         return cell
@@ -232,6 +241,7 @@ extension FTSavedClipsViewController: UICollectionViewDelegate, UICollectionView
         if cellType == .normal, let clip = viewModel.itemFor(indexPath: IndexPath(item: indexPath.item, section: self.selectedSegmentIndex)) {
             self.dismiss(animated: true) { [weak self] in
                 self?.delegate?.didTapSavedClip(clip: clip)
+                self?.trackSavedClips(with: FTNotebookEventTracker.nbk_addmenu_savedclips_clip_tap)
             }
         } else if cellType == .editing {
             self.endEditing()
@@ -257,6 +267,7 @@ extension FTSavedClipsViewController: UICollectionViewDelegate, UICollectionView
                 guard let self = self else { return }
                 self.dismiss(animated: true) { [weak self] in
                     self?.delegate?.didTapSavedClip(clip: clip)
+                    self?.trackSavedClips(with: FTNotebookEventTracker.nbk_savedclips_clip_addtopage_tap)
                 }
             }
             let deleteACtion = UIAction(title: NSLocalizedString("delete", comment: "delete"),
@@ -267,6 +278,7 @@ extension FTSavedClipsViewController: UICollectionViewDelegate, UICollectionView
                                      state: .off) { [weak self] _ in
                 guard let self = self else { return }
                 self.removeItem(clip: clip)
+                self.trackSavedClips(with: FTNotebookEventTracker.nbk_savedclips_clip_delete_tap)
             }
             return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: [addACtion, deleteACtion])
         }
@@ -301,6 +313,9 @@ extension FTSavedClipsViewController: UITextFieldDelegate {
                 let titles = viewModel.categoryNames()
                 segmentedControl?.setTitles(titles, style: .adaptiveSpace(18))
                 segmentedControl.selectedIndex = selectedSegmentIndex
+                if !(textField.text ?? "").isEmpty {
+                    FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.nbk_savedclips_edit_name_type)
+                }
             } catch {
                 // Handle
                 print(error)

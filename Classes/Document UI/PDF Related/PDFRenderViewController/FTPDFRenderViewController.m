@@ -2428,7 +2428,6 @@
         [self insertEmptyPageAtIndex:index];
     }
     else {
-        FTCLSLog(@"Page inserted by right pull");
         id<FTPageProtocol> newPage = [self.pdfDocument insertPageAbovePage:page];
         if(nil != newPage) {
             NSInteger index = newPage.pageIndex;
@@ -2437,16 +2436,17 @@
             });
         }
     }
+    FTNotebookEventTracker.trackFreePageAddedEvent;
 }
 
 -(void)insertEmptyPageBelow:(id<FTPageProtocol>)page {
-    FTCLSLog(@"Page inserted by right pull");
     id<FTPageProtocol> newPage = [self.pdfDocument insertPageBelowPage:page];
     if(nil != newPage) {
         NSInteger index = newPage.pageIndex;
         dispatch_async(dispatch_get_main_queue(), ^{
             [self showPageAtIndex:index forceReLayout:false];
         });
+        FTNotebookEventTracker.trackFreePageAddedEvent;
     }
 }
 
@@ -2483,6 +2483,7 @@
             [self showPageAtIndex:index forceReLayout:false];
         });
     }
+    FTNotebookEventTracker.trackFreePageAddedEvent;
 }
 
 #pragma mark - auxilary button -
