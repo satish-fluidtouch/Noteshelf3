@@ -1775,10 +1775,11 @@ private class FTAppLauncTracker: NSObject {
 
 private extension FTRootViewController {
     func scheduleLaunchWaitError() {
+        self.cancelLaunchWaitError();
         launchTracker = FTAppLauncTracker();
         launchTracker?.scheduleLaunchWaitError();
-        
     }
+    
     func cancelLaunchWaitError() {
         launchTracker?.cancelLaunchWaitError();
         launchTracker = nil;
