@@ -86,6 +86,11 @@ class FTLineDashView : UIView
          }
          return scaleProportinally
      }
+     
+     var isCornerControlPoint : Bool {
+         let cornerPoints: [FTControlPoint] = [.topLeft, .topRight, .bottomRight, .bottomLeft]
+         return cornerPoints.contains(self)
+     }
 }
 
 @objcMembers public class FTImageResizeViewController: UIViewController {
@@ -617,7 +622,7 @@ extension FTImageResizeViewController {
         self.finalizeonTouchEnd();
         if activeControlPoint == .smoothRotate {
             trackSavedClips(with: FTNotebookEventTracker.activeclip_rotate)
-        } else if activeControlPoint == .topLeft ||  activeControlPoint == .topRight ||  activeControlPoint == .bottomRight || activeControlPoint == .bottomLeft {
+        } else if activeControlPoint.isCornerControlPoint {
             trackSavedClips(with: FTNotebookEventTracker.activeclip_controlpoint_drag)
         }
     }
