@@ -10,9 +10,9 @@ import Foundation
 import FTDocumentFramework
 
 private let shapeInsertQuery = """
-INSERT INTO annotation (annotationType, strokeWidth, strokeColor, penType, boundingRect_x, boundingRect_y, boundingRect_w, boundingRect_h, txMatrix, segmentCount, shape_data, createdTime, modifiedTime, isReadonly, version)
+INSERT INTO annotation (annotationType, strokeWidth, strokeColor, penType, boundingRect_x, boundingRect_y, boundingRect_w, boundingRect_h, txMatrix, segmentCount, shape_data, createdTime, modifiedTime, isReadonly, version, id, groupId)
 VALUES
-(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
 """;
 
 extension FTShapeAnnotation {
@@ -24,7 +24,6 @@ extension FTShapeAnnotation {
         guard !self.hasErasedSegments() else {
             return super.saveToDatabase(db)
         }
-
         do {
         try db.executeUpdate(shapeInsertQuery, values: [
             NSNumber.init(value: FTAnnotationType.shape.rawValue),
@@ -41,7 +40,9 @@ extension FTShapeAnnotation {
             NSNumber.init(value: self.createdTimeInterval as Double),
             NSNumber.init(value: self.modifiedTimeInterval as Double),
             NSNumber.init(value: self.isReadonly),
-            NSNumber.init(value: self.version)
+            NSNumber.init(value: self.version),
+            self.uuid,
+            self.groupId ?? NSNull(),
             ]);
             return true
         } catch {

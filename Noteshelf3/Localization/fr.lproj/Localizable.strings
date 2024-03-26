@@ -959,9 +959,9 @@
 "bujoessentials" = "Essentiels du Bujo";
 "cancel" = "Annuler";
 "clip.addClip" = "Ajouter un clip";
+"clip.clipAdded" = "Clip ajoutée";
 "clip.deleteCategory" = "Supprimer la catégorie";
-"clip.deleteCategory.message" = "";
-"clip.deleteCategory.title" = "La suppression de cette catégorie supprimera tous les clips @% de cette catégorie et ne pourra pas être récupérée.";
+"clip.deleteCategory.title" = "La suppression de cette catégorie supprimera tous les clips %@ de cette catégorie et ne pourra pas être récupérée.";
 "clip.newCategory" = "Nouvelle catégorie...";
 "clip.noCategory" = "Cette catégorie est vide.";
 "clip.noSavedClips" = "Aucun clip enregistré";
@@ -1478,6 +1478,7 @@
 "sidebar.topSection.home" = "Accueil";
 "sidebar.topSection.starred" = "Favoris";
 "sidebar.topSection.unfiled" = "Non classé";
+"snippets.addtopage" = "Ajouter à la page";
 "speechbubbles" = "Bulles de dialogue";
 "status_bar_info_footer" = "Appréciez-vous Noteshelf 3 ? %@ pour nous évaluer sur l'App Store. Cela nous aidera plus que vous ne l’imaginez.";
 "status_bar_info_subtitle" = "Vous avez été nombreux à nous demander la barre d'état lors de la prise de notes. Vous avez maintenant la possibilité d'afficher la barre d'état dans le menu Plus.";
@@ -1608,4 +1609,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 11 March 2024 at 7:30 PM
+// Last Synced by Sameer Hussain on 22 March 2024 at 11:59 AM

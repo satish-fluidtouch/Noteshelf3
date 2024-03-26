@@ -199,6 +199,7 @@ final class FTShapeAnnotation: FTStroke, FTShapeAnnotationProtocol {
 
     override func deepCopyAnnotation(_ toPage: FTPageProtocol, onCompletion: @escaping (FTAnnotation?) -> Void) {
         let shape = FTShapeAnnotation(withPage : toPage, shapeType: shapeData.shapeSubType);
+        shape.groupId = self.groupId
         shape.isReadonly = self.isReadonly;
         shape.version = self.version;
         shape.strokeColor = self.strokeColor;
@@ -212,6 +213,7 @@ final class FTShapeAnnotation: FTStroke, FTShapeAnnotationProtocol {
         shape.rotatedAngle = self.rotatedAngle
         shape.properties = self.properties
         shape.shapeData = self.shapeData
+        shape.shapeTransformMatrix = self.shapeTransformMatrix
         onCompletion(shape);
     }
 
@@ -275,6 +277,7 @@ final class FTShapeAnnotation: FTStroke, FTShapeAnnotationProtocol {
     
     func asStroke() -> FTStroke {
         let stroke = FTStroke()
+        stroke.groupId = self.groupId
         stroke.boundingRect = self.renderingRect
         stroke.segmentArray = self.segmentArray
         stroke.segmentsTransientArray = self.segmentsTransientArray

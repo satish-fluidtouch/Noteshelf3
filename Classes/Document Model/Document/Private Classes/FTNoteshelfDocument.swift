@@ -5,8 +5,8 @@
 //  Created by Amar on 25/3/17.
 //  Copyright © 2017 Fluid Touch Pte Ltd. All rights reserved.
 //
-let APP_SUPPORTED_MAX_DOC_VERSION = Float(9);
-let DOC_VERSION : String = "9.0";
+let APP_SUPPORTED_MAX_DOC_VERSION = Float(10);
+let DOC_VERSION : String = "10.0";
 let DOCUMENTS_KEY : String = "documents";
 let DOCUMENT_TYPE = "document_type"
 let DOCUMENT_ID_KEY =  "document_ID";
@@ -655,12 +655,14 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     func saveDocument(completionHandler : ((Bool) -> Void)?)
     {
         if(self.openPurpose == .read) {
-            FTLogError("Doc Saved in Readonly: \(self.addressString) - \(self.URL.title)");
+            FTCLSLog("Doc Saved in Readonly: \(self.addressString) - \(self.URL.title)");
+            FTLogError("Doc Saved in Readonly");
             completionHandler?(true);
             return;
         }
         if self.documentState.contains(.editingDisabled) {
-            FTLogError("Doc_Saved_Edit_Disabled: \(self.addressString) - \(self.URL.title)");
+            FTCLSLog("Doc_Saved_Edit_Disabled: \(self.addressString) - \(self.URL.title)");
+            FTLogError("Doc_Saved_Edit_Disabled");
         }
         
         if(self.hasAnyUnsavedChanges) {
@@ -866,7 +868,8 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
             return;
         }
         if self.documentState.contains(.editingDisabled) {
-            FTLogError("Doc_writeContents_Edit_Disabled: \(self.addressString) - \(self.URL.title)");
+            FTCLSLog("Doc_writeContents_Edit_Disabled: \(self.addressString) - \(self.URL.title)");
+            FTLogError("Doc_writeContents_Edit_Disabled:")
         }
         #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
         if(url.urlByDeleteingPrivate() != self.fileURL.urlByDeleteingPrivate()) {

@@ -255,7 +255,6 @@ extension FTPageViewController {
     
     @IBAction func longPressDetected(_ gesture : UILongPressGestureRecognizer)
     {
-        var isAnnotationDetected = false
         if(gesture.state == .began) {
             self.activeAnnotationController?.annotationControllerLongPressDetected()
             let hitPoint = gesture.location(in: self.contentHolderView);
@@ -264,7 +263,6 @@ extension FTPageViewController {
                 self.editAnnotation(annotation,
                                     eventType: .longPress,
                                     at:hitPoint)
-                isAnnotationDetected = true
                 if annotation.isLocked {
                     return
                 }
@@ -353,6 +351,8 @@ extension FTPageViewController : UIGestureRecognizerDelegate
                         if let activeController = self.delegate?.activeAnnotationController() {
                             let controller = self.delegate?.pageControllerFor(activeAnnotationController: activeController);
                             controller?.endEditingActiveAnnotation(activeController.annotation, refreshView: true)
+                        } else if let lassoController = self.lassoContentSelectionViewController {
+                            self.normalizeLassoView()
                         }
                         return false;
                     }
@@ -443,6 +443,11 @@ extension FTPageViewController : UIGestureRecognizerDelegate
                 if currentDeskMode() == .deskModeReadOnly {
                     valueToReturn = true
 
+                }
+                if nil != self.lassoSelectionView?.antsView ||
+                    nil != self.lassoContentSelectionViewController {
+                    self.normalizeLassoView()
+                    valueToReturn = false;
                 }
             }
             self.perform(#selector(self.hideQuickPageNavigator), with: nil, afterDelay: 0.1)

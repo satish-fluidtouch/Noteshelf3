@@ -959,8 +959,8 @@
 "bujoessentials" = "Bujo Essentials";
 "cancel" = "Cancel";
 "clip.addClip" = "Add Clip";
+"clip.clipAdded" = "Clip Added";
 "clip.deleteCategory" = "Delete Category";
-"clip.deleteCategory.message" = "Would you like to continue?";
 "clip.deleteCategory.title" = "Deleting this category will delete all %@ clips in this category and cannot be recovered.";
 "clip.newCategory" = "New Category...";
 "clip.noCategory" = "This category is empty";
@@ -1478,6 +1478,7 @@
 "sidebar.topSection.home" = "Home";
 "sidebar.topSection.starred" = "Starred";
 "sidebar.topSection.unfiled" = "Unfiled";
+"snippets.addtopage" = "Add to page";
 "speechbubbles" = "Speech Bubbles";
 "status_bar_info_footer" = "Enjoying Noteshelf? %@ to rate us on the App Store. It will help us more than you’d imagine. ";
 "status_bar_info_subtitle" = "Many of you asked for the status bar when taking notes. You now have an option to show the status bar from the More menu.";
@@ -1608,4 +1609,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 11 March 2024 at 7:30 PM
+// Last Synced by Sameer Hussain on 22 March 2024 at 11:59 AM

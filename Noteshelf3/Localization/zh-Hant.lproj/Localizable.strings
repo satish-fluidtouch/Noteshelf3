@@ -959,9 +959,9 @@
 "bujoessentials" = "筆記本要點";
 "cancel" = "取消";
 "clip.addClip" = "添加片段";
+"clip.clipAdded" = "片段已添加";
 "clip.deleteCategory" = "刪除類別";
-"clip.deleteCategory.message" = "";
-"clip.deleteCategory.title" = "刪除此類別將刪除此類別中的所有@％剪輯，且無法恢復。";
+"clip.deleteCategory.title" = "刪除此類別將刪除此類別中的所有%@片段，且無法復原。";
 "clip.newCategory" = "新分類...";
 "clip.noCategory" = "這個類別為空";
 "clip.noSavedClips" = "沒有已儲存的片段";
@@ -1478,6 +1478,7 @@
 "sidebar.topSection.home" = "主页";
 "sidebar.topSection.starred" = "標記";
 "sidebar.topSection.unfiled" = "未歸檔";
+"snippets.addtopage" = "添加到新頁面";
 "speechbubbles" = "對話框";
 "status_bar_info_footer" = "喜歡 Noteshelf 嗎？%@ 在 App Store 上為我們評分。 它對我們的幫助將超越您的想像。";
 "status_bar_info_subtitle" = "許多人在記筆記時都要求使用狀態列。 現在您可以選擇從更多選單中顯示狀態列。";
@@ -1608,4 +1609,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 11 March 2024 at 7:30 PM
+// Last Synced by Sameer Hussain on 22 March 2024 at 11:59 AM

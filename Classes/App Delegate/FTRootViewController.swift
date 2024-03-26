@@ -229,6 +229,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
            || (!UserDefaults.standard.bool(forKey: WelcomeScreenViewed)
                && UserDefaults.standard.double(forKey: WelcomeScreenReminderTime) > 0)) {
             FTCLSLog("Update Provider - Start");
+            let t1 = Date.timeIntervalSinceReferenceDate
             self.scheduleLaunchWaitError()
             self.updateProvider({
                 self.cancelLaunchWaitError()
@@ -1575,6 +1576,7 @@ extension FTRootViewController {
         DispatchQueue.main.async { [weak self] in
             let oldController = self?.noteBookSplitController;
 
+            FTCLSLog("Book: Preparing Note Split")
             if let splitscreen = self?.deskController(docInfo: documentInfo) {
                 self?.presentNotebookSplitController(splitscreen: splitscreen,
                                                      oldController: oldController,
@@ -1584,6 +1586,7 @@ extension FTRootViewController {
                         docitem.updateLastOpenedDate();
                         (document as? FTNoteshelfDocument)?.setLastOpenedDate(docitem.fileLastOpenedDate)
                     }
+                    FTCLSLog("Book: Note Split Presented")
                     blockToCall();
                 }
             }
@@ -1624,6 +1627,7 @@ private extension FTRootViewController {
            !presentedController.isBeingDismissed {
             if presentedController.isMember(of: FTCreateNotebookViewController.classForCoder()),
                let snapView = presentedController.view.snapshotView(afterScreenUpdates: false) {
+                FTCLSLog("Book: New NB Screen Snapshot")
                 self.contentView.addSubview(snapView);
                 snapshotViews.append(snapView);
                 presentedController.dismiss(animated: false)
@@ -1641,6 +1645,7 @@ private extension FTRootViewController {
         splitscreen.transitioningDelegate = splitscreen.contentTransitionDelegate;
         splitscreen.modalPresentationStyle = .custom;
         #endif
+        FTCLSLog("Book: Presenting UI")
         controllerToPresent?.present(splitscreen, animated: animate,completion: { [weak splitscreen] in
             snapshotViews.forEach { eachView in
                 eachView.removeFromSuperview();
@@ -1725,7 +1730,12 @@ extension FTRootViewController: SFSafariViewControllerDelegate {
     }
 }
 
-private extension FTRootViewController {
+
+private var launchTracker: FTAppLauncTracker?
+private class FTAppLauncTracker: NSObject {
+    let delayedLaunchKey = "DelayedLaunch";
+    var startTime: TimeInterval = Date.timeIntervalSinceReferenceDate;
+    
     @objc func log5SecondWaitError() {
         FTLogError("App Launch Failed - 5")
     }
@@ -1735,16 +1745,42 @@ private extension FTRootViewController {
     @objc func log20SecondWaitError() {
         FTLogError("App Launch Failed - 20")
     }
-
+    @objc func log60SecondWaitError() {
+        FTLogError("App Launch Failed - 60")
+        UserDefaults.standard.setValue(true, forKey: delayedLaunchKey)
+    }
+    
     func scheduleLaunchWaitError() {
         self.perform(#selector(self.log5SecondWaitError), with: nil, afterDelay: 5);
         self.perform(#selector(self.log10SecondWaitError), with: nil, afterDelay: 10);
         self.perform(#selector(self.log20SecondWaitError), with: nil, afterDelay: 20);
+        self.perform(#selector(self.log60SecondWaitError), with: nil, afterDelay: 60);
     }
     
     func cancelLaunchWaitError() {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.log5SecondWaitError), object: nil);
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.log10SecondWaitError), object: nil);
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.log20SecondWaitError), object: nil);
+        NSObject.cancelPreviousPerformRequests(withTarget: self);
+        self.logTimeTaken();
+    }
+    
+    func logTimeTaken() {
+        let time = Int(Date.timeIntervalSinceReferenceDate - self.startTime)
+        if time >= 60 {
+            FTLogError("App Launch Time", attributes: ["Time" : time])
+        }
+        else if UserDefaults.standard.bool(forKey: delayedLaunchKey) {
+            FTLogError("App Launch Recovered", attributes: ["Time" : time])
+        }
+    }
+}
+
+private extension FTRootViewController {
+    func scheduleLaunchWaitError() {
+        launchTracker = FTAppLauncTracker();
+        launchTracker?.scheduleLaunchWaitError();
+        
+    }
+    func cancelLaunchWaitError() {
+        launchTracker?.cancelLaunchWaitError();
+        launchTracker = nil;
     }
 }

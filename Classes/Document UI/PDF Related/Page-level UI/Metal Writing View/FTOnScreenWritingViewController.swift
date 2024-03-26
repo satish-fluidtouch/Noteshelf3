@@ -16,7 +16,7 @@ class FTOnScreenWritingViewController: UIViewController {
     
     weak var delegate : FTContentDelegate?;
     internal weak var pageNavigationShowObserver: NSObjectProtocol?;
-    
+    internal var touchTime = DispatchTime.now()
     private weak var metalView: FTMetalView!;
     fileprivate var currentExecutingRequest : FTOnScreenRenderRequest?;
     fileprivate var currentExecutingID : String?;
@@ -347,6 +347,7 @@ extension FTOnScreenWritingViewController
                 break;
             }
             if self.currentRenderer != nil {
+                touchTime = DispatchTime.now()
                 cancelScheduledShapeDetection(touch)
                 let penSet = self.currentSelectedPenSet()
                 let stroke = FTStroke();
@@ -427,7 +428,7 @@ extension FTOnScreenWritingViewController
                     }
                 }
             }
-            if(shapeDetectionEnabled || isShapeEnabled) {
+            if(shapeDetectionEnabled || isShapeEnabled) && shouldAddShape() {
                 let detectedShape = self.drawDetectedShape()
                 isShapeRendered = detectedShape.hasShape
                 if detectedShape.hasShape {
@@ -469,6 +470,15 @@ extension FTOnScreenWritingViewController
             self.cancelDisableLongPressGesture();
             
         }
+    }
+    
+    //This is extra check to ensure user is drawing shape.
+    private func shouldAddShape() -> Bool {
+        var shouldAddShape = true
+        if (DispatchTime.now() - touchTime) < 150 {
+            shouldAddShape = false
+        }
+        return shouldAddShape
     }
     
     private func shouldScheduleShapeDetection() -> Bool {

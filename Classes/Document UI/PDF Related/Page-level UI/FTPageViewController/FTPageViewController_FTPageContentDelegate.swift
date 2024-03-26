@@ -76,7 +76,15 @@ extension FTPageViewController : FTPageAnnotationHandler
         (self.pdfPage as? FTPageUndoManagement)?.moveAnnotationsToBack(annotations);
         refreshModifiedArea(for: annotations, shouldRefresh: shouldRefresh)
     }
-        
+
+    func groupAnnotations(_ annotations : [FTAnnotation]) {
+        (self.pdfPage as? FTPageUndoManagement)?.group(annotations: annotations)
+    }
+
+    func ungroupAnnotations(_ annotations : [FTAnnotation]) {
+        (self.pdfPage as? FTPageUndoManagement)?.ungroup(annotations: annotations)
+    }
+
     private func refreshModifiedArea(for annotations:[FTAnnotation], shouldRefresh: Bool) {
 
         let refreshArea = annotations.reduce(CGRect.null) { (rect, annotation) -> CGRect in

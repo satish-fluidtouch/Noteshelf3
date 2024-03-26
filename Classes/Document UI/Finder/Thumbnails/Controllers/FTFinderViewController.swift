@@ -1245,7 +1245,8 @@ extension FTFinderViewController{
 
     private var cellWidthForBookmark : CGFloat {
         let extraInsets = self.bookMarkContentInsets.left + self.bookMarkContentInsets.right
-        return collectionView.frame.width - extraInsets
+        let width = collectionView.frame.width - extraInsets
+        return (width > 0) ? width : .zero
     }
 
     var contentInset: UIEdgeInsets {
