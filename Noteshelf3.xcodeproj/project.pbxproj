@@ -41,6 +41,7 @@
 		09415E312ACFFB8A00BB1EAA /* FTNoteshelfAIPremiumUserCreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09415E302ACFFB8A00BB1EAA /* FTNoteshelfAIPremiumUserCreditsViewController.swift */; };
 		09415E332ACFFBA000BB1EAA /* FTNoteshelfAIFreeUserCreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09415E322ACFFBA000BB1EAA /* FTNoteshelfAIFreeUserCreditsViewController.swift */; };
 		0951BA9C2AD01D3D00E9E02C /* FTNoteshelfAITokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0951BA9B2AD01D3D00E9E02C /* FTNoteshelfAITokenManager.swift */; };
+		095B826B2BB2BD9C00E8E82C /* FTDocumentFrameworkLogHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 095B82692BB2BD9C00E8E82C /* FTDocumentFrameworkLogHelper.m */; };
 		095F042E2ACD43E100205BF7 /* FTOpenAIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095F042D2ACD43E100205BF7 /* FTOpenAIResponse.swift */; };
 		095F04312ACE89C600205BF7 /* FTDigitalInkRecognitionTaskProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095F04302ACE89C600205BF7 /* FTDigitalInkRecognitionTaskProcessor.swift */; };
 		0964D06C2AB9C27500C79C01 /* ThumbnailProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964D06B2AB9C27500C79C01 /* ThumbnailProvider.swift */; };
@@ -2508,6 +2509,8 @@
 		09591AEC202C4B79008848DE /* URL_WatchRecord_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URL_WatchRecord_Extension.swift; sourceTree = "<group>"; };
 		0959F3671EAB630A00096674 /* FTDocumentItemWrapperObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDocumentItemWrapperObject.swift; sourceTree = "<group>"; };
 		095A20E22341ED14002B4236 /* FTRootViewCOntroller_ImportAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTRootViewCOntroller_ImportAction.swift; sourceTree = "<group>"; };
+		095B82692BB2BD9C00E8E82C /* FTDocumentFrameworkLogHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTDocumentFrameworkLogHelper.m; sourceTree = "<group>"; };
+		095B826A2BB2BD9C00E8E82C /* FTDocumentFrameworkLogHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTDocumentFrameworkLogHelper.h; sourceTree = "<group>"; };
 		095E107A1ED2E5CF004E2632 /* UIFont_Traits_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFont_Traits_Extension.swift; sourceTree = "<group>"; };
 		095E3E94227810C6005FCABA /* FTNoteshelfPage_FTPageEvernoteSyncProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNoteshelfPage_FTPageEvernoteSyncProtocol.swift; sourceTree = "<group>"; };
 		095E9F402366EBD3003277A4 /* FTSaveAsTemplateActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSaveAsTemplateActivity.swift; sourceTree = "<group>"; };
@@ -6723,6 +6726,8 @@
 		211E2C791E027D72007B5CAD /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				095B826A2BB2BD9C00E8E82C /* FTDocumentFrameworkLogHelper.h */,
+				095B82692BB2BD9C00E8E82C /* FTDocumentFrameworkLogHelper.m */,
 				E7AD96C8291A85B0002A6DB2 /* FTPHPicker.swift */,
 				BABD257222E0383A00F9CA5C /* Presentation */,
 				09771C8720E64B1400B73FC0 /* FTDocumentPasswordValidate.swift */,
@@ -13943,6 +13948,7 @@
 				BAF393352859ADF00067CA9F /* FabricHelper.swift in Sources */,
 				BAF393362859ADF00067CA9F /* FTAudioListTableViewCell.m in Sources */,
 				42835D492892C54400B041A3 /* FTFinderPresentationController.swift in Sources */,
+				095B826B2BB2BD9C00E8E82C /* FTDocumentFrameworkLogHelper.m in Sources */,
 				BA50E03C2959CB4800CDC0FD /* FTShelfTagsRepresentableView.swift in Sources */,
 				BAF393372859ADF00067CA9F /* FTPencilBrushBuilder_V2.swift in Sources */,
 				BA2D911C285CAFCC001BB495 /* FTSidebarSectionType.swift in Sources */,

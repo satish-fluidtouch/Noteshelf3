@@ -111,3 +111,5 @@
 #import "EvernoteNoteStore+Extras.h"
 #import "EDAMNoteStore.h"
 #import "NSDate+EDAMAdditions.h"
+
+#import "FTDocumentFrameworkLogHelper.h"
