@@ -404,7 +404,6 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     }
     func insertFile(_ info : FTDocumentInputInfo,onCompletion: @escaping ((NSError?, Bool) -> Void)) {
         #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
-        FTNotebookEventTracker.trackFreePageAddedEvent()
         if let templateURL = info.inputFileURL, info.isTemplate, templateURL.pathExtension == nsBookExtension {
             DispatchQueue.main.async(execute: {
                 self.insertPageFromNSTemplate(info, onCompletion: { (error, success) in
