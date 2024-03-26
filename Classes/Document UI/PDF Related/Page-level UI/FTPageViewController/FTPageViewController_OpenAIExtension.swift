@@ -318,7 +318,7 @@ extension FTPDFRenderViewController {
         }
     }
 
-    private func postRefreshNotification(for inPage:FTPageProtocol?, annotations: [FTAnnotation]) {
+     internal func postRefreshNotification(for inPage:FTPageProtocol?, annotations: [FTAnnotation]) {
         if !annotations.isEmpty, let page = inPage {
             var refreshRect: CGRect = .null;
             annotations.forEach { eachAnnotation in

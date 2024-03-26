@@ -157,6 +157,49 @@ extension FTPDFRenderViewController: FTAddDocumentEntitiesViewControllerDelegate
         }
     }
 }
+extension FTPDFRenderViewController: FTSavedClipdelegate {
+    func didTapSavedClip(clip: FTSavedClipModel) {
+        func performCopy(annotations: [FTAnnotation], completion: @escaping () -> Void) {
+            if let pageController = self.firstPageController(), let page = pageController.pdfPage as? FTNoteshelfPage {
+                let vertices = annotations.map { eachAnn in
+                    return CGPoint(x: eachAnn.boundingRect.midX, y: eachAnn.boundingRect.midY)
+                }
+                var startRect = FTShapeUtility.boundingRect(vertices)
+                if annotations.count == 1 {
+                    let boundingRect = annotations.first?.boundingRect ?? CGRect.zero
+                    startRect = boundingRect
+                }
+                let screenArea = CGRect.scale(pageController.contentHolderView!.bounds, 1 / pageController.contentScale())
+                let targetRect = CGRect(x: (screenArea.size.width - startRect.size.width) * 0.5, y: (screenArea.size.height - startRect.size.height) * 0.5, width: startRect.size.width, height: startRect.size.height)
+                let translateX = targetRect.origin.x - startRect.origin.x;
+                let translateY = targetRect.origin.y - startRect.origin.y;
+                let groupId = UUID().uuidString
+                annotations.forEach { eachAnn in
+                    eachAnn.groupId = groupId
+                    eachAnn.setOffset(CGPoint(x: translateX, y: translateY))
+                }
+                page.deepCopyAnnotations(annotations, disableUndo: false) { [pageController] copiedAnnotations in
+                    pageController.resizeSavedClipFor(annotations: copiedAnnotations)
+                    completion()
+                }
+            }
+        }
+
+        if let fileUrl = FTSavedClipsProvider.shared.fileUrlForClip(clip: clip) {
+            let request = FTDocumentOpenRequest(url: fileUrl, purpose: .read)
+            FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, snippetsDocument, error in
+                if error != nil {
+                } else if let snippetsDocument, let firstPage = snippetsDocument.pages().first {
+                    let annotations = firstPage.annotations()
+                    performCopy(annotations: annotations, completion: {
+                        FTNoteshelfDocumentManager.shared.closeDocument(document: snippetsDocument, token: token, onCompletion: nil)
+                    })
+                }
+            }
+        }
+    }
+
+}
 
 extension FTPDFRenderViewController: FTImportingProtocol {
 

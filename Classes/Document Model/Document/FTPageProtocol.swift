@@ -69,6 +69,7 @@ import PDFKit
     var visionRecognitionInfo : FTVisionRecognitionResult? {get set};
 
     func annotations() -> [FTAnnotation];
+    func annotations(groupId: String) -> [FTAnnotation]?
     func audioAnnotations() -> [FTAnnotation];
 
 

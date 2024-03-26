@@ -63,6 +63,7 @@ class FTNotebookEventTracker {
     static let nbk_addmenu_recordaudio_tap = "nbk_addmenu_recordaudio_tap"
     static let nbk_addmenu_emojis_tap = "nbk_addmenu_emojis_tap"
     static let nbk_addmenu_stickers_tap = "nbk_addmenu_stickers_tap"
+    static let nbk_addmenu_savedclips_tap = "nbk_addmenu_savedclips_tap"
     static let nbk_addmenu_importmedia_tap = "nbk_addmenu_importmedia_tap"
     static let nbk_addmenu_applewatch_tap = "nbk_addmenu_applewatch_tap"
     static let nbk_addmenu_webclip_tap = "nbk_addmenu_webclip_tap"

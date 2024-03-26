@@ -237,7 +237,7 @@ extension FTEmojisViewController: UICollectionViewDelegate, UICollectionViewData
         
         if !didSearchStarted {
             let section = sections[indexPath.section]
-            header.configure(name: section.title.localized.uppercased())
+            header.configure(name: section.title.localized)
         } else {
             header.configure(name: "")
         }

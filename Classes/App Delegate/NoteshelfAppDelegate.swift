@@ -58,6 +58,7 @@ let AppDelegate = UIApplication.shared.delegate as! NoteshelfAppDelegate
         FTDocumentCache.shared.start()
         FTStoreLibraryHandler.shared.start()
         FTStoreCustomTemplatesHandler.shared.start()
+        FTSavedClipsProvider.shared.start()
         return true
     }
 
