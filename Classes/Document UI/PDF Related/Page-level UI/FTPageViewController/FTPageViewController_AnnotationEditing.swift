@@ -216,6 +216,7 @@ private extension FTPageViewController
         }
 
         initiateGroupedAnnotationEditing(annotations: groupAnnotations)
+        FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.clip_tap)
     }
 
     @objc func delayedRender(_ annotation : FTAnnotation)

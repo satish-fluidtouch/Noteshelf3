@@ -63,6 +63,7 @@ class FTSaveClipPreviewViewController: UIViewController {
 
     @IBAction func cancelAction(_ sender: Any) {
         self.dismiss(animated: true)
+        FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.saveclip_cancel_tap)
     }
 
     @IBAction func addClipAction(_ sender: Any) {
@@ -75,6 +76,7 @@ class FTSaveClipPreviewViewController: UIViewController {
         let toastView = FTToastConfiguration(title: "clip.clipAdded".localized)
         FTToastHostController.showToast(from: self, toastConfig: toastView)
         self.dismiss(animated: true)
+        FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.saveclip_addclip_tap)
     }
 }
 
@@ -123,6 +125,7 @@ extension FTSaveClipPreviewViewController: UITableViewDelegate, UITableViewDataS
             self.view.endEditing(true)
             self.selectedIndexPath = indexPath
             cell.setSelected(true, animated: true)
+            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.saveclip_category_tap)
         }
         // Toggle the cell's selection state
         if let cell = tableView.cellForRow(at: indexPath) as? FTInlineTableViewCell {

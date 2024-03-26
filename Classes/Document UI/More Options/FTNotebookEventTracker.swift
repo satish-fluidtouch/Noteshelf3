@@ -8,7 +8,7 @@
 
 import Foundation
 
-class FTNotebookEventTracker {
+@objc class FTNotebookEventTracker: NSObject {
     static let toolbar_back_tap = "toolbar_back_tap"
     static let toolbar_undo_tap = "toolbar_undo_tap"
     static let toolbar_redo_tap = "toolbar_redo_tap"
@@ -95,9 +95,36 @@ class FTNotebookEventTracker {
     static let nbk_swipe_choosetemplate_tap = "nbk_swipe_choosetemplate_tap"
     static let nbk_swipe_importdocument_tap = "nbk_swipe_importdocument_tap"
     static let nbk_swipe_more_tap = "nbk_swipe_more_tap"
-
+    static let nbk_freepage_added = "nbk_freepage_added"
+    static let lasso_saveclip_tap = "lasso_saveclip_tap"
+    static let saveclip_cancel_tap = "saveclip_cancel_tap"
+    static let saveclip_newcategory_tap = "saveclip_newcategory_tap"
+    static let saveclip_addclip_tap = "saveclip_addclip_tap"
+    static let saveclip_newcategory_type = "saveclip_newcategory_type"
+    static let saveclip_category_tap = "saveclip_category_tap"
+    static let nbk_addmenu_savedclips_category_tap = "nbk_addmenu_savedclips_category_tap"
+    static let nbk_addmenu_savedclips_clip_tap = "nbk_addmenu_savedclips_clip_tap"
+    static let nbk_addmenu_savedclips_edit_tap = "nbk_addmenu_savedclips_edit_tap"
+    static let nbk_addmenu_savedclips_done_tap = "nbk_addmenu_savedclips_done_tap"
+    static let nbk_savedclips_edit_delete_tap = "nbk_savedclips_edit_delete_tap"
+    static let nbk_savedclips_edit_name_type = "nbk_savedclips_edit_name_type"
+    static let nbk_savedclips_edit_deletecategory_tap = "nbk_savedclips_edit_deletecategory_tap"
+    static let nbk_savedclips_clip_addtopage_tap = "nbk_savedclips_clip_addtopage_tap"
+    static let clip_tap = "clip_tap"
+    static let activeclip_delete_tap = "activeclip_delete_tap"
+    static let activeclip_rotate_tap = "activeclip_rotate_tap"
+    static let activeclip_controlpoint_drag = "activeclip_controlpoint_drag"
+    static let activeclip_rotate = "activeclip_rotate"
+    static let activeclip_rotatedbyfingers = "activeclip_rotatedbyfingers"
+    static let nbk_savedclips_clip_delete_tap = "nbk_savedclips_clip_delete_tap"
 
     static func trackNotebookEvent(with value: String, params: [String: Any]? = nil) {
         track(value, params: params,screenName: FTScreenNames.notebook)
+    }
+    
+    @objc static func trackFreePageAddedEvent() {
+        if !FTIAPurchaseHelper.shared.isPremiumUser {
+            track(nbk_freepage_added,screenName: FTScreenNames.notebook)
+        }
     }
 }

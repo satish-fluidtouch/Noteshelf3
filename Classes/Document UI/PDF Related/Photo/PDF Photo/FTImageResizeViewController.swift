@@ -597,7 +597,7 @@ extension FTImageResizeViewController {
                 } else {
                     self.performKnobMovedUsingScalingApproach(touch: touch);
                 }
-           
+                
             }
         }
         else if(self.isMoving) {
@@ -615,6 +615,17 @@ extension FTImageResizeViewController {
     override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event);
         self.finalizeonTouchEnd();
+        if activeControlPoint == .smoothRotate {
+            trackSavedClips(with: FTNotebookEventTracker.activeclip_rotate)
+        } else if activeControlPoint == .topLeft ||  activeControlPoint == .topRight ||  activeControlPoint == .bottomRight || activeControlPoint == .bottomLeft {
+            trackSavedClips(with: FTNotebookEventTracker.activeclip_controlpoint_drag)
+        }
+    }
+    
+    func trackSavedClips(with event: String) {
+        if photoMode == .transform, let lassoController = self.parent as? FTLassoContentSelectionViewController {
+            lassoController.trackGroupedClips(with: event)
+        }
     }
     
     override public func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -665,6 +676,7 @@ extension FTImageResizeViewController
             self.showAngleInfoView(false, animate: true);
             self.isRotating = false;
             self.showControlPoints(animate: true)
+            trackSavedClips(with: FTNotebookEventTracker.activeclip_rotatedbyfingers)
         default:
             break;
         }
@@ -704,6 +716,7 @@ extension FTImageResizeViewController
             self.showAngleInfoView(true, animate: true);
         }
         track("Media_TapRotate", params: [:], screenName: FTScreenNames.media)
+        trackSavedClips(with: FTNotebookEventTracker.activeclip_rotate_tap)
     }
 
     func currentViewAngle() -> CGFloat {

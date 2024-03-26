@@ -68,11 +68,15 @@ class FTInlineTableViewCell: UITableViewCell, UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.attributedPlaceholder = lightAttributedPlaceHolder()
         didBeginEditing?()
+        FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.saveclip_newcategory_tap)
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.attributedPlaceholder = attributedPlaceHolder()
         didEndEditing?(textField.text ?? "")
+        if !((textField.text ?? "").isEmpty) {
+            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.saveclip_newcategory_type)
+        }
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
