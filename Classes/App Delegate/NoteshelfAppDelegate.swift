@@ -29,6 +29,7 @@ let AppDelegate = UIApplication.shared.delegate as! NoteshelfAppDelegate
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        FTDocumentFrameworkLogHelper.config()
         self.clearTempCache();
         FTImportStorageManager.resetCorruptedStatusWhenTerminated()
         FTCLSLog("--- didFinishLaunchingWithOptions ---")
@@ -57,6 +58,7 @@ let AppDelegate = UIApplication.shared.delegate as! NoteshelfAppDelegate
         FTDocumentCache.shared.start()
         FTStoreLibraryHandler.shared.start()
         FTStoreCustomTemplatesHandler.shared.start()
+        FTSavedClipsProvider.shared.start()
         return true
     }
 

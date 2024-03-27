@@ -11,17 +11,17 @@ import UIKit
 class FTEmojiCategoryHeaderView: UICollectionReusableView {
     
     static let identifier = "EmojiCategoryHeaderView"
-    
+
     private lazy var label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Recents"
         label.textAlignment = .center
         label.textColor = .label
-        label.font = UIFont.appFont(for: .medium, with: 13.0)
+        label.font = UIFont.clearFaceFont(for: .medium, with: 20)
         return label
     }()
-    
+
     override init(frame: CGRect) {
         super.init(frame: .zero)
         addSubview(label)

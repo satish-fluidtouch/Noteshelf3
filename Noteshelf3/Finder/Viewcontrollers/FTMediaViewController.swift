@@ -100,9 +100,9 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
         createAndApplySnapshot()
         showPlaceHolderView(true)
         self.setUpData()
-        NotificationCenter.default.addObserver(self, selector: #selector(didRemoveMedia(_:)), name: .didRemoveMedia, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didAddMedia(_:)), name: .didAddMedia, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didUpdateMedia(_:)), name: .didUpdateMedia, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didRemoveMedia(_:)), name: .didRemoveMedia, object: self.document)
+        NotificationCenter.default.addObserver(self, selector: #selector(didAddMedia(_:)), name: .didAddMedia, object: self.document)
+        NotificationCenter.default.addObserver(self, selector: #selector(didUpdateMedia(_:)), name: .didUpdateMedia, object: self.document)
         contentView.addVisualEffectBlur(cornerRadius: 0)
     }
     

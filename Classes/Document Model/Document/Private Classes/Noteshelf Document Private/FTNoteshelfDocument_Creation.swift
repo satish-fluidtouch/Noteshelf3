@@ -161,7 +161,9 @@ extension FTNoteshelfDocument
         }
         alertController.addAction(okAction)
         
-        alertController.addTextField(configurationHandler: nil);
+        alertController.addTextField { textField in
+            textField.isSecureTextEntry = true
+        };
         #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
         viewController?.present(alertController, animated: true, completion: nil);
         #endif
