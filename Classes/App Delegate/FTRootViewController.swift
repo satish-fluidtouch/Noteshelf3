@@ -323,6 +323,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 
                 let loadingIndicatorViewController = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: NSLocalizedString("Moving", comment: "Moving..."));
                 DispatchQueue.main.async {
+                    FTDocumentCache.shared.clearCachedItems()
                     FTNoteshelfDocumentProvider.shared.moveContentsFromCloudToLocal(onCompletion: { (_) in
                         FTURLReadThumbnailManager.sharedInstance.clearStoredThumbnailCache()
                         FTNoteshelfDocumentProvider.shared.refreshCurrentShelfCollection {
@@ -342,6 +343,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             controller.addAction(keepLocalAction);
 
             let deleteFromLocal = UIAlertAction.init(title: NSLocalizedString("DeleteALocalCopy",comment:"Delete on my iPad"), style: .destructive, handler: { (_) in
+                FTDocumentCache.shared.clearCachedItems()
                 FTURLReadThumbnailManager.sharedInstance.clearStoredThumbnailCache()
                 FTNoteshelfDocumentProvider.shared.resetProviderCache();
                 (weakSelf?.rootContentViewController as? FTShelfSplitViewController)?.updateSidebarCollections()

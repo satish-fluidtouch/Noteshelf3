@@ -83,6 +83,21 @@ final class FTDocumentCache {
         cacheLog(.info, sharedCacheFolderURL)
         addObservers()
     }
+    
+    func clearCachedItems() {
+        if  let items = try? FileManager.default.contentsOfDirectory(atPath: sharedCacheFolderURL.path(percentEncoded: false)) {
+            items.forEach { eachItem in
+                if eachItem.pathExtension == FTFileExtension.ns3 {
+                    do {
+                        let url = cachedLocation(for: eachItem.deletingPathExtension)
+                        try FileManager.default.removeItem(at: url)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        }
+    }
 
     func stop() {
         removeObservers()
