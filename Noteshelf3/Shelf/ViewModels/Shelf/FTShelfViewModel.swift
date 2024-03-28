@@ -47,6 +47,13 @@ protocol FTShelfViewModelProtocol: AnyObject {
 protocol FTShelfCompactViewModelProtocol: AnyObject {
     func didChangeSelectMode(_ mode: FTShelfMode)
 }
+
+enum FTShelfLoadingState {
+    case loading
+    case loaded
+    case empty
+}
+
 class FTShelfViewModel: NSObject, ObservableObject {
     struct ShelfReloadState {
         var isReloadInProgress: Bool = false
@@ -70,6 +77,8 @@ class FTShelfViewModel: NSObject, ObservableObject {
     weak var groupViewOpenDelegate: FTShelfViewDelegate?
     var didTapOnSeeAllNotes: (() -> Void)?
     @Published var scrollToItemID: String?
+    @Published private(set) var state: FTShelfLoadingState = .loading
+
     // MARK: Published variables
     @Published var mode: FTShelfMode = .normal {
         didSet {
@@ -87,6 +96,11 @@ class FTShelfViewModel: NSObject, ObservableObject {
             }
             subscribeToShelfItemChanges()
             self.updateGetStartedInfoWithDelay()
+            if shelfItems.isEmpty {
+                self.state = .empty
+            } else {
+                self.state = .loaded
+            }
         }
     }
     

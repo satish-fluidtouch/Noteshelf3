@@ -27,6 +27,8 @@ struct FTShelfView: View,FTShelfBaseView {
 //         let _ = Self._printChanges()
         GeometryReader { geometry in
             ZStack {
+                ProgressView()
+                    .isHidden(viewModel.state != .loading)
                 if viewModel.showNoShelfItemsView {
                         emptyShelfItemsView()
                 }
