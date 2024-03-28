@@ -1175,6 +1175,7 @@
         self.previousVisiblePageIndex = self.currentlyVisiblePage.pageIndex;
         self.isPageScrollingByUser = true;
     }
+    FTCLSLog(@"Interaction: Main Scroll view will begin drag");
     NSArray<FTPageViewController*>* visiblePageControllers = [self visiblePageViewControllers];
     for(FTPageViewController *eachPageVC in visiblePageControllers) {
         [eachPageVC startAcceptingTouches:false];

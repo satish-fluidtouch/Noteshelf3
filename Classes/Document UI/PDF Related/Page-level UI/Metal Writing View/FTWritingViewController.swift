@@ -222,6 +222,7 @@ class FTWritingViewController: UIViewController,FTViewControllerSupportsScene {
             if(oldValue != self.isCurrentPage) {
                 if(self.isCurrentPage) {
                     if(self.mode != FTRenderModeDefault || !self.isInZoomMode()) {
+                        FTCLSLog("Interaction: Disabled: render")
                         self.pageContentDelegate?.setUserInteraction(enable: false);
                     }
                     if(self.mode == FTRenderModeDefault && !self.isInZoomMode()) {
@@ -339,6 +340,7 @@ extension FTWritingViewController :  FTWritingProtocol
         if(self.isCurrentPage &&
             self.mode == FTRenderModeDefault &&
             !self.isInZoomMode()) {
+            FTCLSLog("Interaction: Disabled: reset")
             self.pageContentDelegate?.setUserInteraction(enable: false);
         }
         self.offscreenTileViewController?.reloadTiles();
@@ -601,6 +603,7 @@ private extension FTWritingViewController
     
     func updateCurrentPageProperties()
     {
+        FTCLSLog("Interaction: Enabled: update page properties")
         self.pageContentDelegate?.setUserInteraction(enable: true);
         
 //        if(self.mode == FTRenderModeDefault) {

@@ -115,6 +115,7 @@ extension FTPageViewController {
             self.longPressGestureRecognizer?.allowedTouchTypes = [
                 NSNumber(value: UITouch.TouchType.direct.rawValue)
             ];
+            FTCLSLog("Interaction: Update gesture: \(mode.rawValue)")
             self.startAcceptingTouches(true);
         }
         else {
