@@ -36,7 +36,8 @@ private let annotationCreateQuery = """
             transformScale NUMERIC DEFAULT 1,
             rotationAngle NUMERIC DEFAULT 0,
             isLocked NUMERIC DEFAULT 0,
-            clipString TEXT DEFAULT null
+            clipString TEXT DEFAULT null,
+            groupId TEXT DEFAULT null
 )
 """;
 
@@ -86,7 +87,18 @@ extension FTAnnotation {
     }
     
     func updateWith(set : FMResultSet) {
-        self.uuid = set.string(forColumn: "id") ?? UUID().uuidString;
+        let uuid = set.string(forColumn: "id")
+        
+        // Introduced for annotation grouping.
+        if -1 != set.columnIndex(forName: "groupId") {
+            if let groupId = set.string(forColumn: "groupId") {
+                self.groupId = groupId
+                if uuid == nil {
+                    FTLogError("SQLite Group: UUID not saved for grouped annotation")
+                }
+            }
+        }
+        self.uuid = uuid ?? UUID().uuidString;
         self.boundingRect = set.boundingRect();
         self.isReadonly = set.bool(forColumn: "isReadonly") ;
         self.version = Int(set.int(forColumn: "version")) ;

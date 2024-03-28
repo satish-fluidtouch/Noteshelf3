@@ -9,12 +9,13 @@
 import UIKit
 import FTDocumentFramework
 
-private let imageInsertQuery = "INSERT INTO annotation (id,annotationType,boundingRect_x,boundingRect_y,boundingRect_w,boundingRect_h,screenScale,txMatrix,imgTxMatrix,createdTime,modifiedTime,isReadonly,version,isLocked,clipString)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+private let imageInsertQuery = "INSERT INTO annotation (id,groupId,annotationType,boundingRect_x,boundingRect_y,boundingRect_w,boundingRect_h,screenScale,txMatrix,imgTxMatrix,createdTime,modifiedTime,isReadonly,version,isLocked,clipString)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 extension FTWebClipAnnotation  {
     override func saveToDatabase(_ db : FMDatabase)  -> Bool {
         return db.executeUpdate(imageInsertQuery, withArgumentsIn: [
             self.uuid,
+            self.groupId ?? NSNull(),
             NSNumber.init(value: self.annotationType.rawValue),
             NSNumber.init(value: Float(self.boundingRect.origin.x) as Float),
             NSNumber.init(value: Float(self.boundingRect.origin.y) as Float),

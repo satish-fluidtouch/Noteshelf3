@@ -485,7 +485,7 @@ extension FTStroke
 {
     override func deepCopyAnnotation(_ toPage: FTPageProtocol, onCompletion: @escaping (FTAnnotation?) -> Void) {
         let stroke = FTStroke.init(withPage : toPage);
-
+        stroke.groupId = self.groupId;
         stroke.isReadonly = self.isReadonly;
         stroke.version = self.version;
 

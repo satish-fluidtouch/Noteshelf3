@@ -314,6 +314,7 @@ extension FTPDFRenderViewController: FTPHPickerDelegate, FTImagePickerDelegate {
                 }
                 let img = phItem.image
                 let item = FTImportItem(item: img, onCompletion: nil)
+                FTNotebookEventTracker.trackFreePageAddedEvent()
                 self.beginImporting(items: [item])
             } else {
                 let images = phItems.map { $0.image }
@@ -324,6 +325,7 @@ extension FTPDFRenderViewController: FTPHPickerDelegate, FTImagePickerDelegate {
 
     public func didFinishPicking(image: UIImage, picker: UIImagePickerController) {
         self.photosCollectionViewController(self, didFinishPickingPhotos: [image], isCamera: true)
+        FTNotebookEventTracker.trackFreePageAddedEvent()
     }
 }
 

@@ -487,99 +487,53 @@ extension FTImageAnnotation
 {
     override func deepCopyAnnotation(_ toPage: FTPageProtocol, onCompletion: @escaping (FTAnnotation?) -> Void) {
         let imageAnnotation = FTImageAnnotation.init(withPage : toPage);
+        imageAnnotation.groupId = self.groupId;
         imageAnnotation.boundingRect = self.boundingRect;
         imageAnnotation.version = self.version;
         imageAnnotation.isReadonly = self.isReadonly;
-        
+
         imageAnnotation.imageTransformMatrix = self.imageTransformMatrix;
         imageAnnotation.transformMatrix = self.transformMatrix;
         imageAnnotation.screenScale = self.screenScale;
-        
-        if let sourceFileItem = self.imageContentFileItem() {
-            let document = toPage.parentDocument as? FTNoteshelfDocument;
-            let copiedFileItem = FTFileItemImage.init(fileName: imageAnnotation.imageContentFileName());
-            copiedFileItem?.securityDelegate = document;
-            document?.resourceFolderItem()?.addChildItem(copiedFileItem);
-            
-            var copiedTrasnformmedFileItem : FTFileItemImage?;
-            var trasnformmedFileItemURL : URL?
-            var copiedTrasnformmedFileItemURL : URL?
-            let trasnformmedFileItem = self.transformedContentFileItem();
-            if (nil != trasnformmedFileItem) {
-                copiedTrasnformmedFileItem = FTFileItemImage.init(fileName: imageAnnotation.transformedContentFileName());
-                copiedTrasnformmedFileItem?.securityDelegate = document;
-                document?.resourceFolderItem()?.addChildItem(copiedTrasnformmedFileItem);
-                
-                trasnformmedFileItemURL = trasnformmedFileItem!.fileItemURL;
-                copiedTrasnformmedFileItemURL = copiedTrasnformmedFileItem?.fileItemURL;
+
+        if let sourceFileItem = self.imageContentFileItem(),
+           let document = toPage.parentDocument as? FTNoteshelfDocument,
+           let sourceDocument = self.associatedPage?.parentDocument as? FTNoteshelfDocument,
+           let sourceResourceFolder = sourceDocument.resourceFolderItem(),
+           let resourceFolder = document.resourceFolderItem() {
+
+            let sourceFileItemURL = sourceResourceFolder.fileItemURL.appending(path: self.imageContentFileName(), directoryHint: .notDirectory)
+
+            var contentImage: UIImage?
+            if(sourceDocument.isSecured() || document.isSecured()) {
+                contentImage = sourceFileItem.image()
             }
-            if let currentDocument =  self.associatedPage?.parentDocument as? FTNoteshelfDocument,let toDocument = document {
-                if(currentDocument.isSecured() || toDocument.isSecured()) {
-                    let image = sourceFileItem.image();
-                    copiedFileItem?.setImage(image);
-                    
-                    FTCLSLog("NFC - Image deepcopy secured: \(toDocument.URL.title)");
-                    let coordinator = NSFileCoordinator.init(filePresenter: toDocument);
-                    var fileAccessIntents = [NSFileAccessIntent]();
-                    let fileAccessIntent = NSFileAccessIntent.writingIntent(with: copiedFileItem!.fileItemURL,
-                                                                            options: NSFileCoordinator.WritingOptions.forReplacing);
-                    fileAccessIntents.append(fileAccessIntent);
-                    if(nil != trasnformmedFileItem) {
-                        copiedTrasnformmedFileItem?.setImage(trasnformmedFileItem!.image());
-                        let fileAccessIntent = NSFileAccessIntent.writingIntent(with: copiedTrasnformmedFileItem!.fileItemURL,
-                                                                                options: NSFileCoordinator.WritingOptions.forReplacing);
-                        fileAccessIntents.append(fileAccessIntent);
-                    }
-                    
-                    let operationQueue = OperationQueue.init();
-                    coordinator.coordinate(with: fileAccessIntents,
-                                           queue: operationQueue,
-                                           byAccessor:
-                        { (error) in
-                            if(nil != error) {
-                                onCompletion(nil);
-                            }
-                            else {
-                                if let fileItemURL = copiedFileItem?.fileItemURL, fileItemURL.urlByDeleteingPrivate() != fileAccessIntent.url.urlByDeleteingPrivate() {
-                                    let params = ["Annotation" : "Image",
-                                                  "sourceURL" : fileItemURL.path,
-                                                  "intentURL" : fileAccessIntent.url.path]
-                                    FTLogError("Copy URL Mismatch: Image", attributes: params);
-                                }
-                                copiedTrasnformmedFileItem?.saveContentsOfFileItem();
-                                copiedFileItem?.saveContentsOfFileItem();
-                                DispatchQueue.main.async {
-                                    onCompletion(imageAnnotation);
-                                }
-                            }
-                    })
-                }
-                else {
-                    FTCLSLog("NFC - Image deepcopy: \(toDocument.URL.title)");
-                    FileManager.coordinatedCopyAtURL(sourceFileItem.fileItemURL,
-                                                     toURL: copiedFileItem!.fileItemURL)
-                    { (success, error) in
-                        if(nil != error) {
-                            onCompletion(nil);
-                        }
-                        else {
-                            if(nil != trasnformmedFileItemURL && nil != copiedTrasnformmedFileItemURL) {
-                                FileManager.coordinatedCopyAtURL(trasnformmedFileItemURL!,
-                                                                 toURL: copiedTrasnformmedFileItemURL!,
-                                                                 onCompletion: { (_, _) in
-                                                                    onCompletion(imageAnnotation);
-                                });
-                            }
-                            else {
-                                onCompletion(imageAnnotation);
-                            }
-                        }
-                    }
-                }
-            }
-            else {
+
+            guard let copiedFileItem = FTFileItemImageTemporary(fileName: imageAnnotation.imageContentFileName(), sourceURL: sourceFileItemURL, content: contentImage) else {
                 onCompletion(nil);
+                return
             }
+            copiedFileItem.securityDelegate = document;
+            resourceFolder.addChildItem(copiedFileItem);
+
+            copiedFileItem.setImage(sourceFileItem.image())
+
+            if let trasnformmedFileItem = self.transformedContentFileItem() {
+                var transformImage: UIImage?
+                if(sourceDocument.isSecured() || document.isSecured()) {
+                    transformImage = sourceFileItem.image()
+                }
+
+                guard let copiedTrasnformmedFileItem = FTFileItemImageTemporary(fileName: imageAnnotation.transformedContentFileName(), sourceURL: trasnformmedFileItem.fileItemURL, content: transformImage) else {
+                    onCompletion(nil);
+                    return
+                }
+                copiedTrasnformmedFileItem.securityDelegate = document;
+                resourceFolder.addChildItem(copiedTrasnformmedFileItem);
+
+                copiedTrasnformmedFileItem.setImage(trasnformmedFileItem.image())
+            }
+            onCompletion(imageAnnotation);
         }
         else {
             onCompletion(nil);

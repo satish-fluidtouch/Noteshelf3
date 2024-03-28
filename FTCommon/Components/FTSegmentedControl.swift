@@ -307,6 +307,7 @@ extension FTSegmentedControl {
                 let text = titleSources[i] as NSString
                 width = text.size(withAttributes: [.font: textFont]).width + leading * 2
             }
+            width = min(width, (self.frame.size.width)*0.6)
             let x = contentSizeWidth
 //            let height = frame.size.height
             let button = UIButton(type: .custom)
@@ -316,7 +317,7 @@ extension FTSegmentedControl {
 //            button.layer.cornerRadius = 10
 //            button.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 0.7)
 //            button.layer.borderWidth = 1
-            
+            button.titleLabel?.lineBreakMode = .byTruncatingTail
             button.clipsToBounds = true
             button.tag = i
             button.addTarget(self, action: #selector(selectedButton(sender:)), for: .touchUpInside)
