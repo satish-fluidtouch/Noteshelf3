@@ -589,6 +589,10 @@ extension FTDocumentScrollView: UIScrollViewDelegate
         }
     }
     
+    func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
+        self.scrollViewDelegate?.scrollViewWillBeginZooming?(scrollView, with: view);
+    }
+    
     func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
         self.isProgramaticallyZooming = false
         guard let contentHolderView = self.contentHolderView else {

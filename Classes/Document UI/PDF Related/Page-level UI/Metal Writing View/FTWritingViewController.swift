@@ -293,6 +293,7 @@ extension FTWritingViewController :  FTWritingProtocol
     }
     
     func willBeginZooming() {
+        self.offscreenTileViewController?.renderTiles(inRect: self.visibleRect, properties: FTRenderingProperties());
         self.updateLowResolutionImageBackgroundView();
     }
     
@@ -446,7 +447,6 @@ private extension FTWritingViewController
 {
     func _reloadTiles(inRect: CGRect, intents:[FTRendererIntent], properties : FTRenderingProperties)
     {
-
         let rect = inRect.intersection(self.scrollView?.visibleRect() ?? inRect)
         if nil != self.pageToDisplay {
             if(self.mode == FTRenderModeDefault) {

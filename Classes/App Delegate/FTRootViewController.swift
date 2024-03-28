@@ -224,12 +224,23 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     }
 
     // MARK: - Provider update -
+    private weak var localAppActieObserver: NSObjectProtocol?
     fileprivate func updateProviderIfNeeded() {
         if(UserDefaults.standard.bool(forKey: WelcomeScreenViewed)
            || (!UserDefaults.standard.bool(forKey: WelcomeScreenViewed)
                && UserDefaults.standard.double(forKey: WelcomeScreenReminderTime) > 0)) {
+            if UIApplication.shared.applicationState != .active {
+                FTCLSLog("Update Provider - App is not active");
+                localAppActieObserver = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: OperationQueue.main, using: { _ in
+                    if let _observer = self.localAppActieObserver {
+                        NotificationCenter.default.removeObserver(_observer)
+                    }
+                    FTCLSLog("Update Provider - App active");
+                    self.updateProviderIfNeeded();
+                })
+                return;
+            }
             FTCLSLog("Update Provider - Start");
-            let t1 = Date.timeIntervalSinceReferenceDate
             self.scheduleLaunchWaitError()
             self.updateProvider({
                 self.cancelLaunchWaitError()
