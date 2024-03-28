@@ -409,6 +409,7 @@ extension FTPDFRenderViewController : FTImportFileHandlerDelegate
             importItem.append(item);
         }
         self.beginImporting(items: importItem);
+        FTNotebookEventTracker.trackFreePageAddedEvent()
         self.importFileHandler = nil;
     }
 }
@@ -588,6 +589,7 @@ extension FTPDFRenderViewController: FTPaperTemplateDelegate {
         let variants = FTBasicTemplatesDataSource.shared.fetchSelectedVaraintsForMode(.template)
         reqTheme.setPaperVariants(variants)
         self.addPaperTheme(reqTheme)
+        FTNotebookEventTracker.trackFreePageAddedEvent()
     }
     private func udpatePaperThemeAndVariants(_ themeWithVariants: FTNewNotebook.FTSelectedPaperVariantsAndTheme) {
         let basicTemplatesDataSource = FTBasicTemplatesDataSource.shared

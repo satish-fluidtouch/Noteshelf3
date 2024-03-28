@@ -610,7 +610,7 @@ extension FTLassoSelectionView {
 
     func saveClip(_ sender:Any?) {
         self.delegate?.lassoSelectionView(self, perform: .saveClip)
-        track("lasso_snippet_tapped", params: [:], screenName: FTScreenNames.lasso)
+        FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.lasso_saveclip_tap)
     }
 }
 

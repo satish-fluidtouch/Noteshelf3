@@ -127,14 +127,10 @@ class FTiCloudQueryObserver: FTQueryListenerProtocol {
 
         var predicateArray = [NSPredicate]();
         for eachExtension in self.extsToListen {
-            for url in self.rootURLs {
-                let pattern = "*.\(eachExtension)"
-                let  predicate = NSPredicate(format: "(%K CONTAINS %@) AND (%K Like %@)",
-                                             NSMetadataItemPathKey,
-                                             url.path,
-                                             NSMetadataItemFSNameKey, pattern)
-                predicateArray.append(predicate)
-            }
+            let pattern = "*.\(eachExtension)"
+            let  predicate = NSPredicate(format: "(%K Like %@)",
+                                         NSMetadataItemFSNameKey, pattern)
+            predicateArray.append(predicate)
         }
         query.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: predicateArray);
         return query;

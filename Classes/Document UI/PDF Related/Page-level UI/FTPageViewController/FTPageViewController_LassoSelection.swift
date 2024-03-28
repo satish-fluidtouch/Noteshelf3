@@ -166,7 +166,7 @@ extension FTPageViewController
     func resizeSavedClipFor(annotations: [FTAnnotation]) {
         normalizeLassoView()
         self.lassoInfo.selectedAnnotations = annotations;
-        initiateTransformSelection()
+        initiateTransformSelection(isGrouped: true)
     }
 }
 
@@ -353,7 +353,7 @@ extension FTPageViewController: FTLassoSelectionViewDelegate {
 
     func initiateGroupedAnnotationEditing(annotations: [FTAnnotation]) {
         self.lassoInfo.selectedAnnotations = annotations
-        initiateTransformSelection()
+        initiateTransformSelection(isGrouped: true)
     }
 }
 
@@ -886,7 +886,7 @@ private extension FTPageViewController
         return snapshot;
     }
     
-    func initiateTransformSelection()
+    func initiateTransformSelection(isGrouped: Bool = false)
     {
         let selectedAnnotations = self.lassoInfo.selectedAnnotations;
         guard !selectedAnnotations.isEmpty,
@@ -905,6 +905,7 @@ private extension FTPageViewController
         if let selectedImage = self.snapshotOf(annotations: selectedAnnotations, enclosedRect: &boundingRect) {
             let imageResizeViewController = FTLassoContentSelectionViewController(withImage: selectedImage, boundingRect: contentView.bounds);
             imageResizeViewController.delegate = self;
+            imageResizeViewController.isGrouped = isGrouped
             self.addChild(imageResizeViewController);
             contentView.addSubview(imageResizeViewController.view);
             var targetRect = imageResizeViewController.view.convert(boundingRect, from: contentView);
