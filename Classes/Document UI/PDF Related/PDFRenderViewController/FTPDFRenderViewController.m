@@ -1467,7 +1467,7 @@
         }
     }
               shouldCloseDocument:true
-                    waitUntilSave:isRequiredLoader
+                    waitUntilSave:(isRequiredLoader || backAction == FTMoveToTrashAction)
                        saveAction:backAction
           shouldGenerateThumbnail:!isDeleteOperation];
 }
