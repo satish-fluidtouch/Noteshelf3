@@ -7,10 +7,13 @@
 //
 
 import SwiftUI
+import WidgetKit
+import UIKit
 
 struct FTWatchLandView: View {
     @State var selectedPage: Int = 0
     @StateObject private var viewModel = FTRecordViewModel()
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         TabView(selection: $selectedPage) {
@@ -18,6 +21,17 @@ struct FTWatchLandView: View {
             FTRecordingsView()
                 .environmentObject(viewModel)
         }.watchOS10OnlyVerticalTabStyle()
+            .onChange(of: scenePhase) {
+                switch scenePhase {
+                case .active, .background:
+                    if viewModel.isRecording && !FTWidgetDefaults.shared().isRecording ||  !viewModel.isRecording && FTWidgetDefaults.shared().isRecording {
+                        print("zzzz - viewModel.isRecording - \(viewModel.isRecording) \n FTWidgetDefaults.shared().isRecording - \(FTWidgetDefaults.shared().isRecording)")
+                        WidgetCenter.shared.reloadTimelines(ofKind: widgetKind)
+                    } 
+                    default:
+                    break
+                }
+            }
     }
 }
 

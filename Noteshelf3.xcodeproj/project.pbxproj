@@ -1945,6 +1945,9 @@
 		E713D9B0299CF399008FDC77 /* FTSpellCheckManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E713D9AF299CF399008FDC77 /* FTSpellCheckManager.swift */; };
 		E740163F29700B82003D3D7D /* FTGlobalSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E740163E29700B82003D3D7D /* FTGlobalSearchController.swift */; };
 		E740164129700DD7003D3D7D /* FTGlobalSearchController+Suggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E740164029700DD7003D3D7D /* FTGlobalSearchController+Suggestions.swift */; };
+		E74429082BB290280079DD89 /* FTSharedGroupID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0966EE4E213FE7A000B2B456 /* FTSharedGroupID.swift */; };
+		E74429092BB2902B0079DD89 /* FTSharedGroupID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0966EE4E213FE7A000B2B456 /* FTSharedGroupID.swift */; };
+		E744290A2BB290A10079DD89 /* FTWatchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75329C62B99968D00C22267 /* FTWatchUtils.swift */; };
 		E746A99129A48248009B95B4 /* FTStickersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E746A99029A48248009B95B4 /* FTStickersViewController.swift */; };
 		E75329C72B99968D00C22267 /* FTWatchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75329C62B99968D00C22267 /* FTWatchUtils.swift */; };
 		E75329C92B999E8F00C22267 /* FTWatchLandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75329C82B999E8F00C22267 /* FTWatchLandView.swift */; };
@@ -4267,6 +4270,9 @@
 		E743C11825A6EA5100D59BBF /* FTInfoTipView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTInfoTipView.xib; sourceTree = "<group>"; };
 		E743C12125A6EADF00D59BBF /* FTInfoTipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTInfoTipView.swift; sourceTree = "<group>"; };
 		E743C12A25A7039300D59BBF /* FTQuickCreateInfoTipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTQuickCreateInfoTipViewController.swift; sourceTree = "<group>"; };
+		E744290B2BB294D10079DD89 /* Noteshelf3 Watch WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf3 Watch WidgetExtension.entitlements"; sourceTree = "<group>"; };
+		E744290C2BB295120079DD89 /* Noteshelf3 Watch WidgetExtensionBeta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf3 Watch WidgetExtensionBeta.entitlements"; sourceTree = "<group>"; };
+		E744290D2BB2956F0079DD89 /* Noteshelf3 WatchAppDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Noteshelf3 WatchAppDebug.entitlements"; path = "Noteshelf3 WatchApp/Noteshelf3 WatchAppDebug.entitlements"; sourceTree = "<group>"; };
 		E746A99029A48248009B95B4 /* FTStickersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStickersViewController.swift; sourceTree = "<group>"; };
 		E75329C62B99968D00C22267 /* FTWatchUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWatchUtils.swift; sourceTree = "<group>"; };
 		E75329C82B999E8F00C22267 /* FTWatchLandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWatchLandView.swift; sourceTree = "<group>"; };
@@ -4351,6 +4357,9 @@
 		E79D21342B8F311A00712028 /* FTRecordingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTRecordingsView.swift; sourceTree = "<group>"; };
 		E79D21372B8F31AA00712028 /* FTRecordingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTRecordingsViewModel.swift; sourceTree = "<group>"; };
 		E79D21392B8F426000712028 /* FTPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPlayerView.swift; sourceTree = "<group>"; };
+		E79E0AD32BB2DC9E00CCDB81 /* Noteshelf3 Watch WidgetExtensionRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf3 Watch WidgetExtensionRelease.entitlements"; sourceTree = "<group>"; };
+		E79E0AD42BB2DCCC00CCDB81 /* Noteshelf3 WatchAppRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Noteshelf3 WatchAppRelease.entitlements"; path = "Noteshelf3 WatchApp/Noteshelf3 WatchAppRelease.entitlements"; sourceTree = "<group>"; };
+		E79E0AD52BB2DCE700CCDB81 /* Noteshelf3 WatchAppBeta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Noteshelf3 WatchAppBeta.entitlements"; path = "Noteshelf3 WatchApp/Noteshelf3 WatchAppBeta.entitlements"; sourceTree = "<group>"; };
 		E79E84352A31B1DC00683B23 /* FTCustomLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTCustomLabel.swift; sourceTree = "<group>"; };
 		E79E84362A31B1DC00683B23 /* FTCustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTCustomButton.swift; sourceTree = "<group>"; };
 		E79E843D2A31D0E200683B23 /* FTRecentSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTRecentSearchCell.swift; sourceTree = "<group>"; };
@@ -7452,6 +7461,12 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				E79E0AD52BB2DCE700CCDB81 /* Noteshelf3 WatchAppBeta.entitlements */,
+				E79E0AD42BB2DCCC00CCDB81 /* Noteshelf3 WatchAppRelease.entitlements */,
+				E79E0AD32BB2DC9E00CCDB81 /* Noteshelf3 Watch WidgetExtensionRelease.entitlements */,
+				E744290D2BB2956F0079DD89 /* Noteshelf3 WatchAppDebug.entitlements */,
+				E744290C2BB295120079DD89 /* Noteshelf3 Watch WidgetExtensionBeta.entitlements */,
+				E744290B2BB294D10079DD89 /* Noteshelf3 Watch WidgetExtension.entitlements */,
 				BA2D8EAC2859E4C8001BB495 /* Noteshelf3 */,
 				0904BC5D2373F31400239DB8 /* MacCatalyst */,
 				211E2C3B1E027D72007B5CAD /* Classes */,
@@ -14530,6 +14545,7 @@
 				E79D21382B8F31AA00712028 /* FTRecordingsViewModel.swift in Sources */,
 				E7C8FF2D2BA08E4400B4A6AE /* FTAudioService.swift in Sources */,
 				E79D21352B8F311A00712028 /* FTRecordingsView.swift in Sources */,
+				E74429092BB2902B0079DD89 /* FTSharedGroupID.swift in Sources */,
 				E75C9C702BA31F990006B2EA /* FTRecordingEditView.swift in Sources */,
 				E78DE6F92B987BCB000DAA1B /* FTHashTable.swift in Sources */,
 				E75329C72B99968D00C22267 /* FTWatchUtils.swift in Sources */,
@@ -14572,6 +14588,8 @@
 				E7CCFF692BA975E100DB59CE /* Noteshelf3_Watch_Widget.swift in Sources */,
 				E7CCFF6B2BA975E100DB59CE /* AppIntent.swift in Sources */,
 				E7CCFF7A2BA97BA800DB59CE /* Noteshelf3_Watch_WidgetsBundle.swift in Sources */,
+				E744290A2BB290A10079DD89 /* FTWatchUtils.swift in Sources */,
+				E74429082BB290280079DD89 /* FTSharedGroupID.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17003,6 +17021,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 WatchApp/Noteshelf3 WatchAppDebug.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Noteshelf3 WatchApp Watch App/Preview Content\"";
@@ -17119,6 +17138,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 WatchApp/Noteshelf3 WatchAppRelease.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -17229,6 +17249,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 WatchApp/Noteshelf3 WatchAppBeta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -17283,6 +17304,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Watch WidgetExtension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -17336,6 +17358,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Watch WidgetExtension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -17391,6 +17414,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Watch WidgetExtensionRelease.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -17442,6 +17466,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Watch WidgetExtension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -17493,6 +17518,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Watch WidgetExtensionBeta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";

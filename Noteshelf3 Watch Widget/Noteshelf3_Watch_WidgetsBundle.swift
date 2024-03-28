@@ -17,10 +17,8 @@ struct Noteshelf3_Watch_WidgetsBundle: WidgetBundle {
 }
 
 struct FTWatchComplication: Widget {
-    let kind: String = "FT-Complication"
-
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+        StaticConfiguration(kind: widgetKind, provider: Provider()) { entry in
             FTComplicationView(entry: entry)
                 .widgetBackground(Color.clear)
         }
@@ -64,14 +62,8 @@ struct FTComplicationCircular : View {
     @Environment(\.widgetRenderingMode) var widgetRenderingMode
 
     var body: some View {
-        if widgetRenderingMode == .fullColor {
-            Image("circular_complication")
-                .widgetLabel("Noteshelf3")
-
-        } else {
-            Image("circular_complication_gray")
-                .widgetLabel("Noteshelf3")
-        }
+        Image(widgetRenderingMode == .fullColor ? "circular_complication" : "circular_complication_gray")
+            .resizable()
     }
 }
 
@@ -80,18 +72,26 @@ struct FTComplicationCorner : View {
     @Environment(\.widgetRenderingMode) var widgetRenderingMode
 
     var body: some View {
-        if widgetRenderingMode == .fullColor {
-            Image("corner_complication")
-        } else {
-            Image("corner_complication_gray")
-        }
+        Image(widgetRenderingMode == .fullColor ? "corner_complication" : "corner_complication_gray")
+            .resizable()
     }
 }
 
 struct FTComplicationRectangular : View {
     var entry: SimpleEntry
+    @Environment(\.widgetRenderingMode) var widgetRenderingMode
 
     var body: some View {
-        Text("Noteshelf3")
+        HStack(spacing: 8) {
+            Image(widgetRenderingMode == .fullColor ? "circular_complication" : "circular_complication_gray")
+                .resizable()
+                .frame(width: 44, height: 44)
+            
+            if entry.isRecording {
+                Text("Recording")
+                    .font(Font.system(size: 18))
+                    .foregroundStyle(.white)
+            }
+        }
     }
 }

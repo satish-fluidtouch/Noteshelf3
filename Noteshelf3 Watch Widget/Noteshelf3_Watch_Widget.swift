@@ -28,6 +28,7 @@ struct Provider: TimelineProvider {
 
 struct SimpleEntry: TimelineEntry {
     let date: Date
+    var isRecording: Bool = FTWidgetDefaults.shared().isRecording
 }
 
 extension View {

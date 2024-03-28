@@ -9,6 +9,7 @@
 import AVFAudio
 import WatchKit
 import SwiftUI
+import WidgetKit
 
 class FTRecordViewModel: NSObject, ObservableObject {
     private let recordingSession: AVAudioSession = AVAudioSession.sharedInstance()
@@ -17,9 +18,14 @@ class FTRecordViewModel: NSObject, ObservableObject {
     private var isObserversAdded:Bool = false
     private var recordingDuration:Int = 0
     
-    @Published var durationStr: String = "00:00"
     @Published var showPermissionAlert = false
-    @Published var isRecording = false
+    @Published var durationStr: String = "00:00"
+
+    @Published var isRecording = false {
+        didSet {
+            FTWidgetDefaults.shared().isRecording = isRecording
+        }
+    }
 
     var showCustomAlert: Binding<Bool> {
         Binding<Bool>(
@@ -34,12 +40,19 @@ class FTRecordViewModel: NSObject, ObservableObject {
 
     override init() {
         super.init()
+        FTWidgetDefaults.resetRecording()
+        WidgetCenter.shared.reloadTimelines(ofKind: widgetKind)
         do {
             try self.recordingSession.setCategory(AVAudioSession.Category.playAndRecord,mode : .default)
             try self.recordingSession.setActive(true)
         } catch let error as NSError{
             debugPrint(error)
         }
+    }
+
+    deinit {
+        FTWidgetDefaults.resetRecording()
+        WidgetCenter.shared.reloadTimelines(ofKind: widgetKind)
     }
 
     func handleRecordTapAction() {

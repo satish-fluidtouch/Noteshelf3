@@ -8,6 +8,8 @@
 
 import Foundation
 
+ let widgetKind: String = "FT-Complication"
+
 class FTWatchUtils {
     static func timeFormatted(totalSeconds: UInt) -> String {
         var seconds = 0, minutes = 0, hours = 0
@@ -27,5 +29,31 @@ class FTWatchUtils {
         }
 
         return formatString
+    }
+}
+
+class FTWidgetDefaults: NSObject {
+    fileprivate static var sharedDefaults: UserDefaults? = nil
+    @objc class func shared() -> UserDefaults {
+        if(nil == sharedDefaults) {
+            sharedDefaults = UserDefaults(suiteName: FTSharedGroupID.getAppGroupID())
+        }
+        return sharedDefaults!
+    }
+
+    class func resetRecording() {
+        FTWidgetDefaults.shared().isRecording = false
+    }
+}
+
+extension UserDefaults {
+    @objc dynamic var isRecording: Bool {
+        get {
+            return FTWidgetDefaults.sharedDefaults?.bool(forKey: "isRecording") ?? false
+        }
+        set {
+            FTWidgetDefaults.sharedDefaults?.set(newValue, forKey: "isRecording")
+            FTWidgetDefaults.sharedDefaults?.synchronize()
+        }
     }
 }
