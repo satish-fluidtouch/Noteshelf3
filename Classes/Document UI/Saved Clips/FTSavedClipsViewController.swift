@@ -18,8 +18,9 @@ protocol FTSavedClipdelegate : NSObjectProtocol {
     func dismiss()
 }
 
-class FTSavedClipsViewController: UIViewController {
+class FTSavedClipsViewController: UIViewController, FTPopoverPresentable {
     weak var delegate: FTSavedClipdelegate?
+    var ftPresentationDelegate = FTPopoverPresentation()
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet private weak var backButton: UIButton!
@@ -39,6 +40,8 @@ class FTSavedClipsViewController: UIViewController {
     private var minimumInterItemSpacing : CGFloat = 12.0
     private var selectedSegmentIndex: Int  = 0
 
+    var toHideBackBtn: Bool = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         selectedSegmentIndex = viewModel.selectedIndex()
@@ -49,6 +52,7 @@ class FTSavedClipsViewController: UIViewController {
         self.setupCollectionView()
         self.setupSegmentedControl()
         titleLabel.text = "clip.savedClips".localized
+        self.backButton.isHidden = self.toHideBackBtn
     }
 
     private func setupCollectionView() {
@@ -328,4 +332,18 @@ extension FTSavedClipsViewController: UITextFieldDelegate {
         return false
     }
 
+}
+
+extension FTSavedClipsViewController {
+    class func showSavedClipsController(from controller: UIViewController, source: Any, delegate: FTSavedClipdelegate?, toHideBackBtn: Bool = false) {
+        let storyboard = UIStoryboard.init(name: "FTDocumentEntity", bundle: nil)
+        guard let savedClipsVc = storyboard.instantiateViewController(withIdentifier: "FTSavedClipsViewController") as? FTSavedClipsViewController else {
+            fatalError("FTEmojisViewController not found")
+        }
+        savedClipsVc.delegate = delegate
+        savedClipsVc.toHideBackBtn = toHideBackBtn
+        savedClipsVc.view.backgroundColor = UIColor.appColor(.popoverBgColor)
+        savedClipsVc.ftPresentationDelegate.source = source as AnyObject
+        controller.ftPresentPopover(vcToPresent: savedClipsVc, contentSize: AddMenuType.media.contentSize, hideNavBar: true)
+    }
 }

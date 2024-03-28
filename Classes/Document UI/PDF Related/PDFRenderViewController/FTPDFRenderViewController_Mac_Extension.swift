@@ -105,6 +105,9 @@ extension FTPDFRenderViewController {
         case .stickers:
             self.executer.execute(type: .stickers(source: toolbarItem))
             
+        case .savedClips:
+            self.executer.execute(type: .savedClips(source: toolbarItem))
+            
         case .zoomBox:
             self.zoomButtonAction()
 
