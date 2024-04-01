@@ -948,6 +948,8 @@
 "appearance.darkTheme" = "ダークテーマ";
 "appearance.lightTheme" = "ライトテーマ";
 "appearance.useSystemTheme" = "システムのライト/ダークモードを使用する";
+"applaunch.delay.contactSupport" = "サポート問い合わせ先";
+"applaunch.delay.msg" = "iCloud がタイムリーに応答しません。 デバイスを再起動して、もう一度お試しください。 この問題が解決しない場合は、Noteshelf サポートにお問い合わせください。";
 "audiooption.gotoRecording" = "録音に移動";
 "audiooption.jumptoPage" = "ページにジャンプ";
 "audiooption.speed" = "速度";
@@ -1609,4 +1611,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 22 March 2024 at 11:59 AM
+// Last Synced by Amar Udupa on 28 March 2024 at 3:21 PM

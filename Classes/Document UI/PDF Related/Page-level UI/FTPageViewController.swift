@@ -158,6 +158,7 @@ class FTLassoInfo: NSObject {
     }
     
     deinit {
+        self.cancenlScheduledUserIneractionTimeLimit()
         NSObject.cancelPreviousPerformRequests(withTarget: self);
         if let observer = self.didChangePageDisplayNotifcationObserver {
             NotificationCenter.default.removeObserver(observer)

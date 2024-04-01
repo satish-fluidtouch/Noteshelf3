@@ -197,7 +197,9 @@ extension FTWatchRecordingCollection_Cloud: FTMetadataCachingProtocol {
         var addedItems = [FTWatchRecording]();
 
         for eachItem in metadataItems {
-            let fileURL = eachItem.URL();
+            guard let fileURL = eachItem.URL() else {
+                continue;
+            }
             if(fileURL.isAudioMetadataFile()) {
                 if(eachItem.downloadStatus() == NSMetadataUbiquitousItemDownloadingStatusNotDownloaded) {
                     try? FileManager().startDownloadingUbiquitousItem(at: fileURL);
@@ -235,7 +237,9 @@ extension FTWatchRecordingCollection_Cloud: FTMetadataCachingProtocol {
         var itemsRemoved = [FTWatchRecording]();
 
         for eachItem in metadataItems {
-            let fileURL = eachItem.URL();
+            guard let fileURL = eachItem.URL() else {
+                continue;
+            }
             if(fileURL.isAudioMetadataFile()) {
                 let item = self.recordFromAllCache(key: fileURL);
                 if(nil != item) {
@@ -264,7 +268,9 @@ extension FTWatchRecordingCollection_Cloud: FTMetadataCachingProtocol {
         var itemsToAdd = [NSMetadataItem]();
 
         for eachItem in metadataItems {
-            let fileURL = eachItem.URL();
+            guard let fileURL = eachItem.URL() else {
+                continue;
+            }
             if(fileURL.isAudioMetadataFile()) {
                 if let watchrecording = self.recordFromAllCache(key: fileURL) {
                     self.update(item: watchrecording, withURL: fileURL, audioMetadaItem: nil);

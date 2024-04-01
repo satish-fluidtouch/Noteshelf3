@@ -948,6 +948,8 @@
 "appearance.darkTheme" = "黑暗模式";
 "appearance.lightTheme" = "浅色模式";
 "appearance.useSystemTheme" = "跟随系统设置";
+"applaunch.delay.contactSupport" = "联系支持人员";
+"applaunch.delay.msg" = "iCloud 没有及时响应。 请重新启动您的设备并重试。 如果此问题仍然存在，请联系 Noteshelf 支持。";
 "audiooption.gotoRecording" = "转到录音";
 "audiooption.jumptoPage" = "跳转至页面";
 "audiooption.speed" = "速度";
@@ -967,7 +969,7 @@
 "clip.noSavedClips" = "没有保存的片段";
 "clip.noSavedClips.description" = "套索任何内容并点击“保存片段”以供以后使用。";
 "clip.saveClip" = "保存片段";
-"clip.savedClips" = "保存的剪辑";
+"clip.savedClips" = "保存的片段";
 "clipart404" = "服务器繁忙，请稍后重试。";
 "cloud.backup.error.contentPreviouslyCrashed" = "备份时发生错误。请稍后重试。";
 "cloud.backup.error.failedToCreateBackup" = "创建备份文件失败。请检查设备上的剩余空间。";
@@ -1609,4 +1611,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 22 March 2024 at 11:59 AM
+// Last Synced by Amar Udupa on 28 March 2024 at 3:21 PM

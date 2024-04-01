@@ -71,7 +71,7 @@ extension FTNoteshelfDocument : FTDocumentCreateWatchExtension {
                     documentInfo.coverTemplateImage = info.coverTemplateImage
                     documentInfo.insertAt = 0
                     documentInfo.annotationInfo = theme.annotationInfo
-
+                    
                     self.createDocument(documentInfo) { (error, success) in
                         if(nil != error) {
                             DispatchQueue.main.async {
@@ -79,6 +79,13 @@ extension FTNoteshelfDocument : FTDocumentCreateWatchExtension {
                             }
                         }
                         else {
+                            guard let _audioURLs = audioURLS else {
+                                DispatchQueue.main.async {
+                                    onCompletion(nil,true);
+                                }
+                                return
+                            }
+                            
                             self.openDocument(purpose: .write,completionHandler: { (openSuccess,_) in
                                 if(!openSuccess) {
                                     DispatchQueue.main.async {
@@ -86,14 +93,10 @@ extension FTNoteshelfDocument : FTDocumentCreateWatchExtension {
                                     }
                                 }
                                 else {
-                                    if audioURLS == nil {
-                                        onCompletion(nil,true);
-                                        return
-                                    }
                                     let page = self.pages().first;
                                     if(nil != page) {
                                         let annotations = [FTAnnotation]();
-                                        self.addAudioAnnotations(urls: audioURLS!,
+                                        self.addAudioAnnotations(urls: _audioURLs,
                                                                  info: documentInfo,
                                                                  index : Int(0),
                                                                  toPage: page!,
@@ -107,7 +110,7 @@ extension FTNoteshelfDocument : FTDocumentCreateWatchExtension {
                                                     }
                                                 })
                                             })
-
+                                            
                                         })
                                     }
                                 }
