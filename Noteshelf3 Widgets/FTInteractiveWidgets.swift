@@ -54,32 +54,14 @@ struct FTPinnedTimelineProvider: IntentTimelineProvider {
             } else {
                 entry = defaultBookEntry()
             }
-            executeTimelineCompletion(completion, timelineEntry: entry)
+            let timeline = Timeline(entries: [entry], policy: .atEnd)
+            completion(timeline)
         }
     }
     
     private func showEmptyState(completion: @escaping (Timeline<FTPinnedBookEntry>) -> ()) {
         let entry = FTPinnedBookEntry(date: Date(), name: "Empty State", time: "6:00 PM", coverImage: "", relativePath: "", hasCover: false, isLandscape: false)
-
-        
-        // Trigger completion & next fetch happens 15 minutes later
-        executeTimelineCompletion(completion, timelineEntry: entry)
-    }
-    
-    func executeTimelineCompletion(_ completion: @escaping (Timeline<FTPinnedBookEntry>) -> (),
-                                   timelineEntry: FTPinnedBookEntry) {
-        
-        // Next fetch happens 15 minutes later
-        let nextUpdate = Calendar.current.date(
-            byAdding: DateComponents(minute: 15),
-            to: Date()
-        )!
-        
-        let timeline = Timeline(
-            entries: [timelineEntry],
-            policy: .after(nextUpdate)
-        )
-        
+        let timeline = Timeline(entries: [entry], policy: .atEnd)
         completion(timeline)
     }
     

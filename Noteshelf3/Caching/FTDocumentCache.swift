@@ -312,6 +312,7 @@ private extension FTDocumentCache {
         guard !url.isPinEnabledForDocument() else {
             // Cleanup the PIN enabled documents, if they have copied in earlier versions prior to v1.3.
             try? FileManager.default.removeItem(at: destinationURL)
+            reloadWidgetTimeLines()
             throw FTCacheError.pinEnabledDocument
         }
 
@@ -356,6 +357,7 @@ private extension FTDocumentCache {
                 }
             } else {
                 updateMetadataPlistWithRelativePathFor(docUrl: url, documentId: documentUUID)
+                reloadWidgetTimeLines()
                 cacheLog(.info, "Replace Ignored as there are no modifications", url.lastPathComponent)
                 throw FTCacheError.cachingNotRequired
             }
