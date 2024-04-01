@@ -12,11 +12,18 @@ extension FTShelfSplitViewController {
     func handleWidgetAction(for type: FTWidgetActionType) {
         switch type {
         case FTNotebookCreateWidgetActionType.quickNote:
-            self.currentShelfViewModel?.quickCreateNewNotebook()
-
+            if let currentShelfViewModel , !currentShelfViewModel.collection.isStarred, !currentShelfViewModel.collection.isTrash {
+                    currentShelfViewModel.quickCreateNewNotebook()
+                  } else {
+                    FTNoteshelfDocumentProvider.shared.uncategorizedNotesCollection { [weak self] collection in
+                      if let unfiledCollection = collection {
+                        self?.createNewNotebookInside(collection: unfiledCollection, group: nil, notebookDetails: nil, isQuickCreate: true, onCompletion: { error, shelfItem in
+                        })
+                      }
+                    }
+                  }
         case FTNotebookCreateWidgetActionType.newNotebook:
-            self.currentShelfViewModel?.showNewNotebookPopover()
-
+            self.showNewBookPopverOnShelf()
         case FTNotebookCreateWidgetActionType.audioNote:
             if FTIAPManager.shared.premiumUser.nonPremiumQuotaReached {
                 FTIAPurchaseHelper.shared.showIAPAlert(on: self);
