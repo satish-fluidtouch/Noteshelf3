@@ -948,6 +948,8 @@
 "appearance.darkTheme" = "Thème sombre";
 "appearance.lightTheme" = "Thème clair.";
 "appearance.useSystemTheme" = "Utilisez le mode clair/sombre du système";
+"applaunch.delay.contactSupport" = "Contacter le support";
+"applaunch.delay.msg" = "iCloud ne répond pas en temps opportun. Veuillez redémarrer votre appareil et réessayer. Si ce problème persiste, contactez le support Noteshelf.";
 "audiooption.gotoRecording" = "Aller à l'enregistrement";
 "audiooption.jumptoPage" = "Aller à la page";
 "audiooption.speed" = "Vitesse";
@@ -967,7 +969,7 @@
 "clip.noSavedClips" = "Aucun clip enregistré";
 "clip.noSavedClips.description" = "Sélectionnez tout avec le lasso et appuyez sur 'Enregistrer le clip' pour une utilisation ultérieure.";
 "clip.saveClip" = "Enregistrer le clip";
-"clip.savedClips" = "Clips sauvegardés";
+"clip.savedClips" = "Clips enregistrés";
 "clipart404" = "Serveur occupé, veuillez réessayer plus tard.";
 "cloud.backup.error.contentPreviouslyCrashed" = "Une erreur s'est produite lors de la sauvegarde. Veuillez réessayer ultérieurement.";
 "cloud.backup.error.failedToCreateBackup" = "Échec de la création du fichier de sauvegarde. Veuillez vérifier l'espace restant sur votre appareil.";
@@ -1609,4 +1611,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 22 March 2024 at 11:59 AM
+// Last Synced by Amar Udupa on 28 March 2024 at 3:21 PM

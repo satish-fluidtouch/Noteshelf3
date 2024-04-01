@@ -60,6 +60,7 @@ extension FTPDFRenderViewController: FTScrollViewDelegate {
     }
     
     func scrollViewDidEndPanningPage() {
+        FTCLSLog("Interaction: Main Scroll view did end drag");
         let currentControlelrs = self.visiblePageViewControllers();
         currentControlelrs.forEach { (pageVC) in
             pageVC.startAcceptingTouches(true);

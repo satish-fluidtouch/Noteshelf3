@@ -174,7 +174,7 @@
 "Connecting" = "Verbinden...";
 "ConnectingToDropbox" = "Verbindung zu Dropbox herstellen";
 "ConnectionFailed" = "Verbindung fehlgeschlagen";
-"ContactUs" = "Kontaktiere uns.";
+"ContactUs" = "Kontaktiere uns";
 "Continue" = "Weitermachen";
 "ContinueRecording" = "Weiter Aufnahme";
 "ContinueUsingICloud" = "Weiterhin iCloud verwenden.";
@@ -948,6 +948,8 @@
 "appearance.darkTheme" = "Dunkles Thema";
 "appearance.lightTheme" = "Helleres Thema";
 "appearance.useSystemTheme" = "Verwenden Sie den System-Licht-/Dunkelmodus.";
+"applaunch.delay.contactSupport" = "Kontaktieren Sie Support";
+"applaunch.delay.msg" = "iCloud reagiert nicht rechtzeitig. Bitte starten Sie Ihr Gerät neu und versuchen Sie es erneut. Wenn das Problem weiterhin besteht, wenden Sie sich an den Noteshelf-Support.";
 "audiooption.gotoRecording" = "Zur Aufzeichnung gehen";
 "audiooption.jumptoPage" = "Zur Seite springen";
 "audiooption.speed" = "Geschwindigkeit";
@@ -1609,4 +1611,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 22 March 2024 at 11:59 AM
+// Last Synced by Amar Udupa on 28 March 2024 at 3:21 PM
