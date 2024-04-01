@@ -28,16 +28,16 @@ final class FTWidgetIntentDataHelper {
                     return eachUrl.pathExtension == "ns3"
                 }
                 notebookFilteredUrls.forEach { eachNotebookUrl in
-                    let relativePath : String
-                    let time : String
-                    let coverImage : String
                     let metaDataPlistUrl = eachNotebookUrl.appendingPathComponent("Metadata/Properties.plist")
-                    relativePath = _relativePath(for: metaDataPlistUrl)
-                    let pageAttrs = pageAttrs(for: eachNotebookUrl.path(percentEncoded: false))
-                    coverImage = eachNotebookUrl.appending(path:"cover-shelf-image.png").path(percentEncoded: false);
-                    time = timeFromDate(currentDate: eachNotebookUrl.fileCreationDate)
-                    let book = FTPinnedNotebook(relativePath: relativePath, createdTime: time, coverImageName: coverImage, hasCover: pageAttrs.0, isLandscape: pageAttrs.1)
-                    notebooks.append(book)
+                    if let relativePath = _relativePath(for: metaDataPlistUrl) {
+                        let time : String
+                        let coverImage : String
+                        let pageAttrs = pageAttrs(for: eachNotebookUrl.path(percentEncoded: false))
+                        coverImage = eachNotebookUrl.appending(path:"cover-shelf-image.png").path(percentEncoded: false);
+                        time = timeFromDate(currentDate: eachNotebookUrl.fileCreationDate)
+                        let book = FTPinnedNotebook(relativePath: relativePath, createdTime: time, coverImageName: coverImage, hasCover: pageAttrs.0, isLandscape: pageAttrs.1)
+                        notebooks.append(book)
+                    }
                 }
 
             }
@@ -45,8 +45,8 @@ final class FTWidgetIntentDataHelper {
         return notebooks
     }
 
-    public static func _relativePath(for metaDataPlistUrl: URL) -> String {
-        var relativePath = ""
+    public static func _relativePath(for metaDataPlistUrl: URL) -> String? {
+        var relativePath: String?
         if let data = try? Data(contentsOf: metaDataPlistUrl) {
             if let plist = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any], let _relativePath = plist["relativePath"] as? String {
                 relativePath = _relativePath
@@ -95,15 +95,15 @@ final class FTWidgetIntentDataHelper {
                     return eachUrl.pathExtension == "ns3"
                 }
                 if let eachNotebookUrl = notebookFilteredUrls.first {
-                    let relativePath : String
-                    let time : String
-                    let coverImage : String
                     let metaDataPlistUrl = eachNotebookUrl.appendingPathComponent("Metadata/Properties.plist")
-                    relativePath = _relativePath(for: metaDataPlistUrl)
-                    let pageAttrs = pageAttrs(for: eachNotebookUrl.path(percentEncoded: false))
-                    coverImage = eachNotebookUrl.appending(path:"cover-shelf-image.png").path(percentEncoded: false);
-                    time = timeFromDate(currentDate: eachNotebookUrl.fileCreationDate)
-                    entry = FTPinnedNotebook(relativePath: relativePath, createdTime: time, coverImageName: coverImage, hasCover: pageAttrs.0, isLandscape: pageAttrs.1)
+                    if let relativePath = _relativePath(for: metaDataPlistUrl) {
+                        let time : String
+                        let coverImage : String
+                        let pageAttrs = pageAttrs(for: eachNotebookUrl.path(percentEncoded: false))
+                        coverImage = eachNotebookUrl.appending(path:"cover-shelf-image.png").path(percentEncoded: false);
+                        time = timeFromDate(currentDate: eachNotebookUrl.fileCreationDate)
+                        entry = FTPinnedNotebook(relativePath: relativePath, createdTime: time, coverImageName: coverImage, hasCover: pageAttrs.0, isLandscape: pageAttrs.1)
+                    }
                 }
 
             }
