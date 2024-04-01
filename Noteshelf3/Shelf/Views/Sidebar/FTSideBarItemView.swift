@@ -22,7 +22,7 @@ struct SideBarItemView : View {
     @State var itemTitleTint: Color = .clear
     @State var numberOfChildren: Int = 0
     @State var showChildrenNumber: Bool
-    
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     var viewWidth: CGFloat
     var body: some View {
@@ -38,10 +38,21 @@ struct SideBarItemView : View {
             VStack(spacing:0) {
                 sideBarItem
             }
-            .frame(height: 44)
+            .frame(minHeight: 44)
         }
         .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: .littleslow))
+        .accessibilityLabel(accessibilityLabel())
+        .accessibilityHint(item.type.accesibilityHint)
     }
+    
+    func accessibilityLabel() -> String {
+        var title = item.title
+        if self.viewModel.selectedSideBarItem == item {
+            title = "Selected \(item.title) \(numberOfChildren) items"
+        }
+        return title
+    }
+    
     @ViewBuilder
     private var sideBarItem: some View {
         HStack(alignment: .center) {
@@ -50,10 +61,10 @@ struct SideBarItemView : View {
                     .font(.appFont(for: .regular, with: 17))
             } icon: {
                 Image(icon: item.icon)
-                    .frame(width: 24, height: 24, alignment: SwiftUI.Alignment.center)
+                    .frame(maxWidth: 36, maxHeight: 36, alignment: SwiftUI.Alignment.center)
                     .padding(.leading,8)
                     .padding(.trailing, 4)
-                    .font(Font.appFont(for: .regular, with: 20))
+                    .font(Font.appFixedFont(for: .regular, with: isLargerTextEnabled(for: dynamicTypeSize) ? 26 : 20))
             }
             Spacer()
                 Text("\(numberOfChildren)")
@@ -63,7 +74,7 @@ struct SideBarItemView : View {
                     .padding(.leading,8)
                     .isHidden(!showChildrenNumber)
         }
-        .frame(height: 44.0, alignment: .leading)
+        .frame(minHeight: 44.0, alignment: .leading)
         .contentShape(Rectangle())
         .onDrop(of: [.data],
                 delegate: SideBarItemDropDelegate(viewModel: viewModel,

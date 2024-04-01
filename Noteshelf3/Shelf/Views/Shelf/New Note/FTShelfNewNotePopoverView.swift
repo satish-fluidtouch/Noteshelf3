@@ -13,6 +13,8 @@ protocol FTShelfNewNotePopoverViewDelegate: AnyObject {
     func didTapOnWatchRecordings()
 }
 
+
+
 struct FTShelfNewNotePopoverView: View {
     @ObservedObject var viewModel: FTNewNotePopoverViewModel
 
@@ -21,17 +23,20 @@ struct FTShelfNewNotePopoverView: View {
     weak var viewDelegate: FTShelfNewNotePopoverViewDelegate?
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
     var body: some View {
         VStack {
             if appState.sizeClass == .compact {
                 Spacer()
             }
-            contentView
-                .if(appState.sizeClass == .compact, transform: { view in
-                    view .padding(.horizontal, 16)
-                        .padding(.top,16)
-                })
+            ScrollView(.vertical, showsIndicators: false) {
+                contentView
+                    .if(appState.sizeClass == .compact, transform: { view in
+                        view .padding(.horizontal, 16)
+                            .padding(.top,16)
+                    })
+            }
         }
         .macOnlyColorSchemeFixer()
     }
@@ -176,7 +181,7 @@ struct FTShelfNewNotePopoverView: View {
             .padding(.leading,16)
             .padding(.trailing,10)
         }
-        .frame(height:52.0)
+        .frame(minHeight:52.0)
     }
     
     private func shouldDisableRow(for index: Int) -> Bool {

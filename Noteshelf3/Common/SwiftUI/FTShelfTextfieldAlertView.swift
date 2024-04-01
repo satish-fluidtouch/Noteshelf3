@@ -77,6 +77,11 @@ extension View {
     func alertWithTextField(isPresented: Binding<Bool>, _ alert: TextAlert) -> some View {
         AlertWrapper(isPresented: isPresented, alert: alert, content: self)
     }
+    
+    func isLargerTextEnabled(for currentSize: DynamicTypeSize) -> Bool {
+        let sizes: [DynamicTypeSize] = [.accessibility1, .accessibility2, .accessibility3, .accessibility4, .accessibility5]
+        return sizes.contains(currentSize)
+    }
 }
 
 

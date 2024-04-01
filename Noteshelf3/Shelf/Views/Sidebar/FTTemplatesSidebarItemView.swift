@@ -12,19 +12,21 @@ struct FTTemplatesSidebarItemView: View {
     @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
     @Environment(\.colorScheme) var colorScheme
     @AppStorage("isTemplatesNewOptionShown") private var isNewOptionShown = false
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
     weak var delegate: FTSidebarViewDelegate?
     var body: some View {
-        FTSideBarItemContextMenuPreview(preview: {
-            templatesView
-            .ignoresSafeArea()
-        }, onAppearActon: {
-            shelfMenuOverlayInfo.isMenuShown = true
-            viewModel.trackEventForlongpress(item: templatesSidebarItem)
-        }, onDisappearActon: {
-            shelfMenuOverlayInfo.isMenuShown = false
-        }, cornerRadius: 16,alertInfo: .constant(nil), showTrashAlert: .constant(false))
-        .frame(height: 80)
+        templatesView
+//        FTSideBarItemContextMenuPreview(preview: {
+//            templatesView
+//            .ignoresSafeArea()
+//        }, onAppearActon: {
+//            shelfMenuOverlayInfo.isMenuShown = true
+//            viewModel.trackEventForlongpress(item: templatesSidebarItem)
+//        }, onDisappearActon: {
+//            shelfMenuOverlayInfo.isMenuShown = false
+//        }, cornerRadius: 16,alertInfo: .constant(nil), showTrashAlert: .constant(false))
+//        .frame(height: 80)
         .environmentObject(viewModel)
         .environmentObject(templatesSidebarItem)
         .environmentObject(viewModel.sidebarItemContexualMenuVM)
@@ -51,7 +53,7 @@ struct FTTemplatesSidebarItemView: View {
             HStack(alignment: .top, content: {
                 Image(icon: .templates)
                     .foregroundColor(iconTintColor)
-                    .font(.appFont(for: .regular, with: 22))
+                    .font(.appFixedFont(for: .regular, with: isLargerTextEnabled(for: dynamicTypeSize) ? 30 : 22))
                 Spacer()
                 // once the user taps on templates do not show this
                 NewBadgeView()
@@ -70,7 +72,7 @@ struct FTTemplatesSidebarItemView: View {
             .padding(.horizontal,12)
             .padding(.bottom,10)
         }
-        .frame(maxWidth: .infinity,maxHeight: 80)
+//        .frame(maxWidth: .infinity,maxHeight: 80)
         .background(getBGColorTemplateItem())
         .cornerRadius(16)
         .if(templatesSidebarItem.type == viewModel.selectedSideBarItem?.type) { view in

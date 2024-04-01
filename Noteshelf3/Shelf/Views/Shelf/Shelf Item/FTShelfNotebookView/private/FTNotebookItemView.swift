@@ -39,66 +39,64 @@ struct FTNotebookItemView: View {
 
     var body: some View {
         //let _ = Self._printChanges()
-        VStack(alignment: .center,spacing: 0) {
-            ZStack(alignment:.bottom) {
-                FTNotebookShadowView(shelfItem: shelfItem,thumbnailSize: thumbnailSize)
-                    .isHidden((hideShadow || colorScheme == .dark))
-                FTShelfItemContextMenuPreview(preview: {
-                    FTNotebookCoverView(isPressed: $isPressed, isHighlighted: (shelfViewModel.highlightItem == shelfItem))
-                        .ignoresSafeArea()
-                }, notebookShape: {
-                    let shape: FTPreviewShape;
-                    if shelfItem.coverImage.needEqualCorners {
-                        shape = FTPreviewShape(raidus: leftCornerRadius);
-                    }
-                    else {
-                        shape = FTPreviewShape(leftRaidus: leftCornerRadius, rightRadius: rightCornerRadius);
-                    }
-                    return shape;
-                }, onAppearActon: {
-                    shelfMenuOverlayInfo.isMenuShown = true;
-                    hideShadow = true
-                    // Track event
-                    track(EventName.shelf_book_longpress, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
-                }, onDisappearActon: {
-                    hideShadow = false
-                    if !isAnyNBActionPopoverShown {
-                        shelfMenuOverlayInfo.isMenuShown = false;
-                    }
-                }, shelfItem: shelfItem)
-                .frame(width: thumbnailSize.width,
-                       height: thumbnailSize.height,
-                       alignment: Alignment.center)
-                .environmentObject(shelfItem)
-                .padding(coverPadding)
-                
+        VStack {
+            VStack(alignment: .center,spacing: 0) {
+                ZStack(alignment:.bottom) {
+                    FTNotebookShadowView(shelfItem: shelfItem,thumbnailSize: thumbnailSize)
+                        .isHidden((hideShadow || colorScheme == .dark))
+                    FTShelfItemContextMenuPreview(preview: {
+                        FTNotebookCoverView(isPressed: $isPressed, isHighlighted: (shelfViewModel.highlightItem == shelfItem))
+                            .ignoresSafeArea()
+                    }, notebookShape: {
+                        let shape: FTPreviewShape;
+                        if shelfItem.coverImage.needEqualCorners {
+                            shape = FTPreviewShape(raidus: leftCornerRadius);
+                        }
+                        else {
+                            shape = FTPreviewShape(leftRaidus: leftCornerRadius, rightRadius: rightCornerRadius);
+                        }
+                        return shape;
+                    }, onAppearActon: {
+                        shelfMenuOverlayInfo.isMenuShown = true;
+                        hideShadow = true
+                        // Track event
+                        track(EventName.shelf_book_longpress, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
+                    }, onDisappearActon: {
+                        hideShadow = false
+                        if !isAnyNBActionPopoverShown {
+                            shelfMenuOverlayInfo.isMenuShown = false;
+                        }
+                    }, shelfItem: shelfItem)
+                    .frame(width: thumbnailSize.width,
+                           height: thumbnailSize.height,
+                           alignment: Alignment.center)
+                    .environmentObject(shelfItem)
+                    .padding(coverPadding)
+                    
+                }
+                .scaleEffect(isPressed ? 0.92 : 1.0)
+                .animation(Animation.easeInOut(duration: 0.4), value: isPressed)
+                .frame(width: thumbnailSize.width + (coverPadding.leading + coverPadding.trailing),
+                                   height: thumbnailSize.height,
+                                   alignment: .top)
+                .padding(EdgeInsets(top: -(coverPadding.top), leading: 0, bottom: 0, trailing: 0))
             }
-            .scaleEffect(isPressed ? 0.92 : 1.0)
-            .animation(Animation.easeInOut(duration: 0.4), value: isPressed)
-            .frame(width: thumbnailSize.width + (coverPadding.leading + coverPadding.trailing),
-                   height: thumbnailSize.height + (coverPadding.top + coverPadding.bottom),
+            .padding(.horizontal,12)
+            .frame(width: viewSize.width,
+                   height: viewSize.height,
                    alignment: .top)
-            .padding(EdgeInsets(top: -(coverPadding.top), leading: 0, bottom: 0, trailing: 0))
-
-        }
-        .padding(.horizontal,12)
-        .frame(width: viewSize.width,
-               height: viewSize.height,
-               alignment: .top)
-        .overlay(alignment: .bottom, content: {
             VStack(alignment: .center, content: {
                 FTNotebookTitleView()
-                    .frame(height: 60)
+                    .frame(minHeight: 60)
                     .onTapGesture {
                         shelfViewModel.renameShelfItem(shelfItem)
                     }
             })
-            .frame(height: titleRectHeight,alignment:.bottom)
-        })            
+        }
     }
 
     private var viewSize: CGSize {
-        return CGSize(width:viewWidth, height: viewHeight)
+        return CGSize(width:viewWidth, height: viewHeight - titleRectHeight)
     }
     
     private var thumbnailSize: CGSize {

@@ -22,34 +22,36 @@ struct FTNotebookViewList : View {
     @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
     @State var hideShadow: Bool = false
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
     @Binding var isAnyNBActionPopoverShown: Bool
 
     var body: some View {
-        FTShelfItemContextMenuPreview(preview: {
-            contentView
-            .padding(.horizontal, listGridViewHorizontalPadding)
-            .overlay(content: {
-                if(shelfViewModel.highlightItem == shelfItem) {
-                    FTShelfItemDropOverlayView()
-                        .cornerRadius(10, corners: .allCorners)
-                }
-            })
-            .ignoresSafeArea()
-
-        }, notebookShape: {
-            return FTPreviewShape(raidus: 10);
-        }, onAppearActon: {
-            shelfMenuOverlayInfo.isMenuShown = true;
-            hideShadow = true
-            // Track event
-            track(EventName.shelf_book_longpress, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
-        }, onDisappearActon: {
-            if !isAnyNBActionPopoverShown {
-                shelfMenuOverlayInfo.isMenuShown = false;
-                hideShadow = false
-            }
-        }, shelfItem: shelfItem)
+        contentView
+//        FTShelfItemContextMenuPreview(preview: {
+//            contentView
+//            .padding(.horizontal, listGridViewHorizontalPadding)
+//            .overlay(content: {
+//                if(shelfViewModel.highlightItem == shelfItem) {
+//                    FTShelfItemDropOverlayView()
+//                        .cornerRadius(10, corners: .allCorners)
+//                }
+//            })
+//            .ignoresSafeArea()
+//
+//        }, notebookShape: {
+//            return FTPreviewShape(raidus: 10);
+//        }, onAppearActon: {
+//            shelfMenuOverlayInfo.isMenuShown = true;
+//            hideShadow = true
+//            // Track event
+//            track(EventName.shelf_book_longpress, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
+//        }, onDisappearActon: {
+//            if !isAnyNBActionPopoverShown {
+//                shelfMenuOverlayInfo.isMenuShown = false;
+//                hideShadow = false
+//            }
+//        }, shelfItem: shelfItem)
     }
 
     @ViewBuilder

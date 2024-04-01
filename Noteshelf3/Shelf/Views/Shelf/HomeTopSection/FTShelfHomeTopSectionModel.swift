@@ -25,6 +25,19 @@ enum FTShelfHomeTopSectionModel {
         }
         return title
     }
+    
+    var accessibilityHint: String {
+        let title: String
+        switch self {
+        case .quicknote:
+            title = FTAccessibilityHelper.QuickNoteHint
+        case .newNotebook:
+            title = FTAccessibilityHelper.NewNotebookHint
+        case .importFile:
+            title = FTAccessibilityHelper.ImportFileHint
+        }
+        return title
+    }
     var iconName: String {
         let name: String
         switch self {

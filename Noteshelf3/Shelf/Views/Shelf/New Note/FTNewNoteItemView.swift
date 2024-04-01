@@ -77,7 +77,7 @@ struct FTNewNoteItemView:View{
                     Spacer()
                 }
                 .frame(maxWidth: .infinity)
-                .frame(height: 60.0)
+                .frame(minHeight: 60.0)
                 .background(Color.appColor(.white60))
                 .cornerRadius(16)
                 .overlay(

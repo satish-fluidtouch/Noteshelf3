@@ -11,7 +11,8 @@ struct FTShelfTopSectionItem: View {
     var type: FTShelfHomeTopSectionModel
     let isFirsttime: Bool
     let geometrySize: CGFloat
-    
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
+
     @StateObject var shelfViewModel: FTShelfViewModel
     
     var body: some View {
@@ -38,21 +39,22 @@ struct FTShelfTopSectionItem: View {
                         cornerRadius: 16)
         }
         .macOnlyTapAreaFixer()
-
+        .accessibilityHint(type.accessibilityHint)
     }
 
     @ViewBuilder
     private var topSectionView: some View {
         if  !shelfViewModel.isInHomeMode && geometrySize < 600 || geometrySize < 600 && !shelfViewModel.shouldShowGetStartedInfo || geometrySize < 450 && shelfViewModel.shouldShowGetStartedInfo {
-            VStack(alignment: .leading){
+            VStack(alignment: .leading) {
                 gridcomponetImageView
-                VStack(alignment: .leading){
+                VStack(alignment: .leading) {
                     gridcomponettitleAndDescription
                 }
             }
             .frame(maxWidth: .infinity,alignment: .leading)
-            .frame(height: shelfViewModel.isInHomeMode && shelfViewModel.shouldShowGetStartedInfo ? 135.0 : 60.0)
-        }else{
+            .frame(minHeight: 60)
+//            .frame(height: shelfViewModel.isInHomeMode && shelfViewModel.shouldShowGetStartedInfo ? 135.0 : 60.0)
+        } else {
             HStack{
                 gridcomponetImageView
                 VStack(alignment: .leading){
@@ -62,15 +64,21 @@ struct FTShelfTopSectionItem: View {
             .frame(maxWidth: .infinity,maxHeight: .infinity,alignment: .leading)
         }
     }
+    
+    func isLargeSize() -> Bool {
+        let largeSizes: [DynamicTypeSize] = [.accessibility1, .accessibility2, .accessibility3, .accessibility4, .accessibility5]
+        return largeSizes.contains(dynamicTypeSize)
+    }
 }
 
-extension FTShelfTopSectionItem{
+extension FTShelfTopSectionItem {
     @ViewBuilder
     var gridcomponettitleAndDescription: some View {
         Text(type.displayTitle)
             .foregroundColor(.appColor(.black1))
             .font(Font.appFont(for: .medium, with: 15))
             .padding(.bottom,1)
+            .lineLimit(2)
         
         if isFirsttime && shelfViewModel.isInHomeMode{
             Text(type.description)
@@ -83,9 +91,9 @@ extension FTShelfTopSectionItem{
     @ViewBuilder
     var gridcomponetImageView: some View {
         Image(isFirsttime ? type.largeiconName : type.iconName)
-            .resizable()
-            .scaledToFit()
-            .frame(width: imageSize(),height: imageSize())
+//            .resizable()
+//            .scaledToFit()
+            .frame(minWidth: imageSize(),minHeight: imageSize())
     }
     private func imageSize() -> CGFloat {
         if shelfViewModel.isInHomeMode && isFirsttime && geometrySize > 500 {

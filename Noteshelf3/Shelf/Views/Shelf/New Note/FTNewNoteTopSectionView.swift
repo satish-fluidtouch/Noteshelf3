@@ -15,21 +15,39 @@ struct FTNewNoteTopSectionView: View {
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
 //    weak var viewDelegate: FTShelfNewNotePopoverViewDelegate?
     @Environment(\.dismiss) var dismiss
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
     var body: some View {
         Grid {
-            GridRow {
-                getShelfPopOverItemView(.quickNote)
-                    .gridCellColumns(2)
-            }
-            GridRow{
-                getShelfPopOverItemView(.newNotebook)
-                getShelfPopOverItemView(.importFromFiles)
+            if isLargeSize() {
+                GridRow {
+                    getShelfPopOverItemView(.quickNote)
+                }
+                GridRow{
+                    getShelfPopOverItemView(.newNotebook)
+                }
+                GridRow{
+                    getShelfPopOverItemView(.importFromFiles)
+                }
+
+            } else {
+                GridRow {
+                    getShelfPopOverItemView(.quickNote)
+                        .gridCellColumns(2)
+                }
+                GridRow{
+                    getShelfPopOverItemView(.newNotebook)
+                    getShelfPopOverItemView(.importFromFiles)
+                }
             }
         }
     }
     private func getShelfPopOverItemView(_ type: FTNewNotePopoverOptions) -> some View {
         FTNewNoteItemView(type: type, viewModel: viewModel)
+    }
+    
+    func isLargeSize() -> Bool {
+        return isLargerTextEnabled(for: dynamicTypeSize)
     }
 }
 struct FTNewNoteTopSectionView_Previews: PreviewProvider {

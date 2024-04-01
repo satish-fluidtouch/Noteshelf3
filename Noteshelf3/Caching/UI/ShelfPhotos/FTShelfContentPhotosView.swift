@@ -96,6 +96,8 @@ struct FTShelfContentPhotosView: View  {
                                         menuOverlayInfo.isMenuShown = false
                                     }
                             }
+                            .accessibilityElement(children: .ignore)
+                            .accessibilityLabel("Image, in Notebook \(media.title)")
                     }
                 }
             }
@@ -128,6 +130,7 @@ struct MediaItemView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .clipped()
+                .accessibilityHidden(true)
         } else {
             Color.gray
                 .opacity(0.3)

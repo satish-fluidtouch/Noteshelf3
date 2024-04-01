@@ -20,6 +20,7 @@ struct FTEditableView: View {
     @State var textFieldText: String = ""
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @EnvironmentObject var viewModel: FTSidebarViewModel
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
     var body: some View {
                 Label {
@@ -44,7 +45,7 @@ struct FTEditableView: View {
                                     .foregroundColor(.appColor(.black1))
                                 Spacer()
                             }
-                            .frame(height: 44,alignment:.leading)
+                            .frame(minHeight: 44,alignment:.leading)
                             .contentShape(Rectangle())
                             .if(!showEditableField) { view in
                                 view.onTapGesture {
@@ -53,20 +54,21 @@ struct FTEditableView: View {
                                     track(EventName.sidebar_addnewcategory_tap, screenName: ScreenName.sidebar)
                                 }
                             }
+                            .accessibilityHint(FTAccessibilityHelper.NewCategoryHint)
                         }
                     }
-                    .frame(height: 44,alignment:.leading)
+//                    .frame(height: 44,alignment:.leading)
                 } icon: {
                 if item.isEditing {
                     Image(icon:item.type == .category ? FTIcon.folder : FTIcon.number )
-                            .frame(width: 24, height: 24, alignment: SwiftUI.Alignment.center)
+                            .frame(minWidth: 24, minHeight: 24, alignment: SwiftUI.Alignment.center)
                             .padding(.trailing,4)
-                            .font(Font.appFont(for: .regular, with: 20))
+                            .font(Font.appFixedFont(for: .regular, with: isLargerTextEnabled(for: dynamicTypeSize) ? 26 : 20))
                             .foregroundColor(.appColor(.black1))
                 } else {
                     Image(icon: FTIcon.plusCircle)
-                        .frame(width: 24, height: 24, alignment: SwiftUI.Alignment.center)
-                        .font(Font.appFont(for: .regular, with: 20))
+                        .frame(minWidth: 24, minHeight: 24, alignment: SwiftUI.Alignment.center)
+                        .font(Font.appFixedFont(for: .regular, with: isLargerTextEnabled(for: dynamicTypeSize) ? 26 : 20))
                         .foregroundColor(.appColor(.black1))
                         .padding(.trailing,4)
                         .onTapGesture {

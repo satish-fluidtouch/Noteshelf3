@@ -89,6 +89,8 @@ struct FTShelfContentAudioView: View {
                                         menuOverlayInfo.isMenuShown = false
                                     }
                             }
+                            .accessibilityElement(children: .ignore)
+                            .accessibilityLabel("Audio recording \(audio.audioTitle), Duration \(audio.duration), in Notebook \(audio.title)")
                     }
                 }
             }
@@ -113,7 +115,7 @@ struct FTShelfContentAudioView: View {
 }
 
 struct FTShelfAudioItemView: View {
-
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
     let audio: FTShelfAudio
 
     var body: some View {
@@ -122,8 +124,8 @@ struct FTShelfAudioItemView: View {
                 HStack{
                     VStack(alignment: .leading,spacing: 8) {
                         Image(systemName: "volume.2.fill")
-                            .frame(width: 28,height: 24)
-                            .   font(.appFont(for: .medium, with: 20))
+                            .frame(minWidth: 28,minHeight: 24)
+                            .font(.appFixedFont(for: .medium, with: 20))
                         VStack(alignment: .leading,spacing: 2){
                             Text(audio.audioTitle)
                                 .lineLimit(2)

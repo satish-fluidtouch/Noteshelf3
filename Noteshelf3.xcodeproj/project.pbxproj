@@ -351,6 +351,7 @@
 		42B2F3A528A50B83002430C5 /* FTPDFRenderViewController+SidePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFBB120242C8D4700124D80 /* FTPDFRenderViewController+SidePanel.swift */; };
 		42C825C328E8BB9A00CA8286 /* FTFinderViewController_Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C825C228E8BB9A00CA8286 /* FTFinderViewController_Delegates.swift */; };
 		42CA19C22988F3B300810234 /* PDFDocument+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42890CAF2965623D00B2796C /* PDFDocument+Extension.swift */; };
+		42D2F6FB2BB08CE2007BD418 /* FTAccessibilityHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D2F6FA2BB08CE2007BD418 /* FTAccessibilityHelper.swift */; };
 		42D689EC28B7998600EA1925 /* FTAudioTrackHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42D689EB28B7998600EA1925 /* FTAudioTrackHeaderView.xib */; };
 		42D689EE28B8BF5F00EA1925 /* FTAudioTrackHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D689ED28B8BF5F00EA1925 /* FTAudioTrackHeaderView.swift */; };
 		42D8BC3128C61C4B00B4AED0 /* FTFilterRecentsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D8BC3028C61C4B00B4AED0 /* FTFilterRecentsStorage.swift */; };
@@ -3204,6 +3205,7 @@
 		42ADB81F28C1D339002E489A /* FTMediaFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTMediaFilterCell.swift; sourceTree = "<group>"; };
 		42B2F34628A13BF2002430C5 /* FTFinderTabHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFinderTabHostingController.swift; sourceTree = "<group>"; };
 		42C825C228E8BB9A00CA8286 /* FTFinderViewController_Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFinderViewController_Delegates.swift; sourceTree = "<group>"; };
+		42D2F6FA2BB08CE2007BD418 /* FTAccessibilityHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAccessibilityHelper.swift; sourceTree = "<group>"; };
 		42D689EB28B7998600EA1925 /* FTAudioTrackHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTAudioTrackHeaderView.xib; sourceTree = "<group>"; };
 		42D689ED28B8BF5F00EA1925 /* FTAudioTrackHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAudioTrackHeaderView.swift; sourceTree = "<group>"; };
 		42D8BC3028C61C4B00B4AED0 /* FTFilterRecentsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFilterRecentsStorage.swift; sourceTree = "<group>"; };
@@ -9249,6 +9251,7 @@
 			children = (
 				97B411A429E804E900ADFE1F /* FTSidebarTopSectionGridItemView.swift */,
 				97B411A329E804E900ADFE1F /* FTSidebarTopSectionGridView.swift */,
+				42D2F6FA2BB08CE2007BD418 /* FTAccessibilityHelper.swift */,
 				97B411A229E804E800ADFE1F /* FTSidebarTopSectionView.swift */,
 				97B411A529E804E900ADFE1F /* FTTemplatesSidebarItemView.swift */,
 				BA2D9100285CAFCB001BB495 /* FTSidebarView.swift */,
@@ -14227,6 +14230,7 @@
 				098F61382B3071B600BB0E16 /* FTPDFPageContentMigrationv1tov2.swift in Sources */,
 				42871B9C289808DC000E17B0 /* FTMoreOptionsModel.swift in Sources */,
 				0951BA9C2AD01D3D00E9E02C /* FTNoteshelfAITokenManager.swift in Sources */,
+				42D2F6FB2BB08CE2007BD418 /* FTAccessibilityHelper.swift in Sources */,
 				BAF394272859ADF00067CA9F /* UITextViewBulletsAndIndentation+Extension.swift in Sources */,
 				BAF394282859ADF00067CA9F /* FileSystemInfo.swift in Sources */,
 				BAF3942A2859ADF00067CA9F /* FTBackgroundTexture.swift in Sources */,

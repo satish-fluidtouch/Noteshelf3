@@ -21,6 +21,7 @@ struct FTShelfView: View,FTShelfBaseView {
 
     let supportedDropTypes = FTDragAndDropHelper.supportedTypesForDrop()
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
     var body: some View {
 
@@ -33,7 +34,7 @@ struct FTShelfView: View,FTShelfBaseView {
                 ScrollViewReader { proxy in
                     ScrollView(.vertical) {
                         VStack(alignment: .center, spacing:0) {
-                            if viewModel.showNewNoteView , geometry.size.width > 450, viewModel.mode == .normal {
+                            if viewModel.showNewNoteView , geometry.size.width > 450, viewModel.mode == .normal, showTopSectionForLargerText() {
                                 FTShelfTopSectionView()
                                     .frame(maxWidth:.infinity,minHeight: showMinHeight(geometrySize: geometry.size.width), maxHeight: .infinity,alignment: .center)
                                     .padding(.horizontal,gridHorizontalPadding)
@@ -107,6 +108,11 @@ struct FTShelfView: View,FTShelfBaseView {
                                    title: title,
                                    description: NSLocalizedString("shelf.category.noCategoryItemsDescription", comment: "Tap on the options above to create new notes or move existing ones."))
         }
+    }
+    
+    func showTopSectionForLargerText() -> Bool {
+        let sizes:[DynamicTypeSize] = [.accessibility3, .accessibility4, .accessibility5]
+        return !sizes.contains(dynamicTypeSize)
     }
 }
 

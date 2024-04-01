@@ -25,6 +25,7 @@ struct FTPasswordView: View {
     @FocusState private var hintFocused
     weak var passwordDelegate: FTPasswordDelegate?
     weak var viewDelegate: FTPasswordViewDelegate?
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
     var body: some View {
         ZStack {
@@ -149,12 +150,13 @@ struct FTPasswordView: View {
                 self.passwordDelegate?.didTapCancelPassword()
             }
             .foregroundColor(Color.appColor(.accent))
-            .appFont(for: .regular, with: 17.0)
+            .appFixedFont(for: .regular, with: isLargerTextEnabled(for: dynamicTypeSize) ? FTFontSize.largeSize : FTFontSize.regularSize)
+
         }
         ToolbarItem(placement: .principal) {
             Text(viewModel.passwordTitle)
                 .foregroundColor(.primary)
-                .font(.clearFaceFont(for: .medium, with: 20))
+                .font(.clearFaceFixedFont(for: .medium, with: 20))
         }
         ToolbarItem(placement: .navigationBarTrailing) {
             Button(viewModel.save) {
@@ -166,7 +168,7 @@ struct FTPasswordView: View {
                 }
             }
             .foregroundColor(Color.appColor(.accent).opacity(self.toEnableSave() ? 1.0 : 0.6))
-            .appFont(for: .regular, with: 17.0)
+            .appFixedFont(for: .regular, with: isLargerTextEnabled(for: dynamicTypeSize) ? FTFontSize.largeSize : FTFontSize.regularSize)
             .disabled(!self.toEnableSave())
         }
     }
