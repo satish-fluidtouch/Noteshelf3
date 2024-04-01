@@ -21,14 +21,14 @@ struct FTWatchLandView: View {
             FTRecordingsView()
                 .environmentObject(viewModel)
         }.watchOS10OnlyVerticalTabStyle()
-            .onChange(of: scenePhase) {
-                switch scenePhase {
+            .onChange(of: scenePhase) { newValue in
+                switch newValue {
                 case .active, .background:
                     if viewModel.isRecording && !FTWidgetDefaults.shared().isRecording ||  !viewModel.isRecording && FTWidgetDefaults.shared().isRecording {
                         print("zzzz - viewModel.isRecording - \(viewModel.isRecording) \n FTWidgetDefaults.shared().isRecording - \(FTWidgetDefaults.shared().isRecording)")
                         WidgetCenter.shared.reloadTimelines(ofKind: widgetKind)
-                    } 
-                    default:
+                    }
+                default:
                     break
                 }
             }
