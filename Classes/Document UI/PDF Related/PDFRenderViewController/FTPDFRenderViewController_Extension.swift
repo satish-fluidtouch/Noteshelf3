@@ -644,6 +644,7 @@ extension FTPDFRenderViewController : FTScanDocumentServiceDelegate
     func scanDocumentService(_ service: FTScanDocumentService, didFinishWith url: URL) {
         let item = FTImportItem(item: url as AnyObject, onCompletion: nil);
         self.beginImporting(items: [item]);
+        FTNotebookEventTracker.trackFreePageAddedEvent()
     }
 }
 

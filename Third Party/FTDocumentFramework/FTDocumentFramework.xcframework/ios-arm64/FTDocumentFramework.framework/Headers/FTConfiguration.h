@@ -18,4 +18,12 @@
 
 @end
 
+@protocol FTCLSLogger <NSObject>
+
++(void)logEvent:(NSString *)event;
++(void)logEroor:(NSString *)error attributes:(NSDictionary*)attributes;
+
+@end
+
 CG_EXTERN Class<FTGoogleAnalyticsProtocol> gaClass;
+CG_EXTERN Class<FTCLSLogger> clsLoggerClass;

@@ -12,7 +12,6 @@ import FTDocumentFramework
 
 private let fileExtensionsToListen = [FTFileExtension.shelf,
                                       FTFileExtension.ns3,
-                                      FTFileExtension.ns2,
                                       FTFileExtension.group,
                                       "m4a",
                                       "plist",
@@ -137,13 +136,13 @@ extension FTCloudDocumentListener: FTiCloudQueryObserverDelegate {
 fileprivate extension FTCloudDocumentListener {
 
     func filterIndexFiles(with metadataItems: [NSMetadataItem]) -> [NSMetadataItem] {
-        return metadataItems.filter({ $0.URL().pathExtension == FTFileExtension.sortIndex })
+        return metadataItems.filter({ $0.URL()?.pathExtension == FTFileExtension.sortIndex })
     }
 
     func filterAudioRelatedFiles(with metadataItems: [NSMetadataItem]?) -> [NSMetadataItem] {
         return metadataItems?.filter({
-            $0.URL().deletingLastPathComponent().lastPathComponent == "Audio Recordings" &&
-            ( $0.URL().pathExtension == "plist" || $0.URL().pathExtension == "m4a")
+            $0.URL()?.deletingLastPathComponent().lastPathComponent == "Audio Recordings" &&
+            ( $0.URL()?.pathExtension == "plist" || $0.URL()?.pathExtension == "m4a")
         }) ?? [NSMetadataItem]()
     }
 }

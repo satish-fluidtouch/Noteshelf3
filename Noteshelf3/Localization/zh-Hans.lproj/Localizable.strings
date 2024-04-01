@@ -948,6 +948,8 @@
 "appearance.darkTheme" = "黑暗模式";
 "appearance.lightTheme" = "浅色模式";
 "appearance.useSystemTheme" = "跟随系统设置";
+"applaunch.delay.contactSupport" = "联系支持人员";
+"applaunch.delay.msg" = "iCloud 没有及时响应。 请重新启动您的设备并重试。 如果此问题仍然存在，请联系 Noteshelf 支持。";
 "audiooption.gotoRecording" = "转到录音";
 "audiooption.jumptoPage" = "跳转至页面";
 "audiooption.speed" = "速度";
@@ -958,16 +960,16 @@
 "bookmark.removebookMark" = "移除书签";
 "bujoessentials" = "笔记本要点";
 "cancel" = "取消";
-"clip.addClip" = "添加剪辑";
+"clip.addClip" = "添加片段";
+"clip.clipAdded" = "片段已添加";
 "clip.deleteCategory" = "删除分类";
-"clip.deleteCategory.message" = "";
-"clip.deleteCategory.title" = "删除此类别将删除此类别中的所有@%剪辑，且无法恢复。";
+"clip.deleteCategory.title" = "删除此类别将删除此类别中的所有%@片段，且无法恢复。";
 "clip.newCategory" = "新分类...";
 "clip.noCategory" = "这个类别为空";
-"clip.noSavedClips" = "没有保存的剪辑";
-"clip.noSavedClips.description" = "套索任何内容并点击“保存剪辑”以供以后使用。";
-"clip.saveClip" = "保存剪辑";
-"clip.savedClips" = "保存的剪辑";
+"clip.noSavedClips" = "没有保存的片段";
+"clip.noSavedClips.description" = "套索任何内容并点击“保存片段”以供以后使用。";
+"clip.saveClip" = "保存片段";
+"clip.savedClips" = "保存的片段";
 "clipart404" = "服务器繁忙，请稍后重试。";
 "cloud.backup.error.contentPreviouslyCrashed" = "备份时发生错误。请稍后重试。";
 "cloud.backup.error.failedToCreateBackup" = "创建备份文件失败。请检查设备上的剩余空间。";
@@ -1478,6 +1480,7 @@
 "sidebar.topSection.home" = "主页";
 "sidebar.topSection.starred" = "标记";
 "sidebar.topSection.unfiled" = "未归档";
+"snippets.addtopage" = "添加到页面";
 "speechbubbles" = "对话框";
 "status_bar_info_footer" = "喜欢 Noteshelf 吗？%@ 在 App Store 上对我们进行评分。 它对我们的帮助将超出您的想象。";
 "status_bar_info_subtitle" = "许多人在记笔记时都要求使用状态栏。 您现在可以选择从更多菜单中显示状态栏。";
@@ -1608,4 +1611,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 11 March 2024 at 7:30 PM
+// Last Synced by Amar Udupa on 28 March 2024 at 3:21 PM

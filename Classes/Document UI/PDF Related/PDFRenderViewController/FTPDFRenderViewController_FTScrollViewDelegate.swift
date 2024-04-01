@@ -60,6 +60,7 @@ extension FTPDFRenderViewController: FTScrollViewDelegate {
     }
     
     func scrollViewDidEndPanningPage() {
+        FTCLSLog("Interaction: Main Scroll view did end drag");
         let currentControlelrs = self.visiblePageViewControllers();
         currentControlelrs.forEach { (pageVC) in
             pageVC.startAcceptingTouches(true);
@@ -85,5 +86,9 @@ extension FTPDFRenderViewController: UIScrollViewDelegate
             eachController.writingView?.didEndZooming(self.mainScrollView.zoomFactor);
         }
         self.setNeedsLayoutForcibly();
+        for eachController in visiblePages {
+            eachController.view.setNeedsLayout();
+            eachController.scrollView?.setNeedsLayout();
+        }
     }
 }

@@ -948,6 +948,8 @@
 "appearance.darkTheme" = "ダークテーマ";
 "appearance.lightTheme" = "ライトテーマ";
 "appearance.useSystemTheme" = "システムのライト/ダークモードを使用する";
+"applaunch.delay.contactSupport" = "サポート問い合わせ先";
+"applaunch.delay.msg" = "iCloud がタイムリーに応答しません。 デバイスを再起動して、もう一度お試しください。 この問題が解決しない場合は、Noteshelf サポートにお問い合わせください。";
 "audiooption.gotoRecording" = "録音に移動";
 "audiooption.jumptoPage" = "ページにジャンプ";
 "audiooption.speed" = "速度";
@@ -959,9 +961,9 @@
 "bujoessentials" = "Bujoの必需品";
 "cancel" = "キャンセル";
 "clip.addClip" = "クリップを追加";
+"clip.clipAdded" = "クリップを追加されました";
 "clip.deleteCategory" = "カテゴリーを削除";
-"clip.deleteCategory.message" = "";
-"clip.deleteCategory.title" = "このカテゴリを削除すると、このカテゴリ内のすべての@%クリップが削除され、復元することはできません。";
+"clip.deleteCategory.title" = "このカテゴリを削除すると、このカテゴリ内のすべての%@クリップが削除され、復元することはできません。";
 "clip.newCategory" = "新しいカテゴリ...";
 "clip.noCategory" = "このカテゴリーは空です。";
 "clip.noSavedClips" = "保存されたクリップはありません。";
@@ -1478,6 +1480,7 @@
 "sidebar.topSection.home" = "ホーム";
 "sidebar.topSection.starred" = "お気に入り";
 "sidebar.topSection.unfiled" = "未整理";
+"snippets.addtopage" = "ページに追加する";
 "speechbubbles" = "吹き出し";
 "status_bar_info_footer" = "Noteshelf を楽しんでいますか? App Store で評価するには %@ してください。 それはあなたが想像している以上に私たちを助けてくれるでしょう。";
 "status_bar_info_subtitle" = "ユーザーの多くが、ノートを取る際にステータスバーを要望しました。 もっとメニューからステータスバーを表示するオプションを追加しました。";
@@ -1608,4 +1611,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 11 March 2024 at 7:30 PM
+// Last Synced by Amar Udupa on 28 March 2024 at 3:21 PM

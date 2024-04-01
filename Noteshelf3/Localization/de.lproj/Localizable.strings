@@ -174,7 +174,7 @@
 "Connecting" = "Verbinden...";
 "ConnectingToDropbox" = "Verbindung zu Dropbox herstellen";
 "ConnectionFailed" = "Verbindung fehlgeschlagen";
-"ContactUs" = "Kontaktiere uns.";
+"ContactUs" = "Kontaktiere uns";
 "Continue" = "Weitermachen";
 "ContinueRecording" = "Weiter Aufnahme";
 "ContinueUsingICloud" = "Weiterhin iCloud verwenden.";
@@ -948,6 +948,8 @@
 "appearance.darkTheme" = "Dunkles Thema";
 "appearance.lightTheme" = "Helleres Thema";
 "appearance.useSystemTheme" = "Verwenden Sie den System-Licht-/Dunkelmodus.";
+"applaunch.delay.contactSupport" = "Kontaktieren Sie Support";
+"applaunch.delay.msg" = "iCloud reagiert nicht rechtzeitig. Bitte starten Sie Ihr Gerät neu und versuchen Sie es erneut. Wenn das Problem weiterhin besteht, wenden Sie sich an den Noteshelf-Support.";
 "audiooption.gotoRecording" = "Zur Aufzeichnung gehen";
 "audiooption.jumptoPage" = "Zur Seite springen";
 "audiooption.speed" = "Geschwindigkeit";
@@ -959,9 +961,9 @@
 "bujoessentials" = "Bujo Grundlagen";
 "cancel" = "Abbrechen";
 "clip.addClip" = "Clip hinzufügen";
+"clip.clipAdded" = "Clip hinzugefügt";
 "clip.deleteCategory" = "Kategorie löschen";
-"clip.deleteCategory.message" = "";
-"clip.deleteCategory.title" = "Das Löschen dieser Kategorie löscht alle @% Clips in dieser Kategorie und kann nicht wiederhergestellt werden.";
+"clip.deleteCategory.title" = "Das Löschen dieser Kategorie löscht alle %@ Clips in dieser Kategorie und kann nicht wiederhergestellt werden.";
 "clip.newCategory" = "Neue Kategorie...";
 "clip.noCategory" = "Diese Kategorie ist leer.";
 "clip.noSavedClips" = "Keine gespeicherten Clips";
@@ -1478,6 +1480,7 @@
 "sidebar.topSection.home" = "Zuhause";
 "sidebar.topSection.starred" = "Hervorgehoben";
 "sidebar.topSection.unfiled" = "Ungeordnet";
+"snippets.addtopage" = "Zur Seite hinzufügen";
 "speechbubbles" = "Sprechblasen";
 "status_bar_info_footer" = "Genießen Sie Noteshelf? %@, um uns im App Store zu bewerten. Es wird uns mehr helfen, als Sie sich vorstellen können.";
 "status_bar_info_subtitle" = "Viele von Ihnen haben uns beim Notieren nach der Statusleiste gefragt. Sie haben jetzt die Möglichkeit, die Statusleiste über das Menü Mehr anzuzeigen.";
@@ -1608,4 +1611,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 11 March 2024 at 7:30 PM
+// Last Synced by Amar Udupa on 28 March 2024 at 3:21 PM

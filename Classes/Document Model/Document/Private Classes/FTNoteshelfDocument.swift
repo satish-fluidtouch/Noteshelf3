@@ -5,8 +5,8 @@
 //  Created by Amar on 25/3/17.
 //  Copyright © 2017 Fluid Touch Pte Ltd. All rights reserved.
 //
-let APP_SUPPORTED_MAX_DOC_VERSION = Float(9);
-let DOC_VERSION : String = "9.0";
+let APP_SUPPORTED_MAX_DOC_VERSION = Float(10);
+let DOC_VERSION : String = "10.0";
 let DOCUMENTS_KEY : String = "documents";
 let DOCUMENT_TYPE = "document_type"
 let DOCUMENT_ID_KEY =  "document_ID";
@@ -1197,9 +1197,10 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
             dictionary.setObject(docUUID, forKey: DOCUMENT_ID_KEY as NSCopying);
             dictionary.write(to: propertyInfoPlist, atomically: true);
             
-            let uuidAttribute = FileAttributeKey.ExtendedAttribute(key: .documentUUIDKey, string: docUUID)
-            try? self.URL.setExtendedAttributes(attributes: [uuidAttribute])
-            
+            if FTDocumentPropertiesReader.USE_EXTENDED_ATTRIBUTE {
+                let uuidAttribute = FileAttributeKey.ExtendedAttribute(key: .documentUUIDKey, string: docUUID)
+                try? self.URL.setExtendedAttributes(attributes: [uuidAttribute])
+            }
             let annotationFolderPath = self.fileURL.appendingPathComponent(ANNOTATIONS_FOLDER_NAME);
             if(!FileManager().fileExists(atPath: annotationFolderPath.path)){
                 _ = try? FileManager().createDirectory(at: annotationFolderPath, withIntermediateDirectories: true, attributes: nil);
