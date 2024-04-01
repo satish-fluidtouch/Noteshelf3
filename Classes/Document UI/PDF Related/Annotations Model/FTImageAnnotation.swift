@@ -293,7 +293,7 @@ extension FTImageAnnotation
 {
     override func undoInfo() -> FTUndoableInfo {
         let info = FTImageUndoableInfo.init(withAnnotation: self);
-        info.image = _image
+        info.image = self.image
         info.imageTransform = imageTransformMatrix
         return info;
     }
