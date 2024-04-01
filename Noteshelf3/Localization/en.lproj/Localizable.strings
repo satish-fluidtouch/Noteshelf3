@@ -948,6 +948,8 @@
 "appearance.darkTheme" = "Dark Theme";
 "appearance.lightTheme" = "Light Theme";
 "appearance.useSystemTheme" = "Use System Light / Dark Mode";
+"applaunch.delay.contactSupport" = "Contact Support";
+"applaunch.delay.msg" = "iCloud is not responding in a timely manner. Please restart your device and try again. If this problem persists contact Noteshelf Support.";
 "audiooption.gotoRecording" = "Go to Recording";
 "audiooption.jumptoPage" = "Jump to Page";
 "audiooption.speed" = "Speed";
@@ -1609,4 +1611,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 22 March 2024 at 11:59 AM
+// Last Synced by Amar Udupa on 28 March 2024 at 3:21 PM

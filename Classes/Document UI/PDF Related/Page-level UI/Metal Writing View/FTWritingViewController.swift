@@ -222,6 +222,7 @@ class FTWritingViewController: UIViewController,FTViewControllerSupportsScene {
             if(oldValue != self.isCurrentPage) {
                 if(self.isCurrentPage) {
                     if(self.mode != FTRenderModeDefault || !self.isInZoomMode()) {
+                        FTCLSLog("Interaction: Disabled: render")
                         self.pageContentDelegate?.setUserInteraction(enable: false);
                     }
                     if(self.mode == FTRenderModeDefault && !self.isInZoomMode()) {
@@ -293,6 +294,7 @@ extension FTWritingViewController :  FTWritingProtocol
     }
     
     func willBeginZooming() {
+        self.offscreenTileViewController?.renderTiles(inRect: self.visibleRect, properties: FTRenderingProperties());
         self.updateLowResolutionImageBackgroundView();
     }
     
@@ -338,6 +340,7 @@ extension FTWritingViewController :  FTWritingProtocol
         if(self.isCurrentPage &&
             self.mode == FTRenderModeDefault &&
             !self.isInZoomMode()) {
+            FTCLSLog("Interaction: Disabled: reset")
             self.pageContentDelegate?.setUserInteraction(enable: false);
         }
         self.offscreenTileViewController?.reloadTiles();
@@ -446,7 +449,6 @@ private extension FTWritingViewController
 {
     func _reloadTiles(inRect: CGRect, intents:[FTRendererIntent], properties : FTRenderingProperties)
     {
-
         let rect = inRect.intersection(self.scrollView?.visibleRect() ?? inRect)
         if nil != self.pageToDisplay {
             if(self.mode == FTRenderModeDefault) {
@@ -601,6 +603,7 @@ private extension FTWritingViewController
     
     func updateCurrentPageProperties()
     {
+        FTCLSLog("Interaction: Enabled: update page properties")
         self.pageContentDelegate?.setUserInteraction(enable: true);
         
 //        if(self.mode == FTRenderModeDefault) {

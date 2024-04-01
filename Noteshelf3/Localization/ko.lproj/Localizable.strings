@@ -948,6 +948,8 @@
 "appearance.darkTheme" = "다크 테마";
 "appearance.lightTheme" = "라이트 테마";
 "appearance.useSystemTheme" = "시스템 라이트 / 다크 모드 사용";
+"applaunch.delay.contactSupport" = "연락처 지원";
+"applaunch.delay.msg" = "iCloud가 적시에 응답하지 않습니다. 기기를 다시 시작한 후 다시 시도해 주세요. 이 문제가 지속되면 Noteshelf 지원팀에 문의하세요.";
 "audiooption.gotoRecording" = "녹음으로 이동";
 "audiooption.jumptoPage" = "페이지로 이동";
 "audiooption.speed" = "속도";
@@ -1609,4 +1611,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 22 March 2024 at 11:59 AM
+// Last Synced by Amar Udupa on 28 March 2024 at 3:21 PM
