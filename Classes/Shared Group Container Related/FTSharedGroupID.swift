@@ -8,6 +8,11 @@
 
 import UIKit
 
+public enum FTWidgetKind: String {
+    case pinnedWidget = "pinnedWidget"
+    case pinnedOptionsWidget = "pinnedOptionsWidget"
+}
+
 public class FTSharedGroupID {
     public static let notshelfDocumentCache = "com.noteshelf.cache"
 #if ENTERPRISE_EDITION

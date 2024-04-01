@@ -8,6 +8,7 @@
 
 import Foundation
 import FTCommon
+import WidgetKit
 
 /* Steps:
  These tasks should be on low priority and should not interrupt the user at any point.
@@ -328,6 +329,7 @@ private extension FTDocumentCache {
                 try FTFileCacheManager.cacheDocumentAt(url, destination: destinationURL);
 //                try _fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: false)
                 updateMetadataPlistWithRelativePathFor(docUrl: url, documentId: documentUUID)
+                reloadWidgetTimeLines()
                 cacheLog(.success, "Copy", url.lastPathComponent)
             } catch {
                 cacheLog(.error, "Copy", error.localizedDescription, url.lastPathComponent)
@@ -346,6 +348,7 @@ private extension FTDocumentCache {
                 do {
                     try FTFileCacheManager.cacheDocumentAt(url, destination: destinationURL);
                     updateMetadataPlistWithRelativePathFor(docUrl: url, documentId: documentUUID)
+                    reloadWidgetTimeLines()
                     cacheLog(.success, "Replace", url.lastPathComponent)
                 } catch {
                     cacheLog(.error, "Replace", error.localizedDescription, url.lastPathComponent)
@@ -371,6 +374,7 @@ private extension FTDocumentCache {
                     FTCacheTagsProcessor.shared.removeTagsFor(documentUUID: docUUID)
                     FTBookmarksProvider.shared.removeBookmarkFor(documentId: docUUID)
                     try _fileManger.removeItem(at: destinationURL)
+                    reloadWidgetTimeLines()
                     cacheLog(.success, "Remove", doc.URL.lastPathComponent)
                 } catch {
                     cacheLog(.error, "Remove", doc.URL.lastPathComponent)
@@ -378,5 +382,9 @@ private extension FTDocumentCache {
             }
         }
     }
-
+    
+    private func reloadWidgetTimeLines() {
+        WidgetCenter.shared.reloadTimelines(ofKind: FTWidgetKind.pinnedWidget.rawValue)
+        WidgetCenter.shared.reloadTimelines(ofKind: FTWidgetKind.pinnedOptionsWidget.rawValue)
+    }
 }

@@ -34,7 +34,7 @@ final class FTWidgetIntentDataHelper {
                         let coverImage : String
                         let pageAttrs = pageAttrs(for: eachNotebookUrl.path(percentEncoded: false))
                         coverImage = eachNotebookUrl.appending(path:"cover-shelf-image.png").path(percentEncoded: false);
-                        time = timeFromDate(currentDate: eachNotebookUrl.fileCreationDate)
+                        time = timeFromDate(currentDate: eachNotebookUrl.fileModificationDate)
                         let book = FTPinnedNotebook(relativePath: relativePath, createdTime: time, coverImageName: coverImage, hasCover: pageAttrs.0, isLandscape: pageAttrs.1)
                         notebooks.append(book)
                     }
@@ -101,7 +101,7 @@ final class FTWidgetIntentDataHelper {
                         let coverImage : String
                         let pageAttrs = pageAttrs(for: eachNotebookUrl.path(percentEncoded: false))
                         coverImage = eachNotebookUrl.appending(path:"cover-shelf-image.png").path(percentEncoded: false);
-                        time = timeFromDate(currentDate: eachNotebookUrl.fileCreationDate)
+                        time = timeFromDate(currentDate: eachNotebookUrl.fileModificationDate)
                         entry = FTPinnedNotebook(relativePath: relativePath, createdTime: time, coverImageName: coverImage, hasCover: pageAttrs.0, isLandscape: pageAttrs.1)
                     }
                 }

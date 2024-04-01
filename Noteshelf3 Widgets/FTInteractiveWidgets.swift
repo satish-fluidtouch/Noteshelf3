@@ -153,20 +153,13 @@ struct NotebookCreation_Widget: Widget {
 }
 
 struct FTPinnedWidget: Widget {
-    let kind: String = "InteractiveWidgets"
+    let kind: String = FTWidgetKind.pinnedWidget.rawValue
     
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: FTPinnedIntentConfigurationIntent.self, provider: FTPinnedTimelineProvider()) { entry in
-            //if #available(iOS 17.0, *) {
                 FTPinnedWidgetView(entry: entry)
                     .containerBackground(.fill.tertiary, for: .widget)
                     .widgetURL(URLComponents(type: "pinnedWidget", entry: entry)?.url)
-//            } else {
-//                FTPinnedWidgetView(entry: entry)
-//                    .padding()
-//                    .background()
-//                    .widgetURL(URLComponents(type: "pinnedWidget", entry: entry)?.url)          
-//            }
         }
         .supportedFamilies([.systemSmall])
         .configurationDisplayName("Notebook")
@@ -175,13 +168,12 @@ struct FTPinnedWidget: Widget {
 }
 
 struct FTPinnedNotebookOptionsWidget: Widget {
-    let kind: String = "InteractiveWidgets"
+    let kind: String = FTWidgetKind.pinnedOptionsWidget.rawValue
 
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: FTPinnedIntentConfigurationIntent.self, provider: FTPinnedTimelineProvider()) { entry in
             FTPinnedNotebookOptionsWidgetView(entry: entry)
                 .containerBackground(.clear, for: .widget)
-//                .widgetURL(URLComponents(type: "pinnedWidget", entry: entry)?.url)
         }
         .supportedFamilies([.systemMedium])
         .configurationDisplayName("Notebook")
