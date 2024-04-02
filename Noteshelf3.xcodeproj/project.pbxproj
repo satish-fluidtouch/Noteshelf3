@@ -1998,6 +1998,7 @@
 		E76AF9272B9AE0F500B65517 /* FTPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76AF9262B9AE0F500B65517 /* FTPlayerViewModel.swift */; };
 		E76CEDC22A93605C00E4E22F /* FTRecentSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76CEDC02A93605C00E4E22F /* FTRecentSectionHeader.xib */; };
 		E76CEDC32A93605C00E4E22F /* FTRecentSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76CEDC12A93605C00E4E22F /* FTRecentSectionHeader.swift */; };
+		E76EA45A2BBBDEBB009DD911 /* Noteshelf 3 Watch Widget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E7CCFF622BA975E000DB59CE /* Noteshelf 3 Watch Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E776FB582A54531D00AFA38E /* FTGlobalSearchController_MacExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E776FB572A54531D00AFA38E /* FTGlobalSearchController_MacExtension.swift */; };
 		E7780F212B96F38100DD134D /* FTFileItemPDFTemp.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E41AB21F9712CB00A591F1 /* FTFileItemPDFTemp.m */; };
 		E779DE3B2B5143B1007FBFE1 /* FTLinkPageThumbnailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E779DE3A2B5143B1007FBFE1 /* FTLinkPageThumbnailCell.swift */; };
@@ -2340,6 +2341,13 @@
 			remoteGlobalIDString = BAA84E1428730F5800DE801B;
 			remoteInfo = FTStyles;
 		};
+		E76EA45B2BBBDEBB009DD911 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E7CCFF612BA975E000DB59CE;
+			remoteInfo = "Noteshelf3 Watch WidgetExtension";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -2380,6 +2388,17 @@
 				BAA84E4D2873105500DE801B /* FTCommon.framework in CopyFiles */,
 				BAA84E1E28730F5800DE801B /* FTStyles.framework in CopyFiles */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E76EA45D2BBBDEBB009DD911 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				E76EA45A2BBBDEBB009DD911 /* Noteshelf 3 Watch Widget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -12035,10 +12054,12 @@
 				E75CD8462B8F0B4300D59F21 /* Sources */,
 				E75CD8472B8F0B4300D59F21 /* Frameworks */,
 				E75CD8482B8F0B4300D59F21 /* Resources */,
+				E76EA45D2BBBDEBB009DD911 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				E76EA45C2BBBDEBB009DD911 /* PBXTargetDependency */,
 			);
 			name = "Noteshelf3 WatchApp";
 			productName = "Noteshelf3 WatchApp Watch App";
@@ -14741,6 +14762,11 @@
 			isa = PBXTargetDependency;
 			target = BAA84E1428730F5800DE801B /* FTStyles */;
 			targetProxy = DD926E1929FA79C20012EEA3 /* PBXContainerItemProxy */;
+		};
+		E76EA45C2BBBDEBB009DD911 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E7CCFF612BA975E000DB59CE /* Noteshelf3 Watch WidgetExtension */;
+			targetProxy = E76EA45B2BBBDEBB009DD911 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
