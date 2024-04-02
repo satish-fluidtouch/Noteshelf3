@@ -275,13 +275,16 @@ extension NSNotification.Name {
     
     func updateShelfItemInfo(_ metadataItem : NSMetadataItem)
     {
+        guard let metaURL = metadataItem.URL() else {
+            return;
+        }
         self.metadataItem = metadataItem;
         if let tempTime = self.tempFileModificationDate,
             tempTime.compare(self.URL.fileModificationDate) == ComparisonResult.orderedAscending {
             self.tempFileModificationDate = nil;
         }
         
-        self.URL = metadataItem.URL();
+        self.URL = metaURL;
         
         self.updateIsDownloaded(metadataItem);
         self.updateIsDownloading(metadataItem);
@@ -369,14 +372,10 @@ private extension FTDocumentItem {
         }
         if let fileModDate = cache.getExtendedAttribute(for: .lastOpenDateKey)?.dateValue {
             if fileModDate.compare(date) == ComparisonResult.orderedAscending {
-                debugLog("fileModDate: income date is lastest :\(self.URL.relativePathWRTCollection())  - \(fileModDate) -\(date)")
                 _fileLastOpenedDate = date;
-                debugLog("fifileModDate: before update: \(cache.fileModificationDate)")
                 try? cache.updateLastOpenedDate(date)
-                debugLog("fifileModDate: after update: \(cache.fileModificationDate)")
             }
             else {
-                debugLog("fileModDate: cache date is lastest :\(self.URL.relativePathWRTCollection())  - \(fileModDate) -\(date)")
                 _fileLastOpenedDate = fileModDate;
             }
         }

@@ -948,6 +948,8 @@
 "appearance.darkTheme" = "黑暗模式";
 "appearance.lightTheme" = "淺色模式";
 "appearance.useSystemTheme" = "跟隨系統設置";
+"applaunch.delay.contactSupport" = "聯繫支援人員";
+"applaunch.delay.msg" = "iCloud 沒有及時回應。 請重新啟動您的裝置並重試。 如果此問題仍然存在，請聯絡 Noteshelf 支援。";
 "audiooption.gotoRecording" = "轉到錄音";
 "audiooption.jumptoPage" = "跳轉至頁面";
 "audiooption.speed" = "速度";
@@ -1609,4 +1611,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 22 March 2024 at 11:59 AM
+// Last Synced by Amar Udupa on 28 March 2024 at 3:21 PM

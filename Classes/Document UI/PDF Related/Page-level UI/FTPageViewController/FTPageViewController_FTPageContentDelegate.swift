@@ -22,8 +22,25 @@ extension FTPageViewController : FTPageContentDelegate {
     }
     
     func setUserInteraction(enable : Bool) {
+        self.setUserInteraction(enable: enable, applyToToolbar: true)
+    }
+    
+    private var pageIndex: Int {
+        return self.pdfPage?.pageIndex() ?? -1;
+    }
+    
+    func setUserInteraction(enable : Bool,applyToToolbar : Bool) {
+        if self.contentHolderView?.isUserInteractionEnabled != enable {
+            FTCLSLog("Interaction: Content interaction: \(enable) \(self.pageIndex) isCurrent: \(self.isCurrent)");
+            self.cancenlScheduledUserIneractionTimeLimit();
+            if !enable {
+                self.scheduleUserIneractionTimeLimit();
+            }
+        }
         self.contentHolderView?.isUserInteractionEnabled = enable;
-        self.delegate?.setToolbarEnabled(enable);
+        if applyToToolbar {
+            self.delegate?.setToolbarEnabled(enable);
+        }
     }
     
     func currentDeskMode() -> RKDeskMode {
@@ -32,6 +49,35 @@ extension FTPageViewController : FTPageContentDelegate {
     
     func setToPreviousTool() {
         self.delegate?.setToPreviousTool();
+    }
+    
+    private func scheduleUserIneractionTimeLimit() {
+        self.cancenlScheduledUserIneractionTimeLimit();
+        self.perform(#selector(self.delayedEnableUserInteraction), with: nil, afterDelay: 5);
+    }
+    
+    func cancenlScheduledUserIneractionTimeLimit() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.delayedEnableUserInteraction), object: nil);
+    }
+    
+    @objc private func delayedEnableUserInteraction() {
+        FTCLSLog("Interaction: Delayed Enable triggered \(self.pageIndex) \(self.isCurrent)");
+        guard let scrollView = (self.layoutType == .vertical) ? self.delegate?.mainScrollView : self.scrollView
+        , self.isCurrent else {
+            return;
+        }
+        if scrollView.isDragging || scrollView.isZooming {
+            FTCLSLog("Interaction: drag \(scrollView.isDragging) zoom: \(scrollView.isZooming) in progress");
+            self.scheduleUserIneractionTimeLimit();
+            return;
+        }
+        let contentOffset = scrollView.contentOffset;
+        if (contentOffset.x < 0 || contentOffset.x > scrollView.contentSize.width - scrollView.frame.width) {
+            FTCLSLog("Interaction:: ScrollView offset = \(contentOffset)")
+            scrollView.setNeedsLayout();
+        }
+        FTLogError("App Freeze - Interaction disabled: \(self.pageIndex)");
+        self.setUserInteraction(enable: true);
     }
 }
 
