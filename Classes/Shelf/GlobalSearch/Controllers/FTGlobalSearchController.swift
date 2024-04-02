@@ -59,11 +59,16 @@ class FTGlobalSearchController: UIViewController {
     weak var shelfItemCollection: FTShelfItemCollection?
 
     private var selectedIndexPath : IndexPath?
-    private var searchHelper: FTGlobalSearchProvider?
+//    private var searchHelper: FTGlobalSearchProvider?
     private var selectedGridItem: FTSearchResultProtocol?
-    private var searchedSections = [FTSearchSectionProtocol]()
+//    private var searchedSections = [FTSearchSectionProtocol]()
     private var currentSize = CGSize.zero
     private let alignmentOffset: CGFloat = 550.0
+
+    private let viewModel = FTGlobalSearchViewModel()
+    private var searchedSections: [FTSearchSectionProtocol] {
+        self.viewModel.searchedSections
+    }
 
 #if targetEnvironment(macCatalyst)
     // This is used exclusively for updating search text when book is closed
@@ -81,7 +86,7 @@ class FTGlobalSearchController: UIViewController {
 #endif
         self.configureSegmentControl()
         self.configureTableView()
-        self.searchHelper = FTGlobalSearchProvider.init(with: [FTGlobalSearchType.titles, FTGlobalSearchType.content, FTGlobalSearchType.tags])
+//        self.searchHelper = FTGlobalSearchProvider.init(with: [FTGlobalSearchType.titles, FTGlobalSearchType.content, FTGlobalSearchType.tags])
         (self.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionHeadersPinToVisibleBounds = false
         let ftNoResultsVc = FTNoResultsViewHostingController(imageName: "emptySearch", title: "NoResults".localized, description: "search.tryNewSearch".localized)
         self.collectionView.backgroundView = ftNoResultsVc.view
@@ -152,14 +157,14 @@ class FTGlobalSearchController: UIViewController {
     }
 
     func cancelSearch() {
-        runInMainThread {
-            self.progressView?.isHidden = true
-            self.updateSearchStatus()
-            self.hideSegmentControlIfNeeded(toHide: true)
-            self.searchedSections.removeAll()
-            self.collectionView?.reloadData()
+        self.viewModel.cancelSearch()
+        self.viewModel.applySnapshotClosure = {
+            runInMainThread {
+                self.progressView?.isHidden = true
+                self.updateSearchStatus()
+                self.hideSegmentControlIfNeeded(toHide: true)
+            }
         }
-        self.searchHelper?.cancelSearching()
     }
 }
 
@@ -170,13 +175,7 @@ extension FTGlobalSearchController {
         self.cancelSearch()
 
         runInMainThread {
-            var sectionIndexSet = IndexSet()
-            for i in 0 ..< self.searchedSections.count {
-                sectionIndexSet.insert(i)
-            }
             self.hideSegmentControlIfNeeded(toHide: false)
-            self.searchedSections.removeAll()
-            self.collectionView?.deleteSections(sectionIndexSet)
             self.progressView?.isHidden = false
             self.progressView?.updateProgress(0.0, animated: false, initialDelay: 0, duration: 0, completion: nil)
             self.updateSearchStatus()
@@ -188,43 +187,20 @@ extension FTGlobalSearchController {
             shelfcatgories.append(collection)
         }
         let reqSearchKey = info.textKey.trimmingCharacters(in: .whitespaces)
-        self.searchHelper?.fetchSearchResults(with: reqSearchKey, tags: info.tags, shelfCategories: shelfcatgories, onSectionFinding: {[weak self] (items) in
-            guard let self = self, !items.isEmpty else {
-                return
-            }
-            runInMainThread {
-                items.forEach { itemSection in
-                    if !self.searchedSections.contains(where: { section in
-                        return itemSection.uuid == section.uuid
-                    }) {
-                        var sectionIndexSet = IndexSet()
-                        for i in 0 ..< items.count {
-                            sectionIndexSet.insert(self.searchedSections.count + i)
-                        }
-                        self.searchedSections.append(contentsOf: items)
-                        self.collectionView?.insertSections(sectionIndexSet)
-                        self.updateCountInfoLabel()
-                    } else {
-                        if let index = self.searchedSections.firstIndex(where: { section in
-                            section.uuid == itemSection.uuid
-                        }) {
-                            let indexPath = IndexPath(item: 0, section: index)
-                            if self.collectionView.indexPathsForVisibleItems.contains(where: { visibleIndexPath in
-                                visibleIndexPath == indexPath
-                            }) {
-                                if let cell = self.collectionView.cellForItem(at: indexPath) as? FTBaseResultSectionCell {
-                                    cell.updateContentSection(itemSection)
-                                }
-                                if let header = self.collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: indexPath) as? FTSearchResultHeader {
-                                    header.updatePageCount(itemSection)
-                                }
-                            }
-                            self.updateCountInfoLabel()
-                        }
-                    }
+        self.viewModel.searchForNotebooks(with: info, in: shelfcatgories, onCurrentSectionFinding: { itemSection, index in
+            let indexPath = IndexPath(item: 0, section: index)
+            if self.collectionView.indexPathsForVisibleItems.contains(where: { visibleIndexPath in
+                visibleIndexPath == indexPath
+            }) {
+                if let cell = self.collectionView.cellForItem(at: indexPath) as? FTBaseResultSectionCell {
+                    cell.updateContentSection(itemSection)
+                }
+                if let header = self.collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: indexPath) as? FTSearchResultHeader {
+                    header.updatePageCount(itemSection)
                 }
             }
-        }, onCompletion: { [weak self] (_) in
+            self.updateCountInfoLabel()
+        }, onCompletion: { [weak self] _ in
             runInMainThread {
                 if let `self` = self {
                     self.progressView?.isHidden = true
@@ -233,9 +209,10 @@ extension FTGlobalSearchController {
                 }
             }
         })
-        self.searchHelper?.onProgressUpdate = {[weak self] (progress) in
+
+        self.viewModel.onProgressUpdate = { [weak self] (progress) in
             runInMainThread {
-                self?.progressView?.updateProgress(progress, animated: false, initialDelay: 0, duration: 0, completion: nil);
+                self?.progressView?.updateProgress(progress, animated: false, initialDelay: 0, duration: 0, completion: nil)
             }
         }
     }
@@ -306,10 +283,10 @@ private extension FTGlobalSearchController {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.01
 
-        if self.searchedSections.isEmpty {
-            let countAttrs: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.label.withAlphaComponent(0.7), .font: UIFont.appFont(for: .regular, with: 13), NSAttributedString.Key.paragraphStyle: paragraphStyle]
-            self.countInfoLabel?.attributedText = NSAttributedString(string: "", attributes: countAttrs)
-        }
+//        if self.searchedSections.isEmpty {
+//            let countAttrs: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.label.withAlphaComponent(0.7), .font: UIFont.appFont(for: .regular, with: 13), NSAttributedString.Key.paragraphStyle: paragraphStyle]
+//            self.countInfoLabel?.attributedText = NSAttributedString(string: "", attributes: countAttrs)
+//        }
 
         let searchKeyAttrs: [NSAttributedString.Key : Any] = [.foregroundColor: UIColor.label, .font: UIFont.clearFaceFont(for: .medium, with: 28), NSAttributedString.Key.paragraphStyle : paragraphStyle]
 
@@ -377,15 +354,15 @@ extension FTGlobalSearchController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let sectionContent = self.searchedSections[indexPath.section]
         sectionContent.onStatusChange = {[weak self] (section,   isActive) in
-            if isActive {
-                if let index = self?.searchedSections.firstIndex(where: { (eachSection) -> Bool in
-                    return eachSection.isEqual(section)
-                }){
-                    var sectionIndexSet = IndexSet()
-                    sectionIndexSet.insert(index)
-                    self?.collectionView?.reloadSections(sectionIndexSet)
-                }
-            }
+//            if isActive {
+//                if let index = self?.searchedSections.firstIndex(where: { (eachSection) -> Bool in
+//                    return eachSection.isEqual(section)
+//                }){
+//                    var sectionIndexSet = IndexSet()
+//                    sectionIndexSet.insert(index)
+//                    self?.collectionView?.reloadSections(sectionIndexSet)
+//                }
+//            }
         }
         guard kind == UICollectionView.elementKindSectionHeader else { return UICollectionReusableView() }
 
@@ -568,7 +545,7 @@ extension FTGlobalSearchController: FTSearchResultActionDelegate {
             //************************************** Only content matches will be populated in finder
             if section is FTSearchSectionContentProtocol {
                 let documentSearchResults = FTDocumentSearchResults()
-                documentSearchResults.searchedKeyword = self.searchHelper?.searchKey
+//                documentSearchResults.searchedKeyword = self.searchHelper?.searchKey
                 var searchIndices = [FTPageSearchingInfo]()
                 for eachItem in section.items {
                     if let searchInfo = (eachItem as? FTSearchResultPageProtocol)?.searchingInfo {
@@ -579,14 +556,14 @@ extension FTGlobalSearchController: FTSearchResultActionDelegate {
                 docInfo.documentSearchResults = documentSearchResults;
             }
             //**************************************
-            if let sectionIndex = self.searchedSections.firstIndex(where: { $0.hash == section.hash}) {
-                if let itemIndex = self.searchedSections[sectionIndex].items.firstIndex(where: { $0.hash == gridItem.hash}) {
-                    if let cell = self.collectionView?.cellForItem(at: IndexPath(row: 0, section: sectionIndex)) as? FTBaseResultSectionCell {
-                        let indexPath = IndexPath(row: itemIndex, section: 0)
-                        docInfo.openAnimationInfo = cell.getAnimationInfo(for: indexPath)
-                    }
-                }
-            }
+//            if let sectionIndex = self.searchedSections.firstIndex(where: { $0.hash == section.hash}) {
+//                if let itemIndex = self.searchedSections[sectionIndex].items.firstIndex(where: { $0.hash == gridItem.hash}) {
+//                    if let cell = self.collectionView?.cellForItem(at: IndexPath(row: 0, section: sectionIndex)) as? FTBaseResultSectionCell {
+//                        let indexPath = IndexPath(row: itemIndex, section: 0)
+//                        docInfo.openAnimationInfo = cell.getAnimationInfo(for: indexPath)
+//                    }
+//                }
+//            }
             runInMainThread {
                 self.delegate?.openNotebook(info: docInfo);
             }
@@ -614,25 +591,25 @@ extension FTGlobalSearchController: FTSearchResultActionDelegate {
 extension FTGlobalSearchController {
     func getSelectedItemAnimationInfo(withRespectToView targetView: UIView?) -> FTOpenAnimationInfo? {
         if let localCollectionView = self.collectionView, let gridItem = self.selectedGridItem, let parentSection = gridItem.parentSection {
-            if let sectionIndex = self.searchedSections.firstIndex(where: { $0.hash == parentSection.hash}) {
-                if let rowIndex = self.searchedSections[sectionIndex].items.firstIndex(where: { $0.hash == gridItem.hash}) {
-                    let indexPath = IndexPath.init(row: 0, section: sectionIndex)
-                    self.collectionView?.scrollToItem(at: indexPath, at: UICollectionView.ScrollPosition.init(rawValue: 0), animated: false);
-                    self.collectionView?.layoutSubviews()
-
-                    if let cell = localCollectionView.cellForItem(at: indexPath) as? FTBaseResultSectionCell {
-                        let itemIndexPath = IndexPath(row: rowIndex, section: 0)
-                        cell.collectionView?.scrollToItem(at: itemIndexPath, at: UICollectionView.ScrollPosition.init(rawValue: 0), animated: false)
-                        cell.collectionView?.layoutSubviews()
-
-                        if let animateInfo = cell.getAnimationInfo(for: itemIndexPath), let rootView = targetView {
-                            animateInfo.imageFrame = rootView.convert(animateInfo.imageFrame, from: localCollectionView) //Convert the frame with respect to split master view space occupied
-                            animateInfo.imageFrame.origin.x -= (cell.collectionView?.contentOffset.x ?? 0)
-                            return animateInfo
-                        }
-                    }
-                }
-            }
+//            if let sectionIndex = self.searchedSections.firstIndex(where: { $0.hash == parentSection.hash}) {
+//                if let rowIndex = self.searchedSections[sectionIndex].items.firstIndex(where: { $0.hash == gridItem.hash}) {
+//                    let indexPath = IndexPath.init(row: 0, section: sectionIndex)
+//                    self.collectionView?.scrollToItem(at: indexPath, at: UICollectionView.ScrollPosition.init(rawValue: 0), animated: false);
+//                    self.collectionView?.layoutSubviews()
+//
+//                    if let cell = localCollectionView.cellForItem(at: indexPath) as? FTBaseResultSectionCell {
+//                        let itemIndexPath = IndexPath(row: rowIndex, section: 0)
+//                        cell.collectionView?.scrollToItem(at: itemIndexPath, at: UICollectionView.ScrollPosition.init(rawValue: 0), animated: false)
+//                        cell.collectionView?.layoutSubviews()
+//
+//                        if let animateInfo = cell.getAnimationInfo(for: itemIndexPath), let rootView = targetView {
+//                            animateInfo.imageFrame = rootView.convert(animateInfo.imageFrame, from: localCollectionView) //Convert the frame with respect to split master view space occupied
+//                            animateInfo.imageFrame.origin.x -= (cell.collectionView?.contentOffset.x ?? 0)
+//                            return animateInfo
+//                        }
+//                    }
+//                }
+//            }
         }
         return nil
     }

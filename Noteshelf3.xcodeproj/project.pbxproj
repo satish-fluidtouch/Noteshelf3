@@ -2050,6 +2050,7 @@
 		E760A1F92A7B904200E9CF51 /* FTShelfTagsViewController_MacExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E760A1F82A7B904200E9CF51 /* FTShelfTagsViewController_MacExtension.swift */; };
 		E762186F2A4D809D004A8428 /* FTShelfBaseHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E762186E2A4D809D004A8428 /* FTShelfBaseHostingController.swift */; };
 		E7654DF02966A8AA00E0F7A7 /* FTGlobalSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7654DEF2966A8AA00E0F7A7 /* FTGlobalSettingsController.swift */; };
+		E7656D872BBA8A6A00DCDE48 /* FTGlobalSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7656D862BBA8A6A00DCDE48 /* FTGlobalSearchViewModel.swift */; };
 		E76CEDC22A93605C00E4E22F /* FTRecentSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76CEDC02A93605C00E4E22F /* FTRecentSectionHeader.xib */; };
 		E76CEDC32A93605C00E4E22F /* FTRecentSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76CEDC12A93605C00E4E22F /* FTRecentSectionHeader.swift */; };
 		E776FB582A54531D00AFA38E /* FTGlobalSearchController_MacExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E776FB572A54531D00AFA38E /* FTGlobalSearchController_MacExtension.swift */; };
@@ -4408,6 +4409,7 @@
 		E765250B27574F9600ABBAEC /* FTBackUpOptionsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTBackUpOptionsFooterView.swift; sourceTree = "<group>"; };
 		E765250D27574FB500ABBAEC /* FTBackUpOptionsFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTBackUpOptionsFooterView.xib; sourceTree = "<group>"; };
 		E7654DEF2966A8AA00E0F7A7 /* FTGlobalSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGlobalSettingsController.swift; sourceTree = "<group>"; };
+		E7656D862BBA8A6A00DCDE48 /* FTGlobalSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGlobalSearchViewModel.swift; sourceTree = "<group>"; };
 		E76CDDA727073E6600A8249D /* FTModernDiaryWeekTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTModernDiaryWeekTemplate.swift; sourceTree = "<group>"; };
 		E76CEDC02A93605C00E4E22F /* FTRecentSectionHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FTRecentSectionHeader.xib; sourceTree = "<group>"; };
 		E76CEDC12A93605C00E4E22F /* FTRecentSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTRecentSectionHeader.swift; sourceTree = "<group>"; };
@@ -11751,6 +11753,7 @@
 		ED900EFA229FD8A3007EA9C7 /* GlobalSearch */ = {
 			isa = PBXGroup;
 			children = (
+				E7656D862BBA8A6A00DCDE48 /* FTGlobalSearchViewModel.swift */,
 				ED565F2522A0E8B6001ABAB5 /* FTGlobalSearchProvider.swift */,
 				ED17D97E22CF7452007078CC /* FTSearchResultProtocols.swift */,
 				E76023382A4EC45000B16084 /* FTSearchSuggestionHelper.swift */,
@@ -13884,6 +13887,7 @@
 				97A8D9AC28DADEA1008853BF /* FTShelfItemsView.swift in Sources */,
 				9715E0292AEA9D2C00EC48D4 /* KSForwardingWriter.m in Sources */,
 				BAF3930B2859ADF00067CA9F /* FTSelectExportFormatViewController.swift in Sources */,
+				E7656D872BBA8A6A00DCDE48 /* FTGlobalSearchViewModel.swift in Sources */,
 				BAF3930C2859ADF00067CA9F /* FTRecognitionTask.swift in Sources */,
 				BAF3930D2859ADF00067CA9F /* FTPlannerDiaryMonthTemplateFormat.swift in Sources */,
 				BAF3930E2859ADF00067CA9F /* FTWhatsNewStartViewController.swift in Sources */,
