@@ -95,29 +95,31 @@ private extension FTShelfCollectioniCloudRoot {
         var ns3IndexMetadata = [NSMetadataItem]()
         var ns3groupsMetadata = [NSMetadataItem]()
 
-        for metadata in metadataItems {
-            if ns3Collection?.belongsToDocumentsFolder(metadata.URL()) == true {
-                switch metadata.URL().pathExtension {
+        for eachItem in metadataItems {
+            guard let fileURL = eachItem.URL() else {
+                continue;
+            }
+            if ns3Collection?.belongsToDocumentsFolder(fileURL) == true {
+                switch fileURL.pathExtension {
                 case FTFileExtension.shelf:
-                    ns3ShelfsMetadata.append(metadata)
+                    ns3ShelfsMetadata.append(eachItem)
 
                 case FTFileExtension.ns3:
-                    ns3booksMetadata.append(metadata)
+                    ns3booksMetadata.append(eachItem)
                     
                 case FTFileExtension.group:
-                    ns3groupsMetadata.append(metadata)
+                    ns3groupsMetadata.append(eachItem)
 
                 case FTFileExtension.sortIndex:
-                    ns3IndexMetadata.append(metadata)
+                    ns3IndexMetadata.append(eachItem)
 
                 default:
-                    debugLog("🌤️ Unhandled NS3 metadata item for \(metadata.URL().pathExtension)")
+                    debugLog("🌤️ Unhandled NS3 metadata item for \(fileURL.pathExtension)")
                 }
             } else {
-                debugLog("🌤️ Neither NS2/NS3 metadata item for \(metadata.URL())")
+                debugLog("🌤️ Neither NS2/NS3 metadata item for \(fileURL)")
             }
         }
-
         return MetadataContainer(ns3IndexMetadata: ns3IndexMetadata,
                                  ns3booksMetadata: ns3booksMetadata,
                                  ns3ShelfsMetadata: ns3ShelfsMetadata,
