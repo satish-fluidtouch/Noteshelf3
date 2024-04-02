@@ -38,6 +38,17 @@ public struct FTSelectedPaperVariantsAndTheme {
         self.size = size
         self.theme = selectedPaperTheme
     }
+
+    var thumbImagePrefix: String {
+        var imgName: String
+        let name = theme.displayName.localizedEnglish.lowercased()
+        if name == "plain" {
+            imgName = ""
+        } else {
+            imgName = "\(lineHeight.thumbImgPrefix)_\(name)"
+        }
+        return imgName
+    }
 }
 protocol FTPaperTemplatesVariantsDelegateNew: NSObject {
     func updatePaperVaraints(_ variantsAndTheme: FTSelectedPaperVariantsAndTheme)

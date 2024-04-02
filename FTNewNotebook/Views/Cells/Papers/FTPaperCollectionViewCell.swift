@@ -66,19 +66,28 @@ class FTPaperCollectionViewCell: UICollectionViewCell {
         self.shadowImage?.layer.shadowOpacity = 0
         self.shadowImage?.layer.shadowColor = UIColor.clear.cgColor
     }
-    func thumbnailForVariantsAndTheme(_ variantsAndTheme: FTSelectedPaperVariantsAndTheme) async {
+    func thumbnailForVariantsAndTheme(_ variantsAndTheme: FTSelectedPaperVariantsAndTheme)  {
         var themWithVariants: FTSelectedPaperVariantsAndTheme = variantsAndTheme
         themWithVariants.orientation = .portrait
         guard let paperTheme = (themWithVariants.theme as? FTPaperThumbnailGenerator) else {
             return
         }
         let thumbnailSize = FTNewNotebook.Constants.ChoosePaperPanel.thumbnailRegularSize
-        paperTheme.generateThumbnailFor(selectedVariantsAndTheme: variantsAndTheme,forPreview:false) { thumbImage in
-            DispatchQueue.main.async {
-                if let thumbImage = thumbImage?.resizedImage(FTNewNotebook.Constants.ChoosePaperPanel.preview.regularLandscapeOrientationPortraitSize) {
-                    let croppedThumbImage = self.getRequiredPortionOfImageAsThumnail(thumbImage, requiredRect:CGRect(x: 0, y: 0, width: thumbnailSize.width, height: thumbnailSize.height))
-                    self.imgView?.image = croppedThumbImage
+        var imgName = variantsAndTheme.thumbImagePrefix
+        if !imgName.isEmpty {
+            let color = UIColor(hexWithAlphaString: variantsAndTheme.templateColorModel.hex)
+            if variantsAndTheme.templateColorModel.color == .legal {
+                imgName = imgName + "_legal"
+            } else {
+                if color.isLightColor() {
+                    imgName = imgName + "_light"
+                } else {
+                    imgName = imgName + "_dark"
                 }
+            }
+            if var image = UIImage(named: imgName, in: currentBundle, with: nil)?.withRenderingMode(.alwaysOriginal) {
+                self.imgView?.backgroundColor = color
+                self.imgView?.image = image
             }
         }
     }

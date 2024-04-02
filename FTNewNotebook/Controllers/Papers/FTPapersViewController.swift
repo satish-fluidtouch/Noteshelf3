@@ -86,11 +86,9 @@ class FTPapersViewController: UIViewController {
             for (index,theme) in themes.enumerated() {
                 if let cell = self.collectionView?.cellForItem(at: IndexPath(row: index, section: 0)) as? FTPaperCollectionViewCell {
                     cell.applySelectedColorVariant(UIColor(hexString: selectedVariantsAndTheme.templateColorModel.hex))
-                    Task {
-                        var variantsWithTheme = selectedVariantsAndTheme
-                        variantsWithTheme.theme = theme
-                        await cell.thumbnailForVariantsAndTheme(variantsWithTheme)
-                    }
+                    var variantsWithTheme = selectedVariantsAndTheme
+                    variantsWithTheme.theme = theme
+                    cell.thumbnailForVariantsAndTheme(variantsWithTheme)
                 }
             }
         }
@@ -158,9 +156,7 @@ extension FTPapersViewController: UICollectionViewDataSource, UICollectionViewDe
                 } else {
                     cell.isCellSelected = false
                 }
-                Task {
-                    await cell.thumbnailForVariantsAndTheme(variantsAndTheme)
-                }
+                  cell.thumbnailForVariantsAndTheme(variantsAndTheme)
             }
             return cell
         }

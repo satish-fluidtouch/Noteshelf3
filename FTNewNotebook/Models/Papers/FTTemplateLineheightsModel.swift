@@ -39,6 +39,21 @@ public enum FTTemplateLineHeight: String, CaseIterable, Codable {
         return self.rawValue
     }
 
+    var thumbImgPrefix: String {
+        let prefix: String
+        switch self {
+        case .extraNarrow:
+            prefix = "extraNarrow"
+        case .narrow:
+            prefix = "narrow"
+        case .standard:
+            prefix = "standard"
+        case .wide:
+            prefix = "wide"
+        }
+        return prefix
+    }
+
     public init(rawValue: String?)  {
         guard let rawValue = rawValue else {
             self = .standard
