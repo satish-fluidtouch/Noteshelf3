@@ -585,8 +585,8 @@ extension FTTextToolBarViewController {
         guard self.previousTraitCollection != traitCollection else {
             return;
         }
+        self.previousTraitCollection = traitCollection;
         if UIApplication.shared.applicationState == .active {
-            self.previousTraitCollection = traitCollection;
             switchMode()
             self.updateToolBarSelectionForattributes(self.attributes, scale: self.scale)
             if let textView = self.toolBarDelegate?.currentTextInputView() {
