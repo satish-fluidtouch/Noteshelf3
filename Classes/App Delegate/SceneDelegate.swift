@@ -212,23 +212,3 @@ extension URL {
         }
     }
 }
-extension SceneDelegate {
-    func alertForPen() {
-        self.showAlertForIntentWith(title: "Pen", message: "Initiates pen stuff")
-    }
-    func alertForAudio() {
-        self.showAlertForIntentWith(title: "Audio", message: "Initiates audio stuff")
-    }
-    func alertForAI() {
-        self.showAlertForIntentWith(title: "AI", message: "Initiates AI stuff")
-    }
-    func alertForText() {
-        self.showAlertForIntentWith(title: "Text", message: "Initiates text stuff")
-    }
-    func showAlertForIntentWith(title: String, message: String) {
-        if let handlingController = window?.rootViewController as? FTIntentHandlingProtocol {
-            let handler = FTAppIntentHandler(with: handlingController)
-            handler.showAlertForIntentWith(title: title, message: message)
-        }
-    }
-}

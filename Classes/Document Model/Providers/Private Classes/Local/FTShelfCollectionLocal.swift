@@ -101,21 +101,6 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
         });
       }
     
-    func copyNoteShelfFileToCollection(sourceURL: URL, destUrl: URL, onCompletion:@escaping (URL?,NSError?)->Void) {
-        let temporaryDirectoryURL = URL(fileURLWithPath: NSTemporaryDirectory())
-        let temporaryFileURL = temporaryDirectoryURL.appendingPathComponent(sourceURL.lastPathComponent)
-        do {
-            try FileManager.default.copyItem(at: sourceURL, to: temporaryFileURL)
-            FTNSDocumentUnzipper.unzipFile(atPath: sourceURL.path(percentEncoded: false), onUpdate: nil) { path, error in
-                do {
-                    let destinationFileURL = destUrl.appendingPathComponent(path!.lastPathComponent)
-                    try FileManager.default.copyItem(at: URL(filePath: path!), to: destinationFileURL)
-                    onCompletion(destinationFileURL, error)
-                } catch {}
-            }
-        } catch {}
-    }
-    
     func createShelf(_ title: String, onCompletion:  @escaping ((NSError?, FTShelfItemCollection?) -> Void))
     {
         let uniqueName = FileManager.uniqueFileName(title+".shelf", inFolder: self.localDocumentsURL);

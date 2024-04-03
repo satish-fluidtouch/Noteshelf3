@@ -665,7 +665,6 @@
 		5288FB4E2A559C3B00EBC37C /* themes_v8_ko.plist in Resources */ = {isa = PBXBuildFile; fileRef = BAA84EC32873116200DE801B /* themes_v8_ko.plist */; };
 		5288FB4F2A559CC800EBC37C /* StockPapers.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BAA84ECA2873116300DE801B /* StockPapers.bundle */; };
 		5288FB502A559D4600EBC37C /* StockCovers.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BAA84EC92873116200DE801B /* StockCovers.bundle */; };
-		5291391F2B99DC7200BA8108 /* SampleNoteBooks.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5291391E2B99DC7200BA8108 /* SampleNoteBooks.bundle */; };
 		52916EA82B9ED2F500CFC53A /* FTStatusBarInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52916EA72B9ED2F500CFC53A /* FTStatusBarInfoViewController.swift */; };
 		5292B2322A27283C00216330 /* FTNotebookSettingViewController+Siri.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5292B2312A27283C00216330 /* FTNotebookSettingViewController+Siri.swift */; };
 		5292B2362A27323B00216330 /* FTUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211E2C9F1E027D72007B5CAD /* FTUserDefaults.swift */; };
@@ -3592,7 +3591,6 @@
 		526C56472A0B5E9C008E3891 /* FTNoteBookTexfieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNoteBookTexfieldCell.swift; sourceTree = "<group>"; };
 		5283D3B22A5EC8AB00C6C125 /* FTShareActionAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShareActionAlertView.swift; sourceTree = "<group>"; };
 		5283D3B42A5EC90C00C6C125 /* FTShareActionAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTShareActionAlert.xib; sourceTree = "<group>"; };
-		5291391E2B99DC7200BA8108 /* SampleNoteBooks.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SampleNoteBooks.bundle; sourceTree = "<group>"; };
 		52916EA72B9ED2F500CFC53A /* FTStatusBarInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStatusBarInfoViewController.swift; sourceTree = "<group>"; };
 		5292B2312A27283C00216330 /* FTNotebookSettingViewController+Siri.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTNotebookSettingViewController+Siri.swift"; sourceTree = "<group>"; };
 		52B34DB029E561F600360F10 /* UIFonts+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFonts+Custom.swift"; sourceTree = "<group>"; };
@@ -9807,7 +9805,6 @@
 		BA2D90DA285CAFCB001BB495 /* Shelf */ = {
 			isa = PBXGroup;
 			children = (
-				5291391E2B99DC7200BA8108 /* SampleNoteBooks.bundle */,
 				BA2D90DB285CAFCB001BB495 /* ViewModels */,
 				BA2D90E9285CAFCB001BB495 /* Models */,
 				BA2D90F6285CAFCB001BB495 /* Controllers */,
@@ -12585,7 +12582,6 @@
 			files = (
 				52B34DFC29E5684400360F10 /* Montserrat-Bold.otf in Resources */,
 				52B34DFD29E5684400360F10 /* Montserrat-Light.otf in Resources */,
-				5291391F2B99DC7200BA8108 /* SampleNoteBooks.bundle in Resources */,
 				52BBD52929E95D0E003088AE /* Hanuman-Bold.ttf in Resources */,
 				52BBD50129E95BCE003088AE /* Lora-Medium.ttf in Resources */,
 				52BBD50229E95BCE003088AE /* Lora-Regular.ttf in Resources */,

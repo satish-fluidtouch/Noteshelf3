@@ -693,16 +693,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             }
         }
     }
-    
-    func showPinnedWidgetAlert() {
-        let alertController = UIAlertController(title: "",
-                                                message: "This opens Pinned Notebook",
-                                                preferredStyle: .alert);
-        let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Ok"), style: .cancel, handler: { _ in
-        });
-        alertController.addAction(cancelAction);
-        self.present(alertController, animated: true, completion: nil);
-    }
   
     func showAlertWith(title: String, message: String) {
         UIAlertController.showAlert(withTitle: title, message: message, from: self, withCompletionHandler: nil)
