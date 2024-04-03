@@ -24,7 +24,7 @@ class IntentHandler: INExtension, FTPinnedIntentConfigurationIntentHandling {
         var items = [FTPinnedBookType]()
         let response = FTWidgetIntentDataHelper.notebooks()
         response.forEach { eachItem in
-            let pinnedItem = FTPinnedBookType(identifier: UUID().uuidString, display: eachItem.relativePath.lastPathComponent.deletingPathExtension)
+            let pinnedItem = FTPinnedBookType(identifier: eachItem.docId, display: eachItem.relativePath.lastPathComponent.deletingPathExtension)
             pinnedItem.coverImage = eachItem.coverImageName
             pinnedItem.time = eachItem.createdTime
             pinnedItem.relativePath = eachItem.relativePath

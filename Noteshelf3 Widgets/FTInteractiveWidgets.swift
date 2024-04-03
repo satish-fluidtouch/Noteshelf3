@@ -48,25 +48,30 @@ struct FTPinnedTimelineProvider: IntentTimelineProvider {
                      in context: Context,
                      completion: @escaping (Timeline<FTPinnedBookEntry>) -> ()) {
         Task {
-            var entry = placeholder(in: context)
-            if let selectedBook = configuration.Books {
-                entry = FTPinnedBookEntry(date: Date(), name: selectedBook.displayString , time: selectedBook.time ?? "5:00 PM", coverImage: selectedBook.coverImage ?? "coverImage1", relativePath: selectedBook.relativePath ?? "", hasCover: selectedBook.hasCover?.boolValue ?? false, isLandscape: selectedBook.isLandscape?.boolValue ?? false)
-            } else {
-                entry = defaultBookEntry()
+            var entry = emptyEntry()
+            if var selectedBook = configuration.Books {
+                if FTWidgetIntentDataHelper.checkIfBookExists(for: selectedBook) {
+                    FTWidgetIntentDataHelper.updateNotebookIfNeeded(for: &selectedBook)
+                    entry = FTPinnedBookEntry(date: Date(), name: selectedBook.relativePath?.lastPathComponent.deletingPathExtension ?? "" , time: selectedBook.time ?? "5:00 PM", coverImage: selectedBook.coverImage ?? "coverImage1", relativePath: selectedBook.relativePath ?? "", hasCover: selectedBook.hasCover?.boolValue ?? false, isLandscape: selectedBook.isLandscape?.boolValue ?? false)
+                }
             }
             let timeline = Timeline(entries: [entry], policy: .atEnd)
             completion(timeline)
         }
     }
     
+    private func emptyEntry() -> FTPinnedBookEntry {
+        return FTPinnedBookEntry(date: Date(), name: "Empty State", time: "6:00 PM", coverImage: "", relativePath: "", hasCover: false, isLandscape: false)
+    }
+    
     private func showEmptyState(completion: @escaping (Timeline<FTPinnedBookEntry>) -> ()) {
-        let entry = FTPinnedBookEntry(date: Date(), name: "Empty State", time: "6:00 PM", coverImage: "", relativePath: "", hasCover: false, isLandscape: false)
+        let entry = emptyEntry()
         let timeline = Timeline(entries: [entry], policy: .atEnd)
         completion(timeline)
     }
     
     private func defaultBookEntry() -> FTPinnedBookEntry {
-        var entry = FTPinnedBookEntry(date: Date(), name: "PlaceHolder", time: "5:00PM", coverImage: "coverImage1", relativePath: "", hasCover: false, isLandscape: false)
+        var entry = emptyEntry()
         if let book = FTWidgetIntentDataHelper.defaultBookEntry() {
             entry = FTPinnedBookEntry(date: Date(), name: book.relativePath.lastPathComponent.deletingPathExtension, time: book.createdTime, coverImage: book.coverImageName, relativePath: book.relativePath, hasCover: book.hasCover, isLandscape: book.isLandscape)
         }

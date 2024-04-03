@@ -18,6 +18,18 @@ final class FTWidgetIntentDataHelper {
         fatalError("Failed to get path");
     }
     
+    public static func checkIfBookExists(for book: FTPinnedBookType) -> Bool {
+        return notebooks().contains { $0.docId == book.identifier }
+    }
+    
+    public static func updateNotebookIfNeeded(for book: inout FTPinnedBookType) {
+        if let matchingBook = notebooks().first(where: { $0.docId == book.identifier && $0.relativePath != book.relativePath }) {
+            book.relativePath = matchingBook.relativePath
+            book.time = matchingBook.createdTime
+        }
+    }
+    
+    
     public static func notebooks() -> [FTPinnedNotebook] {
         var notebooks = [FTPinnedNotebook]()
         if FileManager().fileExists(atPath: sharedCacheURL.path(percentEncoded: false)) {
@@ -29,13 +41,14 @@ final class FTWidgetIntentDataHelper {
                 }
                 notebookFilteredUrls.forEach { eachNotebookUrl in
                     let metaDataPlistUrl = eachNotebookUrl.appendingPathComponent("Metadata/Properties.plist")
-                    if let relativePath = _relativePath(for: metaDataPlistUrl) {
+                    let docAttrs = docAttrs(for: metaDataPlistUrl)
+                    if let relativePath = docAttrs.0 {
                         let time : String
                         let coverImage : String
                         let pageAttrs = pageAttrs(for: eachNotebookUrl.path(percentEncoded: false))
                         coverImage = eachNotebookUrl.appending(path:"cover-shelf-image.png").path(percentEncoded: false);
                         time = timeFromDate(currentDate: eachNotebookUrl.fileModificationDate)
-                        let book = FTPinnedNotebook(relativePath: relativePath, createdTime: time, coverImageName: coverImage, hasCover: pageAttrs.0, isLandscape: pageAttrs.1)
+                        let book = FTPinnedNotebook(docId: docAttrs.1 ?? "", relativePath: relativePath, createdTime: time, coverImageName: coverImage, hasCover: pageAttrs.0, isLandscape: pageAttrs.1)
                         notebooks.append(book)
                     }
                 }
@@ -45,14 +58,20 @@ final class FTWidgetIntentDataHelper {
         return notebooks
     }
 
-    public static func _relativePath(for metaDataPlistUrl: URL) -> String? {
+    public static func docAttrs(for metaDataPlistUrl: URL) -> (String?, String?) {
         var relativePath: String?
+        var docID: String?
         if let data = try? Data(contentsOf: metaDataPlistUrl) {
-            if let plist = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any], let _relativePath = plist["relativePath"] as? String {
-                relativePath = _relativePath
+            if let plist = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any] {
+                if let _relativePath = plist["relativePath"] as? String {
+                    relativePath = _relativePath
+                }
+                if let documentId = plist["document_ID"] as? String {
+                    docID = documentId
+                }
             }
         }
-        return relativePath
+        return (relativePath, docID)
     }
 
     public static func pageAttrs(for notebookPath: String) -> (Bool, Bool) {
@@ -96,13 +115,14 @@ final class FTWidgetIntentDataHelper {
                 }
                 if let eachNotebookUrl = notebookFilteredUrls.first {
                     let metaDataPlistUrl = eachNotebookUrl.appendingPathComponent("Metadata/Properties.plist")
-                    if let relativePath = _relativePath(for: metaDataPlistUrl) {
+                    let docAttrs = docAttrs(for: metaDataPlistUrl)
+                    if let relativePath = docAttrs.0 {
                         let time : String
                         let coverImage : String
                         let pageAttrs = pageAttrs(for: eachNotebookUrl.path(percentEncoded: false))
                         coverImage = eachNotebookUrl.appending(path:"cover-shelf-image.png").path(percentEncoded: false);
                         time = timeFromDate(currentDate: eachNotebookUrl.fileModificationDate)
-                        entry = FTPinnedNotebook(relativePath: relativePath, createdTime: time, coverImageName: coverImage, hasCover: pageAttrs.0, isLandscape: pageAttrs.1)
+                        entry = FTPinnedNotebook(docId: docAttrs.1 ?? "", relativePath: relativePath, createdTime: time, coverImageName: coverImage, hasCover: pageAttrs.0, isLandscape: pageAttrs.1)
                     }
                 }
 
@@ -113,13 +133,15 @@ final class FTWidgetIntentDataHelper {
 }
 
 struct FTPinnedNotebook {
+    let docId: String
     let relativePath: String
     let createdTime: String
     let coverImageName: String
     let hasCover: Bool
     let isLandscape: Bool
     
-    init(relativePath: String, createdTime: String, coverImageName: String, hasCover: Bool, isLandscape: Bool) {
+    init(docId: String, relativePath: String, createdTime: String, coverImageName: String, hasCover: Bool, isLandscape: Bool) {
+        self.docId = docId
         self.relativePath = relativePath
         self.createdTime = createdTime
         self.coverImageName = coverImageName
