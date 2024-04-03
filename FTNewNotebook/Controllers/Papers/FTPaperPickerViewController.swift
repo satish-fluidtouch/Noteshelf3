@@ -335,44 +335,39 @@ class FTPaperPickerViewController: UIViewController {
         let topRect = CGRect(x: 0, y: 0, width: self.view.frame.width, height: heightWthOutBtmPanel)
         self.previewViewVerticalAlignConstrnt?.constant = getCenterXandY(from: topRect).y
     }
-    private func fetchPaperPreview( completionhandler: @escaping (_ thumbImage : UIImage?)->()){
-        guard let paperTheme = (self.selectedPaperVariantsAndTheme.theme as? FTPaperThumbnailGenerator)    else {
+    private func fetchPaperPreview() -> UIImage? {
+        guard let paperTheme = (self.selectedPaperVariantsAndTheme.theme as? FTPaperThumbnailGenerator) else {
             fatalError("Type case error while trying to generate paper thumb")
         }
-        paperTheme.generateThumbnailFor(selectedVariantsAndTheme: self.selectedPaperVariantsAndTheme, forPreview: true, completionhandler: completionhandler)
+        let img = paperTheme.generateThumbnailFor(selectedVariantsAndTheme: self.selectedPaperVariantsAndTheme, forPreview: true)
+        return img
     }
+
     private func setThumbnailToPreviewImageView(toResize:Bool = false) {
         if toResize {
-            Task {
-                await self.resizePaperPreviewViewAndSetThumbnail()
-            }
-        }else {
-            self.fetchPaperPreview { thumbImage in
-                DispatchQueue.main.async {
-                    self.previewImageView?.image = thumbImage?.resizedImageWithinRect(self.sizeForPreviewView())
-                }
-            }
+              self.resizePaperPreviewViewAndSetThumbnail()
+        } else {
+            let thumbImage = self.fetchPaperPreview()
+            self.previewImageView?.image = thumbImage?.resizedImageWithinRect(self.sizeForPreviewView())
         }
     }
-    private func resizePaperPreviewViewAndSetThumbnail() async {
-        fetchPaperPreview { thumbImage in
-            DispatchQueue.main.async {
-                if !self.traitCollection.isRegular , self.view.frame.width < 420 {
-                        let maxPreviewImgSize = self.getCompactPreviewSize()
-                        if let image = thumbImage?.resizedImageWithinRect(maxPreviewImgSize) {
 
-                            self.updateConstraintOfPreviewToSize(image.size)
-                            self.previewImageView?.image = image
-                            self.setInitialPreviewImage(image)
-                        }
-                }else{
-                    let aspectSize = self.getPreviewViewSizeDynamicallyForImage(thumbImage!)
-                    self.previewImageView?.image = thumbImage?.resizedImage(aspectSize)
-                    if let previewImage = self.previewImageView?.image {
-                        self.updateConstraintOfPreviewToSize(previewImage.size)
-                        self.setInitialPreviewImage(previewImage)
-                    }
-                }
+    private func resizePaperPreviewViewAndSetThumbnail() {
+        let thumbImage = self.fetchPaperPreview()
+        if !self.traitCollection.isRegular , self.view.frame.width < 420 {
+            let maxPreviewImgSize = self.getCompactPreviewSize()
+            if let image = thumbImage?.resizedImageWithinRect(maxPreviewImgSize) {
+
+                self.updateConstraintOfPreviewToSize(image.size)
+                self.previewImageView?.image = image
+                self.setInitialPreviewImage(image)
+            }
+        }else{
+            let aspectSize = self.getPreviewViewSizeDynamicallyForImage(thumbImage!)
+            self.previewImageView?.image = thumbImage?.resizedImage(aspectSize)
+            if let previewImage = self.previewImageView?.image {
+                self.updateConstraintOfPreviewToSize(previewImage.size)
+                self.setInitialPreviewImage(previewImage)
             }
         }
     }
@@ -409,39 +404,37 @@ class FTPaperPickerViewController: UIViewController {
         self.templateSizeButton?.alpha = 0.0
         self.previewView?.setNeedsLayout()
         self.view.layoutIfNeeded()
-        fetchPaperPreview { thumbImage in
-            DispatchQueue.main.async {
-                self.previewImageView?.image = thumbImage?.resizedImageWithinRect(frame.size)
-                let heightWthOutBtmPanel = self.view.frame.height - self.bottomPanelHeight
-                let topRect = CGRect(x: 0, y: 0, width: self.view.frame.width, height: heightWthOutBtmPanel)
-                if let thumbImage = thumbImage {
-                    let paperPreviewSize: CGSize = self.traitCollection.isRegular ? self.getPreviewViewSizeDynamicallyForImage(thumbImage) : self.getCompactPreviewSize()
-                    UIView.animate(withDuration: 0.2,
-                                   delay: 0,
-                                   options: .curveEaseOut,
-                                   animations: {
-                        self.paperPickerDelegate?.animateHideContentViewBasedOn(themeType: .paper)
-                        // Bottom Panel
-                        self.choosePaperContainerViewBottomConstraint?.constant = 0.0
-                        //
-                        // Paper Preview
-                        self.previewViewHorizontalAlignConstrnt?.constant = 0.0
-                        self.previewViewVerticalAlignConstrnt?.constant = self.getCenterXandY(from: topRect).y
+        let thumbImage = self.fetchPaperPreview()
+        self.previewImageView?.image = thumbImage?.resizedImageWithinRect(frame.size)
+        let heightWthOutBtmPanel = self.view.frame.height - self.bottomPanelHeight
+        let topRect = CGRect(x: 0, y: 0, width: self.view.frame.width, height: heightWthOutBtmPanel)
+        if let thumbImage = thumbImage {
+            let paperPreviewSize: CGSize = self.traitCollection.isRegular ? self.getPreviewViewSizeDynamicallyForImage(thumbImage) : self.getCompactPreviewSize()
+            UIView.animate(withDuration: 0.2,
+                           delay: 0,
+                           options: .curveEaseOut,
+                           animations: {
+                self.paperPickerDelegate?.animateHideContentViewBasedOn(themeType: .paper)
+                // Bottom Panel
+                self.choosePaperContainerViewBottomConstraint?.constant = 0.0
+                //
+                // Paper Preview
+                self.previewViewHorizontalAlignConstrnt?.constant = 0.0
+                self.previewViewVerticalAlignConstrnt?.constant = self.getCenterXandY(from: topRect).y
 
-                        self.previewImageView?.image = thumbImage.resizedImageWithinRect(paperPreviewSize)
-                        let aspectFittedImage = thumbImage.resizedImageWithinRect(paperPreviewSize)
-                        self.setInitialPreviewImage(aspectFittedImage)
-                        self.updateConstraintOfPreviewToSize(aspectFittedImage.size)
-                        self.previewView?.setNeedsLayout()
-                        self.view.layoutIfNeeded()
-                    }) { _ in
-                        self.templateSizeButton?.alpha = 1.0
-                        onCompletion?()
-                    }
-                }
+                self.previewImageView?.image = thumbImage.resizedImageWithinRect(paperPreviewSize)
+                let aspectFittedImage = thumbImage.resizedImageWithinRect(paperPreviewSize)
+                self.setInitialPreviewImage(aspectFittedImage)
+                self.updateConstraintOfPreviewToSize(aspectFittedImage.size)
+                self.previewView?.setNeedsLayout()
+                self.view.layoutIfNeeded()
+            }) { _ in
+                self.templateSizeButton?.alpha = 1.0
+                onCompletion?()
             }
         }
     }
+    
     func closePreview(to frame: CGRect,isCancelled: Bool = false, onCompletion: @escaping () -> Void) {
         self.view.layoutIfNeeded()
         if isCancelled, let previewImage = initialPreviewImage {

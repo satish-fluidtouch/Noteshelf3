@@ -45,7 +45,7 @@ public protocol FTThemeable {
     var id: String { get }
 
     func themeThumbnail() -> UIImage
-    func preview() async -> UIImage?
+    func preview() -> UIImage?
     func themeTemplateURL() -> URL
     func deleteThumbnailFromCache()
 }

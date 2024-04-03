@@ -23,7 +23,7 @@ enum FTTemplateType : Int {
 
 protocol FTAutoTemplateGeneratorProtocol {
     init(withTheme: FTTheme)
-    func generate() async throws -> FTDocumentInputInfo
+    func generate() -> FTDocumentInputInfo
 }
 
 class FTAutoTemplateGenerator: NSObject {
@@ -58,7 +58,7 @@ private class FStandardTemplateDiaryGenerator : NSObject,FTAutoTemplateGenerator
         theme = inTheme as! FTPaperTheme
     }
 
-    func generate() async throws -> FTDocumentInputInfo {
+    func generate() -> FTDocumentInputInfo {
         let docInfo = FTDocumentInputInfo()
         docInfo.inputFileURL = theme.themeTemplateURL()
         docInfo.isTemplate = true
@@ -82,7 +82,7 @@ private class FTAutoTemplateDiaryGenerator: NSObject,FTAutoTemplateGeneratorProt
         theme = inTheme as! FTAutoTemlpateDiaryTheme
     }
 
-    func generate() async throws -> FTDocumentInputInfo {
+    func generate() -> FTDocumentInputInfo {
         var startDate = theme.startDate
         var endDate = theme.endDate
 
@@ -169,7 +169,6 @@ private class FTAutoStoreTemplateGenerator: NSObject, FTAutoTemplateGeneratorPro
     }
 
     func generate() -> FTDocumentInputInfo {
-        let generator = FTStoreTemplateGenerator(theme: theme)
         let docInfo = FTDocumentInputInfo()
         docInfo.inputFileURL = theme.themeTemplateURL()
         docInfo.isTemplate = true
