@@ -16,12 +16,12 @@ class FTDynamicTemplateGenerator: NSObject {
         return self.templateFormat.pageProperties;
     }
     
-    init(safeAreaInsets: UIEdgeInsets?, _ theme: FTDynamicTemplateTheme, _ generationType: FTGenrationType) {
+    init(_ theme: FTDynamicTemplateTheme, _ generationType: FTGenrationType) {
         
         guard let variants = theme.customvariants,let templateInfo = theme.templateInfoDict else{
             fatalError("Missing variants or template info dict")
         }
-        self.templateFormat = FTDynamicTemplateFormat.getFormat(FTDynamicTemplateInfo.init(templateInfo, variants.isLandscape, safeAreaInsets, variants, generationType))
+        self.templateFormat = FTDynamicTemplateFormat.getFormat(FTDynamicTemplateInfo(templateInfo, variants.isLandscape, variants, generationType))
         self.variants = theme.customvariants!
         self.displayName = theme.displayName
     }
