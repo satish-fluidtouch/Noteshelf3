@@ -99,25 +99,21 @@ private extension FTShelfCollectioniCloudRoot {
             guard let fileURL = eachItem.URL() else {
                 continue;
             }
-            if ns3Collection?.belongsToDocumentsFolder(fileURL) == true {
-                switch fileURL.pathExtension {
-                case FTFileExtension.shelf:
-                    ns3ShelfsMetadata.append(eachItem)
+            switch fileURL.pathExtension {
+            case FTFileExtension.shelf:
+                ns3ShelfsMetadata.append(eachItem)
 
-                case FTFileExtension.ns3:
-                    ns3booksMetadata.append(eachItem)
-                    
-                case FTFileExtension.group:
-                    ns3groupsMetadata.append(eachItem)
+            case FTFileExtension.ns3:
+                ns3booksMetadata.append(eachItem)
+                
+            case FTFileExtension.group:
+                ns3groupsMetadata.append(eachItem)
 
-                case FTFileExtension.sortIndex:
-                    ns3IndexMetadata.append(eachItem)
+            case FTFileExtension.sortIndex:
+                ns3IndexMetadata.append(eachItem)
 
-                default:
-                    debugLog("🌤️ Unhandled NS3 metadata item for \(fileURL.pathExtension)")
-                }
-            } else {
-                debugLog("🌤️ Neither NS2/NS3 metadata item for \(fileURL)")
+            default:
+                debugLog("🌤️ Unhandled NS3 metadata item for \(fileURL.pathExtension)")
             }
         }
         return MetadataContainer(ns3IndexMetadata: ns3IndexMetadata,
