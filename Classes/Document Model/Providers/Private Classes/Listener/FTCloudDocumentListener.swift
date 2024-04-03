@@ -44,9 +44,11 @@ class FTCloudDocumentListener: FTDocumentListener {
 
     func startQuery(onCompletion completion:@escaping (() -> Void)) {
         if let isStarted = query?.isStarted(), isStarted == true {
+            FTCLSLog("Provider -query in progress");
             completion()
         } else {
             query?.startQuery()
+            FTCLSLog("Provider -Started query");
             guard let listeners = listeners else { return }
             for listener in listeners {
                 listener.willBeginFetchingInitialData()
@@ -75,6 +77,9 @@ extension FTCloudDocumentListener: FTiCloudQueryObserverDelegate {
 
         guard let listeners = listeners, let items = results as? [NSMetadataItem] else { return }
 
+        DispatchQueue.main.async {
+            FTCLSLog("Provider -Filtering files");
+        }
         let audioMetadata = filterAudioRelatedFiles(with: items)
 
         for listener in listeners {
@@ -87,10 +92,16 @@ extension FTCloudDocumentListener: FTiCloudQueryObserverDelegate {
             }
         }
 
+        var logString = "Provider -Filtering Done - no call back";
         //This should be called after
         if let initialCompletionBlok = tempCompletionBlock {
             initialCompletionBlok()
             tempCompletionBlock = nil
+            logString = "Provider -Filtering Done";
+        }
+        
+        DispatchQueue.main.async {
+            FTCLSLog(logString);
         }
     }
 
