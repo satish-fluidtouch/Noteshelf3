@@ -565,14 +565,22 @@ extension FTDocumentScrollView: UIScrollViewDelegate
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        FTCLSLog("Doc ScrollView end decelarating")
+        FTCLSLog("Doc scrollViewEndDecelerating zooming - \(self.isZoomingInProgress)")
+        guard !self.isZoomingInProgress else {
+            self.scrollViewDelegate?.scrollViewDidEndDecelerating?(scrollView);
+            return;
+        }
         self.unlockZoom();
         self.scrollViewDelegate?.scrollViewDidEndDecelerating?(scrollView);
         self.scrollViewDelegate?.scrollViewDidEndPanningPage();
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        FTCLSLog("Doc ScrollView end drag: \(decelerate)")
+        FTCLSLog("Doc scrollViewEndDragging: \(decelerate) zooming - \(self.isZoomingInProgress)")
+        guard !self.isZoomingInProgress else {
+            self.scrollViewDelegate?.scrollViewDidEndDragging?(scrollView, willDecelerate: decelerate);
+            return;
+        }
         if(!decelerate) {
             self.unlockZoom();
         }
@@ -616,11 +624,12 @@ extension FTDocumentScrollView: UIScrollViewDelegate
             contentHolderView.frame = frame;
 
             FTCLSLog("Doc ScrollView zoom end: \(newScale)")
-            self.scrollViewDelegate?.scrollViewDidEndZooming?(scrollView, with: view, atScale: scale);
         }
         else {
-            FTCLSLog("Doc ScrollView zoom end: No change")
+            FTCLSLog("Doc ScrollView zoom end: No change- Dragging : \(scrollView.isDragging)")
         }
+        self.scrollViewDelegate?.scrollViewDidEndZooming?(scrollView, with: view, atScale: scale);
+        scrollView.setNeedsLayout();
         self.unlockZoom();
         enableAndDisableNewPageRefreshControls()
         self.zoomAnimationCompletionBlock?();

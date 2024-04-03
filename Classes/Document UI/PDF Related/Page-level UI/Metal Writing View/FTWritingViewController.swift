@@ -389,8 +389,7 @@ extension FTWritingViewController :  FTWritingProtocol
                 properties.cancelPrevious = true;
                 properties.renderImmediately = true;
                 properties.pageID = self.pageToDisplay?.uuid;
-                self.loadTiles(inRect: scrollView.visibleRect(),
-                               intents: [FTRendererIntent.onScreen], properties: properties);
+                self.loadTiles(inRect: scrollView.visibleRect(), properties: properties);
             }
         }
     }

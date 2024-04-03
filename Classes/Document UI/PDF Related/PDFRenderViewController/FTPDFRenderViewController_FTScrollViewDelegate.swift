@@ -86,5 +86,9 @@ extension FTPDFRenderViewController: UIScrollViewDelegate
             eachController.writingView?.didEndZooming(self.mainScrollView.zoomFactor);
         }
         self.setNeedsLayoutForcibly();
+        for eachController in visiblePages {
+            eachController.view.setNeedsLayout();
+            eachController.scrollView?.setNeedsLayout();
+        }
     }
 }

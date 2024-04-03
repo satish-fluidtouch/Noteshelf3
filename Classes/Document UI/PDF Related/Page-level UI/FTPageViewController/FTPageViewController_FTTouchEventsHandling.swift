@@ -12,10 +12,10 @@ extension FTPageViewController : FTTouchEventsHandling {
     
     @objc func startAcceptingTouches(_ accept : Bool) {
         if(self.isInZoomMode() || self.currentDeskMode() == .deskModeView) {
-            self.setUserInteraction(enable: true);
+            self.setUserInteraction(enable: true,applyToToolbar: false);
         }
         else {
-            self.setUserInteraction(enable: accept);
+            self.setUserInteraction(enable: accept,applyToToolbar: false);
             if(!accept) {
                 self.writingView?.cancelCurrentStroke();
             }
