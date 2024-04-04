@@ -411,7 +411,9 @@ extension FTDocumentRenderViewController: FTDocumentViewPresenter {
                     self.documentViewController.updateToolBar(with: RKDeskMode.deskModePen)
                     break;
                 case .audio:
-                    self.documentViewController.audioButtonAction()
+                    FTNotebookUtils.checkIfAudioIsNotPlaying(forDocument: self.documentViewController.pdfDocument, alertMessage: "AudioRecoring_Progress_Message".localized, onViewController: self) { success in
+                        self.documentViewController.audioButtonAction()
+                    }
                     break;
                 case .openAI:
                     //                self.documentViewController.switch(RKDeskMode.des)
