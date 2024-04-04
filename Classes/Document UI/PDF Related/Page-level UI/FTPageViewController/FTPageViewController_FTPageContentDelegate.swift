@@ -22,15 +22,25 @@ extension FTPageViewController : FTPageContentDelegate {
     }
     
     func setUserInteraction(enable : Bool) {
+        self.setUserInteraction(enable: enable, applyToToolbar: true)
+    }
+    
+    private var pageIndex: Int {
+        return self.pdfPage?.pageIndex() ?? -1;
+    }
+    
+    func setUserInteraction(enable : Bool,applyToToolbar : Bool) {
         if self.contentHolderView?.isUserInteractionEnabled != enable {
-            FTCLSLog("Interaction: Content interaction: \(enable)");
+            FTCLSLog("Interaction: Content interaction: \(enable) \(self.pageIndex) isCurrent: \(self.isCurrent)");
             self.cancenlScheduledUserIneractionTimeLimit();
             if !enable {
                 self.scheduleUserIneractionTimeLimit();
             }
         }
         self.contentHolderView?.isUserInteractionEnabled = enable;
-        self.delegate?.setToolbarEnabled(enable);
+        if applyToToolbar {
+            self.delegate?.setToolbarEnabled(enable);
+        }
     }
     
     func currentDeskMode() -> RKDeskMode {
@@ -51,8 +61,9 @@ extension FTPageViewController : FTPageContentDelegate {
     }
     
     @objc private func delayedEnableUserInteraction() {
-        FTCLSLog("Interaction: Delayed Enable triggered");
-        guard let scrollView = (self.layoutType == .vertical) ? self.delegate?.mainScrollView : self.scrollView else {
+        FTCLSLog("Interaction: Delayed Enable triggered \(self.pageIndex) \(self.isCurrent)");
+        guard let scrollView = (self.layoutType == .vertical) ? self.delegate?.mainScrollView : self.scrollView
+        , self.isCurrent else {
             return;
         }
         if scrollView.isDragging || scrollView.isZooming {
@@ -65,7 +76,7 @@ extension FTPageViewController : FTPageContentDelegate {
             FTCLSLog("Interaction:: ScrollView offset = \(contentOffset)")
             scrollView.setNeedsLayout();
         }
-        FTLogError("App Freeze - Interaction disabled");
+        FTLogError("App Freeze", attributes: ["pageindex" : self.pageIndex]);
         self.setUserInteraction(enable: true);
     }
 }

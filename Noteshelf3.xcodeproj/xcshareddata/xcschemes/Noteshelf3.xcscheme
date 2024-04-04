@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BAF38F492859ADF00067CA9F"
-               BuildableName = "Noteshelf 3.app"
+               BuildableName = "NS3 Dev.app"
                BlueprintName = "Noteshelf3"
                ReferencedContainer = "container:Noteshelf3.xcodeproj">
             </BuildableReference>
@@ -50,7 +50,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BAF38F492859ADF00067CA9F"
-            BuildableName = "Noteshelf 3.app"
+            BuildableName = "NS3 Dev.app"
             BlueprintName = "Noteshelf3"
             ReferencedContainer = "container:Noteshelf3.xcodeproj">
          </BuildableReference>
@@ -73,7 +73,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BAF38F492859ADF00067CA9F"
-            BuildableName = "Noteshelf 3.app"
+            BuildableName = "NS3 Dev.app"
             BlueprintName = "Noteshelf3"
             ReferencedContainer = "container:Noteshelf3.xcodeproj">
          </BuildableReference>
@@ -83,7 +83,7 @@
       buildConfiguration = "Debug">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Beta"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

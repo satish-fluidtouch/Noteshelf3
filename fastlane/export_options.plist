@@ -14,6 +14,8 @@
 		<string>Noteshelf 3 Thumbnail AppStore</string>
 		<key>com.fluidtouch.noteshelf3.watchkitapp</key>
 		<string>Noteshelf 3 Watch AppStore</string>
+		<key>com.fluidtouch.noteshelf3.watchkitapp.watch-widget</key>
+		<string>Noteshelf 3 Watch Widget AppStore</string>
 		<key>com.fluidtouch.noteshelf3.watchkitapp.watchkitextension</key>
 		<string>Noteshelf 3 Watch Extension AppStore</string>
 		<key>com.fluidtouch.noteshelf3-beta</key>
@@ -24,6 +26,8 @@
 		<string>NS3 Beta Thumbnail TestFlight</string>
 		<key>com.fluidtouch.noteshelf3-beta.watchkitapp</key>
 		<string>NS3 Beta Watch Testflight</string>
+		<key>com.fluidtouch.noteshelf3-beta.watchkitapp.watch-widget</key>
+		<string>NS3 Beta Watch Widget TestFlight</string>
 		<key>com.fluidtouch.noteshelf3-beta.watchkitapp.watchkitextension</key>
 		<string>NS3 Beta Watch Extension Testflight</string>
 	</dict>
