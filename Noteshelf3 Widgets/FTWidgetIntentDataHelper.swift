@@ -23,7 +23,7 @@ final class FTWidgetIntentDataHelper {
     }
     
     public static func updateNotebookIfNeeded(for book: inout FTPinnedBookType) {
-        if let matchingBook = notebooks().first(where: { $0.docId == book.identifier && $0.relativePath != book.relativePath }) {
+        if let matchingBook = notebooks().first(where: { $0.docId == book.identifier && ($0.relativePath != book.relativePath || $0.createdTime != book.time)}) {
             book.relativePath = matchingBook.relativePath
             book.time = matchingBook.createdTime
         }
