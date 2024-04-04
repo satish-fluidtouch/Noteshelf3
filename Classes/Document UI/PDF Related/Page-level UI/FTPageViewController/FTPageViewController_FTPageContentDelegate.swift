@@ -76,7 +76,7 @@ extension FTPageViewController : FTPageContentDelegate {
             FTCLSLog("Interaction:: ScrollView offset = \(contentOffset)")
             scrollView.setNeedsLayout();
         }
-        FTLogError("App Freeze - Interaction disabled: \(self.pageIndex)");
+        FTLogError("App Freeze", attributes: ["pageindex" : self.pageIndex]);
         self.setUserInteraction(enable: true);
     }
 }
