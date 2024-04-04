@@ -31,6 +31,10 @@ class FTRecordingEditViewModel: NSObject {
     }
 
     func renameRecording(with name: String, completion:@escaping ((Bool?)->Void)) {
+        guard !name.isEmpty else {
+            completion(false)
+            return
+        }
         self.recording.audioTitle = name
         FTWatchRecordingProvider.shared.updateRecording(item: self.recording) { error in
             if let err = error {
