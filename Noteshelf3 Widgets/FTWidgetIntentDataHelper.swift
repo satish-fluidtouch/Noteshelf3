@@ -130,6 +130,17 @@ final class FTWidgetIntentDataHelper {
         }
         return entry
     }
+    
+    public static func displayName(from path: String) -> String {
+        let components = path.components(separatedBy: "/")
+        var name = path.lastPathComponent.deletingPathExtension
+        if var firstComponent = components.first, firstComponent.hasSuffix(".shelf") {
+            firstComponent = firstComponent.deletingPathExtension
+            name = firstComponent + "/" + path.lastPathComponent.deletingPathExtension
+        }
+        return name
+    }
+
 }
 
 struct FTPinnedNotebook {

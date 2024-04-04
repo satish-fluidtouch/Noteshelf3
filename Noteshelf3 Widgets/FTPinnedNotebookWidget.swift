@@ -33,7 +33,7 @@ struct FTPinnedWidgetView : View {
                             Spacer()
                         }
                         HStack {
-                            Text(entry.name)
+                            Text(entry.name.lastPathComponent)
                                 .lineLimit(2)
                                 .padding(.top,15)
                                 .foregroundColor(Color.label)

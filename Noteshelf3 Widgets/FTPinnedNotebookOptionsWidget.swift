@@ -73,7 +73,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                             Spacer()
                         }
                         HStack {
-                            Text(entry.name)
+                            Text(entry.name.lastPathComponent)
                                 .lineLimit(2)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .foregroundColor(color.isLightColor() ? Color.black : Color.white)

@@ -52,7 +52,7 @@ struct FTPinnedTimelineProvider: IntentTimelineProvider {
             if var selectedBook = configuration.Books {
                 if FTWidgetIntentDataHelper.checkIfBookExists(for: selectedBook) {
                     FTWidgetIntentDataHelper.updateNotebookIfNeeded(for: &selectedBook)
-                    entry = FTPinnedBookEntry(date: Date(), name: selectedBook.relativePath?.lastPathComponent.deletingPathExtension ?? "" , time: selectedBook.time ?? "5:00 PM", coverImage: selectedBook.coverImage ?? "coverImage1", relativePath: selectedBook.relativePath ?? "", hasCover: selectedBook.hasCover?.boolValue ?? false, isLandscape: selectedBook.isLandscape?.boolValue ?? false)
+                    entry = FTPinnedBookEntry(date: Date(), name: FTWidgetIntentDataHelper.displayName(from: selectedBook.relativePath ?? ""), time: selectedBook.time ?? "5:00 PM", coverImage: selectedBook.coverImage ?? "coverImage1", relativePath: selectedBook.relativePath ?? "", hasCover: selectedBook.hasCover?.boolValue ?? false, isLandscape: selectedBook.isLandscape?.boolValue ?? false)
                 }
             } else {
                 entry = defaultBookEntry()
