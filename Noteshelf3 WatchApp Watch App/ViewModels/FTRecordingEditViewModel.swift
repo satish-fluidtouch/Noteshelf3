@@ -45,12 +45,6 @@ class FTRecordingEditViewModel: NSObject {
             }
         }
     }
-
-    func handleAction(for option: FTRecordingEditOption) {
-        if option == .delete {
-        }
-    }
-
 }
 
 enum FTRecordingEditOption: String, CaseIterable {

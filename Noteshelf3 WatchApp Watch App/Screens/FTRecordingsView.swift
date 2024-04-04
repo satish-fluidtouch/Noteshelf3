@@ -20,15 +20,8 @@ struct FTRecordingsView: View {
                     .font(Font.system(size: 18))
             } else {
                 ZStack {
-                    // TODO: Narayana - to be removed once minimum deployment target set to 9.0
-                    if #available(watchOS 9.0, *) {
-                        NavigationStack {
-                            listView
-                        }
-                    } else {
-                        NavigationView {
-                            listView
-                        }
+                    NavigationStack {
+                        listView
                     }
                 }
                 .fullScreenCover(isPresented: $isShowingPlayerView) {

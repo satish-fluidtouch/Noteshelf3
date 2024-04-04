@@ -276,7 +276,6 @@ extension FTAudioService {
         if volume != self.playerVolume {
             self.playerVolume = volume
         }
-        print("zzzz: \(self.playerVolume)")
     }
 
     func pausePlayingAudio() {

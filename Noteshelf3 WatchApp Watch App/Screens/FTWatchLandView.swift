@@ -25,7 +25,6 @@ struct FTWatchLandView: View {
                 switch newValue {
                 case .active, .background:
                     if viewModel.isRecording && !FTWidgetDefaults.shared().isRecording ||  !viewModel.isRecording && FTWidgetDefaults.shared().isRecording {
-                        print("zzzz - viewModel.isRecording - \(viewModel.isRecording) \n FTWidgetDefaults.shared().isRecording - \(FTWidgetDefaults.shared().isRecording)")
                         WidgetCenter.shared.reloadTimelines(ofKind: widgetKind)
                     }
                 default:
