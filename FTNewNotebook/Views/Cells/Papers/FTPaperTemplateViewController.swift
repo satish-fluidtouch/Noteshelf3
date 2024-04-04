@@ -97,11 +97,6 @@ public class FTPaperTemplateViewController: UIViewController {
         customVC = FTStoreContainerViewController.storeCustomViewController(source: self.source, delegate: self, selectedFile: selectedUrl)
     }
     private func updateView() {
-        if source == .addMenu || source == .finder {
-            self.navigationItem.rightBarButtonItem?.isHidden = true
-        } else {
-            self.navigationItem.rightBarButtonItem?.isHidden = false
-        }
         if paperTemplateSegment.selectedSegmentIndex == 0 {
             add(asChildViewController: essentialViewcontroller)
             remove(asChildViewController: libraryVC)

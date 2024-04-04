@@ -39,6 +39,21 @@ public enum FTTemplateLineHeight: String, CaseIterable, Codable {
         return self.rawValue
     }
 
+    var iconPath: String {
+        let path: String
+        switch self {
+        case .extraNarrow:
+            path = "lineHeightExtraNarrow"
+        case .narrow:
+            path = "lineHeightNarrow"
+        case .standard:
+            path = "lineHeightStandard"
+        case .wide:
+            path = "lineHeightWide"
+        }
+        return path
+    }
+    
     var thumbImgPrefix: String {
         let prefix: String
         switch self {

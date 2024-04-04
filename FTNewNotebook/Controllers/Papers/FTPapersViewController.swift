@@ -169,7 +169,6 @@ extension FTPapersViewController: UICollectionViewDataSource, UICollectionViewDe
                 self.papersDelegate?.setCurrentSelectedURL(url: selectedPaperVariantsAndTheme.theme.themeFileURL)
             }
         }
-        if paperPickerMode == .paperPicker || paperPickerMode == .quickCreateSettings {
             if let currenSelectedCell = self.collectionView?.cellForItem(at: indexPath) as? FTPaperCollectionViewCell {
                 if let previousSelectedCellIndexPath = self.selectedPaperThemeCellIndexPath, let previousSelectedCell = self.collectionView?.cellForItem(at: previousSelectedCellIndexPath) as? FTPaperCollectionViewCell {
                     previousSelectedCell.isCellSelected = false
@@ -182,9 +181,6 @@ extension FTPapersViewController: UICollectionViewDataSource, UICollectionViewDe
             }else if let _ = self.collectionView?.cellForItem(at: indexPath) as? FTMoreTemplatesCollectionViewCell {
                 self.showAlertToNavigateToTemplatesView()
             }
-        } else {
-            didSelectTheme()
-        }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if paperPickerMode == .paperPicker{

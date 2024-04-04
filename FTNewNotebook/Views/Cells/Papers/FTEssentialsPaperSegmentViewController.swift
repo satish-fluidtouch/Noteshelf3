@@ -77,10 +77,6 @@ extension FTEssentialsPaperSegmentViewController: FTPaperDelegate {
     }
     func didTapPaperTemplate(_ paperTemplate: FTThemeable) {
         self.varaintsData.selectedVariantsAndTheme.theme = paperTemplate
-        if source != .shelf {
-            self.dismiss(animated: true)
-            self.delegate?.didSelectPaperTheme(theme: self.varaintsData.selectedVariantsAndTheme)
-        }
     }
 }
 extension FTEssentialsPaperSegmentViewController: FTPaperTemplatesVariantsDelegateNew {
@@ -122,6 +118,7 @@ private extension FTEssentialsPaperSegmentViewController{
             self.paperSizeBtn?.menu = UIMenu(identifier: UIMenu.Identifier("SizesMenu") ,children:menuElements)
         }
         self.paperSizeBtn?.showsMenuAsPrimaryAction = true
+        self.paperSizeBtn?.preferredMenuElementOrder = .fixed
     }
     private var templateSizeOptionsMenu: UIMenu {
         var sizeActions = [UIAction]()

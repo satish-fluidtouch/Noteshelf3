@@ -151,7 +151,7 @@ class FTPaperTemplatesVariantsController: UIViewController {
     private func configureLineHeightView(){
         self.setConstraintToLineHeightView()
         configureTemplateLineHeightMenu()
-        let iconName = self.icon(for: selectedPaperVariants.lineHeight) + "Big"
+        let iconName = selectedPaperVariants.lineHeight.iconPath + "Big"
         let lineHeightImage = UIImage(named: iconName, in: currentBundle, with: nil)
         self.lineHeightButton?.setImage(lineHeightImage, for: .normal)
         self.lineHeightButton?.layer.borderColor = UIColor.appColor(.black20).cgColor
@@ -166,9 +166,9 @@ class FTPaperTemplatesVariantsController: UIViewController {
     }
     private func configureTemplateLineHeightMenu() {
         var actions = [UIAction]()
-        for lineHeightModel in papervariantsDataModel.lineHeights.reversed() {
+        for lineHeightModel in papervariantsDataModel.lineHeights {
             let lineHeightTitle = lineHeightModel.lineHeight.displayTitle
-            let lineHeightImage = UIImage(named: self.icon(for: lineHeightModel.lineHeight), in: currentBundle, with: nil)
+            let lineHeightImage = UIImage(named: lineHeightModel.lineHeight.iconPath, in: currentBundle, with: nil)
             let isSelected =  lineHeightModel.lineHeight == selectedPaperVariants.lineHeight
             let state: UIMenuElement.State = isSelected ? .on : .off
             let action = UIAction(title: lineHeightTitle,image: lineHeightImage,state: state) {[weak self] action in
@@ -182,9 +182,10 @@ class FTPaperTemplatesVariantsController: UIViewController {
         }
         self.lineHeightButton?.menu = UIMenu(children:actions)
         self.lineHeightButton?.showsMenuAsPrimaryAction = true
+        self.lineHeightButton?.preferredMenuElementOrder = .fixed
     }
     private func updatelineHeightButtonWith(selectedLineHeight: FTTemplateLineHeight){
-        let iconNameForLineHeightbutton = self.icon(for: selectedLineHeight) + "Big"
+        let iconNameForLineHeightbutton = selectedLineHeight.iconPath + "Big"
         let lineHeightImage = UIImage(named: iconNameForLineHeightbutton, in: currentBundle, with: nil)
         self.lineHeightButton?.setImage(lineHeightImage, for: .normal)
     }
@@ -201,20 +202,6 @@ class FTPaperTemplatesVariantsController: UIViewController {
             action?.state = .on
         }
         return menu
-    }
-    private func icon(for lineHeight: FTTemplateLineHeight) -> String {
-        let iconPath: String
-        switch lineHeight {
-        case .extraNarrow:
-            iconPath = "lineHeightExtraNarrow"
-        case .narrow:
-            iconPath = "lineHeightNarrow"
-        case .standard:
-            iconPath = "lineHeightStandard"
-        case .wide:
-            iconPath = "lineHeightWide"
-        }
-        return iconPath
     }
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         self.setConstraintToLineHeightView()

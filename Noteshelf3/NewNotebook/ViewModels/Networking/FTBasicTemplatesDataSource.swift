@@ -255,6 +255,10 @@ class FTBasicTemplatesDataSource: NSObject {
          }
          FTThemesLibrary(libraryType: .papers).setDefaultTheme(themeWithVariants.theme, defaultMode:mode, withVariants: FTBasicTemplatesDataSource.shared.fetchSelectedVaraintsForMode(mode))
      }
+
+     func getLIneTypes() -> [FTLineType] {
+         return self.basicCategory.customizations?.lineTypes ?? []
+     }
 }
 
 private extension FTBasicTemplatesDataSource {

@@ -122,10 +122,8 @@ public class FTCreateNotebookViewController: UIViewController {
         self.updatePasswordStatus()
         self.notebookTitleTextfield?.placeholder = "shelf.createNotebook.MyNotebook".localized
         self.notebookTitleTextfield?.delegate = self
-        Task {
-            if let themeWithVariants = newNotebookDetails?.selectedPaperWithVariants {
-                await setPaperTemplateWithVarinats(themeWithVariants)
-            }
+        if let themeWithVariants = newNotebookDetails?.selectedPaperWithVariants {
+            self.setPaperTemplateWithVarinats(themeWithVariants)
         }
     }
     private func setUpTitleView() {
