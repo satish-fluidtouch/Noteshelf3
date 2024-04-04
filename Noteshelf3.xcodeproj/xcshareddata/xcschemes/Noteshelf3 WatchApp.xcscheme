@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1430"
-   version = "2.0">
+   LastUpgradeVersion = "1500"
+   version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
@@ -14,8 +14,22 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0E4FDECF2AC1B3AA0097FE16"
+               BuildableName = "Noteshelf3 WatchApp.app"
+               BlueprintName = "Noteshelf3 WatchApp"
+               ReferencedContainer = "container:Noteshelf3.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "BAF38F492859ADF00067CA9F"
-               BuildableName = "NS3 Dev.app"
+               BuildableName = "Noteshelf 3.app"
                BlueprintName = "Noteshelf3"
                ReferencedContainer = "container:Noteshelf3.xcodeproj">
             </BuildableReference>
@@ -26,64 +40,71 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
-      <Testables>
-      </Testables>
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      shouldAutocreateTestPlan = "YES">
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      disablePerformanceAntipatternChecker = "YES"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
-      debugDocumentVersioning = "NO"
-      debugXPCServices = "NO"
+      debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
-      enableGPUFrameCaptureMode = "3"
-      enableGPUValidationMode = "1"
-      allowLocationSimulation = "NO"
-      queueDebuggingEnabled = "No">
+      allowLocationSimulation = "YES"
+      notificationPayloadFile = "PushNotificationPayload.apns">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "BAF38F492859ADF00067CA9F"
-            BuildableName = "NS3 Dev.app"
-            BlueprintName = "Noteshelf3"
+            BlueprintIdentifier = "E75CD8492B8F0B4300D59F21"
+            BuildableName = "Noteshelf3 WatchApp.app"
+            BlueprintName = "Noteshelf3 WatchApp"
             ReferencedContainer = "container:Noteshelf3.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <CommandLineArguments>
-         <CommandLineArgument
-            argument = "-FIRDebugEnabled"
-            isEnabled = "NO">
-         </CommandLineArgument>
-      </CommandLineArguments>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "0E4FDECF2AC1B3AA0097FE16"
+            BuildableName = "Noteshelf3 WatchApp.app"
+            BlueprintName = "Noteshelf3 WatchApp"
+            ReferencedContainer = "container:Noteshelf3.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       shouldUseLaunchSchemeArgsEnv = "YES"
-      savedToolIdentifier = "Time Profiler"
+      savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "BAF38F492859ADF00067CA9F"
-            BuildableName = "NS3 Dev.app"
-            BlueprintName = "Noteshelf3"
+            BlueprintIdentifier = "0E4FDECF2AC1B3AA0097FE16"
+            BuildableName = "Noteshelf3 WatchApp.app"
+            BlueprintName = "Noteshelf3 WatchApp"
             ReferencedContainer = "container:Noteshelf3.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "0E4FDECF2AC1B3AA0097FE16"
+            BuildableName = "Noteshelf3 WatchApp.app"
+            BlueprintName = "Noteshelf3 WatchApp"
+            ReferencedContainer = "container:Noteshelf3.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "Beta"
+      buildConfiguration = "Release"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>
