@@ -19,6 +19,12 @@ struct FTPinnedBookEntry: TimelineEntry {
     let relativePath: String
     let hasCover: Bool
     let isLandscape: Bool
+    
+    public var intent: FTPinnedBookOpenIntent {
+        let intent = FTPinnedBookOpenIntent();
+        intent.relativePath = self.relativePath;
+        return intent
+    }
 }
 struct FTPinnedTimelineProvider: IntentTimelineProvider {
     typealias Entry = FTPinnedBookEntry

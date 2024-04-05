@@ -18,7 +18,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
 
     var body: some View {
         HStack(spacing: 0) {
-            Button(intent: FTPinnedBookOpenIntent(path: entry.relativePath)) {
+            Button(intent: entry.intent) {
                 if entry.relativePath.isEmpty {
                     NoNotesView
                 } else {

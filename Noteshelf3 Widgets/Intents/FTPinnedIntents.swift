@@ -91,17 +91,12 @@ struct FTPinnedBookOpenIntent : AppIntent {
     static var openAppWhenRun: Bool = true
     static var persistentIdentifier: String = "PinnedBookOpenIntent"
     static var path = "Hello"
-    init() {}
-
-    init(path: String) {
-        let sharedDefaults = UserDefaults(suiteName: FTSharedGroupID.getAppGroupID())
-        sharedDefaults?.set(path, forKey: FTPinnedPenIntent.persistentIdentifier)
-    }
     
+    @Parameter(title: "Path")
+    var relativePath: String
+        
     func perform() async throws -> some IntentResult {
-        let sharedDefaults = UserDefaults(suiteName: FTSharedGroupID.getAppGroupID())
-        let path = sharedDefaults?.value(forKey: FTPinnedPenIntent.persistentIdentifier) as? String ?? ""
-        FTWidgetActionController.shared.performAction(action: FTPinndedWidgetActionType.bookOpen(path))
+        FTWidgetActionController.shared.performAction(action: FTPinndedWidgetActionType.bookOpen(self.relativePath))
         return .result()
     }
 }
