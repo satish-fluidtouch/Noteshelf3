@@ -183,8 +183,8 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
                                                               isQuickCreate: true, createWithAudio: false,
                                                               onCompletion: nil);
                     }
-                    onCompletion(error,shelfItem)
                 }
+                onCompletion(error,shelfItem)
             }
         } else {
             if let notebookDetails = notebookDetails {
@@ -203,8 +203,8 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
                                                                   isQuickCreate: false, createWithAudio: false,
                                                                   onCompletion: nil);
                         }
-                        onCompletion(error,shelfItemProtocol)
                     }
+                    onCompletion(error,shelfItemProtocol)
                 }
             }
         }

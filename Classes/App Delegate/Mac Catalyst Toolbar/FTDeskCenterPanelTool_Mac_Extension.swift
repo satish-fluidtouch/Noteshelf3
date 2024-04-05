@@ -59,6 +59,7 @@ extension FTDeskCenterPanelTool {
             ,FTDeskCenterPanelTool.pixabay.toolbarIdentifier
             ,FTDeskCenterPanelTool.emojis.toolbarIdentifier
             ,FTDeskCenterPanelTool.stickers.toolbarIdentifier
+            ,FTDeskCenterPanelTool.savedClips.toolbarIdentifier
             ,FTDeskCenterPanelTool.page.toolbarIdentifier
             ,FTDeskCenterPanelTool.deletePage.toolbarIdentifier
             ,FTDeskCenterPanelTool.bookmark.toolbarIdentifier

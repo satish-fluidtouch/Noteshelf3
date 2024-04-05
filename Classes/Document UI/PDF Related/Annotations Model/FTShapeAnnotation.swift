@@ -131,7 +131,7 @@ final class FTShapeAnnotation: FTStroke, FTShapeAnnotationProtocol {
                                                              brushWidth: strokeWidth,
                                                              isShapeTool: true,
                                                              version: FTStroke.defaultAnnotationVersion());
-            shapeData.properties = FTShapeProperties(strokeThickness: properties.brushWidth, strokeOpacity: shapeData.strokeOpacity)
+            shapeData.properties = FTShapeProperties(strokeThickness: max(properties.brushWidth, 1), strokeOpacity: shapeData.strokeOpacity)
             return shapeData.properties ?? FTShapeProperties()
         }
         

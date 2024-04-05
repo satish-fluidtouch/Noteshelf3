@@ -1,0 +1,24 @@
+{
+  "images" : [
+    {
+      "filename" : "desk_tool_savedClips 1.pdf",
+      "idiom" : "iphone"
+    },
+    {
+      "filename" : "desk_tool_savedClips.pdf",
+      "idiom" : "ipad"
+    },
+    {
+      "filename" : "desk_tool_savedClips_mac.pdf",
+      "idiom" : "mac"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true,
+    "template-rendering-intent" : "template"
+  }
+}

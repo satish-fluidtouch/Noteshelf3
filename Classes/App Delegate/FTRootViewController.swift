@@ -1636,11 +1636,12 @@ private extension FTRootViewController {
         var controllerToPresent: UIViewController? = self;
         if let presentedController = self.presentedViewController,
            !presentedController.isBeingDismissed {
-            if presentedController.isMember(of: FTCreateNotebookViewController.classForCoder()),
-               let snapView = presentedController.view.snapshotView(afterScreenUpdates: false) {
+            if let createNBController = presentedController as? FTCreateNotebookViewController {
+                if let snapView = createNBController.snapshotView() {
+                    self.contentView.addSubview(snapView);
+                    snapshotViews.append(snapView);
+                }
                 FTCLSLog("Book: New NB Screen Snapshot")
-                self.contentView.addSubview(snapView);
-                snapshotViews.append(snapView);
                 presentedController.dismiss(animated: false)
             }
             else {

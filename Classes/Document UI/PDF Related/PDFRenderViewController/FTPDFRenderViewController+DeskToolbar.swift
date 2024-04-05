@@ -168,6 +168,8 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
             self.executer.execute(type: .emojis(source: source))
         case .stickers:
             self.executer.execute(type: .stickers(source: source))
+        case .savedClips:
+            self.executer.execute(type: .savedClips(source: source))
             
         case .zoomBox:
             self.zoomButtonAction()

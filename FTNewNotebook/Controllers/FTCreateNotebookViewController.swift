@@ -627,3 +627,32 @@ extension FTCreateNotebookViewController: FTKeyCommandAction {
     }
 }
 #endif
+
+public extension FTCreateNotebookViewController {
+    func snapshotView() -> UIView? {
+        guard let image = self.view.asImage() else {
+            return nil;
+        }
+        let snapViewImg = UIImageView(image: image)
+        let snapView = UIView(frame: view.bounds);
+        snapView.addSubview(snapViewImg);
+        snapViewImg.frame = view.bounds
+        
+#if !targetEnvironment(macCatalyst)
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect);
+        
+        let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
+        let vibrancyView = UIVisualEffectView(effect: vibrancyEffect)
+        blurEffectView.contentView.addSubview(vibrancyView)
+
+        blurEffectView.backgroundColor = UIColor.clear
+        blurEffectView.isUserInteractionEnabled = false
+        blurEffectView.layer.masksToBounds = true
+        blurEffectView.frame = view.bounds
+
+        snapView.insertSubview(blurEffectView, at: 0);
+#endif
+        return snapView;
+    }
+}
