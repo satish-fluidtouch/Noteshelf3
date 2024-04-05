@@ -12,18 +12,12 @@ struct FTPinnedPenIntent : AppIntent {
     static var title: LocalizedStringResource = "Pen"
     static var openAppWhenRun: Bool = true
     static var persistentIdentifier: String = "PinnedPenIntent"
-    static var path = "Hello"
-    init() {}
 
-    init(path: String) {
-        let sharedDefaults = UserDefaults(suiteName: FTSharedGroupID.getAppGroupID())
-        sharedDefaults?.set(path, forKey: FTPinnedPenIntent.persistentIdentifier)
-    }
-    
+    @Parameter(title: "Path")
+    var relativePath: String
+        
     func perform() async throws -> some IntentResult {
-        let sharedDefaults = UserDefaults(suiteName: FTSharedGroupID.getAppGroupID())
-        let path = sharedDefaults?.value(forKey: FTPinnedPenIntent.persistentIdentifier) as? String ?? ""
-        FTWidgetActionController.shared.performAction(action: FTPinndedWidgetActionType.pen(path))
+        FTWidgetActionController.shared.performAction(action: FTPinndedWidgetActionType.pen(self.relativePath))
         return .result()
     }
 }
@@ -33,17 +27,11 @@ struct FTPinnedAudioIntent : AppIntent {
     static var openAppWhenRun: Bool = true
     static var persistentIdentifier: String = "PinnedAudioIntent"
     
-    init() {}
-
-    init(path: String) {
-        let sharedDefaults = UserDefaults(suiteName: FTSharedGroupID.getAppGroupID())
-        sharedDefaults?.set(path, forKey: FTPinnedPenIntent.persistentIdentifier)
-    }
-
+    @Parameter(title: "Path")
+    var relativePath: String
+        
     func perform() async throws -> some IntentResult {
-        let sharedDefaults = UserDefaults(suiteName: FTSharedGroupID.getAppGroupID())
-        let path = sharedDefaults?.value(forKey: FTPinnedPenIntent.persistentIdentifier) as? String ?? ""
-        FTWidgetActionController.shared.performAction(action: FTPinndedWidgetActionType.audio(path))
+        FTWidgetActionController.shared.performAction(action: FTPinndedWidgetActionType.audio(self.relativePath))
         return .result()
     }
 }
@@ -52,17 +40,11 @@ struct FTPinnedOpenAIIntent : AppIntent {
     static var title: LocalizedStringResource = "OpenAI"
     static var openAppWhenRun: Bool = true
     static var persistentIdentifier: String = "PinnedOpenAIIntent"
-    init() {}
-
-    init(path: String) {
-        let sharedDefaults = UserDefaults(suiteName: FTSharedGroupID.getAppGroupID())
-        sharedDefaults?.set(path, forKey: FTPinnedPenIntent.persistentIdentifier)
-    }
-    
+    @Parameter(title: "Path")
+    var relativePath: String
+        
     func perform() async throws -> some IntentResult {
-        let sharedDefaults = UserDefaults(suiteName: FTSharedGroupID.getAppGroupID())
-        let path = sharedDefaults?.value(forKey: FTPinnedPenIntent.persistentIdentifier) as? String ?? ""
-        FTWidgetActionController.shared.performAction(action: FTPinndedWidgetActionType.openAI(path))
+        FTWidgetActionController.shared.performAction(action: FTPinndedWidgetActionType.openAI(self.relativePath))
         return .result()
     }
 }
@@ -71,17 +53,11 @@ struct FTPinnedTextIntent : AppIntent {
     static var title: LocalizedStringResource = "Text"
     static var openAppWhenRun: Bool = true
     static var persistentIdentifier: String = "PinnedTextIntent"
-    init() {}
-
-    init(path: String) {
-        let sharedDefaults = UserDefaults(suiteName: FTSharedGroupID.getAppGroupID())
-        sharedDefaults?.set(path, forKey: FTPinnedPenIntent.persistentIdentifier)
-    }
-    
+    @Parameter(title: "Path")
+    var relativePath: String
+        
     func perform() async throws -> some IntentResult {
-        let sharedDefaults = UserDefaults(suiteName: FTSharedGroupID.getAppGroupID())
-        let path = sharedDefaults?.value(forKey: FTPinnedPenIntent.persistentIdentifier) as? String ?? ""
-        FTWidgetActionController.shared.performAction(action: FTPinndedWidgetActionType.text(path))
+        FTWidgetActionController.shared.performAction(action: FTPinndedWidgetActionType.text(self.relativePath))
         return .result()
     }
 }
@@ -90,7 +66,6 @@ struct FTPinnedBookOpenIntent : AppIntent {
     static var title: LocalizedStringResource = "BookOpen"
     static var openAppWhenRun: Bool = true
     static var persistentIdentifier: String = "PinnedBookOpenIntent"
-    static var path = "Hello"
     
     @Parameter(title: "Path")
     var relativePath: String

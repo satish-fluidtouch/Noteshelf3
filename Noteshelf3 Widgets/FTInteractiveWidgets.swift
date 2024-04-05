@@ -20,8 +20,32 @@ struct FTPinnedBookEntry: TimelineEntry {
     let hasCover: Bool
     let isLandscape: Bool
     
-    public var intent: FTPinnedBookOpenIntent {
+    public var bookOpenintent: FTPinnedBookOpenIntent {
         let intent = FTPinnedBookOpenIntent();
+        intent.relativePath = self.relativePath;
+        return intent
+    }
+    
+    public var penIntent: FTPinnedPenIntent {
+        let intent = FTPinnedPenIntent();
+        intent.relativePath = self.relativePath;
+        return intent
+    }
+    
+    public var audioIntent: FTPinnedAudioIntent {
+        let intent = FTPinnedAudioIntent();
+        intent.relativePath = self.relativePath;
+        return intent
+    }
+    
+    public var aiIntent: FTPinnedOpenAIIntent {
+        let intent = FTPinnedOpenAIIntent();
+        intent.relativePath = self.relativePath;
+        return intent
+    }
+    
+    public var textIntent: FTPinnedTextIntent {
+        let intent = FTPinnedTextIntent();
         intent.relativePath = self.relativePath;
         return intent
     }

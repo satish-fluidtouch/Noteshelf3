@@ -18,7 +18,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
 
     var body: some View {
         HStack(spacing: 0) {
-            Button(intent: entry.intent) {
+            Button(intent: entry.bookOpenintent) {
                 if entry.relativePath.isEmpty {
                     NoNotesView
                 } else {
@@ -127,13 +127,13 @@ struct FTPinnedNotebookOptionsWidgetView: View {
     private var optionsView : some View {
         Grid(alignment: .center, horizontalSpacing: 8, verticalSpacing: 8) {
             GridRow {
-                optionViewForType(.pen(entry.relativePath), intent: FTPinnedPenIntent(path: entry.relativePath))
-                optionViewForType(.audio(entry.relativePath), intent: FTPinnedAudioIntent(path: entry.relativePath))
+                optionViewForType(.pen(entry.relativePath), intent: entry.penIntent)
+                optionViewForType(.audio(entry.relativePath), intent: entry.audioIntent)
             }
 
             GridRow {
-                optionViewForType(.openAI(entry.relativePath), intent: FTPinnedOpenAIIntent(path: entry.relativePath))
-                optionViewForType(.text(entry.relativePath), intent: FTPinnedTextIntent(path: entry.relativePath))
+                optionViewForType(.openAI(entry.relativePath), intent: entry.aiIntent)
+                optionViewForType(.text(entry.relativePath), intent: entry.textIntent)
             }
         }
     }
