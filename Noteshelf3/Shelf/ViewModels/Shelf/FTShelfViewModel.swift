@@ -102,7 +102,7 @@ class FTShelfViewModel: NSObject, ObservableObject {
     @Published var showNotebookModifiedDate: Bool = UserDefaults.standard.bool(forKey: "Shelf_ShowDate")
     @Published var orientation = UIDevice.current.orientation
     @Published var isSidebarOpen: Bool = true
-    @Published var shouldShowGetStartedInfo: Bool = FTUserDefaults.isFirstLaunch()
+    @Published var shouldShowGetStartedInfo: Bool = false //FTUserDefaults.isFirstLaunch()
     @Published var selectedShelfItems: [FTShelfItemViewModel] = []
 
     // MARK: Normal Variables
@@ -368,7 +368,7 @@ private extension FTShelfViewModel {
                 } else {
                     if !FTUserDefaults.isFirstLaunch() {
                         FTUserDefaults.setFirstLaunch(true)
-                        self.shouldShowGetStartedInfo = true
+                        self.shouldShowGetStartedInfo = false
                     }
                 }
             }
