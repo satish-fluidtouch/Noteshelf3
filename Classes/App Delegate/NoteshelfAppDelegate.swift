@@ -29,6 +29,7 @@ let AppDelegate = UIApplication.shared.delegate as! NoteshelfAppDelegate
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        URL.clearQuickCreateFolder();
         FTDocumentFrameworkLogHelper.config()
         self.clearTempCache();
         FTStyles.registerFonts()

@@ -39,9 +39,21 @@ class FTGetNotebookInfoViewController: UIViewController, FTNotebookTitleDelegate
         //***************************
         var firstSection = FTNotebookInfoSection()
         var properties = [FTNotebookInfoProperty]()
-        properties.append(FTNotebookInfoTitle(description: notebookShelfItem.title))
+        properties.append(FTNotebookInfoTitle(description: notebookShelfItem.displayTitle))
 
-        let relativePath = notebookDocument.URL.path;
+        let relativePath: String
+        if let tempItem = notebookShelfItem as? FTDocumentItemTemp {
+            if let group = tempItem.parent {
+                relativePath = group.URL.appending(path: tempItem.displayTitle).path(percentEncoded: false);
+            }
+            else {
+                relativePath = tempItem.shelfCollection.URL.appending(path: tempItem.displayTitle).path(percentEncoded: false);
+            }
+        }
+        else {
+            relativePath = notebookDocument.URL.path(percentEncoded: false);
+        }
+
         var notebookTitle = notebookShelfItem.shelfCollection.displayTitle ;
         if let groupName = relativePath.relativeGroupPathFromCollection()?.lastPathComponent.deletingPathExtension {
             notebookTitle = "\(notebookTitle) / \(groupName)"
@@ -77,6 +89,10 @@ class FTGetNotebookInfoViewController: UIViewController, FTNotebookTitleDelegate
     }
     
     func renameShelfItem(title: String, onCompletion: @escaping (Bool) -> ()) {
+        if let tempShelfItem = self.notebookShelfItem as? FTDocumentItemTemp {
+            tempShelfItem.tempDisplayTitle = title;
+            return;
+        }
         let shelfCollection = self.notebookShelfItem.shelfCollection
         runInMainThread {
             shelfCollection?.renameShelfItem(self.notebookShelfItem, toTitle: title, onCompletion: {[weak self] (error, updatedShelfItem) in

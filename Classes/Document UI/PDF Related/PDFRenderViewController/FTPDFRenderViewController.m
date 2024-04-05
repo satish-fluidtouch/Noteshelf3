@@ -1275,7 +1275,7 @@
         UIBackgroundTaskIdentifier task = [self startBackgroundTask];
         void(^continueSaving)(BOOL, UIImage*) = ^(BOOL coverPageUpdated, UIImage* coverImage){
             void (^onCompletionBlock)(BOOL) = ^(BOOL success){
-                if(coverPageUpdated) {
+                if(coverPageUpdated && !self.pdfDocument.isJustCreatedWithQuickNote) {
                     [[FTURLReadThumbnailManager sharedInstance] addImageToCacheWithImage:coverImage url:docURL];
                     [FTRecentEntries updateImageInGroupContainerForUrl:docURL];
                 }
@@ -1284,7 +1284,7 @@
                     completion(success);
                 }
                 [self endBackgroundTask:task];
-                if(shouldClose) {
+                if(shouldClose && !self.pdfDocument.isJustCreatedWithQuickNote) {
                     [self postDocumentUpdateNotification];
                 }
             };
@@ -1388,7 +1388,11 @@
     if(backAction == FTSaveAction && [title isEqualToString:fileName]) {
         backAction = FTNormalAction;
     }
-    isRequiredLoader = (backAction == FTSaveAction);
+    isRequiredLoader = (
+                        backAction == FTSaveAction
+                        || backAction == FTMoveToTrashAction
+                        || (backAction == FTNormalAction && self.pdfDocument.isJustCreatedWithQuickNote)
+                        );
     
     if(backAction != FTNormalAction) {
         NSString *saveAction = @"Normal";
@@ -1454,8 +1458,12 @@
             }
             [[FTENPublishManager shared] startPublishing];
         };
-        if(backAction == FTSaveAction) {
-            [self renameShelfItemWithTitle:title onCompletion: ^(BOOL success) {
+        if(backAction == FTSaveAction ||  (backAction == FTNormalAction && self.pdfDocument.isJustCreatedWithQuickNote)) {
+            NSURL *shelfImageURL = [self.shelfItemManagedObject.URL URLByAppendingPathComponent:@"cover-shelf-image.png"];
+            UIImage *shelfImage = [[UIImage alloc] initWithContentsOfFile:shelfImageURL.path];
+            [self saveQuickCreateNote:title onCompletion:^(NSError * _Nullable error, FTDocumentItemWrapperObject * _Nullable item) {
+                self.shelfItemManagedObject = item;
+                [[FTURLReadThumbnailManager sharedInstance] addImageToCacheWithImage:shelfImage url:item.URL];
                 callBack();
             }];
         }
@@ -1468,7 +1476,7 @@
         }
     }
               shouldCloseDocument:true
-                    waitUntilSave:(isRequiredLoader || backAction == FTMoveToTrashAction)
+                    waitUntilSave:isRequiredLoader
                        saveAction:backAction
           shouldGenerateThumbnail:!isDeleteOperation];
 }

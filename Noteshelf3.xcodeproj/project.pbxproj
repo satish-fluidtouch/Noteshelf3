@@ -128,6 +128,8 @@
 		09DEFBD72A725E6F00F41C1E /* FTCharStrokeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEFBD62A725E6F00F41C1E /* FTCharStrokeInfo.swift */; };
 		09DEFBD92A725E9600F41C1E /* FTWordStrokeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEFBD82A725E9600F41C1E /* FTWordStrokeInfo.swift */; };
 		09DEFBDB2A725EC200F41C1E /* FTStrokeGlyphInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEFBDA2A725EC200F41C1E /* FTStrokeGlyphInfo.swift */; };
+		09F72F0C2BBFD5750061792D /* FTDocumentItemTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F72F0B2BBFD5750061792D /* FTDocumentItemTemp.swift */; };
+		09F72F0D2BBFD5750061792D /* FTDocumentItemTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F72F0B2BBFD5750061792D /* FTDocumentItemTemp.swift */; };
 		09F81DC4291544ED0040E023 /* FTToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F81DC3291544ED0040E023 /* FTToolbarView.swift */; };
 		1408AB7B2A14F9A500EF4B6D /* FTSettingsAboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1408AB7A2A14F9A500EF4B6D /* FTSettingsAboutView.swift */; };
 		14126F092A8CDBE500C3F903 /* FTStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14126F082A8CDBE500C3F903 /* FTStepperView.swift */; };
@@ -2842,6 +2844,7 @@
 		09F37B2D2090574B004676DF /* FTRoundProgressLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTRoundProgressLayer.h; sourceTree = "<group>"; };
 		09F37B2F2090578A004676DF /* FTRoundProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTRoundProgressView.swift; sourceTree = "<group>"; };
 		09F47CE1215CDBEF00805AF7 /* NSTextAttachment_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSTextAttachment_Extension.swift; sourceTree = "<group>"; };
+		09F72F0B2BBFD5750061792D /* FTDocumentItemTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDocumentItemTemp.swift; sourceTree = "<group>"; };
 		09F81DC3291544ED0040E023 /* FTToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTToolbarView.swift; sourceTree = "<group>"; };
 		09F8BF06260C72B400864BC7 /* FTNBKZipFileExtracter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNBKZipFileExtracter.swift; sourceTree = "<group>"; };
 		09F8BFAA260DBDFA00864BC7 /* FTNBKZipFileImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNBKZipFileImporter.swift; sourceTree = "<group>"; };
@@ -5160,6 +5163,7 @@
 				09AB9D711E77D8410041A0F5 /* FTDocumentItem.swift */,
 				B82194F22448340300887A2E /* FTDocumentUUIDReader.swift */,
 				09AB9D731E77D8490041A0F5 /* FTGroupItem.swift */,
+				09F72F0B2BBFD5750061792D /* FTDocumentItemTemp.swift */,
 			);
 			name = "Private Classes";
 			sourceTree = "<group>";
@@ -13180,6 +13184,7 @@
 				BAF391222859ADF00067CA9F /* FTNBKZipFileExtracter.swift in Sources */,
 				BAF391242859ADF00067CA9F /* FTHashTable.swift in Sources */,
 				BAF391252859ADF00067CA9F /* FTDropboxManager.swift in Sources */,
+				09F72F0C2BBFD5750061792D /* FTDocumentItemTemp.swift in Sources */,
 				F3ACB196289E355600872CBD /* FTShapesRackViewController.swift in Sources */,
 				E7ECA3C329C04CCC00703BB7 /* FTUnSplashModel.swift in Sources */,
 				E7A63EC4286C6C8C003F538C /* FTThemeCategory.swift in Sources */,
@@ -14540,6 +14545,7 @@
 				4209FE71295C5F4700ACC02E /* FTShelfCollectionSystem.swift in Sources */,
 				4209FE77295C5F7700ACC02E /* FTUniqueNameProtocol.swift in Sources */,
 				4209FE75295C5F7000ACC02E /* FTShelfItemProtocols.swift in Sources */,
+				09F72F0D2BBFD5750061792D /* FTDocumentItemTemp.swift in Sources */,
 				4209FE86295C609A00ACC02E /* NSURL_Application_Specific_Paths.swift in Sources */,
 				5283D3A32A5E6D3600C6C125 /* FTBaseCommunicationManager.swift in Sources */,
 				4209FE61295C5CA800ACC02E /* FTShelfItemCollection.swift in Sources */,
