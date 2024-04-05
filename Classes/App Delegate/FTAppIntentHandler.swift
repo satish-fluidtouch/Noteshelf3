@@ -191,7 +191,7 @@ final class FTAppIntentHandler {
                 if queryitem.value == NS3LaunchIntent.migration.rawValue {
                     intentHandler?.startNS2ToNS3Migration()
                 } else if queryitem.value == NS3LaunchIntent.pinnedWidget.rawValue {
-                    if let relativePath = urlcomponents.queryItems?.first(where: {$0.name == "relativePath"})?.value
+                    if let relativePath = urlcomponents.queryItems?.first(where: {$0.name == "relativePath"})?.value, !relativePath.isEmpty
                     {
                         intentHandler?.openPinnedBook(with: relativePath)
                     }             

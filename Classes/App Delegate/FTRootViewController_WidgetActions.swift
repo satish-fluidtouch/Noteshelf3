@@ -15,7 +15,7 @@ extension FTRootViewController {
                     self.rootContentViewController?.handleWidgetAction(for: type)
                 }
             } else {
-                if let pathType = type as? FTPinndedWidgetActionType {
+                if let pathType = type as? FTPinndedWidgetActionType, !pathType.relativePath.isEmpty {
                     if self.noteBookSplitController == nil {
                         self.openAndperformActionInsidePinnedNotebook(pathType)
                     } else {
