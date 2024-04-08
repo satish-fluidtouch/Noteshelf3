@@ -13,6 +13,7 @@ struct FTShelfHomeView: FTShelfBaseView {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @EnvironmentObject var viewModel: FTShelfViewModel
     @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
+    @AppStorage("discoverIsExpanded") var discoverExpandStaus: Bool = false
 
     let supportedDropTypes = FTDragAndDropHelper.supportedTypesForDrop()
 
@@ -43,11 +44,12 @@ struct FTShelfHomeView: FTShelfBaseView {
                             }
                             Spacer()
                             if viewModel.shelfDidLoad {
-                                FTDiscoverWhatsNewView()
+                                FTDiscoverWhatsNewView(isExpanded: discoverExpandStaus)
                                     .environmentObject(viewModel)
                                     .macOnlyPlainButtonStyle()
                                     .padding(.horizontal,gridHorizontalPadding)
                                     .padding(.bottom,20)
+                                    .padding(.top,16)
                             }
                         }
                         .frame(minHeight: geometry.size.height)

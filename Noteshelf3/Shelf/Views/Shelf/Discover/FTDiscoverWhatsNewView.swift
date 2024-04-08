@@ -17,7 +17,9 @@ struct FTDiscoverItemModel: Identifiable {
     var eventTrackName: String
 }
 struct FTDiscoverWhatsNewView: View {
-    @AppStorage("discoverIsExpanded") var isExpanded: Bool = false
+    @AppStorage("discoverIsExpanded") var discoverExpandStaus: Bool = false
+    @State var isExpanded: Bool = false
+
     @EnvironmentObject var sheflViewModel: FTShelfViewModel
 
     var body: some View {
@@ -26,6 +28,7 @@ struct FTDiscoverWhatsNewView: View {
                 get: { isExpanded},
                 set: { isExpanding in
                     isExpanded = isExpanding
+                    discoverExpandStaus = isExpanding
                     let eventName = isExpanding ? EventName.discover_expand : EventName.discover_collapse
                     track(eventName, screenName: ScreenName.shelf)
                 }
@@ -44,7 +47,7 @@ struct FTDiscoverWhatsNewView: View {
                     }
                 }
             } label: {
-                Text("shelf.home.getinspired".localized)
+                Text("shelf.discover.title".localized)
 //                    .font(.clearFaceFont(for: .medium, with: 22))
                     .font(.appFont(for: .bold, with: 15))
                     .padding(.leading,8)
@@ -64,8 +67,8 @@ struct FTDiscoverWhatsNewView: View {
     private func footerView(item: FTDiscoverItemModel) -> some View {
         return VStack {
             VStack(spacing: 8) {
-                Image("sample_paper")
-                //Image(uiImage: UIImage(named: item.imageName)!)
+//                Image("sample_paper")
+                Image(uiImage: UIImage(named: item.imageName)!)
                     .frame(width: 120, height:80)
                 HStack {
                     Text(item.title.localized)

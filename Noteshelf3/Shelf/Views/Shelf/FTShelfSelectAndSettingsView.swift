@@ -90,10 +90,12 @@ struct FTMoreItemView:View{
             switch type {
             case .selectNotes:
                 eventName = EventName.shelf_more_selectnotes_tap
-                if idiom == .phone {
-                    viewModel.compactDelegate?.didChangeSelectMode(.selection)
+                withAnimation {
+                    if idiom == .phone {
+                        viewModel.compactDelegate?.didChangeSelectMode(.selection)
+                    }
+                    viewModel.mode = .selection
                 }
-                viewModel.mode = .selection
             case .settings:
                 viewModel.delegate?.showSettings()
                 eventName = EventName.shelf_more_settings_tap
