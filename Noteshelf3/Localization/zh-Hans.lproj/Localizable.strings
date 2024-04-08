@@ -1105,6 +1105,8 @@
 "headers" = "标题";
 "highlighterRack.flat" = "扁平荧光笔";
 "highlighterRack.round" = "圆形荧光笔";
+"home.getStarted.descrption" = "";
+"home.getStarted.title" = "";
 "household" = "家庭";
 "iCloudAvailable" = "iCloud 可用";
 "iCloudAvailableMessage" = "将您的文件自动存储在云端，以确保其在您的所有设备上保持最新状态。";
@@ -1611,4 +1613,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 28 March 2024 at 3:21 PM
+// Last Synced by Fluid Touch on 8 April 2024 at 12:34 PM

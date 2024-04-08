@@ -34,24 +34,23 @@ struct FTShelfHomeView: FTShelfBaseView {
                                     .environmentObject(viewModel)
                             }
                             if viewModel.showNoShelfItemsView {
-                                FTGetStartedPlaceHolderView(noResultsImageName: "GetStartedPaceholder",
-                                                       title: "Get started on digital & paperless notetaking",
-                                                            description: "Add a notebook, import a PDF or image, and more.")
+                                FTGetStartedPlaceHolderView(noResultsImageName: "noCategoryItems",
+                                                            title: "home.getStarted.title".localized,
+                                                            description: "home.getStarted.descrption".localized)
                                 .frame(minHeight: 350)
                             } else {
                                 homeShelfItemsViewForGeometrySize(geometry.size, scrollViewProxy: proxy)
                             }
-                          //  Spacer()
-//                            if viewModel.shelfDidLoad {
-//                                FTDiscoverWhatsNewView()
-//                                    .environmentObject(viewModel)
-//                                    .macOnlyPlainButtonStyle()
-//                                    .padding(.horizontal,gridHorizontalPadding)
-////                                    .padding(.top,40)
-////                                    .padding(.bottom,28)
-//                            }
+                            Spacer()
+                            if viewModel.shelfDidLoad {
+                                FTDiscoverWhatsNewView()
+                                    .environmentObject(viewModel)
+                                    .macOnlyPlainButtonStyle()
+                                    .padding(.horizontal,gridHorizontalPadding)
+                                    .padding(.bottom,20)
+                            }
                         }
-//                        .frame(minHeight: geometry.size.height)
+                        .frame(minHeight: geometry.size.height)
                     }
                 }
 

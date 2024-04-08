@@ -65,7 +65,7 @@ struct FTGetStartedPlaceHolderView: View {
             VStack(spacing: 0.0) {
                 Image(uiImage: UIImage(named: noResultsImageName)!)
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 184, height: 197, alignment: Alignment.center)
+                    .frame(width: 64, height: 64, alignment: Alignment.center)
                     .padding(.bottom, 16)
 
                 Text(title)

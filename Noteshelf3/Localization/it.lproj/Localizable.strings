@@ -1105,6 +1105,8 @@
 "headers" = "Intestazioni";
 "highlighterRack.flat" = "Evidenziatore piatto";
 "highlighterRack.round" = "Evidenziatore tondo";
+"home.getStarted.descrption" = "";
+"home.getStarted.title" = "";
 "household" = "Casa";
 "iCloudAvailable" = "iCloud è disponibile";
 "iCloudAvailableMessage" = "Archivia automaticamente i tuoi documenti nel cloud per mantenerli aggiornati su tutti i tuoi dispositivi.";
@@ -1611,4 +1613,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 28 March 2024 at 3:21 PM
+// Last Synced by Fluid Touch on 8 April 2024 at 12:34 PM

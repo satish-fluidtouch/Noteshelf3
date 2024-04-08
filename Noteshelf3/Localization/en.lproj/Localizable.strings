@@ -1105,6 +1105,8 @@
 "headers" = "Headers";
 "highlighterRack.flat" = "Flat Highlighter";
 "highlighterRack.round" = "Round Highlighter";
+"home.getStarted.descrption" = "Add a notebook, import a PDF or image, and more.";
+"home.getStarted.title" = "Get started on digital & paperless notetaking";
 "household" = "Household";
 "iCloudAvailable" = "iCloud Available";
 "iCloudAvailableMessage" = "Automatically store your documents in the cloud to keep them up-to-date across all your devices.";
@@ -1611,4 +1613,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 28 March 2024 at 3:21 PM
+// Last Synced by Fluid Touch on 8 April 2024 at 12:34 PM
