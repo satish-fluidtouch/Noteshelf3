@@ -59,15 +59,15 @@ extension FTShelfSplitViewController: FTCreateNotebookDelegate {
                 })
             }
         }
-        if shelfViewModel == nil {
+        if let shelfViewModel, !(shelfViewModel.collection.isTrash || shelfViewModel.collection.isStarred) {
+            blockToExecute()
+        } else {
             FTNoteshelfDocumentProvider.shared.uncategorizedNotesCollection { collection in
                 if let collection {
                     shelfViewModel = FTShelfViewModel(collection: collection)
                     blockToExecute()
                 }
             }
-        } else {
-            blockToExecute()
         }
     }
     
