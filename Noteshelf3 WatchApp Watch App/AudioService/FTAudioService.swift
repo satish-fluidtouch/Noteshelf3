@@ -294,10 +294,8 @@ extension FTAudioService {
     }
 
     func pausePlayingAudio() {
-        if self.playerNode.isPlaying {
-            self.playerNode.pause()
-            self.audioActivity.audioServiceStatus = .playingPaused
-        }
+        self.playerNode.pause()
+        self.audioActivity.audioServiceStatus = .playingPaused
     }
 
     func resumePlayingAudio() {
