@@ -1105,8 +1105,8 @@
 "headers" = "標題";
 "highlighterRack.flat" = "扁平螢光筆";
 "highlighterRack.round" = "圓形螢光筆";
-"home.getStarted.descrption" = "";
-"home.getStarted.title" = "";
+"home.getStarted.descrption" = "使用上述三個選項中的任何一個來製作您的第一個筆記本。";
+"home.getStarted.title" = "開始使用 Noteshelf";
 "household" = "家庭";
 "iCloudAvailable" = "iCloud 可用";
 "iCloudAvailableMessage" = "將您的檔案自動儲存在雲端，以確保其在您的所有裝置上保持最新狀態。";
@@ -1613,4 +1613,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 8 April 2024 at 12:34 PM
+// Last Synced by Fluid Touch on 8 April 2024 at 5:22 PM

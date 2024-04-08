@@ -1105,8 +1105,8 @@
 "headers" = "Encabezados";
 "highlighterRack.flat" = "Marcador plano";
 "highlighterRack.round" = "Resaltador circular";
-"home.getStarted.descrption" = "";
-"home.getStarted.title" = "";
+"home.getStarted.descrption" = "Crea tu primer cuaderno usando cualquiera de las tres opciones anteriores.";
+"home.getStarted.title" = "Comience a usar Noteshelf";
 "household" = "Hogar";
 "iCloudAvailable" = "iCloud Disponible";
 "iCloudAvailableMessage" = "Almacene automáticamente sus documentos en la nube para mantenerlos actualizados en todos sus dispositivos.";
@@ -1613,4 +1613,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 8 April 2024 at 12:34 PM
+// Last Synced by Fluid Touch on 8 April 2024 at 5:22 PM

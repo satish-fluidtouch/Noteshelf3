@@ -1105,8 +1105,8 @@
 "headers" = "ヘッダー";
 "highlighterRack.flat" = "フラットハイライター";
 "highlighterRack.round" = "ラウンドハイライター";
-"home.getStarted.descrption" = "";
-"home.getStarted.title" = "";
+"home.getStarted.descrption" = "上記の 3 つのオプションのいずれかを使用して、最初のノートブックを作成します。";
+"home.getStarted.title" = "Noteshelf の使用を開始する";
 "household" = "家庭";
 "iCloudAvailable" = "iCloud が利用可能です";
 "iCloudAvailableMessage" = "すべてのデバイスで最新の状態を保つために、自動的にドキュメントをクラウドに保存します。";
@@ -1613,4 +1613,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 8 April 2024 at 12:34 PM
+// Last Synced by Fluid Touch on 8 April 2024 at 5:22 PM

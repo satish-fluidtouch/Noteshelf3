@@ -1105,8 +1105,8 @@
 "headers" = "헤더";
 "highlighterRack.flat" = "플랫 형광펜";
 "highlighterRack.round" = "라운드 형광펜";
-"home.getStarted.descrption" = "";
-"home.getStarted.title" = "";
+"home.getStarted.descrption" = "위의 세 가지 옵션 중 하나를 사용하여 첫 번째 노트북을 만드세요.";
+"home.getStarted.title" = "Noteshelf 사용 시작";
 "household" = "가구";
 "iCloudAvailable" = "아이클라우드 사용 가능";
 "iCloudAvailableMessage" = "모든 기기에서 최신 상태로 유지하기 위해 문서를 자동으로 클라우드에 저장합니다.";
@@ -1613,4 +1613,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 8 April 2024 at 12:34 PM
+// Last Synced by Fluid Touch on 8 April 2024 at 5:22 PM
