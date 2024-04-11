@@ -59,7 +59,8 @@ public protocol FTStoreLibraryDelegate:NSObjectProtocol, FTThemeUpdateURL {
 class FTStoreLibraryViewController: UIViewController {
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private var emptyView: UIView!
-
+    @IBOutlet private weak var emptyViewCenterYConstraint: NSLayoutConstraint?
+    
     private weak var delegate: FTStoreLibraryDelegate?;
     private let viewModel = FTStoreLibraryViewModel()
     private var headerView: FTLibraryHeaderView? = nil
@@ -119,6 +120,11 @@ class FTStoreLibraryViewController: UIViewController {
         runInMainThread {
             if self.viewModel.items().isEmpty {
                 self.collectionView.backgroundView = self.emptyView
+                if self.sourceType == .addMenu || self.sourceType == .changeTemplate {
+                    self.emptyViewCenterYConstraint?.constant = -30.0
+                } else {
+                    self.emptyViewCenterYConstraint?.constant = 50.0
+                }
             } else {
                 self.collectionView.backgroundView = nil
             }

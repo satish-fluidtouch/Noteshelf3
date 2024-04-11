@@ -59,13 +59,15 @@ struct FTGetStartedPlaceHolderView: View {
     var description: String = ""
     var learnMoreLink: String = ""
     var showLearnMoreLink: Bool = false
+    var placeHolderType: FTGestStartedPlaceholderType = .small
+
     var body: some View {
         VStack {
             Spacer()
             VStack(spacing: 0.0) {
                 Image(uiImage: UIImage(named: noResultsImageName)!)
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 64, height: 64, alignment: Alignment.center)
+                    .frame(width: placeHolderType == .small ? 66: 88, height: placeHolderType == .small ? 66: 88, alignment: Alignment.center)
                     .padding(.bottom, 16)
 
                 Text(title)
@@ -96,6 +98,11 @@ struct FTGetStartedPlaceHolderView: View {
             Spacer()
         }.ignoresSafeArea()
     }
+}
+
+enum FTGestStartedPlaceholderType {
+    case small
+    case medium
 }
 
 struct FTNoResultsView_Previews: PreviewProvider {

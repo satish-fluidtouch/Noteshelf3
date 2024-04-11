@@ -35,9 +35,9 @@ struct FTShelfHomeView: FTShelfBaseView {
                                     .environmentObject(viewModel)
                             }
                             if viewModel.showNoShelfItemsView {
-                                FTGetStartedPlaceHolderView(noResultsImageName: "noCategoryItems",
+                                FTGetStartedPlaceHolderView(noResultsImageName: "noHomeItems",
                                                             title: "home.getStarted.title".localized,
-                                                            description: "home.getStarted.descrption".localized)
+                                                            description: "home.getStarted.descrption".localized, placeHolderType: .medium)
                                 .frame(minHeight: 350)
                             } else {
                                 homeShelfItemsViewForGeometrySize(geometry.size, scrollViewProxy: proxy)

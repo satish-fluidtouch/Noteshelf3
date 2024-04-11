@@ -146,7 +146,11 @@ class FTShelfViewModel: NSObject, ObservableObject {
     
     private func configAndObserveDisplayStyle() {
         let style = UserDefaults.standard.integer(forKey: "displayStyle")
-        self.displayStlye = FTShelfDisplayStyle(rawValue: style) ?? .Gallery
+        var defaultStyle: FTShelfDisplayStyle = .Gallery
+        if !UserDefaults.standard.bool(forKey: "isAlreadyInstalled") {
+            defaultStyle = .Icon
+        }
+        self.displayStlye = FTShelfDisplayStyle(rawValue: style) ?? defaultStyle
         observer = UserDefaults.standard.observe(\.shelfDisplayStyle, options: [.new]) { [weak self] (userDefaults, change) in
             guard let self else { return }
             let value = userDefaults.shelfDisplayStyle

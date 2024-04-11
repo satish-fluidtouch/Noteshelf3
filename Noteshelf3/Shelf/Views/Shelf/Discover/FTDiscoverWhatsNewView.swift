@@ -48,13 +48,11 @@ struct FTDiscoverWhatsNewView: View {
                 }
             } label: {
                 Text("shelf.discover.title".localized)
-//                    .font(.clearFaceFont(for: .medium, with: 22))
                     .font(.appFont(for: .bold, with: 15))
                     .padding(.leading,8)
             }
             .padding(.top,16)
-            .padding(.trailing,24)
-            .padding(.leading,16)
+            .padding(.horizontal,24)
             .if(!isExpanded, transform: { view in
                 view.padding(.bottom,16)
             })
