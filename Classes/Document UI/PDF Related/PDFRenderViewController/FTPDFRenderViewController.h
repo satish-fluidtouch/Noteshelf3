@@ -193,6 +193,8 @@ FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {}
 
 // eraser option action
 -(void)setToPreviousTool;
+-(void)switchMode:(RKDeskMode)mode;
+-(void)updateToolBarWith:(RKDeskMode)mode;
 
 -(void)minimizeFavToolBarIfNeeded;
 

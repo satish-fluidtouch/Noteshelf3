@@ -21,7 +21,7 @@ final class FTCacheTagsProcessor {
     private let queue = DispatchQueue(label: FTCacheFiles.cacheTagsPlist, qos: .utility)
     static let shared = FTCacheTagsProcessor()
     private let fileManager = FileManager()
-    let cacheFolderURL = FTDocumentCache.shared.cacheFolderURL
+    let cacheFolderURL = FTDocumentCache.shared.sharedCacheFolderURL
 
     private func cachedPageTagsLocation() -> URL {
         guard NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).last != nil else {

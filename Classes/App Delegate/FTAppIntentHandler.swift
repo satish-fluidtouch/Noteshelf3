@@ -85,6 +85,9 @@ protocol FTIntentHandlingProtocol: UIUserActivityRestoring {
     func createNotebookWithScannedPhoto()
     func startNS2ToNS3Migration()
     func showPremiumUpgradeScreen()
+    func openPinnedBook(with relativePath: String)
+    func showAlertWith(title : String,message : String)
+    func handleWidgetAction(type: FTWidgetActionType)
 }
 
 
@@ -93,6 +96,8 @@ final class FTAppIntentHandler {
     enum NS3LaunchIntent: String {
        case migration = "NS2Migration"
        case premiumUpgrade = "purchasePremium"
+        case pinnedWidget = "pinnedWidget"
+        case quickNote = "quickNote"
     }
 
     private let supportedPathExts = [nsBookExtension
@@ -185,6 +190,13 @@ final class FTAppIntentHandler {
                         , queryitem.name == "intent" {
                 if queryitem.value == NS3LaunchIntent.migration.rawValue {
                     intentHandler?.startNS2ToNS3Migration()
+                } else if queryitem.value == NS3LaunchIntent.pinnedWidget.rawValue {
+                    if let relativePath = urlcomponents.queryItems?.first(where: {$0.name == "relativePath"})?.value, !relativePath.isEmpty
+                    {
+                        intentHandler?.openPinnedBook(with: relativePath)
+                    }             
+                } else if queryitem.value == NS3LaunchIntent.quickNote.rawValue {
+                    intentHandler?.handleWidgetAction(type: FTNotebookCreateWidgetActionType.quickNote)
                 } else {
                     intentHandler?.showPremiumUpgradeScreen()
                 }
@@ -247,6 +259,13 @@ final class FTAppIntentHandler {
         case .scanDocument:
             intentHandler?.createNotebookWithScannedPhoto()
         }
+    }
+    func showAlertForIntentWith(title : String,message : String) {
+        intentHandler?.showAlertWith(title: title, message: message)
+    }
+
+    func handleWidgetAction(for type: FTWidgetActionType) {
+        intentHandler?.handleWidgetAction(type: type)
     }
 }
 
