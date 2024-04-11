@@ -1,0 +1,225 @@
+//
+//  FTWelcomeScreenViewController.swift
+//  Noteshelf3
+//
+//  Created by Amar Udupa on 08/04/24.
+//  Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.
+//
+
+import UIKit
+
+class FTWelcomeScreenViewController: UIViewController {
+    private weak var previewController: FTWelcomePreviewViewController?
+    @IBOutlet weak var titleLable: UILabel?;
+    @IBOutlet weak var dismissButton: UIButton?;
+    @IBOutlet weak var subTitle: UILabel?;
+    
+    private weak var selectedSlide: FTWelcomeItemViewController?;
+    
+    @IBOutlet private weak var contentView: UIView?;
+
+    @IBOutlet private weak var contentHeightConstraint: NSLayoutConstraint?;
+
+    @IBOutlet private weak var scrollView1: UIScrollView?;
+    @IBOutlet private weak var scrollView2: UIScrollView?;
+    
+    private var onDismissBlock: (() -> Void)?
+    
+    private var model = FTGetStartedItemViewModel();
+    class func showWelcome(presenterController: UIViewController, onDismiss : (() -> Void)?) {
+        let story = UIStoryboard(name: "FTWelcome", bundle: nil)
+        let welcomeController = story.instantiateViewController(withIdentifier: "FTWelcomeScreenViewController") as! FTWelcomeScreenViewController
+        welcomeController.onDismissBlock = onDismiss;
+        welcomeController.modalPresentationStyle = .overFullScreen;
+        welcomeController.modalTransitionStyle = .crossDissolve;
+        presenterController.present(welcomeController, animated: true, completion: nil)
+    }
+    
+    private var fontSize: CGFloat {
+        return UIDevice.current.isPhone() ? 36 : 52
+    }
+    
+    private var itemSize: CGFloat {
+        return (UIDevice.current.isPhone() ? 144 : 180)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+                           
+        self.dismissButton?.layer.shadowOffset = CGSize(width: 0, height: 12);
+        self.dismissButton?.layer.shadowRadius = 16.0;
+        self.dismissButton?.layer.shadowOpacity = 0.24
+        self.dismissButton?.layer.shadowColor = UIColor.appColor(.welcomeBtnColor).cgColor;
+        
+        self.contentView?.layer.shadowOffset = CGSize(width: 0, height: 30);
+        self.contentView?.layer.shadowRadius = 30;
+        self.contentView?.layer.shadowOpacity = 0.12
+        self.contentView?.layer.shadowColor = UIColor.appColor(.welcomeBtnColor).cgColor;
+
+        self.titleLable?.font = UIFont.clearFaceFont(for: .regular, with: fontSize)
+        self.titleLable?.text = self.model.headerTopTitle
+        
+        let attributedTet = NSMutableAttributedString(string: self.model.headerbottomfirstTitle, attributes: [.font : UIFont.clearFaceFont(for: .regular, with: fontSize)])
+        let secondSet = NSAttributedString(string: self.model.headerbottomsecondTitle, attributes: [.font: UIFont.clearFaceFont(for: .regularItalic, with: fontSize)])
+        attributedTet.append(secondSet)
+        self.subTitle?.attributedText = attributedTet;
+        
+        self.dismissButton?.setAttributedTitle(NSAttributedString(string: model.btntitle, attributes: [
+            .font : UIFont.clearFaceFont(for: .medium, with: 20)
+            , .foregroundColor : UIColor.white
+        ]), for: .normal);
+        self.dismissButton?.backgroundColor = UIColor.appColor(.welcomeBtnColor)
+        self.dismissButton?.layer.cornerRadius = 16;
+        
+        self.contentHeightConstraint?.constant = 2 * itemSize + 16;
+        self.view.layoutIfNeeded();
+
+        self.loadGrids(model.getstartedList, contentView: self.scrollView1!)
+        self.loadGrids(model.getstartedList, contentView: self.scrollView2!)
+        
+        var offset = self.scrollView2?.contentOffset ?? .zero;
+        offset.x = self.scrollView2!.contentSize.width - self.scrollView2!.frame.width
+        self.scrollView2?.contentOffset = offset;
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.startAnimation();
+    }
+    
+    @IBAction func didTapOnDismiss(_ sender: UIButton?) {
+        self.dismiss(animated: true) {
+            self.onDismissBlock?();
+            self.onDismissBlock = nil
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+    }
+            
+    private lazy var displayLink: CADisplayLink = {
+        let displayLink = CADisplayLink(target: self, selector: #selector(self.updateContent(_:)));
+        displayLink.preferredFrameRateRange = CAFrameRateRange(minimum: 20, maximum: 40);
+        displayLink.add(to: RunLoop.current, forMode: RunLoop.Mode.default);
+
+        return displayLink;
+    }();
+    
+    private func startAnimation() {
+        self.displayLink.isPaused = false
+    }
+    
+    private func stopAnimation() {
+        self.displayLink.isPaused = true
+    }
+    
+    @objc private func updateContent(_ displayLInk: CADisplayLink) {
+        guard let _scrollview1 = self.scrollView1, let _scrollview2 = self.scrollView2 else {
+            return;
+        }
+        
+        var offset = _scrollview1.contentOffset;
+        offset.x += 1;
+        if offset.x > _scrollview1.contentSize.width - _scrollview1.frame.width {
+            offset.x = 0;
+        }
+        _scrollview1.contentOffset = offset;
+        
+        var offset1 = _scrollview2.contentOffset;
+        offset1.x -= 1;
+        if offset1.x < 0 {
+            offset1.x = _scrollview2.contentSize.width - _scrollview2.frame.width;
+        }
+        offset1.x = max(offset1.x,0)
+        _scrollview2.contentOffset = offset1;
+    }
+        
+    private  func loadGrids( _ items: [FTGetStartedViewItems], contentView: UIScrollView) {
+        var previousFrame = CGPoint.zero;
+        items.forEach { eachItem in
+            let item = FTWelcomeItemViewController.welcomeItemComtroller(eachItem)
+            item.delegate = self;
+            var frame = item.view.frame
+            frame.origin = CGPoint(x:previousFrame.x,y:0);
+            frame.size = eachItem.contentSize(self.itemSize)
+            item.view.frame = frame
+            
+            self.addChild(item);
+            contentView.addSubview(item.view);
+            
+            previousFrame.x = frame.maxX + 16;
+        }
+        contentView.contentSize = CGSize(width: previousFrame.x - 16, height: contentView.frame.height)
+    }
+
+}
+
+class GradientView: UIView {
+    @IBInspectable var gradientColors: [UIColor] = [UIColor.appColor(.welcometopGradiantColor)
+                                                    , UIColor.appColor(.welcomeBottonGradiantColor)]
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        
+        // Create a CGContext
+        guard let context = UIGraphicsGetCurrentContext() else { return }
+        
+        // Create a gradient with the colors array
+        let gradient = CGGradient(colorsSpace: nil, colors: gradientColors.map { $0.cgColor } as CFArray, locations: nil)
+        
+        // Draw the gradient
+        context.drawLinearGradient(gradient!,
+                                    start: CGPoint(x: 0, y: 0),
+                                    end: CGPoint(x: bounds.width, y: bounds.height),
+                                    options: [])
+    }
+}
+
+extension FTWelcomeScreenViewController: FTWelcomePreviewDelegate {
+    func welcomePreviewDidClose(_ preview: FTWelcomePreviewViewController) {
+        guard let slide = self.selectedSlide else {
+            return;
+        }
+        let frame = self.frame(for: slide)
+        preview.dismissPreivew(to: frame,itemSize: self.itemSize) {
+            preview.removeFromParent()
+            preview.view.removeFromSuperview();
+            self.selectedSlide?.view.isHidden = false;
+            self.selectedSlide = nil;
+            self.startAnimation();
+        }
+    }
+}
+
+extension FTWelcomeScreenViewController: FTWelcomeItemDelegate {
+    func welcomeItem(_ controller: FTWelcomeItemViewController, didTapOnItem item: FTGetStartedViewItems) {
+        let previewController = FTWelcomePreviewViewController.welcomeItemComtroller(item);
+        
+        let frame = self.frame(for: controller)
+        previewController.delegate = self;
+        self.addChild(previewController);
+        previewController.view.frame = self.view.bounds
+        previewController.view.addFullConstraints(self.view);
+        selectedSlide = controller;
+        
+        controller.view.isHidden = true;
+        
+        previewController.showPreview(from: frame,itemSize: self.itemSize)
+        self.stopAnimation();
+    }
+}
+
+
+private extension FTWelcomeScreenViewController {
+    func frame(for controller: FTWelcomeItemViewController) -> CGRect {
+        var frame = controller.view.frame;
+        if let scrollView = controller.view.superview as? UIScrollView {
+            let offset = scrollView.contentOffset;
+            frame.origin.x -= offset.x;
+            frame.origin.y -= offset.y;
+            frame.origin.y += scrollView.frame.origin.y;
+            frame.origin.y += (scrollView.superview?.frame.origin.y ?? 0);
+        }
+        return frame;
+    }
+}
