@@ -141,6 +141,7 @@ class FTUserDefaults : NSObject
     @objc class func registerDefaults(isFreshInstall freshInstall : Bool)
     {
         if freshInstall {
+            UserDefaults.standard.shelfDisplayStyle = FTShelfDisplayStyle.Icon.rawValue;
             UserDefaults.registerNotebookSettingDefaultsForFreshInstall()
             UserDefaults.standard.set(Date().timeIntervalSinceReferenceDate, forKey: APP_Installed_Key)
         } else {
