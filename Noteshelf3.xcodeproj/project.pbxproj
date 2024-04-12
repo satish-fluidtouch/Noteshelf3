@@ -123,7 +123,7 @@
 		09DBD52A2A7D255B00987ED1 /* FTFormSheetTransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DBD5292A7D255B00987ED1 /* FTFormSheetTransitionDelegate.swift */; };
 		09DCDB992BBADBE2006055DB /* AVFAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09DCDB982BBADBE2006055DB /* AVFAudio.framework */; };
 		09DCDB9A2BBADBFF006055DB /* AVFAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09DCDB982BBADBE2006055DB /* AVFAudio.framework */; };
-		09DCDBA32BBAE946006055DB /* Noteshelf3 Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = E75CD84A2B8F0B4300D59F21 /* Noteshelf3 Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		09DCDBA32BBAE946006055DB /* Noteshelf3 Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = E75CD84A2B8F0B4300D59F21 /* Noteshelf3 Watch App.app */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		09DE78082A9DDEE800FE74D0 /* FTCloudBackupErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DE78072A9DDEE800FE74D0 /* FTCloudBackupErrors.swift */; };
 		09DEFBD72A725E6F00F41C1E /* FTCharStrokeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEFBD62A725E6F00F41C1E /* FTCharStrokeInfo.swift */; };
 		09DEFBD92A725E9600F41C1E /* FTWordStrokeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEFBD82A725E9600F41C1E /* FTWordStrokeInfo.swift */; };
@@ -14687,6 +14687,7 @@
 		};
 		09DCDBA22BBAE848006055DB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = E75CD8492B8F0B4300D59F21 /* Noteshelf3 WatchApp */;
 			targetProxy = 09DCDBA12BBAE848006055DB /* PBXContainerItemProxy */;
 		};
