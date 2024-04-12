@@ -95,12 +95,15 @@ class FTWelcomeScreenViewController: UIViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator);
+        var isPaused = self.displayLink.isPaused;
         self.stopAnimation()
         coordinator.animate { context in
             self.view.setNeedsUpdateConstraints();
             self.view.updateConstraintsIfNeeded();
         } completion: { _ in
-            self.startAnimation()
+            if !isPaused {
+                self.startAnimation()
+            }
         }
     }
   

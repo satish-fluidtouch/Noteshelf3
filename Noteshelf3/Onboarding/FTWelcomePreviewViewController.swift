@@ -44,58 +44,31 @@ class FTWelcomePreviewViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.contentView?.addShadow(CGSize(width: 0, height: 50), color: UIColor.appColor(.welcomeBtnColor), opacity: 0.4, radius: 50)
         self.contentView?.layer.cornerRadius = 32;
-        self.contentView?.layer.shadowOffset = CGSize(width: 0, height: 50)
-        self.contentView?.layer.shadowRadius = 50;
-        self.contentView?.layer.shadowOpacity = 0.4;
-        self.contentView?.layer.shadowColor = UIColor.appColor(.welcomeBtnColor).cgColor
+        self.contentInfoLabel?.text = self.welcomeItem?.itemDescription;
     }
-    
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews();
-//        if let leftconstraint = self.contentConstraintLeft, let topconstraint =  self.contentConstraintTop {
-//            leftconstraint.constant = (self.view.frame.width - (self.contentConstraintWidth?.constant ?? 0))*0.5;
-//            topconstraint.constant = (self.view.frame.height - (self.contentConstraintHeight?.constant ?? 0))*0.5;
-//        }
-    }
-    
-    func showPreview(from sourceRect: CGRect,itemSize: CGFloat) {
-        guard let item = self.welcomeItem else {
-            return;
-        }
-        let contentSize = item.contentSize(itemSize)
-        self.contentInfoLabel?.text = item.displayTitle;
-
-        self.contentConstraintWidth?.constant = sourceRect.width;
-        self.contentConstraintHeight?.constant = sourceRect.height;
-        self.contentConstraintLeft?.constant = sourceRect.origin.x;
-        self.contentConstraintTop?.constant = sourceRect.origin.y;
         
+    func showPreview(from sourceRect: CGRect,itemSize: CGFloat) {
+        let contentSize = self.requiredContentSize(itemSize: itemSize)
+        self.setContentViewFrame(sourceRect)
         self.containerConstraintWidth?.constant = sourceRect.width;
         self.containerConstraintHeight?.constant = sourceRect.height;
-
-        let width = min(394, self.view.frame.width);
-        let height = contentSize.height + 32 + 12 + 4
-
-        self.contentInfoConstraintWidth?.constant = width
+        self.contentInfoConstraintWidth?.constant = contentSize.width
         self.view.layoutIfNeeded();
         
-        
-        var endRect = CGRect(origin: .zero, size: CGSize(width: width, height: height));
+        var endRect = CGRect(origin: .zero, size: contentSize);
         endRect.origin.x = (self.view.frame.width - endRect.width)*0.5;
         endRect.origin.y = (self.view.frame.height - endRect.height)*0.5;
 
-        self.view.backgroundColor = UIColor.clear
-        UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut]) {
-            self.contentConstraintWidth?.constant = endRect.width;
-            self.contentConstraintHeight?.constant = endRect.height;
-            self.contentConstraintLeft?.constant = endRect.origin.x;
-            self.contentConstraintTop?.constant = endRect.origin.y;
-            self.view.backgroundColor = UIColor.black.withAlphaComponent(0.1)
+        self.view.backgroundColor = self.bgColor(true, isPresenting: true)
+        
+        let duration = self.duration(from: sourceRect.origin, to: endRect.origin);
+        UIView.animate(withDuration: TimeInterval(duration), delay: 0, options: [.curveEaseOut]) {
+            self.setContentViewFrame(endRect)
+            self.view.backgroundColor = self.bgColor(false, isPresenting: true)
             self.view.layoutIfNeeded();
         } completion: { _ in
-            
         }
     }
     
@@ -108,17 +81,22 @@ class FTWelcomePreviewViewController: UIViewController {
         }
     }
     
-    func dismissPreivew(to sourceRect: CGRect,itemSize: CGFloat,onCompletion: (()->())?) {
-        var frame = self.contentInfoLabel?.frame ?? .zero;
-        frame.size.width = sourceRect.width
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate { _ in
+            self.contentConstraintLeft?.constant = (self.view.frame.width - (self.contentConstraintWidth?.constant ?? 0))*0.5;
+            self.contentConstraintTop?.constant = (self.view.frame.height - (self.contentConstraintHeight?.constant ?? 0))*0.5;
+        } completion: { _ in
+            
+        }
 
-        self.view.backgroundColor = UIColor.black.withAlphaComponent(0.1)
-        UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut]) {
-            self.contentConstraintWidth?.constant = sourceRect.width;
-            self.contentConstraintHeight?.constant = sourceRect.height;
-            self.contentConstraintLeft?.constant = sourceRect.origin.x;
-            self.contentConstraintTop?.constant = sourceRect.origin.y;
-            self.view.backgroundColor = UIColor.clear
+    }
+    func dismissPreivew(to sourceRect: CGRect,itemSize: CGFloat,onCompletion: (()->())?) {
+        self.view.backgroundColor = self.bgColor(true, isPresenting: false)
+        let duration = self.duration(from: sourceRect.origin, to: self.contentView?.frame.origin ?? .zero);
+        UIView.animate(withDuration: duration, delay: 0, options: [.curveEaseOut]) {
+            self.setContentViewFrame(sourceRect)
+            self.view.backgroundColor = self.bgColor(false, isPresenting: false)
             self.view.layoutIfNeeded();
         } completion: { _ in
             onCompletion?();
@@ -127,5 +105,40 @@ class FTWelcomePreviewViewController: UIViewController {
     
     @objc @IBAction func didTap(_ tapgesture: UITapGestureRecognizer) {
         self.delegate?.welcomePreviewDidClose(self);
+    }
+}
+
+private extension FTWelcomePreviewViewController {
+    func duration(from :CGPoint, to :CGPoint) -> TimeInterval {
+        let maxDistance = distanceBetweenPoints2(to, CGPoint(x: self.view.frame.width, y: self.view.frame.midY));
+        let distanceToCover = distanceBetweenPoints2(from, to);
+        let duration = max(min(0.3,(distanceToCover * 0.3) / maxDistance),0.1)
+        return TimeInterval(duration);
+    }
+    
+    func setContentViewFrame(_ frame: CGRect) {
+        self.contentConstraintWidth?.constant = frame.width;
+        self.contentConstraintHeight?.constant = frame.height;
+        self.contentConstraintLeft?.constant = frame.origin.x;
+        self.contentConstraintTop?.constant = frame.origin.y;
+    }
+    
+    func bgColor(_ initialState: Bool, isPresenting: Bool) -> UIColor {
+        let color1 = UIColor.clear;
+        let color2 = UIColor.black.withAlphaComponent(0.2);
+        if initialState {
+            return isPresenting ? color1 : color2
+        }
+        return isPresenting ? color2 : color1;
+    }
+    
+    func requiredContentSize(itemSize: CGFloat) -> CGSize {
+        let width = min(394, self.view.frame.width);
+        guard let item = self.welcomeItem else {
+            return CGSize(width: width, height: 225);
+        }
+        let contentSize = item.contentSize(itemSize)
+        let height = contentSize.height + 32 + 12 + 4
+        return CGSize(width: width, height: height);
     }
 }

@@ -183,6 +183,77 @@ enum FTGetStartedViewItems:CaseIterable {
         }
         return name
     }
+    
+    var itemDescription:String{
+        let title:String
+        switch self {
+        case .autoBackup:
+            title = "welcome.autoBackup,description"
+        case .superNaturalPens:
+            title = "welcome.superNaturalPens.description"
+        case .focusmode:
+            title = "welcome.focusMode.description"
+        case .daynightJournal:
+            title = "welcome.dayNightJournal.description"
+        case .customizableToolbar:
+            title = "welcome.customizableToolBar.description"
+        case .unsplash:
+            title = "welcome.unsplash.description"
+        case .pixabay:
+            title = "welcome.pixabay.description"
+        case .beatifulCovers:
+            title = "welcome.beautifulCovers.description"
+//        case .fancyHeaders:
+//            title = "welcome.fancyHeaders.description"
+        case .stickers:
+            title = "welcome.stickers.description"
+        case .emojies:
+            title = "welcome.emojies.description"
+        case .audioNotes:
+            title = "welcome.audioNotes.description"
+        case .webClip:
+            title = "welcome.webClips.description"
+        case .iCloudsync:
+            title = "welcome.icloudSync.description"
+//        case .appleWatch:
+//            title = "welcome.appleWatch.description"
+        case .macApp:
+            title = "welcome.macApp.description"
+        case .shapes:
+            title = "welcome.shapes.description"
+        case .imageEditing:
+            title = "welcome.imageEditing.description"
+        case .importDocuments:
+            title = "welcome.importDocuments.description"
+        case .presentMode:
+            title = "welcome.presentMode.description"
+        case .richText:
+            title = "welcome.richText.description"
+        case .tags:
+            title = "welcome.tags.description"
+        case .nestedGroups:
+            title = "welcome.nestedgroups.description"
+        case .presureSensitive:
+            title = "welcome.pressureSensitive.description"
+        case .handwritingRecognition:
+            title = "welcome.handWritingRecognition.description"
+        case .scanDocuments:
+            title = "welcome.scanDocuments.description"
+        case .bookmarks:
+            title = "welcome.bookmarks.description"
+        case .password:
+            title = "welcome.password.description"
+        case .customTemplates:
+            title = "welcome.customTemplates.description"
+        case .zoombox:
+            title = "welcome.zoombox.description"
+        case .thousandPlusTemplates:
+            title = "welcome.thousandPlusTemplates.description"
+        case .digitalDiaries:
+            title = "welcome.digitalDiaries.description"
+        }
+        return title.localized
+    }
 }
 class FTGetStartedItemViewModel: ObservableObject {
     var getstartedList: [FTGetStartedViewItems] = FTGetStartedViewItems.allCases
