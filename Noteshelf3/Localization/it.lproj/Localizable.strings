@@ -1258,6 +1258,7 @@
 "penRack.felt" = "Pennarello";
 "penRack.fountain" = "Pennino";
 "penRack.pencil" = "Matita";
+"premiumBanner.featureInfo" = "Taccuini illimitati, riconoscimento della grafia e altro ancora.";
 "presentation.clearAnnotations" = "Cancella annotazioni";
 "presentation.clearAnnotationsAlert" = "Sei sicuro di voler cancellare tutte le annotazioni?";
 "presentation.exit" = "Esci dalla presentazione";
@@ -1601,6 +1602,7 @@
 "welcome.imageEditing.description" = "Aggiungi immagini e esegui azioni avanzate come la rimozione dello sfondo con facilità.";
 "welcome.importDocuments" = "IMPORTA DOCUMENTI";
 "welcome.importDocuments.description" = "Supportiamo i formati PDF, Pages, Keynote, Word, PowerPoint ed Excel per l'importazione e il markup.";
+"welcome.links" = "COLLEGAMENTI";
 "welcome.links.description" = "Crea collegamenti tra le pagine, tra i notebook o verso URL esterni.";
 "welcome.macApp" = "APP PER MAC";
 "welcome.macApp.description" = "Rivedi le tue note sul Mac. Le tue note saranno fantastiche sul grande schermo!";
@@ -1616,6 +1618,7 @@
 "welcome.pressureSensitive.description" = "La scrittura espressiva è possibile con la sensibilità alla pressione della Apple Pencil.";
 "welcome.richText" = "RICH TEXT";
 "welcome.richText.description" = "Prendi appunti dettagliati con elenchi puntati, numerazione e persino checklist.";
+"welcome.savedClips" = "CLIP SALVATI";
 "welcome.savedclips.description" = "Salva qualsiasi selezione sulla pagina come clip e riutilizzala quante volte vuoi. Crea la tua libreria di clip.";
 "welcome.scanDocuments" = "SCANSIONA DOCUMENTI";
 "welcome.scanDocuments.description" = "Scansiona documenti reali e annota o condividi all'interno di Noteshelf.";
@@ -1633,6 +1636,7 @@
 "welcome.unsplash.description" = "Crea splendide copertine per notebook o aggiungi foto ai tuoi appunti dalla vasta galleria di Unsplash.";
 "welcome.webClips" = "CLIP WEB";
 "welcome.webClips.description" = "Aggiungi rapidamente ritagli di pagine web ai tuoi appunti. Ottimo per qualsiasi progetto di ricerca.";
+"welcome.widgets" = "WIDGET";
 "welcome.widgets.description" = "Esplora i nostri widget e osserva il flusso in cui prendi appunti sulla schermata iniziale.";
 "welcome.zoombox" = "ZOOM BOX";
 "welcome.zoombox.description" = "La nostra scatola di zoom ti permette di prendere appunti scritti a mano con precisione con facilità.";
@@ -1647,4 +1651,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 12 April 2024 at 12:00 PM
+// Last Synced by Amar Udupa on 12 April 2024 at 6:37 PM

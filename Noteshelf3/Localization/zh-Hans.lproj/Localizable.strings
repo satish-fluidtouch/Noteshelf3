@@ -1258,6 +1258,7 @@
 "penRack.felt" = "毛笔";
 "penRack.fountain" = "钢笔";
 "penRack.pencil" = "铅笔";
+"premiumBanner.featureInfo" = "无限笔记本、手写识别等等。";
 "presentation.clearAnnotations" = "清除批注";
 "presentation.clearAnnotationsAlert" = "您确定要清除所有的注释吗？";
 "presentation.exit" = "退出演示";
@@ -1601,6 +1602,7 @@
 "welcome.imageEditing.description" = "轻松添加图片并执行高级操作，如背景去除。";
 "welcome.importDocuments" = "导入文件";
 "welcome.importDocuments.description" = "我们支持PDF、Pages、Keynote、Word、PowerPoint和Excel格式的导入和标记。";
+"welcome.links" = "链接";
 "welcome.links.description" = "在页面之间创建链接，或者在笔记本之间创建链接，或者链接到外部网址。";
 "welcome.macApp" = "MAC应用";
 "welcome.macApp.description" = "在 Mac 上查看您的笔记。您的笔记在大屏幕上看起来很棒！";
@@ -1616,6 +1618,7 @@
 "welcome.pressureSensitive.description" = "使用Apple Pencil的压感灵敏度可以实现表现力十足的手写。";
 "welcome.richText" = "富文本";
 "welcome.richText.description" = "使用项目符号、编号甚至可点击的清单记录丰富的打字笔记。";
+"welcome.savedClips" = "保存的片段";
 "welcome.savedclips.description" = "将页面上的任何选择保存为剪辑，并重复使用任意次数。创建您自己的剪辑库。";
 "welcome.scanDocuments" = "扫描文档";
 "welcome.scanDocuments.description" = "扫描真实文件并在Noteshelf中标记或共享。";
@@ -1633,6 +1636,7 @@
 "welcome.unsplash.description" = "在广阔的Unsplash图库中创建令人惊叹的笔记本封面或将照片添加到您的笔记中。";
 "welcome.webClips" = "网页剪贴";
 "welcome.webClips.description" = "快速将网页剪辑添加到您的笔记中。非常适合任何研究项目。";
+"welcome.widgets" = "微件";
 "welcome.widgets.description" = "探索我们的交互式小部件范围，将您的笔记工作流提升到主屏幕。";
 "welcome.zoombox" = "缩放框";
 "welcome.zoombox.description" = "我们的缩放框让您轻松地进行精确的手写笔记。";
@@ -1647,4 +1651,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 12 April 2024 at 12:00 PM
+// Last Synced by Amar Udupa on 12 April 2024 at 6:37 PM

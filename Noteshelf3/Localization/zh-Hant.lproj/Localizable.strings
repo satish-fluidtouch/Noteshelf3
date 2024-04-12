@@ -1258,6 +1258,7 @@
 "penRack.felt" = "毛筆";
 "penRack.fountain" = "鋼筆";
 "penRack.pencil" = "鉛筆";
+"premiumBanner.featureInfo" = "無限筆記本、手寫辨識等等。";
 "presentation.clearAnnotations" = "偏好";
 "presentation.clearAnnotationsAlert" = "清除批註";
 "presentation.exit" = "您確定要清除所有的註解嗎？";
@@ -1601,6 +1602,7 @@
 "welcome.imageEditing.description" = "輕鬆添加圖片並執行高級操作，如背景移除。";
 "welcome.importDocuments" = "導入文件";
 "welcome.importDocuments.description" = "我們支援 PDF、Pages、Keynote、Word、PowerPoint 和 Excel 格式進行導入和標記。";
+"welcome.links" = "連結";
 "welcome.links.description" = "在頁面之間建立連結，或者在筆記本之間建立連結，或者連接到外部網址。";
 "welcome.macApp" = "MAC應用";
 "welcome.macApp.description" = "在 Mac 上查看您的筆記。您的筆記在大屏幕上看起來很棒！";
@@ -1616,6 +1618,7 @@
 "welcome.pressureSensitive.description" = "使用Apple Pencil的壓感靈敏度可以實現表達豐富的手寫筆跡。";
 "welcome.richText" = "富文本";
 "welcome.richText.description" = "使用項目符號、編號甚至可點擊的清單記錄豐富的打字筆記。";
+"welcome.savedClips" = "已儲存的片段";
 "welcome.savedclips.description" = "將頁面上的任何選擇保存為片段，並重複使用任意次數。建立您自己的片段庫。";
 "welcome.scanDocuments" = "掃描文件";
 "welcome.scanDocuments.description" = "掃描真實文件並在Noteshelf中標記或分享。";
@@ -1633,6 +1636,7 @@
 "welcome.unsplash.description" = "從龐大的Unsplash圖庫中創建令人驚艷的筆記本封面或將照片添加到您的筆記中。";
 "welcome.webClips" = "網頁剪貼";
 "welcome.webClips.description" = "快速將網頁剪報添加到您的筆記。非常適合任何研究項目。";
+"welcome.widgets" = "小組件";
 "welcome.widgets.description" = "探索我們的互動小工具範圍，將您的筆記工作流程提升到主屏幕。";
 "welcome.zoombox" = "縮放框";
 "welcome.zoombox.description" = "我們的縮放框讓您輕鬆地進行精確的手寫筆記。";
@@ -1647,4 +1651,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 12 April 2024 at 12:00 PM
+// Last Synced by Amar Udupa on 12 April 2024 at 6:37 PM

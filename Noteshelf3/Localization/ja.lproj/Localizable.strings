@@ -1258,6 +1258,7 @@
 "penRack.felt" = "フェルトペン";
 "penRack.fountain" = "万年筆";
 "penRack.pencil" = "鉛筆";
+"premiumBanner.featureInfo" = "無制限のノートブック、手書き認識など。";
 "presentation.clearAnnotations" = "注釈をクリア";
 "presentation.clearAnnotationsAlert" = "すべての注釈を削除してもよろしいですか？";
 "presentation.exit" = "プレゼンテーション終了";
@@ -1601,6 +1602,7 @@
 "welcome.imageEditing.description" = "画像を追加したり、背景の削除などの高度な操作を簡単に実行できます。";
 "welcome.importDocuments" = "ドキュメントのインポート";
 "welcome.importDocuments.description" = "PDF、Pages、Keynote、Word、PowerPoint、Excel ファイルをインポートして注釈を付けます。";
+"welcome.links" = "リンク";
 "welcome.links.description" = "ページ間、ノート間、または外部URL間のリンクを作成します。";
 "welcome.macApp" = "MAC APP: マックアプリ";
 "welcome.macApp.description" = "Mac でメモを確認します。 メモは大画面で見栄えがよくなります。";
@@ -1616,6 +1618,7 @@
 "welcome.pressureSensitive.description" = "Apple Pencilの圧力感知機能を使って表現豊かな手書きが可能です。";
 "welcome.richText" = "リッチテキスト";
 "welcome.richText.description" = "箇条書き、番号付け、さらにはタップ可能なチェックリストを含む豊富なタイプのメモを作成します。";
+"welcome.savedClips" = "保存されたクリップ";
 "welcome.savedclips.description" = "ページ上の選択内容をクリップとして保存し、何度でも再利用できます。";
 "welcome.scanDocuments" = "文書をスキャン";
 "welcome.scanDocuments.description" = "リアルな文書をスキャンして、Noteshelf内でマークアップしたり共有したりします。";
@@ -1633,6 +1636,7 @@
 "welcome.unsplash.description" = "巨大なUnsplashギャラリーから素晴らしいノートカバーを作成するか、ノートに写真を追加します。";
 "welcome.webClips" = "ウェブクリップ";
 "welcome.webClips.description" = "ウェブページの切り抜きを素早くノートに追加します。どんな研究プロジェクトにも最適です。";
+"welcome.widgets" = "ウィジェット";
 "welcome.widgets.description" = "ホーム画面にノート取りのワークフローを向上させるためのインタラクティブウィジェットの範囲をご覧ください。";
 "welcome.zoombox" = "ズームボックス";
 "welcome.zoombox.description" = "私たちのズームボックスは、簡単に正確な手書きメモを取ることができます。";
@@ -1647,4 +1651,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 12 April 2024 at 12:00 PM
+// Last Synced by Amar Udupa on 12 April 2024 at 6:37 PM

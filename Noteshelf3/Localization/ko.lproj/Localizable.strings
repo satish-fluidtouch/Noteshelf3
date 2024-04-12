@@ -1258,6 +1258,7 @@
 "penRack.felt" = "펠트 펜";
 "penRack.fountain" = "만년필";
 "penRack.pencil" = "연필";
+"premiumBanner.featureInfo" = "무제한 메모, 필기 인식 등.";
 "presentation.clearAnnotations" = "주석 지우기";
 "presentation.clearAnnotationsAlert" = "모든 주석을 지우시겠습니까?";
 "presentation.exit" = "프레젠테이션 종료";
@@ -1601,6 +1602,7 @@
 "welcome.imageEditing.description" = "이미지를 추가하고 배경 제거와 같은 고급 작업을 쉽게 수행하세요.";
 "welcome.importDocuments" = "수입 문서";
 "welcome.importDocuments.description" = "우리는 PDF, Pages, Keynote, Word, PowerPoint 및 Excel 형식을 가져오고 표시하는 것을 지원합니다.";
+"welcome.links" = "링크";
 "welcome.links.description" = "페이지 간, 노트북 간 또는 외부 URL 간 링크 생성.";
 "welcome.macApp" = "맥 앱";
 "welcome.macApp.description" = "Mac에서 메모를 검토하세요. 당신의 노트는 큰 화면에서 멋지게 보일 것입니다!";
@@ -1616,6 +1618,7 @@
 "welcome.pressureSensitive.description" = "애플 펜슬 압력 감지 기능으로 표현력 있는 필기가 가능합니다.";
 "welcome.richText" = "리치 텍스트";
 "welcome.richText.description" = "글머리 기호, 번호 매기기, 탭할 수 있는 체크리스트 등 다양한 형식의 메모를 작성하세요.";
+"welcome.savedClips" = "저장된 클립";
 "welcome.savedclips.description" = "페이지에서 선택한 모든 것을 클립으로 저장하고 여러 번 재사용하세요. 자신만의 클립 라이브러리를 만드세요.";
 "welcome.scanDocuments" = "문서 스캔";
 "welcome.scanDocuments.description" = "실제 문서를 스캔하고 Noteshelf 내에서 표시 또는 공유합니다.";
@@ -1633,6 +1636,7 @@
 "welcome.unsplash.description" = "Unsplash 갤러리에서 멋진 노트북 커버를 만들거나 노트에 사진을 추가하세요.";
 "welcome.webClips" = "웹 클립";
 "welcome.webClips.description" = "웹 페이지의 클리핑을 빠르게 노트에 추가하세요. 모든 연구 프로젝트에 적합합니다.";
+"welcome.widgets" = "위젯";
 "welcome.widgets.description" = "우리의 대화식 위젯 범위를 탐색하고 노트 작성 워크플로우를 홈 화면으로 끌어올리세요.";
 "welcome.zoombox" = "줌 박스";
 "welcome.zoombox.description" = "우리의 줌 상자는 손쉽게 정확한 필기를 할 수 있게 해줍니다.";
@@ -1647,4 +1651,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 12 April 2024 at 12:00 PM
+// Last Synced by Amar Udupa on 12 April 2024 at 6:37 PM

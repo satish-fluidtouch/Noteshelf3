@@ -1258,6 +1258,7 @@
 "penRack.felt" = "Stylo-feutre";
 "penRack.fountain" = "Stylo-plume";
 "penRack.pencil" = "Crayon";
+"premiumBanner.featureInfo" = "Carnets de notes illimités, reconnaissance de l'écriture manuscrite et bien plus encore.";
 "presentation.clearAnnotations" = "Effacer les annotations";
 "presentation.clearAnnotationsAlert" = "Êtes-vous sûr de vouloir effacer toutes les annotations ?";
 "presentation.exit" = "Quitter la présentation";
@@ -1601,6 +1602,7 @@
 "welcome.imageEditing.description" = "Ajoutez des images et effectuez des actions avancées comme la suppression d'arrière-plan.";
 "welcome.importDocuments" = "IMPORTER LES DOCUMENTS";
 "welcome.importDocuments.description" = "Importez et annotez des fichiers PDF, Pages, Keynote, Word, PowerPoint et Excel";
+"welcome.links" = "LIENS";
 "welcome.links.description" = "Créer des liens entre les pages, entre les carnets ou vers des URL externes.";
 "welcome.macApp" = "APPLICATION MAC";
 "welcome.macApp.description" = "Revoyez vos notes sur Mac. Vos notes auront l'air super sur grand écran!";
@@ -1616,6 +1618,7 @@
 "welcome.pressureSensitive.description" = "Une écriture manuscrite expressive est possible grâce à la sensibilité à la pression de l’Apple Pencil.";
 "welcome.richText" = "TEXTE RICHE";
 "welcome.richText.description" = "Prenez des notes riches avec des puces, des numéros et même des listes de contrôle.";
+"welcome.savedClips" = "CLIPS ENREGISTRÉS";
 "welcome.savedclips.description" = "Enregistrez toute sélection sur la page sous forme de clip à réutiliser. Créez une bibliothèque de clips !";
 "welcome.scanDocuments" = "SCAN DOCUMENTS";
 "welcome.scanDocuments.description" = "Numérisez de vrais documents et annotez ou partagez-les dans Noteshelf.";
@@ -1633,6 +1636,7 @@
 "welcome.unsplash.description" = "Créez des couvertures de cahier ou ajoutez des photos de la galerie Unsplash à vos notes.";
 "welcome.webClips" = "CLIPS WEB";
 "welcome.webClips.description" = "Ajoutez rapidement des découpures de pages web à vos notes. Idéal pour tout projet de recherche.";
+"welcome.widgets" = "WIDGETS";
 "welcome.widgets.description" = "Explorez nos widgets et affichez votre flux de prise de notes sur l'écran d'accueil.";
 "welcome.zoombox" = "BOÎTE DE ZOOM";
 "welcome.zoombox.description" = "Notre boîte de zoom vous permet de prendre des notes manuscrites précises facilement.";
@@ -1647,4 +1651,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 12 April 2024 at 12:00 PM
+// Last Synced by Amar Udupa on 12 April 2024 at 6:37 PM
