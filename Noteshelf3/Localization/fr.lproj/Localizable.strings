@@ -1258,7 +1258,6 @@
 "penRack.felt" = "Stylo-feutre";
 "penRack.fountain" = "Stylo-plume";
 "penRack.pencil" = "Crayon";
-"premiumBanner.featureInfo" = "Carnets de notes illimités, reconnaissance de l'écriture manuscrite et bien plus encore.";
 "presentation.clearAnnotations" = "Effacer les annotations";
 "presentation.clearAnnotationsAlert" = "Êtes-vous sûr de vouloir effacer toutes les annotations ?";
 "presentation.exit" = "Quitter la présentation";
@@ -1651,4 +1650,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 12 April 2024 at 6:37 PM
+// Last Synced by Amar Udupa on 12 April 2024 at 7:58 PM
