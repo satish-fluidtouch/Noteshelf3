@@ -35,7 +35,5 @@
 -(void)saveChangesOnCompletion:(void (^)(BOOL success) )completion
            shouldCloseDocument:(BOOL)shouldClose
        shouldGenerateThumbnail:(BOOL)generateThumbnail;
--(void)delayedSaveAndCloseDocument:(BOOL)shouldClose
-             shouldGenerateThumbnail:(BOOL)generateThumbnail
-                        completion:(void (^)(BOOL success))completion;
+
 @end

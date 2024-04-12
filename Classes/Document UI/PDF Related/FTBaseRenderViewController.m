@@ -55,12 +55,6 @@
     
 }
 
--(void)delayedSaveAndCloseDocument:(BOOL)shouldClose
-             shouldGenerateThumbnail:(BOOL)generateThumbnail
-                        completion:(void (^)(BOOL success))completion {
-    
-}
-
 #pragma mark common methods
 
 -(void)switchMode:(RKDeskMode)mode sourceView:(UIView *)sourceView

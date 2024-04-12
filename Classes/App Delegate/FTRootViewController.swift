@@ -506,36 +506,25 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         }
     }
 
-    internal func closeAnyActiveOpenedBook(forceSave: Bool = false,completion: @escaping () -> Void) {
+    internal func closeAnyActiveOpenedBook(completion: @escaping () -> Void) {
 
-        self.updateProvider {[weak self] () -> Void in
-            guard let self = self else {
-                return
-            }
+        self.updateProvider { () -> Void in
+
             if self.rootContentViewController != nil {
+
                 if let _docuemntViewController = self.docuemntViewController {
-                    if forceSave {
-                        _docuemntViewController.delayedSaveAndsaveApplicationStateByClosingDocument(true, keepEditingOn: false, onCompletion: { success in
-                            if(success) {
+                    self.saveApplicationStateByClosingDocument(true, keepEditingOn: false, onCompletion: { [weak _docuemntViewController] success in
+                        if(success) {
+                            self.switchToShelf(_docuemntViewController?.documentItemObject, documentViewController: _docuemntViewController,
+                                               animate: true,
+                                               onCompletion: {
                                 self.dismissPresentedViewController({ () -> Void in
                                     completion()
                                 })
-                            }
-                        })
-                    } else {
-                        self.saveApplicationStateByClosingDocument(true, keepEditingOn: false, onCompletion: {[weak _docuemntViewController] success in
-                            if(success) {
-                                self.switchToShelf(_docuemntViewController?.documentItemObject, documentViewController: _docuemntViewController,
-                                                   animate: true,
-                                                   onCompletion: {
-                                    self.dismissPresentedViewController({ () -> Void in
-                                        completion()
-                                    })
 
-                                })                        
-                            }
-                        })
-                    }
+                            });
+                        }
+                    })
                 } else {
                     self.dismissPresentedViewController({ () -> Void in
                         completion()
