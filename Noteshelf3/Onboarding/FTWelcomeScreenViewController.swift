@@ -101,6 +101,10 @@ class FTWelcomeScreenViewController: UIViewController {
         self.startAnimation();
     }
     
+    override var prefersHomeIndicatorAutoHidden: Bool {
+        return true;
+    }
+    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator);
         let isPaused = self.displayLink.isPaused;

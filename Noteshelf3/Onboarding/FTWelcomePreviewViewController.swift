@@ -57,7 +57,7 @@ class FTWelcomePreviewViewController: UIViewController {
         self.previewContentView?.layer.cornerRadius = 32;
         self.contentView?.layer.cornerRadius = 32;
         
-        self.previewTitleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .medium);
+        self.previewTitleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .bold);
         self.previewDescriptionLabel?.font = UIFont.systemFont(ofSize: 13, weight: .regular);
 
         if let item = self.welcomeItem {
@@ -147,7 +147,7 @@ private extension FTWelcomePreviewViewController {
     func duration(from :CGPoint, to :CGPoint) -> TimeInterval {
         let maxDistance = distanceBetweenPoints2(to, CGPoint(x: self.view.frame.width, y: self.view.frame.midY));
         let distanceToCover = distanceBetweenPoints2(from, to);
-        let duration = max(min(0.3,(distanceToCover * 0.3) / maxDistance),0.1)
+        let duration = max(min(0.3,(distanceToCover * 0.3) / maxDistance),0.2)
         return TimeInterval(duration);
     }
     
@@ -176,7 +176,7 @@ private extension FTWelcomePreviewViewController {
     
     func requiredContentSize() -> CGSize {
         let width = min(394, self.view.frame.width);
-        return CGSize(width: width, height: 225);
+        return CGSize(width: width, height: 245);
     }
     
     func centeredRect(_ rect:CGRect) -> CGRect {

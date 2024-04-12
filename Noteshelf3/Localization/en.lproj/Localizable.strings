@@ -1586,7 +1586,7 @@
 "welcome.digitalDiaries" = "DIGITAL DIARIES";
 "welcome.digitalDiaries.description" = "Noteshelf diaries are fully custmizable for any date range. Start your diary today!";
 "welcome.emojies" = "EMOJIS";
-"welcome.emojies.description" = "Emojies are generaly typed, but you can use them like stamps in Noteshelf 😲";
+"welcome.emojies.description" = "Emojis are generaly typed, but you can use them like stamps in Noteshelf 😲";
 "welcome.fancyHeaders" = "FANCY HEADERS";
 "welcome.focusMode" = "FOCUS MODE";
 "welcome.focusMode.description" = "All the UI out-of-the-way with one gesture. Let's you focus better on what matters—your notes.";
