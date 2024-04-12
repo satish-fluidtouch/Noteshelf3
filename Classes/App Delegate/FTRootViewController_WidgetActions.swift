@@ -11,7 +11,7 @@ import Foundation
 extension FTRootViewController {
     func handleWidgetAction(type: FTWidgetActionType) {
             if type is FTNotebookCreateWidgetActionType {
-                self.closeAnyActiveOpenedBook {
+                self.closeAnyActiveOpenedBook(forceSave: true) {
                     self.rootContentViewController?.handleWidgetAction(for: type)
                 }
             } else {

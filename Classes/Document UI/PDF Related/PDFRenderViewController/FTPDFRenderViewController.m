@@ -1212,6 +1212,17 @@
 }
 
 #pragma mark - saveChanges -
+
+#pragma mark - saveChanges -
+
+-(void)delayedSaveAndCloseDocument:(BOOL)shouldClose
+             shouldGenerateThumbnail:(BOOL)generateThumbnail
+                           completion:(void (^)(BOOL success))completion {
+    [self delayedSave:FTSaveAction with: NSLocalizedString(@"quickNotesSave.quickNote", @"Quick note") completion:^(BOOL success) {
+        completion(success);
+    }];
+}
+
 -(void)saveChangesOnCompletion:(void (^)(BOOL success) )completion
            shouldCloseDocument:(BOOL)shouldClose
        shouldGenerateThumbnail:(BOOL)generateThumbnail {
@@ -1376,8 +1387,7 @@
 }
 
 #pragma mark - desktoolbar menu items -
--(void)delayedSave: (FTNotebookBackAction)backAction with: (NSString *)title
-{
+-(void)delayedSave:(FTNotebookBackAction)backAction with:(NSString *)title completion:(void (^)(BOOL success))completion {
     FTLoadingIndicatorViewController *loadingIndicator;
     
     
@@ -1450,7 +1460,7 @@
         
         void (^callBack)(void) = ^ {
             [self closeDocumentWithShelfItemManagedObject:self.shelfItemManagedObject animate:true onCompletion: ^{
-                
+                completion(success);
             }];
             [FTiRateManager logEvent];
             if (loadingIndicator) {
@@ -1503,7 +1513,9 @@
             [self.mainScrollView setZoomScale:self.mainScrollView.minimumZoomScale animated:false];
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.001 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                [self delayedSave:backAction with: title];
+                [self delayedSave:backAction with:title completion:^(BOOL success) {
+                    
+                }];
             });
             
         }
