@@ -75,7 +75,6 @@ struct FTSidebarView: View {
                 if !premiumUser.isPremiumUser {
                     FTPremiumBanner()
                         .environmentObject(viewModel)
-                        .frame(height:108)                    
                         .padding(.horizontal,12)
                 }
             })
