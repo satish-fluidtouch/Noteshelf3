@@ -347,7 +347,7 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
     {
         var removedItem: FTShelfItemProtocol?
         var movedItem : FTShelfItemProtocol?;
-        (toCollection as? FTUniqueNameProtocol)?.uniqueName(name: shelfItem.URL.lastPathComponent,
+        (toCollection as? FTUniqueNameProtocol)?.uniqueName(name: shelfItem.displayTitle + ".\(shelfItem.URL.pathExtension)",
                                 inGroup: toGroup)
         { destFileName -> Void in
             let destURL = self.documentURLWithFileName(destFileName, inGroup: toGroup, collection: toCollection).urlByDeleteingPrivate();
@@ -358,7 +358,7 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
                             let recoveryURL = destURL.appendingPathComponent(NOTEBOOK_RECOVERY_PLIST);
                             let plist = FTNotebookRecoverPlist(url: recoveryURL, isDirectory: false);
                             plist?.recovertType = .book;
-                            plist?.recoverLocation = shelfItem.URL.relativePathWRTCollection().deletingLastPathComponent;
+                            plist?.recoverLocation = shelfItem.relativePathWRTCollection().deletingLastPathComponent;
                             plist?.saveContentsOfFileItem();
                         }
                         if(self.URL != toCollection.URL) {
@@ -519,7 +519,7 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
                                    onCompletion block:@escaping (NSError?, FTShelfItemProtocol?, FTShelfItemProtocol?) -> Void)
     {
         toCollection?.shelfItems(.byName, parent: toGroup, searchKey: nil, onCompletion: { cloudItems in
-            (toCollection as? FTUniqueNameProtocol)?.uniqueName(name: groupItem.URL.lastPathComponent,
+            (toCollection as? FTUniqueNameProtocol)?.uniqueName(name: groupItem.displayTitle + ".\(groupItem.URL.pathExtension)",
                                                                 inGroup: toGroup)
             { (uniqueGroupName) -> (Void) in
                 toCollection.createGroupItem(uniqueGroupName.deletingPathExtension, inGroup: toGroup,

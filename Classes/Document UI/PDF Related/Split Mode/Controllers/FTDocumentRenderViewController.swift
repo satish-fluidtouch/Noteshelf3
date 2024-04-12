@@ -25,6 +25,9 @@ let textContainerTag: Int = 9001
     func saveApplicationStateByClosingDocument(_ shouldClose : Bool,
                                                keepEditingOn : Bool,
                                                onCompletion :((Bool) -> Void)?);
+    func delayedSaveAndsaveApplicationStateByClosingDocument(_ shouldClose : Bool,
+                                               keepEditingOn : Bool,
+                                               onCompletion :((Bool) -> Void)?);
     func startRecordingOnAudioNotebook();
     func didReceivePencilInteraction(_ action:FTApplePencilInteractionType);
     func insertNewPage(fromItem url:URL, onCompletion:((_ completed:Bool) -> Void)?);
@@ -412,7 +415,9 @@ extension FTDocumentRenderViewController: FTDocumentViewPresenter {
                     break;
                 case .audio:
                     FTNotebookUtils.checkIfAudioIsNotPlaying(forDocument: self.documentViewController.pdfDocument, alertMessage: "AudioRecoring_Progress_Message".localized, onViewController: self) { success in
-                        self.documentViewController.audioButtonAction()
+                        if success {
+                            self.documentViewController.audioButtonAction()
+                        }
                     }
                     break;
                 case .openAI:
@@ -459,6 +464,15 @@ extension FTDocumentRenderViewController: FTDocumentViewPresenter {
         documentViewController.saveChanges(onCompletion: onCompletion,
                                      shouldCloseDocument: shouldClose,
                                      shouldGenerateThumbnail: false);
+    }
+    
+    func delayedSaveAndsaveApplicationStateByClosingDocument(_ shouldClose: Bool, keepEditingOn: Bool, onCompletion: ((Bool) -> Void)?) {
+        if !keepEditingOn {
+            documentViewController.normalizeAndEndEditingAnnotation(true);
+        }
+        documentViewController.delayedSaveAndCloseDocument(shouldClose, shouldGenerateThumbnail: false) { success in
+            onCompletion?(true)
+        }
     }
     
     func canContinueToImportFiles() -> Bool {

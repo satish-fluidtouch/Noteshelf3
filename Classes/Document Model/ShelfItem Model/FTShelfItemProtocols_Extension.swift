@@ -19,6 +19,15 @@ extension FTDiskItemProtocol
     };
 }
 
+extension FTDocumentItemProtocol {
+    func relativePathWRTCollection() -> String {
+        if let obj = self as? FTDocumentItemTemp {
+            return obj.relativePathWRTCollection();
+        }
+        return self.URL.relativePathWRTCollection();
+    }
+}
+
 extension FTShelfItemProtocol
 {
     var type : RKShelfItemType {
@@ -35,7 +44,6 @@ extension FTShelfItemProtocol
     
     var fileLastOpenedDate: Date {
         fatalError("\(self) should implement");
-        return self.URL.fileLastOpenedDate;
     }
 
     var enSyncEnabled: Bool {

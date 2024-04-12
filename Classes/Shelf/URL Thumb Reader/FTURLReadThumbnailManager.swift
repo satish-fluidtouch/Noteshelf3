@@ -61,6 +61,11 @@ class FTThumbReadCallbacks : NSObject
                          onCompletion : @escaping (UIImage?,String?) -> Void) -> String?
     {
 
+        if let image = self.imageCache.cachedImageForItem(item: item) {
+            onCompletion(image,nil);
+            return nil;
+        }
+
         @discardableResult
         func readThumbnailFromCache(reuseToken: String?) -> String {
             return self.ns2ThumbnailReader.thumbnail(for: item
@@ -77,7 +82,7 @@ class FTThumbReadCallbacks : NSObject
                     readThumbnailFromCache(reuseToken: token)
                 }
                 else {
-                    self.imageCache.removeImageCache(url: item.URL);
+                    self.imageCache.addImageToCache(image: image, url: item.URL);
                     onCompletion(image,token);
                 }
             }

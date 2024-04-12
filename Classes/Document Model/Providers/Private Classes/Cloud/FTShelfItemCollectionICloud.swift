@@ -320,7 +320,7 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
     {
         var removedItem: FTShelfItemProtocol?
         var movedItem : FTShelfItemProtocol?;
-        (toCollection as? FTUniqueNameProtocol)?.uniqueName(name: shelfItem.URL.lastPathComponent,
+        (toCollection as? FTUniqueNameProtocol)?.uniqueName(name: shelfItem.displayTitle + ".\(shelfItem.URL.pathExtension)",
                                 inGroup: toGroup)
         { destFileName -> Void in
             let destURL = self.documentURLWithFileName(destFileName, inGroup: toGroup, collection: toCollection);
@@ -331,7 +331,7 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
                             let recoveryURL = destURL.appendingPathComponent(NOTEBOOK_RECOVERY_PLIST);
                             let plist = FTNotebookRecoverPlist(url: recoveryURL, isDirectory: false);
                             plist?.recovertType = .book;
-                            plist?.recoverLocation = shelfItem.URL.relativePathWRTCollection().deletingLastPathComponent;
+                            plist?.recoverLocation = shelfItem.relativePathWRTCollection().deletingLastPathComponent;
                             plist?.saveContentsOfFileItem();
                         }
                         if(self.URL != toCollection.URL) {
@@ -466,7 +466,7 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
                                    onCompletion block:@escaping (NSError?, FTShelfItemProtocol?, FTShelfItemProtocol?) -> Void)
     {
         toCollection?.shelfItems(.byName, parent: toGroup, searchKey: nil, onCompletion: { localItems in
-            (toCollection as? FTUniqueNameProtocol)?.uniqueName(name: groupItem.URL.lastPathComponent,
+            (toCollection as? FTUniqueNameProtocol)?.uniqueName(name: groupItem.displayTitle + ".\(groupItem.URL.pathExtension)",
                                                                 inGroup: toGroup)
             { (uniqueGroupName) -> (Void) in
                 toCollection.createGroupItem(uniqueGroupName.deletingPathExtension,
@@ -871,12 +871,15 @@ extension FTShelfItemCollectionICloud {
         let collectionName = self.URL.lastPathComponent;
 
         var collectionURL = fileURL;
-        while((collectionURL.pathExtension != FTFileExtension.shelf) && !belongs) {
-            collectionURL = collectionURL.deletingLastPathComponent();
-            if(collectionURL.lastPathComponent == collectionName) {
+        
+        var urlComponents = collectionURL.pathComponents.reversed();
+        for urlComponent in urlComponents {
+            if urlComponent.pathExtension == FTFileExtension.shelf, urlComponent == collectionName {
                 belongs = true;
+                break;
             }
         }
+
         return belongs;
     }
 

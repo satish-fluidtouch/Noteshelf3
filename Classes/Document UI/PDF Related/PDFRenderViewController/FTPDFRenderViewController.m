@@ -1212,6 +1212,17 @@
 }
 
 #pragma mark - saveChanges -
+
+#pragma mark - saveChanges -
+
+-(void)delayedSaveAndCloseDocument:(BOOL)shouldClose
+             shouldGenerateThumbnail:(BOOL)generateThumbnail
+                           completion:(void (^)(BOOL success))completion {
+    [self delayedSave:FTSaveAction with: NSLocalizedString(@"quickNotesSave.quickNote", @"Quick note") completion:^(BOOL success) {
+        completion(success);
+    }];
+}
+
 -(void)saveChangesOnCompletion:(void (^)(BOOL success) )completion
            shouldCloseDocument:(BOOL)shouldClose
        shouldGenerateThumbnail:(BOOL)generateThumbnail {
@@ -1275,7 +1286,7 @@
         UIBackgroundTaskIdentifier task = [self startBackgroundTask];
         void(^continueSaving)(BOOL, UIImage*) = ^(BOOL coverPageUpdated, UIImage* coverImage){
             void (^onCompletionBlock)(BOOL) = ^(BOOL success){
-                if(coverPageUpdated) {
+                if(coverPageUpdated && !self.pdfDocument.isJustCreatedWithQuickNote) {
                     [[FTURLReadThumbnailManager sharedInstance] addImageToCacheWithImage:coverImage url:docURL];
                     [FTRecentEntries updateImageInGroupContainerForUrl:docURL];
                 }
@@ -1284,7 +1295,7 @@
                     completion(success);
                 }
                 [self endBackgroundTask:task];
-                if(shouldClose) {
+                if(shouldClose && !self.pdfDocument.isJustCreatedWithQuickNote) {
                     [self postDocumentUpdateNotification];
                 }
             };
@@ -1376,8 +1387,7 @@
 }
 
 #pragma mark - desktoolbar menu items -
--(void)delayedSave: (FTNotebookBackAction)backAction with: (NSString *)title
-{
+-(void)delayedSave:(FTNotebookBackAction)backAction with:(NSString *)title completion:(void (^)(BOOL success))completion {
     FTLoadingIndicatorViewController *loadingIndicator;
     
     
@@ -1388,7 +1398,11 @@
     if(backAction == FTSaveAction && [title isEqualToString:fileName]) {
         backAction = FTNormalAction;
     }
-    isRequiredLoader = (backAction == FTSaveAction);
+    isRequiredLoader = (
+                        backAction == FTSaveAction
+                        || backAction == FTMoveToTrashAction
+                        || (backAction == FTNormalAction && self.pdfDocument.isJustCreatedWithQuickNote)
+                        );
     
     if(backAction != FTNormalAction) {
         NSString *saveAction = @"Normal";
@@ -1446,7 +1460,7 @@
         
         void (^callBack)(void) = ^ {
             [self closeDocumentWithShelfItemManagedObject:self.shelfItemManagedObject animate:true onCompletion: ^{
-                
+                completion(success);
             }];
             [FTiRateManager logEvent];
             if (loadingIndicator) {
@@ -1454,8 +1468,12 @@
             }
             [[FTENPublishManager shared] startPublishing];
         };
-        if(backAction == FTSaveAction) {
-            [self renameShelfItemWithTitle:title onCompletion: ^(BOOL success) {
+        if(backAction == FTSaveAction ||  (backAction == FTNormalAction && self.pdfDocument.isJustCreatedWithQuickNote)) {
+            NSURL *shelfImageURL = [self.shelfItemManagedObject.URL URLByAppendingPathComponent:@"cover-shelf-image.png"];
+            UIImage *shelfImage = [[UIImage alloc] initWithContentsOfFile:shelfImageURL.path];
+            [self saveQuickCreateNote:title onCompletion:^(NSError * _Nullable error, FTDocumentItemWrapperObject * _Nullable item) {
+                self.shelfItemManagedObject = item;
+                [[FTURLReadThumbnailManager sharedInstance] addImageToCacheWithImage:shelfImage url:item.URL];
                 callBack();
             }];
         }
@@ -1468,7 +1486,7 @@
         }
     }
               shouldCloseDocument:true
-                    waitUntilSave:(isRequiredLoader || backAction == FTMoveToTrashAction)
+                    waitUntilSave:isRequiredLoader
                        saveAction:backAction
           shouldGenerateThumbnail:!isDeleteOperation];
 }
@@ -1495,7 +1513,9 @@
             [self.mainScrollView setZoomScale:self.mainScrollView.minimumZoomScale animated:false];
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.001 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                [self delayedSave:backAction with: title];
+                [self delayedSave:backAction with:title completion:^(BOOL success) {
+                    
+                }];
             });
             
         }
@@ -1689,6 +1709,7 @@
     self.previousDeskMode = self.currentDeskMode;
     self.currentDeskMode = mode;
     [self validateMenuItems];
+    [self endActiveEditingAnnotations];
 }
 
 -(void)openRackForMode:(RKDeskMode)mode sourceView:(UIView *)sourceView {

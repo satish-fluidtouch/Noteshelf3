@@ -1123,3 +1123,21 @@ extension FTPDFRenderViewController: UIGestureRecognizerDelegate {
         return FTDeveloperOption.bookScaleAnim
     }
 }
+
+internal extension FTPDFRenderViewController {
+    @objc func saveQuickCreateNote(_ title: String,onCompletion : ((NSError?,FTDocumentItemWrapperObject?)->())?) {
+        let collection = self.shelfItemManagedObject.documentItemProtocol.shelfCollection
+        let group = self.shelfItemManagedObject.documentItemProtocol.parent;
+        
+        collection?.addShelfItemForDocument(self.shelfItemManagedObject.documentItemProtocol.URL
+                                            , toTitle: title
+                                            , toGroup: group
+                                            , onCompletion: { error, item in
+            guard let docItem = item else {
+                onCompletion?(error,nil);
+                return;
+            }
+            onCompletion?(error,FTDocumentItemWrapperObject(documentItem: docItem));
+        })
+    }
+}
