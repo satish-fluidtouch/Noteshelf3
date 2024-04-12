@@ -125,7 +125,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated);
         if FTWhatsNewManger.canShowWelcomeScreen(onViewController: self) {
-            FTGetstartedHostingViewcontroller.showWelcome(presenterController: self, onDismiss: {
+            FTWelcomeScreenViewController.showWelcome(presenterController: self, onDismiss: {
                 [weak self] in
                 self?.addShelfToolbar();
                 self?.updateProvider({
@@ -1488,7 +1488,7 @@ extension FTRootViewController: FTSceneBackgroundHandling {
         }
         FTAppConfigHelper.sharedAppConfig().updateAppConfig()
         if FTWhatsNewManger.canShowWelcomeScreen(onViewController: self) {
-            FTGetstartedHostingViewcontroller.showWelcome(presenterController: self, onDismiss: nil);
+            FTWelcomeScreenViewController.showWelcome(presenterController: self, onDismiss: nil);
             self.refreshStatusBarAppearnce();
         } else {
             var placeOfSlideShow: FTWhatsNewSlideShowPlace = .shelf
