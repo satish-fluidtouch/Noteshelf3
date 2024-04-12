@@ -14,6 +14,7 @@ struct FTPremiumBanner: View {
     @EnvironmentObject var viewModel : FTSidebarViewModel
     @EnvironmentObject var premiumUser : FTPremiumUser
     @State var height: CGFloat = 136
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
         ZStack {
@@ -28,7 +29,7 @@ struct FTPremiumBanner: View {
                     Image("premium_banner_wave")
                         .scaledToFill()
                         .frame(width: 76, height: 76, alignment: .bottomLeading)
-                        .foregroundStyle(Color(hex: "0455CF", alpha: 0.2))
+                        .foregroundStyle(Color(hex: "0455CF", alpha: colorScheme == .light ? 0.2 : 0.7))
                 }
 
                 VStack(alignment: .leading, spacing: 0) {
