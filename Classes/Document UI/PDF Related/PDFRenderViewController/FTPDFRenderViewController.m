@@ -1226,9 +1226,24 @@
 -(void)saveChangesOnCompletion:(void (^)(BOOL success) )completion
            shouldCloseDocument:(BOOL)shouldClose
        shouldGenerateThumbnail:(BOOL)generateThumbnail {
-    [self saveChangesOnCompletion:completion
-              shouldCloseDocument:shouldClose
-                    waitUntilSave: false
+    [self saveChangesOnCompletion:^(BOOL success) {
+        if(shouldClose && self.pdfDocument.isJustCreatedWithQuickNote) {
+            NSURL *shelfImageURL = [self.shelfItemManagedObject.URL URLByAppendingPathComponent:@"cover-shelf-image.png"];
+            UIImage *shelfImage = [[UIImage alloc] initWithContentsOfFile:shelfImageURL.path];
+            [self saveQuickCreateNote:self.shelfItemManagedObject.title
+                         onCompletion:^(NSError * _Nullable error, FTDocumentItemWrapperObject * _Nullable item) {
+                if(nil == error) {
+                    self.shelfItemManagedObject = item;
+                    [[FTURLReadThumbnailManager sharedInstance] addImageToCacheWithImage:shelfImage url:item.URL];
+                }
+                completion(nil == error);
+            }];
+        }
+        else {
+            completion(success);
+        }
+    } shouldCloseDocument:shouldClose
+                    waitUntilSave: shouldClose && self.pdfDocument.isJustCreatedWithQuickNote
                        saveAction:FTNormalAction
           shouldGenerateThumbnail:generateThumbnail];
 }
