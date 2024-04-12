@@ -58,7 +58,7 @@ struct FTPremiumBanner: View {
                 }
                 .padding(.top, 0)
                 .padding(.bottom, 16)
-                .padding(.trailing, 20)
+                .padding(.trailing, 12)
                 Spacer()
             }
             .padding(.top, 16)
