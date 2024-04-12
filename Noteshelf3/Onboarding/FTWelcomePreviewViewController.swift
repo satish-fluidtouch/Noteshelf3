@@ -86,12 +86,13 @@ class FTWelcomePreviewViewController: UIViewController {
         endRect.origin.x = (self.view.frame.width - endRect.width)*0.5;
         endRect.origin.y = (self.view.frame.height - endRect.height)*0.5;
 
+        self.view.backgroundColor = UIColor.clear
         UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut]) {
             self.contentConstraintWidth?.constant = endRect.width;
             self.contentConstraintHeight?.constant = endRect.height;
             self.contentConstraintLeft?.constant = endRect.origin.x;
             self.contentConstraintTop?.constant = endRect.origin.y;
-
+            self.view.backgroundColor = UIColor.black.withAlphaComponent(0.1)
             self.view.layoutIfNeeded();
         } completion: { _ in
             
@@ -111,11 +112,13 @@ class FTWelcomePreviewViewController: UIViewController {
         var frame = self.contentInfoLabel?.frame ?? .zero;
         frame.size.width = sourceRect.width
 
+        self.view.backgroundColor = UIColor.black.withAlphaComponent(0.1)
         UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut]) {
             self.contentConstraintWidth?.constant = sourceRect.width;
             self.contentConstraintHeight?.constant = sourceRect.height;
             self.contentConstraintLeft?.constant = sourceRect.origin.x;
             self.contentConstraintTop?.constant = sourceRect.origin.y;
+            self.view.backgroundColor = UIColor.clear
             self.view.layoutIfNeeded();
         } completion: { _ in
             onCompletion?();

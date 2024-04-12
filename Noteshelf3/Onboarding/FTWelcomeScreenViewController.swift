@@ -13,9 +13,13 @@ class FTWelcomeScreenViewController: UIViewController {
     @IBOutlet weak var titleLable: UILabel?;
     @IBOutlet weak var dismissButton: UIButton?;
     @IBOutlet weak var subTitle: UILabel?;
-    
+    @IBOutlet private weak var topHeaderView: UIStackView?;
+
     private weak var selectedSlide: FTWelcomeItemViewController?;
-    
+    @IBOutlet private weak var headerConstraintTop: NSLayoutConstraint?;
+    @IBOutlet private weak var footerConstraintBottom: NSLayoutConstraint?;
+    @IBOutlet private weak var contentViewConstraintTop: NSLayoutConstraint?;
+
     @IBOutlet private weak var contentView: UIView?;
 
     @IBOutlet private weak var contentHeightConstraint: NSLayoutConstraint?;
@@ -43,18 +47,26 @@ class FTWelcomeScreenViewController: UIViewController {
         return (UIDevice.current.isPhone() ? 144 : 180)
     }
     
+    override func updateViewConstraints() {
+        let viewHeight = self.view.frame.size.height;
+        
+        let contentHeight = 2 * itemSize + 16 + (self.dismissButton?.frame.height ?? 0) + (self.topHeaderView?.frame.height ?? 0);
+        let remainingHeight = (viewHeight - contentHeight) / 5;
+               
+        self.contentHeightConstraint?.constant = 2 * itemSize + 16;
+        self.headerConstraintTop?.constant = remainingHeight;
+        self.footerConstraintBottom?.constant = remainingHeight;
+        self.contentViewConstraintTop?.constant = remainingHeight;
+        super.updateViewConstraints()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-                           
-        self.dismissButton?.layer.shadowOffset = CGSize(width: 0, height: 12);
-        self.dismissButton?.layer.shadowRadius = 16.0;
-        self.dismissButton?.layer.shadowOpacity = 0.24
-        self.dismissButton?.layer.shadowColor = UIColor.appColor(.welcomeBtnColor).cgColor;
+                         
+        self.contentView?.translatesAutoresizingMaskIntoConstraints = false
         
-        self.contentView?.layer.shadowOffset = CGSize(width: 0, height: 30);
-        self.contentView?.layer.shadowRadius = 30;
-        self.contentView?.layer.shadowOpacity = 0.12
-        self.contentView?.layer.shadowColor = UIColor.appColor(.welcomeBtnColor).cgColor;
+        self.dismissButton?.addShadow(CGSize(width: 0, height: 12), color: UIColor.appColor(.welcomeBtnColor), opacity: 0.24, radius: 16.0)
+        self.contentView?.addShadow(CGSize(width: 0, height: 30), color: UIColor.appColor(.welcomeBtnColor), opacity: 0.12, radius: 30)
 
         self.titleLable?.font = UIFont.clearFaceFont(for: .regular, with: fontSize)
         self.titleLable?.text = self.model.headerTopTitle
@@ -71,9 +83,8 @@ class FTWelcomeScreenViewController: UIViewController {
         self.dismissButton?.backgroundColor = UIColor.appColor(.welcomeBtnColor)
         self.dismissButton?.layer.cornerRadius = 16;
         
-        self.contentHeightConstraint?.constant = 2 * itemSize + 16;
         self.view.layoutIfNeeded();
-
+        
         self.loadGrids(model.getstartedList, contentView: self.scrollView1!)
         self.loadGrids(model.getstartedList, contentView: self.scrollView2!)
         
@@ -82,6 +93,17 @@ class FTWelcomeScreenViewController: UIViewController {
         self.scrollView2?.contentOffset = offset;
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator);
+        self.stopAnimation()
+        coordinator.animate { context in
+            self.view.setNeedsUpdateConstraints();
+            self.view.updateConstraintsIfNeeded();
+        } completion: { _ in
+            self.startAnimation()
+        }
+    }
+  
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.startAnimation();
@@ -147,12 +169,10 @@ class FTWelcomeScreenViewController: UIViewController {
             
             self.addChild(item);
             contentView.addSubview(item.view);
-            
             previousFrame.x = frame.maxX + 16;
         }
         contentView.contentSize = CGSize(width: previousFrame.x - 16, height: contentView.frame.height)
     }
-
 }
 
 class GradientView: UIView {
@@ -221,5 +241,14 @@ private extension FTWelcomeScreenViewController {
             frame.origin.y += (scrollView.superview?.frame.origin.y ?? 0);
         }
         return frame;
+    }
+}
+
+extension UIView {
+    func addShadow(_ offset: CGSize, color: UIColor, opacity: Float = 1.0,radius: CGFloat) {
+        self.layer.shadowOffset = offset
+        self.layer.shadowRadius = radius
+        self.layer.shadowOpacity = opacity
+        self.layer.shadowColor = color.cgColor
     }
 }
