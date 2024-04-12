@@ -1258,6 +1258,7 @@
 "penRack.felt" = "Felt Pen";
 "penRack.fountain" = "Fountain Pen";
 "penRack.pencil" = "Pencil";
+"premiumBanner.featureInfo" = "Unlimited notebooks, handwriting recognition, and more.";
 "presentation.clearAnnotations" = "Clear Annotations";
 "presentation.clearAnnotationsAlert" = "Are you sure you want to clear all annotations?";
 "presentation.exit" = "Exit Presentation";
@@ -1585,7 +1586,11 @@
 "welcome.digitalDiaries" = "DIGITAL DIARIES";
 "welcome.digitalDiaries.description" = "Noteshelf diaries are fully custmizable for any date range. Start your diary today!";
 "welcome.emojies" = "EMOJIS";
+<<<<<<< HEAD
 "welcome.emojies.description" = "Emojies are generaly typed, but you can use them like stamps in Noteshelf 😲";
+=======
+"welcome.emojies.description" = "Emojis are generaly typed, but you can use them like stamps in Noteshelf 😲";
+>>>>>>> feature/v1.5.10_welcome_screen_refactor
 "welcome.fancyHeaders" = "FANCY HEADERS";
 "welcome.focusMode" = "FOCUS MODE";
 "welcome.focusMode.description" = "All the UI out-of-the-way with one gesture. Let's you focus better on what matters—your notes.";
@@ -1650,4 +1655,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 12 April 2024 at 6:50 PM
+// Last Synced by Amar Udupa on 12 April 2024 at 6:37 PM
