@@ -1236,11 +1236,15 @@
                     self.shelfItemManagedObject = item;
                     [[FTURLReadThumbnailManager sharedInstance] addImageToCacheWithImage:shelfImage url:item.URL];
                 }
-                completion(nil == error);
+                if(nil != completion) {
+                    completion(nil == error);
+                }
             }];
         }
         else {
-            completion(success);
+            if(nil != completion) {
+                completion(success);
+            }
         }
     } shouldCloseDocument:shouldClose
                     waitUntilSave: shouldClose && self.pdfDocument.isJustCreatedWithQuickNote
