@@ -90,7 +90,7 @@ class FTWelcomeScreenViewController: UIViewController {
         var itemsToLoad = [FTGetStartedViewItems]();
         itemsToLoad.append(contentsOf: model.getstartedList);
         itemsToLoad.append(contentsOf: model.getstartedList);
-        itemsToLoad.append(contentsOf: model.getstartedList);
+//        itemsToLoad.append(contentsOf: model.getstartedList);
         
         self.loadGrids(itemsToLoad, contentView: self.scrollView1!)
         self.loadGrids(itemsToLoad, contentView: self.scrollView2!)
@@ -98,6 +98,7 @@ class FTWelcomeScreenViewController: UIViewController {
         var offset = self.scrollView2?.contentOffset ?? .zero;
         offset.x = self.scrollView2!.contentSize.width - self.scrollView2!.frame.width
         self.scrollView2?.contentOffset = offset;
+        self.startAnimation();
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -118,11 +119,23 @@ class FTWelcomeScreenViewController: UIViewController {
   
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.startAnimation();
+        NotificationCenter.default.addObserver(self, selector: #selector(self.sceneDidEnterForeground(_:)), name: UIApplication.sceneWillEnterForeground, object: self.sceneToObserve)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.sceneWillEnterBackground(_:)), name: UIApplication.sceneDidEnterBackground, object: self.sceneToObserve)
+    }
+    
+    @objc private func sceneDidEnterForeground(_ notification: Notification) {
+        if nil == self.selectedSlide {
+            self.displayLink.isPaused = false
+        }
+    }
+    
+    @objc private func sceneWillEnterBackground(_ notification: Notification) {
+        self.displayLink.isPaused = true
     }
     
     @IBAction func didTapOnDismiss(_ sender: UIButton?) {
         self.dismiss(animated: true) {
+            self.displayLink.invalidate();
             self.onDismissBlock?();
             self.onDismissBlock = nil
         }
