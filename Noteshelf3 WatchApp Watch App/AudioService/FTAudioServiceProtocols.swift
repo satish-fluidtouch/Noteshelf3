@@ -8,9 +8,10 @@
 
 import Foundation
 
-protocol FTAudioServiceDelegate: NSObjectProtocol {
-    func audioServiceDidFinishRecording(withURL audioURL:URL)
-    func audioServiceDidFinishPlaying(withError error: Error?)
+@objc protocol FTAudioServiceDelegate: NSObjectProtocol {
+    @objc optional func audioServiceDidFinishRecording(withURL audioURL: URL)
+    @objc optional func audioServiceDidFinishPlaying(withError error: Error?)
+    @objc optional func audioServiceDidInterrupted(at status: FTAudioServiceStatus)
 }
 
 @objc protocol FTVisualizationDataProtocol: NSObjectProtocol {

@@ -92,9 +92,6 @@ struct FTPlayerView: View {
         }
         .fullScreenCover(isPresented: $isEditOptionsShowing, content: {
             FTRecordingEditView(viewModel: FTRecordingEditViewModel(recording: self.recording), isEditOptionsShowing: $isEditOptionsShowing, isShowingPlayerView: $isShowingPlayerView)
-                .onDisappear {
-                    self.viewModel.updateRecording(self.recording)
-                }
         })
         .alert(isPresented: $showInProgressRecordAlert) {
             Alert(

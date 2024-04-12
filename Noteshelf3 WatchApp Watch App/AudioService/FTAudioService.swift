@@ -96,7 +96,7 @@ private extension FTAudioService {
         NSLog("All userInfo: %@", notification.userInfo!)
 #endif
         if(self.audioActivity.audioServiceStatus == .recording){
-            self.stopRecording()
+            self.delegate?.audioServiceDidInterrupted?(at: self.audioActivity.audioServiceStatus)
         }
         else if(self.audioActivity.audioServiceStatus == .playing){
             recentPlayedAudio["currentTime"] = Double(self.audioActivity.currentTime)
@@ -127,7 +127,7 @@ private extension FTAudioService {
                 self.audioActivity.audioServiceStatus = FTAudioServiceStatus.none
                 audioServiceCurrentState = FTAudioServiceStatus.none
             }
-            self.delegate?.audioServiceDidFinishPlaying(withError: nil)
+            self.delegate?.audioServiceDidFinishPlaying?(withError: nil)
         }
     }
 
@@ -221,7 +221,7 @@ extension FTAudioService {
     func finishRecording(success: Bool) {
         self.audioActivity.audioServiceStatus = FTAudioServiceStatus.none
         if(success){
-            self.delegate?.audioServiceDidFinishRecording(withURL: self.audioActivity.audioURL!)
+            self.delegate?.audioServiceDidFinishRecording?(withURL: self.audioActivity.audioURL!)
         }
     }
 }
@@ -317,7 +317,7 @@ extension FTAudioService {
                 }
 
                 self.audioActivity.audioServiceStatus = .none
-                self.delegate?.audioServiceDidFinishPlaying(withError: nil)
+                self.delegate?.audioServiceDidFinishPlaying?(withError: nil)
             }
         }
     }
