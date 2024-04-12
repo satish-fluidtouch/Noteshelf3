@@ -412,7 +412,9 @@ extension FTDocumentRenderViewController: FTDocumentViewPresenter {
                     break;
                 case .audio:
                     FTNotebookUtils.checkIfAudioIsNotPlaying(forDocument: self.documentViewController.pdfDocument, alertMessage: "AudioRecoring_Progress_Message".localized, onViewController: self) { success in
-                        self.documentViewController.audioButtonAction()
+                        if success {
+                            self.documentViewController.audioButtonAction()
+                        }
                     }
                     break;
                 case .openAI:

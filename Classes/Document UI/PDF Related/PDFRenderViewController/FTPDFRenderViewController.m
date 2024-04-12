@@ -1689,6 +1689,7 @@
     self.previousDeskMode = self.currentDeskMode;
     self.currentDeskMode = mode;
     [self validateMenuItems];
+    [self endActiveEditingAnnotations];
 }
 
 -(void)openRackForMode:(RKDeskMode)mode sourceView:(UIView *)sourceView {
