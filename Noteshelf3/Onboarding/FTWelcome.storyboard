@@ -45,7 +45,7 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gqs-Yc-pNH">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gqs-Yc-pNH">
                                 <rect key="frame" x="0.0" y="473" width="1024" height="376"/>
                                 <subviews>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cnb-xm-lJp" userLabel="Scroll View 1">
