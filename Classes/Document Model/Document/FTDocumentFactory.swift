@@ -18,6 +18,16 @@ class FTDocumentFactory : NSObject
         return URL(fileURLWithPath: tempPath);
     }
 
+    static func quickCreateDocumentPath(_ name : String) -> URL
+    {
+        let fileName = name;
+        guard let path = URL.quickCreateFolder else {
+            return tempDocumentPath(name);
+        }
+        let tempFilePath = path.appending(path: fileName).appendingPathExtension(FTFileExtension.ns3);
+        return tempFilePath;
+    }
+
     static func documentForItemAtURL(_ url : URL) -> FTDocumentProtocol
     {
         let document = FTNoteshelfDocument.init(fileURL : url);
@@ -66,4 +76,22 @@ class FTDocumentFactory : NSObject
     }
 
     #endif
+}
+
+extension URL {
+    static var quickCreateFolder: URL? {
+        guard let path = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true).first else {
+            return nil;
+        }
+        let tempPath = URL(fileURLWithPath: path).appending(path: "QUICK_CREATE");
+        try? FileManager().createDirectory(at: tempPath, withIntermediateDirectories: true);
+        return tempPath;
+    }
+    
+    static func clearQuickCreateFolder() {
+        guard let pathe = self.quickCreateFolder else {
+            return;
+        }
+        try? FileManager().removeItem(at: pathe)
+    }
 }

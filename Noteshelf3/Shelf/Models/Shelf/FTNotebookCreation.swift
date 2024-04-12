@@ -129,7 +129,7 @@ class FTNotebookCreation: NSObject {
                 Task {
                     do {
                         let documentInfo = try await generator.generate()
-                        let tempDocURL = FTDocumentFactory.tempDocumentPath(FTUtils.getUUID());
+                        let tempDocURL = FTDocumentFactory.quickCreateDocumentPath(FTUtils.getUUID());
                         let ftdocument = FTDocumentFactory.documentForItemAtURL(tempDocURL);
 
                         let defaultCover = FTThemesLibrary(libraryType: .covers).getDefaultTheme(defaultMode: .quickCreate)
@@ -142,28 +142,33 @@ class FTNotebookCreation: NSObject {
                         documentInfo.coverTemplateImage = UIImage.init(contentsOfFile: templatePath)
                         ftdocument.createDocument(documentInfo) { (error, _) in
                             if(error == nil) {
-
-                                let createBlock: () -> () = {
-                                    collection.addShelfItemForDocument(ftdocument.URL, toTitle: NSLocalizedString("quickNotesSave.quickNote", comment: "Quick Note"), toGroup: group, onCompletion: { (error, item) in
-                                        if(nil != error) {
-                                            completion(error,item)
+                                if collection.isAllNotesShelfItemCollection {
+                                    FTNoteshelfDocumentProvider.shared.uncategorizedNotesCollection { uncategoriedCollection in
+                                        if let unfiled = uncategoriedCollection {
+                                            createDocumentItem(unfiled)
                                         }
                                         else {
-                                            if let pinToSet = documentInfo.pinModel?.pin {
-                                                FTBiometricManager.keychainSetIsTouchIDEnabled(documentInfo.pinModel!.isTouchIDEnabled,
-                                                                                             withPin: pinToSet,
-                                                                                             forKey: ftdocument.documentUUID);
-                                            }
-
-                                            //****************************** AutoBackup & AutoPublish
-                                            //Amar: Commented below code to avoid ununcessary adding the quick note to EN list without knowing if it is going to be deleted of not
-//                                            FTENPublishManager.applyDefaultBackupPreferences(forItem: item, documentUUID: ftdocument.documentUUID)
-                                            //******************************
-                                            completion(error,item)
+                                            createDocumentItem(collection)
                                         }
-                                    });
+                                    }
                                 }
-                                createBlock()
+                                else {
+                                    createDocumentItem(collection)
+                                }
+                                
+                                func createDocumentItem(_ shelfCollection: FTShelfItemCollection) {
+                                    let documentItem = FTDocumentItemTemp(fileURL: ftdocument.URL);
+                                    documentItem.shelfCollection = shelfCollection
+                                    documentItem.parent = group;
+                                    documentItem.documentUUID = ftdocument.documentUUID;
+                                    documentItem.isDownloaded = true
+                                    if let pinToSet = documentInfo.pinModel?.pin {
+                                        FTBiometricManager.keychainSetIsTouchIDEnabled(documentInfo.pinModel!.isTouchIDEnabled,
+                                                                                     withPin: pinToSet,
+                                                                                     forKey: ftdocument.documentUUID);
+                                    }
+                                    completion(error,documentItem)
+                                }
                             }
                             else {
                                 completion(error,nil)
@@ -177,3 +182,11 @@ class FTNotebookCreation: NSObject {
         }
     }
 }
+
+/*
+ 
+ let shelfImageURL = ftdocument.URL.appending(path:"cover-shelf-image.png");
+ let shelfImage = UIImage(contentsOfFile: shelfImageURL.path(percentEncoded:false));
+ FTURLReadThumbnailManager.sharedInstance.addImageToCache(image: shelfImage, url: item!.URL)
+
+ */
