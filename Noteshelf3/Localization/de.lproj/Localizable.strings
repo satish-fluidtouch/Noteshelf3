@@ -1258,7 +1258,6 @@
 "penRack.felt" = "Filzstift";
 "penRack.fountain" = "Füllfederhalter";
 "penRack.pencil" = "Bleistift";
-"premiumBanner.featureInfo" = "Unbegrenzte Notizbücher, Handschrifterkennung und mehr.";
 "presentation.clearAnnotations" = "Klare Anmerkungen";
 "presentation.clearAnnotationsAlert" = "Bist du sicher, dass du alle Anmerkungen löschen möchtest?";
 "presentation.exit" = "Präsentation verlassen";
@@ -1602,7 +1601,7 @@
 "welcome.imageEditing.description" = "Führen Sie erweiterte Aktionen wie das Entfernen des Hintergrunds problemlos aus.";
 "welcome.importDocuments" = "DOKUMENTE IMPORTIEREN";
 "welcome.importDocuments.description" = "Importieren und markieren Sie PDF-, Pages-, Keynote-, Word-, PowerPoint- und Excel-Dateien";
-"welcome.links" = "Links";
+"welcome.links" = "LINKS";
 "welcome.links.description" = "Erstellen Sie Verknüpfungen zwischen Seiten, zwischen Notizbuch oder zu externen URLs.";
 "welcome.macApp" = "MAC-App";
 "welcome.macApp.description" = "Überprüfen Sie Ihre Notizen auf dem Mac. Ihre Notizen werden darauf großartig aussehen!";
@@ -1618,7 +1617,7 @@
 "welcome.pressureSensitive.description" = "Ausdrucksstarkes Schreiben mit der Hand ist mit der Druckempfindlichkeit des Apple Pencil möglich.";
 "welcome.richText" = "FORMATIERTEM TEXT";
 "welcome.richText.description" = "Machen Sie getippte Notizen mit Aufzählungs- und Nummernlisten und sogar Checklisten.";
-"welcome.savedClips" = "Gespeicherte Clips";
+"welcome.savedClips" = "GESPEICHERTE CLIPS";
 "welcome.savedclips.description" = "Speichern Sie jede Auswahl auf der Seite als Clip und verwenden Sie sie beliebig oft wieder.";
 "welcome.scanDocuments" = "DOKUMENTE SCANNEN";
 "welcome.scanDocuments.description" = "Scannen Sie echte Dokumente und markieren oder teilen Sie sie innerhalb von Noteshelf.";
@@ -1636,7 +1635,7 @@
 "welcome.unsplash.description" = "Erstellen Sie Notizbuchcover oder fügen Sie Fotos aus der Unsplash-Galerie zu Ihren Notizen hinzu.";
 "welcome.webClips" = "WEB CLIPS";
 "welcome.webClips.description" = "Schnell Webseiten-Ausschnitte zu Ihren Notizen hinzufügen. Ideal für jedes Forschungsprojekt.";
-"welcome.widgets" = "Widgets";
+"welcome.widgets" = "WIDGETS";
 "welcome.widgets.description" = "Erkunden Sie unser Widgets und heben Sie Ihren Notizenaufnahmefluss auf den Startbildschirm.";
 "welcome.zoombox" = "ZOOM BOX";
 "welcome.zoombox.description" = "Unser Zoom-Feld ermöglicht es Ihnen, präzise handschriftliche Notizen mühelos zu machen.";
@@ -1651,4 +1650,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 12 April 2024 at 5:56 PM
+// Last Synced by Narayana on 12 April 2024 at 6:50 PM

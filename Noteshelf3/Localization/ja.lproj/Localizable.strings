@@ -1258,7 +1258,6 @@
 "penRack.felt" = "フェルトペン";
 "penRack.fountain" = "万年筆";
 "penRack.pencil" = "鉛筆";
-"premiumBanner.featureInfo" = "無制限のノートブック、手書き認識など。";
 "presentation.clearAnnotations" = "注釈をクリア";
 "presentation.clearAnnotationsAlert" = "すべての注釈を削除してもよろしいですか？";
 "presentation.exit" = "プレゼンテーション終了";
@@ -1651,4 +1650,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 12 April 2024 at 5:56 PM
+// Last Synced by Narayana on 12 April 2024 at 6:50 PM

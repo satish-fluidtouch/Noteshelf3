@@ -1258,7 +1258,6 @@
 "penRack.felt" = "Rotulador.";
 "penRack.fountain" = "Pluma estilográfica.";
 "penRack.pencil" = "Lápiz";
-"premiumBanner.featureInfo" = "Cuadernos ilimitados, reconocimiento de escritura a mano y más.";
 "presentation.clearAnnotations" = "Borrar anotaciones";
 "presentation.clearAnnotationsAlert" = "¿Estás seguro de que quieres borrar todas las anotaciones?";
 "presentation.exit" = "Salir de la presentación";
@@ -1602,7 +1601,7 @@
 "welcome.imageEditing.description" = "Agrega imágenes y realiza acciones avanzadas como la eliminación de fondos con facilidad.";
 "welcome.importDocuments" = "IMPORTAR DOCUMENTOS";
 "welcome.importDocuments.description" = "Apoyamos los formatos PDF, Pages, Keynote, Word, PowerPoint y Excel para importar y marcar.";
-"welcome.links" = "Enlaces";
+"welcome.links" = "ENLACES";
 "welcome.links.description" = "Crear enlaces entre páginas, entre cuadernos o a URLs externas.";
 "welcome.macApp" = "APLICACIÓN DE MAC";
 "welcome.macApp.description" = "Revisa tus notas en la Mac. ¡Tus notas se verán increíbles en la pantalla grande!";
@@ -1618,7 +1617,7 @@
 "welcome.pressureSensitive.description" = "La escritura expresiva es posible con la sensibilidad a la presión del Apple Pencil.";
 "welcome.richText" = "TEXTO RICO";
 "welcome.richText.description" = "Tomar notas detalladas con viñetas, numeración e incluso listas de verificación.";
-"welcome.savedClips" = "Clips guardados";
+"welcome.savedClips" = "CLIPS GUARDADOS";
 "welcome.savedclips.description" = "Guarde cualquier selección en la página como un clip para reutilizarla. ¡Crea una biblioteca de clips!";
 "welcome.scanDocuments" = "ESCANEAR DOCUMENTOS";
 "welcome.scanDocuments.description" = "Escanear documentos reales y marcar o compartir dentro de Noteshelf.";
@@ -1636,7 +1635,7 @@
 "welcome.unsplash.description" = "Crea portadas de cuadernos o agrega fotos de la galería Unsplash a tus notas.";
 "welcome.webClips" = "WEB CLIPS' in Spanish is 'RECORTES WEB'.";
 "welcome.webClips.description" = "Agregue rápidamente recortes de páginas web a sus notas. Ideal para proyectos de investigación.";
-"welcome.widgets" = "widgets";
+"welcome.widgets" = "WIDGETS";
 "welcome.widgets.description" = "Explore nuestros widgets y vea su flujo de toma de notas en la pantalla de inicio.";
 "welcome.zoombox" = "CAJA DE ZOOM";
 "welcome.zoombox.description" = "Nuestra caja de zoom te permite tomar notas escritas a mano precisas con facilidad.";
@@ -1651,4 +1650,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 12 April 2024 at 5:56 PM
+// Last Synced by Narayana on 12 April 2024 at 6:50 PM

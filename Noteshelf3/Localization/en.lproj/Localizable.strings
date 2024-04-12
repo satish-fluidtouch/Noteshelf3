@@ -1115,7 +1115,7 @@
 "iCloudNotAvailableInfo-Mac" = "Please allow %@ to access iCloud in System Preferences -> Internet Accounts -> iCloud Drive -> Options -> Documents.";
 "iCloudUserTurnedOff" = "iCloud turned off";
 "iCloudUserTurnedOffMessage" = "A copy of your documents will remain stored in iCloud. What would you like to do with the documents currently on this device?";
-"iap.bannerTitle" = "Upgrade for Premium";
+"iap.bannerTitle" = "Upgrade to Premium";
 "iap.bannerTitle1" = "Get Premium at %@ OFF";
 "iap.bannerTitle2" = "only for Noteshelf 2 users";
 "iap.booklimitReachedMessage" = "Empty your trash bin to make sure deleted notebooks aren't counting towards your quota, or unlock the full app for unlimited notebooks";
@@ -1258,7 +1258,6 @@
 "penRack.felt" = "Felt Pen";
 "penRack.fountain" = "Fountain Pen";
 "penRack.pencil" = "Pencil";
-"premiumBanner.featureInfo" = "Unlimited notebooks, handwriting recognition, and more.";
 "presentation.clearAnnotations" = "Clear Annotations";
 "presentation.clearAnnotationsAlert" = "Are you sure you want to clear all annotations?";
 "presentation.exit" = "Exit Presentation";
@@ -1602,7 +1601,7 @@
 "welcome.imageEditing.description" = "Add images and do advanced actions like background removal with ease.";
 "welcome.importDocuments" = "IMPORT DOCUMENTS";
 "welcome.importDocuments.description" = "PDF, Pages, Keynote, Word, PowerPoint and Excel formats are supported for import and markup.";
-"welcome.links" = "Links";
+"welcome.links" = "LINKS";
 "welcome.links.description" = "Create links between pages, between notebook or to external URLs.";
 "welcome.macApp" = "MAC APP";
 "welcome.macApp.description" = "Review your notes on the Mac. Your notes will look awesome on the large screen!";
@@ -1618,7 +1617,7 @@
 "welcome.pressureSensitive.description" = "Expressive handwriting is possible with the Apple Pencil pressure sensitivity.";
 "welcome.richText" = "RICH TEXT";
 "welcome.richText.description" = "Take rich typed notes with bullets, numbering and even tappable checklists.";
-"welcome.savedClips" = "Saved Clips";
+"welcome.savedClips" = "SAVED CLIPS";
 "welcome.savedclips.description" = "Save any selection on the page as a clip and reuse it any number of times. Make your own clip library!";
 "welcome.scanDocuments" = "SCAN DOCUMENTS";
 "welcome.scanDocuments.description" = "Scan real documents and markup or share within Noteshelf.";
@@ -1636,7 +1635,7 @@
 "welcome.unsplash.description" = "Create stunning notebook covers or add photos to your notes from the vast Unsplash gallary.";
 "welcome.webClips" = "WEB CLIPS";
 "welcome.webClips.description" = "Quickly add clipping of web pages to your notes. Great for any research project.";
-"welcome.widgets" = "Widgets";
+"welcome.widgets" = "WIDGETS";
 "welcome.widgets.description" = "Explore our interactive widgets and elevate your note taking workflow to the home screen.";
 "welcome.zoombox" = "ZOOM BOX";
 "welcome.zoombox.description" = "Our zoom box lets you take precise handwritten notes with ease.";
@@ -1651,4 +1650,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 12 April 2024 at 5:56 PM
+// Last Synced by Narayana on 12 April 2024 at 6:50 PM
