@@ -102,11 +102,15 @@ private extension FTRecordViewModel {
             self.isRecording = true
         } else if (self.audioActivity != nil &&
                    self.audioActivity?.audioServiceStatus == .recording) {
-            self.audioService?.stopRecording()
-            self.isRecording = false
-            self.recordingDuration = 0
-            self.durationStr = "00:00"
+            self.stopRecording()
         }
+    }
+
+    func stopRecording() {
+        self.audioService?.stopRecording()
+        self.isRecording = false
+        self.recordingDuration = 0
+        self.durationStr = "00:00"
     }
 
     func updateRecordingTime() {
@@ -162,7 +166,9 @@ extension FTRecordViewModel: FTAudioServiceDelegate {
             }
         })
     }
-    
-    func audioServiceDidFinishPlaying(withError error: Error?) {
+    func audioServiceDidInterrupted(at status: FTAudioServiceStatus) {
+        if status == .recording {
+            self.stopRecording()
+        }
     }
 }
