@@ -138,6 +138,8 @@ class FTWelcomeScreenViewController: UIViewController {
     }
     
     @IBAction func didTapOnDismiss(_ sender: UIButton?) {
+        UserDefaults.standard.set(true, forKey: WelcomeScreenViewed)
+        UserDefaults.standard.synchronize();
         self.dismiss(animated: true) {
             self.displayLink.invalidate();
             self.onDismissBlock?();
