@@ -48,11 +48,10 @@ class FTWelcomeItemViewController: UIViewController {
     }
     
     @IBAction func didTapOnButtonAction(_ button: UIButton) {
+        self.delegate?.welcomeItem(self, didTapOnItem: self.welcomeItem!)
         UIView.animate(withDuration: AnimationValue.animatedValue, animations: {
             self.contentView?.transform = .identity
-        }) { _ in
-            self.delegate?.welcomeItem(self, didTapOnItem: self.welcomeItem!)
-        }
+        })
     }
     
     @IBAction func didBeganTapOnButtonAction(_ button: UIButton) {
@@ -65,6 +64,12 @@ class FTWelcomeItemViewController: UIViewController {
         UIView.animate(withDuration: AnimationValue.animatedValue, animations: {
             self.contentView?.transform = .identity
         })
+    }
+    
+    func setAsPreviewed(_ isPreviewd: Bool) {
+        self.view?.backgroundColor = isPreviewd ? UIColor(hexString: "DED0BE") : .clear
+        self.view.layer.cornerRadius = isPreviewd ? 28 : 0;
+        self.contentView?.isHidden = isPreviewd;
     }
 }
 

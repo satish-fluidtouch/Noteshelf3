@@ -51,7 +51,7 @@ class FTWelcomeScreenViewController: UIViewController {
         let viewHeight = self.view.frame.size.height;
         
         let contentHeight = 2 * itemSize + 16 + (self.dismissButton?.frame.height ?? 0) + (self.topHeaderView?.frame.height ?? 0);
-        let remainingHeight = (viewHeight - contentHeight) / 5;
+        let remainingHeight = (viewHeight - contentHeight) / 4;
                
         self.contentHeightConstraint?.constant = 2 * itemSize + 16;
         self.headerConstraintTop?.constant = remainingHeight;
@@ -84,9 +84,16 @@ class FTWelcomeScreenViewController: UIViewController {
         self.dismissButton?.layer.cornerRadius = 16;
         
         self.view.layoutIfNeeded();
+        self.view.setNeedsUpdateConstraints();
+        self.view.updateConstraintsIfNeeded()
+
+        var itemsToLoad = [FTGetStartedViewItems]();
+        itemsToLoad.append(contentsOf: model.getstartedList);
+        itemsToLoad.append(contentsOf: model.getstartedList);
+        itemsToLoad.append(contentsOf: model.getstartedList);
         
-        self.loadGrids(model.getstartedList, contentView: self.scrollView1!)
-        self.loadGrids(model.getstartedList, contentView: self.scrollView2!)
+        self.loadGrids(itemsToLoad, contentView: self.scrollView1!)
+        self.loadGrids(itemsToLoad, contentView: self.scrollView2!)
         
         var offset = self.scrollView2?.contentOffset ?? .zero;
         offset.x = self.scrollView2!.contentSize.width - self.scrollView2!.frame.width
@@ -95,11 +102,13 @@ class FTWelcomeScreenViewController: UIViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator);
-        var isPaused = self.displayLink.isPaused;
+        let isPaused = self.displayLink.isPaused;
         self.stopAnimation()
         coordinator.animate { context in
             self.view.setNeedsUpdateConstraints();
             self.view.updateConstraintsIfNeeded();
+            self.view.layoutIfNeeded()
+            self.previewController?.updateViewConstraintsOntransition()
         } completion: { _ in
             if !isPaused {
                 self.startAnimation()
@@ -118,11 +127,7 @@ class FTWelcomeScreenViewController: UIViewController {
             self.onDismissBlock = nil
         }
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
-            
+                
     private lazy var displayLink: CADisplayLink = {
         let displayLink = CADisplayLink(target: self, selector: #selector(self.updateContent(_:)));
         displayLink.preferredFrameRateRange = CAFrameRateRange(minimum: 20, maximum: 40);
@@ -207,8 +212,9 @@ extension FTWelcomeScreenViewController: FTWelcomePreviewDelegate {
         preview.dismissPreivew(to: frame,itemSize: self.itemSize) {
             preview.removeFromParent()
             preview.view.removeFromSuperview();
-            self.selectedSlide?.view.isHidden = false;
+            self.selectedSlide?.setAsPreviewed(false)
             self.selectedSlide = nil;
+            self.previewController = nil;
             self.startAnimation();
         }
     }
@@ -217,6 +223,7 @@ extension FTWelcomeScreenViewController: FTWelcomePreviewDelegate {
 extension FTWelcomeScreenViewController: FTWelcomeItemDelegate {
     func welcomeItem(_ controller: FTWelcomeItemViewController, didTapOnItem item: FTGetStartedViewItems) {
         let previewController = FTWelcomePreviewViewController.welcomeItemComtroller(item);
+        previewController.referenceContentView = self.contentView;
         
         let frame = self.frame(for: controller)
         previewController.delegate = self;
@@ -224,8 +231,9 @@ extension FTWelcomeScreenViewController: FTWelcomeItemDelegate {
         previewController.view.frame = self.view.bounds
         previewController.view.addFullConstraints(self.view);
         selectedSlide = controller;
+        self.previewController = previewController;
         
-        controller.view.isHidden = true;
+        controller.setAsPreviewed(true)
         
         previewController.showPreview(from: frame,itemSize: self.itemSize)
         self.stopAnimation();

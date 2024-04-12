@@ -15,6 +15,9 @@ enum FTGetStartedViewItems:CaseIterable {
     case daynightJournal
     case customizableToolbar
     case unsplash
+    case savedClips
+    case links
+    case widgets
     case pixabay
     case beatifulCovers
 //    case fancyHeaders
@@ -23,7 +26,7 @@ enum FTGetStartedViewItems:CaseIterable {
     case audioNotes
     case webClip
     case iCloudsync
-//    case appleWatch
+    case appleWatch
     case macApp
     case shapes
     case imageEditing
@@ -57,6 +60,12 @@ enum FTGetStartedViewItems:CaseIterable {
             title = "welcome.customizableToolBar"
         case .unsplash:
             title = "welcome.unsplash"
+        case .savedClips:
+            title = "welcome.savedClips"
+        case .links:
+            title = "welcome.links"
+        case .widgets:
+            title = "welcome.widgets"
         case .pixabay:
             title = "welcome.pixabay"
         case .beatifulCovers:
@@ -73,8 +82,8 @@ enum FTGetStartedViewItems:CaseIterable {
             title = "welcome.webClips"
         case .iCloudsync:
             title = "welcome.icloudSync"
-//        case .appleWatch:
-//            title = "welcome.appleWatch"
+        case .appleWatch:
+            title = "welcome.appleWatch"
         case .macApp:
             title = "welcome.macApp"
         case .shapes:
@@ -128,6 +137,12 @@ enum FTGetStartedViewItems:CaseIterable {
             name = "customizable_toolbar"
         case .unsplash:
             name = "unsplash_welcome"
+        case .savedClips:
+            name = "welcome.savedclips"
+        case .links:
+            name = "welcome.links"
+        case .widgets:
+            name = "welcome.widgets"
         case .pixabay:
             name = "pixabay_welcome"
         case .beatifulCovers:
@@ -144,8 +159,8 @@ enum FTGetStartedViewItems:CaseIterable {
             name = "webclips"
         case .iCloudsync:
             name = "icloud_sync"
-//        case .appleWatch:
-//            name = "apple_watch"
+        case .appleWatch:
+            name = "apple_watch"
         case .macApp:
             name = "macApp"
         case .shapes:
@@ -199,6 +214,12 @@ enum FTGetStartedViewItems:CaseIterable {
             title = "welcome.customizableToolBar.description"
         case .unsplash:
             title = "welcome.unsplash.description"
+        case .savedClips:
+            title = "welcome.savedclips.description"
+        case .links:
+            title = "welcome.links.description"
+        case .widgets:
+            title = "welcome.widgets.description"
         case .pixabay:
             title = "welcome.pixabay.description"
         case .beatifulCovers:
@@ -215,8 +236,8 @@ enum FTGetStartedViewItems:CaseIterable {
             title = "welcome.webClips.description"
         case .iCloudsync:
             title = "welcome.icloudSync.description"
-//        case .appleWatch:
-//            title = "welcome.appleWatch.description"
+        case .appleWatch:
+            title = "welcome.appleWatch.description"
         case .macApp:
             title = "welcome.macApp.description"
         case .shapes:
@@ -253,6 +274,83 @@ enum FTGetStartedViewItems:CaseIterable {
             title = "welcome.digitalDiaries.description"
         }
         return title.localized
+    }
+    
+    var previewImageName: String {
+        let name: String
+        switch self {
+        case .autoBackup:
+            name = "welcome.autoBackup.preview"
+        case .superNaturalPens:
+            name = "welcome.superNaturalPens.preview"
+        case .focusmode:
+            name = "welcome.focusMode.preview"
+        case .daynightJournal:
+            name = "welcome.dayNightJournal.preview"
+        case .customizableToolbar:
+            name = "welcome.customizableToolBar.preview"
+        case .unsplash:
+            name = "welcome.unsplash.preview"
+        case .savedClips:
+            name = "welcome.savedClips.preview"
+        case .links:
+            name = "welcome.links.preview"
+        case .widgets:
+            name = "welcome.widgets.preview"
+        case .pixabay:
+            name = "welcome.pixabay.preview"
+        case .beatifulCovers:
+            name = "welcome.beautifulCovers.preview"
+//        case .fancyHeaders:
+//            name = "fancy_headers"
+        case .stickers:
+            name = "welcome.stickers.preview"
+        case .emojies:
+            name = "welcome.emojies.preview"
+        case .audioNotes:
+            name = "welcome.audioNotes.preview"
+        case .webClip:
+            name = "welcome.webClips.preview"
+        case .iCloudsync:
+            name = "welcome.icloudSync.preview"
+        case .appleWatch:
+            name = "welcome.appleWatch.preview"
+        case .macApp:
+            name = "welcome.macApp.preview"
+        case .shapes:
+            name = "welcome.shapes.preview"
+        case .imageEditing:
+            name = "welcome.imageEditing.preview"
+        case .importDocuments:
+            name = "welcome.importDocuments.preview"
+        case .presentMode:
+            name = "welcome.presentMode.preview"
+        case .richText:
+            name = "welcome.richText.preview"
+        case .tags:
+            name = "welcome.tags.preview"
+        case .nestedGroups:
+            name = "welcome.nestedgroups.preview"
+        case .presureSensitive:
+            name = "welcome.pressureSensitive.preview"
+        case .handwritingRecognition:
+            name = "welcome.handWritingRecognition.preview"
+        case .scanDocuments:
+            name = "welcome.scanDocuments.preview"
+        case .bookmarks:
+            name = "welcome.bookmarks.preview"
+        case .password:
+            name = "welcome.password.preview"
+        case .customTemplates:
+            name = "welcome.customTemplates.preview"
+        case .zoombox:
+            name = "welcome.zoombox.preview"
+        case .thousandPlusTemplates:
+            name = "welcome.thousandPlusTemplates.preview"
+        case .digitalDiaries:
+            name = "welcome.digitalDiaries.preview"
+        }
+        return name
     }
 }
 class FTGetStartedItemViewModel: ObservableObject {

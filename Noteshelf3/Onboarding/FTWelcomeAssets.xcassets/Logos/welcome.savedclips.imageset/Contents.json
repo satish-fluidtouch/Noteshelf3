@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "welcome.savedclips.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
