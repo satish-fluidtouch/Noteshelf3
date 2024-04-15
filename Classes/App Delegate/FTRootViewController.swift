@@ -229,7 +229,9 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     // MARK: - Provider update -
     private weak var localAppActieObserver: NSObjectProtocol?
     fileprivate func updateProviderIfNeeded() {
+        #if DEBUG
         UserDefaults.standard.removeObject(forKey: WelcomeScreenViewed)
+        #endif
         if(UserDefaults.standard.bool(forKey: WelcomeScreenViewed)
            || (!UserDefaults.standard.bool(forKey: WelcomeScreenViewed)
                && UserDefaults.standard.double(forKey: WelcomeScreenReminderTime) > 0)) {
