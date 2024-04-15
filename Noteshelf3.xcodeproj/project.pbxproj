@@ -66,10 +66,10 @@
 		099C91F62A8A1B3900C1FD07 /* FTdairyDatePickerViewController_Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C91F52A8A1B3900C1FD07 /* FTdairyDatePickerViewController_Mac.swift */; };
 		099C91F82A8A386700C1FD07 /* FTDairyDateSelectionPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C91F72A8A386700C1FD07 /* FTDairyDateSelectionPickerController.swift */; };
 		099D23592ABAD10A00636C42 /* URL+Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7A5F5D2AB0766E006D5284 /* URL+Thumbnail.swift */; };
-		09A1C3C82BCD45B500053114 /* ambient loop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09A1C3C52BCD45B500053114 /* ambient loop.mp3 */; };
-		09A1C3C92BCD45B500053114 /* popup_close.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09A1C3C62BCD45B500053114 /* popup_close.mp3 */; };
-		09A1C3CA2BCD45B500053114 /* popup_open.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09A1C3C72BCD45B500053114 /* popup_open.mp3 */; };
 		09A1C3CC2BCD4A2A00053114 /* FTGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A1C3CB2BCD4A2A00053114 /* FTGradientView.swift */; };
+		09A1C3D72BCD5C2C00053114 /* popup_close.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09A1C3D42BCD5C2C00053114 /* popup_close.mp3 */; };
+		09A1C3D82BCD5C2C00053114 /* ambient loop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09A1C3D52BCD5C2C00053114 /* ambient loop.mp3 */; };
+		09A1C3D92BCD5C2C00053114 /* popup_open.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09A1C3D62BCD5C2C00053114 /* popup_open.mp3 */; };
 		09A535572B0B80D60004CA09 /* FTImageResourceCacheHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A535562B0B80D60004CA09 /* FTImageResourceCacheHandler.swift */; };
 		09A67BF02AE7C66900C5500D /* FTPDFContentCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A67BEF2AE7C66900C5500D /* FTPDFContentCache.swift */; };
 		09A67BF32AE8F25100C5500D /* FTCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A67BF22AE8F25100C5500D /* FTCache.swift */; };
@@ -2730,10 +2730,10 @@
 		099D235A2ABAE2B900636C42 /* Noteshelf3 Thumbnail.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf3 Thumbnail.entitlements"; sourceTree = "<group>"; };
 		099F722020526FC7004D3518 /* default_paper_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_paper_image.png; sourceTree = "<group>"; };
 		099F722120526FC7004D3518 /* default_cover_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_cover_image.png; sourceTree = "<group>"; };
-		09A1C3C52BCD45B500053114 /* ambient loop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "ambient loop.mp3"; sourceTree = "<group>"; };
-		09A1C3C62BCD45B500053114 /* popup_close.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = popup_close.mp3; sourceTree = "<group>"; };
-		09A1C3C72BCD45B500053114 /* popup_open.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = popup_open.mp3; sourceTree = "<group>"; };
 		09A1C3CB2BCD4A2A00053114 /* FTGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGradientView.swift; sourceTree = "<group>"; };
+		09A1C3D42BCD5C2C00053114 /* popup_close.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = popup_close.mp3; sourceTree = "<group>"; };
+		09A1C3D52BCD5C2C00053114 /* ambient loop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "ambient loop.mp3"; sourceTree = "<group>"; };
+		09A1C3D62BCD5C2C00053114 /* popup_open.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = popup_open.mp3; sourceTree = "<group>"; };
 		09A3870D210763F4005E4000 /* FTAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAnnotation.swift; sourceTree = "<group>"; };
 		09A3870F210763FF005E4000 /* FTStroke.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FTStroke.swift; path = "Classes/Document UI/PDF Related/Annotations Model/FTStroke.swift"; sourceTree = SOURCE_ROOT; };
 		09A387112107640D005E4000 /* FTImageAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTImageAnnotation.swift; sourceTree = "<group>"; };
@@ -5701,6 +5701,16 @@
 			path = ThemeImages;
 			sourceTree = "<group>";
 		};
+		09A1C3D32BCD5C2C00053114 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				09A1C3D42BCD5C2C00053114 /* popup_close.mp3 */,
+				09A1C3D52BCD5C2C00053114 /* ambient loop.mp3 */,
+				09A1C3D62BCD5C2C00053114 /* popup_open.mp3 */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
 		09A535552B0B80BC0004CA09 /* private */ = {
 			isa = PBXGroup;
 			children = (
@@ -6474,17 +6484,6 @@
 			path = TextLists;
 			sourceTree = "<group>";
 		};
-		09F290262BCD1B0900B221BD /* Audio */ = {
-			isa = PBXGroup;
-			children = (
-				09A1C3C52BCD45B500053114 /* ambient loop.mp3 */,
-				09A1C3C62BCD45B500053114 /* popup_close.mp3 */,
-				09A1C3C72BCD45B500053114 /* popup_open.mp3 */,
-			);
-			name = Audio;
-			path = ../../../../../../../Users/amar/Desktop/Audio;
-			sourceTree = "<group>";
-		};
 		09FD71761EB44AD8008ACB6B /* FTThemesModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -6519,7 +6518,7 @@
 		143570502A42D33E0088B4EB /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				09F290262BCD1B0900B221BD /* Audio */,
+				09A1C3D32BCD5C2C00053114 /* Audio */,
 				143570512A42D37D0088B4EB /* FTWelcomeView.swift */,
 				143570532A42D4080088B4EB /* FTGetStartedItemViewModel.swift */,
 				143570572A42F6040088B4EB /* FTGetstartedHostingViewcontroller.swift */,
@@ -12604,7 +12603,6 @@
 				52BBD4E429E951D1003088AE /* Coming Soon Regular.ttf in Resources */,
 				52BBD4E629E951D1003088AE /* Baskerville T Medium.otf in Resources */,
 				52BBD4E829E951D1003088AE /* Andrea-Normal.ttf in Resources */,
-				09A1C3C92BCD45B500053114 /* popup_close.mp3 in Resources */,
 				14E976882A17534700382189 /* FTSettings_Accounts.storyboard in Resources */,
 				BAF38F5A2859ADF00067CA9F /* BrushAssets_V4.xcassets in Resources */,
 				E7AE403528755A9500C0F3EC /* StockCovers.bundle in Resources */,
@@ -12666,6 +12664,7 @@
 				BAF38FB82859ADF00067CA9F /* FTBackUpOptionsFooterView.xib in Resources */,
 				BA8BA66029782EA200946CFE /* FTAdvanced.storyboard in Resources */,
 				E7AE403F28755D4500C0F3EC /* Planner.plist in Resources */,
+				09A1C3D72BCD5C2C00053114 /* popup_close.mp3 in Resources */,
 				BAF38FBC2859ADF00067CA9F /* FTWatchRecordings.storyboard in Resources */,
 				423E8793295EF2DD002C082F /* cover_template.pdf in Resources */,
 				BAF38FBE2859ADF00067CA9F /* FTExportDataInfoCell.xib in Resources */,
@@ -12673,7 +12672,7 @@
 				BAF38FC02859ADF00067CA9F /* FTConvertPreferencesViewController.xib in Resources */,
 				52DE39482A150E3A0090A630 /* DancingScript-Regular.ttf in Resources */,
 				E7AE404628755D4500C0F3EC /* themes_v8_fr.plist in Resources */,
-				09A1C3CA2BCD45B500053114 /* popup_open.mp3 in Resources */,
+				09A1C3D92BCD5C2C00053114 /* popup_open.mp3 in Resources */,
 				BAB4D5072AFFF34D009124EF /* Migration.storyboard in Resources */,
 				E7AE403928755D4500C0F3EC /* themes_v8_zh-Hant.plist in Resources */,
 				BAF38FC72859ADF00067CA9F /* WhatsNewLocalizable.strings in Resources */,
@@ -12688,7 +12687,6 @@
 				BAF38FE22859ADF00067CA9F /* FTAudioPlayerController.xib in Resources */,
 				E7AE403628755A9800C0F3EC /* StockPapers.bundle in Resources */,
 				BAF38FE42859ADF00067CA9F /* FTSettingsCommonTableViewCell.xib in Resources */,
-				09A1C3C82BCD45B500053114 /* ambient loop.mp3 in Resources */,
 				BAF38FE62859ADF00067CA9F /* FTShelfCategoryHeaderView.xib in Resources */,
 				BAF38FE82859ADF00067CA9F /* FTConvertToTextViewController.xib in Resources */,
 				097449E02ABDB51A0008C6B6 /* AICommands.strings in Resources */,
@@ -12740,6 +12738,7 @@
 				523DFE8B2A6FCED100924E9A /* Colors.xcassets in Resources */,
 				BAF3902F2859ADF00067CA9F /* FTEvernoteFooterView.xib in Resources */,
 				42A702FC293A158F00970A94 /* cover_line.png in Resources */,
+				09A1C3D82BCD5C2C00053114 /* ambient loop.mp3 in Resources */,
 				E7AE403C28755D4500C0F3EC /* Modern.plist in Resources */,
 				BAF390322859ADF00067CA9F /* FTOutlineTableCell.xib in Resources */,
 				BAF3903B2859ADF00067CA9F /* FTNewSettings.storyboard in Resources */,
@@ -15410,7 +15409,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 94;
+				CURRENT_PROJECT_VERSION = 95;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -15851,7 +15850,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 94;
+				CURRENT_PROJECT_VERSION = 95;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -16785,7 +16784,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 94;
+				CURRENT_PROJECT_VERSION = 95;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -17729,7 +17728,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 94;
+				CURRENT_PROJECT_VERSION = 95;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -17795,7 +17794,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 94;
+				CURRENT_PROJECT_VERSION = 95;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
