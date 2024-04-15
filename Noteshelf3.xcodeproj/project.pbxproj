@@ -4333,7 +4333,6 @@
 		E75CD84E2B8F0B4600D59F21 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E75CD8502B8F0B4700D59F21 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E75CD8532B8F0B4700D59F21 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		E75CD85E2B8F115800D59F21 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E75E1EB22AFA0781008CAD44 /* FTFavoritePenTypeEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritePenTypeEditController.swift; sourceTree = "<group>"; };
 		E75E67BC2A9F7442009F5B2E /* FTTextStyle.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FTTextStyle.plist; sourceTree = "<group>"; };
 		E75FCB2826C0EB5700E5FF75 /* FTGlobalSearch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FTGlobalSearch.storyboard; sourceTree = "<group>"; };
@@ -10760,7 +10759,6 @@
 				E75CD84C2B8F0B4600D59F21 /* Noteshelf3_WatchApp.swift */,
 				E75CD84E2B8F0B4600D59F21 /* ContentView.swift */,
 				E75CD8502B8F0B4700D59F21 /* Assets.xcassets */,
-				E75CD85E2B8F115800D59F21 /* Info.plist */,
 				E75CD8522B8F0B4700D59F21 /* Preview Content */,
 			);
 			path = "Noteshelf3 WatchApp Watch App";
