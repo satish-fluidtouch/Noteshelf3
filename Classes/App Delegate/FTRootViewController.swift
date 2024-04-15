@@ -143,6 +143,9 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
            !(splitVC.isBeingDismissed || splitVC.isBeingPresented) {
             return splitVC.prefersStatusBarHidden;
         }
+        else if self.presentedViewController is FTWelcomeScreenViewController {
+            return self.presentedViewController?.prefersStatusBarHidden ?? super.prefersStatusBarHidden
+        }
         return super.prefersStatusBarHidden;
     }
 
