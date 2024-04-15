@@ -1007,6 +1007,7 @@
 "customizeToolbar.emojis" = "表情符號";
 "customizeToolbar.eraser" = "橡皮";
 "customizeToolbar.highlighter" = "螢光筆";
+"customizeToolbar.horizontalScrollingEnabled" = "水平滾動已啟用";
 "customizeToolbar.lasso" = "套索";
 "customizeToolbar.page" = "新增頁面";
 "customizeToolbar.pen" = "筆";
@@ -1028,6 +1029,7 @@
 "customizeToolbar.tag" = "標籤";
 "customizeToolbar.textBox" = "文字方塊";
 "customizeToolbar.unsplash" = "Unsplash";
+"customizeToolbar.verticalScrollingEnabled" = "垂直滾動已啟用";
 "customizeToolbarzoombox" = "縮放框";
 "customtemplate.saveas" = "儲存為自訂模板";
 "customtemplate.screentitle" = "自訂模板";
@@ -1629,6 +1631,7 @@
 "welcome.superNaturalPens.description" = "我們的筆提供真實的書寫體驗-就像用筆和紙一樣！";
 "welcome.tags" = "標籤";
 "welcome.tags.description" = "標記筆記本或頁面以便日後輕鬆找到。";
+"welcome.taptileinfo" = "點擊任何卡片以獲取更多資訊";
 "welcome.thousandPlusTemplates" = "1000+模板";
 "welcome.thousandPlusTemplates.description" = "我們有適合每種筆記需求的模板。還有更多。";
 "welcome.unsplash" = "UNSPLASH";
@@ -1650,4 +1653,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 12 April 2024 at 7:58 PM
+// Last Synced by Amar Udupa on 15 April 2024 at 12:55 PM

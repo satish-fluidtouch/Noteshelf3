@@ -1007,6 +1007,7 @@
 "customizeToolbar.emojis" = "Emoticon";
 "customizeToolbar.eraser" = "Cancellino";
 "customizeToolbar.highlighter" = "Evidenziatore";
+"customizeToolbar.horizontalScrollingEnabled" = "Lo scorrimento orizzontale è abilitato";
 "customizeToolbar.lasso" = "Laccio";
 "customizeToolbar.page" = "Pagina";
 "customizeToolbar.pen" = "Penna";
@@ -1028,6 +1029,7 @@
 "customizeToolbar.tag" = "Tag";
 "customizeToolbar.textBox" = "Casella di testo";
 "customizeToolbar.unsplash" = "Unplash";
+"customizeToolbar.verticalScrollingEnabled" = "Lo scorrimento verticale è abilitato";
 "customizeToolbarzoombox" = "Zoom Box";
 "customtemplate.saveas" = "Salva come modello personalizzato";
 "customtemplate.screentitle" = "MODELLO PERSONALIZZATO";
@@ -1629,6 +1631,7 @@
 "welcome.superNaturalPens.description" = "Le nostre penne offrono un'esperienza di scrittura realistica, proprio come carta e penna!";
 "welcome.tags" = "TAGS";
 "welcome.tags.description" = "Etichetta i quaderni o le pagine per trovarli facilmente in seguito.";
+"welcome.taptileinfo" = "Tocca su qualsiasi carta per saperne di più";
 "welcome.thousandPlusTemplates" = "1000+ MODELLI";
 "welcome.thousandPlusTemplates.description" = "Abbiamo un modello per ogni esigenza di appunti. E altro ancora.";
 "welcome.unsplash" = "UNSPLASH";
@@ -1650,4 +1653,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 12 April 2024 at 7:58 PM
+// Last Synced by Amar Udupa on 15 April 2024 at 12:55 PM

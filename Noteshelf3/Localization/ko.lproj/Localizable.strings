@@ -1007,6 +1007,7 @@
 "customizeToolbar.emojis" = "이모티콘";
 "customizeToolbar.eraser" = "지우개";
 "customizeToolbar.highlighter" = "형광펜";
+"customizeToolbar.horizontalScrollingEnabled" = "가로 스크롤이 활성화되었습니다.";
 "customizeToolbar.lasso" = "라쏘";
 "customizeToolbar.page" = "페이지";
 "customizeToolbar.pen" = "펜";
@@ -1028,6 +1029,7 @@
 "customizeToolbar.tag" = "태그";
 "customizeToolbar.textBox" = "텍스트 상자";
 "customizeToolbar.unsplash" = "언스플래시";
+"customizeToolbar.verticalScrollingEnabled" = "수직 스크롤이 활성화되었습니다";
 "customizeToolbarzoombox" = "줌 박스";
 "customtemplate.saveas" = "사용자 정의 템플릿으로 저장";
 "customtemplate.screentitle" = "사용자 정의 템플릿";
@@ -1629,6 +1631,7 @@
 "welcome.superNaturalPens.description" = "우리의 펜은 펜과 종이처럼 현실적인 쓰기 경험을 제공합니다!";
 "welcome.tags" = "태그";
 "welcome.tags.description" = "나중에 쉽게 찾기 위해 노트북이나 페이지에 태그를 달아주세요.";
+"welcome.taptileinfo" = "어떤 카드를 눌러 자세히 알아보세요";
 "welcome.thousandPlusTemplates" = "1000개 이상의 템플릿";
 "welcome.thousandPlusTemplates.description" = "우리는 모든 필요에 맞는 템플릿을 갖추고 있습니다. 그리고 더 많은 것도 있습니다.";
 "welcome.unsplash" = "언스플래시";
@@ -1650,4 +1653,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 12 April 2024 at 7:58 PM
+// Last Synced by Amar Udupa on 15 April 2024 at 12:55 PM

@@ -11,6 +11,8 @@ import UIKit
 class FTWelcomeScreenViewController: UIViewController {
     private weak var previewController: FTWelcomePreviewViewController?
     @IBOutlet weak var titleLable: UILabel?;
+    @IBOutlet weak var tapTileInfoLable: UILabel?;
+
     @IBOutlet weak var dismissButton: UIButton?;
     @IBOutlet weak var subTitle: UILabel?;
     @IBOutlet private weak var topHeaderView: UIStackView?;
@@ -76,6 +78,8 @@ class FTWelcomeScreenViewController: UIViewController {
         let secondSet = NSAttributedString(string: self.model.headerbottomsecondTitle, attributes: [.font: UIFont.clearFaceFont(for: .regularItalic, with: fontSize),.foregroundColor : UIColor.black])
         attributedTet.append(secondSet)
         self.subTitle?.attributedText = attributedTet;
+        
+        self.tapTileInfoLable?.text = "welcome.taptileinfo".localized
         
         self.dismissButton?.setAttributedTitle(NSAttributedString(string: model.btntitle, attributes: [
             .font : UIFont.clearFaceFont(for: .medium, with: 20)

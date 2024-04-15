@@ -123,6 +123,7 @@
                         <outlet property="scrollView1" destination="cnb-xm-lJp" id="qXt-o2-DkO"/>
                         <outlet property="scrollView2" destination="O0M-Az-UNH" id="wzH-Es-IAe"/>
                         <outlet property="subTitle" destination="WRj-AB-Hzd" id="UUR-54-kaV"/>
+                        <outlet property="tapTileInfoLable" destination="Cww-MO-zAv" id="8Ia-m2-aOa"/>
                         <outlet property="titleLable" destination="Cwv-6M-QmI" id="yIU-I6-Uv3"/>
                         <outlet property="topHeaderView" destination="51d-kq-NfM" id="8Ax-Uq-YNl"/>
                     </connections>

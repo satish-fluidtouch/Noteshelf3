@@ -1007,6 +1007,7 @@
 "customizeToolbar.emojis" = "絵文字";
 "customizeToolbar.eraser" = "消しゴム";
 "customizeToolbar.highlighter" = "ハイライト";
+"customizeToolbar.horizontalScrollingEnabled" = "水平スクロールが有効になりました";
 "customizeToolbar.lasso" = "投げなわ選択";
 "customizeToolbar.page" = "ページ";
 "customizeToolbar.pen" = "ペン";
@@ -1028,6 +1029,7 @@
 "customizeToolbar.tag" = "タグ";
 "customizeToolbar.textBox" = "テキストボックス";
 "customizeToolbar.unsplash" = "アンスプラッシュ";
+"customizeToolbar.verticalScrollingEnabled" = "垂直スクロールが有効になりました";
 "customizeToolbarzoombox" = "ズームボックス";
 "customtemplate.saveas" = "カスタムテンプレートとして保存";
 "customtemplate.screentitle" = "カスタムテンプレート";
@@ -1629,6 +1631,7 @@
 "welcome.superNaturalPens.description" = "私たちのペンは、紙とペンと同じようなリアルな書き心地を提供します！";
 "welcome.tags" = "タグ";
 "welcome.tags.description" = "後で簡単に見つけるためにノートブックやページにタグを付ける。";
+"welcome.taptileinfo" = "どのカードでもタップして詳細を確認してください";
 "welcome.thousandPlusTemplates" = "1000+ テンプレート";
 "welcome.thousandPlusTemplates.description" = "私たちは、すべてのメモ取りのニーズに対応したテンプレートを用意しています。そしてもっと。";
 "welcome.unsplash" = "アンスプラッシュ";
@@ -1650,4 +1653,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 12 April 2024 at 7:58 PM
+// Last Synced by Amar Udupa on 15 April 2024 at 12:55 PM

@@ -1007,6 +1007,7 @@
 "customizeToolbar.emojis" = "表情符号";
 "customizeToolbar.eraser" = "橡皮";
 "customizeToolbar.highlighter" = "荧光笔";
+"customizeToolbar.horizontalScrollingEnabled" = "水平滚动已启用";
 "customizeToolbar.lasso" = "套索";
 "customizeToolbar.page" = "添加页面";
 "customizeToolbar.pen" = "笔";
@@ -1028,6 +1029,7 @@
 "customizeToolbar.tag" = "标签";
 "customizeToolbar.textBox" = "文本框";
 "customizeToolbar.unsplash" = "Unsplash";
+"customizeToolbar.verticalScrollingEnabled" = "垂直滚动已启用";
 "customizeToolbarzoombox" = "缩放框";
 "customtemplate.saveas" = "保存为自定义模板";
 "customtemplate.screentitle" = "自定义模板";
@@ -1629,6 +1631,7 @@
 "welcome.superNaturalPens.description" = "我们的笔提供了一种逼真的书写体验-就像纸和笔一样！";
 "welcome.tags" = "标签";
 "welcome.tags.description" = "标记笔记本或页面以便稍后轻松找到。";
+"welcome.taptileinfo" = "点击任何卡片以了解更多";
 "welcome.thousandPlusTemplates" = "1000+模板";
 "welcome.thousandPlusTemplates.description" = "我们为每种笔记需求都有模板。还有更多。";
 "welcome.unsplash" = "UNSPLASH";
@@ -1650,4 +1653,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 12 April 2024 at 7:58 PM
+// Last Synced by Amar Udupa on 15 April 2024 at 12:55 PM
