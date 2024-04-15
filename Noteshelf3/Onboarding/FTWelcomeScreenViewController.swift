@@ -69,10 +69,11 @@ class FTWelcomeScreenViewController: UIViewController {
         self.contentView?.addShadow(CGSize(width: 0, height: 30), color: UIColor.appColor(.welcomeBtnColor), opacity: 0.12, radius: 30)
 
         self.titleLable?.font = UIFont.clearFaceFont(for: .regular, with: fontSize)
+        self.titleLable?.textColor = UIColor.black;
         self.titleLable?.text = self.model.headerTopTitle
         
-        let attributedTet = NSMutableAttributedString(string: self.model.headerbottomfirstTitle, attributes: [.font : UIFont.clearFaceFont(for: .regular, with: fontSize)])
-        let secondSet = NSAttributedString(string: self.model.headerbottomsecondTitle, attributes: [.font: UIFont.clearFaceFont(for: .regularItalic, with: fontSize)])
+        let attributedTet = NSMutableAttributedString(string: self.model.headerbottomfirstTitle, attributes: [.font : UIFont.clearFaceFont(for: .regular, with: fontSize),.foregroundColor : UIColor.black])
+        let secondSet = NSAttributedString(string: self.model.headerbottomsecondTitle, attributes: [.font: UIFont.clearFaceFont(for: .regularItalic, with: fontSize),.foregroundColor : UIColor.black])
         attributedTet.append(secondSet)
         self.subTitle?.attributedText = attributedTet;
         
