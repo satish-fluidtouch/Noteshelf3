@@ -11,6 +11,8 @@ import UIKit
 class FTWelcomeScreenViewController: UIViewController {
     private weak var previewController: FTWelcomePreviewViewController?
     @IBOutlet weak var titleLable: UILabel?;
+    @IBOutlet weak var tapTileInfoLable: UILabel?;
+
     @IBOutlet weak var dismissButton: UIButton?;
     @IBOutlet weak var subTitle: UILabel?;
     @IBOutlet private weak var topHeaderView: UIStackView?;
@@ -69,12 +71,15 @@ class FTWelcomeScreenViewController: UIViewController {
         self.contentView?.addShadow(CGSize(width: 0, height: 30), color: UIColor.appColor(.welcomeBtnColor), opacity: 0.12, radius: 30)
 
         self.titleLable?.font = UIFont.clearFaceFont(for: .regular, with: fontSize)
+        self.titleLable?.textColor = UIColor.black;
         self.titleLable?.text = self.model.headerTopTitle
         
-        let attributedTet = NSMutableAttributedString(string: self.model.headerbottomfirstTitle, attributes: [.font : UIFont.clearFaceFont(for: .regular, with: fontSize)])
-        let secondSet = NSAttributedString(string: self.model.headerbottomsecondTitle, attributes: [.font: UIFont.clearFaceFont(for: .regularItalic, with: fontSize)])
+        let attributedTet = NSMutableAttributedString(string: self.model.headerbottomfirstTitle, attributes: [.font : UIFont.clearFaceFont(for: .regular, with: fontSize),.foregroundColor : UIColor.black])
+        let secondSet = NSAttributedString(string: self.model.headerbottomsecondTitle, attributes: [.font: UIFont.clearFaceFont(for: .regularItalic, with: fontSize),.foregroundColor : UIColor.black])
         attributedTet.append(secondSet)
         self.subTitle?.attributedText = attributedTet;
+        
+        self.tapTileInfoLable?.text = "welcome.taptileinfo".localized
         
         self.dismissButton?.setAttributedTitle(NSAttributedString(string: model.btntitle, attributes: [
             .font : UIFont.clearFaceFont(for: .medium, with: 20)
@@ -138,6 +143,8 @@ class FTWelcomeScreenViewController: UIViewController {
     }
     
     @IBAction func didTapOnDismiss(_ sender: UIButton?) {
+        UserDefaults.standard.set(true, forKey: WelcomeScreenViewed)
+        UserDefaults.standard.synchronize();
         self.dismiss(animated: true) {
             self.displayLink.invalidate();
             self.onDismissBlock?();

@@ -1007,6 +1007,7 @@
 "customizeToolbar.emojis" = "Émoticônes";
 "customizeToolbar.eraser" = "Gomme à effacer";
 "customizeToolbar.highlighter" = "Surligneur";
+"customizeToolbar.horizontalScrollingEnabled" = "Défilement horizontal activé";
 "customizeToolbar.lasso" = "Lasso";
 "customizeToolbar.page" = "Page";
 "customizeToolbar.pen" = "Stylo";
@@ -1028,6 +1029,7 @@
 "customizeToolbar.tag" = "Marquer";
 "customizeToolbar.textBox" = "Boîte de texte";
 "customizeToolbar.unsplash" = "Unsplash";
+"customizeToolbar.verticalScrollingEnabled" = "Défilement vertical activé";
 "customizeToolbarzoombox" = "Boîte de zoom";
 "customtemplate.saveas" = "Enregistrer en tant que modèle personnalisé";
 "customtemplate.screentitle" = "MODÈLE PERSONNALISÉ";
@@ -1630,6 +1632,7 @@
 "welcome.superNaturalPens.description" = "Nos stylos offrent une expérience d'écriture réaliste - tout comme le stylo et le papier !";
 "welcome.tags" = "ÉTIQUETTES";
 "welcome.tags.description" = "Étiquetez les cahiers ou les pages pour les retrouver facilement plus tard.";
+"welcome.taptileinfo" = "Appuyez sur n'importe quelle carte pour en savoir plus";
 "welcome.thousandPlusTemplates" = "1000+ MODÈLES";
 "welcome.thousandPlusTemplates.description" = "Nous avons un modèle pour chaque besoin de prise de notes. Et plus encore.";
 "welcome.unsplash" = "UNSPLASH";

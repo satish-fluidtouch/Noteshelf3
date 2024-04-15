@@ -1007,6 +1007,7 @@
 "customizeToolbar.emojis" = "Emojis";
 "customizeToolbar.eraser" = "Radiergummi";
 "customizeToolbar.highlighter" = "Textmarker";
+"customizeToolbar.horizontalScrollingEnabled" = "Horizontales Scrollen wurde aktiviert";
 "customizeToolbar.lasso" = "Lasso";
 "customizeToolbar.page" = "Seite";
 "customizeToolbar.pen" = "Stift";
@@ -1028,6 +1029,7 @@
 "customizeToolbar.tag" = "Machen Sie ein Tag für dieses Wort.";
 "customizeToolbar.textBox" = "Textfeld";
 "customizeToolbar.unsplash" = "Unsplash";
+"customizeToolbar.verticalScrollingEnabled" = "Vertikales Scrollen wurde aktiviert";
 "customizeToolbarzoombox" = "Zoom-Box";
 "customtemplate.saveas" = "Als benutzerdefinierte Vorlage speichern";
 "customtemplate.screentitle" = "BENUTZERDEFINIERTE VORLAGE";
@@ -1630,6 +1632,7 @@
 "welcome.superNaturalPens.description" = "Unsere Stifte bieten ein realistisches Schreiberlebnis - genau wie Stift und Papier!";
 "welcome.tags" = "Schlagwörter";
 "welcome.tags.description" = "Markiere Notizbücher oder Seiten, um sie später leicht zu finden.";
+"welcome.taptileinfo" = "Tippen Sie auf eine Karte, um mehr zu erfahren";
 "welcome.thousandPlusTemplates" = "1000+ VORLAGEN";
 "welcome.thousandPlusTemplates.description" = "Wir haben eine Vorlage für jeden Notizbedarf. Und mehr.";
 "welcome.unsplash" = "UNSPLASH";

@@ -133,6 +133,9 @@ class FTWhatsNewManger: NSObject {
     }
 
     class func canShowWelcomeScreen(onViewController : UIViewController) -> Bool {
+#if DEBUG
+        return true;
+#else
         let userDefaults = UserDefaults.standard;
         let nowInSeconds = Date().timeIntervalSince1970;
         let reminderTimeInSeconds = userDefaults.double(forKey: WelcomeScreenReminderTime);
@@ -140,6 +143,7 @@ class FTWhatsNewManger: NSObject {
             return true;
         }
         return false;
+#endif
     }
 
     @objc class func setAsWhatsNewViewed() {

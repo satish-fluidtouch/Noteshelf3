@@ -1007,6 +1007,7 @@
 "customizeToolbar.emojis" = "Emojis";
 "customizeToolbar.eraser" = "Eraser";
 "customizeToolbar.highlighter" = "Highlighter";
+"customizeToolbar.horizontalScrollingEnabled" = "Horizontal Scrolling Enabled";
 "customizeToolbar.lasso" = "Lasso";
 "customizeToolbar.page" = "Page";
 "customizeToolbar.pen" = "Pen";
@@ -1028,6 +1029,7 @@
 "customizeToolbar.tag" = "Tag";
 "customizeToolbar.textBox" = "Text Box";
 "customizeToolbar.unsplash" = "Unsplash";
+"customizeToolbar.verticalScrollingEnabled" = "Vertical Scrolling Enabled";
 "customizeToolbarzoombox" = "Zoom Box";
 "customtemplate.saveas" = "Save as Custom Template";
 "customtemplate.screentitle" = "CUSTOM TEMPLATE";
@@ -1586,7 +1588,7 @@
 "welcome.digitalDiaries" = "DIGITAL DIARIES";
 "welcome.digitalDiaries.description" = "Noteshelf diaries are fully custmizable for any date range. Start your diary today!";
 "welcome.emojies" = "EMOJIS";
-"welcome.emojies.description" = "Emojis are generaly typed, but you can use them like stamps in Noteshelf 😲";
+"welcome.emojies.description" = "Emojies are generaly typed, but you can use them like stamps in Noteshelf 😲";
 "welcome.fancyHeaders" = "FANCY HEADERS";
 "welcome.focusMode" = "FOCUS MODE";
 "welcome.focusMode.description" = "All the UI out-of-the-way with one gesture. Let's you focus better on what matters—your notes.";
@@ -1630,6 +1632,7 @@
 "welcome.superNaturalPens.description" = "Our pens provide a realisting writing experience—just like pen and paper!";
 "welcome.tags" = "TAGS";
 "welcome.tags.description" = "Tag notebooks or pages to easily find them later.";
+"welcome.taptileinfo" = "Tap on any tile to learn more";
 "welcome.thousandPlusTemplates" = "1000+ TEMPLATES";
 "welcome.thousandPlusTemplates.description" = "We have a template for every note taking need. And more.";
 "welcome.unsplash" = "UNSPLASH";
