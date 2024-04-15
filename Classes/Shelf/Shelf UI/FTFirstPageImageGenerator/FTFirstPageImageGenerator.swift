@@ -39,9 +39,10 @@ class FTFirstPageImageGenerator {
     
     func generateCoverImage(forImage image:UIImage, withCoverOverlayImage overlayImage:UIImage?) -> UIImage {
         let imgTargetSize = self.targetSize;
-        UIGraphicsBeginImageContextWithOptions(imgTargetSize, false, 2.0)
+        guard let ftcontext = FTImageContext.imageContext(imgTargetSize, scale: 2) else {
+            return image;
+        }
         let coverPageRect = CGRect(x: 0, y: 0, width: imgTargetSize.width, height: imgTargetSize.height)
-        
         //**********************************
         let colorCube = CCColorCube.init()
         let colors:[UIColor]? = colorCube.extractDefaultColors(from: image)!
@@ -80,8 +81,7 @@ class FTFirstPageImageGenerator {
             overlayImage?.draw(in: bandSize, blendMode: CGBlendMode.normal, alpha: 1.0)
         }
         
-        let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
+        let newImage:UIImage = ftcontext.uiImage() ?? image
         return newImage
     }
 }
