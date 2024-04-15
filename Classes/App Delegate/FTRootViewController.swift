@@ -143,6 +143,9 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
            !(splitVC.isBeingDismissed || splitVC.isBeingPresented) {
             return splitVC.prefersStatusBarHidden;
         }
+        else if self.presentedViewController is FTWelcomeScreenViewController {
+            return self.presentedViewController?.prefersStatusBarHidden ?? super.prefersStatusBarHidden
+        }
         return super.prefersStatusBarHidden;
     }
 
@@ -226,6 +229,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     // MARK: - Provider update -
     private weak var localAppActieObserver: NSObjectProtocol?
     fileprivate func updateProviderIfNeeded() {
+        UserDefaults.standard.removeObject(forKey: WelcomeScreenViewed)
         if(UserDefaults.standard.bool(forKey: WelcomeScreenViewed)
            || (!UserDefaults.standard.bool(forKey: WelcomeScreenViewed)
                && UserDefaults.standard.double(forKey: WelcomeScreenReminderTime) > 0)) {

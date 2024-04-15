@@ -175,7 +175,7 @@ private extension FTWelcomePreviewViewController {
     }
     
     func requiredContentSize() -> CGSize {
-        let width = min(394, self.view.frame.width);
+        let width = min(394, self.view.frame.width-20);
         return CGSize(width: width, height: 245);
     }
     

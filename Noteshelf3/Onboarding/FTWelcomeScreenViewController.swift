@@ -14,6 +14,8 @@ class FTWelcomeScreenViewController: UIViewController {
     @IBOutlet weak var tapTileInfoLable: UILabel?;
 
     @IBOutlet weak var dismissButton: UIButton?;
+    @IBOutlet weak var playPauseButton: UIButton?;
+
     @IBOutlet weak var subTitle: UILabel?;
     @IBOutlet private weak var topHeaderView: UIStackView?;
 
@@ -29,7 +31,13 @@ class FTWelcomeScreenViewController: UIViewController {
     @IBOutlet private weak var scrollView1: UIScrollView?;
     @IBOutlet private weak var scrollView2: UIScrollView?;
     
+    private var popUpOpenPlayer: AVAudioPlayer?;
+    private var popUpClosePlayer: AVAudioPlayer?;
+    private var bgAudioPlayer: AVAudioPlayer?
+
     private var onDismissBlock: (() -> Void)?
+    
+    private var isMuted = true;
     
     private var model = FTGetStartedItemViewModel();
     class func showWelcome(presenterController: UIViewController, onDismiss : (() -> Void)?) {
@@ -42,7 +50,10 @@ class FTWelcomeScreenViewController: UIViewController {
     }
     
     private var fontSize: CGFloat {
-        return UIDevice.current.isPhone() ? 36 : 52
+        guard !UIDevice.current.isPhone() else {
+            return 36;
+        }
+        return (self.view.frame.width > 400) ? 52 : 36
     }
     
     private var itemSize: CGFloat {
@@ -70,16 +81,12 @@ class FTWelcomeScreenViewController: UIViewController {
         self.dismissButton?.addShadow(CGSize(width: 0, height: 12), color: UIColor.appColor(.welcomeBtnColor), opacity: 0.24, radius: 16.0)
         self.contentView?.addShadow(CGSize(width: 0, height: 30), color: UIColor.appColor(.welcomeBtnColor), opacity: 0.12, radius: 30)
 
-        self.titleLable?.font = UIFont.clearFaceFont(for: .regular, with: fontSize)
         self.titleLable?.textColor = UIColor.black;
         self.titleLable?.text = self.model.headerTopTitle
-        
-        let attributedTet = NSMutableAttributedString(string: self.model.headerbottomfirstTitle, attributes: [.font : UIFont.clearFaceFont(for: .regular, with: fontSize),.foregroundColor : UIColor.black])
-        let secondSet = NSAttributedString(string: self.model.headerbottomsecondTitle, attributes: [.font: UIFont.clearFaceFont(for: .regularItalic, with: fontSize),.foregroundColor : UIColor.black])
-        attributedTet.append(secondSet)
-        self.subTitle?.attributedText = attributedTet;
+        self.updateUI();
         
         self.tapTileInfoLable?.text = "welcome.taptileinfo".localized
+        self.tapTileInfoLable?.textColor = UIColor.black.withAlphaComponent(0.5);
         
         self.dismissButton?.setAttributedTitle(NSAttributedString(string: model.btntitle, attributes: [
             .font : UIFont.clearFaceFont(for: .medium, with: 20)
@@ -95,7 +102,6 @@ class FTWelcomeScreenViewController: UIViewController {
         var itemsToLoad = [FTGetStartedViewItems]();
         itemsToLoad.append(contentsOf: model.getstartedList);
         itemsToLoad.append(contentsOf: model.getstartedList);
-//        itemsToLoad.append(contentsOf: model.getstartedList);
         
         self.loadGrids(itemsToLoad, contentView: self.scrollView1!)
         self.loadGrids(itemsToLoad, contentView: self.scrollView2!)
@@ -104,10 +110,32 @@ class FTWelcomeScreenViewController: UIViewController {
         offset.x = self.scrollView2!.contentSize.width - self.scrollView2!.frame.width
         self.scrollView2?.contentOffset = offset;
         self.startAnimation();
+        
+        self.loadAudioFiles();
+        self.validatePlayPauseButton(self.view.frame.size);
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
     
     override var prefersHomeIndicatorAutoHidden: Bool {
         return true;
+    }
+    
+    private func validatePlayPauseButton(_ size: CGSize) {
+        var shouldHide = false;
+        if UIDevice.current.isIphone() {
+            shouldHide = true;
+        }
+        else if let dismissButtonframe = self.dismissButton?.frame.width {
+            let availableWidth = (size.width - dismissButtonframe);
+            shouldHide = (availableWidth * 0.5) < 100;
+        }
+        else if self.bgAudioPlayer == nil {
+            shouldHide = true;
+        }
+        self.playPauseButton?.isHidden = shouldHide;
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -119,6 +147,8 @@ class FTWelcomeScreenViewController: UIViewController {
             self.view.updateConstraintsIfNeeded();
             self.view.layoutIfNeeded()
             self.previewController?.updateViewConstraintsOntransition()
+            self.validatePlayPauseButton(size);
+            self.updateUI();
         } completion: { _ in
             if !isPaused {
                 self.startAnimation()
@@ -132,19 +162,49 @@ class FTWelcomeScreenViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.sceneWillEnterBackground(_:)), name: UIApplication.sceneDidEnterBackground, object: self.sceneToObserve)
     }
     
+    private func updateUI() {
+        self.titleLable?.font = UIFont.clearFaceFont(for: .regular, with: fontSize)
+        let attributedTet = NSMutableAttributedString(string: self.model.headerbottomfirstTitle, attributes: [.font : UIFont.clearFaceFont(for: .regular, with: fontSize),.foregroundColor : UIColor.black])
+        let secondSet = NSAttributedString(string: self.model.headerbottomsecondTitle, attributes: [.font: UIFont.clearFaceFont(for: .regularItalic, with: fontSize),.foregroundColor : UIColor.black])
+        attributedTet.append(secondSet)
+        self.subTitle?.attributedText = attributedTet;
+    }
+    
+    @IBAction func didToggelePlayPauseButton(_ sender: UIButton) {
+        isMuted.toggle();
+        self.playPauseButton?.isSelected = !isMuted;
+        if isMuted {
+            self.bgAudioPlayer?.volume = 0;
+        }
+        else {
+            if !(self.bgAudioPlayer?.isPlaying ?? false) {
+                self.bgAudioPlayer?.play()
+            }
+            self.muteBgMucis(false);
+        }
+    }
+    
     @objc private func sceneDidEnterForeground(_ notification: Notification) {
         if nil == self.selectedSlide {
-            self.displayLink.isPaused = false
+            self.startAnimation()
+        }
+        if !isMuted {
+            if !(self.bgAudioPlayer?.isPlaying ?? false) {
+                self.bgAudioPlayer?.play()
+            }
+            self.muteBgMucis(false)
         }
     }
     
     @objc private func sceneWillEnterBackground(_ notification: Notification) {
-        self.displayLink.isPaused = true
+        self.stopAnimation()
+        self.muteBgMucis(true);
     }
     
     @IBAction func didTapOnDismiss(_ sender: UIButton?) {
         UserDefaults.standard.set(true, forKey: WelcomeScreenViewed)
         UserDefaults.standard.synchronize();
+        self.muteBgMucis(true)
         self.dismiss(animated: true) {
             self.displayLink.invalidate();
             self.onDismissBlock?();
@@ -207,31 +267,14 @@ class FTWelcomeScreenViewController: UIViewController {
     }
 }
 
-class GradientView: UIView {
-    @IBInspectable var gradientColors: [UIColor] = [UIColor.appColor(.welcometopGradiantColor)
-                                                    , UIColor.appColor(.welcomeBottonGradiantColor)]
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
-        
-        // Create a CGContext
-        guard let context = UIGraphicsGetCurrentContext() else { return }
-        
-        // Create a gradient with the colors array
-        let gradient = CGGradient(colorsSpace: nil, colors: gradientColors.map { $0.cgColor } as CFArray, locations: nil)
-        
-        // Draw the gradient
-        context.drawLinearGradient(gradient!,
-                                    start: CGPoint(x: 0, y: 0),
-                                    end: CGPoint(x: bounds.width, y: bounds.height),
-                                    options: [])
-    }
-}
-
 extension FTWelcomeScreenViewController: FTWelcomePreviewDelegate {
     func welcomePreviewDidClose(_ preview: FTWelcomePreviewViewController) {
         guard let slide = self.selectedSlide else {
             return;
         }
+        
+        self.playPopupCloseSound();
+
         let frame = self.frame(for: slide)
         preview.dismissPreivew(to: frame,itemSize: self.itemSize) {
             preview.removeFromParent()
@@ -246,6 +289,8 @@ extension FTWelcomeScreenViewController: FTWelcomePreviewDelegate {
 
 extension FTWelcomeScreenViewController: FTWelcomeItemDelegate {
     func welcomeItem(_ controller: FTWelcomeItemViewController, didTapOnItem item: FTGetStartedViewItems) {
+        self.playPopupOpenSound()
+        
         let previewController = FTWelcomePreviewViewController.welcomeItemComtroller(item);
         previewController.referenceContentView = self.contentView;
         
@@ -276,6 +321,75 @@ private extension FTWelcomeScreenViewController {
             frame.origin.y += (scrollView.superview?.frame.origin.y ?? 0);
         }
         return frame;
+    }
+}
+
+private extension FTWelcomeScreenViewController {
+    func loadAudioFiles() {
+        DispatchQueue.global().async {
+            if let url = Bundle.main.url(forResource: "ambient loop", withExtension: "mp3")
+                ,let popup_open = Bundle.main.url(forResource: "popup_open", withExtension: "mp3")
+                ,let popup_close = Bundle.main.url(forResource: "popup_close", withExtension: "mp3")
+            {
+                do {
+                    try AVAudioSession.sharedInstance().setCategory(.playback)
+                    try AVAudioSession.sharedInstance().setActive(true)
+                    let avplayer = try AVAudioPlayer(contentsOf: url)
+                    avplayer.numberOfLoops = -1;
+                    avplayer.volume = 0;
+                    avplayer.prepareToPlay();
+
+                    let buttonEffectPlayer = try AVAudioPlayer(contentsOf: popup_open)
+                    buttonEffectPlayer.prepareToPlay();
+                    
+                    let popClosePlayer = try AVAudioPlayer(contentsOf: popup_close)
+                    popClosePlayer.prepareToPlay();
+
+                    runInMainThread {
+                        self.popUpOpenPlayer = buttonEffectPlayer;
+                        self.popUpOpenPlayer?.volume = 0.5
+
+                        self.popUpClosePlayer = popClosePlayer;
+                        self.popUpClosePlayer?.volume = 0.5
+
+                        self.bgAudioPlayer = avplayer
+                        self.bgAudioPlayer?.play();
+                        if !self.isMuted {
+                            self.muteBgMucis(false)
+                        }
+                    }
+                }
+                catch {
+                    debugLog("error : \(error)");
+                }
+            }
+        }
+    }
+    
+    func playPopupOpenSound() {
+        if !isMuted {
+            self.popUpOpenPlayer?.currentTime = TimeInterval(0)
+            self.popUpOpenPlayer?.play();
+        }
+    }
+    
+    func playPopupCloseSound() {
+        if !isMuted {
+            self.popUpClosePlayer?.currentTime = TimeInterval(0)
+            self.popUpClosePlayer?.play();
+        }
+    }
+    
+    func muteBgMucis(_ mute: Bool) {
+        if mute {
+            self.bgAudioPlayer?.setVolume(0, fadeDuration: 1)
+        }
+        else {
+            if !(self.bgAudioPlayer?.isPlaying ?? false) {
+                self.bgAudioPlayer?.play();
+            }
+            self.bgAudioPlayer?.setVolume(0.5, fadeDuration: 1);
+        }
     }
 }
 
