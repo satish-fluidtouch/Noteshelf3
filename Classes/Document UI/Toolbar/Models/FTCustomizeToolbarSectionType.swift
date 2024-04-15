@@ -69,6 +69,8 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
     case rotatePage
     case duplicatePage
     case deletePage
+    case scrolling
+    case camera
 
     // Share and Save
     case savePageAsPhoto
@@ -130,7 +132,14 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             name = "desk_tool_duplicatePage"
         case .deletePage:
             name = "desk_tool_deletePage"
-
+        case .scrolling:
+            if UserDefaults.standard.pageLayoutType == .vertical {
+                name = "desk_tool_vertical_scrolling"
+            }else {
+                name = "desk_tool_horizontal_scrolling"
+            }
+        case .camera:
+            name = "desk_tool_camera"
         case .savePageAsPhoto:
             name = "desk_tool_saveAsPhoto"
         case .sharePageAsPng:
@@ -236,6 +245,10 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             str = "customizeToolbar.duplicatePage".localized
         case .deletePage:
             str = "customizeToolbar.deletePage".localized
+        case .camera:
+            str = "Camera".localized
+        case .scrolling:
+            str = "customizeToolbar.switchScrollingDirection".localized
             
         case .savePageAsPhoto:
             str = "customizeToolbar.savePageAsPhoto".localized
@@ -305,6 +318,10 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             str = "customizeToolbar.duplicatePage".localizedEnglish
         case .deletePage:
             str = "customizeToolbar.deletePage".localizedEnglish
+        case .camera:
+            str = "customizeToolbar.camera".localizedEnglish
+        case .scrolling:
+            str = "customizeToolbar.scrolling".localizedEnglish
 
         case .savePageAsPhoto:
             str = "customizeToolbar.savePageAsPhoto".localizedEnglish

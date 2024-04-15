@@ -56,6 +56,7 @@ class FTToolbarCenterPanelController: UIViewController {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         longPressGesture.minimumPressDuration = 0.6
         self.view.addGestureRecognizer(longPressGesture)
+        getNotificationForScrollIcon()
     }
 
     @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
@@ -354,5 +355,15 @@ extension FTToolbarCenterPanelController: FTDeskToolCellDelegate {
         let userActivity = self.view.window?.windowScene?.userActivity
         let color = FTDeskModeHelper.getCurrentToolColor(toolType: toolType, userActivity: userActivity)
         return color
+    }
+}
+
+extension FTToolbarCenterPanelController {
+    func getNotificationForScrollIcon(){
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateScrollIcon(notification:)), name: Notification.Name("ScrollDirectionUpdate"), object: nil)
+    }
+    
+    @objc func updateScrollIcon(notification: Notification) {
+        collectionView.reloadData()
     }
 }

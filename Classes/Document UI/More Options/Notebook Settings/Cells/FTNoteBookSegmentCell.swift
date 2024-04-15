@@ -21,6 +21,7 @@ class FTNoteBookSegmentCell: UITableViewCell {
         if let direction = FTPageLayout(rawValue: segment.selectedSegmentIndex) {
             UserDefaults.standard.pageLayoutType = direction
             FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.nbk_moresettings_scrolling_tap, params: ["segment": (direction == .horizontal) ? "horizontal" : "vertical"])
+            NotificationCenter.default.post(name: Notification.Name("ScrollDirectionUpdate"), object: nil)
         }
     }
 }

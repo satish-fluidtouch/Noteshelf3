@@ -17,6 +17,8 @@ protocol FTShortcutActions: AnyObject {
     func deletePageAction(page: FTThumbnailable)
     func duplicateAction(pages: [FTThumbnailable], onCompletion: (()->())?)
     func handleTagPage(source: Any, controller: UIViewController, pages: NSSet)
+    func camera()
+    func scrolling(direction: Int)
 
     // Media
     func photoAction()
@@ -50,6 +52,8 @@ enum FTCommand: Equatable {
     case deletePage(page: FTThumbnailable)
     case duplicatePage(pages: [FTThumbnailable])
     case tag(source: Any, controller: UIViewController, pages: NSSet)
+    case camera
+    case scrolling(direction: Int)
 
     // Share
     case shareNoteBookAsPDF(source: Any)
@@ -91,7 +95,13 @@ class FTShortcutExecuter: FTShortcutCommand {
 
         case .tag(let source, let controller, let pages):
             self.receiver?.handleTagPage(source: source, controller: controller, pages: pages)
-
+            
+        case .camera:
+            self.receiver?.camera()
+            
+        case .scrolling(let source):
+            self.receiver?.scrolling(direction: source)
+            
             // Media
         case .photo:
             self.receiver?.photoAction()
@@ -218,6 +228,16 @@ extension FTPDFRenderViewController: FTShortcutActions {
             FTTagsViewController.showTagsController(fromSourceView: source, onController: controller, tags: tagItems)
         }
     }
+    
+    func camera() {
+        FTImagePicker.shared.showImagePickerController(from: self)
+    }
+    
+    func scrolling(direction: Int) {
+        if let directionFlow = FTPageLayout(rawValue:direction) {
+            UserDefaults.standard.pageLayoutType = directionFlow
+        }
+    }
 
     // Media
     func photoAction() {
@@ -227,8 +247,7 @@ extension FTPDFRenderViewController: FTShortcutActions {
 
     func audioAction() {
         self.audioButtonAction()
-    }
-
+    } 
     func unsplashAction(source: Any) {
         FTMediaLibraryViewController.showAddMenuPixaBayController(from: self, mediaType: .unSplash, source: source)
     }
