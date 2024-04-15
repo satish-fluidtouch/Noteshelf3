@@ -123,7 +123,7 @@
 		09DBD52A2A7D255B00987ED1 /* FTFormSheetTransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DBD5292A7D255B00987ED1 /* FTFormSheetTransitionDelegate.swift */; };
 		09DCDB992BBADBE2006055DB /* AVFAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09DCDB982BBADBE2006055DB /* AVFAudio.framework */; };
 		09DCDB9A2BBADBFF006055DB /* AVFAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09DCDB982BBADBE2006055DB /* AVFAudio.framework */; };
-		09DCDBA32BBAE946006055DB /* Noteshelf3 Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = E75CD84A2B8F0B4300D59F21 /* Noteshelf3 Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		09DCDBA32BBAE946006055DB /* Noteshelf3 Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = E75CD84A2B8F0B4300D59F21 /* Noteshelf3 Watch App.app */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		09DE78082A9DDEE800FE74D0 /* FTCloudBackupErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DE78072A9DDEE800FE74D0 /* FTCloudBackupErrors.swift */; };
 		09DEFBD72A725E6F00F41C1E /* FTCharStrokeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEFBD62A725E6F00F41C1E /* FTCharStrokeInfo.swift */; };
 		09DEFBD92A725E9600F41C1E /* FTWordStrokeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEFBD82A725E9600F41C1E /* FTWordStrokeInfo.swift */; };
@@ -4342,6 +4342,7 @@
 		E76023382A4EC45000B16084 /* FTSearchSuggestionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSearchSuggestionHelper.swift; sourceTree = "<group>"; };
 		E760233A2A4EFBA100B16084 /* UIApplication+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
 		E760A1F82A7B904200E9CF51 /* FTShelfTagsViewController_MacExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfTagsViewController_MacExtension.swift; sourceTree = "<group>"; };
+		E761FE792BBFC12B00136797 /* Noteshelf3-WatchApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Noteshelf3-WatchApp-Info.plist"; sourceTree = SOURCE_ROOT; };
 		E762186E2A4D809D004A8428 /* FTShelfBaseHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfBaseHostingController.swift; sourceTree = "<group>"; };
 		E762F6E4272FA5C700F46DCE /* FTQuickNoteSaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTQuickNoteSaveViewController.swift; sourceTree = "<group>"; };
 		E76383F6269710C5000EECDA /* FTTextAnnotationViewController_MenuHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTextAnnotationViewController_MenuHandler.swift; sourceTree = "<group>"; };
@@ -6063,6 +6064,7 @@
 		09DCDBA82BBAF070006055DB /* Noteshelf3 WatchApp */ = {
 			isa = PBXGroup;
 			children = (
+				E761FE792BBFC12B00136797 /* Noteshelf3-WatchApp-Info.plist */,
 				09DCDBA92BBAF070006055DB /* Noteshelf3 WatchAppRelease.entitlements */,
 				09DCDBAA2BBAF070006055DB /* Noteshelf3 WatchAppBeta.entitlements */,
 				09DCDBAB2BBAF070006055DB /* Noteshelf3 WatchAppDebug Enterprise.entitlements */,
@@ -14681,6 +14683,7 @@
 		};
 		09DCDBA22BBAE848006055DB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = E75CD8492B8F0B4300D59F21 /* Noteshelf3 WatchApp */;
 			targetProxy = 09DCDBA12BBAE848006055DB /* PBXContainerItemProxy */;
 		};
@@ -17131,6 +17134,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Noteshelf3-WatchApp-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Used to record audio as you take notes in Noteshelf.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(MAIN_APP_BUNDLE_IDENTIFIER)";
@@ -17185,6 +17190,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Noteshelf3-WatchApp-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Used to record audio as you take notes in Noteshelf.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(MAIN_APP_BUNDLE_IDENTIFIER)";
@@ -17235,6 +17242,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Noteshelf3-WatchApp-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Used to record audio as you take notes in Noteshelf.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(MAIN_APP_BUNDLE_IDENTIFIER)";
@@ -17285,6 +17294,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Noteshelf3-WatchApp-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Used to record audio as you take notes in Noteshelf.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(MAIN_APP_BUNDLE_IDENTIFIER)";
@@ -17349,6 +17360,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Noteshelf3-WatchApp-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Used to record audio as you take notes in Noteshelf.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(MAIN_APP_BUNDLE_IDENTIFIER)";
