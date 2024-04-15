@@ -281,6 +281,7 @@ extension FTAddDocumentEntitiesViewController: FTAddMenuCameraDelegate, FTImageP
                 let item = FTImportItem(image: image)
                 self.delegate?.didFinishPickingImportItems([item])
             } else if self.selectedCameraType == .takePhoto {
+                UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
                 self.delegate?.didFinishPickingUIImages([image], source: FTInsertImageSourcePhotos)
             }
         }
