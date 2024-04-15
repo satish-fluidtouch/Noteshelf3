@@ -10,6 +10,7 @@ import UIKit
 import FTStyles
 
 let currentBundle = Bundle(for: FTCreateNotebookViewController.self)
+let regularThreshold: CGFloat = 480
 
 struct FTNewNotebook {
     struct Constants {

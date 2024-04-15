@@ -139,6 +139,7 @@ public class FTPaperTemplateViewController: UIViewController {
         let rightNavItem = FTNavBarButtonItem(type: .right, title: "Done".localized, delegate: self)
         self.navigationItem.leftBarButtonItem = leftNavItem
         self.navigationItem.rightBarButtonItem = rightNavItem
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
     }
 }
 extension FTPaperTemplateViewController {

@@ -67,6 +67,7 @@ class FTPaperTemplatesVariantsController: UIViewController {
     weak var templateVariantsDelegate: FTPaperTemplatesVariantsDelegateNew?
     var papervariantsDataModel: FTPaperTemplatesVariantsDataModel!
     private var firstValueSet = false
+    private var size: CGSize = .zero
 
     var selectedPaperVariants: FTSelectedPaperVariantsAndTheme! {
         didSet {
@@ -82,12 +83,21 @@ class FTPaperTemplatesVariantsController: UIViewController {
         super.viewDidLoad()
         configureUI()
     }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if self.size != self.view.frame.size {
+            self.size = self.view.frame.size
+            self.configureOrientaionSegmentedControl()
+        }
+    }
+
     private func configureUI() {
         self.configurTemplateColorsView()
         self.configureLineHeightView()
-        self.configureOrientaionSegmentedControl()
     }
     func updateOrientationSegmentVisibility(_ shouldHide: Bool){
+        print("zzzz - should hide: \(shouldHide)")
         self.orientationSegmentedControl?.isHidden = shouldHide
         self.seperatorDotView?.isHidden = shouldHide
         self.variantsViewWidthConstraint?.constant = shouldHide ? 328 : 448
@@ -104,7 +114,11 @@ class FTPaperTemplatesVariantsController: UIViewController {
         orientationSegmentedControl?.setDividerImage(UIImage(), forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
         orientationSegmentedControl?.backgroundColor = UIColor.black.withAlphaComponent(0.04)
         orientationSegmentedControl?.clipsToBounds = true
-        updateOrientationSegmentVisibility(selectedPaperVariants.size == FTTemplateSize.mobile)
+        var shouldShow = self.view.frame.width > regularThreshold
+        if selectedPaperVariants.size == FTTemplateSize.mobile {
+            shouldShow = false
+        }
+        updateOrientationSegmentVisibility(!shouldShow)
     }
     @IBAction func templateOrientaionChanged(_ sender: UISegmentedControl) {
         let orientation: FTTemplateOrientation = sender.selectedSegmentIndex == 0 ? .portrait : .landscape
@@ -208,7 +222,11 @@ class FTPaperTemplatesVariantsController: UIViewController {
     }
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         self.setConstraintToLineHeightView()
-        self.updateOrientationSegmentVisibility(selectedPaperVariants.size == FTTemplateSize.mobile)
+        var shouldShow = self.view.frame.width > 550
+        if selectedPaperVariants.size == FTTemplateSize.mobile {
+            shouldShow = false
+        }
+        self.updateOrientationSegmentVisibility(!shouldShow)
     }
 }
 extension FTPaperTemplatesVariantsController: FTPaperTemplateCustomColorDelegate {

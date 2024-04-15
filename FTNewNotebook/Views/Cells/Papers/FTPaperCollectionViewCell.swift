@@ -8,24 +8,38 @@
 import UIKit
 import PDFKit
 import FTStyles
+import FTCommon
 
-class FTPaperCollectionViewCell: UICollectionViewCell {
+class FTPaperCollectionViewCell: FTTraitCollectionViewCell {
     @IBOutlet weak var shadowImage: UIImageView?
     @IBOutlet weak private var selectedImageView: UIImageView?
     @IBOutlet weak private var imgView: UIImageView?
     @IBOutlet weak private var themeTitle: UILabel?
+    @IBOutlet private weak var imgWidthConstraint: NSLayoutConstraint?
+
     private var thumbnailColorHex: String?
     var isCellSelected: Bool = false {
         didSet {
             setBorderAndSelectionToThumbnail()
         }
     }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.updateImgWidthConstraint()
+    }
+
+    func updateImgWidthConstraint() {
+           self.imgWidthConstraint?.constant = self.isRegular ? 120 : 100
+    }
+
     func configureCellWith(title: String?, thumbnailColorHex:String){
         self.thumbnailColorHex = thumbnailColorHex
         let color = UIColor(hexWithAlphaString: thumbnailColorHex)
         self.applySelectedColorVariant(color)
         self.imgView?.image = UIImage(named: "samplePaperTemplateThumbnail", in: currentBundle, with: nil)?.withRenderingMode(.alwaysTemplate)
         self.themeTitle?.text = title ?? "Plain"
+        self.updateImgWidthConstraint()
     }
     private func applyBorderToThemeImage(){
         self.imgView?.layer.borderWidth = 1.0
@@ -69,10 +83,6 @@ class FTPaperCollectionViewCell: UICollectionViewCell {
     func thumbnailForVariantsAndTheme(_ variantsAndTheme: FTSelectedPaperVariantsAndTheme)  {
         var themWithVariants: FTSelectedPaperVariantsAndTheme = variantsAndTheme
         themWithVariants.orientation = .portrait
-        guard let paperTheme = (themWithVariants.theme as? FTPaperThumbnailGenerator) else {
-            return
-        }
-        let thumbnailSize = FTNewNotebook.Constants.ChoosePaperPanel.thumbnailRegularSize
         var imgName = variantsAndTheme.thumbImagePrefix
         if !imgName.isEmpty {
             let color = UIColor(hexWithAlphaString: variantsAndTheme.templateColorModel.hex)
@@ -85,7 +95,7 @@ class FTPaperCollectionViewCell: UICollectionViewCell {
                     imgName = imgName + "_dark"
                 }
             }
-            if var image = UIImage(named: imgName, in: currentBundle, with: nil)?.withRenderingMode(.alwaysOriginal) {
+            if let image = UIImage(named: imgName, in: currentBundle, with: nil)?.withRenderingMode(.alwaysOriginal) {
                 self.imgView?.backgroundColor = color
                 self.imgView?.image = image
             }

@@ -59,6 +59,12 @@ class FTPaperPickerViewController: UIViewController {
             }
         #endif
     }
+
+    private var varaintsVc: FTPaperTemplatesVariantsController? {
+        let choosePaperVc = (self.children.first as? UINavigationController)?.viewControllers.first
+        return choosePaperVc?.children.first { $0 is FTPaperTemplatesVariantsController } as? FTPaperTemplatesVariantsController
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.panelContainerView?.addShadow(color: UIColor.label.withAlphaComponent(0.2), offset: CGSize(width: 0, height: 8), opacity: 1.0, shadowRadius: 64.0)
@@ -118,17 +124,24 @@ class FTPaperPickerViewController: UIViewController {
             let isSelected =  templateSizeModel.size == self.selectedPaperVariantsAndTheme.size
             let state: UIMenuElement.State = isSelected ? .on : .off
             let action = UIAction(title: displayTitle,state: state) { [weak self]action in
-                let resizeThumbnail = self?.selectedPaperVariantsAndTheme.size != templateSizeModel.size
-                self?.selectedPaperVariantsAndTheme.size = templateSizeModel.size
-                self?.setAttributedTextToTemplateSizeButton(templateSizeModel.size)
-                self?.setThumbnailToPreviewImageView(toResize: resizeThumbnail)
-                if let templateSizeMenu = self?.templateSizeButton?.menu {
-                    self?.templateSizeButton?.menu = self?.updateActionState(actionTitle: displayTitle, menu: templateSizeMenu)
+                guard let self else {
+                    return
+                }
+                let resizeThumbnail = self.selectedPaperVariantsAndTheme.size != templateSizeModel.size
+                self.selectedPaperVariantsAndTheme.size = templateSizeModel.size
+                self.setAttributedTextToTemplateSizeButton(templateSizeModel.size)
+                self.setThumbnailToPreviewImageView(toResize: resizeThumbnail)
+                if let templateSizeMenu = self.templateSizeButton?.menu {
+                    self.templateSizeButton?.menu = self.updateActionState(actionTitle: displayTitle, menu: templateSizeMenu)
                 }
                 if templateSizeModel.size == .mobile {
-                    self?.selectedPaperVariantsAndTheme.orientation = .portrait
+                    self.selectedPaperVariantsAndTheme.orientation = .portrait
                 }
-                self?.updateOrientationOptionVisibility(displayTitle == FTTemplateSize.mobile.displayTitle)
+                var shouldShow = self.view.frame.width > regularThreshold
+                if templateSizeModel.size == .mobile {
+                    shouldShow = false
+                }
+                self.varaintsVc?.updateOrientationSegmentVisibility(!shouldShow)
             }
             sizeActions.append(action)
         }
@@ -383,14 +396,6 @@ class FTPaperPickerViewController: UIViewController {
     }
     private func setShadowToPreview(){
         self.previewImageView?.addShadow(color: UIColor.appColor(.black28), offset: CGSize(width: 0, height: 24), opacity: 1, shadowRadius: 40)
-    }
-    private func updateOrientationOptionVisibility(_ shouldHide: Bool){
-        let choosePaperController = (self.children.first as? UINavigationController)?.viewControllers.first
-        if let children = choosePaperController?.children {
-            for childVC in children where childVC as? FTPaperTemplatesVariantsController != nil {
-                (childVC as? FTPaperTemplatesVariantsController)?.updateOrientationSegmentVisibility(shouldHide)
-            }
-        }
     }
 
 //MARK: Animations Code
