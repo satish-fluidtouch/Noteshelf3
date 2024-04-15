@@ -25278,22 +25278,29 @@
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/Annotation\/Compute\/FTComputeShape.swift",
+      "kind": "IntegerLiteral",
+      "offset": 5635,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/Annotation\/Compute\/FTComputeShape.swift",
       "kind": "FloatLiteral",
-      "offset": 7159,
+      "offset": 7203,
       "length": 3,
       "value": "1.0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/Annotation\/Compute\/FTComputeShape.swift",
       "kind": "FloatLiteral",
-      "offset": 7621,
+      "offset": 7665,
       "length": 3,
       "value": "0.5"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/Annotation\/Compute\/FTComputeShape.swift",
       "kind": "FloatLiteral",
-      "offset": 7646,
+      "offset": 7690,
       "length": 3,
       "value": "0.5"
     },

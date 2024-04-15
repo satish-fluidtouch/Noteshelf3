@@ -91,6 +91,7 @@ final class FTAddMenuToolsSection: FTToolbarSection {
         .pixabay,
         .emojis,
         .stickers,
+        .savedClips
     ]
     
     var displayTools: [FTDeskCenterPanelTool] = []

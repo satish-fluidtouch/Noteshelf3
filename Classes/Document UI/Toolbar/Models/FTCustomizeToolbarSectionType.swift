@@ -60,6 +60,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
     case pixabay
     case emojis
     case stickers
+    case savedClips
 
     // Shortcuts
     case page
@@ -114,6 +115,8 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             name = "desk_tool_pixabay"
         case .emojis:
             name = "desk_tool_emojis"
+        case .savedClips:
+            name = "desk_tool_savedClips"
 
         case .page:
             name = "desk_tool_page"
@@ -217,6 +220,8 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             str = "Pixabay"
         case .emojis:
             str = "customizeToolbar.emojis".localized
+        case .savedClips:
+            str = "clip.savedClips".localized
 
             // Shortcuts
         case .page:
@@ -284,6 +289,8 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             str = "Pixabay"
         case .emojis:
             str = "customizeToolbar.emojis".localizedEnglish
+        case .savedClips:
+            str = "clip.savedClips".localizedEnglish
 
             // Shortcuts
         case .page:
