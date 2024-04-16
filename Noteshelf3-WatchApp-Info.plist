@@ -21,6 +21,8 @@
 	</array>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Used to record audio as you take notes in Noteshelf.</string>
+	<key>WKRunsIndependentlyOfCompanionApp</key>
+	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
