@@ -34,6 +34,7 @@ class FTPapersViewController: UIViewController {
     var selectedPaperVariantsAndTheme: FTSelectedPaperVariantsAndTheme!
     private var selectedPaperThemeCellIndexPath: IndexPath?
     var paperPickerMode:FTPaperPickerMode = FTPaperPickerMode.paperPicker
+    private var size: CGSize = .zero
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,10 +76,19 @@ class FTPapersViewController: UIViewController {
             }
             self.collectionView?.collectionViewLayout = layout
         }
+        var offset: CGFloat = 0.0
+        if self.view.frame.width > regularThreshold {
+            offset = 12.0
+        }
+        let insets = UIEdgeInsets(top: offset, left: offset, bottom: offset, right: offset)
+        self.collectionView?.contentInset = insets
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.setUpCollectionViewConstraints()
+        if self.size != self.view.frame.size {
+            self.size = self.view.frame.size
+            self.setUpCollectionViewConstraints()
+        }
     }
     func reloadTemplatesViewWithLatest(selectedVariantsAndTheme:FTSelectedPaperVariantsAndTheme){
         self.selectedPaperVariantsAndTheme = selectedVariantsAndTheme
