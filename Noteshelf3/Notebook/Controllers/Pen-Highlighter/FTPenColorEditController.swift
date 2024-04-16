@@ -84,12 +84,6 @@ class FTPenColorEditController: UIHostingController<FTPenColorEditView>, FTPopov
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.appColor(.popoverBgColor)
     }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        self.delegate?.saveFavoriteColorsIfNeeded()
-        self.viewModel.updateCurrentColors()
-    }
 }
 
 extension FTPenColorEditController: FTPenColorEditDelegate {

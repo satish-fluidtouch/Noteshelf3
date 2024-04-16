@@ -75,10 +75,6 @@ class FTPenSizeEditController: UIHostingController<FTPenSizeEditView>, FTPopover
     dynamic required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    deinit {
-        self.viewModel.saveFavoriteSizes()
-    }
 }
 
 extension FTPenSizeEditController: UIGestureRecognizerDelegate {

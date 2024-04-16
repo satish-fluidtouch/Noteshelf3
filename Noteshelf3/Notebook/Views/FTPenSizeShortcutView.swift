@@ -53,9 +53,11 @@ struct FTPenSizeShortcutView: View {
     }
 
     private func handleSizeSelection(sizeModel: FTPenSizeModel, index: Int) {
-        self.viewModel.resetSizeSelection()
-        sizeModel.isSelected = true
-        self.viewModel.updateCurrentPenSize(size: sizeModel.size, sizeMode: .sizeSelect)
+        if !sizeModel.isSelected {
+            self.viewModel.resetSizeSelection()
+            sizeModel.isSelected = true
+            self.viewModel.updateCurrentPenSize(size: sizeModel.size, sizeMode: .sizeSelect)
+        }
     }
 
     private func handleLongpressAction(sizeModel: FTPenSizeModel, index: Int) {
