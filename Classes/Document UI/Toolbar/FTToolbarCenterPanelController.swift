@@ -56,7 +56,7 @@ class FTToolbarCenterPanelController: UIViewController {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         longPressGesture.minimumPressDuration = 0.6
         self.view.addGestureRecognizer(longPressGesture)
-        getNotificationForScrollIcon()
+        addObserverForScrollDirection()
     }
 
     @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
@@ -359,7 +359,7 @@ extension FTToolbarCenterPanelController: FTDeskToolCellDelegate {
 }
 
 extension FTToolbarCenterPanelController {
-    func getNotificationForScrollIcon() {
+    func addObserverForScrollDirection() {
         NotificationCenter.default.addObserver(forName: .pageLayoutWillChange,
                                                  object: nil,
                                                  queue: nil)

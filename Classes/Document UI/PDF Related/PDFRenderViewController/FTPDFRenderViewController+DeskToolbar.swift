@@ -161,12 +161,8 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
         case .camera :
             self.executer?.execute(type: .camera)
         case .scrolling :
-            var value : Int = 0
-            var title : String = "customizeToolbar.verticalScrollingEnabled"
-            if UserDefaults.standard.pageLayoutType == .vertical {
-                value = 1
-                title = "customizeToolbar.horizontalScrollingEnabled"
-            }
+            let value = (UserDefaults.standard.pageLayoutType == .vertical) ? 1 : 0
+            let title = (UserDefaults.standard.pageLayoutType == .vertical) ? "customizeToolbar.horizontalScrollingEnabled" : "customizeToolbar.verticalScrollingEnabled"
             self.executer?.execute(type: .scrolling(direction: value))
             let config = FTToastConfiguration(title: title.localized)
             FTToastHostController.showToast(from: self, toastConfig: config)

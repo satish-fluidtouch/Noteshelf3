@@ -133,11 +133,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
         case .deletePage:
             name = "desk_tool_deletePage"
         case .scrolling:
-            if UserDefaults.standard.pageLayoutType == .vertical {
-                name = "desk_tool_vertical_scrolling"
-            }else {
-                name = "desk_tool_horizontal_scrolling"
-            }
+            name = (UserDefaults.standard.pageLayoutType == .vertical) ? "desk_tool_vertical_scrolling" : "desk_tool_horizontal_scrolling"
         case .camera:
             name = "desk_tool_camera"
         case .savePageAsPhoto:

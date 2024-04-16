@@ -23,9 +23,20 @@ class FTCustomizeToolbarController: UITableViewController {
         self.registerCells()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        self.setUpFooterViewtoTableView()
+
+    }
+    
     private func registerCells() {
         tableView.register(UINib(nibName:"FTCustomizeToolbarCell", bundle: nil), forCellReuseIdentifier: "FTCustomizeToolbarCell")
-        tableView.register(UINib(nibName:"FTCustomToolbarFooterView", bundle: nil), forHeaderFooterViewReuseIdentifier: "FTCustomToolbarFooterView")
+    }
+    
+    private func setUpFooterViewtoTableView(){
+        let footerView = Bundle.main.loadNibNamed("FTCustomToolbarFooterView", owner: nil)?[0] as? FTCustomToolbarFooterView
+        footerView?.setUpUi()
+        footerView?.delegate = self
+        tableView.tableFooterView = footerView
     }
 
     private func configNavigationTitle() {
@@ -121,9 +132,6 @@ class FTCustomizeToolbarController: UITableViewController {
                 height = 40.0
             }
         }
-        if section == 4 {
-           height = 100
-        }
         return height
     }
 
@@ -145,7 +153,6 @@ class FTCustomizeToolbarController: UITableViewController {
         config.imageProperties.reservedLayoutSize = CGSize(width: 24.0, height: 24.0)
         let attributes = [NSAttributedString.Key.font: UIFont.appFont(for: .regular, with: 17.0)]
         cell.titleLbl.attributedText = NSAttributedString(string: displayableTools[indexPath.row].localizedString(), attributes: attributes)
-  //      cell.contentConfiguration = config
         cell.backgroundColor = UIColor.appColor(.white60)
         return cell
     }
@@ -227,18 +234,6 @@ class FTCustomizeToolbarController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
         return "Remove".localized
-    }
-    
-    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if section == 4 {
-            guard let view  =  tableView.dequeueReusableHeaderFooterView(withIdentifier:"FTCustomToolbarFooterView") as? FTCustomToolbarFooterView else {
-                fatalError("programming error")
-            }
-            view.setUpUi()
-            view.delegate = self
-            return view
-        }
-        return UIView()
     }
     
 }

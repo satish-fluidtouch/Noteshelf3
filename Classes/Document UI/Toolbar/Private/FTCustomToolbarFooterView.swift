@@ -13,7 +13,7 @@ protocol FTCustomToolbarFooterViewProtocal:AnyObject {
     func navigateToContactUsPage()
 }
 
-class FTCustomToolbarFooterView : UITableViewHeaderFooterView {
+class FTCustomToolbarFooterView : UIView {
     
     @IBOutlet weak private var topBtn: UIButton!
     @IBOutlet weak private var bgVIew: UIView!
@@ -22,6 +22,10 @@ class FTCustomToolbarFooterView : UITableViewHeaderFooterView {
     @IBOutlet weak private var requestLbl: UILabel!
     
    weak var delegate : FTCustomToolbarFooterViewProtocal?
+    
+    override class func awakeFromNib() {
+        
+    }
     
     func setUpUi() {
         ideaForShortcutLbl.text = "customizeToolbar.ideaForShortcut".localized
