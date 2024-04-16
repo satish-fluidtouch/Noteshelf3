@@ -128,7 +128,7 @@ extension FTPapersViewController: UICollectionViewDataSource, UICollectionViewDe
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: moreTemplateCellReuseId, for: indexPath) as? FTMoreTemplatesCollectionViewCell else {
                 fatalError("FTMoreTemplatesCollectionViewCell cell doesn't exists")
             }
-            cell.configureCell()
+            cell.configureCell(mode: self.paperPickerMode)
             return cell
         } else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: templateCellReuseId, for: indexPath) as? FTPaperCollectionViewCell else {
@@ -144,7 +144,7 @@ extension FTPapersViewController: UICollectionViewDataSource, UICollectionViewDe
                 variantsAndTheme.theme = paperTheme
                 variantsAndTheme.orientation = .portrait
                 cell.configureCellWith(title: paperTheme.displayName,
-                                       thumbnailColorHex: variantsAndTheme.templateColorModel.hex)
+                                       thumbnailColorHex: variantsAndTheme.templateColorModel.hex, mode: self.paperPickerMode)
                 if paperPickerMode == .paperPicker || paperPickerMode == .quickCreateSettings{
                     cell.isCellSelected = isPaperSelected
                     if isPaperSelected {

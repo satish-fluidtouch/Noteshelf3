@@ -97,10 +97,13 @@ class FTPaperTemplatesVariantsController: UIViewController {
         self.configureLineHeightView()
     }
     func updateOrientationSegmentVisibility(_ shouldHide: Bool){
-        print("zzzz - should hide: \(shouldHide)")
         self.orientationSegmentedControl?.isHidden = shouldHide
         self.seperatorDotView?.isHidden = shouldHide
-        self.variantsViewWidthConstraint?.constant = shouldHide ? 328 : 448
+        var extraStackSpacing: CGFloat = 16.0
+        if self.traitCollection.isRegular {
+            extraStackSpacing = 0.0
+        }
+        self.variantsViewWidthConstraint?.constant = shouldHide ? (328 - extraStackSpacing) : (448 - extraStackSpacing)
         if shouldHide {
             self.orientationSegmentedControl?.selectedSegmentIndex = 0
             self.selectedPaperVariants.orientation = .portrait

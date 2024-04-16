@@ -28,16 +28,23 @@ class FTEssentialsPaperSegmentViewController: UIViewController {
 
     @IBOutlet weak var chevronIcon: UIImageView?
 
+    private var size: CGSize = .zero
+
     override func viewDidLoad() {
         super.viewDidLoad()
         #if targetEnvironment(macCatalyst)
             addMacOnlySettings()
         #endif
     }
-    public override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        configureTemplateSizesMenu()
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if self.size != self.view.frame.size {
+            self.size = self.view.frame.size
+            self.configureTemplateSizesMenu()
+        }
     }
+
     public override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         if let data = self.varaintsData {
@@ -77,6 +84,9 @@ extension FTEssentialsPaperSegmentViewController: FTPaperDelegate {
     }
     func didTapPaperTemplate(_ paperTemplate: FTThemeable) {
         self.varaintsData.selectedVariantsAndTheme.theme = paperTemplate
+        if let parent = self.parent as? FTPaperTemplateViewController {
+            parent.enableDoneBtn = true
+        }
     }
 }
 extension FTEssentialsPaperSegmentViewController: FTPaperTemplatesVariantsDelegateNew {
@@ -114,9 +124,7 @@ private extension FTEssentialsPaperSegmentViewController{
             let orientation = self.varaintsData.selectedVariantsAndTheme.size == .mobile ? FTTemplateOrientation.portrait.title : varaintsData.selectedVariantsAndTheme.orientation.title
             var menuElements: [UIMenuElement] =  [templateSizeOptionsMenu]
             var paperSizeWithOrientationTitle = varaintsData.selectedVariantsAndTheme.size.displayTitle
-
-            let isRegular = self.view.frame.width > 550
-            if !isRegular {
+            if self.toShowOrientation {
                 paperSizeWithOrientationTitle += " (\(orientation))"
                 menuElements += [orientaionOptionsMenu]
             }
@@ -135,9 +143,8 @@ private extension FTEssentialsPaperSegmentViewController{
             let action = UIAction(title: displayTitle,state: state) { [weak self]action in
                 guard let self = self else { return }
                 let orientation = templateSizeModel.size == .mobile ? FTTemplateOrientation.portrait.title : self.varaintsData.selectedVariantsAndTheme.orientation.title
-                var paperSizeWithOrientationTitle = self.traitCollection.isRegular ? action.title : action.title
-                var shouldShow = self.view.frame.width > regularThreshold
-                if templateSizeModel.size != .mobile {
+                var paperSizeWithOrientationTitle = action.title
+                if self.toShowOrientation {
                     paperSizeWithOrientationTitle += " (\(String(describing: orientation)))"
                 }
                 self.paperSizeBtn.setTitle(paperSizeWithOrientationTitle, for: .normal)
@@ -147,9 +154,8 @@ private extension FTEssentialsPaperSegmentViewController{
                 }
                 if templateSizeModel.size == .mobile {
                     self.varaintsData.selectedVariantsAndTheme.orientation = .portrait
-                    shouldShow = false
                 }
-                self.variantsVc?.updateOrientationSegmentVisibility(!shouldShow)
+                self.variantsVc?.updateOrientationSegmentVisibility(!self.toShowOrientationSegment)
             }
             sizeActions.append(action)
         }
@@ -167,7 +173,10 @@ private extension FTEssentialsPaperSegmentViewController{
                guard let self = self else { return }
                 self.varaintsData.selectedVariantsAndTheme.orientation = orientation
                let orientationType = self.varaintsData.selectedVariantsAndTheme.size == .mobile ? FTTemplateOrientation.portrait.title : orientation.title
-               let paperSizeWithOrientationTitle = self.traitCollection.isRegular ? self.varaintsData.selectedVariantsAndTheme.size.displayTitle : self.varaintsData.selectedVariantsAndTheme.size.displayTitle + " (\(String(describing: orientationType)))"
+               var paperSizeWithOrientationTitle = self.varaintsData.selectedVariantsAndTheme.size.displayTitle
+               if self.toShowOrientation {
+                   paperSizeWithOrientationTitle += " (\(String(describing: orientationType)))"
+               }
                self.paperSizeBtn.setTitle(paperSizeWithOrientationTitle, for: .normal)
                 if let templateSizeMenu = self.paperSizeBtn?.menu {
                     self.paperSizeBtn?.menu = self.updateOrientationSubTitleInMenu(orientation, menu: templateSizeMenu)
@@ -181,6 +190,23 @@ private extension FTEssentialsPaperSegmentViewController{
         ])
         return orientationMenu
     }
+
+    private var toShowOrientationSegment: Bool {
+        var status = false
+        if self.view.frame.width > regularThreshold && self.varaintsData.selectedVariantsAndTheme.size != .mobile {
+            status = true
+        }
+        return status
+    }
+
+    private var toShowOrientation: Bool {
+        var status = false
+        if self.view.frame.width < regularThreshold && self.varaintsData.selectedVariantsAndTheme.size != .mobile {
+            status = true
+        }
+        return status
+    }
+
     private func updateOrientationSubTitleInMenu(_ oriention:FTTemplateOrientation, menu: UIMenu) -> UIMenu {
         menu.children.forEach { child in
             guard let menu =  child as? UIMenu else {
@@ -212,24 +238,21 @@ private extension FTEssentialsPaperSegmentViewController{
             }
             action.state = action.title == actionTitle ? .on : .off
         }
-        var filteredMenuChildren : [UIMenu] = [UIMenu]()
-        if self.traitCollection.isRegular {
-            filteredMenuChildren = [templateSizeOptionsMenu]
-        } else {
-            filteredMenuChildren = varaintsData.selectedVariantsAndTheme.size == FTTemplateSize.mobile ? [templateSizeOptionsMenu] : [templateSizeOptionsMenu,orientaionOptionsMenu]
+        var filteredMenuChildren : [UIMenu] = [templateSizeOptionsMenu]
+        if self.toShowOrientation {
+            filteredMenuChildren = [templateSizeOptionsMenu,orientaionOptionsMenu]
         }
-        
         if actionTitle != nil {
             filteredMenuChildren.forEach { child in
-                if self.traitCollection.isRegular {
-                    updateActionState(child)
-                }else {
+                if toShowOrientation {
                     guard child.title == "" else {
                         return
                     }
                     menu.children.forEach { child in
                         updateActionState(child)
                     }
+                } else {
+                    updateActionState(child)
                 }
             }
         } else {

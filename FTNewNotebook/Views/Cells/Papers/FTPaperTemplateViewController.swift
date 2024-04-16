@@ -63,6 +63,12 @@ public class FTPaperTemplateViewController: UIViewController {
     private var customVC: UIViewController!
     private var storeTemplateInfo: FTTemplateInfo?
 
+    var enableDoneBtn: Bool = false {
+        didSet {
+            self.updateDoneButtonStatus()
+        }
+    }
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.setUpStoreViewControllers()
@@ -139,7 +145,11 @@ public class FTPaperTemplateViewController: UIViewController {
         let rightNavItem = FTNavBarButtonItem(type: .right, title: "Done".localized, delegate: self)
         self.navigationItem.leftBarButtonItem = leftNavItem
         self.navigationItem.rightBarButtonItem = rightNavItem
-        self.navigationItem.rightBarButtonItem?.isEnabled = false
+        self.updateDoneButtonStatus()
+    }
+
+    private func updateDoneButtonStatus() {
+        self.navigationItem.rightBarButtonItem?.isEnabled = enableDoneBtn
     }
 }
 extension FTPaperTemplateViewController {

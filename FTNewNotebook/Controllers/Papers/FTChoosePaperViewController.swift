@@ -90,7 +90,7 @@ class FTChoosePaperViewController: UIViewController {
 extension FTChoosePaperViewController: FTPaperTemplatesVariantsDelegateNew {
     func updatePaperVaraints(_ variantsAndTheme: FTSelectedPaperVariantsAndTheme){
         var refreshThemes: Bool = false
-        if self.selectedPaperVariantsAndTheme.templateColorModel != variantsAndTheme.templateColorModel || self.selectedPaperVariantsAndTheme.lineHeight != variantsAndTheme.lineHeight{
+        if self.selectedPaperVariantsAndTheme.templateColorModel != variantsAndTheme.templateColorModel || self.selectedPaperVariantsAndTheme.lineHeight != variantsAndTheme.lineHeight || self.selectedPaperVariantsAndTheme.orientation != variantsAndTheme.orientation {
             refreshThemes = true
         }
         self.selectedPaperVariantsAndTheme.templateColorModel = variantsAndTheme.templateColorModel

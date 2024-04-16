@@ -100,7 +100,6 @@ class FTPaperPickerViewController: UIViewController {
         }
         setUpPreviewSize()
         setAttributedTextToTemplateSizeButton(self.selectedPaperVariantsAndTheme.size)
-        configureTemplateSizesMenu()
         setBottomPanelHeight()
         setShadowToPreview()
     }
@@ -109,14 +108,30 @@ class FTPaperPickerViewController: UIViewController {
     }
     //MARK: Template sizes menu
     private func configureTemplateSizesMenu() {
-        if self.traitCollection.isRegular {
-            self.templateSizeButton?.menu = templateSizeOptionsMenu
-        } else {
-            let menuElements: [UIMenuElement] = selectedPaperVariantsAndTheme.size == FTTemplateSize.mobile ? [templateSizeOptionsMenu] : [templateSizeOptionsMenu,orientaionOptionsMenu]
+        self.templateSizeButton?.menu = templateSizeOptionsMenu
+        if self.toShowOrientation {
+            let menuElements =  [templateSizeOptionsMenu,orientaionOptionsMenu]
             self.templateSizeButton?.menu = UIMenu(identifier: UIMenu.Identifier("SizesMenu") ,children:menuElements)
         }
         self.templateSizeButton?.showsMenuAsPrimaryAction = true
     }
+
+    private var toShowOrientationSegment: Bool {
+        var status = false
+        if self.view.frame.width > regularThreshold && self.selectedPaperVariantsAndTheme.size != .mobile {
+            status = true
+        }
+        return status
+    }
+
+    private var toShowOrientation: Bool {
+        var status = false
+        if self.view.frame.width < regularThreshold && self.selectedPaperVariantsAndTheme.size != .mobile {
+            status = true
+        }
+        return status
+    }
+
     private var templateSizeOptionsMenu: UIMenu {
         var sizeActions = [UIAction]()
         for templateSizeModel in paperVariantsDataModel.sizes.reversed() {
@@ -137,11 +152,7 @@ class FTPaperPickerViewController: UIViewController {
                 if templateSizeModel.size == .mobile {
                     self.selectedPaperVariantsAndTheme.orientation = .portrait
                 }
-                var shouldShow = self.view.frame.width > regularThreshold
-                if templateSizeModel.size == .mobile {
-                    shouldShow = false
-                }
-                self.varaintsVc?.updateOrientationSegmentVisibility(!shouldShow)
+                self.varaintsVc?.updateOrientationSegmentVisibility(!self.toShowOrientationSegment)
             }
             sizeActions.append(action)
         }
@@ -209,24 +220,21 @@ class FTPaperPickerViewController: UIViewController {
             }
             action.state = action.title == actionTitle ? .on : .off
         }
-        let menuChildren = menu.children
-        var filteredMenuChildren : [UIMenu] = [UIMenu]()
-        if self.traitCollection.isRegular {
-            filteredMenuChildren = [templateSizeOptionsMenu]
-        } else {
-            filteredMenuChildren = selectedPaperVariantsAndTheme.size == FTTemplateSize.mobile ? [templateSizeOptionsMenu] : [templateSizeOptionsMenu,orientaionOptionsMenu]
+        var filteredMenuChildren : [UIMenu] = [templateSizeOptionsMenu]
+        if self.toShowOrientation {
+            filteredMenuChildren = [templateSizeOptionsMenu,orientaionOptionsMenu]
         }
         if actionTitle != nil {
             filteredMenuChildren.forEach { child in
-                if self.traitCollection.isRegular {
-                    updateActionState(child)
-                }else {
+                if toShowOrientation {
                     guard child.title == "" else {
                         return
                     }
                     menu.children.forEach { child in
                         updateActionState(child)
                     }
+                } else {
+                    updateActionState(child)
                 }
             }
         } else {
@@ -487,7 +495,7 @@ extension FTPaperPickerViewController: FTChoosePaperDelegate {
         self.selectedPaperVariantsAndTheme.templateColorModel = variants.templateColorModel
         self.selectedPaperVariantsAndTheme.lineHeight = variants.lineHeight
         let resizeThumbnail = self.selectedPaperVariantsAndTheme.orientation != variants.orientation
-        if self.traitCollection.isRegular {
+        if self.view.frame.width > regularThreshold {
             self.selectedPaperVariantsAndTheme.orientation = variants.orientation
         }
         self.setThumbnailToPreviewImageView(toResize: resizeThumbnail)

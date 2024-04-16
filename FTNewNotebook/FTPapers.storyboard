@@ -190,20 +190,20 @@
             <objects>
                 <viewController storyboardIdentifier="FTPaperPropertiesViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="wat-I9-Ts7" customClass="FTPaperTemplatesVariantsController" customModule="FTNewNotebook" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="318-Km-bjC">
-                        <rect key="frame" x="0.0" y="0.0" width="726" height="36"/>
+                        <rect key="frame" x="0.0" y="0.0" width="835" height="36"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fHv-lN-dMx">
-                                <rect key="frame" x="141.5" y="0.0" width="448" height="36"/>
+                                <rect key="frame" x="196" y="0.0" width="448" height="36"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="HAS-aH-aui">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="HAS-aH-aui">
                                         <rect key="frame" x="8" y="0.0" width="244" height="36"/>
                                         <subviews>
                                             <button opaque="NO" clipsSubviews="YES" tag="700" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="d8X-Ws-92R" customClass="FTPaperTemplateColorButton" customModule="FTNewNotebook" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="36" height="36"/>
                                                 <color key="backgroundColor" name="whiteTemplate"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="36" id="ZbQ-kH-RNA"/>
+                                                    <constraint firstAttribute="width" secondItem="d8X-Ws-92R" secondAttribute="height" multiplier="1:1" id="Eef-lH-dcq"/>
                                                     <constraint firstAttribute="width" constant="36" id="dLk-8l-LJB"/>
                                                 </constraints>
                                                 <state key="normal" title="Button"/>
@@ -220,10 +220,6 @@
                                             <button opaque="NO" clipsSubviews="YES" tag="701" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="zTW-kP-5dH" customClass="FTPaperTemplateColorButton" customModule="FTNewNotebook" customModuleProvider="target">
                                                 <rect key="frame" x="52" y="0.0" width="36" height="36"/>
                                                 <color key="backgroundColor" name="grayTemplate"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="36" id="Nzi-86-7sD"/>
-                                                    <constraint firstAttribute="height" constant="36" id="bO4-xl-Y5x"/>
-                                                </constraints>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain"/>
                                                 <userDefinedRuntimeAttributes>
@@ -238,10 +234,6 @@
                                             <button opaque="NO" clipsSubviews="YES" tag="702" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="5EY-aQ-65e" customClass="FTPaperTemplateColorButton" customModule="FTNewNotebook" customModuleProvider="target">
                                                 <rect key="frame" x="104" y="0.0" width="36" height="36"/>
                                                 <color key="backgroundColor" name="legalTemplate"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="36" id="81w-Yh-bRB"/>
-                                                    <constraint firstAttribute="width" constant="36" id="dKH-Of-4f7"/>
-                                                </constraints>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain"/>
                                                 <userDefinedRuntimeAttributes>
@@ -256,10 +248,6 @@
                                             <button opaque="NO" clipsSubviews="YES" tag="703" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="qgL-2t-PvB" customClass="FTPaperTemplateColorButton" customModule="FTNewNotebook" customModuleProvider="target">
                                                 <rect key="frame" x="156" y="0.0" width="36" height="36"/>
                                                 <color key="backgroundColor" name="darkTemplate"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="36" id="OwP-zr-gn0"/>
-                                                    <constraint firstAttribute="height" constant="36" id="mrC-Jb-LG7"/>
-                                                </constraints>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain"/>
                                                 <userDefinedRuntimeAttributes>
@@ -273,39 +261,11 @@
                                             </button>
                                             <colorWell contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Aos-0v-o1q" customClass="FTPaperTemplateColorWell" customModule="FTNewNotebook" customModuleProvider="target">
                                                 <rect key="frame" x="208" y="0.0" width="36" height="36"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="36" id="Dv0-Qc-7Cr"/>
-                                                    <constraint firstAttribute="width" constant="36" id="Ey2-D3-C2W"/>
-                                                </constraints>
                                             </colorWell>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="228" id="7OA-LF-ukN"/>
                                             <constraint firstAttribute="height" constant="36" id="buw-VI-qrH"/>
-                                            <constraint firstAttribute="width" constant="244" id="faj-aF-Ckw"/>
                                         </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="7OA-LF-ukN"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=compact-widthClass=compact" spacing="12">
-                                            <mask key="constraints">
-                                                <include reference="7OA-LF-ukN"/>
-                                                <exclude reference="faj-aF-Ckw"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=compact-widthClass=regular">
-                                            <mask key="constraints">
-                                                <exclude reference="faj-aF-Ckw"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=regular-widthClass=compact" spacing="12">
-                                            <mask key="constraints">
-                                                <include reference="7OA-LF-ukN"/>
-                                                <exclude reference="faj-aF-Ckw"/>
-                                            </mask>
-                                        </variation>
                                         <variation key="heightClass=regular-widthClass=regular" spacing="16"/>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ecq-2n-hXM" userLabel="Separator1">
@@ -389,7 +349,9 @@
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="VR4-aF-ShR" secondAttribute="trailing" constant="8" id="0pm-rm-W6J"/>
                                     <constraint firstItem="Ecq-2n-hXM" firstAttribute="leading" secondItem="HAS-aH-aui" secondAttribute="trailing" constant="16" id="2S4-He-zYF"/>
-                                    <constraint firstAttribute="width" constant="448" id="3lM-S4-g49"/>
+                                    <constraint firstAttribute="width" constant="432" id="3lM-S4-g49">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="448"/>
+                                    </constraint>
                                     <constraint firstItem="VR4-aF-ShR" firstAttribute="leading" secondItem="IRb-ov-slf" secondAttribute="trailing" constant="16" id="Bxe-3d-j3B"/>
                                     <constraint firstItem="HAS-aH-aui" firstAttribute="top" secondItem="fHv-lN-dMx" secondAttribute="top" id="Df2-J3-bDB"/>
                                     <constraint firstAttribute="bottom" secondItem="HAS-aH-aui" secondAttribute="bottom" id="K0J-Ae-lE2"/>

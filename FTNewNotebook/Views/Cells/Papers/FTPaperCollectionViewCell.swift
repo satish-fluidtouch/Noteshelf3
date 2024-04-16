@@ -16,6 +16,8 @@ class FTPaperCollectionViewCell: FTTraitCollectionViewCell {
     @IBOutlet weak private var imgView: UIImageView?
     @IBOutlet weak private var themeTitle: UILabel?
     @IBOutlet private weak var imgWidthConstraint: NSLayoutConstraint?
+    
+    private var paperPickerMode: FTPaperPickerMode = .paperPicker
 
     private var thumbnailColorHex: String?
     var isCellSelected: Bool = false {
@@ -30,10 +32,15 @@ class FTPaperCollectionViewCell: FTTraitCollectionViewCell {
     }
 
     func updateImgWidthConstraint() {
-           self.imgWidthConstraint?.constant = self.isRegular ? 120 : 100
+        if self.paperPickerMode == .paperPicker {
+            self.imgWidthConstraint?.constant = self.isRegular ? 120 : 100
+        } else {
+            self.imgWidthConstraint?.constant = 120
+        }
     }
 
-    func configureCellWith(title: String?, thumbnailColorHex:String){
+    func configureCellWith(title: String?, thumbnailColorHex:String, mode: FTPaperPickerMode){
+        self.paperPickerMode = mode
         self.thumbnailColorHex = thumbnailColorHex
         let color = UIColor(hexWithAlphaString: thumbnailColorHex)
         self.applySelectedColorVariant(color)
@@ -100,28 +107,6 @@ class FTPaperCollectionViewCell: FTTraitCollectionViewCell {
                 self.imgView?.image = image
             }
         }
-    }
-    private func getRequiredPortionOfImageAsThumnail(_ thumbnailImage: UIImage,
-                                                     requiredRect:CGRect) -> UIImage {
-        let pdfPath = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0] as NSString
-            let pdfFilePath = pdfPath.appendingPathComponent("thumnailPDF.pdf")
-            let pdfBounds = CGRect(x: 0, y: 0, width: thumbnailImage.size.width, height: thumbnailImage.size.height)
-        UIGraphicsBeginPDFContextToFile(pdfFilePath, pdfBounds, nil)
-        UIGraphicsBeginPDFPage()
-        let context = UIGraphicsGetCurrentContext()
-        context?.translateBy(x: 0, y: thumbnailImage.size.height);
-        context?.scaleBy(x: 1, y: -1);
-        context!.draw(thumbnailImage.cgImage!, in: pdfBounds)
-        UIGraphicsEndPDFContext()
-        guard let pdf = PDFDocument(url: URL(fileURLWithPath: pdfFilePath)),
-              let page = pdf.page(at: 0) else {
-            fatalError("pdf page note found")
-        }
-        let renderer = UIGraphicsImageRenderer(size: requiredRect.size)
-        let thumbImage = renderer.image { context in
-            page.draw(with: PDFDisplayBox.cropBox, to: context.cgContext)
-        }
-        return thumbImage
     }
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)

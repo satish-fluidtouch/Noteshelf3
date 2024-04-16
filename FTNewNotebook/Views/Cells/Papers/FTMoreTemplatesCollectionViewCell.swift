@@ -13,9 +13,12 @@ class FTMoreTemplatesCollectionViewCell: FTTraitCollectionViewCell {
     @IBOutlet weak private var moreTemplatesButton: UIButton?
     @IBOutlet private weak var moreTemplateBtnWidthConstraint: NSLayoutConstraint?
 
-    func configureCell() {
+    private var paperPickerMode: FTPaperPickerMode = .paperPicker
+    
+    func configureCell(mode: FTPaperPickerMode) {
         setBorder()
         moreTemplateLabel?.text = "newnotebook.moretemplates".localized
+        self.paperPickerMode = mode
     }
 
     override func layoutSubviews() {
@@ -24,7 +27,11 @@ class FTMoreTemplatesCollectionViewCell: FTTraitCollectionViewCell {
     }
 
     func updateImgWidthConstraint() {
-        self.moreTemplateBtnWidthConstraint?.constant = self.isRegular ? 120 : 100
+        if self.paperPickerMode == .paperPicker {
+            self.moreTemplateBtnWidthConstraint?.constant = self.isRegular ? 120 : 100
+        } else {
+            self.moreTemplateBtnWidthConstraint?.constant = 120
+        }
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
