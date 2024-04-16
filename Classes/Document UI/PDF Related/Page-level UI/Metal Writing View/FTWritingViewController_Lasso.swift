@@ -39,13 +39,13 @@ extension FTWritingViewController : FTLassoProtocol {
             
             self.lassoImageView?.isHidden = true;
             if annotationsToRender.isEmpty == false {
-                UIGraphicsBeginImageContextWithOptions(annotationsMaxRect.size, false, 0);
-                let currentContext = UIGraphicsGetCurrentContext();
-                currentContext?.translateBy(x: 0, y: annotationsMaxRect.height);
-                currentContext?.scaleBy(x: 1, y: -1);
-                
                 let windowHash = self.view.window?.hash;
                 self.lassoQueue.async {
+                    let ftContext = FTImageContext.imageContext(annotationsMaxRect.size, scale: 0);
+                    let currentContext = ftContext?.cgContext;
+                    currentContext?.translateBy(x: 0, y: annotationsMaxRect.height);
+                    currentContext?.scaleBy(x: 1, y: -1);
+
                     let imageGen = FTRendererProvider.shared.dequeOffscreenRenderer();
                     
                     let tileSize = FTRenderConstants.TILE_SIZE;
@@ -100,8 +100,7 @@ extension FTWritingViewController : FTLassoProtocol {
                     
                     dispatchGroup.notify(queue: self.lassoQueue, execute: {
                         DispatchQueue.main.async { [weak self] in
-                            let newImage = UIGraphicsGetImageFromCurrentImageContext();
-                            UIGraphicsEndImageContext();
+                            let newImage = ftContext?.uiImage();
                             FTRendererProvider.shared.enqueOffscreenRenderer(imageGen)
                             let properties = FTRenderingProperties();
                             properties.renderImmediately = true;

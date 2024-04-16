@@ -7,33 +7,7 @@
 //
 
 import UIKit
-#if  !NS2_SIRI_APP && !NOTESHELF_ACTION
-extension UIImage {
-    func resizeWithinRect(_ rectSize: CGSize) -> CGSize {
-        let widthFactor = size.width / rectSize.width
-        let heightFactor = size.height / rectSize.height
-        
-        var resizeFactor = widthFactor
-        if size.height > size.width {
-            resizeFactor = heightFactor
-        }
-        
-        let newSize = CGSize(width: size.width/resizeFactor, height: size.height/resizeFactor)
-        return newSize
-    }
-    func getImageResizedRect(_ newSize: CGSize) -> CGSize {
-        // Guard newSize is different
-        guard self.size != newSize else { return self.size }
-        
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0);
-        self.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
-        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        return newImage.size
-    }
-    
-}
-#endif
+
 extension UIColor {
     convenience init(hexWithAlphaString: String) {
         let strings = hexWithAlphaString.split(separator: "-")

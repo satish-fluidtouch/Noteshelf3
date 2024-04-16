@@ -138,7 +138,6 @@ class FTPhotoAlbumsViewController: UIViewController, FTImagePickerDelegate, UITa
         self.dismiss(animated: true) {
             self.delegate?.photosCollectionViewController(self, didFinishPickingPhotos: [image],isCamera: true)
         }
-        print("test")
     }
     
     //MARK:- Segue

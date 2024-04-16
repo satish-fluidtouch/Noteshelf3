@@ -21,70 +21,140 @@ extension UIImage {
             position = FTCoverStyle.clearWhite
         }
         return position
-     }
-     
-     @objc func coverSize() -> CGSize
-     {
-         let style = self.coverStyle();
-         return style.coverSize();
-     }
+    }
+    
+    @objc func coverSize() -> CGSize
+    {
+        let style = self.coverStyle();
+        return style.coverSize();
+    }
+    
+    @objc func coverLabelStyle() -> FTCoverLabelStyle
+    {
+        let position = self.coverStyle();
+        var labelPosition : FTCoverLabelStyle;
+        switch position {
+        case .transparent, .audio, .clearWhite:
+            labelPosition = .bottom;
+        default:
+            labelPosition = .default;
+        }
+        return labelPosition;
+    }
+    
+    private func imageRotatedByDegrees(_ degrees:CGFloat) -> UIImage {
+        // calculate the size of the rotated view's containing box for our drawing space
+        var rotatedViewBox = CGRect(x: 0,y: 0,width: self.size.width, height: self.size.height);
+        let t:CGAffineTransform = CGAffineTransform(rotationAngle: degrees.degreesToRadians)
+        rotatedViewBox = rotatedViewBox.applying(t).integral;
+        let rotatedSize:CGSize = rotatedViewBox.size
 
-     @objc func coverLabelStyle() -> FTCoverLabelStyle
-     {
-         let position = self.coverStyle();
-         var labelPosition : FTCoverLabelStyle;
-         switch position {
-         case .transparent, .audio, .clearWhite:
-             labelPosition = .bottom;
-         default:
-             labelPosition = .default;
+        // Create the bitmap context
+        guard let ftcontext = FTImageContext.imageContext(rotatedSize, scale: 0.0) else {
+            return self;
+        }
+        let bitmap:CGContext = ftcontext.cgContext
+        bitmap.interpolationQuality = CGInterpolationQuality.high
+
+        // Move the origin to the middle of the image so we will rotate and scale around the center.
+        bitmap.translateBy(x: rotatedSize.width/2, y: rotatedSize.height/2)
+
+        //   // Rotate the image context
+        bitmap.rotate(by: degrees.degreesToRadians)
+
+        // Now, draw the rotated/scaled image into the context
+        bitmap.scaleBy(x: 1.0, y: -1.0)
+        if let cgImage = self.cgImage {
+            bitmap.draw(cgImage, in:  CGRect(x: -self.size.width / 2, y: -self.size.height / 2, width: self.size.width, height: self.size.height))
+        }
+        let newImage = ftcontext.uiImage()
+        return newImage ?? self
+    }
+
+    func imageRotatedByRadians(_ radians:CGFloat) -> UIImage {
+        return self.imageRotatedByDegrees(radians.radiansToDegrees)
+    }
+    
+    func resizedImage(newSize:CGSize, transform:CGAffineTransform, clippingRect clipRect:CGRect, screenScale:CGFloat, includeBorder:Bool) -> UIImage {
+        //NSTimeInterval t1 = [NSDate timeIntervalSinceReferenceDate];
+
+        let rect = CGRect(x: 0, y: 0, width: clipRect.size.width, height: clipRect.size.height).integral
+
+        let scaledImageSize = CGSize(width: self.size.width/screenScale, height: self.size.height/screenScale)
+
+        guard let ftcontext = FTImageContext.imageContext(rect.size, scale: screenScale) else {
+            return self;
+        }
+
+        let ctx = ftcontext.cgContext;
+        ctx.interpolationQuality = .low
+
+        // Transform the image (as the image view has been transformed)
+        ctx.translateBy(x: newSize.width*0.5 - clipRect.origin.x, y: newSize.height*0.5 - clipRect.origin.y)
+        ctx.concatenate(transform)
+        ctx.translateBy(x: -scaledImageSize.width*0.5, y: -scaledImageSize.height*0.5)
+
+        ctx.translateBy(x: 0.0, y: scaledImageSize.height)
+        ctx.scaleBy(x: 1.0, y: -1.0)
+
+        // Draw view into context
+        if let cgImage = self.cgImage {
+            ctx.draw(cgImage, in: CGRect(x: 0,y: 0,width: scaledImageSize.width, height: scaledImageSize.height))
+        }
+
+        if includeBorder {
+
+            //Implement someday:
+
+            //CGContextAddRect(ctx, CGRectInset(CGRect(0,0,self.size.width, self.size.height),2,2));
+            //CGContextSetStrokeColorWithColor(ctx, [UIColor redColor].CGColor);
+            //CGContextSetLineWidth(ctx, 10);
+            //CGContextStrokePath(ctx);
+        }
+
+        // Create the new UIImage from the context
+        let newImage = ftcontext.uiImage()
+        return newImage ?? self
+    }
+    
+    func imageByRemovingShadows() -> UIImage? {
+         var outputImage = CIImage(image: self)
+         let filter = CIFilter(name: "CIHighlightShadowAdjust")
+         filter?.setDefaults()
+         filter?.setValue(outputImage, forKey: kCIInputImageKey)
+         filter?.setValue(NSNumber(value: 1), forKey: "inputHighlightAmount")
+         filter?.setValue(NSNumber(value: 10), forKey: "inputShadowAmount")
+         outputImage = filter?.outputImage
+
+         let exposureAdjustmentFilter = CIFilter(name: "CIExposureAdjust")
+         exposureAdjustmentFilter?.setDefaults()
+         exposureAdjustmentFilter?.setValue(outputImage, forKey: "inputImage")
+         exposureAdjustmentFilter?.setValue(NSNumber(value: 0.3), forKey: "inputEV")
+         outputImage = exposureAdjustmentFilter?.value(forKey: "outputImage") as? CIImage
+
+         let adjustments = outputImage?.autoAdjustmentFilters(options: nil)
+
+         for filter in adjustments! {
+             filter.setValue(outputImage, forKey: kCIInputImageKey)
+             outputImage = filter.outputImage
          }
-         return labelPosition;
+         let context = CIContext(options: nil)
+         return UIImage(cgImage: context.createCGImage(outputImage!, from:outputImage!.extent)!)
      }
-    
+}
+
+//MARK:- UNUSED -
+private extension UIImage {
     convenience init(view: UIView) {
-          UIGraphicsBeginImageContext(view.frame.size)
-          view.layer.render(in:UIGraphicsGetCurrentContext()!)
-          let image = UIGraphicsGetImageFromCurrentImageContext()
-          UIGraphicsEndImageContext()
-          self.init(cgImage: image!.cgImage!)
+        guard let ftcontext = FTImageContext.imageContext(view.frame.size) else {
+            self.init();
+            return;
+        }
+        view.layer.render(in:ftcontext.cgContext)
+        let image = ftcontext.uiImage()
+        self.init(cgImage: image!.cgImage!)
     }
-   
-   func tint(with color: UIColor) -> UIImage
-   {
-       UIGraphicsBeginImageContextWithOptions(self.size, false, UIScreen.main.scale)
-       defer { UIGraphicsEndImageContext() }
-       guard let context = UIGraphicsGetCurrentContext() else { return self }
-       
-       // flip the image
-       context.scaleBy(x: 1.0, y: -1.0)
-       context.translateBy(x: 0.0, y: -self.size.height)
-       
-       // multiply blend mode
-       context.setBlendMode(.multiply)
-       
-       let rect = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
-       context.clip(to: rect, mask: self.cgImage!)
-       color.setFill()
-       context.fill(rect)
-       
-       // create UIImage
-       guard let newImage = UIGraphicsGetImageFromCurrentImageContext() else { return self }
-       
-       return newImage
-   }
-    
-    func applying(contrast value: NSNumber) -> UIImage? {
-       guard
-           let ciImage = CIImage(image: self)?.applyingFilter("CIColorControls",
-                                                              parameters: [kCIInputContrastKey: value])
-           else { return nil }
-       UIGraphicsBeginImageContextWithOptions(size, false, scale)
-       defer { UIGraphicsEndImageContext() }
-       UIImage(ciImage: ciImage).draw(in: CGRect(origin: .zero, size: size))
-       return UIGraphicsGetImageFromCurrentImageContext()
-    }
-    
+           
     func resizedImageWithSize(_ targetSize:CGSize) -> UIImage {
 
         let sourceImage = self
@@ -120,15 +190,15 @@ extension UIImage {
         thumbnailRect.size.width  = scaledWidth
         thumbnailRect.size.height = scaledHeight
 
-        UIGraphicsBeginImageContextWithOptions(thumbnailRect.size, false, 0.0)
-        if let context = UIGraphicsGetCurrentContext() {
-            context.interpolationQuality = CGInterpolationQuality.high
+        guard let ftcontext = FTImageContext.imageContext(thumbnailRect.size) else {
+            return self;
         }
+        let context = ftcontext.cgContext;
+        context.interpolationQuality = CGInterpolationQuality.high
 
         sourceImage.draw(in: thumbnailRect)
 
-        newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+        newImage = ftcontext.uiImage()
         
         if newImage == nil {
             debugLog("could not scale image")
@@ -143,13 +213,15 @@ extension UIImage {
         } else {
             rect = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
         }
-        UIGraphicsBeginImageContextWithOptions(rect.size, false, 1.0)
-        if let context = UIGraphicsGetCurrentContext() {
-            context.interpolationQuality = CGInterpolationQuality.high
+        
+        guard let ftcontext = FTImageContext.imageContext(rect.size,scale: 1.0) else {
+            return self;
         }
+        let context = ftcontext.cgContext;
+        
+        context.interpolationQuality = CGInterpolationQuality.high
         self.draw(in: rect)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+        let newImage = ftcontext.uiImage()
         return newImage ?? self
     }
 
@@ -160,10 +232,11 @@ extension UIImage {
             return self
         }
 
-        UIGraphicsBeginImageContextWithOptions(targetSize, false, 0.0)
-        if let context = UIGraphicsGetCurrentContext() {
-          context.interpolationQuality = CGInterpolationQuality.high
+        guard let ftcontext = FTImageContext.imageContext(targetSize) else {
+            return self;
         }
+        let context = ftcontext.cgContext;
+        context.interpolationQuality = CGInterpolationQuality.high
         let horizontalRatio:CGFloat = targetSize.width / self.size.width
         let verticalRatio:CGFloat = targetSize.height / self.size.height
         var ratio:CGFloat
@@ -176,9 +249,7 @@ extension UIImage {
         self.draw(in: CGRect(x: xPos, y: yPos, width: newSize.width, height: newSize.height))
 
         // An autoreleased image
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-
-        UIGraphicsEndImageContext()
+        let newImage = ftcontext.uiImage()
 
         return newImage ?? self
     }
@@ -210,31 +281,30 @@ extension UIImage {
 
         let scaledImageSize:CGSize = CGSize(width: self.size.width, height: self.size.height)
 
-        UIGraphicsBeginImageContextWithOptions(scaledImageSize, false, 1.0)
-        if let context = UIGraphicsGetCurrentContext() {
-            context.interpolationQuality = CGInterpolationQuality.high
+        guard let ftcontext = FTImageContext.imageContext(scaledImageSize,scale: 1.0) else {
+            return self;
         }
+        let context = ftcontext.cgContext;
+        context.interpolationQuality = CGInterpolationQuality.high
         //CGContextSetFillColorWithColor(UIGraphicsGetCurrentContext(), [UIColor redColor].CGColor);
         //CGContextFillRect(UIGraphicsGetCurrentContext(), CGRect(0, 0, scaledImageSize.width, scaledImageSize.height));
 
         self.draw(in: CGRect(x: 0, y: 0, width: scaledImageSize.width, height: scaledImageSize.height))
 
-        let imageCopy = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-
+        let imageCopy = ftcontext.uiImage()
         return imageCopy ?? self
     }
 
     func scaleUpTo2x() -> UIImage {
 
-        UIGraphicsBeginImageContextWithOptions(self.size, false, 0.0)
-        if let context = UIGraphicsGetCurrentContext() {
-            context.interpolationQuality = CGInterpolationQuality.high
+        guard let ftcontext = FTImageContext.imageContext(self.size,scale: 0.0) else {
+            return self;
         }
+        let context = ftcontext.cgContext;
+        context.interpolationQuality = CGInterpolationQuality.high
         self.draw(in: CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height))
 
-        let imageCopy = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+        let imageCopy = ftcontext.uiImage()
 
         return imageCopy ?? self
     }
@@ -281,11 +351,11 @@ extension UIImage {
 
 
         // this is actually the interesting part:
-
-        UIGraphicsBeginImageContextWithOptions(targetSize, false, 0.0)
-        if let context = UIGraphicsGetCurrentContext() {
-            context.interpolationQuality = CGInterpolationQuality.high
+        guard let ftcontext = FTImageContext.imageContext(targetSize,scale: 0.0) else {
+            return self;
         }
+        let context = ftcontext.cgContext;
+            context.interpolationQuality = CGInterpolationQuality.high
         var thumbnailRect:CGRect = .zero
         thumbnailRect.origin = thumbnailPoint
         thumbnailRect.size.width  = scaledWidth
@@ -293,8 +363,7 @@ extension UIImage {
 
         sourceImage.draw(in: thumbnailRect)
 
-        newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+        newImage = ftcontext.uiImage()
 
         if newImage == nil {debugLog("could not scale image")}
 
@@ -321,11 +390,12 @@ extension UIImage {
         let thumbnailPoint:CGPoint = CGPoint(x: 0.0,y: 0.0)
 
         // this is actually the interesting part:
-
-        UIGraphicsBeginImageContextWithOptions(targetSize, false, 0.0)
-        if let context = UIGraphicsGetCurrentContext() {
-            context.interpolationQuality = CGInterpolationQuality.high
+        guard let ftcontext = FTImageContext.imageContext(targetSize,scale: 0.0) else {
+            return self;
         }
+        let context = ftcontext.cgContext;
+
+            context.interpolationQuality = CGInterpolationQuality.high
         var thumbnailRect:CGRect = .zero
         thumbnailRect.origin = thumbnailPoint
         thumbnailRect.size.width  = scaledWidth
@@ -333,49 +403,12 @@ extension UIImage {
 
         sourceImage.draw(in: thumbnailRect)
 
-        newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+        newImage = ftcontext.uiImage()
 
         if newImage == nil {debugLog("could not scale image")}
 
 
         return newImage ?? self
-    }
-
-
-    private func imageRotatedByDegrees(_ degrees:CGFloat) -> UIImage {
-        // calculate the size of the rotated view's containing box for our drawing space
-        var rotatedViewBox = CGRect(x: 0,y: 0,width: self.size.width, height: self.size.height);
-        let t:CGAffineTransform = CGAffineTransform(rotationAngle: degrees.degreesToRadians)
-        rotatedViewBox = rotatedViewBox.applying(t).integral;
-        let rotatedSize:CGSize = rotatedViewBox.size
-
-        // Create the bitmap context
-        UIGraphicsBeginImageContextWithOptions(rotatedSize, false, 0.0)
-        if let context = UIGraphicsGetCurrentContext() {
-            context.interpolationQuality = CGInterpolationQuality.high
-        }
-        let bitmap:CGContext = UIGraphicsGetCurrentContext()!
-
-        // Move the origin to the middle of the image so we will rotate and scale around the center.
-        bitmap.translateBy(x: rotatedSize.width/2, y: rotatedSize.height/2)
-
-        //   // Rotate the image context
-        bitmap.rotate(by: degrees.degreesToRadians)
-
-        // Now, draw the rotated/scaled image into the context
-        bitmap.scaleBy(x: 1.0, y: -1.0)
-        if let cgImage = self.cgImage {
-            bitmap.draw(cgImage, in:  CGRect(x: -self.size.width / 2, y: -self.size.height / 2, width: self.size.width, height: self.size.height))
-        }
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return newImage ?? self
-
-    }
-
-    func imageRotatedByRadians(_ radians:CGFloat) -> UIImage {
-        return self.imageRotatedByDegrees(radians.radiansToDegrees)
     }
 
     // Returns a copy of the image that has been transformed using the given affine transform and scaled to the new size
@@ -416,58 +449,6 @@ extension UIImage {
                      clippingRect:clipRect,
                      screenScale:UIScreen.main.scale,
                     includeBorder:includeBorder)
-    }
-
-    func resizedImage(newSize:CGSize, transform:CGAffineTransform, clippingRect clipRect:CGRect, screenScale:CGFloat, includeBorder:Bool) -> UIImage {
-        //NSTimeInterval t1 = [NSDate timeIntervalSinceReferenceDate];
-
-        let rect = CGRect(x: 0, y: 0, width: clipRect.size.width, height: clipRect.size.height).integral
-
-        let scaledImageSize = CGSize(width: self.size.width/screenScale, height: self.size.height/screenScale)
-
-        UIGraphicsBeginImageContextWithOptions(rect.size, false, screenScale)
-
-        // End the drawing
-        defer {
-            UIGraphicsEndImageContext()
-        }
-
-        guard let ctx:CGContext = UIGraphicsGetCurrentContext() else {
-            return self
-        }
-        ctx.interpolationQuality = .low
-
-        // Transform the image (as the image view has been transformed)
-        ctx.translateBy(x: newSize.width*0.5 - clipRect.origin.x, y: newSize.height*0.5 - clipRect.origin.y)
-        ctx.concatenate(transform)
-        ctx.translateBy(x: -scaledImageSize.width*0.5, y: -scaledImageSize.height*0.5)
-
-        ctx.translateBy(x: 0.0, y: scaledImageSize.height)
-        ctx.scaleBy(x: 1.0, y: -1.0)
-
-        // Draw view into context
-        if let cgImage = self.cgImage {
-            ctx.draw(cgImage, in: CGRect(x: 0,y: 0,width: scaledImageSize.width, height: scaledImageSize.height))
-        }
-
-        if includeBorder {
-
-            //Implement someday:
-
-            //CGContextAddRect(ctx, CGRectInset(CGRect(0,0,self.size.width, self.size.height),2,2));
-            //CGContextSetStrokeColorWithColor(ctx, [UIColor redColor].CGColor);
-            //CGContextSetLineWidth(ctx, 10);
-            //CGContextStrokePath(ctx);
-        }
-
-        // Create the new UIImage from the context
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-
-        //NSTimeInterval t2 = [NSDate timeIntervalSinceReferenceDate];
-
-        //print(@"%.0f", (t2-t1)*1000);
-
-        return newImage ?? self
     }
 
     func scaleAndRotateImage() -> UIImage {
@@ -538,12 +519,11 @@ extension UIImage {
                  NSException(name:NSExceptionName.internalInconsistencyException, reason:"Invalid image orientation", userInfo:nil).raise()
         }
 
-        UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0.0)
-        if let context = UIGraphicsGetCurrentContext() {
-            context.interpolationQuality = .high
+        guard let ftcontext = FTImageContext.imageContext(bounds.size,scale: 0.0) else {
+            return self;
         }
-
-        let context:CGContext = UIGraphicsGetCurrentContext()!
+        let context = ftcontext.cgContext;
+            context.interpolationQuality = .high
 
         if orient == .right || orient == .left {
             context.scaleBy(x: -scaleRatio, y: scaleRatio)
@@ -576,8 +556,7 @@ extension UIImage {
 
         context.concatenate(transform)
         context.draw(imgRef, in: CGRect(x: 0, y: 0, width: width, height: height))
-        let imageCopy = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+        let imageCopy = ftcontext.uiImage()
 
         return imageCopy ?? self
     }
@@ -587,46 +566,45 @@ extension UIImage {
         guard let anotherImage = anotherImage else{
             return self
         }
-        UIGraphicsBeginImageContextWithOptions(self.size, false, 0.0)
-
-        if let context = UIGraphicsGetCurrentContext() {
-                   context.interpolationQuality = .high
-               }
+        guard let ftcontext = FTImageContext.imageContext(self.size,scale: 0.0) else {
+            return self;
+        }
+        let context = ftcontext.cgContext;
+        context.interpolationQuality = .high
         self.draw(in: CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height))
 
         anotherImage.draw(in: CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height))
 
-        let imageCopy = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+        let imageCopy = ftcontext.uiImage()
 
         return imageCopy ?? self
     }
 
     func grabImageFromView(viewToGrab:UIView) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(viewToGrab.bounds.size, false, 0.0)
-        if let context = UIGraphicsGetCurrentContext() {
-                   context.interpolationQuality = .high
-               }
-        viewToGrab.layer.render(in: UIGraphicsGetCurrentContext()!)
-        let viewImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+        guard let ftcontext = FTImageContext.imageContext(viewToGrab.bounds.size,scale: 0.0) else {
+            return self;
+        }
+        let context = ftcontext.cgContext;
+        context.interpolationQuality = .high
+        viewToGrab.layer.render(in: context)
+        let viewImage = ftcontext.uiImage()
         return viewImage ?? self
     }
 
     func stretchImage(to size: CGSize, edgeInsets: UIEdgeInsets) -> UIImage? {
 
-        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-        if let context = UIGraphicsGetCurrentContext() {
-            context.interpolationQuality = .high
+        guard let ftcontext = FTImageContext.imageContext(size,scale: 0.0) else {
+            return self;
         }
+        let context = ftcontext.cgContext;
+
+            context.interpolationQuality = .high
         if responds(to: #selector(self.resizableImage(withCapInsets:))) {
             resizableImage(withCapInsets: edgeInsets).draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         } else {
             stretchableImage(withLeftCapWidth: Int(edgeInsets.left), topCapHeight: Int(edgeInsets.top)).draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         }
-
-        let imageCopy = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+        let imageCopy = ftcontext.uiImage()
 
         return imageCopy
     }
@@ -644,46 +622,18 @@ extension UIImage {
         }
         return nil
     }
-    
-    
-   func imageByRemovingShadows() -> UIImage? {
-        var outputImage = CIImage(image: self)
-        let filter = CIFilter(name: "CIHighlightShadowAdjust")
-        filter?.setDefaults()
-        filter?.setValue(outputImage, forKey: kCIInputImageKey)
-        filter?.setValue(NSNumber(value: 1), forKey: "inputHighlightAmount")
-        filter?.setValue(NSNumber(value: 10), forKey: "inputShadowAmount")
-        outputImage = filter?.outputImage
-
-        let exposureAdjustmentFilter = CIFilter(name: "CIExposureAdjust")
-        exposureAdjustmentFilter?.setDefaults()
-        exposureAdjustmentFilter?.setValue(outputImage, forKey: "inputImage")
-        exposureAdjustmentFilter?.setValue(NSNumber(value: 0.3), forKey: "inputEV")
-        outputImage = exposureAdjustmentFilter?.value(forKey: "outputImage") as? CIImage
-
-        let adjustments = outputImage?.autoAdjustmentFilters(options: nil)
-
-        for filter in adjustments! {
-            filter.setValue(outputImage, forKey: kCIInputImageKey)
-            outputImage = filter.outputImage
-        }
-        let context = CIContext(options: nil)
-        return UIImage(cgImage: context.createCGImage(outputImage!, from:outputImage!.extent)!)
-    }
-    
+        
    @objc func resizeImage(to newSize: CGSize, transform: CGAffineTransform, clippingRect clipRect: CGRect) -> UIImage? {
         let rect1 = CGRect(x: 0, y: 0, width: clipRect.size.width, height: clipRect.size.height)
         let rect = rect1.integral
         
         let scaledImageSize = CGSize(width: size.width, height: size.height)
         
-        guard let context = UIGraphicsGetCurrentContext() else {
-            return self
-        }
-        
-        UIGraphicsBeginImageContextWithOptions(rect.size, _: false, _: 0.0)
-        //        CGContextSetInterpolationQuality(context, CGInterpolationQuality.low)
-        
+       guard let ftcontext = FTImageContext.imageContext(rect.size,scale: 0.0) else {
+           return self;
+       }
+       let context = ftcontext.cgContext;
+
         // Transform the image (as the image view has been transformed)
         context.translateBy(x: newSize.width * 0.5 - clipRect.origin.x, y: newSize.height * 0.5 - clipRect.origin.y)
         context.concatenate(transform)
@@ -695,24 +645,21 @@ extension UIImage {
         // Draw view into context
         context.draw(cgImage!, in: CGRect(x: 0, y: 0, width: scaledImageSize.width, height: scaledImageSize.height))
         // Create the new UIImage from the context
-        let newImage: UIImage? = UIGraphicsGetImageFromCurrentImageContext()
-        
-        // End the drawing
-        UIGraphicsEndImageContext()
+       let newImage: UIImage? = ftcontext.uiImage()
         
         return newImage
     }
     
-   @objc func scaleDownToHalf() -> UIImage? {
+    @objc func scaleDownToHalf() -> UIImage? {
         let scaledImageSize = CGSize(width: size.width * 0.5, height: size.height * 0.5)
         
-        UIGraphicsBeginImageContextWithOptions(scaledImageSize, _: false, _: 1.0)
-        //        CGContextSetInterpolationQuality(UIGraphicsGetCurrentContext(), CGInterpolationQuality.high)
-        
+        guard let ftcontext = FTImageContext.imageContext(scaledImageSize,scale: 1.0) else {
+            return self;
+        }
+        let context = ftcontext.cgContext;
         draw(in: CGRect(x: 0, y: 0, width: scaledImageSize.width, height: scaledImageSize.height))
         
-        let imageCopy: UIImage? = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+        let imageCopy: UIImage? = ftcontext.uiImage()
         
         return imageCopy
     }
@@ -728,11 +675,12 @@ private extension UIImage {
         let rotatedSize:CGSize = rotatedViewBox.frame.size
         
         // Create the bitmap context
-        UIGraphicsBeginImageContextWithOptions(rotatedSize, false, 1.0)
-        if let context = UIGraphicsGetCurrentContext() {
-            context.interpolationQuality = CGInterpolationQuality.high
+        guard let ftcontext = FTImageContext.imageContext(rotatedSize,scale: 1.0) else {
+            return self;
         }
-        let bitmap:CGContext = UIGraphicsGetCurrentContext()!
+        let bitmap = ftcontext.cgContext;
+
+        bitmap.interpolationQuality = CGInterpolationQuality.high
         
         // Move the origin to the middle of the image so we will rotate and scale around the center.
         bitmap.translateBy(x: rotatedSize.width/2, y: rotatedSize.height/2)
@@ -745,8 +693,7 @@ private extension UIImage {
         if let cgImage = self.cgImage {
             bitmap.draw(cgImage, in: CGRect(x: -self.size.width / 2, y: -self.size.height / 2, width: self.size.width, height: self.size.height))
         }
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+        let newImage = ftcontext.uiImage()
         return newImage ?? self
         
     }

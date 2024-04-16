@@ -14,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0E4FDECF2AC1B3AA0097FE16"
-               BuildableName = "Noteshelf3 WatchApp.app"
+               BlueprintIdentifier = "E75CD8492B8F0B4300D59F21"
+               BuildableName = "Noteshelf3 Watch App.app"
                BlueprintName = "Noteshelf3 WatchApp"
                ReferencedContainer = "container:Noteshelf3.xcodeproj">
             </BuildableReference>
@@ -58,8 +58,8 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0E4FDECF2AC1B3AA0097FE16"
-            BuildableName = "Noteshelf3 WatchApp.app"
+            BlueprintIdentifier = "E75CD8492B8F0B4300D59F21"
+            BuildableName = "Noteshelf3 Watch App.app"
             BlueprintName = "Noteshelf3 WatchApp"
             ReferencedContainer = "container:Noteshelf3.xcodeproj">
          </BuildableReference>
@@ -76,21 +76,12 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0E4FDECF2AC1B3AA0097FE16"
-            BuildableName = "Noteshelf3 WatchApp.app"
+            BlueprintIdentifier = "E75CD8492B8F0B4300D59F21"
+            BuildableName = "Noteshelf3 Watch App.app"
             BlueprintName = "Noteshelf3 WatchApp"
             ReferencedContainer = "container:Noteshelf3.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0E4FDECF2AC1B3AA0097FE16"
-            BuildableName = "Noteshelf3 WatchApp.app"
-            BlueprintName = "Noteshelf3 WatchApp"
-            ReferencedContainer = "container:Noteshelf3.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
