@@ -25,6 +25,7 @@ protocol FTShortcutActions: AnyObject {
     func pixabayAction(source: Any)
     func emojiAction(source: Any)
     func stickersAction(source: Any)
+    func savedClipsAction(source: Any)
 
     // Share
     func shareNotebookAsPDF(source: Any)
@@ -40,6 +41,7 @@ enum FTCommand: Equatable {
     case pixabay(source: Any)
     case emojis(source: Any)
     case stickers(source: Any)
+    case savedClips(source: Any)
 
     // Shortcuts
     case addPage
@@ -105,6 +107,9 @@ class FTShortcutExecuter: FTShortcutCommand {
 
         case .emojis(let source):
             self.receiver?.emojiAction(source: source)
+
+        case .savedClips(let source):
+            self.receiver?.savedClipsAction(source: source)
 
         case .stickers(let source):
             self.receiver?.stickersAction(source: source)
@@ -236,6 +241,10 @@ extension FTPDFRenderViewController: FTShortcutActions {
         FTEmojisViewController.showAsPopover(fromSourceView: source, overViewController: self, withDelegate: self, toHideBackBtn: true)
     }
 
+    func savedClipsAction(source: Any) {
+        FTSavedClipsViewController.showSavedClipsController(from: self, source: source, delegate: self, toHideBackBtn: true)
+    }
+    
     func stickersAction(source: Any) {
         let model = FTStickerCategoriesViewModel(delegate: self)
         var view = FTStickerCategoriesView(model: model, downloadedViewModel: FTDownloadedStickerViewModel())

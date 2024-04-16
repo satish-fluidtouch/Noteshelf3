@@ -53,7 +53,7 @@ extension FTPageViewController : FTPageContentDelegate {
     
     private func scheduleUserIneractionTimeLimit() {
         self.cancenlScheduledUserIneractionTimeLimit();
-        self.perform(#selector(self.delayedEnableUserInteraction), with: nil, afterDelay: 5);
+        self.perform(#selector(self.delayedEnableUserInteraction), with: nil, afterDelay: 10);
     }
     
     func cancenlScheduledUserIneractionTimeLimit() {

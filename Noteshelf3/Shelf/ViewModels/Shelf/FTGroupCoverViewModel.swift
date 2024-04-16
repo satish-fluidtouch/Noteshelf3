@@ -10,11 +10,16 @@ import Foundation
 import Combine
 
 class FTGroupCoverViewModel: ObservableObject {
-
+    private var observerAdded = false;
     var groupItem: FTGroupItem? {
         didSet {
-            if groupItem != nil {
-                self.addGroupUpdatedObserver()
+            if groupItem != oldValue {
+                if let _groupItem = oldValue {
+                    self.removeObserver(_groupItem);
+                }
+                if nil != groupItem {
+                    self.addGroupUpdatedObserver()
+                }
             }
         }
     }
@@ -34,10 +39,7 @@ class FTGroupCoverViewModel: ObservableObject {
         if !isVisible {
             return
         }
-        var currentOrder = FTUserDefaults.sortOrder()
-        //        if let userActivity = self.window?.windowScene?.userActivity {
-        //            currentOrder = userActivity.sortOrder
-        //        }
+        let currentOrder = FTUserDefaults.sortOrder()
         if (group as? FTGroupItem)?.shelfCollection != nil {
             (group as? FTGroupItem)?.fetchTopNotebooks(sortOrder: currentOrder,noOfBooksTofetch: 4, onCompletion: { [weak self ] top4Children in
                 if !top4Children.isEmpty {
@@ -57,6 +59,9 @@ class FTGroupCoverViewModel: ObservableObject {
         var groupChildItems: [FTShelfItemViewModel] = []
 
         for shelfItem in shelfItems {
+            let item = self.createShelfItemFromData(shelfItem)
+            groupChildItems.append(item)
+
             group.enter()
 
             var token: String?
@@ -65,11 +70,9 @@ class FTGroupCoverViewModel: ObservableObject {
                     group.leave()
                     return
                 }
-                let item = self.createShelfItemFromData(shelfItem)
                 if token == imageToken, let image {
                     item.coverImage = image
                 }
-                groupChildItems.append(item)
                 group.leave()
             }
         }
@@ -102,6 +105,12 @@ class FTGroupCoverViewModel: ObservableObject {
                                                object: self.groupItem);
     }
     deinit {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.init(rawValue: "GroupUpdatedNotification"), object: self.groupItem)
+        if let _groupItem = self.groupItem {
+            self.removeObserver(_groupItem)
+        }
+    }
+    
+    private func removeObserver(_ _groupItem: FTGroupItem) {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.init(rawValue: "GroupUpdatedNotification"), object: _groupItem)
     }
 }

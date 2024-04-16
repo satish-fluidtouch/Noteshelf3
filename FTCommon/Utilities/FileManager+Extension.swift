@@ -16,6 +16,7 @@ public struct FTFileExtension {
     public static let sortIndex = "nsindex"
 }
 
+#if !os(watchOS)
 public extension FileManager {
     static func uniqueFileName(_ documentName : String,
                         inFolder folderURL: URL,
@@ -74,3 +75,4 @@ public extension FileManager {
         return fileExists;
     }
 }
+#endif
