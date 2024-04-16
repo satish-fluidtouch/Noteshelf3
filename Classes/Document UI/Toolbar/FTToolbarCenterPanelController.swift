@@ -359,11 +359,12 @@ extension FTToolbarCenterPanelController: FTDeskToolCellDelegate {
 }
 
 extension FTToolbarCenterPanelController {
-    func getNotificationForScrollIcon(){
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateScrollIcon(notification:)), name: Notification.Name("ScrollDirectionUpdate"), object: nil)
-    }
-    
-    @objc func updateScrollIcon(notification: Notification) {
-        collectionView.reloadData()
+    func getNotificationForScrollIcon() {
+        NotificationCenter.default.addObserver(forName: .pageLayoutWillChange,
+                                                 object: nil,
+                                                 queue: nil)
+          { [weak self] (_) in
+              self?.collectionView.reloadData()
+         }
     }
 }

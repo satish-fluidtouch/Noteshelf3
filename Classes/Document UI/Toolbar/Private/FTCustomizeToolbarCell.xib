@@ -48,6 +48,11 @@
                             <constraint firstAttribute="width" constant="40" id="dBX-1U-hH9"/>
                             <constraint firstItem="BZd-6z-CAB" firstAttribute="centerX" secondItem="Hmj-Ko-AEe" secondAttribute="centerX" id="oxz-Z5-gte"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="6"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
                 <constraints>

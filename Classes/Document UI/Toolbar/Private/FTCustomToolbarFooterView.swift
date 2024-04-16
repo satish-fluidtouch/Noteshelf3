@@ -9,23 +9,21 @@
 import Foundation
 import UIKit
 
-protocol FTCustomToolbarFooterViewProtocal {
+protocol FTCustomToolbarFooterViewProtocal:AnyObject {
     func navigateToContactUsPage()
 }
 
 class FTCustomToolbarFooterView : UITableViewHeaderFooterView {
     
-    @IBOutlet weak var topBtn: UIButton!
-    @IBOutlet weak var bgVIew: UIView!
-    @IBOutlet weak var iconsBgView: UIView!
-    @IBOutlet weak var ideaForShortcutLbl: UILabel!
-    @IBOutlet weak var requestLbl: UILabel!
+    @IBOutlet weak private var topBtn: UIButton!
+    @IBOutlet weak private var bgVIew: UIView!
+    @IBOutlet weak private var iconsBgView: UIView!
+    @IBOutlet weak private var ideaForShortcutLbl: UILabel!
+    @IBOutlet weak private var requestLbl: UILabel!
     
-    var delegate : FTCustomToolbarFooterViewProtocal?
+   weak var delegate : FTCustomToolbarFooterViewProtocal?
     
     func setUpUi() {
-        bgVIew.layer.cornerRadius = 12
-        iconsBgView.layer.cornerRadius = 8
         ideaForShortcutLbl.text = "customizeToolbar.ideaForShortcut".localized
         requestLbl.text = "customizeToolbar.requestForShortcut".localized
     }

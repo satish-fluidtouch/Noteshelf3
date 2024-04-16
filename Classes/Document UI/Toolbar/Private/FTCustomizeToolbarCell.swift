@@ -10,18 +10,14 @@ import UIKit
 
 class FTCustomizeToolbarCell: UITableViewCell {
     
-    @IBOutlet weak var titleLbl: UILabel!
-    @IBOutlet weak var iconImg: UIImageView!
+    @IBOutlet weak private(set) var titleLbl: UILabel!
+    @IBOutlet weak private(set) var iconImg: UIImageView!
     @IBOutlet weak var newLbl: UILabel!
-    @IBOutlet weak var newBgView: UIView!
+    @IBOutlet weak private(set) var newBgView: UIView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
         
-    }
-    
-    func setUpUi(){
-        newBgView.layer.cornerRadius = 6
     }
 
 }

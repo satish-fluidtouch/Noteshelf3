@@ -340,6 +340,14 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
         }
         return mode
     }
+    
+    var toShowNewBadge: Bool {
+        var status = true
+        if self == .camera || self == .scrolling {
+            status = false
+        }
+        return status
+    }
 
     func isColorEditTool() -> Bool {
         var isColorEditTool: Bool = false
