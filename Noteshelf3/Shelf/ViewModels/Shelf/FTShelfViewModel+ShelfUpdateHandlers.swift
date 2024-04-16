@@ -53,14 +53,24 @@ extension FTShelfViewModel {
             //****************
             if(self.collection.uuid == shelfCollection.uuid) {
                 if let items = userInfo[FTShelfItemsKey] as? [FTShelfItemProtocol] {
+                    var shouldReload = (nil != self.groupItem) ? false : true;
+                    var parentsUpdated = Set<FTGroupItem>();
                     items.forEach { (eachItem) in
                         if let parent = eachItem.parent as? FTGroupItem, !parent.isDownloading {
-                            parent.invalidateTop3Notebooks()
-                            parent.isUpdated = true
-                            parent.resetCachedDates()
+                            parentsUpdated.insert(parent);
+                            if let curGroup = self.groupItem as? FTGroupItem, curGroup == parent {
+                                shouldReload = true;
+                            }
                         }
                     }
-                    reloadItems()
+                    parentsUpdated.forEach { eachItem in
+                        eachItem.invalidateTop3Notebooks()
+                        eachItem.isUpdated = true
+                        eachItem.resetCachedDates()
+                    }
+                    if shouldReload {
+                        reloadItems()
+                    }
                 }
             }
         }

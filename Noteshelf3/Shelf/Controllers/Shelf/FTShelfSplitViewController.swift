@@ -91,7 +91,6 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
         }
     }
 
-    var openingBookInProgress: Bool = false
     var cancellable = Set<AnyCancellable>()
     typealias ImportItems = [FTImportItem]
 
@@ -483,11 +482,9 @@ extension FTShelfSplitViewController {
         }
         else{
             self.view.isUserInteractionEnabled = false
-            self.openingBookInProgress = true
             FTDocumentPasswordValidate.validateShelfItem(shelfItem: shelfItem,
                                                          onviewController: self) { [weak self] (pin, success, cancelled) in
                 self?.view.isUserInteractionEnabled = true
-                self?.openingBookInProgress = false
                 NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
                 if(success) {
                     openDoc(pin)
@@ -516,7 +513,6 @@ extension FTShelfSplitViewController {
         FTCLSLog("Book: \(notebookName): Show")
         self.view.isUserInteractionEnabled = false
 
-        self.openingBookInProgress = true
         FTDocumentValidator.openNoteshelfDocument(for: shelfItem,
                                                   pin: pin,
                                                   onViewController: self)
@@ -524,7 +520,6 @@ extension FTShelfSplitViewController {
             guard let self else { return }
             if let inError = error {
                 self.view.isUserInteractionEnabled = true
-                self.openingBookInProgress = false
                 NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
                 if(inError.isConflictError) {
                     FTCLSLog("Book: \(notebookName): Conflict")
@@ -553,7 +548,6 @@ extension FTShelfSplitViewController {
 
             guard let notebookToOpen = openedDocument, let doc = notebookToOpen as? FTNoteshelfDocument, error == nil else {
                 self.view.isUserInteractionEnabled = true
-                self.openingBookInProgress = false
                 NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
                 onCompletion?(nil, false)
                 return
@@ -572,7 +566,6 @@ extension FTShelfSplitViewController {
             func processDocumentOpen() {
                 func finalizeClose() {
                     self.view.isUserInteractionEnabled = true
-                    self.openingBookInProgress = false
                     if let curToken = token {
                         FTNoteshelfDocumentManager.shared.closeDocument(document: doc, token: curToken, onCompletion: nil)
                     }
@@ -622,6 +615,7 @@ extension FTShelfSplitViewController {
                 func switchToPDFViewer(docInfo: FTDocumentOpenInfo) {
                     docInfo.documentOpenToken = token ?? FTDocumentOpenToken()
                     guard let rootController = self.parent as? FTRootViewController else {
+                        self.view.isUserInteractionEnabled = true
                         onCompletion?(nil,false)
                         return
                     }
@@ -642,7 +636,6 @@ extension FTShelfSplitViewController {
                         FTCLSLog("Book: Launch Book UI")
                         rootController.switchToPDFViewer(docInfo, animate: shouldAnimate ,onCompletion: {
                             FTCLSLog("Book: Launched UI")
-                            self.openingBookInProgress = false
                             self.view.isUserInteractionEnabled = true
                             NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
                             notebookToOpen.isJustCreatedWithQuickNote = isQuickCreate
