@@ -170,55 +170,57 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
         var updatedDocumentURLs = [URL]();
 
         for eachItem in metadataItems {
-                let fileURL = eachItem.URL();
-                if(fileURL.pathExtension == FTFileExtension.shelf) {
-                    if(eachItem.downloadStatus() == NSMetadataUbiquitousItemDownloadingStatusNotDownloaded) {
-                        try? FileManager().startDownloadingUbiquitousItem(at: fileURL);
+            guard let fileURL = eachItem.URL() else {
+                continue;
+            }
+            if(fileURL.pathExtension == FTFileExtension.shelf) {
+                if(eachItem.downloadStatus() == NSMetadataUbiquitousItemDownloadingStatusNotDownloaded) {
+                    try? FileManager().startDownloadingUbiquitousItem(at: fileURL);
+                }
+                //Check if the document reference is present in documentMetadataItemHashTable.If the reference is found, its already added to cache. We just need to update the document with this metadataItem
+                var shelfItem = self.hashTable.itemFromHashTable(eachItem) as? FTShelfItemCollection;
+                if(shelfItem == nil) {
+                    if(!isBuildingCache) {
+                        shelfItem = self.collectionForURL(fileURL);
                     }
-                    //Check if the document reference is present in documentMetadataItemHashTable.If the reference is found, its already added to cache. We just need to update the document with this metadataItem
-                    var shelfItem = self.hashTable.itemFromHashTable(eachItem) as? FTShelfItemCollection;
                     if(shelfItem == nil) {
-                        if(!isBuildingCache) {
-                            shelfItem = self.collectionForURL(fileURL);
-                        }
-                        if(shelfItem == nil) {
-                            shelfItem = self.addItemToCache(fileURL) as? FTShelfItemCollection;
-                            checkAndUpdateOrphans()
-                        }
-
-                        if(shelfItem != nil) {
-                            if(!eachItem.isItemDownloaded()) {
-                                //If in cache, use that object and set it to the documentMetadataItemHashTable.
-                                do {
-                                    _ = try FileManager().startDownloadingUbiquitousItem(at: fileURL as URL);
-                                } catch let error as NSError {
-                                    FTLogError("Notebook Download failed", attributes: error.userInfo);
-                                }
+                        shelfItem = self.addItemToCache(fileURL) as? FTShelfItemCollection;
+                        checkAndUpdateOrphans()
+                    }
+                    
+                    if(shelfItem != nil) {
+                        if(!eachItem.isItemDownloaded()) {
+                            //If in cache, use that object and set it to the documentMetadataItemHashTable.
+                            do {
+                                _ = try FileManager().startDownloadingUbiquitousItem(at: fileURL as URL);
+                            } catch let error as NSError {
+                                FTLogError("Notebook Download failed", attributes: error.userInfo);
                             }
-                            self.hashTable.addItemToHashTable(shelfItem!, forKey: eachItem);
                         }
-                        updatedDocumentURLs.append(fileURL);
+                        self.hashTable.addItemToHashTable(shelfItem!, forKey: eachItem);
                     }
-
-                    (shelfItem as? FTDocumentItemProtocol)?.updateShelfItemInfo(eachItem);
-                    if(ENABLE_SHELF_RPOVIDER_LOGS) {
-                        #if DEBUG
-                        debugPrint("\(self.classForCoder): Added:\(fileURL.lastPathComponent)");
-                        #endif
+                    updatedDocumentURLs.append(fileURL);
+                }
+                
+                (shelfItem as? FTDocumentItemProtocol)?.updateShelfItemInfo(eachItem);
+                if(ENABLE_SHELF_RPOVIDER_LOGS) {
+#if DEBUG
+                    debugPrint("\(self.classForCoder): Added:\(fileURL.lastPathComponent)");
+#endif
+                }
+            }
+            else if(fileURL.pathExtension == FTFileExtension.sortIndex) {
+                if(self.belongsToDocumentsFolder(fileURL)) {
+                    if let itemCollection = collectionForURL(fileURL) as? FTShelfItemCollectionICloud {
+                        itemCollection.handleSortIndexFileUpdates(eachItem)
                     }
                 }
-                else if(fileURL.pathExtension == FTFileExtension.sortIndex) {
-                    if(self.belongsToDocumentsFolder(fileURL)) {
-                       if let itemCollection = collectionForURL(fileURL) as? FTShelfItemCollectionICloud {
-                            itemCollection.handleSortIndexFileUpdates(eachItem)
-                       }
-                    }
-                } else if (fileURL.pathExtension == FTFileExtension.group) {
-                    _ = self.addShelfItemToCache(eachItem, isBuildingCache: isBuildingCache) as? FTShelfItemCollection;
-                } else {
-                    _ = self.addShelfItemToCache(eachItem, isBuildingCache: isBuildingCache) as? FTShelfItemCollection;
-                }
-
+            } else if (fileURL.pathExtension == FTFileExtension.group) {
+                _ = self.addShelfItemToCache(eachItem, isBuildingCache: isBuildingCache) as? FTShelfItemCollection;
+            } else {
+                _ = self.addShelfItemToCache(eachItem, isBuildingCache: isBuildingCache) as? FTShelfItemCollection;
+            }
+            
             if(!updatedDocumentURLs.isEmpty) {
                 runInMainThread({
                     NotificationCenter.default.post(name: Notification.Name.collectionAdded, object: self, userInfo: [FTShelfItemsKey: updatedDocumentURLs]);
@@ -233,7 +235,9 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
 
         for eachItem in metadataItems {
             autoreleasepool {
-                let fileURL = eachItem.URL();
+                guard let fileURL = eachItem.URL() else {
+                    return;
+                }
                 if fileURL.pathExtension == FTFileExtension.shelf {
                     
                     let shelfItem = self.hashTable.itemFromHashTable(eachItem) as? FTShelfItemCollection;
@@ -243,9 +247,9 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
                         self.removeItemFromCache(fileURL, shelfItem: shelfItem!);
                         self.hashTable.removeItemFromHashTable(eachItem);
                         if(ENABLE_SHELF_RPOVIDER_LOGS) {
-                            #if DEBUG
+#if DEBUG
                             debugPrint("\(self.classForCoder): Removed:\(fileURL.lastPathComponent)");
-                            #endif
+#endif
                         }
                     }
                 } else {
@@ -266,10 +270,13 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
         var updatedDocumentURLs = [URL]();
         var addedItems = [NSMetadataItem]();
         var deletedItems = [NSMetadataItem]();
+        var updatedItems = [FTShelfItemCollectionICloud:[NSMetadataItem]]();
 
         for eachItem in metadataItems {
             autoreleasepool {
-                let fileURL = eachItem.URL();
+                guard let fileURL = eachItem.URL() else {
+                    return;
+                }
                 if fileURL.pathExtension == FTFileExtension.shelf {
                     var shelfItem = self.hashTable.itemFromHashTable(eachItem) as? FTShelfItemCollection;
                     if(nil == shelfItem) {
@@ -301,7 +308,9 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
                     if let previousShelfItemCollection = self.collectionForMetadata(eachItem) as? FTShelfItemCollectionICloud {
                         let currentShelfItemCollection = self.collectionForURL(fileURL) as? FTShelfItemCollectionICloud
                         if currentShelfItemCollection == previousShelfItemCollection {
-                            currentShelfItemCollection?.updateItemsInCache([eachItem])
+                            var items = updatedItems[previousShelfItemCollection] ?? [NSMetadataItem]()
+                            items.append(eachItem);
+                            updatedItems[previousShelfItemCollection] = items;
                         } else {
                             deletedItems.append(eachItem)
                             addedItems.append(eachItem)
@@ -310,6 +319,11 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
                 }
             }
         }
+
+        updatedItems.forEach { eachitem in
+            eachitem.key.updateItemsInCache(eachitem.value);
+        }
+        
         shelfCollections.forEach { collection in
             if !deletedItems.isEmpty {
                 (collection as? FTShelfItemCollectionICloud)?.removeItemsFromCache(deletedItems)
@@ -355,7 +369,9 @@ extension FTShelfCollectioniCloud: FTShelfCacheProtocol {
     }
         
     fileprivate func addShelfItemToCache(_ item: NSMetadataItem, isBuildingCache: Bool = false) -> FTDiskItemProtocol? {
-        let fileURL = item.URL()
+        guard let fileURL = item.URL() else {
+            return nil;
+        }
         if(!self.belongsToDocumentsFolder(fileURL)) {
             return nil;
         }

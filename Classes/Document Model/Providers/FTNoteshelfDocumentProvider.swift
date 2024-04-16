@@ -136,50 +136,50 @@ class FTNoteshelfDocumentProvider: NSObject {
         FTCLSLog("Provider - Preparing Default Collections");
         let documentProvider = FTNoteshelfDocumentProvider();
         documentProvider.prepareSystemDefaultCollections {
-                documentProvider.localShelfCollectionRoot = FTShelfCollectionLocalRoot()
-                documentProvider.providerMode = .local;
-
-                #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
-                documentProvider.localWatchRecordingCollection = FTWatchRecordingCollection_Local()
-                #endif
-            FTCLSLog("Provider - Checking iCloud status");
-                FTNSiCloudManager.shared().updateiCloudStatus(FTNSiCloudManager.iCloudContainerID.ns3, withCompletionHandler: { available in
-                    FTCLSLog("Provider - Verified iCloud status \(available)");
-                    // Early exit from the provider creation, when the cloud drive is off inside device settings and iCloud is still on inside the application.
-                    if(FTNSiCloudManager.shared().iCloudOn() && FTNSiCloudManager.shared().iCloudRootURL() == nil) {
-                        FTCLSLog("Provider - Cloud on but url nil");
-                        onCompletion(documentProvider);
-                        return
-                    }
-
-                    if available {
-                        let rootCloudShelfCollection = FTShelfCollectioniCloudRoot()
-                        let queryListener = FTCloudDocumentListener(rootURLs: FTNSiCloudManager.shared().cloudURLSToListen)
-                        documentProvider.cloudDocumentListener = queryListener
-                        if FTNSiCloudManager.shared().iCloudOn() {
-                            documentProvider.providerMode = .cloud;
-                        }
-
-                        documentProvider.cloudShelfCollectionRoot = rootCloudShelfCollection
-                        queryListener.addListener(rootCloudShelfCollection)
-
+            documentProvider.localShelfCollectionRoot = FTShelfCollectionLocalRoot()
+            documentProvider.providerMode = .local;
+            
 #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
-                        if let cloudURL = FTNSiCloudManager.shared().iCloudRootURL() {
-                            let cloudWatchCollection = FTWatchRecordingCollection_Cloud(cloudURL: cloudURL)
-                            documentProvider.cloudWatchRecordingCollection = cloudWatchCollection
-
-                            //Add Audio recordings Listener
-                            if let audioListener = documentProvider.cloudWatchRecordingCollection as? FTMetadataCachingProtocol {
-                                queryListener.addListener(audioListener)
-                            }
-                        }
+            documentProvider.localWatchRecordingCollection = FTWatchRecordingCollection_Local()
 #endif
-                        onCompletion(documentProvider);
+            FTCLSLog("Provider - Checking iCloud status");
+            FTNSiCloudManager.shared().updateiCloudStatus(nil, withCompletionHandler: { available in
+                FTCLSLog("Provider - Verified iCloud status \(available)");
+                // Early exit from the provider creation, when the cloud drive is off inside device settings and iCloud is still on inside the application.
+                if(FTNSiCloudManager.shared().iCloudOn() && FTNSiCloudManager.shared().iCloudRootURL() == nil) {
+                    FTCLSLog("Provider - Cloud on but url nil");
+                    onCompletion(documentProvider);
+                    return
+                }
+                
+                if available {
+                    let rootCloudShelfCollection = FTShelfCollectioniCloudRoot()
+                    let queryListener = FTCloudDocumentListener(rootURLs: FTNSiCloudManager.shared().cloudURLSToListen)
+                    documentProvider.cloudDocumentListener = queryListener
+                    if FTNSiCloudManager.shared().iCloudOn() {
+                        documentProvider.providerMode = .cloud;
                     }
-                    else {
-                        onCompletion(documentProvider);
+                    
+                    documentProvider.cloudShelfCollectionRoot = rootCloudShelfCollection
+                    queryListener.addListener(rootCloudShelfCollection)
+                    
+#if  !NS2_SIRI_APP && !NOTESHELF_ACTION
+                    if let cloudURL = FTNSiCloudManager.shared().iCloudRootURL() {
+                        let cloudWatchCollection = FTWatchRecordingCollection_Cloud(cloudURL: cloudURL)
+                        documentProvider.cloudWatchRecordingCollection = cloudWatchCollection
+                        
+                        //Add Audio recordings Listener
+                        if let audioListener = documentProvider.cloudWatchRecordingCollection as? FTMetadataCachingProtocol {
+                            queryListener.addListener(audioListener)
+                        }
                     }
-                })
+#endif
+                    onCompletion(documentProvider);
+                }
+                else {
+                    onCompletion(documentProvider);
+                }
+            })
         }
     }
 

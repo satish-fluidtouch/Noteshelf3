@@ -43,9 +43,11 @@ extension NSMetadataItem
         return isDownloaded;
     }
 
-    func URL() -> Foundation.URL
+    func URL() -> Foundation.URL?
     {
-        var fileURL = self.value(forAttribute: NSMetadataItemURLKey) as! Foundation.URL;
+        guard var fileURL = self.value(forAttribute: NSMetadataItemURLKey) as? Foundation.URL else {
+            return nil;
+        };
         fileURL = FTDocumentUtils.resolvedURL(fileURL);
         return fileURL;
     }

@@ -224,12 +224,23 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     }
 
     // MARK: - Provider update -
+    private weak var localAppActieObserver: NSObjectProtocol?
     fileprivate func updateProviderIfNeeded() {
         if(UserDefaults.standard.bool(forKey: WelcomeScreenViewed)
            || (!UserDefaults.standard.bool(forKey: WelcomeScreenViewed)
                && UserDefaults.standard.double(forKey: WelcomeScreenReminderTime) > 0)) {
+            if UIApplication.shared.applicationState != .active {
+                FTCLSLog("Update Provider - App is not active");
+                localAppActieObserver = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: OperationQueue.main, using: { _ in
+                    if let _observer = self.localAppActieObserver {
+                        NotificationCenter.default.removeObserver(_observer)
+                    }
+                    FTCLSLog("Update Provider - App active");
+                    self.updateProviderIfNeeded();
+                })
+                return;
+            }
             FTCLSLog("Update Provider - Start");
-            let t1 = Date.timeIntervalSinceReferenceDate
             self.scheduleLaunchWaitError()
             self.updateProvider({
                 self.cancelLaunchWaitError()
@@ -1625,11 +1636,12 @@ private extension FTRootViewController {
         var controllerToPresent: UIViewController? = self;
         if let presentedController = self.presentedViewController,
            !presentedController.isBeingDismissed {
-            if presentedController.isMember(of: FTCreateNotebookViewController.classForCoder()),
-               let snapView = presentedController.view.snapshotView(afterScreenUpdates: false) {
+            if let createNBController = presentedController as? FTCreateNotebookViewController {
+                if let snapView = createNBController.snapshotView() {
+                    self.contentView.addSubview(snapView);
+                    snapshotViews.append(snapView);
+                }
                 FTCLSLog("Book: New NB Screen Snapshot")
-                self.contentView.addSubview(snapView);
-                snapshotViews.append(snapView);
                 presentedController.dismiss(animated: false)
             }
             else {
@@ -1733,6 +1745,7 @@ extension FTRootViewController: SFSafariViewControllerDelegate {
 
 private var launchTracker: FTAppLauncTracker?
 private class FTAppLauncTracker: NSObject {
+    weak var rootViewController: FTRootViewController?
     let delayedLaunchKey = "DelayedLaunch";
     var startTime: TimeInterval = Date.timeIntervalSinceReferenceDate;
     
@@ -1744,6 +1757,7 @@ private class FTAppLauncTracker: NSObject {
     }
     @objc func log20SecondWaitError() {
         FTLogError("App Launch Failed - 20")
+        self.rootViewController?.showAppLaunchDelayAlert();
     }
     @objc func log60SecondWaitError() {
         FTLogError("App Launch Failed - 60")
@@ -1773,14 +1787,33 @@ private class FTAppLauncTracker: NSObject {
     }
 }
 
-private extension FTRootViewController {
+fileprivate extension FTRootViewController {
     func scheduleLaunchWaitError() {
+        self.cancelLaunchWaitError();
         launchTracker = FTAppLauncTracker();
+        launchTracker?.rootViewController = self;
         launchTracker?.scheduleLaunchWaitError();
-        
     }
+    
     func cancelLaunchWaitError() {
         launchTracker?.cancelLaunchWaitError();
         launchTracker = nil;
+    }
+    
+    func showAppLaunchDelayAlert() {
+        guard FTUserDefaults.defaults().iCloudOn else {
+            return;
+        }
+        let alertContorller = UIAlertController(title: "applaunch.delay.msg".localized, message: nil, preferredStyle: .alert)
+        let closeAction = UIAlertAction(title: "Close".localized, style: .default);
+        let support = UIAlertAction(title: "applaunch.delay.contactSupport".localized, style: .default) { [weak self] _ in
+            guard let controller = self else {
+                return;
+            }
+            FTZenDeskManager.shared.showSupportContactUsScreen(controller: controller, defaultSubject: "App Launch Delay", extraTags: ["ns3_app_launc_delay"])
+        }
+        alertContorller.addAction(closeAction)
+        alertContorller.addAction(support)
+        self.present(alertContorller, animated: true);
     }
 }

@@ -726,6 +726,10 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
         return [FTAnnotation]();
     }
 
+    func annotations(groupId: String) -> [FTAnnotation]? {
+        return self.sqliteFileItem()?.annotations(groupId: groupId)
+    }
+
     func audioAnnotations() -> [FTAnnotation] {
         var annotations = self.annotations();
         annotations = annotations.filter({ (eachAnnotation) -> Bool in
@@ -1267,7 +1271,7 @@ extension FTNoteshelfPage : FTCopying {
                 pdfTemplateFileItem?.setSourceFileURL(tempFilePath)
                 
                 newPage._parent!.templateFolderItem()!.addChildItem(pdfTemplateFileItem);
-                newPage.deepCopyAnnotations(pageAnnotations){
+                newPage.deepCopyAnnotations(pageAnnotations){ _ in
                     newPage.isInitializationInprogress = false;
                     DispatchQueue.main.async {
                         onCompletion(newPage);
@@ -1276,7 +1280,7 @@ extension FTNoteshelfPage : FTCopying {
             });
         }
         else {
-            newPage.deepCopyAnnotations(pageAnnotations) {
+            newPage.deepCopyAnnotations(pageAnnotations) { _ in
                 newPage.isInitializationInprogress = false;
                 DispatchQueue.main.async {
                     onCompletion(newPage);
@@ -1290,24 +1294,28 @@ extension FTNoteshelfPage : FTCopying {
 extension FTNoteshelfPage {
     func deepCopyAnnotations(_ annotations : [FTAnnotation],
                              insertFrom : Int = -1,
-                             onCompletion : @escaping  (()->()))
-    {
+                             disableUndo: Bool = true,
+                             onCompletion : @escaping  ((_: [FTAnnotation])->())) {
         self._startCopyingAnnotations(annotations,
                                       copiedAnnotations : [FTAnnotation](),
                                       onCompletion: { (copiedAnnotations) in
-                                        self.undoManager?.disableUndoRegistration()
-                                        var indices: [Int]?
-                                        if insertFrom != -1 {
-                                            var insertIndices = [Int]();
-                                            let count = copiedAnnotations.count;
-                                            for i in 0..<count {
-                                                insertIndices.append(insertFrom + i);
-                                            }
-                                            indices = insertIndices;
-                                        }
-                                        self.addAnnotations(copiedAnnotations, indices: indices);
-                                        self.undoManager?.enableUndoRegistration()
-                                        onCompletion();
+            if disableUndo {
+                self.undoManager?.disableUndoRegistration()
+            }
+            var indices: [Int]?
+            if insertFrom != -1 {
+                var insertIndices = [Int]();
+                let count = copiedAnnotations.count;
+                for i in 0..<count {
+                    insertIndices.append(insertFrom + i);
+                }
+                indices = insertIndices;
+            }
+            self.addAnnotations(copiedAnnotations, indices: indices);
+            if disableUndo {
+                self.undoManager?.enableUndoRegistration()
+            }
+            onCompletion(copiedAnnotations);
         })
     }
     
@@ -1315,27 +1323,25 @@ extension FTNoteshelfPage {
                                           copiedAnnotations : [FTAnnotation],
                                           onCompletion : @escaping  (([FTAnnotation])->()))
     {
-        
-        autoreleasepool{
-            var pageAnnotations = annotations;
-            var copyAnnotations = copiedAnnotations;
-            if let annotation = pageAnnotations.first {
-                pageAnnotations.removeFirst();
-                annotation.deepCopyAnnotation(self, onCompletion: { (copiedAnnotation) in
-                    if let copiedAnnotation = copiedAnnotation {
-                        copyAnnotations.append(copiedAnnotation)
-                    }
-                    DispatchQueue.main.async {
-                        self._startCopyingAnnotations(pageAnnotations,
-                                                      copiedAnnotations : copyAnnotations,
-                                                      onCompletion: onCompletion)
-                    }
-                });
-            }
-            else {
-                onCompletion(copyAnnotations);
-            }
-        };
+        var pageAnnotations = annotations;
+        var copyAnnotations = copiedAnnotations;
+        guard let annotation = pageAnnotations.first else {
+            onCompletion(copyAnnotations);
+            return;
+        }
+        pageAnnotations.removeFirst();
+        DispatchQueue.global().async {
+            annotation.deepCopyAnnotation(self, onCompletion: { (copiedAnnotation) in
+                if let copiedAnnotation = copiedAnnotation {
+                    copyAnnotations.append(copiedAnnotation)
+                }
+                DispatchQueue.main.async {
+                    self._startCopyingAnnotations(pageAnnotations,
+                                                  copiedAnnotations : copyAnnotations,
+                                                  onCompletion: onCompletion)
+                }
+            });
+        }
     }
 }
 

@@ -591,6 +591,7 @@ parentViewController:(FTPageViewController*)controller
 
 -(void)completedScrolling
 {
+    FTCLSLog(@"Interaction: Scrollview end drag");
     [(id)self.writingView performSelector:@selector(updateLowResolutionImageBackgroundView) withObject:nil afterDelay:0.001];
     [self.parentViewController startAcceptingTouches:YES];
     _isScrolling = NO;
@@ -695,6 +696,7 @@ parentViewController:(FTPageViewController*)controller
     }
     
     [self setNeedsLayout];
+    FTCLSLog(@"Interaction: Scrollview end Zoom");
     [self.parentViewController startAcceptingTouches:YES];
     
     if(shouldEnable || !_isScrolling) {
@@ -1216,10 +1218,12 @@ CGPoint lastPoint1,lastPoint2;
 {
     switch (gesture.state) {
         case UIGestureRecognizerStateBegan:
+            FTCLSLog(@"Interaction: Scrollview begin drag");
             [self.parentViewController startAcceptingTouches:NO];
             break;
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled:
+            FTCLSLog(@"Interaction: Scrollview cancel pan gesture");
             [self.parentViewController startAcceptingTouches:YES];
             break;
         default:
@@ -1231,10 +1235,12 @@ CGPoint lastPoint1,lastPoint2;
 {
     switch (gesture.state) {
         case UIGestureRecognizerStateBegan:
+            FTCLSLog(@"Interaction: Scrollview will begin zoom");
             [self.parentViewController startAcceptingTouches:NO];
             break;
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled:
+            FTCLSLog(@"Interaction: Scrollview cancel zoom gesture");
             [self.parentViewController startAcceptingTouches:YES];
             break;
         default:

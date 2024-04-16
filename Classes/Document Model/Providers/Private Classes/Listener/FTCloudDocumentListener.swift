@@ -12,7 +12,6 @@ import FTDocumentFramework
 
 private let fileExtensionsToListen = [FTFileExtension.shelf,
                                       FTFileExtension.ns3,
-                                      FTFileExtension.ns2,
                                       FTFileExtension.group,
                                       "m4a",
                                       "plist",
@@ -45,9 +44,11 @@ class FTCloudDocumentListener: FTDocumentListener {
 
     func startQuery(onCompletion completion:@escaping (() -> Void)) {
         if let isStarted = query?.isStarted(), isStarted == true {
+            FTCLSLog("Provider -query in progress");
             completion()
         } else {
             query?.startQuery()
+            FTCLSLog("Provider -Started query");
             guard let listeners = listeners else { return }
             for listener in listeners {
                 listener.willBeginFetchingInitialData()
@@ -76,6 +77,9 @@ extension FTCloudDocumentListener: FTiCloudQueryObserverDelegate {
 
         guard let listeners = listeners, let items = results as? [NSMetadataItem] else { return }
 
+        DispatchQueue.main.async {
+            FTCLSLog("Provider -Filtering files");
+        }
         let audioMetadata = filterAudioRelatedFiles(with: items)
 
         for listener in listeners {
@@ -88,10 +92,16 @@ extension FTCloudDocumentListener: FTiCloudQueryObserverDelegate {
             }
         }
 
+        var logString = "Provider -Filtering Done - no call back";
         //This should be called after
         if let initialCompletionBlok = tempCompletionBlock {
             initialCompletionBlok()
             tempCompletionBlock = nil
+            logString = "Provider -Filtering Done";
+        }
+        
+        DispatchQueue.main.async {
+            FTCLSLog(logString);
         }
     }
 
@@ -137,13 +147,13 @@ extension FTCloudDocumentListener: FTiCloudQueryObserverDelegate {
 fileprivate extension FTCloudDocumentListener {
 
     func filterIndexFiles(with metadataItems: [NSMetadataItem]) -> [NSMetadataItem] {
-        return metadataItems.filter({ $0.URL().pathExtension == FTFileExtension.sortIndex })
+        return metadataItems.filter({ $0.URL()?.pathExtension == FTFileExtension.sortIndex })
     }
 
     func filterAudioRelatedFiles(with metadataItems: [NSMetadataItem]?) -> [NSMetadataItem] {
         return metadataItems?.filter({
-            $0.URL().deletingLastPathComponent().lastPathComponent == "Audio Recordings" &&
-            ( $0.URL().pathExtension == "plist" || $0.URL().pathExtension == "m4a")
+            $0.URL()?.deletingLastPathComponent().lastPathComponent == "Audio Recordings" &&
+            ( $0.URL()?.pathExtension == "plist" || $0.URL()?.pathExtension == "m4a")
         }) ?? [NSMetadataItem]()
     }
 }

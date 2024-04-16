@@ -543,8 +543,9 @@ extension FTShelfItemCollectionICloud {
         var addedItems = [AnyObject]();
         for eachItem in metadataItems {
             autoreleasepool {
-
-                let fileURL = eachItem.URL();
+                guard let fileURL = eachItem.URL() else {
+                    return;
+                }
                 //Check if the document reference is present in documentMetadataItemHashTable.If the reference is found, its already added to cache. We just need to update the document with this metadataItem
                 var shelfItem = self.hashTable.itemFromHashTable(eachItem) as? FTShelfItemProtocol;
                 if(shelfItem == nil) {
@@ -586,7 +587,9 @@ extension FTShelfItemCollectionICloud {
 
         for eachItem in metadataItems {
             autoreleasepool {
-                let fileURL = eachItem.URL();
+                guard let fileURL = eachItem.URL() else {
+                    return;
+                }
                 let shelfItem = self.hashTable.itemFromHashTable(eachItem) as? FTShelfItemProtocol;
                 
                 if(nil != shelfItem) {
@@ -614,7 +617,9 @@ extension FTShelfItemCollectionICloud {
 
         for eachItem in metadataItems {
             autoreleasepool {
-                let fileURL = eachItem.URL();
+                guard let fileURL = eachItem.URL() else {
+                    return;
+                }
                 #if DEBUG
 //                print("Updated :\(fileURL.path.removingPercentEncoding ?? "")");
                 #endif
@@ -976,8 +981,7 @@ extension FTShelfItemCollectionICloud {
 //MARK:- Manual Sorting
 extension FTShelfItemCollectionICloud: FTSortIndexContainerProtocol {
     func handleSortIndexFileUpdates(_ infoItem: Any?) {
-        if let metadata = infoItem as? NSMetadataItem {
-            let fileURL = metadata.URL()
+        if let metadata = infoItem as? NSMetadataItem,let fileURL = metadata.URL() {
             if let groupItem = self.groupItemForURL(fileURL.deletingLastPathComponent()) {
                 (groupItem as? FTSortIndexContainerProtocol)?.handleSortIndexFileUpdates(metadata)
             }

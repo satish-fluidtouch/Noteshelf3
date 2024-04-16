@@ -37,6 +37,7 @@ extension FTWebClipAnnotation
 {
     override func deepCopyAnnotation(_ toPage: FTPageProtocol, onCompletion: @escaping (FTAnnotation?) -> Void) {
         let annotation = FTWebClipAnnotation.init(withPage : toPage)
+        annotation.groupId = self.groupId;
         annotation.boundingRect = self.boundingRect;
         annotation.isReadonly = self.isReadonly;
         annotation.version = self.version;
@@ -44,70 +45,33 @@ extension FTWebClipAnnotation
         annotation.imageTransformMatrix = self.imageTransformMatrix;
         annotation.screenScale = self.screenScale;
         
-        let document = toPage.parentDocument as? FTNoteshelfDocument
-        var copiedFileItem = annotation.imageContentFileItem();
-        if(nil == copiedFileItem) {
-            if let sourceFileItem = self.imageContentFileItem() {
-                copiedFileItem = FTFileItemImage.init(fileName: annotation.imageContentFileName());
-                copiedFileItem?.securityDelegate = document;
-                document?.resourceFolderItem()?.addChildItem(copiedFileItem);
-
-                if let currentDocument =  self.associatedPage?.parentDocument as? FTNoteshelfDocument,let toDocument = document  {
-                    if(currentDocument.isSecured() || toDocument.isSecured()) {
-                        let image = sourceFileItem.image();
-                        copiedFileItem?.setImage(image);
-                        
-                        FTCLSLog("NFC - webclip deepCopy secured: \(toDocument.URL.title)");
-                        let coordinator = NSFileCoordinator.init(filePresenter: document);
-                        let fileAccessIntent = NSFileAccessIntent.writingIntent(with: copiedFileItem!.fileItemURL,
-                                                                                options: NSFileCoordinator.WritingOptions.forReplacing);
-                        let operationQueue = OperationQueue.init();
-                        coordinator.coordinate(with: [fileAccessIntent],
-                                               queue: operationQueue,
-                                               byAccessor:
-                            { (error) in
-                                if(nil != error) {
-                                    onCompletion(nil);
-                                }
-                                else {
-                                    if let fileItemURL = copiedFileItem?.fileItemURL, fileItemURL.urlByDeleteingPrivate() != fileAccessIntent.url.urlByDeleteingPrivate() {
-                                        let params = ["Annotation" : "Sticky",
-                                                      "sourceURL" : fileItemURL.path,
-                                                      "intentURL" : fileAccessIntent.url.path]
-                                        FTLogError("Copy URL Mismatch: Sticky",attributes: params);
-                                    }
-                                    copiedFileItem?.saveContentsOfFileItem();
-                                    DispatchQueue.main.async {
-                                        onCompletion(annotation);
-                                    }
-                                }
-                        })
-                    }
-                    else {
-                        FTCLSLog("NFC - webclip deepcopy: \(toDocument.URL.title)");
-                        FileManager.coordinatedCopyAtURL(sourceFileItem.fileItemURL,
-                                                         toURL: copiedFileItem!.fileItemURL)
-                        { (success, error) in
-                            if(nil == error) {
-                                onCompletion(annotation);
-                            }
-                            else {
-                                onCompletion(nil);
-                            }
-                        }
-                    }
-                }
-                else {
-                    onCompletion(nil);
-                }
-            }
-            else {
-                onCompletion(nil);
-            }
-        }
+        guard let document = toPage.parentDocument as? FTNoteshelfDocument,
+              let sourceFileItem = self.imageContentFileItem(),
+              let sourceDocument = self.associatedPage?.parentDocument as? FTNoteshelfDocument,
+              let sourceResourceFolder = sourceDocument.resourceFolderItem(),
+              let resourceFolder = document.resourceFolderItem()
         else {
-            onCompletion(annotation);
+            onCompletion(nil)
+            return
         }
+
+        let sourceFileItemURL = sourceResourceFolder.fileItemURL.appending(path: self.imageContentFileName(), directoryHint: .notDirectory)
+        
+        var contentImage: UIImage?
+        if(sourceDocument.isSecured() || document.isSecured()) {
+            contentImage = sourceFileItem.image()
+        }
+
+        guard let copiedFileItem = FTFileItemImageTemporary(fileName: annotation.imageContentFileName(), sourceURL: sourceFileItemURL, content: contentImage) else {
+            onCompletion(nil)
+            return
+        }
+        copiedFileItem.securityDelegate = document;
+        resourceFolder.addChildItem(copiedFileItem);
+
+        copiedFileItem.setImage(sourceFileItem.image())
+
+        onCompletion(annotation);
     }
 }
 

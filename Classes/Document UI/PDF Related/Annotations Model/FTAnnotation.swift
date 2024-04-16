@@ -32,6 +32,8 @@ protocol FTAnnotationStrokeErase
     var forceRender : Bool = false;
 
     var uuid : String = UUID().uuidString;
+    var groupId : String?
+
     var hidden : Bool = false;
     var modifiedTimeInterval : TimeInterval = Date.timeIntervalSinceReferenceDate;
     var createdTimeInterval : TimeInterval = Date.timeIntervalSinceReferenceDate;
@@ -105,6 +107,11 @@ protocol FTAnnotationStrokeErase
         if let uniqueId = aDecoder.decodeObject(forKey: "uuid") as? String {
             self.uuid = uniqueId;
         }
+
+        if let groupId = aDecoder.decodeObject(forKey: "groupId") as? String {
+            self.groupId = groupId;
+        }
+
         self.isReadonly = aDecoder.decodeBool(forKey: "isReadonly");
         self.version = aDecoder.decodeInteger(forKey: "version");
         #if !targetEnvironment(macCatalyst)
@@ -118,6 +125,7 @@ protocol FTAnnotationStrokeErase
     
     func encode(with aCoder: NSCoder) {
         aCoder.encode(self.uuid, forKey: "uuid");
+        aCoder.encode(self.groupId, forKey: "groupId");
         aCoder.encode(self.isReadonly, forKey: "isReadonly");
         aCoder.encode(self.version, forKey: "version");
         #if !targetEnvironment(macCatalyst)

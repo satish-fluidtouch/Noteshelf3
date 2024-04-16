@@ -948,6 +948,8 @@
 "appearance.darkTheme" = "Thème sombre";
 "appearance.lightTheme" = "Thème clair.";
 "appearance.useSystemTheme" = "Utilisez le mode clair/sombre du système";
+"applaunch.delay.contactSupport" = "Contacter le support";
+"applaunch.delay.msg" = "iCloud ne répond pas en temps opportun. Veuillez redémarrer votre appareil et réessayer. Si ce problème persiste, contactez le support Noteshelf.";
 "audiooption.gotoRecording" = "Aller à l'enregistrement";
 "audiooption.jumptoPage" = "Aller à la page";
 "audiooption.speed" = "Vitesse";
@@ -959,15 +961,15 @@
 "bujoessentials" = "Essentiels du Bujo";
 "cancel" = "Annuler";
 "clip.addClip" = "Ajouter un clip";
+"clip.clipAdded" = "Clip ajoutée";
 "clip.deleteCategory" = "Supprimer la catégorie";
-"clip.deleteCategory.message" = "";
-"clip.deleteCategory.title" = "La suppression de cette catégorie supprimera tous les clips @% de cette catégorie et ne pourra pas être récupérée.";
+"clip.deleteCategory.title" = "La suppression de cette catégorie supprimera tous les clips %@ de cette catégorie et ne pourra pas être récupérée.";
 "clip.newCategory" = "Nouvelle catégorie...";
 "clip.noCategory" = "Cette catégorie est vide.";
 "clip.noSavedClips" = "Aucun clip enregistré";
 "clip.noSavedClips.description" = "Sélectionnez tout avec le lasso et appuyez sur 'Enregistrer le clip' pour une utilisation ultérieure.";
 "clip.saveClip" = "Enregistrer le clip";
-"clip.savedClips" = "Clips sauvegardés";
+"clip.savedClips" = "Clips enregistrés";
 "clipart404" = "Serveur occupé, veuillez réessayer plus tard.";
 "cloud.backup.error.contentPreviouslyCrashed" = "Une erreur s'est produite lors de la sauvegarde. Veuillez réessayer ultérieurement.";
 "cloud.backup.error.failedToCreateBackup" = "Échec de la création du fichier de sauvegarde. Veuillez vérifier l'espace restant sur votre appareil.";
@@ -1478,6 +1480,7 @@
 "sidebar.topSection.home" = "Accueil";
 "sidebar.topSection.starred" = "Favoris";
 "sidebar.topSection.unfiled" = "Non classé";
+"snippets.addtopage" = "Ajouter à la page";
 "speechbubbles" = "Bulles de dialogue";
 "status_bar_info_footer" = "Appréciez-vous Noteshelf 3 ? %@ pour nous évaluer sur l'App Store. Cela nous aidera plus que vous ne l’imaginez.";
 "status_bar_info_subtitle" = "Vous avez été nombreux à nous demander la barre d'état lors de la prise de notes. Vous avez maintenant la possibilité d'afficher la barre d'état dans le menu Plus.";
@@ -1608,4 +1611,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 11 March 2024 at 7:30 PM
+// Last Synced by Amar Udupa on 28 March 2024 at 3:21 PM

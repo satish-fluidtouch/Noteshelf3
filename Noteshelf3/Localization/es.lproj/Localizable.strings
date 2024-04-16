@@ -174,7 +174,7 @@
 "Connecting" = "Conectando...";
 "ConnectingToDropbox" = "Conectando a Dropbox";
 "ConnectionFailed" = "Conexión fallida";
-"ContactUs" = "Contáctenos'";
+"ContactUs" = "Contáctenos";
 "Continue" = "Continuar";
 "ContinueRecording" = "Continuar grabando";
 "ContinueUsingICloud" = "Continuar usando iCloud";
@@ -948,6 +948,8 @@
 "appearance.darkTheme" = "Tema oscuro";
 "appearance.lightTheme" = "Tema claro";
 "appearance.useSystemTheme" = "Usar modo claro / oscuro del sistema.";
+"applaunch.delay.contactSupport" = "Soporte de contacto";
+"applaunch.delay.msg" = "iCloud no responde de manera oportuna. Reinicie su dispositivo e inténtelo nuevamente. Si este problema persiste, comuníquese con el soporte técnico de Noteshelf.";
 "audiooption.gotoRecording" = "Ir a la grabación";
 "audiooption.jumptoPage" = "Ir a la página";
 "audiooption.speed" = "Velocidad";
@@ -959,9 +961,9 @@
 "bujoessentials" = "Elementos esenciales del bujo";
 "cancel" = "Cancelar";
 "clip.addClip" = "Añadir clip";
+"clip.clipAdded" = "Clip añadido";
 "clip.deleteCategory" = "Eliminar categoría";
-"clip.deleteCategory.message" = "";
-"clip.deleteCategory.title" = "Eliminar esta categoría eliminará todos los clips @% en esta categoría y no se podrán recuperar.";
+"clip.deleteCategory.title" = "Eliminar esta categoría eliminará todos los clips %@ en esta categoría y no se podrán recuperar.";
 "clip.newCategory" = "Nueva categoría...";
 "clip.noCategory" = "Esta categoría está vacía.";
 "clip.noSavedClips" = "No hay clips guardados";
@@ -1478,6 +1480,7 @@
 "sidebar.topSection.home" = "Casa";
 "sidebar.topSection.starred" = "Destacado";
 "sidebar.topSection.unfiled" = "Desordenado";
+"snippets.addtopage" = "Agregar a una nueva página";
 "speechbubbles" = "Burbujas de diálogo";
 "status_bar_info_footer" = "¿Disfrutando de Noteshelf? %@ para calificarnos en la App Store. Nos ayudará más de lo que imaginas.";
 "status_bar_info_subtitle" = "Muchos de ustedes nos solicitaron la barra de estado al tomar notas. Ahora tiene la opción de mostrar la barra de estado desde el menú Más.";
@@ -1608,4 +1611,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 11 March 2024 at 7:30 PM
+// Last Synced by Amar Udupa on 28 March 2024 at 3:21 PM

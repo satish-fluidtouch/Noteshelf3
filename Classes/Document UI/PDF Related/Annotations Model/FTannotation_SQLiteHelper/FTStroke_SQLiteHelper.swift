@@ -10,9 +10,9 @@ import UIKit
 import FTDocumentFramework
 
 private let strokeInsertQuery = """
-INSERT INTO annotation (annotationType,strokeWidth,strokeColor,penType,boundingRect_x,boundingRect_y,boundingRect_w,boundingRect_h,segmentCount,stroke_segments_v3,createdTime,modifiedTime,isReadonly,version)
+INSERT INTO annotation (annotationType,strokeWidth,strokeColor,penType,boundingRect_x,boundingRect_y,boundingRect_w,boundingRect_h,segmentCount,stroke_segments_v3,createdTime,modifiedTime,isReadonly,version, id, groupId)
 VALUES
-(?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
 """;
 
 extension FTStroke {
@@ -35,7 +35,9 @@ extension FTStroke {
             NSNumber.init(value: self.createdTimeInterval as Double),
             NSNumber.init(value: self.modifiedTimeInterval as Double),
             NSNumber.init(value: self.isReadonly),
-            NSNumber.init(value: self.version)
+            NSNumber.init(value: self.version),
+            self.uuid,
+            self.groupId ?? NSNull()
             ]);
         
     }

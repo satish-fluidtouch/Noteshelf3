@@ -20,7 +20,7 @@ extension View {
     
     func shelfNavBarItems() -> some View {
 #if !targetEnvironment(macCatalyst)
-        modifier(FTShelfNavBarItemsViewModifier(appState: AppState(sizeClass: .regular)))
+        modifier(FTShelfNavBarItemsViewModifier())
 #else
         self
 #endif

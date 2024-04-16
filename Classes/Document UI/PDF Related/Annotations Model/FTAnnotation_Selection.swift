@@ -16,6 +16,18 @@ extension FTAnnotation {
     }
 }
 
+extension FTStroke {
+    override func allowsSingleTapSelection(atPoint: CGPoint, mode: RKDeskMode) -> Bool {
+        guard self.intersectsPath(atPoint.pathWith1Px, withScale: 1.0, withOffset: CGPoint.zero) else {
+            return false
+        }
+        if self.groupId != nil {
+            return true
+        }
+        return false
+    }
+}
+
 extension FTImageAnnotation {
     override func allowsSingleTapSelection(atPoint: CGPoint, mode: RKDeskMode) -> Bool {
         if mode == .deskModeText {
@@ -30,6 +42,6 @@ extension FTShapeAnnotation {
         if mode == .deskModeText {
             return false
         }
-        return super.allowsSingleTapSelection(atPoint: atPoint, mode: mode)
+        return self.allowsSingleTapSelection(atPoint: atPoint)
     }
 }
