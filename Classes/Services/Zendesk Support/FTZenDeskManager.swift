@@ -8,6 +8,7 @@
 
 import Foundation
 import FTCommon
+import TPInAppReceipt
 #if !targetEnvironment(macCatalyst)
 import ZendeskCoreSDK
 import SupportSDK
@@ -300,6 +301,9 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
         if !deviceIds.isEmpty {
             customFields["DeviceIDs"] = deviceIds.joined(separator: ", ");
         }
+        if let receipt = try? InAppReceipt.localReceipt() {
+            customFields["OriginalAppVer"] = receipt.originalAppVersion
+        }
         return customFields
     }
      
@@ -339,6 +343,9 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
             ,let deviceIDs = customFields["DeviceIDs"]
         {
             string = "User ID: \(userId) | Version: \(version) | Premium: \(premium) | OS: \(operatingSystem) | Device: \(Device) | \(sizes) | Apple Pencil: \(pencil) | iCloud: \(iCloud) | Autobackup: \(autobackup) | Format: \(format) | Publish: \(ENPublish) | Lang: \(lang) | Locale: \(locale) | AppleWatch : \(appleWatch) | RLang : \(recognition) | R_Act: \(recog_Act) | Layout: \(layoutType) | Screens : \(UIScreen.screensDescription) | NS2: \(ns2) | SafeMode: \(safemode) DeviceID: \(deviceIDs)"
+        }
+        if let orAppVersion = customFields["OriginalAppVer"] {
+            string?.append(" | OriginalAppVer: \(orAppVersion)");
         }
         return string ?? ""
     }
