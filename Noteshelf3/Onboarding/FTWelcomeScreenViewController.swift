@@ -9,6 +9,15 @@
 import UIKit
 import AVFAudio
 
+class FTClearFaceFontLabel: UILabel {
+    override var intrinsicContentSize: CGSize {
+        var size = super.intrinsicContentSize;
+        size.width += 1;
+        size.height += 1;
+        return size;
+    }
+}
+
 class FTWelcomeScreenViewController: UIViewController {
     private weak var previewController: FTWelcomePreviewViewController?
     @IBOutlet weak var titleLable: UILabel?;
@@ -290,7 +299,7 @@ extension FTWelcomeScreenViewController: FTWelcomePreviewDelegate {
 
 extension FTWelcomeScreenViewController: FTWelcomeItemDelegate {
     func welcomeItem(_ controller: FTWelcomeItemViewController, didTapOnItem item: FTGetStartedViewItems) {
-        self.playPopupOpenSound()
+        self.playPopupCloseSound()
         
         let previewController = FTWelcomePreviewViewController.welcomeItemComtroller(item);
         previewController.referenceContentView = self.contentView;
@@ -351,7 +360,7 @@ private extension FTWelcomeScreenViewController {
                         self.popUpOpenPlayer?.volume = 0.5
 
                         self.popUpClosePlayer = popClosePlayer;
-                        self.popUpClosePlayer?.volume = 0.5
+                        self.popUpClosePlayer?.volume = 1.0
 
                         self.bgAudioPlayer = avplayer
                         self.bgAudioPlayer?.play();
