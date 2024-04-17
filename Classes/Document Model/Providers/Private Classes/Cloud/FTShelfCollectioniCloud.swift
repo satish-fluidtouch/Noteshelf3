@@ -270,6 +270,7 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
         var updatedDocumentURLs = [URL]();
         var addedItems = [NSMetadataItem]();
         var deletedItems = [NSMetadataItem]();
+        var updatedItems = [FTShelfItemCollectionICloud:[NSMetadataItem]]();
 
         for eachItem in metadataItems {
             autoreleasepool {
@@ -307,7 +308,9 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
                     if let previousShelfItemCollection = self.collectionForMetadata(eachItem) as? FTShelfItemCollectionICloud {
                         let currentShelfItemCollection = self.collectionForURL(fileURL) as? FTShelfItemCollectionICloud
                         if currentShelfItemCollection == previousShelfItemCollection {
-                            currentShelfItemCollection?.updateItemsInCache([eachItem])
+                            var items = updatedItems[previousShelfItemCollection] ?? [NSMetadataItem]()
+                            items.append(eachItem);
+                            updatedItems[previousShelfItemCollection] = items;
                         } else {
                             deletedItems.append(eachItem)
                             addedItems.append(eachItem)
@@ -316,6 +319,11 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
                 }
             }
         }
+
+        updatedItems.forEach { eachitem in
+            eachitem.key.updateItemsInCache(eachitem.value);
+        }
+        
         shelfCollections.forEach { collection in
             if !deletedItems.isEmpty {
                 (collection as? FTShelfItemCollectionICloud)?.removeItemsFromCache(deletedItems)

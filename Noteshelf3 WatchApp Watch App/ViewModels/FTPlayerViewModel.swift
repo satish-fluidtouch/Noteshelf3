@@ -145,9 +145,6 @@ private extension FTPlayerViewModel {
 }
 
 extension FTPlayerViewModel: FTAudioServiceDelegate {
-    func audioServiceDidFinishRecording(withURL audioURL: URL) {
-    }
-    
     func audioServiceDidFinishPlaying(withError error: Error?) {
         self.audioService = nil
         self.audioActivity = nil
