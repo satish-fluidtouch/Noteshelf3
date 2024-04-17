@@ -357,7 +357,7 @@ private extension FTWelcomeScreenViewController {
 
                     runInMainThread {
                         self.popUpOpenPlayer = buttonEffectPlayer;
-                        self.popUpOpenPlayer?.volume = 0.5
+                        self.popUpOpenPlayer?.volume = 1.0
 
                         self.popUpClosePlayer = popClosePlayer;
                         self.popUpClosePlayer?.volume = 1.0
