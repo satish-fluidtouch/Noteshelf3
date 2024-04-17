@@ -38,6 +38,7 @@ class FTWelcomeItemViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.layer.cornerRadius = 28;
 
         guard let _welcomeItem = self.welcomeItem else {
             return
@@ -67,8 +68,10 @@ class FTWelcomeItemViewController: UIViewController {
     }
     
     func setAsPreviewed(_ isPreviewd: Bool) {
-        self.view?.backgroundColor = isPreviewd ? UIColor(hexString: "DED0BE") : .clear
-        self.view.layer.cornerRadius = isPreviewd ? 28 : 0;
+        self.view?.backgroundColor = isPreviewd ? UIColor(named: "WelcomeEmptyTileBGColor") : UIColor.appColor(.sidebarBG)
+        self.view.layer.borderColor = isPreviewd ? UIColor.white.withAlphaComponent(0.2).cgColor : UIColor.clear.cgColor
+        
+        self.view.layer.borderWidth = isPreviewd ? 1 : 0
         self.contentView?.isHidden = isPreviewd;
     }
 }

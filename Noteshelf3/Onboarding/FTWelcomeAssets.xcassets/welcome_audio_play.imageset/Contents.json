@@ -3,6 +3,16 @@
     {
       "filename" : "welcome_audio_play.pdf",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "Frame 2608813.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

@@ -1,17 +1,18 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename" : "zoombox.png",
+      "idiom" : "universal"
     },
     {
-      "filename" : "zoombox@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x"
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "zoombox 1.png",
+      "idiom" : "universal"
     }
   ],
   "info" : {

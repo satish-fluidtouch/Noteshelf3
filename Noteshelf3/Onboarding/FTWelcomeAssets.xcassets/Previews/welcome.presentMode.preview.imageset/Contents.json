@@ -3,6 +3,16 @@
     {
       "filename" : "welcome.presentMode.preview.png",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "welcome.presentMode.preview 1.png",
+      "idiom" : "universal"
     }
   ],
   "info" : {

@@ -3,6 +3,16 @@
     {
       "filename" : "welcome.savedClips.preview.png",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "welcome.savedClips.preview 1.png",
+      "idiom" : "universal"
     }
   ],
   "info" : {

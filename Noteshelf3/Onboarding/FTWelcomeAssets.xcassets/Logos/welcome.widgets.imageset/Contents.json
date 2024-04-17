@@ -1,7 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "welcome.widgets.png",
+      "filename" : "widgets.png",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "widgets 1.png",
       "idiom" : "universal"
     }
   ],

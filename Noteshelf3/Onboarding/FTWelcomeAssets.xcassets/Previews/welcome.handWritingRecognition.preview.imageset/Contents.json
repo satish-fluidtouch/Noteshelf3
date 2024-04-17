@@ -3,6 +3,16 @@
     {
       "filename" : "welcome.handWritingRecognition.preview.png",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "welcome.handWritingRecognition.preview 1.png",
+      "idiom" : "universal"
     }
   ],
   "info" : {

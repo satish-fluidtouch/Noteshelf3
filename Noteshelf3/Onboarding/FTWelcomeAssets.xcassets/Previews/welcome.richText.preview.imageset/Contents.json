@@ -3,6 +3,16 @@
     {
       "filename" : "welcome.richText.preview.png",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "welcome.richText.preview 1.png",
+      "idiom" : "universal"
     }
   ],
   "info" : {

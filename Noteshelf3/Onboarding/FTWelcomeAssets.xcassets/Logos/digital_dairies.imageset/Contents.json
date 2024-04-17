@@ -1,17 +1,18 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename" : "digital_diaries.png",
+      "idiom" : "universal"
     },
     {
-      "filename" : "digital_dairies@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x"
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "digital_diaries 1.png",
+      "idiom" : "universal"
     }
   ],
   "info" : {

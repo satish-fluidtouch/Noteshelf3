@@ -6356,8 +6356,7 @@
 				09A1C3C62BCD45B500053114 /* popup_close.mp3 */,
 				09A1C3C72BCD45B500053114 /* popup_open.mp3 */,
 			);
-			name = Audio;
-			path = ../../../../../../../Users/amar/Desktop/Audio;
+			path = Audio;
 			sourceTree = "<group>";
 		};
 		09FD71761EB44AD8008ACB6B /* FTThemesModel */ = {

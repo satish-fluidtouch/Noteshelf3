@@ -1,17 +1,18 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename" : "handwriting_recognition.png",
+      "idiom" : "universal"
     },
     {
-      "filename" : "handwriting_recognition@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x"
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "handwriting_recognition 1.png",
+      "idiom" : "universal"
     }
   ],
   "info" : {

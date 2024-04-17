@@ -1,7 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "welcome.savedclips.png",
+      "filename" : "savedclips.png",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "savedclips 1.png",
       "idiom" : "universal"
     }
   ],

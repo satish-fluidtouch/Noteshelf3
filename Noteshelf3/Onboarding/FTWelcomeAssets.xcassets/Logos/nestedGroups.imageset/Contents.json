@@ -1,17 +1,18 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename" : "nestedGroups 1.png",
+      "idiom" : "universal"
     },
     {
-      "filename" : "nestedGroups@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x"
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "nestedGroups.png",
+      "idiom" : "universal"
     }
   ],
   "info" : {

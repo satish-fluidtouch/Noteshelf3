@@ -3,6 +3,16 @@
     {
       "filename" : "welcome.zoombox.preview.png",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "welcome.zoombox.preview 1.png",
+      "idiom" : "universal"
     }
   ],
   "info" : {

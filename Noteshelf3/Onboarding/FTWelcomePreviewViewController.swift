@@ -53,11 +53,11 @@ class FTWelcomePreviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.previewDescriptionLabelWidthConstraint?.constant = self.requiredContentSize().width - 40;
-        self.contentView?.addShadow(CGSize(width: 0, height: 50), color: UIColor.appColor(.welcomeBtnColor), opacity: 0.4, radius: 50)
+        self.contentView?.addShadow(CGSize(width: 0, height: 50), color: UIColor.appColor(.WelcomeContentShadowColor), opacity: 0, radius: 50)
         self.previewContentView?.layer.cornerRadius = 32;
         self.contentView?.layer.cornerRadius = 32;
         
-        self.previewTitleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .bold);
+        self.previewTitleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .medium);
         self.previewDescriptionLabel?.font = UIFont.systemFont(ofSize: 13, weight: .regular);
 
         if let item = self.welcomeItem {
@@ -84,11 +84,13 @@ class FTWelcomePreviewViewController: UIViewController {
         
         let duration = self.duration(from: sourceRect.origin, to: endRect.origin);
 
+        self.contentView?.layer.shadowOpacity = 0
         UIView.animate(withDuration: TimeInterval(duration), delay: 0, options: [.curveEaseOut]) {
             self.setContentViewFrame(endRect)
             self.containerConstraintLeft?.constant = centeredSourceRect.minX;
             self.containerConstraintTop?.constant = centeredSourceRect.minY;
 
+            self.contentView?.layer.shadowOpacity = 0.4
             self.containerView?.alpha = 0.0;
             self.contentView?.alpha = 1.0;
             
@@ -124,10 +126,11 @@ class FTWelcomePreviewViewController: UIViewController {
         self.contentView?.alpha = 1.0;
 
         let duration = self.duration(from: sourceRect.origin, to: self.contentView?.frame.origin ?? .zero);
+        self.contentView?.layer.shadowOpacity = 0.4
         UIView.animate(withDuration: duration, delay: 0, options: [.curveEaseOut]) {
             self.setContentViewFrame(sourceRect)
             self.setContainerViewFrame(sourceRect);
-
+            self.contentView?.layer.shadowOpacity = 0;
             self.containerView?.alpha = 1.0;
             self.contentView?.alpha = 0.0;
 

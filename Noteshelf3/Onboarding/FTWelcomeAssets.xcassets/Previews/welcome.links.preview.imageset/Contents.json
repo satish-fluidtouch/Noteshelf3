@@ -3,6 +3,16 @@
     {
       "filename" : "welcome.links.preview.png",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "welcome.links.preview 1.png",
+      "idiom" : "universal"
     }
   ],
   "info" : {
