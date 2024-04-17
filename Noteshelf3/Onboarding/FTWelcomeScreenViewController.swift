@@ -12,8 +12,8 @@ import AVFAudio
 class FTClearFaceFontLabel: UILabel {
     override var intrinsicContentSize: CGSize {
         var size = super.intrinsicContentSize;
-        size.width += 1;
-        size.height += 1;
+        size.width += 2;
+        size.height += 2;
         return size;
     }
 }
@@ -299,7 +299,7 @@ extension FTWelcomeScreenViewController: FTWelcomePreviewDelegate {
 
 extension FTWelcomeScreenViewController: FTWelcomeItemDelegate {
     func welcomeItem(_ controller: FTWelcomeItemViewController, didTapOnItem item: FTGetStartedViewItems) {
-        self.playPopupCloseSound()
+        self.playPopupOpenSound()
         
         let previewController = FTWelcomePreviewViewController.welcomeItemComtroller(item);
         previewController.referenceContentView = self.contentView;
