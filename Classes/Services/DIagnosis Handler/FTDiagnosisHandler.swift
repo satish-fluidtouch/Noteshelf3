@@ -49,7 +49,7 @@ import MessageUI
         self.generateWatchSyncDefaults(tempSyncFolderPath);
         self.generateAdditionalCustomFields(tempSyncFolderPath);
         // Masking it for now, needs to change iteration logic and enable it
-        // self.generateDocumentsDirectoryLog(tempSyncFolderPath)
+         self.generateDocumentsDirectoryLog(tempSyncFolderPath)
         #endif
         self.generateCloudBackLog(tempSyncFolderPath);
         self.generateAppInfoLog(tempSyncFolderPath);

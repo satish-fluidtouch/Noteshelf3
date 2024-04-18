@@ -121,15 +121,74 @@ class FTNoteshelfDocumentProvider: NSObject {
         if FTUserDefaults.defaults().iCloudOn, let iCloudUrl = FTNSiCloudManager.shared().iCloudRootURL() {
             url = iCloudUrl
         }
-        let contents = FileManager.default.enumerator(at: url, includingPropertiesForKeys: nil, options: [.skipsPackageDescendants, .producesRelativePathURLs])
-        var relativePaths = [String]();
-        contents?.enumerated().forEach({ eachItem in
-            let item = eachItem.element;
-            if let pathURL = (item as? URL)?.relativePath {
-                relativePaths.append(pathURL);
+        var notebooksUrlPaths = [String]()
+        let shelfUrls = fetchShelfUrls(url: url)
+        shelfUrls.forEach({ eachUrl in
+            if eachUrl.pathExtension == FTFileExtension.shelf {
+                notebooksUrlPaths.append(eachUrl.relativePathWRTCollection())
+                notebooksUrlPaths.append(contentsOf: self.contentsOfURL(eachUrl))
             }
         })
-        return relativePaths
+        return notebooksUrlPaths
+    }
+
+    private func fetchShelfUrls(url: URL) -> [URL] {
+        var shelfUrls = [URL]()
+        if let urls = try? FileManager.default.contentsOfDirectory(at: url,
+                                                                   includingPropertiesForKeys: nil,
+                                                                   options: .skipsHiddenFiles) {
+            urls.forEach({ eachUrl in
+                if eachUrl.pathExtension == FTFileExtension.shelf {
+                    shelfUrls.append(eachUrl)
+                } else {
+                    let urls = fetchShelfUrls(url: eachUrl)
+                    if !urls.isEmpty {
+                        shelfUrls.append(contentsOf: urls)
+                    }
+                }
+            })
+        }
+        return shelfUrls
+    }
+    
+    private func contentsOfURL(_ url: URL) -> [String] {
+        let urls = try? FileManager.default.contentsOfDirectory(at: url,
+                                                                includingPropertiesForKeys: nil,
+                                                                options: .skipsHiddenFiles);
+        let filteredURLS = self.filterItemsMatchingExtensions(urls);
+        
+        var notebookUrlList: [String] = [String]()
+        filteredURLS.enumerated().forEach({ (_,eachURL) in
+            if(eachURL.pathExtension == FTFileExtension.group) {
+                let dirContents = self.contentsOfURL(eachURL);
+                if dirContents.isEmpty {
+                    notebookUrlList.append(eachURL.relativePathWRTCollection())
+                } else {
+                    notebookUrlList.append(eachURL.relativePathWRTCollection())
+                    notebookUrlList.append(contentsOf: dirContents);
+                }
+            }
+            else {
+                notebookUrlList.append(eachURL.relativePathWRTCollection());
+            }
+        });
+        return notebookUrlList
+    }
+    
+    private func filterItemsMatchingExtensions(_ items : [URL]?) -> [URL] {
+        let extToListen:[String] = [FTFileExtension.group, FTFileExtension.ns3]
+        var filteredURLS = [URL]();
+        if let items {
+            if(!extToListen.isEmpty) {
+                filteredURLS = items.filter({ (eachURL) -> Bool in
+                    if(extToListen.contains(eachURL.pathExtension)) {
+                        return true
+                    }
+                    return false
+                });
+            }
+        }
+        return filteredURLS
     }
 
     fileprivate static func documentProvider(_ onCompletion : @escaping ((FTNoteshelfDocumentProvider) -> Void)) {
