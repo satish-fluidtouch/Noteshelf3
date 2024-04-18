@@ -372,22 +372,21 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FTShelfTagsPageCell", for: indexPath) as? FTShelfTagsPageCell else {
-            return UICollectionViewCell()
-        }
-        cell.selectionBadge?.isHidden = viewState == .none ? true : false
-
-        if indexPath.section == 0 {
+        
+        guard indexPath.section == 1 else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FTShelfTagsBooksCell", for: indexPath) as? FTShelfTagsBooksCell else {
                 return UICollectionViewCell()
             }
             return cell
-        } else if indexPath.section == 1 {
-            let item = self.tagCategory.pages[indexPath.row]
-            cell.updateTaggedEntity(taggedEntity: item, isRegular: self.traitCollection.isRegular);
         }
         
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FTShelfTagsPageCell", for: indexPath) as? FTShelfTagsPageCell else {
+            return UICollectionViewCell()
+        }
+        cell.isInEditMode = (viewState == .edit)
         let item = self.tagCategory.pages[indexPath.row]
+        cell.updateTaggedEntity(taggedEntity: item, isRegular: self.traitCollection.isRegular);
+
         if viewState == .edit,self.tagCategory.selectedEntities.contains(item) {
             cell.isItemSelected = true;
         }
@@ -445,9 +444,13 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
             let columnWidth = columnWidthForSize(self.view.frame.size) - 12
             if let pageRect = pageRect {
                 if  pageRect.size.width > pageRect.size.height  { // landscape
-                    return CGSize(width: columnWidth, height: ((columnWidth)/FTShelfTagsConstants.Page.landscapeAspectRatio) + FTShelfTagsConstants.Page.extraHeightPadding)
+                    let size = CGSize(width: columnWidth, height: ((columnWidth)/FTShelfTagsConstants.Page.landscapeAspectRatio) + FTShelfTagsConstants.Page.extraHeightPadding)
+                    debugLog("Cell Size: land: \(size)")
+                    return size
                 } else {
-                    return CGSize(width: columnWidth, height: ((columnWidth)/FTShelfTagsConstants.Page.potraitAspectRation) + FTShelfTagsConstants.Page.extraHeightPadding)
+                    let size = CGSize(width: columnWidth, height: ((columnWidth)/FTShelfTagsConstants.Page.potraitAspectRation) + FTShelfTagsConstants.Page.extraHeightPadding)
+                    debugLog("Cell Size: port: \(size)")
+                    return size;
                 }
             }
         }

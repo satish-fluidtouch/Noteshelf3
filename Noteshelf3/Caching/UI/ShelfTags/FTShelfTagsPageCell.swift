@@ -44,17 +44,17 @@ class FTShelfTagsPageCell: UICollectionViewCell {
     }
     
     @IBOutlet weak var thumbnail: UIImageView?
-    @IBOutlet weak var notDownloadStatusView: UIImageView?
-    @IBOutlet weak var tagsView: UIStackView!
-    @IBOutlet weak var bookTitleLbl: UILabel?
-    @IBOutlet weak var selectionBadge: UIImageView?
-    @IBOutlet weak var shadowImageView: UIImageView!
+    @IBOutlet private weak var notDownloadStatusView: UIImageView?
+    @IBOutlet private weak var tagsView: UIStackView?
+    @IBOutlet private weak var bookTitleLbl: UILabel?
+    @IBOutlet private weak var selectionBadge: UIImageView?
+    @IBOutlet private weak var shadowImageView: UIImageView!
 
     private(set) weak var taggedEntity: FTTaggedEntity?;
     
     private var obsertver: NSKeyValueObservation?
     
-    @IBOutlet weak var thumbnailHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var thumbnailHeightConstraint: NSLayoutConstraint!
     var isItemSelected: Bool = false {
         didSet {
             if let selectionBadge = selectionBadge {
@@ -63,17 +63,15 @@ class FTShelfTagsPageCell: UICollectionViewCell {
             }
         }
     }
-        
+       
+    var isInEditMode: Bool = false {
+        didSet {
+            self.selectionBadge?.isHidden = !self.isInEditMode
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib();
-        guard let tagView = self.tagsView else {
-            return;
-        }
-        tagsView?.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            tagView.centerXAnchor.constraint(equalTo: self.centerXAnchor)
-            ,tagView.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor)
-        ])
     }
 
     private func updateTagsViewWith(tags: [String]) {

@@ -63,7 +63,7 @@ extension FTShelfTagsBooksCell: UICollectionViewDataSource, UICollectionViewDele
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FTShelfTagsPageCell", for: indexPath) as? FTShelfTagsPageCell else {
             return UICollectionViewCell()
         }
-        cell.selectionBadge?.isHidden = viewState == .none ? true : false
+        cell.isInEditMode = (viewState == .edit);
 
         let item = self.tagCategory.books[indexPath.row]
         cell.updateTaggedEntity(taggedEntity: item, isRegular: self.traitCollection.isRegular);

@@ -211,8 +211,8 @@
                                                                         <color key="textColor" name="black1"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="fillProportionally" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ooY-JZ-35d">
-                                                                        <rect key="frame" x="55" y="268" width="75" height="20"/>
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ooY-JZ-35d">
+                                                                        <rect key="frame" x="0.0" y="268" width="185" height="20"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="20" id="ex2-uY-vde"/>
                                                                         </constraints>
@@ -221,8 +221,10 @@
                                                                 <color key="backgroundColor" name="secondaryBG"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="trailing" secondItem="rN4-CY-9kx" secondAttribute="trailing" constant="-20" id="6bz-fW-LuP"/>
+                                                                    <constraint firstItem="ooY-JZ-35d" firstAttribute="centerX" secondItem="njf-NQ-Aco" secondAttribute="centerX" id="8Gx-OL-jTg"/>
                                                                     <constraint firstAttribute="trailing" secondItem="SMI-SH-YrM" secondAttribute="trailing" id="FgE-XO-yDT"/>
                                                                     <constraint firstItem="rN4-CY-9kx" firstAttribute="leading" secondItem="fn2-pq-ZTV" secondAttribute="leading" constant="-20" id="LeD-dy-T0y"/>
+                                                                    <constraint firstItem="ooY-JZ-35d" firstAttribute="width" secondItem="njf-NQ-Aco" secondAttribute="width" priority="250" id="PrP-Xz-Vv8"/>
                                                                     <constraint firstItem="njf-NQ-Aco" firstAttribute="top" secondItem="fn2-pq-ZTV" secondAttribute="top" id="QHd-0i-nuc"/>
                                                                     <constraint firstItem="ooY-JZ-35d" firstAttribute="top" secondItem="SMI-SH-YrM" secondAttribute="bottom" constant="8" id="SOl-4M-wyg"/>
                                                                     <constraint firstItem="zOy-4j-gSS" firstAttribute="centerX" secondItem="fn2-pq-ZTV" secondAttribute="centerX" id="Stq-oy-AYy"/>
@@ -306,8 +308,8 @@
                                                         <constraint firstAttribute="width" secondItem="ffm-7U-bqP" secondAttribute="height" multiplier="1:1" id="qWh-8T-Dc6"/>
                                                     </constraints>
                                                 </imageView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="fillProportionally" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Ib3-NX-4rN">
-                                                    <rect key="frame" x="55" y="268" width="75" height="20"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Ib3-NX-4rN">
+                                                    <rect key="frame" x="0.0" y="268" width="185" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="jWE-hN-guV"/>
                                                     </constraints>
@@ -317,6 +319,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="4T9-SB-Mne" secondAttribute="trailing" id="5aB-UW-eAC"/>
                                                 <constraint firstAttribute="bottom" secondItem="Ib3-NX-4rN" secondAttribute="bottom" id="85K-Oh-CMc"/>
+                                                <constraint firstItem="Ib3-NX-4rN" firstAttribute="width" secondItem="EWt-nM-0H9" secondAttribute="width" priority="250" id="9JG-pY-hVq"/>
                                                 <constraint firstItem="4T9-SB-Mne" firstAttribute="leading" secondItem="EWt-nM-0H9" secondAttribute="leading" id="DQt-cn-BIW"/>
                                                 <constraint firstItem="TFT-kw-uEy" firstAttribute="centerX" secondItem="EWt-nM-0H9" secondAttribute="centerX" id="GfV-7p-ACb"/>
                                                 <constraint firstItem="ffm-7U-bqP" firstAttribute="bottom" secondItem="EWt-nM-0H9" secondAttribute="bottom" constant="-10" id="QCn-ih-bDh"/>
@@ -325,6 +328,7 @@
                                                 <constraint firstItem="EWt-nM-0H9" firstAttribute="bottom" secondItem="TFT-kw-uEy" secondAttribute="bottom" constant="4" id="TLT-Tf-hP2"/>
                                                 <constraint firstItem="EWt-nM-0H9" firstAttribute="leading" secondItem="dZE-rx-WdE" secondAttribute="leading" id="VR7-xF-AeJ"/>
                                                 <constraint firstItem="xNP-3p-gF9" firstAttribute="top" secondItem="dZE-rx-WdE" secondAttribute="top" constant="-8" id="aiF-FB-Mir"/>
+                                                <constraint firstItem="Ib3-NX-4rN" firstAttribute="centerX" secondItem="EWt-nM-0H9" secondAttribute="centerX" id="f4W-dh-EaS"/>
                                                 <constraint firstItem="EWt-nM-0H9" firstAttribute="top" secondItem="dZE-rx-WdE" secondAttribute="top" id="hxv-nr-dM7"/>
                                                 <constraint firstItem="xNP-3p-gF9" firstAttribute="leading" secondItem="dZE-rx-WdE" secondAttribute="leading" constant="-20" id="mmA-1h-Lzm"/>
                                                 <constraint firstItem="Ib3-NX-4rN" firstAttribute="top" secondItem="4T9-SB-Mne" secondAttribute="bottom" constant="2" id="mzd-BJ-QKE"/>
