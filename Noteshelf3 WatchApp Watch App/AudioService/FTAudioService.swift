@@ -48,14 +48,35 @@ class FTAudioService: NSObject {
         }
 
         let sessionInstance = AVAudioSession.sharedInstance()
+        do {
+            try sessionInstance.setCategory(AVAudioSession.Category.playAndRecord,mode : .default)
+            try sessionInstance.setActive(true)
+        } catch let error as NSError{
+            debugPrint(error)
+        }
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(FTAudioService.handleInterruption(_:)),
                                                name: AVAudioSession.interruptionNotification,
                                                object: sessionInstance)
-
-        self.audioEngine = AVAudioEngine()
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: WKExtension.applicationDidBecomeActiveNotification, object: nil)
         self.playerNode =  AVAudioPlayerNode()
+        self.prepareEngine()
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: AVAudioSession.interruptionNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: WKExtension.applicationDidBecomeActiveNotification, object: nil)
+    }
+
+    @objc func applicationDidBecomeActive() {
+        self.prepareEngine()
+    }
+}
+
+private extension FTAudioService {
+    func prepareEngine() {
         do {
+            self.audioEngine = AVAudioEngine()
             self.audioEngine.attach(self.playerNode)
             self.audioEngine.connect(self.playerNode,
                                      to:self.audioEngine.mainMixerNode,
@@ -68,12 +89,6 @@ class FTAudioService: NSObject {
         }
     }
 
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: AVAudioSession.interruptionNotification, object: nil)
-    }
-}
-
-private extension FTAudioService {
     @objc func handleInterruption(_ notification: Notification) {
         let theInterruptionType = notification.userInfo![AVAudioSessionInterruptionTypeKey] as! UInt
 #if DEBUG
@@ -81,7 +96,7 @@ private extension FTAudioService {
         NSLog("All userInfo: %@", notification.userInfo!)
 #endif
         if(self.audioActivity.audioServiceStatus == .recording){
-            self.stopRecording()
+            self.delegate?.audioServiceDidInterrupted?(at: self.audioActivity.audioServiceStatus)
         }
         else if(self.audioActivity.audioServiceStatus == .playing){
             recentPlayedAudio["currentTime"] = Double(self.audioActivity.currentTime)
@@ -95,8 +110,10 @@ private extension FTAudioService {
             self.audioActivity.totalDuration = 0
         }
         else if(self.audioActivity.audioServiceStatus == FTAudioServiceStatus.playing){
-            //self.audioActivity.currentTime = self.currentTime()
             self.audioActivity.currentTime = self.audioActivity.currentTime + 1.0
+            if self.isAudioPlaybackCompleted() {
+                self.handleAudioPlayCompletion()
+            }
         }
     }
 
@@ -110,7 +127,7 @@ private extension FTAudioService {
                 self.audioActivity.audioServiceStatus = FTAudioServiceStatus.none
                 audioServiceCurrentState = FTAudioServiceStatus.none
             }
-            self.delegate?.audioServiceDidFinishPlaying(withError: nil)
+            self.delegate?.audioServiceDidFinishPlaying?(withError: nil)
         }
     }
 
@@ -204,7 +221,7 @@ extension FTAudioService {
     func finishRecording(success: Bool) {
         self.audioActivity.audioServiceStatus = FTAudioServiceStatus.none
         if(success){
-            self.delegate?.audioServiceDidFinishRecording(withURL: self.audioActivity.audioURL!)
+            self.delegate?.audioServiceDidFinishRecording?(withURL: self.audioActivity.audioURL!)
         }
     }
 }
@@ -230,7 +247,6 @@ extension FTAudioService {
             guard let self else {
                 return
             }
-            print("zzzz - scheduleSegment completion - play audio")
             if self.isAudioPlaybackCompleted() {
                 self.handleAudioPlayCompletion()
             }
@@ -260,7 +276,6 @@ extension FTAudioService {
             guard let self else {
                 return
             }
-            print("zzzz - scheduleSegment completion - seek audio")
             if self.isAudioPlaybackCompleted() {
                 self.handleAudioPlayCompletion()
             }
@@ -279,10 +294,8 @@ extension FTAudioService {
     }
 
     func pausePlayingAudio() {
-        if self.playerNode.isPlaying {
-            self.playerNode.pause()
-            self.audioActivity.audioServiceStatus = .playingPaused
-        }
+        self.playerNode.pause()
+        self.audioActivity.audioServiceStatus = .playingPaused
     }
 
     func resumePlayingAudio() {
@@ -304,7 +317,7 @@ extension FTAudioService {
                 }
 
                 self.audioActivity.audioServiceStatus = .none
-                self.delegate?.audioServiceDidFinishPlaying(withError: nil)
+                self.delegate?.audioServiceDidFinishPlaying?(withError: nil)
             }
         }
     }

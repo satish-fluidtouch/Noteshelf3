@@ -10,10 +10,10 @@ import UIKit
 extension UIImage {
     public func makeCover(shouldAddSpine: Bool = false, shouldAddCorner: Bool = false, isCover: Bool = false) -> UIImage {
         let size = self.size
-        UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale)
-        guard let context = UIGraphicsGetCurrentContext() else {
+        guard let ftcontext = FTImageContext.imageContext(size, scale: UIScreen.main.scale) else {
             return self
         }
+        let context = ftcontext.cgContext;
         var scaledImageRect = CGRect.zero;
         let aspectWidth:CGFloat = size.width / self.size.width;
         let aspectHeight:CGFloat = size.height / self.size.height;
@@ -38,29 +38,28 @@ extension UIImage {
         context.interpolationQuality = .high
         context.translateBy(x: 0.0, y: size.height)
         context.scaleBy(x: 1.0, y: -1.0)
-        context.draw((cgImage!),in: scaledImageRect)
+        ftcontext.drawImage(self, in: scaledImageRect);
         if shouldAddSpine {
-            context.draw((UIImage(named:"cover_line.png")?.cgImage)!, in: CGRect(x: 0, y: 0, width: 15, height: scaledImageRect.height),byTiling:false)
+            ftcontext.drawImage(UIImage(named:"cover_line.png")!, in: CGRect(x: 0, y: 0, width: 15, height: scaledImageRect.height));
         }
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+        let newImage = ftcontext.uiImage()
         return newImage ?? self
     }
     
     public func addSpineToImageIfneeded(shouldAddSpine: Bool) -> UIImage {
         let size = self.size
-        UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale)
-        guard let context = UIGraphicsGetCurrentContext(), shouldAddSpine else {
+        
+        guard let ftcontext = FTImageContext.imageContext(size, scale: UIScreen.main.scale), shouldAddSpine else {
             return self
         }
+        let context = ftcontext.cgContext;
         let frame = CGRect(origin: .zero, size: size)
         context.interpolationQuality = .high
         context.translateBy(x: 0.0, y: size.height)
         context.scaleBy(x: 1.0, y: -1.0)
-        context.draw((cgImage!),in: frame)
-        context.draw((UIImage(named:"cover_spine")?.cgImage)!, in: CGRect(origin: .zero, size: CGSize(width: 70, height: frame.height)), byTiling:false)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+        ftcontext.drawImage(self, in: frame);
+        ftcontext.drawImage(UIImage(named:"cover_spine")!, in: CGRect(origin: .zero, size: CGSize(width: 70, height: frame.height)));
+        let newImage = ftcontext.uiImage()
         return newImage ?? self
     }
 }

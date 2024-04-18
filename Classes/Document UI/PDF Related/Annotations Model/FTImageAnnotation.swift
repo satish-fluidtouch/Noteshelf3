@@ -637,11 +637,9 @@ private extension FTImageAnnotation
                 if(nil == localImage) {
                     localImage = self.image;
                 }
-                if(nil != localImage) {
-                    UIGraphicsBeginImageContextWithOptions((localImage!.size), false, UIScreen.main.scale);
-                    localImage!.draw(in: CGRect.init(origin: CGPoint.zero, size: localImage!.size));
-                    localImage = UIGraphicsGetImageFromCurrentImageContext();
-                    UIGraphicsEndImageContext();
+                if let img = localImage, let context = FTImageContext.imageContext(img.size) {
+                    img.draw(in: CGRect.init(origin: CGPoint.zero, size: img.size));
+                    localImage = context.uiImage()
                 }
             }
             if(nil == localImage) {
