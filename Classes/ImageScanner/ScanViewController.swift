@@ -42,7 +42,7 @@ class ScannedItem : NSObject {
     }
     var quad:Quadrilateral! {
         didSet {
-            _croppedImage = self.getCroppedImage().fixOrientation().imageByRemovingShadows()//.applying(contrast: NSNumber.init(value: 1.5))
+            _croppedImage = self.getCroppedImage().fixOrientation().imageByRemovingShadows()
         }
     }
     fileprivate var _croppedImage:UIImage?

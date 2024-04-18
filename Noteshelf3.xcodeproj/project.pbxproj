@@ -90,6 +90,7 @@
 		09B905932BC3E4D000A03CCC /* FTWelcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09B905922BC3E4D000A03CCC /* FTWelcome.storyboard */; };
 		09BAE60F2A654B48008CD577 /* FTShelfSplitViewController_Mac_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BAE60E2A654B48008CD577 /* FTShelfSplitViewController_Mac_Extension.swift */; };
 		09BC391D2ACC4BCF0011D8B0 /* FTQLThumbnail_Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BC391C2ACC4BCF0011D8B0 /* FTQLThumbnail_Error.swift */; };
+		09BD0B8C2BAAFD320085DA1D /* FTImageContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BD0B8B2BAAFD320085DA1D /* FTImageContext.swift */; };
 		09C17BC12B3C66C000229E6D /* FTENPublishError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C17BC02B3C66C000229E6D /* FTENPublishError.swift */; };
 		09C3696A2A5EA6EB009BCC3F /* FTColorEyeDropperPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C369662A5EA6EB009BCC3F /* FTColorEyeDropperPickerController.swift */; };
 		09C3696B2A5EA6EB009BCC3F /* FTColorEyeDropperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C369682A5EA6EB009BCC3F /* FTColorEyeDropperView.swift */; };
@@ -131,7 +132,7 @@
 		09DBD52A2A7D255B00987ED1 /* FTFormSheetTransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DBD5292A7D255B00987ED1 /* FTFormSheetTransitionDelegate.swift */; };
 		09DCDB992BBADBE2006055DB /* AVFAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09DCDB982BBADBE2006055DB /* AVFAudio.framework */; };
 		09DCDB9A2BBADBFF006055DB /* AVFAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09DCDB982BBADBE2006055DB /* AVFAudio.framework */; };
-		09DCDBA32BBAE946006055DB /* Noteshelf3 Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = E75CD84A2B8F0B4300D59F21 /* Noteshelf3 Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		09DCDBA32BBAE946006055DB /* Noteshelf3 Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = E75CD84A2B8F0B4300D59F21 /* Noteshelf3 Watch App.app */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		09DE78082A9DDEE800FE74D0 /* FTCloudBackupErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DE78072A9DDEE800FE74D0 /* FTCloudBackupErrors.swift */; };
 		09DEFBD72A725E6F00F41C1E /* FTCharStrokeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEFBD62A725E6F00F41C1E /* FTCharStrokeInfo.swift */; };
 		09DEFBD92A725E9600F41C1E /* FTWordStrokeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEFBD82A725E9600F41C1E /* FTWordStrokeInfo.swift */; };
@@ -284,7 +285,6 @@
 		4209FEAB295C629D00ACC02E /* StoreTemplateGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7050CE24F644C1009CA613 /* StoreTemplateGenerator.swift */; };
 		4209FEAC295C62A000ACC02E /* StoreTemplateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7050CD24F644C1009CA613 /* StoreTemplateFormat.swift */; };
 		4209FEAE295C62DE00ACC02E /* URL_Attributes_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AF2BFF249B52CD0089A2A3 /* URL_Attributes_Extension.swift */; };
-		4209FEAF295C62E500ACC02E /* Siri+Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4297F6642535E042009F8F5A /* Siri+Common.swift */; };
 		4209FEB1295C634500ACC02E /* NSDate_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA376E2223BE134D00B27012 /* NSDate_Extension.swift */; };
 		4209FEB2295C635300ACC02E /* FTDynamicTemplateInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C8525A24F62CEA00EF893A /* FTDynamicTemplateInfo.swift */; };
 		4209FEB3295C636700ACC02E /* FTShelfItemSearching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B665E11E85024B0003DA80 /* FTShelfItemSearching.swift */; };
@@ -1444,7 +1444,6 @@
 		BAF392872859ADF00067CA9F /* NSFileManager_UniqueFileName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AB9DA51E7C18580041A0F5 /* NSFileManager_UniqueFileName.swift */; };
 		BAF392892859ADF00067CA9F /* FTPaperTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C8521C24F521BB00EF893A /* FTPaperTheme.swift */; };
 		BAF3928A2859ADF00067CA9F /* FTMigrateToV3o1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093EE22E213FDC5900D6F115 /* FTMigrateToV3o1.swift */; };
-		BAF3928B2859ADF00067CA9F /* Siri+Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4297F6642535E042009F8F5A /* Siri+Common.swift */; };
 		BAF3928C2859ADF00067CA9F /* FTNoteshelfPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09953E851F1F2A7F00753F70 /* FTNoteshelfPage.swift */; };
 		BAF3928D2859ADF00067CA9F /* FTPageFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09993A571EF408D500741879 /* FTPageFooterView.swift */; };
 		BAF3928E2859ADF00067CA9F /* FTTooltipBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8656D820A41D130048FEC6 /* FTTooltipBubbleView.swift */; };
@@ -2726,6 +2725,7 @@
 		09BAE60E2A654B48008CD577 /* FTShelfSplitViewController_Mac_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfSplitViewController_Mac_Extension.swift; sourceTree = "<group>"; };
 		09BB70AC21F84EF20065B781 /* FTBackgroundTexture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTBackgroundTexture.swift; sourceTree = "<group>"; };
 		09BC391C2ACC4BCF0011D8B0 /* FTQLThumbnail_Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTQLThumbnail_Error.swift; sourceTree = "<group>"; };
+		09BD0B8B2BAAFD320085DA1D /* FTImageContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTImageContext.swift; sourceTree = "<group>"; };
 		09BD1DC021FAF59C000D73D5 /* FTAudioUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FTAudioUtils.h; sourceTree = "<group>"; };
 		09C0066E1E49C15400C491F8 /* FTLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTLogger.swift; sourceTree = "<group>"; };
 		09C0B6D5240D2178009F5E91 /* FTVerticalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTVerticalLayout.swift; sourceTree = "<group>"; };
@@ -3180,7 +3180,6 @@
 		429350812844968B00EBEAE5 /* FTShapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShapeView.swift; sourceTree = "<group>"; };
 		4294CB12278E9CCC008AAC27 /* FTShapeTriangleResizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShapeTriangleResizing.swift; sourceTree = "<group>"; };
 		4297F6622535DF6E009F8F5A /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
-		4297F6642535E042009F8F5A /* Siri+Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Siri+Common.swift"; sourceTree = "<group>"; };
 		4297F6672535F82F009F8F5A /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
 		4297F6692535FA8E009F8F5A /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		429E0C75292362C500C75E37 /* FTFinderCollectionviewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFinderCollectionviewFlowLayout.swift; sourceTree = "<group>"; };
@@ -4351,7 +4350,6 @@
 		E75CD84E2B8F0B4600D59F21 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E75CD8502B8F0B4700D59F21 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E75CD8532B8F0B4700D59F21 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		E75CD85E2B8F115800D59F21 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E75E1EB22AFA0781008CAD44 /* FTFavoritePenTypeEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritePenTypeEditController.swift; sourceTree = "<group>"; };
 		E75E67BC2A9F7442009F5B2E /* FTTextStyle.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FTTextStyle.plist; sourceTree = "<group>"; };
 		E75FCB2826C0EB5700E5FF75 /* FTGlobalSearch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FTGlobalSearch.storyboard; sourceTree = "<group>"; };
@@ -6829,7 +6827,6 @@
 				BAD422F122D5E452000D0137 /* UIWindow+VisibleViewController.swift */,
 				422211BC2539A79C00136166 /* UIImage+Extension.swift */,
 				4297F6622535DF6E009F8F5A /* UIColor+Extensions.swift */,
-				4297F6642535E042009F8F5A /* Siri+Common.swift */,
 				4297F6672535F82F009F8F5A /* UIFont+Extensions.swift */,
 				4297F6692535FA8E009F8F5A /* String+Extension.swift */,
 				423EE1DB253489DE007967F9 /* CocoaCryptoHashing.swift */,
@@ -10795,7 +10792,6 @@
 				E75CD84C2B8F0B4600D59F21 /* Noteshelf3_WatchApp.swift */,
 				E75CD84E2B8F0B4600D59F21 /* ContentView.swift */,
 				E75CD8502B8F0B4700D59F21 /* Assets.xcassets */,
-				E75CD85E2B8F115800D59F21 /* Info.plist */,
 				E75CD8522B8F0B4700D59F21 /* Preview Content */,
 			);
 			path = "Noteshelf3 WatchApp Watch App";
@@ -11198,6 +11194,7 @@
 				BAA84E602873108800DE801B /* FileManager+Extension.swift */,
 				BAA84E5F2873108800DE801B /* NSCalendar+Extension.swift */,
 				BAA84E592873108600DE801B /* FTCommonUserDefaults.swift */,
+				09BD0B8B2BAAFD320085DA1D /* FTImageContext.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -12798,6 +12795,7 @@
 				BAA84E6B2873108800DE801B /* UIImage+Extension.swift in Sources */,
 				47C561C729FA821900E35D06 /* FTImportFileHandler.swift in Sources */,
 				E7A51E662A051614003C0DC0 /* FTPopoverPresentation.swift in Sources */,
+				09BD0B8C2BAAFD320085DA1D /* FTImageContext.swift in Sources */,
 				BAA84E6A2873108800DE801B /* UIDevice+Extension.swift in Sources */,
 				47C561C629FA814D00E35D06 /* Constants.swift in Sources */,
 				BAA84E692873108800DE801B /* URL+Extension.swift in Sources */,
@@ -13656,7 +13654,6 @@
 				BAF392872859ADF00067CA9F /* NSFileManager_UniqueFileName.swift in Sources */,
 				BAF392892859ADF00067CA9F /* FTPaperTheme.swift in Sources */,
 				BAF3928A2859ADF00067CA9F /* FTMigrateToV3o1.swift in Sources */,
-				BAF3928B2859ADF00067CA9F /* Siri+Common.swift in Sources */,
 				BAF3928C2859ADF00067CA9F /* FTNoteshelfPage.swift in Sources */,
 				97F60C18291E26CE0050C3F3 /* FTShelfItemInfoView.swift in Sources */,
 				F3B0654C287C496A00E67B35 /* FTErrorView.swift in Sources */,
@@ -14547,7 +14544,6 @@
 				4209FE70295C5F4700ACC02E /* FTLocalQueryObserver.swift in Sources */,
 				C85AFDF323324A2800D25D5F /* NSFileManager_UniqueFileName.swift in Sources */,
 				4209FE5F295C5CA800ACC02E /* FTShelfCategoryCollection.swift in Sources */,
-				4209FEAF295C62E500ACC02E /* Siri+Common.swift in Sources */,
 				5283D3B32A5EC8AB00C6C125 /* FTShareActionAlertView.swift in Sources */,
 				4209FEA7295C625200ACC02E /* FTDiagnosticInstanceCounter.swift in Sources */,
 				C85AFDF02331FF4300D25D5F /* BEMPathManager.m in Sources */,
@@ -14727,6 +14723,7 @@
 		};
 		09DCDBA22BBAE848006055DB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = E75CD8492B8F0B4300D59F21 /* Noteshelf3 WatchApp */;
 			targetProxy = 09DCDBA12BBAE848006055DB /* PBXContainerItemProxy */;
 		};
@@ -15050,7 +15047,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 EE Dev";
-				APP_VERSION = 1.5.10;
+				APP_VERSION = 1.6;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -15075,7 +15072,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 499;
+				CURRENT_PROJECT_VERSION = 96;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -15494,7 +15491,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Noteshelf 3";
-				APP_VERSION = 1.5.10;
+				APP_VERSION = 1.6;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -15519,7 +15516,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 499;
+				CURRENT_PROJECT_VERSION = 96;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -15933,7 +15930,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Beta";
-				APP_VERSION = 1.5.9;
+				APP_VERSION = 1.6;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -15957,7 +15954,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 499;
+				CURRENT_PROJECT_VERSION = 96;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -16886,7 +16883,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Dev";
-				APP_VERSION = 1.5.9;
+				APP_VERSION = 1.6;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -16911,7 +16908,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 499;
+				CURRENT_PROJECT_VERSION = 96;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -16952,7 +16949,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Noteshelf 3";
-				APP_VERSION = 1.5.9;
+				APP_VERSION = 1.6;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -16977,7 +16974,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 499;
+				CURRENT_PROJECT_VERSION = 96;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -17178,10 +17175,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Noteshelf3-WatchApp-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf 3";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Used to record audio as you take notes in Noteshelf.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(MAIN_APP_BUNDLE_IDENTIFIER)";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.fluidtouch.noteshelf3-dev";
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17234,10 +17232,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Noteshelf3-WatchApp-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf 3";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Used to record audio as you take notes in Noteshelf.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(MAIN_APP_BUNDLE_IDENTIFIER)";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.fluidtouch.noteshelf3-dev";
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17286,10 +17285,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Noteshelf3-WatchApp-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf 3";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Used to record audio as you take notes in Noteshelf.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(MAIN_APP_BUNDLE_IDENTIFIER)";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.fluidtouch.noteshelf3-dev";
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17338,10 +17338,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Noteshelf3-WatchApp-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf 3";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Used to record audio as you take notes in Noteshelf.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(MAIN_APP_BUNDLE_IDENTIFIER)";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.fluidtouch.noteshelf3-dev";
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17404,10 +17405,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Noteshelf3-WatchApp-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf 3";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Used to record audio as you take notes in Noteshelf.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(MAIN_APP_BUNDLE_IDENTIFIER)";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.fluidtouch.noteshelf3-dev";
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17519,7 +17521,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3-dev.watchkitapp.watch-widget";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3.enterprise-dev..watchkitapp.watch-widget";
 				PRODUCT_NAME = "Noteshelf 3 Watch Widget";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -17615,7 +17617,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3.watchkitapp.watch-widget";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3.enterprise.watchkitapp.watch-widget";
 				PRODUCT_NAME = "Noteshelf 3 Watch Widget";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
