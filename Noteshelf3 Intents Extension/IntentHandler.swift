@@ -22,7 +22,7 @@ class IntentHandler: INExtension, FTPinnedIntentConfigurationIntentHandling {
 
     func provideBooksOptionsCollection(for intent: FTPinnedIntentConfigurationIntent) async throws -> INObjectCollection<FTPinnedBookType> {
         var items = [FTPinnedBookType]()
-        let response = FTWidgetIntentDataHelper.notebooks()
+        let response = FTWidgetIntentDataHelper.allNoteBooks
         response.forEach { eachItem in
             let pinnedItem = FTPinnedBookType(identifier: eachItem.docId, display: FTWidgetIntentDataHelper.displayName(from: eachItem.relativePath))
             pinnedItem.coverImage = eachItem.coverImageName

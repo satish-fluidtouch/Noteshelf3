@@ -10,6 +10,10 @@ import Foundation
 import FTCommon
 
 final class FTWidgetIntentDataHelper {
+    static var allNoteBooks: [FTPinnedNotebook] {
+      return getPinnedNotebooks()
+    }
+    
     static var sharedCacheURL: URL {
         if let url = FileManager().containerURL(forSecurityApplicationGroupIdentifier: FTSharedGroupID.getAppGroupID()) {
             let directoryURL = url.appending(path: FTSharedGroupID.notshelfDocumentCache);
@@ -18,19 +22,36 @@ final class FTWidgetIntentDataHelper {
         fatalError("Failed to get path");
     }
     
+    static var localDocumentsUrl: URL? {
+        if let url = FileManager().containerURL(forSecurityApplicationGroupIdentifier: FTSharedGroupID.getAppGroupID()) {
+            let directoryURL = url.appending(path: "Noteshelf.nsdata/User Documents");
+            return directoryURL
+        }
+        return nil
+    }
+    
     public static func checkIfBookExists(for book: FTPinnedBookType) -> Bool {
-        return notebooks().contains { $0.docId == book.identifier }
+        return allNoteBooks.contains { $0.docId == book.identifier }
     }
     
     public static func updateNotebookIfNeeded(for book: inout FTPinnedBookType) {
-        if let matchingBook = notebooks().first(where: { $0.docId == book.identifier && ($0.relativePath != book.relativePath || $0.createdTime != book.time)}) {
+        if let matchingBook = allNoteBooks.first(where: { $0.docId == book.identifier && ($0.relativePath != book.relativePath || $0.createdTime != book.time)}) {
             book.relativePath = matchingBook.relativePath
+            book.coverImage = matchingBook.coverImageName
             book.time = matchingBook.createdTime
         }
     }
     
+    private static func getPinnedNotebooks() -> [FTPinnedNotebook] {
+        let defaults = UserDefaults.init(suiteName: FTSharedGroupID.getAppGroupID())
+        if let iCloudOn = defaults?.bool(forKey: "iCloudOn"), !iCloudOn {
+            return localNotebooks()
+        } else {
+            return iCloudNotebooks()
+        }
+    }
     
-    public static func notebooks() -> [FTPinnedNotebook] {
+    public static func iCloudNotebooks() -> [FTPinnedNotebook] {
         var notebooks = [FTPinnedNotebook]()
         if FileManager().fileExists(atPath: sharedCacheURL.path(percentEncoded: false)) {
             if let urls = try? FileManager.default.contentsOfDirectory(at: sharedCacheURL,
@@ -56,6 +77,73 @@ final class FTWidgetIntentDataHelper {
             }
         }
         return notebooks
+    }
+    
+    private static func localNotebooks() -> [FTPinnedNotebook] {
+        var notebookUrls = [URL]()
+        var notebooks = [FTPinnedNotebook]()
+        if let localDocumentsUrl, let urls = try? FileManager.default.contentsOfDirectory(at: localDocumentsUrl,
+                                                                   includingPropertiesForKeys: nil,
+                                                                   options: .skipsHiddenFiles)  {
+            urls.forEach({ eachUrl in
+                notebookUrls.append(contentsOf: self.contentsOfURL(eachUrl))
+            })
+            
+            notebookUrls.forEach { eachNotebookUrl in
+                let metaDataPlistUrl = eachNotebookUrl.appendingPathComponent("Metadata/Properties.plist")
+                let docAttrs = docAttrs(for: metaDataPlistUrl)
+                let relativePath = eachNotebookUrl.relativePathWRTCollection()
+                let time : String
+                let coverImage : String
+                let pageAttrs = pageAttrs(for: eachNotebookUrl.path(percentEncoded: false))
+                coverImage = eachNotebookUrl.appending(path:"cover-shelf-image.png").path(percentEncoded: false);
+                time = timeFromDate(currentDate: eachNotebookUrl.fileModificationDate)
+                let book = FTPinnedNotebook(docId: docAttrs.1 ?? "", relativePath: relativePath, createdTime: time, coverImageName: coverImage, hasCover: pageAttrs.0, isLandscape: pageAttrs.1)
+                notebooks.append(book)
+            }
+        }
+        return notebooks
+    }
+    
+    private static func contentsOfURL(_ url: URL) -> [URL] {
+        let urls = try? FileManager.default.contentsOfDirectory(at: url,
+                                                                includingPropertiesForKeys: nil,
+                                                                options: .skipsHiddenFiles);
+        let filteredURLS = self.filterItemsMatchingExtensions(urls);
+        
+        var notebookUrlList: [URL] = [URL]()
+            filteredURLS.enumerated().forEach({ (_,eachURL) in
+                if(eachURL.pathExtension == FTFileExtension.group) {
+                    let dirContents = self.contentsOfURL(eachURL);
+                    //Since we are supporting empty group creation
+                    if dirContents.isEmpty {
+                        notebookUrlList.append(eachURL)
+                    } else {
+                        notebookUrlList.append(contentsOf: dirContents);
+                    }
+                }
+                else {
+                    notebookUrlList.append(eachURL);
+                }
+            });
+        
+        return notebookUrlList
+    }
+    
+    private static func filterItemsMatchingExtensions(_ items : [URL]?) -> [URL] {
+        let extToListen:[String] = [FTFileExtension.group, FTFileExtension.ns3]
+        var filteredURLS = [URL]();
+        if let items {
+            if(!extToListen.isEmpty) {
+                filteredURLS = items.filter({ (eachURL) -> Bool in
+                    if(extToListen.contains(eachURL.pathExtension)) {
+                        return true
+                    }
+                    return false
+                });
+            }
+        }
+        return filteredURLS
     }
 
     public static func docAttrs(for metaDataPlistUrl: URL) -> (String?, String?) {
