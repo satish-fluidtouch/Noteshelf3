@@ -10,12 +10,13 @@
 @objc(FTWatchRecordedAudio)
 
 public class FTWatchRecordedAudio: NSObject,FTWatchRecording {
-    
     var date: Date
     var GUID: String
     var fileName: String
     var filePath: URL?
     var duration: Double
+    var audioTitle: String
+
     var audioStatus:FTWatchAudioStatus = .unread
     var syncStatus:FTWatchSyncStatus = .notSynced
     var downloadStatus: FTDownloadStatus = FTDownloadStatus.notDownloaded;
@@ -28,6 +29,7 @@ public class FTWatchRecordedAudio: NSObject,FTWatchRecording {
         self.syncStatus = .notSynced
         self.fileName = GUID + ".m4a"
         self.GUID = GUID
+        self.audioTitle = audioDateFormatter.string(from: date)
         super.init()
     }
     
@@ -48,6 +50,12 @@ public class FTWatchRecordedAudio: NSObject,FTWatchRecording {
         self.duration = (dictionary["duration"] as! NSNumber).doubleValue
         self.audioStatus = FTWatchAudioStatus(rawValue: Int((dictionary["audioStatus"]! as! NSString).intValue))!
         self.syncStatus = FTWatchSyncStatus(rawValue: Int(((dictionary["syncStatus"] ?? "0") as! NSString).intValue)) ?? .notSynced
+        // To avoid existing record issue
+        if let title = dictionary["audioTitle"] as? String {
+            self.audioTitle = title
+        } else {
+            self.audioTitle = audioDateFormatter.string(from: date)
+        }
     }
 
     public func dictionaryRepresentation()->Dictionary<String,Any>
@@ -57,6 +65,7 @@ public class FTWatchRecordedAudio: NSObject,FTWatchRecording {
         dictAudio["fileName"]=self.fileName
         dictAudio["date"]=self.date
         dictAudio["duration"]=self.duration
+        dictAudio["audioTitle"]=self.audioTitle
         dictAudio["audioStatus"]=String(describing: self.audioStatus.rawValue)
         dictAudio["syncStatus"]=String(describing: self.syncStatus.rawValue)
         return dictAudio
@@ -69,11 +78,10 @@ public class FTWatchRecordedAudio: NSObject,FTWatchRecording {
         let fileLocationURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(fileGUID).m4a")
         return fileLocationURL
     }
-    
-    var audioTitle : String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd MMM YY, h:mm a";
-
-        return formatter.string(from: self.date);
-    };
 }
+
+var audioDateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "dd MMM YY, h:mm a"
+    return formatter
+}()
