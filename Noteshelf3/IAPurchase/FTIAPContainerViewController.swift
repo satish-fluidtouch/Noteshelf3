@@ -21,6 +21,11 @@ class FTIAPContainerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        if FTCommonUtils.isWithinEarthDayRange() {
+            self.view.addVisualEffectBlur(style: .regular, cornerRadius: 0, frameToBlur: .zero);
+            self.view.backgroundColor = .clear
+            self.activityProgressHolderView.backgroundColor = .clear
+        }
         viewModel.delegate = self
     }
 
@@ -51,21 +56,22 @@ extension FTIAPContainerViewController {
 extension FTIAPContainerViewController: FTIAPViewModelDelegate {
     func didfinishLoadingProducts() {
         self.isModalInPresentation = true
+
+        if FTCommonUtils.isWithinEarthDayRange()
+            , let ns3Product = viewModel.ns3PremiumProduct() {
+            let viewcontroller = FTIAPOfferCampaignViewController.instatiate(originalProduct: ns3Product, delegate: self)
+            self.addChild(viewcontroller)
+            viewcontroller.view.addFullConstraints(contentView)
+            return;
+        }
+        
         var viewcontroller: UIViewController?
         if FTDocumentMigration.isNS2AppInstalled(),
            let ns2Product = viewModel.ns3PremiumForNS2UserProduct(),
            let ns3Product = viewModel.ns3PremiumProduct() {
-            if FTCommonUtils.isWithinEarthDayRange() {
-                viewcontroller = FTIAPOfferCampaignViewController.instatiate(originalProduct: ns3Product, delegate: self)
-            } else {
-                viewcontroller = FTIAPOfferViewController.instatiate(discountedProduct: ns2Product, originalProduct: ns3Product, delegate: self)
-            }
+            viewcontroller = FTIAPOfferViewController.instatiate(discountedProduct: ns2Product, originalProduct: ns3Product, delegate: self)
         } else if let ns3product = viewModel.ns3PremiumProduct() {
-            if FTCommonUtils.isWithinEarthDayRange() {
-                viewcontroller = FTIAPOfferCampaignViewController.instatiate(originalProduct: ns3product, delegate: self)
-            } else {
-                viewcontroller = FTIAPViewController.instatiate(with: ns3product, delegate: self)
-            }
+            viewcontroller = FTIAPViewController.instatiate(with: ns3product, delegate: self)
         } else {
             showAlert(withMessage: "MakeSureYouAreConnected".localized)
         }

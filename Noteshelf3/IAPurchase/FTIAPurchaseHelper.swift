@@ -22,7 +22,7 @@ final class FTIAPurchaseHelper {
             fatalError("FTIAPContainerViewController doesnt exist")
         }
         if FTCommonUtils.isWithinEarthDayRange() {
-            inAppPurchase.modalPresentationStyle = .fullScreen
+            inAppPurchase.modalPresentationStyle = .overFullScreen
             controller.present(inAppPurchase, animated: true)
         } else {
             controller.ftPresentFormsheet(vcToPresent: inAppPurchase,contentSize: CGSize(width: 700, height: 740),animated: true);
