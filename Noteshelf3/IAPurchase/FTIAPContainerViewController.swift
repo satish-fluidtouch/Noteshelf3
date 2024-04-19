@@ -23,7 +23,7 @@ class FTIAPContainerViewController: UIViewController {
         super.viewDidLoad()
         if FTCommonUtils.isWithinEarthDayRange() {
             self.view.addVisualEffectBlur(style: .regular, cornerRadius: 0, frameToBlur: .zero);
-            self.view.backgroundColor = .clear
+            self.view.backgroundColor = UIColor.appColor(.white90)
             self.activityProgressHolderView.backgroundColor = .clear
         }
         viewModel.delegate = self
