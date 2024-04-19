@@ -17135,7 +17135,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf 3";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Used to record audio as you take notes in Noteshelf.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.fluidtouch.noteshelf3-dev";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(MAIN_APP_BUNDLE_IDENTIFIER)";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -17192,7 +17192,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf 3";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Used to record audio as you take notes in Noteshelf.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.fluidtouch.noteshelf3-dev";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(MAIN_APP_BUNDLE_IDENTIFIER)";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -17244,7 +17244,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf 3";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Used to record audio as you take notes in Noteshelf.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.fluidtouch.noteshelf3-dev";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(MAIN_APP_BUNDLE_IDENTIFIER)";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -17296,7 +17296,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf 3";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Used to record audio as you take notes in Noteshelf.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.fluidtouch.noteshelf3-dev";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(MAIN_APP_BUNDLE_IDENTIFIER)";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -17363,7 +17363,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf 3";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Used to record audio as you take notes in Noteshelf.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.fluidtouch.noteshelf3-dev";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(MAIN_APP_BUNDLE_IDENTIFIER)";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
