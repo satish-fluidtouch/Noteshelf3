@@ -121,7 +121,9 @@ class FTWelcomeScreenViewController: UIViewController {
         self.scrollView2?.contentOffset = offset;
         self.startAnimation();
         
-        self.loadAudioFiles();
+        if !UIDevice.current.isPhone() {
+            self.loadAudioFiles();
+        }
         self.validatePlayPauseButton(self.view.frame.size);
     }
     
