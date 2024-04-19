@@ -8,6 +8,7 @@
 
 import Foundation
 import TPInAppReceipt
+import FTCommon
 
 let premiumUserStatus = "premiumUserStatus"
 
@@ -20,9 +21,12 @@ final class FTIAPurchaseHelper {
         guard let inAppPurchase = storyboard.instantiateViewController(withIdentifier: "FTIAPContainerViewController") as? FTIAPContainerViewController else {
             fatalError("FTIAPContainerViewController doesnt exist")
         }
-        inAppPurchase.modalPresentationStyle = .fullScreen
-        controller.present(inAppPurchase, animated: true)
-//        controller.ftPresentFormsheet(vcToPresent: inAppPurchase,contentSize: CGSize(width: 700, height: 740),animated: true);
+        if FTCommonUtils.isWithinEarthDayRange() {
+            inAppPurchase.modalPresentationStyle = .fullScreen
+            controller.present(inAppPurchase, animated: true)
+        } else {
+            controller.ftPresentFormsheet(vcToPresent: inAppPurchase,contentSize: CGSize(width: 700, height: 740),animated: true);
+        }
     }
 
     func showIAPAlert(on controller: UIViewController) {
