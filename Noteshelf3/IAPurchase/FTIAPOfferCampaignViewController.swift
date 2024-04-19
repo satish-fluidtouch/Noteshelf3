@@ -21,19 +21,16 @@ class FTIAPOfferCampaignViewController: UIViewController {
 
     @IBOutlet weak var subheadingLabel: UILabel?;
 
-    private var discountedProduct: SKProduct?;
     private var originalProduct: SKProduct?;
 
     private weak var delegate: FTIAPContainerDelegate?
 
-    static func instatiate(discountedProduct: SKProduct,
-                           originalProduct: SKProduct,
+    static func instatiate(originalProduct: SKProduct,
                            delegate: FTIAPContainerDelegate?) -> FTIAPOfferCampaignViewController {
         let storyboard = UIStoryboard(name: "IAPEssentials", bundle: nil)
         guard let inAppPurchase = storyboard.instantiateViewController(withIdentifier: "FTIAPOfferCampaignViewController") as? FTIAPOfferCampaignViewController else {
             fatalError("FTIAPOfferCampaignViewController doesnt exist")
         }
-        inAppPurchase.discountedProduct = discountedProduct
         inAppPurchase.originalProduct = originalProduct
         inAppPurchase.delegate = delegate
         return inAppPurchase
@@ -81,10 +78,7 @@ class FTIAPOfferCampaignViewController: UIViewController {
     }
 
     private func attributedTitleText(){
-        var discountpercentage = 50
-        if let ns2productt = self.discountedProduct, let ns3Product = self.originalProduct {
-            discountpercentage = self.discountedPercentage(ns3Product, ns2Product: ns2productt);
-        }
+        let discountpercentage = 50
         let localisedText = NSLocalizedString("iap.bannerTitle1", comment: "Get Premium at %@ OFF")
 
         let offText =  String(format: NSLocalizedString("iap.discount.highlight", comment:""), "\(discountpercentage)%")
@@ -123,7 +117,7 @@ class FTIAPOfferCampaignViewController: UIViewController {
 
     @IBAction func purchaseAction(_ sender: Any) {
         track(EventName.ns2premium_upgradenow_tap, screenName: ScreenName.iap)
-        if let product = self.discountedProduct {
+        if let product = self.originalProduct {
             self.delegate?.purchase(product: product)
         }
     }
@@ -158,57 +152,25 @@ class FTIAPOfferCampaignViewController: UIViewController {
 extension FTIAPOfferCampaignViewController {
     func configureUI(priceLocation: OfferPriceLocation) {
         guard let ns3product = originalProduct,
-              let ns3Price = FTIAPManager.shared.getPriceFormatted(for: ns3product),
-              let ns2Product = discountedProduct,
-              let ns2Price = FTIAPManager.shared.getPriceFormatted(for: ns2Product) else {
+        let ns3Price = FTIAPManager.shared.getPriceFormatted(for: ns3product) else {
             return
         }
-        //This code needs be refacotored
-        if priceLocation == .priceAboveButton {
-            let iapPurchaseTitle = "iap.onetimepurchasenew".localized;
-
-            let atts: [NSAttributedString.Key:Any] = self.subHeadlineTitleAttributes;
-            let attributedTitle = NSMutableAttributedString(string: iapPurchaseTitle,attributes:atts);
-            if let range = iapPurchaseTitle.range(of: "%@") {
-                var strikeThroughAttr : [NSAttributedString.Key:Any] = atts;
-                strikeThroughAttr[.strikethroughStyle] =  NSUnderlineStyle.single.rawValue;
-                strikeThroughAttr[.strikethroughColor] =  UIColor.black.withAlphaComponent(0.5)
-                strikeThroughAttr[.foregroundColor] = UIColor.black.withAlphaComponent(0.5)
-                strikeThroughAttr[.font] = UIFont.appFont(for: .medium, with: 13)
-                let priceString = NSMutableAttributedString(string: ns3Price,attributes: strikeThroughAttr);
-                priceString.append(NSAttributedString(string: " ", attributes: atts));
-                priceString.append(NSAttributedString(string: "(50% Off)", attributes: atts));
-                priceString.append(NSAttributedString(string: " ", attributes: atts));
-                priceString.append(NSAttributedString(string: ns2Price,attributes: atts));
-                let nsRange = NSRange(range,in: iapPurchaseTitle);
-                attributedTitle.replaceCharacters(in: nsRange, with: priceString)
-                attributedTitle.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black.withAlphaComponent(0.5), range: nsRange)
-                self.subheadingLabel?.attributedText = attributedTitle
-            }
-        } else {
-            let upgradeAttrs: [NSAttributedString.Key:Any] = self.upgradeTitleAttributes;
-            let iapPurchaseButtonTitle = "iap.purchase".localized;
-            let purchaseAttributedTitle = NSMutableAttributedString(string: iapPurchaseButtonTitle,attributes: upgradeAttrs);
-            if let range = iapPurchaseButtonTitle.range(of: "%@") {
-                var strikeThroughAttr : [NSAttributedString.Key:Any] = upgradeAttrs;
-                strikeThroughAttr[.strikethroughStyle] =  NSUnderlineStyle.single.rawValue;
-                strikeThroughAttr[.strikethroughColor] =  UIColor.white.withAlphaComponent(0.6);
-                strikeThroughAttr[.foregroundColor] = UIColor.white.withAlphaComponent(0.6)
-                strikeThroughAttr[.font] = UIFont.clearFaceFont(for: .medium, with: 20)
-                let priceString = NSMutableAttributedString(string: ns3Price,attributes: strikeThroughAttr);
-                priceString.append(NSAttributedString(string: " ", attributes: upgradeAttrs));
-                priceString.append(NSAttributedString(string: ns2Price,attributes: upgradeAttrs));
-                let nsRange = NSRange(range,in: iapPurchaseButtonTitle);
-                purchaseAttributedTitle.replaceCharacters(in: nsRange, with: priceString)
-                self.upgradeButton?.setAttributedTitle(purchaseAttributedTitle, for: .normal)
-            }
+        let iapPurchaseTitle = "iap.onetimepurchasenew".localized;
+        
+        let atts: [NSAttributedString.Key:Any] = self.subHeadlineTitleAttributes;
+        let attributedTitle = NSMutableAttributedString(string: iapPurchaseTitle,attributes:atts);
+        if let range = iapPurchaseTitle.range(of: "%@") {
+            let priceString = NSMutableAttributedString(string: ns3Price + " / ",attributes: atts);
+            let nsRange = NSRange(range,in: iapPurchaseTitle);
+            attributedTitle.replaceCharacters(in: nsRange, with: priceString)
+            self.subheadingLabel?.attributedText = attributedTitle
         }
     }
 }
 
 private extension FTIAPOfferCampaignViewController {
     var subHeadlineTitleAttributes: [NSAttributedString.Key : Any] {
-        return [.font: UIFont.appFont(for: .medium, with: 13)];
+        return [.font: UIFont.appFont(for: .bold, with: 13)];
     }
     
     var upgradeTitleAttributes: [NSAttributedString.Key : Any] {

@@ -56,12 +56,16 @@ extension FTIAPContainerViewController: FTIAPViewModelDelegate {
            let ns2Product = viewModel.ns3PremiumForNS2UserProduct(),
            let ns3Product = viewModel.ns3PremiumProduct() {
             if FTCommonUtils.isWithinEarthDayRange() {
-                viewcontroller = FTIAPOfferCampaignViewController.instatiate(discountedProduct: ns2Product, originalProduct: ns3Product, delegate: self)
+                viewcontroller = FTIAPOfferCampaignViewController.instatiate(originalProduct: ns3Product, delegate: self)
             } else {
                 viewcontroller = FTIAPOfferViewController.instatiate(discountedProduct: ns2Product, originalProduct: ns3Product, delegate: self)
             }
         } else if let ns3product = viewModel.ns3PremiumProduct() {
-            viewcontroller = FTIAPViewController.instatiate(with: ns3product, delegate: self)
+            if FTCommonUtils.isWithinEarthDayRange() {
+                viewcontroller = FTIAPOfferCampaignViewController.instatiate(originalProduct: ns3product, delegate: self)
+            } else {
+                viewcontroller = FTIAPViewController.instatiate(with: ns3product, delegate: self)
+            }
         } else {
             showAlert(withMessage: "MakeSureYouAreConnected".localized)
         }
