@@ -187,12 +187,14 @@ class FTWelcomeScreenViewController: UIViewController {
         self.playPauseButton?.isSelected = !isMuted;
         if isMuted {
             self.bgAudioPlayer?.volume = 0;
+            track("Welcome_Audio", params: ["State": "Pause"], screenName: FTScreenNames.welcomeScreen);
         }
         else {
             if !(self.bgAudioPlayer?.isPlaying ?? false) {
                 self.bgAudioPlayer?.play()
             }
-            self.muteBgMucis(false);
+            self.muteBackgroundMusic(false);
+            track("Welcome_Audio", params: ["State": "Play"], screenName: FTScreenNames.welcomeScreen);
         }
     }
     
@@ -204,19 +206,19 @@ class FTWelcomeScreenViewController: UIViewController {
             if !(self.bgAudioPlayer?.isPlaying ?? false) {
                 self.bgAudioPlayer?.play()
             }
-            self.muteBgMucis(false)
+            self.muteBackgroundMusic(false)
         }
     }
     
     @objc private func sceneWillEnterBackground(_ notification: Notification) {
         self.stopAnimation()
-        self.muteBgMucis(true);
+        self.muteBackgroundMusic(true);
     }
     
     @IBAction func didTapOnDismiss(_ sender: UIButton?) {
         UserDefaults.standard.set(true, forKey: WelcomeScreenViewed)
         UserDefaults.standard.synchronize();
-        self.muteBgMucis(true)
+        self.muteBackgroundMusic(true)
         self.dismiss(animated: true) {
             self.displayLink.invalidate();
             self.onDismissBlock?();
@@ -318,6 +320,7 @@ extension FTWelcomeScreenViewController: FTWelcomeItemDelegate {
         
         previewController.showPreview(from: frame,itemSize: self.itemSize)
         self.stopAnimation();
+        track("Welcome_Tile_Open", params: ["Tile": item.displayTitle], screenName: FTScreenNames.welcomeScreen);
     }
 }
 
@@ -367,7 +370,7 @@ private extension FTWelcomeScreenViewController {
                         self.bgAudioPlayer = avplayer
                         self.bgAudioPlayer?.play();
                         if !self.isMuted {
-                            self.muteBgMucis(false)
+                            self.muteBackgroundMusic(false)
                         }
                     }
                 }
@@ -392,7 +395,7 @@ private extension FTWelcomeScreenViewController {
         }
     }
     
-    func muteBgMucis(_ mute: Bool) {
+    func muteBackgroundMusic(_ mute: Bool) {
         if mute {
             self.bgAudioPlayer?.setVolume(0, fadeDuration: 1)
         }
