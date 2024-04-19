@@ -1140,7 +1140,7 @@
 "iap.noProductIDsFound" = "No In-App Purchase product identifiers were found.";
 "iap.noProductsFound" = "No In-App Purchases were found.";
 "iap.onetimepurchase" = "ONE-TIME PURCHASE. YOURS FOREVER.";
-"iap.onetimepurchasenew" = "%@ one-time purchase";
+"iap.onetimepurchasenew" = "%@ One-Time Purchase";
 "iap.paymentWasCancelled" = "In-App Purchase process was cancelled.";
 "iap.privacy" = "Privacy Policy";
 "iap.productRequestFailed" = "Unable to fetch available In-App Purchase products at the moment.";
@@ -1662,4 +1662,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 19 April 2024 at 6:00 PM
+// Last Synced by Fluid Touch on 19 April 2024 at 6:14 PM
