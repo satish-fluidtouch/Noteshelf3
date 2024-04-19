@@ -43,21 +43,25 @@ class FTIAPOfferCampaignViewController: UIViewController {
         super.viewDidLoad()
         self.preferredContentSize = CGSize(width: 700, height: 740);
         self.attributedTitleText()
-        self.messageLabel?.font = UIFont.appFont(for: .regular, with: 17);
-        self.messageLabel?.text = "iap.messageNew".localized
-        self.messageLabel?.addCharacterSpacing(kernValue: -0.41)
+        updateDescriptionLabel()
         self.upgradeButton?.layer.shadowColor = UIColor.black.cgColor
         self.upgradeButton?.layer.shadowOpacity = 0.2
         self.upgradeButton?.layer.shadowRadius = 8.0
         self.upgradeButton?.layer.shadowOffset = CGSize(width: 0, height: 12.0)
-
-        self.privacyButton?.setTitle("iap.privacy".localized, for: .normal);
-        self.restorePurchaseButton?.setTitle("iap.restorePurchase".localized, for: .normal);
+        self.privacyButton?.titleLabel?.text = "iap.privacy".localized
+        self.restorePurchaseButton?.titleLabel?.text = "iap.restorePurchase".localized
         if let upgradeButton = upgradeButton{
             upgradeButton.apply(to: upgradeButton, withScaleValue: 0.93)
         }
         configurePriceAboveButton()
         configureUI(priceLocation: OfferPriceLocation.priceAboveButton)
+    }
+    
+    private func updateDescriptionLabel() {
+        let localisedString = NSLocalizedString("iap.campaign.description", comment: "Noteshelf Premium")
+        let boldText = "iap.campaign.description.placeholder".localized
+        let font = UIFont.appFont(for: .bold, with: 17)
+        self.messageLabel?.attributedText = localisedString.replaceAndBold(substring: "%@", with: boldText, using: font, lineSpacing: 5)
     }
 
     func configurePriceAboveButton() {
@@ -100,19 +104,11 @@ class FTIAPOfferCampaignViewController: UIViewController {
         let attributedString = NSMutableAttributedString(string: fullText, attributes: blackAttributes)
         attributedString.addAttributes(redAttributes, range: range)
         self.titleLabel?.attributedText = attributedString
+        let localisedString = NSLocalizedString("iap.campaign.title", comment: "Earth day Offer")
+        let boldText = "iap.earthday.title".localized
+        let font = UIFont.clearFaceFont(for: .bold, with: 32)
 
-        let mediumAttr: [NSAttributedString.Key: Any] = [
-            .font: UIFont.clearFaceFont(for: .medium, with: 20.0)
-        ]
-
-        let boldAttr: [NSAttributedString.Key: Any] = [
-            .font: UIFont.clearFaceFont(for: .bold, with: 20.0)
-        ]
-        let localisedString = NSLocalizedString("iap.toptitle", comment: "Noteshelf 2 users exclusive")
-        let selectedRange = (localisedString as NSString).range(of: "Noteshelf 2")
-        let attrString = NSMutableAttributedString(string: localisedString, attributes: mediumAttr)
-        attrString.addAttributes(boldAttr, range: selectedRange)
-        self.topTitle?.attributedText = attrString
+        self.topTitle?.attributedText = localisedString.replaceAndBold(substring: "%@", with: boldText, using: font)
     }
 
     private func showAlert(withMessage message: String,closeOnOk: Bool = false) {
@@ -225,5 +221,23 @@ private extension FTIAPOfferCampaignViewController {
         let roundedValue = round(((ns3Value-ns2Value)/ns3Value) * 10);
         let percentage = (Int)(roundedValue) * 10
         return percentage;
+    }
+}
+
+extension String {
+    func replaceAndBold(substring: String, with boldText: String, using font: UIFont, lineSpacing: CGFloat? = nil) -> NSAttributedString? {
+        guard let range = self.range(of: substring) else {
+            return nil
+        }
+        let mutableAttributedString = NSMutableAttributedString(string: self)
+        mutableAttributedString.addAttribute(.font, value: font, range: NSRange(range, in: self))
+        mutableAttributedString.replaceCharacters(in: NSRange(range, in: self), with: boldText)
+        if let lineSpacing {
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = lineSpacing
+            mutableAttributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: mutableAttributedString.length))
+            paragraphStyle.alignment = NSTextAlignment.center
+        }
+        return mutableAttributedString
     }
 }
