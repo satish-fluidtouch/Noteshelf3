@@ -555,6 +555,25 @@ extension UserDefaults {
         }
     }
     
+    var appScreenLaunchCount : Int {
+        get {
+            return self.integer(forKey: "appScreenLaunchCount");
+        }
+        set {
+            self.set(newValue, forKey: "appScreenLaunchCount");
+            self.synchronize()
+        }
+    }
+    
+    var isEarthDayOffScreenViewed : Bool {
+        get {
+            return self.bool(forKey: "isEarthDayOffScreenViewed");
+        }
+        set {
+            self.set(newValue, forKey: "isEarthDayOffScreenViewed");
+            self.synchronize()
+        }
+    }
     
     @objc dynamic var showStatusBar: Bool {
         get {
