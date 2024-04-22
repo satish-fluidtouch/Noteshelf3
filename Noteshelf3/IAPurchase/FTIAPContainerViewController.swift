@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FTCommon
 
 protocol FTIAPContainerDelegate: AnyObject {
     func purchase(product: SKProduct)
@@ -20,6 +21,11 @@ class FTIAPContainerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        if FTCommonUtils.isWithinEarthDayRange() {
+            self.view.addVisualEffectBlur(style: .regular, cornerRadius: 0, frameToBlur: .zero);
+            self.view.backgroundColor = UIColor.appColor(.white90)
+            self.activityProgressHolderView.backgroundColor = .clear
+        }
         viewModel.delegate = self
     }
 
@@ -50,6 +56,15 @@ extension FTIAPContainerViewController {
 extension FTIAPContainerViewController: FTIAPViewModelDelegate {
     func didfinishLoadingProducts() {
         self.isModalInPresentation = true
+
+        if FTCommonUtils.isWithinEarthDayRange()
+            , let ns3Product = viewModel.ns3PremiumProduct() {
+            let viewcontroller = FTIAPOfferCampaignViewController.instatiate(originalProduct: ns3Product, delegate: self)
+            self.addChild(viewcontroller)
+            viewcontroller.view.addFullConstraints(contentView)
+            return;
+        }
+        
         var viewcontroller: UIViewController?
         if FTDocumentMigration.isNS2AppInstalled(),
            let ns2Product = viewModel.ns3PremiumForNS2UserProduct(),
