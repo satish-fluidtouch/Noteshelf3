@@ -63,12 +63,6 @@ public class FTPaperTemplateViewController: UIViewController {
     private var customVC: UIViewController!
     private var storeTemplateInfo: FTTemplateInfo?
 
-    var enableDoneBtn: Bool = false {
-        didSet {
-            self.updateDoneButtonStatus()
-        }
-    }
-
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.setUpStoreViewControllers()
@@ -103,6 +97,11 @@ public class FTPaperTemplateViewController: UIViewController {
         customVC = FTStoreContainerViewController.storeCustomViewController(source: self.source, delegate: self, selectedFile: selectedUrl)
     }
     private func updateView() {
+        if source == .addMenu || source == .finder {
+            self.navigationItem.rightBarButtonItem?.isHidden = true
+        } else {
+            self.navigationItem.rightBarButtonItem?.isHidden = false
+        }
         if paperTemplateSegment.selectedSegmentIndex == 0 {
             add(asChildViewController: essentialViewcontroller)
             remove(asChildViewController: libraryVC)
@@ -145,11 +144,6 @@ public class FTPaperTemplateViewController: UIViewController {
         let rightNavItem = FTNavBarButtonItem(type: .right, title: "Done".localized, delegate: self)
         self.navigationItem.leftBarButtonItem = leftNavItem
         self.navigationItem.rightBarButtonItem = rightNavItem
-        self.updateDoneButtonStatus()
-    }
-
-    private func updateDoneButtonStatus() {
-        self.navigationItem.rightBarButtonItem?.isEnabled = enableDoneBtn
     }
 }
 extension FTPaperTemplateViewController {

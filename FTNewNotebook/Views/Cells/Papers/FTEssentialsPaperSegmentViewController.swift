@@ -84,8 +84,9 @@ extension FTEssentialsPaperSegmentViewController: FTPaperDelegate {
     }
     func didTapPaperTemplate(_ paperTemplate: FTThemeable) {
         self.varaintsData.selectedVariantsAndTheme.theme = paperTemplate
-        if let parent = self.parent as? FTPaperTemplateViewController {
-            parent.enableDoneBtn = true
+        if source != .shelf {
+            self.dismiss(animated: true)
+            self.delegate?.didSelectPaperTheme(theme: self.varaintsData.selectedVariantsAndTheme)
         }
     }
 }
