@@ -144,12 +144,12 @@ private extension FTEssentialsPaperSegmentViewController{
             let action = UIAction(title: displayTitle,state: state) { [weak self]action in
                 guard let self = self else { return }
                 let orientation = templateSizeModel.size == .mobile ? FTTemplateOrientation.portrait.title : self.varaintsData.selectedVariantsAndTheme.orientation.title
+                self.varaintsData.selectedVariantsAndTheme.size = templateSizeModel.size
                 var paperSizeWithOrientationTitle = action.title
                 if self.toShowOrientation {
                     paperSizeWithOrientationTitle += " (\(String(describing: orientation)))"
                 }
                 self.paperSizeBtn.setTitle(paperSizeWithOrientationTitle, for: .normal)
-                self.varaintsData.selectedVariantsAndTheme.size = templateSizeModel.size
                 if let templateSizeMenu = self.paperSizeBtn?.menu {
                     self.paperSizeBtn?.menu = self.updateActionState(actionTitle: displayTitle, menu: templateSizeMenu)
                 }

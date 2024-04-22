@@ -463,7 +463,7 @@ extension FTPDFRenderViewController {
             if !isBasicFound {
                 for sizeModel in sizeModels {
                     let size = sizeModel.requiredSize(with: variants.orientaion)
-                    if size.validate(with: pageSize, by: 0.1) {
+                    if size.validate(with: pageSize, by: 0.2) {
                         variants.templateSize = sizeModel.size
                         break
                     }

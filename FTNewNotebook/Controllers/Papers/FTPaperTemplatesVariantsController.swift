@@ -106,7 +106,9 @@ class FTPaperTemplatesVariantsController: UIViewController {
         self.variantsViewWidthConstraint?.constant = shouldHide ? (328 - extraStackSpacing) : (448 - extraStackSpacing)
         if shouldHide {
             self.orientationSegmentedControl?.selectedSegmentIndex = 0
-            self.selectedPaperVariants.orientation = .portrait
+            if self.selectedPaperVariants.size == .mobile {
+                self.selectedPaperVariants.orientation = .portrait
+            }
         }
     }
 
