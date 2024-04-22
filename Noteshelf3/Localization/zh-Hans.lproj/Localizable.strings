@@ -1008,6 +1008,7 @@
 "customizeToolbar.eraser" = "橡皮";
 "customizeToolbar.highlighter" = "荧光笔";
 "customizeToolbar.horizontalScrollingEnabled" = "水平滚动已启用";
+"customizeToolbar.ideaForShortcut" = "有一个工具栏快捷方式的想法？";
 "customizeToolbar.lasso" = "套索";
 "customizeToolbar.page" = "添加页面";
 "customizeToolbar.pen" = "笔";
@@ -1015,6 +1016,7 @@
 "customizeToolbar.pixabay" = "Pixabay";
 "customizeToolbar.present" = "演示";
 "customizeToolbar.readOnlyMode" = "只读模式";
+"customizeToolbar.requestForShortcut" = "请求快捷方式";
 "customizeToolbar.resetConfirmation" = "您确定要重置为默认工具栏吗？";
 "customizeToolbar.rotatePage" = "旋转页面";
 "customizeToolbar.savePageAsPhoto" = "保存页面至照片";
@@ -1026,6 +1028,7 @@
 "customizeToolbar.shortcuts" = "快捷方式";
 "customizeToolbar.snippets" = "片段";
 "customizeToolbar.stickers" = "贴纸";
+"customizeToolbar.switchScrollingDirection" = "切换滚动方向";
 "customizeToolbar.tag" = "标签";
 "customizeToolbar.textBox" = "文本框";
 "customizeToolbar.unsplash" = "Unsplash";
@@ -1123,7 +1126,13 @@
 "iap.booklimitReachedMessage" = "清空您的垃圾桶以确保已删除的笔记本不会计入您的配额，或解锁完整应用程序以获取无限笔记本";
 "iap.booklimitReachedTitle" = "您已达到免费笔记本限制";
 "iap.booksleft" = "%@ 留下的注释";
+"iap.campaign.description" = "Noteshelf Premium 为您提供%@。 利用此限时优惠，享受无缝笔记体验。";
+"iap.campaign.description.placeholder" = "无限笔记本、数字日记、手写识别和搜索";
+"iap.campaign.ns2description" = "今年地球日，我们为您提供%@。抓住这个限时优惠，享受无缝的笔记体验。";
+"iap.campaign.ns2description.placeholder" = "Noteshelf Premium特别优惠";
+"iap.campaign.title" = "%@优惠";
 "iap.discount.highlight" = "%@折扣";
+"iap.earthday.title" = "地球日";
 "iap.featureLimitMessage" = "此功能已锁定。立即升级解锁。";
 "iap.featureLimitTitle" = "立即升级";
 "iap.message" = "获取无限笔记、手写识别和搜索以及Noteshelf高级版的数字日记。";
@@ -1654,4 +1663,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 12 April 2024 at 6:37 PM
+// Last Synced by Fluid Touch on 19 April 2024 at 6:14 PM

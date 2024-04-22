@@ -163,7 +163,7 @@
 "ClubLoginTryAnotherAccount" = "다른 계정으로 시도해 보시겠습니까?";
 "Color" = "색깔";
 "ColorAlreadyAdded" = "이 색은 이미 팔레트에 있습니다.";
-"ColorByAuthor" = "@%에서";
+"ColorByAuthor" = "%@에서";
 "Colors" = "색상";
 "Confirm" = "확인";
 "ConflictDocModifiedOn" = "%@에서 수정됨";
@@ -1008,6 +1008,7 @@
 "customizeToolbar.eraser" = "지우개";
 "customizeToolbar.highlighter" = "형광펜";
 "customizeToolbar.horizontalScrollingEnabled" = "가로 스크롤이 활성화되었습니다.";
+"customizeToolbar.ideaForShortcut" = "툴바 바로 가기에 대한 아이디어가 있나요?";
 "customizeToolbar.lasso" = "라쏘";
 "customizeToolbar.page" = "페이지";
 "customizeToolbar.pen" = "펜";
@@ -1015,6 +1016,7 @@
 "customizeToolbar.pixabay" = "픽사베이";
 "customizeToolbar.present" = "프레젠테이션";
 "customizeToolbar.readOnlyMode" = "읽기 전용 모드";
+"customizeToolbar.requestForShortcut" = "단축키 요청";
 "customizeToolbar.resetConfirmation" = "기본 도구 모음으로 재설정하시겠습니까?";
 "customizeToolbar.rotatePage" = "페이지 회전";
 "customizeToolbar.savePageAsPhoto" = "페이지를 사진으로 저장하기'";
@@ -1026,6 +1028,7 @@
 "customizeToolbar.shortcuts" = "단축키";
 "customizeToolbar.snippets" = "조각";
 "customizeToolbar.stickers" = "스티커";
+"customizeToolbar.switchScrollingDirection" = "스크롤 방향 전환";
 "customizeToolbar.tag" = "태그";
 "customizeToolbar.textBox" = "텍스트 상자";
 "customizeToolbar.unsplash" = "언스플래시";
@@ -1123,7 +1126,13 @@
 "iap.booklimitReachedMessage" = "휴지통을 비우세요. 삭제된 노트북이 할당량에 포함되지 않도록 하거나, 무제한 노트북을 위해 전체 앱을 잠금 해제하세요.";
 "iap.booklimitReachedTitle" = "무료 노트북 제한에 도달했습니다.";
 "iap.booksleft" = "%@ 남은 노트";
+"iap.campaign.description" = "Noteshelf Premium은 %@을 제공합니다. 이 한정된 기간의 특별 혜택을 이용하여 원활한 필기 경험을 즐기세요.";
+"iap.campaign.description.placeholder" = "무제한 노트북, 디지털 다이어리, 필기 인식 및 검색";
+"iap.campaign.ns2description" = "올해의 지구의 날에, %@을 제공합니다. 이 기간 한정 특별 혜택을 이용하여 원활한 필기 경험을 즐기세요.";
+"iap.campaign.ns2description.placeholder" = "Noteshelf Premium의 특별 할인";
+"iap.campaign.title" = "%@ 특별 혜택";
 "iap.discount.highlight" = "%@ 할인으로";
+"iap.earthday.title" = "지구의 날 특별 혜택";
 "iap.featureLimitMessage" = "이 기능은 잠겨 있습니다. 지금 업그레이드하여 잠금 해제하세요.";
 "iap.featureLimitTitle" = "지금 업그레이드하세요.";
 "iap.message" = "노트셀프 프리미엄으로 무제한 노트, 필기 인식과 검색, 그리고 디지털 다이어리에 접근하세요.";
@@ -1654,4 +1663,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 12 April 2024 at 6:37 PM
+// Last Synced by Fluid Touch on 19 April 2024 at 6:14 PM

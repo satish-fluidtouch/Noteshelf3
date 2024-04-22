@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FTCommon
 
 private extension UIScene {
     var clsLogTitle : String {
@@ -84,6 +85,13 @@ class SceneDelegate: FTSceneDelegate {
             let handler = FTAppIntentHandler(with: handlingController)
             handler.handleShortcutItem(item: shortcutItem)
             shortcutItemToProcess = nil
+        }
+        if !FTIAPurchaseHelper.shared.isPremiumUser && FTCommonUtils.isWithinEarthDayRange() {
+            UserDefaults().appScreenLaunchCount += 1
+            if let handlingController = window?.rootViewController as? FTIntentHandlingProtocol, UserDefaults().appScreenLaunchCount > 1, !UserDefaults().isEarthDayOffScreenViewed {
+                handlingController.showPremiumUpgradeScreen()
+                UserDefaults().isEarthDayOffScreenViewed = true
+            }
         }
         FabricHelper.configure()
     }

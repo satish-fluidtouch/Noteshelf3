@@ -1008,6 +1008,7 @@
 "customizeToolbar.eraser" = "Gomme à effacer";
 "customizeToolbar.highlighter" = "Surligneur";
 "customizeToolbar.horizontalScrollingEnabled" = "Défilement horizontal activé";
+"customizeToolbar.ideaForShortcut" = "Avez-vous une idée pour un raccourci de barre d'outils ?";
 "customizeToolbar.lasso" = "Lasso";
 "customizeToolbar.page" = "Page";
 "customizeToolbar.pen" = "Stylo";
@@ -1015,6 +1016,7 @@
 "customizeToolbar.pixabay" = "Pixabay";
 "customizeToolbar.present" = "Présenter";
 "customizeToolbar.readOnlyMode" = "Mode lecture seule";
+"customizeToolbar.requestForShortcut" = "Demander un raccourci";
 "customizeToolbar.resetConfirmation" = "Êtes-vous sûr de vouloir réinitialiser la barre d'outils par défaut ?";
 "customizeToolbar.rotatePage" = "Faire pivoter la page";
 "customizeToolbar.savePageAsPhoto" = "Enregistrer la page en tant que photo";
@@ -1026,6 +1028,7 @@
 "customizeToolbar.shortcuts" = "RACCOURCIS";
 "customizeToolbar.snippets" = "Extraits";
 "customizeToolbar.stickers" = "Autocollants";
+"customizeToolbar.switchScrollingDirection" = "Changer la direction du défilement";
 "customizeToolbar.tag" = "Marquer";
 "customizeToolbar.textBox" = "Boîte de texte";
 "customizeToolbar.unsplash" = "Unsplash";
@@ -1123,7 +1126,13 @@
 "iap.booklimitReachedMessage" = "Videz votre corbeille pour vous assurer que les carnets supprimés ne comptent pas dans votre quota, ou déverrouillez l'application complète pour des carnets illimités.";
 "iap.booklimitReachedTitle" = "Vous avez atteint la limite de cahiers gratuits.";
 "iap.booksleft" = "%@ notes restantes";
+"iap.campaign.description" = "Noteshelf Premium vous offre des %@. Profitez de cette offre à durée limitée et profitez d'une expérience de prise de notes fluide.";
+"iap.campaign.description.placeholder" = "bloc-notes illimités, agendas numériques, reconnaissance et recherche d'écriture manuscrite";
+"iap.campaign.ns2description" = "En ce Jour de la Terre, nous proposons une %@. Profitez de cette offre à durée limitée et profitez d'une expérience de prise de notes fluide.";
+"iap.campaign.ns2description.placeholder" = "réduction spéciale sur Noteshelf Premium";
+"iap.campaign.title" = "Offre pour %@";
 "iap.discount.highlight" = "%@ DE RABAIS";
+"iap.earthday.title" = "la Journée de la Terre";
 "iap.featureLimitMessage" = "Cette fonctionnalité est verrouillée. Débloquez-la en effectuant une mise à niveau maintenant.";
 "iap.featureLimitTitle" = "Mettez à niveau maintenant.";
 "iap.message" = "Accédez à des notes illimitées, à la reconnaissance de l'écriture manuscrite et à la recherche, ainsi qu'à des journaux numériques avec Noteshelf Premium.";
@@ -1654,4 +1663,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 12 April 2024 at 6:37 PM
+// Last Synced by Fluid Touch on 19 April 2024 at 6:14 PM

@@ -40,8 +40,8 @@ extension FTWritingViewController : FTLassoProtocol {
             self.lassoImageView?.isHidden = true;
             if annotationsToRender.isEmpty == false {
                 let windowHash = self.view.window?.hash;
+                let ftContext = FTImageContext.imageContext(annotationsMaxRect.size, scale: 0);
                 self.lassoQueue.async {
-                    let ftContext = FTImageContext.imageContext(annotationsMaxRect.size, scale: 0);
                     let currentContext = ftContext?.cgContext;
                     currentContext?.translateBy(x: 0, y: annotationsMaxRect.height);
                     currentContext?.scaleBy(x: 1, y: -1);
