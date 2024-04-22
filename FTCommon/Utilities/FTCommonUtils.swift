@@ -8,6 +8,19 @@
 import UIKit
 
 public class FTCommonUtils: NSObject {
+    public static func isWithinEarthDayRange() -> Bool {
+        let currentDate = Date()
+        let calendar = Calendar.current
+        let startDateComponents = DateComponents(year: 2024, month: 4, day: 20, hour: 0, minute: 0, second: 0)
+        let endDateComponents = DateComponents(year: 2024, month: 4, day: 22, hour: 23, minute: 59, second: 59)
+        if let startDate = calendar.date(from: startDateComponents), let endDate = calendar.date(from: endDateComponents) {
+            if currentDate >= startDate && currentDate <= endDate {
+                return true
+            }
+        }
+        return false
+    }
+    
     public class func currentLanguage() -> String {
         return Bundle.main.preferredLocalizations[0]
     }

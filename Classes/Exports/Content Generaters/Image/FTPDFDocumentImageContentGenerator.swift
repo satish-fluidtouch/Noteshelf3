@@ -105,7 +105,7 @@ class FTPDFDocumentImageContentGenerator: FTPDFDocumentContentGenerator {
                                 {
                                     textColor = bgcolor.blackOrWhiteContrastingColor() ?? UIColor.black
                                 }
-                                image = FTPDFExportView.renderFooterInfo(image: _image, screenScale:screenScale, title: self.preferedFileName, currentPage: index+1, totalPages: totalPages, textColor: textColor)
+                                image = FTPDFExportView.renderFooterInfo(image: _image, title: self.preferedFileName, currentPage: index+1, totalPages: totalPages, textColor: textColor)
                         }
                         let destPath = self.localFilePathWithExtension();
                         if let image = image, let imageData = image.pngData(), ((try? imageData.write(to: URL(fileURLWithPath: destPath), options: [.atomic])) != nil) {

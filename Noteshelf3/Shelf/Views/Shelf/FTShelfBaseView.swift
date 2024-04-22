@@ -63,15 +63,15 @@ extension FTShelfBaseView {
                                     shelfItemWidth:gridItemSize.width,
                                     shelfItemHeight: gridItemSize.height)
                     .frame(width: gridItemSize.width , height: gridItemSize.height, alignment: Alignment(horizontal: .center, vertical: .bottom))
-                    .onChange(of: viewModel.scrollToItemID) { newValue in
-                        if let newValue {
-                            scrollViewProxy?.scrollTo(newValue)
-                            viewModel.scrollToItemID = nil
-                        }
-                    }
                 } else {
                     EmptyView()
                 }
+            }
+        }
+        .onChange(of: viewModel.scrollToItemID) { newValue in
+            if let newValue {
+                scrollViewProxy?.scrollTo(newValue)
+                viewModel.scrollToItemID = nil
             }
         }
         .padding(.horizontal,gridHorizontalPadding);

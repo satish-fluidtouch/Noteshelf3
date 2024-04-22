@@ -179,6 +179,10 @@ extension FTIAPOfferViewController {
               let ns2Price = FTIAPManager.shared.getPriceFormatted(for: ns2Product) else {
             return
         }
+        var discountpercentage = 50
+        if let ns2productt = self.discountedProduct, let ns3Product = self.originalProduct {
+            discountpercentage = self.discountedPercentage(ns3Product, ns2Product: ns2productt);
+        }
         //This code needs be refacotored
         if priceLocation == .priceAboveButton {
             let iapPurchaseTitle = "iap.onetimepurchasenew".localized;
@@ -193,7 +197,7 @@ extension FTIAPOfferViewController {
                 strikeThroughAttr[.font] = UIFont.appFont(for: .medium, with: 13)
                 let priceString = NSMutableAttributedString(string: ns3Price,attributes: strikeThroughAttr);
                 priceString.append(NSAttributedString(string: " ", attributes: atts));
-                priceString.append(NSAttributedString(string: "(50% Off)", attributes: atts));
+                priceString.append(NSAttributedString(string: "(\(discountpercentage)% Off)", attributes: atts));
                 priceString.append(NSAttributedString(string: " ", attributes: atts));
                 priceString.append(NSAttributedString(string: ns2Price,attributes: atts));
                 let nsRange = NSRange(range,in: iapPurchaseTitle);

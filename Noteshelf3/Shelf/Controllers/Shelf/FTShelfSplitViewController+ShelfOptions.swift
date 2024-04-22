@@ -537,25 +537,22 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
     //TODO: (AK) Discuss with RK
     func openNotebook(_ shelfItem: FTShelfItemProtocol, shelfItemDetails: FTCurrentShelfItem?, animate: Bool, isQuickCreate: Bool, pageIndex: Int?) {
         if let shelfCollection = shelfItem.shelfCollection ,!shelfCollection.isTrash  {
-            if !self.openingBookInProgress {
-                let t1 = Date.timeIntervalSinceReferenceDate;
-                self.openNotebookAndAskPasswordIfNeeded(shelfItem
-                                                        , animate: animate
-                                                        , presentWithAnimation: false
-                                                        , pin: shelfItemDetails?.pin
-                                                        , addToRecent: true
-                                                        , isQuickCreate: isQuickCreate
-                                                        ,createWithAudio: false
-                                                        , pageIndex: pageIndex) { _, success in
-                    if success {
-                        let timeTaken = Int(Date.timeIntervalSinceReferenceDate - t1);
-                        if timeTaken > 5 {
-                            FTLogError("Notebook Open Delayed", attributes: ["Time" : timeTaken])
-                        }
+            let t1 = Date.timeIntervalSinceReferenceDate;
+            self.openNotebookAndAskPasswordIfNeeded(shelfItem
+                                                    , animate: animate
+                                                    , presentWithAnimation: false
+                                                    , pin: shelfItemDetails?.pin
+                                                    , addToRecent: true
+                                                    , isQuickCreate: isQuickCreate
+                                                    ,createWithAudio: false
+                                                    , pageIndex: pageIndex) { _, success in
+                if success {
+                    let timeTaken = Int(Date.timeIntervalSinceReferenceDate - t1);
+                    if timeTaken > 5 {
+                        FTLogError("Notebook Open Delayed", attributes: ["Time" : timeTaken])
                     }
                 }
-            }else {
-                NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
+                debugLog("Doc open in progress Complete: \(shelfItem.displayTitle)")
             }
         } else {
             UIAlertController.showAlert(withTitle: "", message: "trash.alert.cannotOpenNotebook".localized, from: self, withCompletionHandler: nil)

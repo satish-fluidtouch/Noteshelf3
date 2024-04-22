@@ -19,27 +19,28 @@ struct FTRecordingEditView: View {
 
     @State private var text: String = ""
 
+    // TODO: Narayana - to uncomment below when rename is completely supported
     var body: some View {
         VStack {
-            Spacer()
-                .frame(height: 16.0)
-
-            ZStack {
-                HStack {
-                    Text(FTRecordingEditOption.rename.title)
-                        .padding(.leading, 4)
-                    Spacer()
-                    Image(systemName: FTRecordingEditOption.rename.imageName)
-                        .padding(.trailing, 4)
-                }
-
-                TextField("", text: $text)
-                    .onSubmit {
-                        self.viewModel.renameRecording(with: text) { _ in
-                            self.isEditOptionsShowing = false
-                        }
-                    }
-            }
+//            Spacer()
+//                .frame(height: 16.0)
+//
+//            ZStack {
+//                HStack {
+//                    Text(FTRecordingEditOption.rename.title)
+//                        .padding(.leading, 4)
+//                    Spacer()
+//                    Image(systemName: FTRecordingEditOption.rename.imageName)
+//                        .padding(.trailing, 4)
+//                }
+//
+//                TextField("", text: $text)
+//                    .onSubmit {
+//                        self.viewModel.renameRecording(with: text) { _ in
+//                            self.isEditOptionsShowing = false
+//                        }
+//                    }
+//            }
 
             HStack {
                 Text(FTRecordingEditOption.delete.title)
@@ -55,8 +56,7 @@ struct FTRecordingEditView: View {
             .onTapGesture {
                 self.isShowingDeleteView = true
             }
-
-            Spacer()
+//            Spacer()
         }
         .padding(.horizontal)
         .fullScreenCover(isPresented: $isShowingDeleteView, content: {

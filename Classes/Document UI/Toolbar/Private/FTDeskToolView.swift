@@ -50,13 +50,11 @@ class FTDeskToolView: UIView {
     }
 
    private func updateToolImageIfNeeded() {
-        let image: UIImage!
         if let selImgName = toolType.selectedIconName(), isSelected {
-            image = UIImage(named: selImgName)
+            self.toolButton.setImage(named: selImgName, for: .normal);
         } else {
-            image = UIImage(named: toolType.iconName())
+            self.toolButton.setImage(named: toolType.iconName(), for: .normal);
         }
-        self.toolButton.setImage(image, for: .normal)
     }
 
     private func showBgIfNeeded() {
@@ -64,16 +62,14 @@ class FTDeskToolView: UIView {
             self.bgButton.backgroundColor = UIColor.appColor(.white100)
             self.bgButton.addRequiredShadow()
             if let selImgName = self.toolType.selectedIconName() {
-                let img = UIImage(named: selImgName)?.withRenderingMode(.alwaysOriginal)
-                self.toolButton.setImage(img, for: .normal)
+                self.toolButton.setImage(named: selImgName, for: .normal, renderMode: .alwaysOriginal);
             }
         } else {
             self.bgButton.backgroundColor = .clear
             self.bgButton?.removeShadow()
             self.bgButton.layer.cornerRadius = 0.0
             if nil != self.toolType.selectedIconName() {
-                let img = UIImage(named: self.toolType.iconName())
-                self.toolButton.setImage(img, for: .normal)
+                self.toolButton.setImage(named: self.toolType.iconName(), for: .normal);
             }
         }
     }
@@ -181,4 +177,18 @@ extension FTDeskToolView: UIPointerInteractionDelegate {
         }
         return nil
     }
+}
+
+private extension UIButton {
+    func setImage(named: String?, for state: UIControl.State,renderMode: UIImage.RenderingMode? = nil) {
+        var image: UIImage?
+        if let _imgName = named {
+            image = UIImage(named: _imgName,in: nil, compatibleWith: self.traitCollection)
+        }
+        if let _renderMode = renderMode {
+            image = image?.withRenderingMode(_renderMode)
+        }
+        self.setImage(image, for: state)
+    }
+    
 }

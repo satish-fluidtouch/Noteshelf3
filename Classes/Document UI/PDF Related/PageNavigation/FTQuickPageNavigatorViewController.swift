@@ -433,6 +433,7 @@ extension FTQuickPageNavigatorViewController {
 //MARK:- Thumbnail & Page Info
 extension FTQuickPageNavigatorViewController {
     
+    //TODO: Amar: Update thumbnail only if it is showing. isTrackingActive is set to true
     @objc private func updateThumbnailImage() {
         guard isTrackingActive else {
             return;
