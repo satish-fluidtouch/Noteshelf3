@@ -1957,6 +1957,7 @@
 		E713D9AB299CC1CF008FDC77 /* FTConvertPreferencesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E713D9AA299CC1CF008FDC77 /* FTConvertPreferencesCell.xib */; };
 		E713D9AD299CC23D008FDC77 /* FTCustomDictViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E713D9AC299CC23D008FDC77 /* FTCustomDictViewController.xib */; };
 		E713D9B0299CF399008FDC77 /* FTSpellCheckManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E713D9AF299CF399008FDC77 /* FTSpellCheckManager.swift */; };
+		E7151FBF2BD0F3B9004AAD38 /* FTIAPOfferCampaignViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7151FBE2BD0F3B9004AAD38 /* FTIAPOfferCampaignViewController.swift */; };
 		E740163F29700B82003D3D7D /* FTGlobalSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E740163E29700B82003D3D7D /* FTGlobalSearchController.swift */; };
 		E740164129700DD7003D3D7D /* FTGlobalSearchController+Suggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E740164029700DD7003D3D7D /* FTGlobalSearchController+Suggestions.swift */; };
 		E74429082BB290280079DD89 /* FTSharedGroupID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0966EE4E213FE7A000B2B456 /* FTSharedGroupID.swift */; };
@@ -4298,6 +4299,7 @@
 		E713D9AA299CC1CF008FDC77 /* FTConvertPreferencesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FTConvertPreferencesCell.xib; sourceTree = "<group>"; };
 		E713D9AC299CC23D008FDC77 /* FTCustomDictViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTCustomDictViewController.xib; sourceTree = "<group>"; };
 		E713D9AF299CF399008FDC77 /* FTSpellCheckManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSpellCheckManager.swift; sourceTree = "<group>"; };
+		E7151FBE2BD0F3B9004AAD38 /* FTIAPOfferCampaignViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTIAPOfferCampaignViewController.swift; sourceTree = "<group>"; };
 		E7281D9A26846C4600FD2161 /* FTSlideShowTimeTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSlideShowTimeTracker.swift; sourceTree = "<group>"; };
 		E73C96C025331DC3000FE7CC /* FTCustomAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCustomAlertViewController.swift; sourceTree = "<group>"; };
 		E740163E29700B82003D3D7D /* FTGlobalSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGlobalSearchController.swift; sourceTree = "<group>"; };
@@ -8019,6 +8021,7 @@
 				097184232A825C1300656B36 /* IAPAssets.xcassets */,
 				097184272A82668200656B36 /* IAPEssentials.storyboard */,
 				4747C4222A96129800B1AB59 /* FTIAPAnalytics.swift */,
+				E7151FBE2BD0F3B9004AAD38 /* FTIAPOfferCampaignViewController.swift */,
 			);
 			path = IAPurchase;
 			sourceTree = "<group>";
@@ -13304,6 +13307,7 @@
 				97CBAB5D2AEB98DB00267A17 /* ENOAuthViewController.m in Sources */,
 				BAF3918B2859ADF00067CA9F /* FTTextAnnotationViewController.swift in Sources */,
 				BAF3918C2859ADF00067CA9F /* FTLaserPresentationViewController.swift in Sources */,
+				E7151FBF2BD0F3B9004AAD38 /* FTIAPOfferCampaignViewController.swift in Sources */,
 				E7E3EC3B29A4882F004372B6 /* FTAddMenuItemCell.swift in Sources */,
 				BAF3918E2859ADF00067CA9F /* FTCustomTextSelectionRect.swift in Sources */,
 				9715E03D2AEA9D2D00EC48D4 /* EvernoteUserStore+Extras.m in Sources */,
@@ -15007,7 +15011,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 EE Dev";
-				APP_VERSION = 1.6;
+				APP_VERSION = 1.6.1;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -15033,6 +15037,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 96;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -15450,7 +15455,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Noteshelf 3";
-				APP_VERSION = 1.6;
+				APP_VERSION = 1.6.1;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -15889,7 +15894,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Beta";
-				APP_VERSION = 1.6;
+				APP_VERSION = 1.6.1;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -16842,7 +16847,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Dev";
-				APP_VERSION = 1.6;
+				APP_VERSION = 1.6.1;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -16868,6 +16873,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 96;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -16907,7 +16913,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Noteshelf 3";
-				APP_VERSION = 1.6;
+				APP_VERSION = 1.6.1;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
