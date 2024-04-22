@@ -1,15 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "save as template.pdf",
+      "filename" : "Clip path group 1.pdf",
       "idiom" : "universal"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "preserves-vector-representation" : true
   }
 }

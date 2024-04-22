@@ -86,13 +86,21 @@ struct FTRecordView: View {
 
             .onAppear {
                 if !viewModel.isRecording {
+                    // Initial setup
                     self.size = proxy.size.width * 0.75
                 }
             }
             .onTapGesture {
                 if !viewModel.isRecording {
+                    // To record
                     self.size = proxy.size.height * 0.38
                     self.viewModel.handleRecordTapAction()
+                }
+            }
+            .onChange(of: self.viewModel.isRecording) { newValue in
+                // due to interpption, if recording is stopped, size needs to be updated
+                if !newValue {
+                    self.size = proxy.size.width * 0.75
                 }
             }
             .alert(isPresented:self.viewModel.showCustomAlert) {
