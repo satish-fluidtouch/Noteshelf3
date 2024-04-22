@@ -19,6 +19,7 @@ struct FTPinnedBookEntry: TimelineEntry {
     let relativePath: String
     let hasCover: Bool
     let isLandscape: Bool
+    let docId: String
     
     public var bookOpenintent: FTPinnedBookOpenIntent {
         let intent = FTPinnedBookOpenIntent();
@@ -64,7 +65,7 @@ struct FTPinnedTimelineProvider: IntentTimelineProvider {
     }
     func placeholder(in context: Context) -> FTPinnedBookEntry {
         
-        return FTPinnedBookEntry(date: Date(), name: "PlaceHolder", time: "5:00PM", coverImage: "coverImage1", relativePath: "", hasCover: false, isLandscape: false)
+        return FTPinnedBookEntry(date: Date(), name: "PlaceHolder", time: "5:00PM", coverImage: "coverImage1", relativePath: "", hasCover: false, isLandscape: false, docId: "")
     }
 
     func getSnapshot(for configuration: FTPinnedIntentConfigurationIntent,
@@ -82,7 +83,7 @@ struct FTPinnedTimelineProvider: IntentTimelineProvider {
             if var selectedBook = configuration.Books {
                 if FTWidgetIntentDataHelper.checkIfBookExists(for: selectedBook) {
                     FTWidgetIntentDataHelper.updateNotebookIfNeeded(for: &selectedBook)
-                    entry = FTPinnedBookEntry(date: Date(), name: FTWidgetIntentDataHelper.displayName(from: selectedBook.relativePath ?? ""), time: selectedBook.time ?? "5:00 PM", coverImage: selectedBook.coverImage ?? "coverImage1", relativePath: selectedBook.relativePath ?? "", hasCover: selectedBook.hasCover?.boolValue ?? false, isLandscape: selectedBook.isLandscape?.boolValue ?? false)
+                    entry = FTPinnedBookEntry(date: Date(), name: FTWidgetIntentDataHelper.displayName(from: selectedBook.relativePath ?? ""), time: selectedBook.time ?? "5:00 PM", coverImage: selectedBook.coverImage ?? "coverImage1", relativePath: selectedBook.relativePath ?? "", hasCover: selectedBook.hasCover?.boolValue ?? false, isLandscape: selectedBook.isLandscape?.boolValue ?? false, docId: selectedBook.identifier ?? "")
                 }
             } else {
                 entry = defaultBookEntry()
@@ -93,7 +94,7 @@ struct FTPinnedTimelineProvider: IntentTimelineProvider {
     }
     
     private func emptyEntry() -> FTPinnedBookEntry {
-        return FTPinnedBookEntry(date: Date(), name: "Empty State", time: "6:00 PM", coverImage: "", relativePath: "", hasCover: false, isLandscape: false)
+        return FTPinnedBookEntry(date: Date(), name: "Empty State", time: "6:00 PM", coverImage: "", relativePath: "", hasCover: false, isLandscape: false, docId: "")
     }
     
     private func showEmptyState(completion: @escaping (Timeline<FTPinnedBookEntry>) -> ()) {
@@ -105,7 +106,7 @@ struct FTPinnedTimelineProvider: IntentTimelineProvider {
     private func defaultBookEntry() -> FTPinnedBookEntry {
         var entry = emptyEntry()
         if let book = FTWidgetIntentDataHelper.defaultBookEntry() {
-            entry = FTPinnedBookEntry(date: Date(), name: book.relativePath.lastPathComponent.deletingPathExtension, time: book.createdTime, coverImage: book.coverImageName, relativePath: book.relativePath, hasCover: book.hasCover, isLandscape: book.isLandscape)
+            entry = FTPinnedBookEntry(date: Date(), name: book.relativePath.lastPathComponent.deletingPathExtension, time: book.createdTime, coverImage: book.coverImageName, relativePath: book.relativePath, hasCover: book.hasCover, isLandscape: book.isLandscape, docId: book.docId)
         }
         return entry
     }
@@ -231,6 +232,7 @@ private extension URLComponents {
         self.queryItems = [param1]
         if let entry = entry as? FTPinnedBookEntry {
             self.queryItems?.append(URLQueryItem(name: "relativePath", value: entry.relativePath))
+            self.queryItems?.append(URLQueryItem(name: "docId", value: entry.docId))
         }
     }
 }

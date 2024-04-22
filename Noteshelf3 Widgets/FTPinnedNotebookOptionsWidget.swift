@@ -169,7 +169,7 @@ struct FTPinnedBookOptionButtonStyle: ButtonStyle {
 
 struct FTPinnedNotebookOptionsWidgetView_Previews: PreviewProvider {
     static var previews: some View {
-        FTPinnedNotebookOptionsWidgetView(entry: FTPinnedBookEntry(date: Date(), name: "Notebook Title hdsfhhg", time: "12:00 PM", coverImage: "coverImage1", relativePath: "", hasCover: false, isLandscape: false))
+        FTPinnedNotebookOptionsWidgetView(entry: FTPinnedBookEntry(date: Date(), name: "Notebook Title hdsfhhg", time: "12:00 PM", coverImage: "coverImage1", relativePath: "", hasCover: false, isLandscape: false, docId: ""))
     }
 }
 

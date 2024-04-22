@@ -3022,8 +3022,6 @@
         return;
     }
     
-    self.view.userInteractionEnabled = NO;
-
     FTPageViewController *firstPageController = [self firstPageController];
     if(nil == firstPageController) {
         return;
@@ -3032,7 +3030,6 @@
     id<FTPageProtocol> page =  firstPageController.pdfPage;
     
     FTAudioAnnotationInfo *info = [[FTAudioAnnotationInfo alloc] initWithPage:page];
-    CGFloat offSet = self.mainScrollView.contentOffset.y;
     CGRect frame = contentHolderView.frame;
     if (self.currentToolBarState != FTScreenModeShortCompact) {
         CGFloat kStartingOffset = 24;
@@ -3044,7 +3041,6 @@
     info.visibleRect = frame;
     info.scale = firstPageController.pageContentScale;
     [firstPageController addAnnotationWithInfo:info];
-    self.view.userInteractionEnabled = YES;
 }
 
 -(void)pageDidReleased:(NSNotification*)notification

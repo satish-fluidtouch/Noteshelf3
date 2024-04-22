@@ -405,7 +405,7 @@ extension FTDocumentRenderViewController: FTDocumentViewPresenter {
                return
             }
             doc.saveDocument { _ in
-                self.documentViewController.showPage(at: insertedPage.pageIndex(), forceReLayout: true)
+                self.documentViewController.showPage(at: insertedPage.pageIndex(), forceReLayout: true, animate: false)
                 switch type {
                 case .pen:
                     self.documentViewController.updateToolBar(with: RKDeskMode.deskModePen)
