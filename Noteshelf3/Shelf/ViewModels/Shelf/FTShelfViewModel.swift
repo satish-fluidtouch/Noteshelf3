@@ -102,7 +102,7 @@ class FTShelfViewModel: NSObject, ObservableObject {
     @Published var showNotebookModifiedDate: Bool = UserDefaults.standard.bool(forKey: "Shelf_ShowDate")
     @Published var orientation = UIDevice.current.orientation
     @Published var isSidebarOpen: Bool = true
-    @Published var shouldShowGetStartedInfo: Bool = FTUserDefaults.isFirstLaunch()
+    @Published var shouldShowGetStartedInfo: Bool = false //FTUserDefaults.isFirstLaunch()
     @Published var selectedShelfItems: [FTShelfItemViewModel] = []
 
     // MARK: Normal Variables
@@ -146,7 +146,11 @@ class FTShelfViewModel: NSObject, ObservableObject {
     
     private func configAndObserveDisplayStyle() {
         let style = UserDefaults.standard.integer(forKey: "displayStyle")
-        self.displayStlye = FTShelfDisplayStyle(rawValue: style) ?? .Gallery
+        var defaultStyle: FTShelfDisplayStyle = .Gallery
+        if !UserDefaults.standard.bool(forKey: "isAlreadyInstalled") {
+            defaultStyle = .Icon
+        }
+        self.displayStlye = FTShelfDisplayStyle(rawValue: style) ?? defaultStyle
         observer = UserDefaults.standard.observe(\.shelfDisplayStyle, options: [.new]) { [weak self] (userDefaults, change) in
             guard let self else { return }
             let value = userDefaults.shelfDisplayStyle
@@ -368,7 +372,7 @@ private extension FTShelfViewModel {
                 } else {
                     if !FTUserDefaults.isFirstLaunch() {
                         FTUserDefaults.setFirstLaunch(true)
-                        self.shouldShowGetStartedInfo = true
+                        self.shouldShowGetStartedInfo = false
                     }
                 }
             }

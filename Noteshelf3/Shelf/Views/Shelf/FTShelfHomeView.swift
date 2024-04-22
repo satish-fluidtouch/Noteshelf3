@@ -13,40 +13,51 @@ struct FTShelfHomeView: FTShelfBaseView {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @EnvironmentObject var viewModel: FTShelfViewModel
     @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
+    @AppStorage("discoverIsExpanded") var discoverExpandStaus: Bool = false
 
     let supportedDropTypes = FTDragAndDropHelper.supportedTypesForDrop()
 
     var body: some View {
         GeometryReader { geometry in
-            ScrollViewReader { proxy in
-                ScrollView(.vertical) {
-                    VStack(alignment: .center,spacing:0) {
-                        /*
-                         1. show description and top section in compact and ipad very first time
-                         2. once a notebook is created, dont show top section in compact but show in ipad.
-                         */
-                        if viewModel.shouldShowGetStartedInfo{
-                            FTShelfGetStartedDescription()
+            ZStack {
+                ScrollViewReader { proxy in
+                    ScrollView(.vertical) {
+                        VStack(alignment: .center,spacing:0) {
+                            /*
+                             1. show description and top section in compact and ipad very first time
+                             2. once a notebook is created, dont show top section in compact but show in ipad.
+                             */
+                            if viewModel.mode == .normal, (viewModel.shouldShowGetStartedInfo || geometry.size.width > 450) {
+                                FTShelfTopSectionView()
+                                    .frame(height: showMinHeight(geometrySize: geometry.size.width))
+                                    .padding(.horizontal,gridHorizontalPadding)
+                                    .padding(.top,10)
+                                    .environmentObject(viewModel)
+                            }
+                            if viewModel.showNoShelfItemsView {
+                                FTGetStartedPlaceHolderView(noResultsImageName: "noHomeItems",
+                                                            title: "home.getStarted.title".localized,
+                                                            description: "home.getStarted.descrption".localized, placeHolderType: .medium)
+                                .frame(minHeight: 350)
+                            } else {
+                                homeShelfItemsViewForGeometrySize(geometry.size, scrollViewProxy: proxy)
+                            }
+                            Spacer()
+                            if viewModel.shelfDidLoad {
+                                FTDiscoverWhatsNewView(isExpanded: discoverExpandStaus)
+                                    .environmentObject(viewModel)
+                                    .macOnlyPlainButtonStyle()
+                                    .padding(.horizontal,gridHorizontalPadding)
+                                    .padding(.bottom,20)
+                                    .padding(.top,16)
+                            }
                         }
-                        if viewModel.mode == .normal, (viewModel.shouldShowGetStartedInfo || geometry.size.width > 450) {
-                            FTShelfTopSectionView()
-                                .frame(height: showMinHeight(geometrySize: geometry.size.width))
-                                .padding(.horizontal,gridHorizontalPadding)
-                                .padding(.top,10)
-                                .environmentObject(viewModel)
-                        }
-                    }
-                    homeShelfItemsViewForGeometrySize(geometry.size, scrollViewProxy: proxy)
-                    if viewModel.shelfDidLoad {
-                        FTDiscoverWhatsNewView()
-                            .environmentObject(viewModel)
-                            .macOnlyPlainButtonStyle()
-                            .padding(.horizontal,gridHorizontalPadding)
-                            .padding(.top,40)
-                            .padding(.bottom,28)
+                        .frame(minHeight: geometry.size.height)
                     }
                 }
+
             }
+
         }
                 .overlay(content: {
                     if viewModel.showDropOverlayView {
