@@ -11,6 +11,7 @@ import FirebaseAnalytics
 import FirebaseCrashlytics
 import FTStyles
 import FTTemplatesStore
+import TipKit
 
 let AppDelegate = UIApplication.shared.delegate as! NoteshelfAppDelegate
 
@@ -60,6 +61,10 @@ let AppDelegate = UIApplication.shared.delegate as! NoteshelfAppDelegate
         FTStoreLibraryHandler.shared.start()
         FTStoreCustomTemplatesHandler.shared.start()
         FTSavedClipsProvider.shared.start()
+        if #available(iOS 17.0, *) {
+            try? Tips.resetDatastore()
+            try? Tips.configure([.displayFrequency(.daily)])
+        }
         return true
     }
 

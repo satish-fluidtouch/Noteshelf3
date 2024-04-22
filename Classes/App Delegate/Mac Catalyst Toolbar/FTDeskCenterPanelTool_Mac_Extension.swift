@@ -66,6 +66,8 @@ extension FTDeskCenterPanelTool {
             ,FTDeskCenterPanelTool.tag.toolbarIdentifier
             ,FTDeskCenterPanelTool.rotatePage.toolbarIdentifier
             ,FTDeskCenterPanelTool.duplicatePage.toolbarIdentifier
+            ,FTDeskCenterPanelTool.camera.toolbarIdentifier
+            ,FTDeskCenterPanelTool.scrolling.toolbarIdentifier
             ,FTDeskCenterPanelTool.savePageAsPhoto.toolbarIdentifier
             ,FTDeskCenterPanelTool.sharePageAsPng.toolbarIdentifier
             ,FTDeskCenterPanelTool.shareNotebookAsPDF.toolbarIdentifier
@@ -134,6 +136,7 @@ extension FTDeskCenterPanelTool {
         }
         return nil;
     }
+    
 }
 
 #endif

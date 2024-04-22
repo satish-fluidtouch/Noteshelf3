@@ -5,7 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -26,9 +25,15 @@
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="desk_tool_icons" translatesAutoresizingMaskIntoConstraints="NO" id="9co-HQ-swv">
                                     <rect key="frame" x="0.0" y="0.0" width="110" height="32"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="8"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
                                 </imageView>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="9co-HQ-swv" firstAttribute="top" secondItem="bn7-2u-Qrq" secondAttribute="top" id="FGo-BB-MKK"/>
                                 <constraint firstAttribute="trailing" secondItem="9co-HQ-swv" secondAttribute="trailing" id="IIa-w3-Fzm"/>
@@ -56,10 +61,10 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fii-JY-bMu">
-                            <rect key="frame" x="142" y="47" width="107.33333333333331" height="1"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <rect key="frame" x="142" y="46" width="107.33333333333331" height="0.3333333333333357"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="1" id="eWA-rf-Tlp"/>
+                                <constraint firstAttribute="height" constant="0.29999999999999999" id="eWA-rf-Tlp"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -75,7 +80,7 @@
                         <constraint firstItem="fii-JY-bMu" firstAttribute="trailing" secondItem="7Jb-F7-mJO" secondAttribute="trailing" id="ZMZ-Hl-DLy"/>
                         <constraint firstItem="bn7-2u-Qrq" firstAttribute="centerY" secondItem="yft-ED-uer" secondAttribute="centerY" id="bUP-Zp-MM5"/>
                         <constraint firstAttribute="bottom" secondItem="7QQ-02-cvt" secondAttribute="bottom" id="eLH-HB-tDr"/>
-                        <constraint firstItem="fii-JY-bMu" firstAttribute="top" secondItem="7Jb-F7-mJO" secondAttribute="bottom" constant="1" id="f1r-VB-uae"/>
+                        <constraint firstItem="fii-JY-bMu" firstAttribute="top" secondItem="7Jb-F7-mJO" secondAttribute="bottom" id="f1r-VB-uae"/>
                         <constraint firstItem="7QQ-02-cvt" firstAttribute="leading" secondItem="yft-ED-uer" secondAttribute="leading" id="gFw-HI-upL"/>
                         <constraint firstItem="7Jb-F7-mJO" firstAttribute="leading" secondItem="1QP-YI-fhI" secondAttribute="leading" id="h50-GR-vj7"/>
                         <constraint firstAttribute="height" constant="60" id="jho-bh-PCU"/>
@@ -121,8 +126,5 @@
     <resources>
         <image name="desk_tool_icons" width="103" height="32"/>
         <image name="toolbar_shadow_footerview" width="492" height="58"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

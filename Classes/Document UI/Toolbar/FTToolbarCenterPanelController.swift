@@ -8,12 +8,69 @@
 
 import UIKit
 import FTCommon
+import TipKit
 
 protocol FTToolbarCenterPanelDelegate: AnyObject {
     func isZoomModeEnabled() -> Bool
     func currentDeskMode() -> RKDeskMode?
     func maxCenterPanelItemsToShow() -> Int
     func didTapCenterPanelButton(type: FTDeskCenterPanelTool, sender: UIView)
+}
+
+@available (iOS 17.0, *)
+struct NewFeatures: Tip{
+    var title : Text {
+        Text("New toolbar shortcuts added!")
+            .foregroundStyle(.white)
+    }
+    var message: Text?{
+        Text("Long-press on the toolbar to add, remove or reorder tools the way you like.")
+            .foregroundStyle(Color(uiColor: UIColor.white.withAlphaComponent(0.7) ))
+    }
+    
+    var image : Image? {
+        Image(uiImage: UIImage(named: "desk_tool_bulb") ?? UIImage())
+    }
+    
+}
+@available (iOS 17.0, *)
+struct CustomTiPView : TipViewStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        VStack(alignment: .center) {
+            
+            HStack(alignment: .top) {
+                configuration.image?
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .padding(EdgeInsets(top: 15, leading: 25, bottom: 50, trailing: 0))
+               
+                VStack(alignment: .leading, spacing: 1.0) {
+                    configuration.title?.font(.headline).padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
+                    configuration.message?.font(.subheadline).padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 30))
+
+
+                    ForEach(configuration.actions) { action in
+                        Button(action: action.handler) {
+                            action.label().foregroundStyle(.blue)
+                        }
+                    }
+                }.frame(minWidth: 330,minHeight: 90)
+            }
+        }
+        
+//        VStack(alignment:.leading, spacing:0) {
+//            HStack(spacing:0) {
+//                configuration.image?
+//                    .frame(width: 32,height: 32)
+//                configuration.title?.font(.headline)
+//                    .padding(.leading,16)
+//            }.padding(.horizontal,16)
+//            configuration.message?.font(.subheadline)
+//                .padding(.trailing,16)
+//                .padding(.leading,64)
+//                
+//        }.frame(width: 330,height: 130)
+    }
 }
 
 class FTToolbarCenterPanelController: UIViewController {
@@ -31,6 +88,7 @@ class FTToolbarCenterPanelController: UIViewController {
 
     private var dataSourceItems: [FTDeskCenterPanelTool] = []
     private(set) var screenMode = FTScreenMode.normal
+   
 
     weak var delegate: FTToolbarCenterPanelDelegate?
 
@@ -57,6 +115,9 @@ class FTToolbarCenterPanelController: UIViewController {
         longPressGesture.minimumPressDuration = 0.6
         self.view.addGestureRecognizer(longPressGesture)
         addObserverForScrollDirection()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        setUpTipForNewFeatures()
     }
 
     @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
@@ -366,5 +427,26 @@ extension FTToolbarCenterPanelController {
           { [weak self] (_) in
               self?.collectionView.reloadData()
          }
+    }
+    
+    func setUpTipForNewFeatures() {
+        if #available(iOS 17.0, *) {
+            var newFeautres = NewFeatures()
+            Task { @MainActor in
+                for await shouldDisplay in newFeautres.shouldDisplayUpdates {
+                    if shouldDisplay {
+                        let controller = TipUIPopoverViewController(newFeautres, sourceItem: self.collectionView)
+                        controller.view.backgroundColor = UIColor.init(hexString: "#474747")
+                        controller.viewStyle = CustomTiPView()
+                        present(controller, animated: true)
+                    } else if presentedViewController is TipUIPopoverViewController {
+                        dismiss(animated: true)
+                    }
+                }
+            }
+        } else {
+            fatalError("using Lower versions then Ios 17")
+        }
+        
     }
 }
