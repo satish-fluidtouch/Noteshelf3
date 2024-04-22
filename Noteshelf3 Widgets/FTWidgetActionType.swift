@@ -97,11 +97,11 @@ public enum FTPinndedWidgetActionType: FTWidgetActionType {
         return iconName
     }
 
-    public var relativePath: String {
+    public var docId: String {
         get {
             switch self {
-            case .pen(let path), .audio(let path), .openAI(let path), .text(let path),.bookOpen(let path):
-                return path
+            case .pen(let docId), .audio(let docId), .openAI(let docId), .text(let docId),.bookOpen(let docId):
+                return docId
             }
         }
         set {

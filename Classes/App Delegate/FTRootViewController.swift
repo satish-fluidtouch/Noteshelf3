@@ -538,29 +538,26 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     }
    
     // MARK: - open Document from today widget
-    func openPinnedBook(with relativePath: String) {
-        self.openPinnedBook(with: relativePath, onCompletion: nil)
+    func openPinnedBook(with docId: String) {
+        FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
+            if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == docId}) as? FTDocumentItemProtocol {
+                self.openPinnedBook(documentItem: shelfItem, onCompletion: nil)
+            }
+        }
     }
     
-    func openPinnedBook(with relativePath: String, onCompletion: (() -> ())?) {
+    func openPinnedBook(documentItem: FTDocumentItemProtocol, onCompletion: (() -> ())?) {
+        let relativePath = documentItem.URL.relativePathWRTCollection()
         if(FTNoteshelfDocumentProvider.shared.isProviderReady) {
-            var collectionName : String?;
-            if let _collectionName = relativePath.collectionName() {
-                collectionName = _collectionName.deletingPathExtension;
-            }
-            self.shelfCollection(title: collectionName) { (shelfitemcollection) in
-                if let collection = shelfitemcollection {
-                    var groupItem : FTGroupItemProtocol?;
-                    if let groupPath = relativePath.relativeGroupPathFromCollection() {
-                        let url = collection.URL.appendingPathComponent(groupPath);
-                        groupItem = collection.groupItemForURL(url);
-                    }
-                    let shelfItem = collection.documentItemWithName(title: relativePath.documentName(),
-                                                                    inGroup: groupItem);
-                    self.openDocumentAtRelativePath(relativePath, inShelfItem: shelfItem, animate: false, addToRecent: true, bipassPassword: true) {_,_ in 
-                        onCompletion?()
-                    }
-                } else {
+            if let collection = documentItem.shelfCollection {
+                var groupItem : FTGroupItemProtocol?;
+                if let groupPath = relativePath.relativeGroupPathFromCollection() {
+                    let url = collection.URL.appendingPathComponent(groupPath);
+                    groupItem = collection.groupItemForURL(url);
+                }
+                let shelfItem = collection.documentItemWithName(title: relativePath.documentName(),
+                                                                inGroup: groupItem);
+                self.openDocumentAtRelativePath(relativePath, inShelfItem: shelfItem, animate: false, addToRecent: true, bipassPassword: true) {_,_ in
                     onCompletion?()
                 }
             }
@@ -576,14 +573,19 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     }
     
     func openAndperformActionInsidePinnedNotebook(_ type :FTPinndedWidgetActionType) {
-        self.openPinnedBook(with: type.relativePath) {[weak self] in
-            guard let self = self else {
-                return
-            }
-            if let docVc = self.noteBookSplitController?.documentViewController {
-                docVc.insertNewPageWith(type: type)
+        FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
+            if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == type.docId}) as? FTDocumentItemProtocol {
+                self.openPinnedBook(documentItem: shelfItem) {[weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    if let docVc = self.noteBookSplitController?.documentViewController {
+                        docVc.insertNewPageWith(type: type)
+                    }
+                }
             }
         }
+        
     }
     
     func openDocumentForSelectedNotebook(_ path: URL, isSiriCreateIntent: Bool) {

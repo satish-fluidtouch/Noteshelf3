@@ -85,7 +85,7 @@ protocol FTIntentHandlingProtocol: UIUserActivityRestoring {
     func createNotebookWithScannedPhoto()
     func startNS2ToNS3Migration()
     func showPremiumUpgradeScreen()
-    func openPinnedBook(with relativePath: String)
+    func openPinnedBook(with docId: String)
     func showAlertWith(title : String,message : String)
     func handleWidgetAction(type: FTWidgetActionType)
 }
@@ -191,10 +191,10 @@ final class FTAppIntentHandler {
                 if queryitem.value == NS3LaunchIntent.migration.rawValue {
                     intentHandler?.startNS2ToNS3Migration()
                 } else if queryitem.value == NS3LaunchIntent.pinnedWidget.rawValue {
-                    if let relativePath = urlcomponents.queryItems?.first(where: {$0.name == "relativePath"})?.value, !relativePath.isEmpty
+                    if let docId = urlcomponents.queryItems?.first(where: {$0.name == "docId"})?.value, !docId.isEmpty
                     {
-                        intentHandler?.openPinnedBook(with: relativePath)
-                    }             
+                        intentHandler?.openPinnedBook(with: docId)
+                    }
                 } else if queryitem.value == NS3LaunchIntent.quickNote.rawValue {
                     intentHandler?.handleWidgetAction(type: FTNotebookCreateWidgetActionType.quickNote)
                 } else {

@@ -15,12 +15,12 @@ extension FTRootViewController {
                     self.rootContentViewController?.handleWidgetAction(for: type)
                 }
             } else {
-                if let pathType = type as? FTPinndedWidgetActionType, !pathType.relativePath.isEmpty {
+                if let pathType = type as? FTPinndedWidgetActionType, !pathType.docId.isEmpty {
                     if self.noteBookSplitController == nil {
                         self.openAndperformActionInsidePinnedNotebook(pathType)
                     } else {
                         let docObject = self.noteBookSplitController?.documentViewController?.documentItemObject
-                        if let docURL = docObject?.URL , docURL.relativePathWRTCollection() == pathType.relativePath {
+                        if let documentId = docObject?.documentUUID , documentId == pathType.docId {
                             if let docVc = self.noteBookSplitController?.documentViewController {
                                 docVc.insertNewPageWith(type: pathType)
                             }

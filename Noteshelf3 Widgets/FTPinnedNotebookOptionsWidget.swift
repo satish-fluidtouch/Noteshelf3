@@ -144,11 +144,11 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                 Image("\(type.iconName)")
                     .frame(width: 18,height: 18,alignment: .center)
                     .scaledToFit()
-                    .foregroundStyle(Color(type.relativePath.isEmpty ? "imageDisabledTintColor" : "creationWidgetButtonTint"))
+                    .foregroundStyle(Color(type.docId.isEmpty ? "imageDisabledTintColor" : "creationWidgetButtonTint"))
             }
         }
-        .buttonStyle(FTPinnedBookOptionButtonStyle(color: Color(type.relativePath.isEmpty ? "pinnedBookEmptyBgColor" : "pinnedBookOptionBgColor")))
-        .disabled(type.relativePath.isEmpty)
+        .buttonStyle(FTPinnedBookOptionButtonStyle(color: Color(type.docId.isEmpty ? "pinnedBookEmptyBgColor" : "pinnedBookOptionBgColor")))
+        .disabled(type.docId.isEmpty)
     }
 }
 
