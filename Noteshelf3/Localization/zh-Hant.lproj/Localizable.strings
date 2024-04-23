@@ -1126,7 +1126,13 @@
 "iap.booklimitReachedMessage" = "清空您的垃圾桶以確保已刪除的筆記本不會計入您的配額，或解鎖完整應用程式以獲取無限筆記本";
 "iap.booklimitReachedTitle" = "您已達到免費筆記本限制";
 "iap.booksleft" = "%@ 留下的註釋";
+"iap.campaign.description" = "Noteshelf Premium 為您提供%@。 利用此限時優惠，享受無縫筆記體驗。";
+"iap.campaign.description.placeholder" = "無限筆記本、數位日記、手寫辨識和搜尋";
+"iap.campaign.ns2description" = "今年地球日，我們為您提供%@。抓住這個限時優惠，享受無縫的筆記體驗。";
+"iap.campaign.ns2description.placeholder" = "Noteshelf Premium特別優惠";
+"iap.campaign.title" = "%@優惠";
 "iap.discount.highlight" = "%@折扣";
+"iap.earthday.title" = "地球日";
 "iap.featureLimitMessage" = "此功能已鎖定。 立即升級解鎖。";
 "iap.featureLimitTitle" = "立即升級";
 "iap.message" = "取得無限筆記、手寫辨識和搜尋以及Noteshelf高級版的數位日記。";
@@ -1656,4 +1662,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 15 April 2024 at 3:50 PM
+// Last Synced by Fluid Touch on 19 April 2024 at 6:14 PM

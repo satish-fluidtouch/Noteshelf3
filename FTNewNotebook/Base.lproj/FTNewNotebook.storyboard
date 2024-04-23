@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tlK-LX-I56">
-    <device id="ipad11_0rounded" orientation="landscape" layout="splitview1_3" appearance="light"/>
+    <device id="ipad12_9" orientation="landscape" layout="splitview1_3" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
@@ -23,17 +23,17 @@
             <objects>
                 <viewController storyboardIdentifier="FTCreateNotebookViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tlK-LX-I56" customClass="FTCreateNotebookViewController" customModule="FTNewNotebook" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZEJ-5p-jIC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="834"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ko0-67-07M">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="834"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W4m-gQ-kHF">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="834"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Rb-Lf-kMd" userLabel="ContainerView">
-                                                <rect key="frame" x="-87.5" y="174" width="550" height="486"/>
+                                                <rect key="frame" x="-87.5" y="269" width="550" height="486"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="redraw" distribution="fillProportionally" alignment="bottom" spacing="44" translatesAutoresizingMaskIntoConstraints="NO" id="iFh-rk-cHY">
                                                         <rect key="frame" x="0.0" y="0.0" width="550" height="330"/>
@@ -265,7 +265,7 @@
                                                 </variation>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bLt-fZ-hZL">
-                                                <rect key="frame" x="138" y="704" width="99" height="32"/>
+                                                <rect key="frame" x="138" y="799" width="99" height="32"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="32" id="8Re-tS-D8N"/>
                                                 </constraints>
@@ -317,7 +317,7 @@
                                 <viewLayoutGuide key="frameLayoutGuide" id="5hV-ep-gop"/>
                             </scrollView>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" role="cancel" translatesAutoresizingMaskIntoConstraints="NO" id="lCN-4S-Ubu">
-                                <rect key="frame" x="299" y="56" width="44" height="44"/>
+                                <rect key="frame" x="299" y="52" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="6ra-7Y-dkT"/>
                                     <constraint firstAttribute="height" constant="44" id="bSx-oM-oIp"/>

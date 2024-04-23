@@ -1126,7 +1126,13 @@
 "iap.booklimitReachedMessage" = "Svuota il cestino per assicurarti che i notebook eliminati non siano conteggiati nel tuo limite, o sblocca l'app completa per avere quaderni illimitati.";
 "iap.booklimitReachedTitle" = "Hai raggiunto il limite di notebook gratuiti.";
 "iap.booksleft" = "%@ note rimaste";
+"iap.campaign.description" = "Noteshelf Premium ti offre <quaderni illimitati, diari digitali, riconoscimento e ricerca della grafia>. Approfitta di questa offerta a tempo limitato e goditi un'esperienza senza soluzione di continuità nel prendere appunti.";
+"iap.campaign.description.placeholder" = "";
+"iap.campaign.ns2description" = "Questa Giornata della Terra offriamo uno %@. Approfitta di questa offerta a tempo limitato e goditi un'esperienza senza soluzione di continuità nel prendere appunti.";
+"iap.campaign.ns2description.placeholder" = "sconto speciale su Noteshelf Premium";
+"iap.campaign.title" = "Offerta per %@";
 "iap.discount.highlight" = "%@ DI SCONTO";
+"iap.earthday.title" = "la Giornata della Terra";
 "iap.featureLimitMessage" = "Questa funzione è bloccata. Sblocca effettuando l'aggiornamento ora.";
 "iap.featureLimitTitle" = "Aggiorna ora";
 "iap.message" = "Ottieni accesso a note illimitate, riconoscimento della grafia e ricerca, e diari digitali con Noteshelf Premium.";
@@ -1656,4 +1662,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 15 April 2024 at 3:50 PM
+// Last Synced by Fluid Touch on 19 April 2024 at 6:14 PM

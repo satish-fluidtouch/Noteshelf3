@@ -1126,7 +1126,13 @@
 "iap.booklimitReachedMessage" = "Empty your trash bin to make sure deleted notebooks aren't counting towards your quota, or unlock the full app for unlimited notebooks";
 "iap.booklimitReachedTitle" = "You have reached the free notebook limit";
 "iap.booksleft" = "%@ notes left";
+"iap.campaign.description" = "Noteshelf Premium gives you %@. Avail this limited-time offer and enjoy a seamless note-taking experience.";
+"iap.campaign.description.placeholder" = "unlimited notebooks, digital diaries, handwriting recognition & search";
+"iap.campaign.ns2description" = "This Earth Day, we are offering a %@. Avail this limited-time offer and enjoy a seamless note-taking experience.";
+"iap.campaign.ns2description.placeholder" = "special discount on Noteshelf Premium";
+"iap.campaign.title" = "%@ Offer";
 "iap.discount.highlight" = "%@ OFF";
+"iap.earthday.title" = "Earth Day";
 "iap.featureLimitMessage" = "This feature is locked. Unlock by upgrading now";
 "iap.featureLimitTitle" = "Upgrade now";
 "iap.message" = "Get access to unlimited notes, handwriting recognition and search, and digital diaries with Noteshelf Premium.";
@@ -1134,7 +1140,7 @@
 "iap.noProductIDsFound" = "No In-App Purchase product identifiers were found.";
 "iap.noProductsFound" = "No In-App Purchases were found.";
 "iap.onetimepurchase" = "ONE-TIME PURCHASE. YOURS FOREVER.";
-"iap.onetimepurchasenew" = "%@ one-time purchase";
+"iap.onetimepurchasenew" = "%@ One-Time Purchase";
 "iap.paymentWasCancelled" = "In-App Purchase process was cancelled.";
 "iap.privacy" = "Privacy Policy";
 "iap.productRequestFailed" = "Unable to fetch available In-App Purchase products at the moment.";
@@ -1656,4 +1662,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 15 April 2024 at 3:50 PM
+// Last Synced by Fluid Touch on 19 April 2024 at 6:14 PM

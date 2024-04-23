@@ -1126,7 +1126,13 @@
 "iap.booklimitReachedMessage" = "ごみ箱を空にして、削除したノートブックがクオータにカウントされないようにしてください。または、無制限のノートブックのためにフルアプリをロック解除してください。";
 "iap.booklimitReachedTitle" = "無料のノートブックの制限に達しました。";
 "iap.booksleft" = "残り%@件のノート";
+"iap.campaign.description" = "Noteshelf Premiumでは、%@ を利用できます。 この期間限定のオファーを利用して、シームレスなメモ取り体験をお楽しみください。";
+"iap.campaign.description.placeholder" = "無制限のノートブック、デジタル日記、手書き認識と検索";
+"iap.campaign.ns2description" = "今年の地球の日に、%@を提供しています。この期間限定のオファーを利用して、スムーズなノート取り体験をお楽しみください。";
+"iap.campaign.ns2description.placeholder" = "Noteshelf Premiumの特別割引";
+"iap.campaign.title" = "%@特別オファー";
 "iap.discount.highlight" = "%@ OFF";
+"iap.earthday.title" = "地球の日";
 "iap.featureLimitMessage" = "この機能はロックされています。今すぐアップグレードして解除します。";
 "iap.featureLimitTitle" = "今すぐアップグレード";
 "iap.message" = "「Noteshelfプレミアムで無制限のノートへのアクセス、手書き認識と検索、そしてデジタルダイアリーを手に入れましょう。」";
@@ -1656,4 +1662,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 15 April 2024 at 3:50 PM
+// Last Synced by Fluid Touch on 19 April 2024 at 6:14 PM
