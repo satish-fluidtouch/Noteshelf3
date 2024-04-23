@@ -21,11 +21,7 @@ class FTIAPContainerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if FTCommonUtils.isWithinEarthDayRange() {
-            self.view.addVisualEffectBlur(style: .regular, cornerRadius: 0, frameToBlur: .zero);
-            self.view.backgroundColor = UIColor.appColor(.white90)
-            self.activityProgressHolderView.backgroundColor = .clear
-        }
+        updateBlurStyle()
         viewModel.delegate = self
     }
 
@@ -38,6 +34,24 @@ class FTIAPContainerViewController: UIViewController {
         track(EventName.premium_close_tap, screenName: ScreenName.iap)
         self.dismiss(animated: true)
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            updateBlurStyle()
+        }
+    }
+
+    private func updateBlurStyle() {
+        if FTCommonUtils.isWithinEarthDayRange() {
+            let blurStyle = UIScreen.main.traitCollection.userInterfaceStyle == .dark ? UIBlurEffect.Style.light : UIBlurEffect.Style.regular
+            self.view.removeVisualEffectBlur()
+            self.view.addVisualEffectBlur(style: blurStyle, cornerRadius: 0, frameToBlur: .zero);
+            self.view.backgroundColor = UIColor.white.withAlphaComponent(0.9)
+            self.activityProgressHolderView.backgroundColor = .clear
+        }
+    }
+    
 }
 
 extension FTIAPContainerViewController {
