@@ -1667,7 +1667,11 @@ private extension FTRootViewController {
         splitscreen.modalPresentationStyle = .custom;
         #endif
         FTCLSLog("Book: Presenting UI")
+        let createNotebookController = (self.rootContentViewController as? UIViewController)?.children.filter{$0 is FTCreateNotebookViewController};
         controllerToPresent?.present(splitscreen, animated: animate,completion: { [weak splitscreen] in
+            createNotebookController?.forEach { eachItem in
+                eachItem.dismiss(animated: false, completion: nil);
+            }
             snapshotViews.forEach { eachView in
                 eachView.removeFromSuperview();
             }
