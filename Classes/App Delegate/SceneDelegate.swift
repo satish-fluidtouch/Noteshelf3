@@ -86,13 +86,6 @@ class SceneDelegate: FTSceneDelegate {
             handler.handleShortcutItem(item: shortcutItem)
             shortcutItemToProcess = nil
         }
-        if !FTIAPurchaseHelper.shared.isPremiumUser && FTCommonUtils.isWithinEarthDayRange() {
-            UserDefaults().appScreenLaunchCount += 1
-            if let handlingController = window?.rootViewController as? FTIntentHandlingProtocol, UserDefaults().appScreenLaunchCount > 1, !UserDefaults().isEarthDayOffScreenViewed {
-                handlingController.showPremiumUpgradeScreen()
-                UserDefaults().isEarthDayOffScreenViewed = true
-            }
-        }
         FabricHelper.configure()
         self.performWidgetActionIfRequired()
     }
