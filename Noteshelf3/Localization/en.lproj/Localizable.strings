@@ -929,7 +929,7 @@
 "Webdav404Error" = "Please check the file location and whether your WebDAV account has access to the file.";
 "Webdav405Error" = "Host server has denied your request.";
 "Webdav409Error" = "The host server has denied your request. Please check that your account has permissions to make changes to the folder and try again.";
-"Welcome Tour" = "Welcome Tour";
+"Welcome" = "Welcome";
 "WhatsNewJoinUsInfo" = "Get access to exclusive content, tips, promotions & more by liking and following us on Facebook and Twitter.";
 "Whiteboard" = "Whiteboard Mode";
 "WhiteboardMessage" = "Use Noteshelf as a whiteboard with an external display or a projector.";
@@ -1662,4 +1662,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 19 April 2024 at 6:14 PM
+// Last Synced by Amar Udupa on 24 April 2024 at 1:13 PM
