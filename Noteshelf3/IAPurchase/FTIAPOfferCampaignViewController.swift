@@ -9,6 +9,7 @@
 import UIKit
 import StoreKit
 import SafariServices
+import FTCommon
 
 class FTIAPOfferCampaignViewController: UIViewController {
     @IBOutlet weak var upgradeButton: UIButton?;
@@ -86,14 +87,13 @@ class FTIAPOfferCampaignViewController: UIViewController {
 
         let fullText =  String(format: localisedText,"\(discountpercentage)%")
         let range = (fullText as NSString).range(of: offText)
-
         let redAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.init(hexString: "#D6411c"),
+            .foregroundColor: UIColor.appColor(.discount_percentage_color),
             .font: UIFont(name: "SFProRounded-Bold", size: 36)!
         ]
 
         let blackAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.black,
+            .foregroundColor: UIColor.label,
         ]
         let attributedString = NSMutableAttributedString(string: fullText, attributes: blackAttributes)
         attributedString.addAttributes(redAttributes, range: range)

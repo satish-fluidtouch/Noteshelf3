@@ -66,10 +66,13 @@ class FTRecognitionCache: NSObject {
         if(nil == self.currentDocument?.rootFileItem) {
             return
         }
+        var langCode = (fileName == VISION_RECOGNITION_INFO_FILE_NAME) ? FTVisionLanguageMapper.currentISOLanguageCode()
+        : self.languageCode;
+        
         let folderItem = self.currentDocument?.rootFileItem.childFileItem(withName: RECOGNITION_FILES_FOLDER_NAME);
-        if(folderItem != nil){
-            let plistFileName = String.init(format: "%@_%@.plist", fileName, self.languageCode)
-            let recognitionInfoURL = folderItem!.fileItemURL.appendingPathComponent(plistFileName)
+        if(folderItem != nil) {
+            let plistFileName = String.init(format: "%@_%@.plist", fileName, langCode)
+            var recognitionInfoURL = folderItem!.fileItemURL.appendingPathComponent(plistFileName)
             
             if(!FileManager.default.fileExists(atPath: recognitionInfoURL.path)) {
                 return
@@ -77,7 +80,7 @@ class FTRecognitionCache: NSObject {
             if(self.documentIDFolder != nil){
                 try? self.recognitionCacheRoot.writeUpdates(to: self.recognitionCacheRoot.fileItemURL)
                 
-                let cachePlistFileName = String.init(format: "%@_%@.plist", fileName, self.languageCode)
+                let cachePlistFileName = String.init(format: "%@_%@.plist", fileName, langCode)
                 let recognitionCacheURL = self.documentIDFolder!.fileItemURL.appendingPathComponent(cachePlistFileName)
                 if FileManager.default.fileExists(atPath: recognitionCacheURL.path){
                     try? FileManager.default.removeItem(at: recognitionCacheURL)
@@ -101,8 +104,11 @@ class FTRecognitionCache: NSObject {
     }
     
     private func getPlistFileItem(forFileName fileName: String) -> FTFileItemPlist? {
+        var langCode = (fileName == VISION_RECOGNITION_INFO_FILE_NAME) ? FTVisionLanguageMapper.currentISOLanguageCode()
+        : self.languageCode;
+        
         guard let currentDoc = self.currentDocument, let rootFileItem = currentDoc.rootFileItem,
-              (!self.languageCode.isEmpty && self.languageCode != languageCodeNone)  else {
+              (!langCode.isEmpty && langCode != languageCodeNone)  else {
             return nil;
         }
         if self.documentIDFolder == nil  {
@@ -113,7 +119,7 @@ class FTRecognitionCache: NSObject {
             }
         }
         //************************
-        let plistFileName = String.init(format: "%@_%@.plist", fileName, self.languageCode)
+        let plistFileName = String.init(format: "%@_%@.plist", fileName, langCode)
         if fileName == RECOGNITION_INFO_FILE_NAME {
             if(cachePlistItem?.fileName == plistFileName) {
                 return self.cachePlistItem;
@@ -130,13 +136,31 @@ class FTRecognitionCache: NSObject {
             let cachePlistURL: URL = docUUIDFolder.fileItemURL.appendingPathComponent(plistFileName)
             
             if(!FileManager.default.fileExists(atPath: cachePlistURL.path)){
-                self.copyFileFromPackageToCache(forFileName: fileName)
+                if fileName == VISION_RECOGNITION_INFO_FILE_NAME {
+                    let oldPListFileName = String.init(format: "%@_%@.plist", fileName, self.languageCode);
+                    let oldCachePlistURL: URL = docUUIDFolder.fileItemURL.appendingPathComponent(oldPListFileName)
+                    if(!FileManager.default.fileExists(atPath: oldCachePlistURL.path)) {
+                        self.copyFileFromPackageToCache(forFileName: fileName)
+                    }
+                    else {
+                        do {
+                            try FileManager().moveItem(at: oldCachePlistURL, to: cachePlistURL);
+                            return self.getPlistFileItem(forFileName: fileName)
+                        }
+                        catch {
+                            self.copyFileFromPackageToCache(forFileName: fileName)
+                        }
+                    }
+                }
+                else {
+                    self.copyFileFromPackageToCache(forFileName: fileName)
+                }
             }
-            else{
+            else {
                 if let cachedFileAttributes = try? FileManager.default.attributesOfItem(atPath: cachePlistURL.path){
                     if let cachedFileModifiedDate = cachedFileAttributes[FileAttributeKey.modificationDate] as? Date {
                         let folderItem = rootFileItem.childFileItem(withName: RECOGNITION_FILES_FOLDER_NAME);
-                        if(folderItem != nil){
+                        if(folderItem != nil) {
                             let packagePlistURL = folderItem!.fileItemURL.appendingPathComponent(plistFileName)
                             if(FileManager.default.fileExists(atPath: packagePlistURL.path)){
                                 if let packageFileAttributes = try? FileManager.default.attributesOfItem(atPath: packagePlistURL.path){
