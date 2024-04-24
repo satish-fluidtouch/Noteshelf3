@@ -36,6 +36,7 @@ public enum AssetsColor: String, CaseIterable {
     case welcomeBtnColor
     case welcometopGradiantColor
     case welcomeBottonGradiantColor
+    case WelcomeContentShadowColor
     case neroColor
     case readOnlyModePageNumberBG
     case readOnlyModePageNumberTint

@@ -25,22 +25,25 @@ class FTDocumentFactory : NSObject
     }
     
     #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
-    static func duplicateDocumentAt(_ documentItem : FTShelfItemProtocol, onCompletion : @escaping (NSError?,FTDocumentProtocol?) -> Void)
+    static func duplicateDocumentAt(_ documentItem : FTShelfItemProtocol, onCompletion : @escaping (NSError?,UIImage?,FTDocumentProtocol?) -> Void)
     {
         let path = FTDocumentFactory.tempDocumentPath(FTUtils.getUUID());
         FileManager.copyCoordinatedItemAtURL(documentItem.URL, toNonCoordinatedURL: path) { (_, error) in
             if(nil != error) {
-                onCompletion(error,nil);
+                onCompletion(error,nil,nil);
             }
             else {
                 if let document = FTDocumentFactory.documentForItemAtURL(path) as? FTPrepareForImporting{
                     document.prepareForImporting({ (_, error) in
+                        var shelfImage: UIImage?
                         if let duplicatedDocument = document as? FTDocumentProtocol {
                             if let docUUID = (documentItem as? FTDocumentItemProtocol)?.documentUUID {
                                 self.duplicateThumbnailsFrom(documentId: docUUID, to: duplicatedDocument.documentUUID)
                             }
+                            let shelfImageURL = duplicatedDocument.URL.appending(path:"cover-shelf-image.png");
+                            shelfImage = UIImage(contentsOfFile: shelfImageURL.path(percentEncoded:false));
                         }
-                        onCompletion(error, document as? FTDocumentProtocol);
+                        onCompletion(error, shelfImage , document as? FTDocumentProtocol);
                     });
                 }
             }

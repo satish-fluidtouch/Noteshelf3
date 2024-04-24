@@ -125,7 +125,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated);
         if FTWhatsNewManger.canShowWelcomeScreen(onViewController: self) {
-            FTGetstartedHostingViewcontroller.showWelcome(presenterController: self, onDismiss: {
+            FTWelcomeScreenViewController.showWelcome(presenterController: self, onDismiss: {
                 [weak self] in
                 self?.addShelfToolbar();
                 self?.updateProvider({
@@ -142,6 +142,9 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         if let splitVC = self.noteBookSplitController,
            !(splitVC.isBeingDismissed || splitVC.isBeingPresented) {
             return splitVC.prefersStatusBarHidden;
+        }
+        else if self.presentedViewController is FTWelcomeScreenViewController {
+            return self.presentedViewController?.prefersStatusBarHidden ?? super.prefersStatusBarHidden
         }
         return super.prefersStatusBarHidden;
     }
@@ -226,6 +229,9 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     // MARK: - Provider update -
     private weak var localAppActieObserver: NSObjectProtocol?
     fileprivate func updateProviderIfNeeded() {
+        #if DEBUG
+        UserDefaults.standard.removeObject(forKey: WelcomeScreenViewed)
+        #endif
         if(UserDefaults.standard.bool(forKey: WelcomeScreenViewed)
            || (!UserDefaults.standard.bool(forKey: WelcomeScreenViewed)
                && UserDefaults.standard.double(forKey: WelcomeScreenReminderTime) > 0)) {
@@ -1490,7 +1496,7 @@ extension FTRootViewController: FTSceneBackgroundHandling {
         }
         FTAppConfigHelper.sharedAppConfig().updateAppConfig()
         if FTWhatsNewManger.canShowWelcomeScreen(onViewController: self) {
-            FTGetstartedHostingViewcontroller.showWelcome(presenterController: self, onDismiss: nil);
+            FTWelcomeScreenViewController.showWelcome(presenterController: self, onDismiss: nil);
             self.refreshStatusBarAppearnce();
         } else {
             if self.showPremiumUpgradeAdScreenIfNeeded() {
@@ -1721,7 +1727,11 @@ private extension FTRootViewController {
         splitscreen.modalPresentationStyle = .custom;
         #endif
         FTCLSLog("Book: Presenting UI")
+        let createNotebookController = (self.rootContentViewController as? UIViewController)?.children.filter{$0 is FTCreateNotebookViewController};
         controllerToPresent?.present(splitscreen, animated: animate,completion: { [weak splitscreen] in
+            createNotebookController?.forEach { eachItem in
+                eachItem.dismiss(animated: false, completion: nil);
+            }
             snapshotViews.forEach { eachView in
                 eachView.removeFromSuperview();
             }
