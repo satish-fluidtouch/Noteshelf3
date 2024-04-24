@@ -14,9 +14,9 @@ struct FTShelfHomeView: FTShelfBaseView {
     @EnvironmentObject var viewModel: FTShelfViewModel
     @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
     @AppStorage("discoverIsExpanded") var discoverExpandStaus: Bool = false
-
+    
     let supportedDropTypes = FTDragAndDropHelper.supportedTypesForDrop()
-
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -41,8 +41,8 @@ struct FTShelfHomeView: FTShelfBaseView {
                                 .frame(minHeight: 350)
                             } else {
                                 homeShelfItemsViewForGeometrySize(geometry.size, scrollViewProxy: proxy)
+                                Spacer()
                             }
-                            Spacer()
                             if viewModel.shelfDidLoad {
                                 FTDiscoverWhatsNewView(isExpanded: discoverExpandStaus)
                                     .environmentObject(viewModel)
@@ -55,39 +55,40 @@ struct FTShelfHomeView: FTShelfBaseView {
                         .frame(minHeight: geometry.size.height)
                     }
                 }
-
+                
             }
-
+            
         }
-                .overlay(content: {
-                    if viewModel.showDropOverlayView {
-                        withAnimation {
-                            FTDropOverlayView()
-                                .environmentObject(viewModel)
-                        }
-                    }
-                })
-                .overlay(alignment: .bottom, content: {
-                        FTAdBannerView()
-                            .padding(.bottom,8)
-                })
-                .detectOrientation($viewModel.orientation)
-                .shelfNavBarItems()
-                .allowsHitTesting(viewModel.allowHitTesting)
-                .navigationTitle(viewModel.navigationTitle)
-#if targetEnvironment(macCatalyst)
-                .navigationBarBackButtonHidden(true)
-#else
-                .navigationBarBackButtonHidden(viewModel.mode == .selection)
-#endif
-                .shelfBottomToolbar()
-                .environmentObject(viewModel.toolbarViewModel)
-                .environmentObject(viewModel)
-                .onTapGesture {
-                    self.hideKeyboard() // if any textfield is in editing state we exit from that mode and perform action. eg.rename category.
+        .overlay(content: {
+            if viewModel.showDropOverlayView {
+                withAnimation {
+                    FTDropOverlayView()
+                        .environmentObject(viewModel)
                 }
-                .onDrop(of: supportedDropTypes, delegate: FTShelfScrollViewDropDelegate(viewModel: viewModel))
+            }
+        })
+        .overlay(alignment: .bottom, content: {
+            FTAdBannerView()
+                .padding(.bottom,8)
+        })
+        .detectOrientation($viewModel.orientation)
+        .shelfNavBarItems()
+        .allowsHitTesting(viewModel.allowHitTesting)
+        .navigationTitle(viewModel.navigationTitle)
+#if targetEnvironment(macCatalyst)
+        .navigationBarBackButtonHidden(true)
+#else
+        .navigationBarBackButtonHidden(viewModel.mode == .selection)
+#endif
+        .shelfBottomToolbar()
+        .environmentObject(viewModel.toolbarViewModel)
+        .environmentObject(viewModel)
+        .onTapGesture {
+            self.hideKeyboard() // if any textfield is in editing state we exit from that mode and perform action. eg.rename category.
         }
+        .onDrop(of: supportedDropTypes, delegate: FTShelfScrollViewDropDelegate(viewModel: viewModel))
+    }
+    
     private func homeShelfItemsViewForGeometrySize(_ size: CGSize, scrollViewProxy: ScrollViewProxy) -> some View {
         let homeShelfItems = homeShelfItemsForScreenSize(size)
         return VStack(spacing:0) {
@@ -95,13 +96,13 @@ struct FTShelfHomeView: FTShelfBaseView {
                 .if(viewModel.shelfItems.count > 0, transform: { view in
                     view.padding(.top,showSeeAllOption(shelfItemsCount: homeShelfItems.count) ? 16 : 20)
                 })
-                    if showSeeAllOption(shelfItemsCount: homeShelfItems.count) {
-                    seeAllNotesView
-                        .macOnlyPlainButtonStyle()
-                }
+            if showSeeAllOption(shelfItemsCount: homeShelfItems.count) {
+                seeAllNotesView
+                    .macOnlyPlainButtonStyle()
+            }
         }
     }
-
+    
     private var seeAllNotesView: some View {
         Button {
             self.viewModel.didTapOnSeeAllNotes?()
@@ -124,13 +125,13 @@ struct FTShelfHomeView: FTShelfBaseView {
         }
         .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: .slow))
     }
-
+    
     private var seeAllNotesButtonTitle: String {
         let notesCount = viewModel.shelfItems.count
         let seeAllString = NSLocalizedString("shelf.home.seeAllNotes", comment: "See All Notes") + " " + "(" + "\(notesCount)" + ")"
         return seeAllString
     }
-
+    
     private func homeShelfItemsForScreenSize(_ size: CGSize) -> [FTShelfItemViewModel] {
         let isInLandscape = UIScreen.main.bounds.width > UIScreen.main.bounds.height
         if self.viewModel.isSidebarOpen {
@@ -147,7 +148,7 @@ struct FTShelfHomeView: FTShelfBaseView {
             }
         }
     }
-
+    
     private func showSeeAllOption(shelfItemsCount:Int) -> Bool {
         viewModel.shelfItems.count > shelfItemsCount
     }
