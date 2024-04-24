@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OaU-hm-tZk">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OaU-hm-tZk">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -34,10 +34,10 @@
                                 <color key="sectionIndexBackgroundColor" name="bgColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="FTNotebookMoreOptionsCell" rowHeight="44" id="bkX-DF-UiW" customClass="FTNotebookMoreOptionsCell" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="55.333332061767578" width="374" height="44"/>
+                                        <rect key="frame" x="16" y="55.333332061767578" width="382" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bkX-DF-UiW" id="fAQ-jE-Gpx">
-                                            <rect key="frame" x="0.0" y="0.0" width="343.66666666666669" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="355.66666666666669" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Added to Siri" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9yo-PK-BtQ">
@@ -67,16 +67,24 @@
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     </preferredSymbolConfiguration>
                                                 </imageView>
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vertical" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rfZ-so-9gy">
+                                                    <rect key="frame" x="288.33333333333331" y="11.666666666666664" width="57.333333333333314" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" name="black30"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="d6T-W1-NkZ" firstAttribute="leading" secondItem="UxK-Hw-1wl" secondAttribute="leading" constant="-8" id="7Ks-Ia-sqk"/>
+                                                <constraint firstItem="rfZ-so-9gy" firstAttribute="centerY" secondItem="9yo-PK-BtQ" secondAttribute="centerY" id="86h-Ag-ith"/>
                                                 <constraint firstItem="UxK-Hw-1wl" firstAttribute="centerY" secondItem="fAQ-jE-Gpx" secondAttribute="centerY" id="LWg-70-Qak"/>
                                                 <constraint firstItem="W1Q-8C-XGl" firstAttribute="leading" secondItem="fAQ-jE-Gpx" secondAttribute="leading" id="Lle-iS-DQ7"/>
                                                 <constraint firstItem="9yo-PK-BtQ" firstAttribute="centerY" secondItem="fAQ-jE-Gpx" secondAttribute="centerY" id="SJQ-H6-JsB"/>
                                                 <constraint firstItem="d6T-W1-NkZ" firstAttribute="centerY" secondItem="fAQ-jE-Gpx" secondAttribute="centerY" id="kBs-xC-Zko"/>
                                                 <constraint firstItem="9yo-PK-BtQ" firstAttribute="leading" secondItem="UxK-Hw-1wl" secondAttribute="trailing" constant="16" id="ks6-cp-TOL"/>
                                                 <constraint firstItem="UxK-Hw-1wl" firstAttribute="leading" secondItem="fAQ-jE-Gpx" secondAttribute="leading" constant="16" id="lhI-kv-8dX"/>
+                                                <constraint firstAttribute="trailing" secondItem="rfZ-so-9gy" secondAttribute="trailing" constant="10" id="nOs-JT-VmC"/>
                                                 <constraint firstItem="W1Q-8C-XGl" firstAttribute="top" secondItem="fAQ-jE-Gpx" secondAttribute="top" id="yNx-bX-MMg"/>
                                             </constraints>
                                             <variation key="default">
@@ -95,6 +103,7 @@
                                             <outlet property="lblCenterYConstraint" destination="SJQ-H6-JsB" id="ywB-cc-ALf"/>
                                             <outlet property="lblText" destination="9yo-PK-BtQ" id="AMO-61-odA"/>
                                             <outlet property="onboardingDotView" destination="d6T-W1-NkZ" id="YGQ-gU-yip"/>
+                                            <outlet property="scrollingValueLbl" destination="rfZ-so-9gy" id="SCo-q3-uir"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -167,10 +176,10 @@
                                 <inset key="separatorInset" minX="24" minY="0.0" maxX="24" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="FTNotebookMoreOptionsCell" rowHeight="52" id="ej9-gQ-gMW" customClass="FTNotebookMoreOptionsCell" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="55.333332061767578" width="374" height="52"/>
+                                        <rect key="frame" x="16" y="55.333332061767578" width="382" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ej9-gQ-gMW" id="apS-5o-HKk">
-                                            <rect key="frame" x="0.0" y="0.0" width="343.66666666666669" height="52"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="355.66666666666669" height="52"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clockwise" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bNt-pU-SId">
@@ -312,10 +321,10 @@
                                 <inset key="separatorInset" minX="24" minY="0.0" maxX="24" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="FTNotebookMoreOptionsCell" rowHeight="52" id="cwO-Iu-beU" customClass="FTNotebookMoreOptionsCell" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="55.333332061767578" width="374" height="52"/>
+                                        <rect key="frame" x="16" y="55.333332061767578" width="382" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cwO-Iu-beU" id="5q5-9I-Ykg">
-                                            <rect key="frame" x="0.0" y="0.0" width="343.66666666666669" height="52"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="355.66666666666669" height="52"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Horizontal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xKL-Vq-f32">
@@ -417,14 +426,14 @@
                                 <inset key="separatorInset" minX="24" minY="0.0" maxX="24" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FTNotebookMetadataCell" id="Q8t-ku-lvN" customClass="FTNotebookMetadataCell" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="55.333332061767578" width="374" height="54.666667938232422"/>
+                                        <rect key="frame" x="16" y="55.333332061767578" width="382" height="54.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Q8t-ku-lvN" id="cDI-zh-gxD">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="54.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="382" height="54.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Page Created" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bra-lc-ez0">
-                                                    <rect key="frame" x="16" y="18" width="146.33333333333334" height="20.333333333333329"/>
+                                                    <rect key="frame" x="16" y="18" width="149.66666666666666" height="20.333333333333329"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -436,7 +445,7 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Some Sub Title " textAlignment="right" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FVq-ma-7tp">
-                                                    <rect key="frame" x="172.33333333333337" y="18" width="185.66666666666663" height="20.666666666666671"/>
+                                                    <rect key="frame" x="175.66666666666663" y="18" width="190.33333333333337" height="20.666666666666671"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" name="black70"/>
                                                     <nil key="highlightedColor"/>
@@ -472,14 +481,14 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FTNotebookTitleCell" id="4ic-Tl-KHW" customClass="FTNotebookTitleCell" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="110" width="374" height="43.666667938232422"/>
+                                        <rect key="frame" x="16" y="110" width="382" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4ic-Tl-KHW" id="QWC-Or-WWN">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="382" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Page Created" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WDA-1C-eRv">
-                                                    <rect key="frame" x="16" y="12" width="146.33333333333334" height="20"/>
+                                                    <rect key="frame" x="16" y="12" width="149.66666666666666" height="20"/>
                                                     <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -491,7 +500,7 @@
                                                     </constraints>
                                                 </view>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="URG-1T-g88">
-                                                    <rect key="frame" x="172.33333333333337" y="5" width="185.66666666666663" height="34"/>
+                                                    <rect key="frame" x="175.66666666666663" y="5" width="190.33333333333337" height="34"/>
                                                     <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
@@ -527,14 +536,14 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FTNoteBookTexfieldCell" id="hBK-d1-mZp" customClass="FTNoteBookTexfieldCell" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="153.66666793823242" width="374" height="48.333332061767578"/>
+                                        <rect key="frame" x="16" y="153.66666793823242" width="382" height="48.333332061767578"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hBK-d1-mZp" id="zub-4T-dtS">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="48.333332061767578"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="382" height="48.333332061767578"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="G73-be-EfL">
-                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="48.333333333333336"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="382" height="48.333333333333336"/>
                                                     <color key="backgroundColor" name="white100"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="48" id="iOx-0T-MCe"/>
@@ -594,10 +603,10 @@
                                 <color key="separatorColor" name="black10"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FTGestureHelpCell" rowHeight="70" id="Lqa-cX-j2N" userLabel="FTGestureTableViewCell" customClass="FTGestureHelpTableViewCell" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="55.333332061767578" width="374" height="70"/>
+                                        <rect key="frame" x="16" y="55.333332061767578" width="382" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lqa-cX-j2N" id="NOk-k8-4LA">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="382" height="70"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Q24-11-TXK">
@@ -992,6 +1001,9 @@
         </namedColor>
         <namedColor name="black20">
             <color red="0.0" green="0.0" blue="0.0" alpha="0.20000000298023224" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="black30">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.30000001192092896" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="black50">
             <color red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>

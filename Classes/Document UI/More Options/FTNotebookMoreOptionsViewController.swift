@@ -49,7 +49,7 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
     weak var delegate: FTNotebookMoreOptionsDelegate?
     fileprivate var settings:[[FTNotebookMoreOption]] = [[FTNotebookMoreOption]]()
     var pinController: FTPasswordViewController?
-    
+    var siriShortcut: INVoiceShortcut?
     override func viewDidLoad() {
         super.viewDidLoad()
         guard notebookShelfItem != nil, page != nil, notebookDocument != nil else {
@@ -59,6 +59,10 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
         self.navigationItem.title = "more".localized
         self.tblSettings?.tableFooterView = UIView(frame: .zero)
         self.addTableHeaderview()
+        isSiriShortcutAvailable(for: self.notebookShelfItem) {[weak self] shortCut in
+            self?.siriShortcut = shortCut
+            self?.tblSettings?.reloadData()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -153,7 +157,9 @@ extension FTNotebookMoreOptionsViewController: UITableViewDelegate, UITableViewD
         if section == 0 {
             return "Page".localized.uppercased()
         } else if section == 1 {
-            return "Settings".localized.uppercased()
+            return "notebook".localized.uppercased()
+        }else if section == 2 {
+            return "Global".localized.uppercased()
         }
         return ""
     }
@@ -197,6 +203,19 @@ extension FTNotebookMoreOptionsViewController: UITableViewDelegate, UITableViewD
                 settingCell.backgroundColor = .appColor(.black5)
             } else {
                 settingCell.backgroundColor = .appColor(.white60)
+            }
+            switch setting {
+            case is FTNotebookEverNoteSetting:
+                let toggleSwitch = UISwitch(frame: CGRect.zero)
+                toggleSwitch.preferredStyle = .sliding
+                self.updateEvernoteToggleSwitch(uiSwitch: toggleSwitch, withStatus: FTENPublishManager.shared.isSyncEnabled(forDocumentUUID: notebookDocument.documentUUID))
+                
+            case is FTNotebookAddScrollingDirection :
+                settingCell.scrollingValueLbl?.isHidden = false
+            case is FTNotebookStatusBarSetting :
+                settingCell.scrollingValueLbl?.isHidden = true
+            default:
+                break
             }
         }
         return cell
@@ -250,6 +269,12 @@ extension FTNotebookMoreOptionsViewController: UITableViewDelegate, UITableViewD
             self.delegate?.didTapBasicOption(option: .zoomBox, with: page, controller: self)
         case is FTNotebookOptionSaveAsTemplate:
             self.delegate?.didTapBasicOption(option: .saveAsTemplate, with: page, controller: self)
+        case is FTNotebookPassword :
+            self.delegate?.presentPasswordScreen(settingsController: self)
+        case is FTNotebookAddToSiri:
+            self.handleSiriSetting()
+        case is FTNotebookAddToStylus:
+            self.navigateToStylus()
         default:
 #if DEBUG
             print("Setting", setting.localizedTitle)
@@ -359,5 +384,69 @@ extension FTNotebookMoreOptionsViewController: FTNotebookToolDelegate {
             self.delegate?.didTapBasicOption(option: .zoomBox, with: page, controller: self)
         }
         type.trackEvent()
+    }
+}
+
+//MARK: Evernote settings
+extension FTNotebookMoreOptionsViewController {
+    func updateEvernoteToggleSwitch(uiSwitch: UISwitch, withStatus status:Bool){
+        uiSwitch.isOn = status
+    }
+    func toggleEvernoteSyncStatusFor(uiSwitch: UISwitch) {
+#if NOTESHELF_RETAIL_DEMO
+        UIAlertController.showDemoLimitationAlert(withMessageID: "AutoPublishLimitation", onController: self)
+        return
+#endif
+
+        guard let localShelfItem = self.notebookShelfItem as? FTDocumentItemProtocol else {
+            FTLogError("EN Sync Backup Failed", attributes: ["reason": "shelf item not found"]);
+            return;
+        }
+        let evernotePublishManager = FTENPublishManager.shared;
+        evernotePublishManager.checkENSyncPrerequisite(from: self) { success in
+            if success {
+                let documentItemProtocol = localShelfItem ;
+                if let documentUUID = documentItemProtocol.documentUUID {
+                    if evernotePublishManager.isSyncEnabled(forDocumentUUID: documentItemProtocol.documentUUID!) {
+                        FTENPublishManager.recordSyncLog("User disabled Sync for notebook \(documentUUID)");
+                        self.updateEvernoteToggleSwitch(uiSwitch: uiSwitch, withStatus: false);
+                        evernotePublishManager.disableSync(for: documentItemProtocol);
+                        evernotePublishManager.disableBackupForShelfItem(withUUID: documentUUID);
+                    } else {
+                        FTENPublishManager.recordSyncLog("User enabled Sync for notebook: \(documentUUID)");
+                        evernotePublishManager.showAccountChooser(self, withCompletionHandler: { [weak self] accountType in
+                            if accountType != EvernoteAccountType.evernoteAccountUnknown {
+                                guard let strongSelf = self else { return }
+
+                                strongSelf.updateEvernoteToggleSwitch(uiSwitch: uiSwitch, withStatus: true);
+
+                                if let pin = (strongSelf.notebookDocument as? FTDocument)?.pin {
+                                    FTDocument.keychainSet(pin, forKey: strongSelf.notebookDocument.documentUUID)
+                                }
+
+                                evernotePublishManager.enableSync(for: documentItemProtocol);
+                                evernotePublishManager.updateSyncRecord(forShelfItem: localShelfItem, withDocumentUUID: documentUUID);
+                                evernotePublishManager.updateSyncRecord(forShelfItemAtURL: localShelfItem.URL, withDeleteOption: true, andAccountType: accountType);
+                            } else {
+                                self?.updateEvernoteToggleSwitch(uiSwitch: uiSwitch, withStatus: false);
+                            }
+                        });
+                    }
+                }
+            } else {
+                self.updateEvernoteToggleSwitch(uiSwitch: uiSwitch, withStatus: false);
+            }
+        }
+    }
+}
+
+extension FTNotebookMoreOptionsViewController {
+    func navigateToStylus(){
+        let storyboard = UIStoryboard(name: "FTSettings_Stylus", bundle: nil)
+        if let stylusController = storyboard.instantiateViewController(withIdentifier: "FTStylusesViewController") as? FTStylusesViewController {
+            stylusController.contentSize = CGSize(width: defaultPopoverWidth, height: 210)
+            stylusController.hideNavButtons = true
+            self.navigationController?.pushViewController(stylusController, animated: true)
+        }
     }
 }

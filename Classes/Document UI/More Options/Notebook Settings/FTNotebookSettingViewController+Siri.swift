@@ -10,11 +10,11 @@ import Foundation
 import IntentsUI
 import FTCommon
 
-extension FTNoteBookSettingsViewController: INUIAddVoiceShortcutViewControllerDelegate, INUIEditVoiceShortcutViewControllerDelegate {
+extension FTNotebookMoreOptionsViewController: INUIAddVoiceShortcutViewControllerDelegate, INUIEditVoiceShortcutViewControllerDelegate {
 
      func updateSiriShortcutSetting(with shortcut: INVoiceShortcut?) {
         self.siriShortcut = shortcut
-        tableView?.reloadData()
+         tblSettings?.reloadData()
     }
 
      func handleSiriSetting() {

@@ -114,4 +114,10 @@ extension FTIcon {
     static let photoIcon = FTIcon(systemName: "photo")
     static let richTextfill = FTIcon(systemName: "doc.richtext.fill")
     static let showstatusbar: FTIcon = FTIcon(bundleName: "statusbar_icon")
+    static let passwordIcon : FTIcon = FTIcon(bundleName:"passwordIcon")
+    static let siriIcon: FTIcon = FTIcon(bundleName: "siriIcon")
+    static let everNoteSyncIcon: FTIcon = FTIcon(bundleName: "everNoteSyncIcon")
+    static let StylusIcon: FTIcon = FTIcon(bundleName: "stylusIcon")
+    static let verticalScrollingIcon: FTIcon = FTIcon(bundleName: "verticalScrollingIcon")
+    static let horizontalScrollingIcon: FTIcon = FTIcon(bundleName: "horizontalScrollingIcon")
 }

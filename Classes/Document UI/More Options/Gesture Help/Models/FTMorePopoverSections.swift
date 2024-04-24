@@ -25,18 +25,28 @@ struct FTMorePopoverSections {
 
     private func otherProperties() -> [FTNotebookMoreOption] {
         var section = [FTNotebookMoreOption]()
-        section.append(FTNotebookOptionGetInfo())
-        section.append(FTNotebookOptionGesture())
-        section.append(FTNotebookOptionHelp())
+     //   section.append(FTNotebookOptionGesture())
+     //   section.append(FTNotebookOptionHelp())
+        section.append(FTNotebookAddScrollingDirection())
 #if !targetEnvironment(macCatalyst)
         if !UIDevice.current.isIphone() {
             section.append(FTNotebookStatusBarSetting(isEnabled: FTUserDefaults.defaults().showStatusBar))
         }
 #endif
+        section.append(FTNotebookAddToStylus())
         section.append(FTNotebookOptionSettings())
         return section
     }
         
+    func noteBookProperties() -> [FTNotebookMoreOption] {
+        var section = [FTNotebookMoreOption]()
+        section.append(FTNotebookPassword())
+        section.append(FTNotebookAddToSiri())
+        section.append(FTNotebookEverNoteSetting(isEnabled: false))
+        section.append(FTNotebookOptionGetInfo())
+        return section
+    }
+    
     func moreSections(_ page: FTPageProtocol) -> [[FTNotebookMoreOption]] {
         var settings:[[FTNotebookMoreOption]] = [[FTNotebookMoreOption]]()
         // First section
@@ -44,6 +54,10 @@ struct FTMorePopoverSections {
         if !secondSection.isEmpty {
             settings.append(secondSection)
         }
+        
+        let noteBooksection = noteBookProperties()
+            settings.append(noteBooksection)
+        
         
         // Second Section
         let thirdSection = otherProperties()

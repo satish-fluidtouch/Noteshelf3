@@ -48,10 +48,10 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
         tableView?.sectionHeaderTopPadding = 0
         configureFooter()
         self.tableView?.estimatedRowHeight = UITableView.automaticDimension
-        isSiriShortcutAvailable(for: self.notebookShelfItem) {[weak self] shortCut in
-            self?.siriShortcut = shortCut
-            self?.tableView?.reloadData()
-        }
+//        isSiriShortcutAvailable(for: self.notebookShelfItem) {[weak self] shortCut in
+//            self?.siriShortcut = shortCut
+//            self?.tableView?.reloadData()
+//        }
         self.configureCustomNavigation(title: "notebook.settings.moresettings".localized)
     }
     
@@ -186,7 +186,7 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
                 self.navigationController?.pushViewController(stylusController, animated: true)
             }
         } else if eachSetting == .addToSiri {
-            self.handleSiriSetting()
+            //self.handleSiriSetting()
         } else if eachSetting == .password {
             self.delegate?.presentPasswordScreen()
         }
