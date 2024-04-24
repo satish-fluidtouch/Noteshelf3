@@ -929,7 +929,7 @@
 "Webdav404Error" = "Si prega di controllare la posizione del file e se il tuo account WebDAV ha accesso al file.";
 "Webdav405Error" = "Il server remoto ha negato la tua richiesta.";
 "Webdav409Error" = "Il server remoto ha rifiutato la tua richiesta. Verifica che il tuo account abbia i permessi per apportare modifiche alla cartella e riprova.";
-"Welcome Tour" = "Tour di benvenuto";
+"Welcome" = "Benvenuto";
 "WhatsNewJoinUsInfo" = "Ottieni accesso a contenuti esclusivi, consigli, promozioni e altro ancora mettendo mi piace e seguendoci su Facebook e Twitter.";
 "Whiteboard" = "Modalità lavagna";
 "WhiteboardMessage" = "Usa Noteshelf come lavagna con un display esterno o un proiettore.";
@@ -1269,7 +1269,6 @@
 "penRack.felt" = "Pennarello";
 "penRack.fountain" = "Pennino";
 "penRack.pencil" = "Matita";
-"premiumBanner.featureInfo" = "Taccuini illimitati, riconoscimento della grafia e altro ancora.";
 "presentation.clearAnnotations" = "Cancella annotazioni";
 "presentation.clearAnnotationsAlert" = "Sei sicuro di voler cancellare tutte le annotazioni?";
 "presentation.exit" = "Esci dalla presentazione";
@@ -1663,4 +1662,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 19 April 2024 at 6:14 PM
+// Last Synced by Amar Udupa on 24 April 2024 at 1:13 PM

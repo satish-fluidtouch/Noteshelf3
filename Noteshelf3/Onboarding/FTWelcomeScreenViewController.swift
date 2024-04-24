@@ -135,6 +135,15 @@ class FTWelcomeScreenViewController: UIViewController {
         return true;
     }
     
+    private var currentSize: CGSize = .zero;
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews();
+        if currentSize != self.view.frame.size {
+            currentSize = self.view.frame.size;
+            self.validatePlayPauseButton(currentSize);
+        }
+    }
+    
     private func validatePlayPauseButton(_ size: CGSize) {
         var shouldHide = false;
         if UIDevice.current.isIphone() {
