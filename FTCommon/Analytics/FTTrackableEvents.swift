@@ -32,4 +32,5 @@ import UIKit
     public static let penrack: String = "Penrack"
     public static let favoriteToolBar = "Favorites_Toolbar"
     public static let whatsNew = "WhatsNew"
+    public static let welcomeScreen = "Welcome"
 }

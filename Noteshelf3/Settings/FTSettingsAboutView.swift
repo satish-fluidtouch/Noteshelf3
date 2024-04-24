@@ -82,21 +82,11 @@ struct FTSettingsAboutView: View {
         VStack(alignment: .leading, spacing: 0) {
             aboutNoteshelfOption(option: .visitWebsite)
 
-            FTDividerLine()
-
-            aboutNoteshelfOption(option: .privacyPolicy)
-                .if(aboutNoteshelfOption != nil, transform: { view in
-                    view.fullScreenCover(isPresented: $isShowingWebView) {
-                        if let aboutNoteshelfOption = aboutNoteshelfOption, let url = URL(string: aboutNoteshelfOption.webUrl) {
-                            SafariView(url: url)
-                        }
-                    }
-                })
-#if !RELEASE && !targetEnvironment(macCatalyst)
+#if !targetEnvironment(macCatalyst)
             FTDividerLine()
             
             Button {
-                showWelcome = true
+                viewModel.showWelcomeScreen();
             } label: {
                 LabeledContent {
                     Image(icon: .rightArrow)
@@ -107,10 +97,17 @@ struct FTSettingsAboutView: View {
             }
             .macOnlyPlainButtonStyle()
             .modifier(MiddleSectionItemConfig())
-            .fullScreenCover(isPresented: $showWelcome) {
-                FTWelcomeView(viewModel: FTGetStartedItemViewModel(), source: .settings)
-            }
 #endif
+            FTDividerLine()
+
+            aboutNoteshelfOption(option: .privacyPolicy)
+                .if(aboutNoteshelfOption != nil, transform: { view in
+                    view.fullScreenCover(isPresented: $isShowingWebView) {
+                        if let aboutNoteshelfOption = aboutNoteshelfOption, let url = URL(string: aboutNoteshelfOption.webUrl) {
+                            SafariView(url: url)
+                        }
+                    }
+                })
         }
         .frame(maxWidth: .infinity)
         .background(Color.appColor(.cellBackgroundColor))

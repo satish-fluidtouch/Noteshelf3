@@ -3,6 +3,16 @@
     {
       "filename" : "ipa_close.pdf",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "navContent.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

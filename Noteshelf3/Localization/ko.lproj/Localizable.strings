@@ -929,7 +929,7 @@
 "Webdav404Error" = "파일 위치를 확인하고 WebDAV 계정이 파일에 액세스할 수 있는지 확인해주세요.";
 "Webdav405Error" = "호스트 서버가 요청을 거부했습니다.";
 "Webdav409Error" = "호스트 서버가 요청을 거부했습니다. 계정이 해당 폴더에 변경 사항을 적용할 수 있는 권한이 있는지 확인하고 다시 시도해주세요.";
-"Welcome Tour" = "환영 투어";
+"Welcome" = "환영";
 "WhatsNewJoinUsInfo" = "Facebook와 Twitter에서 우리를 좋아하고 팔로우함으로써 독점 콘텐츠, 팁, 프로모션 등에 접근하세요.";
 "Whiteboard" = "화이트보드 모드";
 "WhiteboardMessage" = "외부 디스플레이나 프로젝터로 노트셀프를 화이트보드로 사용하세요.";
@@ -1662,4 +1662,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 19 April 2024 at 6:14 PM
+// Last Synced by Amar Udupa on 24 April 2024 at 1:13 PM
