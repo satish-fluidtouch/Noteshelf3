@@ -56,12 +56,17 @@ class FTSheetPresentationController: UISheetPresentationController {
         self.prevTraitcollection = localtraitCollection;
     }
 
-    init(presentedVc: UIViewController, presentingVc: UIViewController?, cornerRadius: CGFloat = 16.0, toGrabFurther: Bool = true) {
+    init(presentedVc: UIViewController, presentingVc: UIViewController?, cornerRadius: CGFloat = 16.0, toGrabFurther: Bool = true, source: UIViewController) {
         super.init(presentedViewController: presentedVc, presenting: presentingVc)
         let startHeight = UISheetPresentationController.Detent.custom { context in
             presentedVc.preferredContentSize.height
         }
-        self.detents = [startHeight, .medium(), .large()]
+        if let window = source.view.window, presentedVc.preferredContentSize.height > window.frame.height * 0.5 {
+            self.detents = [startHeight,.large()]
+        }
+        else {
+            self.detents = [startHeight, .medium(), .large()]
+        }
         if !toGrabFurther {
             self.detents = [startHeight]
         }

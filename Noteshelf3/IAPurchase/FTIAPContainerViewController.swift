@@ -44,10 +44,9 @@ class FTIAPContainerViewController: UIViewController {
 
     private func updateBlurStyle() {
         if FTCommonUtils.isWithinEarthDayRange() {
-            let blurStyle = UIScreen.main.traitCollection.userInterfaceStyle == .dark ? UIBlurEffect.Style.light : UIBlurEffect.Style.regular
             self.view.removeVisualEffectBlur()
-            self.view.addVisualEffectBlur(style: blurStyle, cornerRadius: 0, frameToBlur: .zero);
-            self.view.backgroundColor = UIColor.white.withAlphaComponent(0.9)
+            self.view.addVisualEffectBlur(style: .regular, cornerRadius: 0, frameToBlur: .zero);
+            self.view.backgroundColor = UIColor.appColor(.createNotebookViewBG)
             self.activityProgressHolderView.backgroundColor = .clear
         }
     }
