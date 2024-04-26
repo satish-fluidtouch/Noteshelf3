@@ -40,7 +40,13 @@ class FTNBKFormatImporter: NSObject,SSZipArchiveDelegate {
                 onCompletion(error,nil);
             }
             else {
-                FTDocumentFactory.prepareForImportingAtURL(URL.init(fileURLWithPath: path!)) { (error, document) in
+                let filePath = URL(fileURLWithPath: path!);
+                let recoveryPath = filePath.appending(path: NOTEBOOK_RECOVERY_PLIST);
+                if FileManager.default.fileExists(atPath: recoveryPath.path(percentEncoded: false)) {
+                    try? FileManager.default.removeItem(at: recoveryPath)
+                }
+                
+                FTDocumentFactory.prepareForImportingAtURL(filePath) { (error, document) in
                     if(nil == error) {
                         let fileURL = document?.URL;
                         let title = fileURL!.deletingPathExtension().lastPathComponent;
