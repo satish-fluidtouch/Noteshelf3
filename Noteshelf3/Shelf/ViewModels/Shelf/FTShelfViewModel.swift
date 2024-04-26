@@ -48,11 +48,13 @@ protocol FTShelfCompactViewModelProtocol: AnyObject {
     func didChangeSelectMode(_ mode: FTShelfMode)
 }
 class FTShelfViewModel: NSObject, ObservableObject {
+    
     struct ShelfReloadState {
         var isReloadInProgress: Bool = false
         var scheduleReload: Bool = false
     }
 
+    var isReady = false;
     // MARK: Private Properties
     private var cancellables = [AnyCancellable]()
     private var cancellables1 = Set<AnyCancellable>()
@@ -122,7 +124,7 @@ class FTShelfViewModel: NSObject, ObservableObject {
     var isInHomeMode: Bool = false
     var displayStlye: FTShelfDisplayStyle = .Gallery
     private var observer: NSKeyValueObservation?
-
+    private var shelfRefreshTimer = FTShelfRefreshTimer();
 
     init(collection: FTShelfItemCollection, groupItem: FTGroupItemProtocol? = nil) {
         self.collection = collection
@@ -224,7 +226,9 @@ class FTShelfViewModel: NSObject, ObservableObject {
     func subscribeToShelfItemChanges(){
         self.cancellables.removeAll()
         self.shelfItems.forEach({ [weak self] in
-            let item = $0.$coverImage.sink(receiveValue: { _ in self?.objectWillChange.send() })
+            let item = $0.$coverImage.removeDuplicates().dropFirst().sink(receiveValue: { value in
+                self?.objectWillChange.send()
+            })
             self?.cancellables.append(item)
         })
     }
@@ -232,10 +236,13 @@ class FTShelfViewModel: NSObject, ObservableObject {
     func getShelfItemWithUUID(_ uuid: String) -> FTShelfItemViewModel? {
         self.shelfItems.first(where: {$0.model.uuid == uuid})
     }
+    
     deinit {
+        shelfRefreshTimer.reset()
         removeObserversForShelfItems()
         //print("deinit in shelfviewmodel", self.groupItem?.displayTitle)
     }
+    
     func removeObserversForShelfItems() {
         isObserversAdded = false
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.shelfItemAdded, object: nil)
@@ -252,7 +259,8 @@ class FTShelfViewModel: NSObject, ObservableObject {
         self.addObservers()
     }
     
-    func reloadShelf(animate: Bool = true){
+    func reloadShelf(animate: Bool = true) {
+        shelfRefreshTimer.reset()
         Task {
             await fetchShelfItems(animate: animate);
         }
@@ -265,6 +273,7 @@ class FTShelfViewModel: NSObject, ObservableObject {
         }
     }
     func shelfWillMovetoBack() {
+        shelfRefreshTimer.reset()
         self.removeObserversForShelfItems()
     }
     
@@ -384,7 +393,6 @@ private extension FTShelfViewModel {
             .dropFirst()
             .sink { [weak self] option in
                 guard let self = self else { return }
-                print("choosen option",option?.displayTitle ?? "")
                 if let option = option {
                     self.performContexualMenuOperation(option)
                 }
@@ -397,7 +405,7 @@ private extension FTShelfViewModel {
     }
 
     func addObservers() {
-        if(isObserversAdded) {
+        if(isObserversAdded || !self.isReady) {
             return;
         }
         isObserversAdded = true;
@@ -460,8 +468,9 @@ extension FTShelfViewModel {
                 self.scrollToItemID = item.uuid
                 self.closedDocumentItem = nil
             }
+            self.isReady = true;
+            self.addObservers()
         }
-        self.addObservers()
     }
     
     private func setShelfItems(_ items: [FTShelfItemProtocol],animate:Bool) {
@@ -486,25 +495,42 @@ extension FTShelfViewModel {
         }
     }
 
-    @objc func reloadItems() {
+    @objc func reloadItems(force: Bool) {
+        guard self.isReady else {
+            return;
+        }
         guard shelfReloadState.isReloadInProgress == false else {
             shelfReloadState.scheduleReload = true
             return
         }
-
+        let curDate = Date.timeIntervalSinceReferenceDate;
+        if !force, curDate - shelfRefreshTimer.lastRenderTime  <= shelfRefreshTimer.refreshDuration {
+            shelfRefreshTimer.scheduleReload({
+                self.reloadItems(force: true);
+            });
+            return;
+        }
+        
+        shelfRefreshTimer.cancelScheduledReload();
+        shelfRefreshTimer.setLastRenderedTime(force ? 0 : curDate)
+        
         shelfReloadState.isReloadInProgress = true
         reloadShelfItems(animate: true, { [weak self] in
             guard let self = self else { return }
             self.shelfReloadState.isReloadInProgress = false
             if shelfReloadState.scheduleReload {
                 shelfReloadState.scheduleReload = false
-                self.reloadItems()
+                shelfRefreshTimer.setLastRenderedTime(Date.timeIntervalSinceReferenceDate - (shelfRefreshTimer.refreshDuration + 0.1))
+                self.reloadItems(force: false)
             }
         })
     }
-
-
+    
     func reloadShelfItems(animate: Bool, _ onCompletion: (() -> Void)?) {
+        guard self.isReady else {
+            onCompletion?()
+            return;
+        }
         self.collection.shelfItems(FTUserDefaults.sortOrder(),
                                    parent: groupItem,
                                    searchKey: nil) { [weak self ] _shelfItems in
@@ -614,7 +640,7 @@ extension FTShelfViewModel {
         set {
             if(FTUserDefaults.sortOrder() != newValue) {
                 FTUserDefaults.setSortOrder(newValue);
-                self.reloadItems();
+                self.reloadItems(force: true);
             }
         }
     }
@@ -757,5 +783,46 @@ extension FTShelfViewModel {
             // Track Event
             track(EventName.shelf_group_tap, params: [EventParameterKey.location: shelfLocation()], screenName: ScreenName.shelf)
         }
+    }
+}
+
+private class FTShelfRefreshTimer: NSObject {
+    private(set) var isRefreshSceduled = false;
+    private(set) var lastRenderTime = Date.timeIntervalSinceReferenceDate;
+    let refreshDuration: TimeInterval = 0.3;
+    private var scheduledFunction: (()->())?;
+    
+    func setLastRenderedTime(_ timeInterval: TimeInterval) {
+        self.lastRenderTime = timeInterval;
+    }
+    
+    func setisRefreshSceduled(_ scheduled: Bool) {
+        isRefreshSceduled = scheduled;
+    }
+}
+
+private extension FTShelfRefreshTimer {
+    @objc func scheduleReload(_ scheduledFunction: (()->())?) {
+        if !isRefreshSceduled {
+            self.scheduledFunction = scheduledFunction;
+            isRefreshSceduled = true
+            self.perform(#selector(self.triggerReloadAction), with: nil, afterDelay: self.refreshDuration);
+        }
+    }
+    
+    @objc private func triggerReloadAction() {
+        self.isRefreshSceduled = false;
+        self.scheduledFunction?();
+        self.scheduledFunction = nil;
+    }
+    
+    @objc func cancelScheduledReload() {
+        self.isRefreshSceduled = false;
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.triggerReloadAction), object: nil);
+    }
+    
+    func reset() {
+        self.cancelScheduledReload();
+        self.lastRenderTime = 0;
     }
 }
