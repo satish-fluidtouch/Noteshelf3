@@ -509,16 +509,8 @@ extension FTShelfViewModel {
                                    parent: groupItem,
                                    searchKey: nil) { [weak self ] _shelfItems in
             guard let self = self else { return }
-            if self.isInHomeMode && _shelfItems.count == 0 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)){
-                    self.setShelfItems(_shelfItems, animate: animate);
-                    onCompletion?()
-                }
-                
-            } else {
-                self.setShelfItems(_shelfItems, animate: animate);
-                onCompletion?()
-            }
+            self.setShelfItems(_shelfItems, animate: animate);
+            onCompletion?()
         }
     }
 }

@@ -65,14 +65,10 @@ struct FTDiscoverWhatsNewView: View {
     private func footerView(item: FTDiscoverItemModel) -> some View {
         return VStack {
             VStack(spacing: 8) {
-//                Image("sample_paper")
                 Image(uiImage: UIImage(named: item.imageName)!)
                     .frame(width: 120, height:80)
-                HStack {
-                    Text(item.title.localized)
-                        .appFont(for: .medium, with: 13)
-                    Spacer()
-                }
+                Text(item.title.localized)
+                    .appFont(for: .medium, with: 13)
             }
         }
         .frame(width: 120)
