@@ -977,6 +977,10 @@ extension FTTextAnnotationViewController: FTTextToolBarDelegate {
         self.textInputDidChangeStyle(style)
     }
     
+    func enterIntoEditMode() {
+        self.editMode = true
+    }
+    
     func didChangeBackgroundColor(_ color: UIColor) {
         self.textInputAccessoryDidChangeColor(color)
     }

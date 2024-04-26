@@ -9,7 +9,7 @@
 import UIKit
 
 public protocol FTSystemFontPickerDelegate : AnyObject {
-    func didPickFontFromSystemFontPicker(_ viewController : FTFontPickerViewController?, selectedFontDescriptor: UIFontDescriptor)
+    func didPickFontFromSystemFontPicker(_ viewController : FTFontPickerViewController?, selectedFontDescriptor: UIFontDescriptor, fontStyle: FTTextStyleItem)
 }
 
 public class FTFontPickerViewController: UIViewController, UIFontPickerViewControllerDelegate {
@@ -20,7 +20,8 @@ public class FTFontPickerViewController: UIViewController, UIFontPickerViewContr
     @IBOutlet weak var closeBtn: UIButton!
     @IBOutlet weak var backBtn: UIButton!
     public weak var delegate : FTSystemFontPickerDelegate?
-    
+    var textFontStyle: FTTextStyleItem?
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.titleLbl.text = "texttoolbar.fontselectionTitle".localized
@@ -50,8 +51,17 @@ public class FTFontPickerViewController: UIViewController, UIFontPickerViewContr
     }
     
     public func fontPickerViewControllerDidPickFont(_ viewController: UIFontPickerViewController) {
-        guard let descriptor = viewController.selectedFontDescriptor else { return }
-        self.delegate?.didPickFontFromSystemFontPicker(self, selectedFontDescriptor: descriptor)
+        guard let selectedFontDescriptor = viewController.selectedFontDescriptor else { return }
+        if let fontFamily = selectedFontDescriptor.object(forKey: .family) as? String, let displayName = selectedFontDescriptor.object(forKey: .visibleName) as? String, let textFontStyle = self.textFontStyle  {
+            if let _ = selectedFontDescriptor.object(forKey: .face) as? String, let fontName = selectedFontDescriptor.object(forKey: .name) as? String {
+               textFontStyle.fontName = fontName
+               textFontStyle.fontFamily = fontFamily
+            } else {
+               textFontStyle.fontName = displayName
+               textFontStyle.fontFamily = fontFamily
+            }
+        }
+        self.delegate?.didPickFontFromSystemFontPicker(self, selectedFontDescriptor: selectedFontDescriptor, fontStyle: self.textFontStyle ?? FTTextStyleItem())
         self.backButtonTapped(nil)
     }
     

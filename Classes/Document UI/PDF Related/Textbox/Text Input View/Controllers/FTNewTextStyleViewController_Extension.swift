@@ -17,22 +17,7 @@ extension FTNewTextStyleViewController  {
     }
 }
 
-extension FTNewTextStyleViewController : FTSystemFontPickerDelegate, UIFontPickerViewControllerDelegate {
-    
-    func didPickFontFromSystemFontPicker(_ viewController : FTFontPickerViewController?, selectedFontDescriptor: UIFontDescriptor) {
-        if let fontFamily = selectedFontDescriptor.object(forKey: .family) as? String, let displayName = selectedFontDescriptor.object(forKey: .visibleName) as? String {
-            if let _ = selectedFontDescriptor.object(forKey: .face) as? String, let fontName = selectedFontDescriptor.object(forKey: .name) as? String {
-                self.textFontStyle.fontName = fontName
-                self.textFontStyle.fontFamily = fontFamily
-            } else {
-                self.textFontStyle.fontFamily = displayName
-                self.textFontStyle.fontName = fontFamily
-            }
-        }
-        self.shouldApplyAttributes = true
-        self.updateFontTraitsEnableStatus()
-        applyFontChanges()
-    }
+extension FTNewTextStyleViewController : UIFontPickerViewControllerDelegate {
 }
 
 extension FTNewTextStyleViewController: FTTextColorCollectionViewDelegate {
