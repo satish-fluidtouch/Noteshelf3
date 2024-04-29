@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FTCommon
 
 private extension UIScene {
     var clsLogTitle : String {

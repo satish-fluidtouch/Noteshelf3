@@ -70,6 +70,8 @@ enum FTAboutNoteshelfOptions: CaseIterable{
 }
 
 class FTSettingsAboutViewModel: ObservableObject {
+    weak var presentingViewController: UIViewController?;
+    
     var headerTopTitle: String {
         return "Noteshelf 3"
     }
@@ -90,6 +92,12 @@ class FTSettingsAboutViewModel: ObservableObject {
         return "settings.about.copyrightmessage".localized
     }
     var welcomeTourText: String{
-        return "Welcome Tour".localized
+        return "Welcome".localized
+    }
+    
+    func showWelcomeScreen() {
+        if let controlelr = self.presentingViewController {
+            FTWelcomeScreenViewController.showWelcome(presenterController: controlelr, onDismiss: nil);
+        }
     }
 }

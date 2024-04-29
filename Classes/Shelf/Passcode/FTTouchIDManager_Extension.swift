@@ -127,12 +127,13 @@ extension FTBiometricManager: UITextFieldDelegate {
         alertController.addAction(cancelAction);
         
         alertController.addTextField(configurationHandler: {[weak self] (textFiled) in
-            textFiled.delegate = self;
+//            textFiled.delegate = self;
             textFiled.isSecureTextEntry = true;
+            textFiled.returnKeyType = .done
             textFiled.setDefaultStyle(.defaultStyle);
             textFiled.setStyledPlaceHolder(NSLocalizedString("Password", comment: "Password"), style: .defaultStyle);
         });
-        
+        alertController.preferredAction = okAction
         viewController.present(alertController, animated: true, completion: nil);
     }
     

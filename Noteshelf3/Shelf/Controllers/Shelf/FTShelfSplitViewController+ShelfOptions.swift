@@ -166,8 +166,9 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
             FTIAPurchaseHelper.shared.showIAPAlert(on: self);
             return;
         }
-        let loadingIndicatorView =  FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: NSLocalizedString("shelf.newNotebook.creating", comment: "Creating"));
+        let loadingIndicatorView =  FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: NSLocalizedString("shelf.newNotebook.creating", comment: "Creating"),andDelay: 0.3);
         if isQuickCreate {
+            FTNoteshelfDocumentProvider.shared.disableCloudUpdates()
             FTNotebookCreation().quickCreateNotebook(collection: collection, group: group) {[weak self] error, shelfItem in
                 loadingIndicatorView.hide()
                 if error != nil {
@@ -181,13 +182,16 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
                                                               pin: notebookDetails?.documentPin?.pin,
                                                               addToRecent: true,
                                                               isQuickCreate: true, createWithAudio: false,
-                                                              onCompletion: nil);
+                                                              onCompletion: { document, success in
+                            FTNoteshelfDocumentProvider.shared.enableCloudUpdates()
+                        });
                     }
                 }
                 onCompletion(error,shelfItem)
             }
         } else {
             if let notebookDetails = notebookDetails {
+                FTNoteshelfDocumentProvider.shared.disableCloudUpdates()
                 FTNotebookCreation().createNewNotebookInside(collection: collection, group: group, notebookDetails: notebookDetails,mode: mode) { [weak self] error, shelfItemProtocol in
                     loadingIndicatorView.hide()
                     if error != nil {
@@ -201,7 +205,9 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
                                                                   pin: notebookDetails.documentPin?.pin,
                                                                   addToRecent: true,
                                                                   isQuickCreate: false, createWithAudio: false,
-                                                                  onCompletion: nil);
+                                                                  onCompletion: { (_, _) in
+                                FTNoteshelfDocumentProvider.shared.enableCloudUpdates()
+                            });
                         }
                     }
                     onCompletion(error,shelfItemProtocol)
@@ -934,7 +940,7 @@ extension FTShelfSplitViewController {
                                         }
                                      })
                 } else {
-                    FTDocumentFactory.duplicateDocumentAt(doucmentItem, onCompletion: { (_, document) in
+                    FTDocumentFactory.duplicateDocumentAt(doucmentItem, onCompletion: { (_,coverImage, document) in
                         if let duplicatedDocument = document {
                             doucmentItem.shelfCollection.addShelfItemForDocument(duplicatedDocument.URL,
                                                                                  toTitle: doucmentItem.title,
@@ -1014,12 +1020,15 @@ extension FTShelfSplitViewController {
             }
         }
         else {
-            FTDocumentFactory.duplicateDocumentAt(eachItem) { (error, document) in
+            FTDocumentFactory.duplicateDocumentAt(eachItem) { (error,coverImage,document) in
                 if let doc = document {
                     toGroup?.shelfCollection.addShelfItemForDocument(doc.URL,
                         toTitle: eachItem.title,
                         toGroup: toGroup,
-                        onCompletion: { (_, _) in
+                        onCompletion: { (_, docItem) in
+                        if let item = docItem, let img = coverImage {
+                            FTURLReadThumbnailManager.sharedInstance.addImageToCache(image: img, url: item.URL)
+                        }
                             self.duplicateGroupItems(items: originalGroupItems, toGroup: toGroup) { error, group in
                                 //self.reloadSnapShot(with: false)
                                 onCompletion(error, group)

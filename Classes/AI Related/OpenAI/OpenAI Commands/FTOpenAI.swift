@@ -41,16 +41,25 @@ class FTOpenAI: NSObject {
 #else
         let commandString: String = command.command();
 #endif
-       let response = FTOpenAIResponse();
-        var messages = [Chat]();
-        messages.append(Chat(role: .system, content: commandString));
-        messages.append(Chat(role: .user, content: command.contentToExecute));
-
+        let response = FTOpenAIResponse();
+        var messages = [ChatQuery.ChatCompletionMessageParam]();
+        if let msg = ChatQuery.ChatCompletionMessageParam(role: ChatQuery.ChatCompletionMessageParam.Role.system, content: commandString) {
+            messages.append(msg);
+        }
+        else {
+            FTLogError("OPENAI-system-msg faile")
+        }
+        if let msg1 = ChatQuery.ChatCompletionMessageParam(role: ChatQuery.ChatCompletionMessageParam.Role.user, content: command.contentToExecute) {
+            messages.append(msg1);
+        }
+        else {
+            FTLogError("OPENAI-user-msg faile")
+        }
         var targettedError: Error?;
 #if DEBUG || BETA
-        let query = ChatQuery(model: FTOpenAI.debugModel, messages: messages,temperature: 0.2)
+        let query = ChatQuery(messages: messages, model: FTOpenAI.debugModel,temperature: 0.2)
 #else
-        let query = ChatQuery(model: .gpt3_5Turbo, messages: messages,temperature: 0.2)
+        let query = ChatQuery(messages: messages, model: .gpt3_5Turbo,temperature: 0.2)
 #endif
         openAI.chatsStream(query: query) { partialResult in
             guard self.currentcommand == command else {
@@ -72,13 +81,15 @@ class FTOpenAI: NSObject {
             case .failure(let error):
                 DispatchQueue.main.async {
                     targettedError = error;
+                    FTLogError("OpenAI-Error", attributes: ["reason": error.localizedDescription])
                     onUpdate(response,error,command.commandToken);
                 }
             }
         } completion: { error in
             DispatchQueue.main.async {
-                if nil != error {
-                    targettedError = error;
+                if let _error = error {
+                    targettedError = _error;
+                    FTLogError("OpenAI-Error", attributes: ["reason": _error.localizedDescription])
                 }
                 onCompletion(targettedError,command.commandToken);
             }

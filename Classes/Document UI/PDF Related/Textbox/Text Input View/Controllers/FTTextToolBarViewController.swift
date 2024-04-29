@@ -145,7 +145,10 @@ extension FTTextToolBarViewController {
     private func loadTextStyles() {
         if isRegular {
             let textStyles = fetchStyles()
-            let showCount = textStyles.styles.count
+            var showCount = textStyles.styles.count
+            if showCount >= 5 {
+                showCount = 5
+            }
             let styles = textStyles.styles.prefix(Int(showCount))
             if let subviews = textStyleView?.arrangedSubviews, styles.count > 0, subviews.count == styles.count {
                 for (idx, item) in styles.enumerated() {

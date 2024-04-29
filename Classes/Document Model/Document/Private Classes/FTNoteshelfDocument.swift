@@ -691,7 +691,14 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
             }
             if let cache = self.recognitionCache, let cachePlist = cache.visionRecognitionCachePlist() {
                 let mutableDict = NSMutableDictionary.init(dictionary: cachePlist.contentDictionary);
-                self.visionRecognitionInfoPlist()?.updateContent(mutableDict);
+                if let dict = self.visionRecognitionInfoPlist()?.contentDictionary as? NSDictionary {
+                    if mutableDict != dict {
+                        self.visionRecognitionInfoPlist()?.updateContent(mutableDict);
+                    }
+                }
+                else {
+                    self.visionRecognitionInfoPlist()?.updateContent(mutableDict);
+                }
             }
 
             //This was added in version 6.2, when we removed the bounding rect from the Segment level storage.
