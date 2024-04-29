@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "icloud_sync.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

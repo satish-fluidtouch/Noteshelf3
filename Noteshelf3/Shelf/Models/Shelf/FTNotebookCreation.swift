@@ -122,7 +122,6 @@ class FTNotebookCreation: NSObject {
                 let documentInfo =  generator.generate()
                 let tempDocURL = FTDocumentFactory.tempDocumentPath(FTUtils.getUUID());
                 let ftdocument = FTDocumentFactory.documentForItemAtURL(tempDocURL);
-
                 let defaultCover = FTThemesLibrary(libraryType: .covers).getDefaultTheme(defaultMode: .quickCreate)
                 //documentInfo.rootViewController = self;
                 documentInfo.footerOption = theme.footerOption
@@ -133,19 +132,20 @@ class FTNotebookCreation: NSObject {
                 documentInfo.coverTemplateImage = UIImage.init(contentsOfFile: templatePath)
                 ftdocument.createDocument(documentInfo) { (error, _) in
                     if(error == nil) {
-
+                        let shelfImageURL = ftdocument.URL.appending(path:"cover-shelf-image.png");
+                        let shelfImage = UIImage(contentsOfFile: shelfImageURL.path(percentEncoded:false));
                         let createBlock: () -> () = {
                             collection.addShelfItemForDocument(ftdocument.URL, toTitle: NSLocalizedString("quickNotesSave.quickNote", comment: "Quick Note"), toGroup: group, onCompletion: { (error, item) in
                                 if(nil != error) {
                                     completion(error,item)
                                 }
                                 else {
+                                    FTURLReadThumbnailManager.sharedInstance.addImageToCache(image: shelfImage, url: item!.URL)
                                     if let pinToSet = documentInfo.pinModel?.pin {
                                         FTBiometricManager.keychainSetIsTouchIDEnabled(documentInfo.pinModel!.isTouchIDEnabled,
                                                                                        withPin: pinToSet,
                                                                                        forKey: ftdocument.documentUUID);
                                     }
-
                                     //****************************** AutoBackup & AutoPublish
                                     //Amar: Commented below code to avoid ununcessary adding the quick note to EN list without knowing if it is going to be deleted of not
                                     //                                            FTENPublishManager.applyDefaultBackupPreferences(forItem: item, documentUUID: ftdocument.documentUUID)
