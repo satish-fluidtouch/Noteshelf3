@@ -17,7 +17,14 @@ extension FTNewTextStyleViewController  {
     }
 }
 
-extension FTNewTextStyleViewController : UIFontPickerViewControllerDelegate {
+extension FTNewTextStyleViewController : FTSystemFontPickerDelegate, UIFontPickerViewControllerDelegate {
+    
+    func didPickFontFromSystemFontPicker(_ viewController : FTFontPickerViewController?, selectedFontDescriptor: UIFontDescriptor, fontStyle: FTTextStyleItem) {
+        self.textFontStyle = fontStyle
+        self.shouldApplyAttributes = true
+        self.updateFontTraitsEnableStatus()
+        applyFontChanges()
+    }
 }
 
 extension FTNewTextStyleViewController: FTTextColorCollectionViewDelegate {
