@@ -542,9 +542,11 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
    
     // MARK: - open Document from today widget
     func openPinnedBook(with docId: String) {
-        FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
-            if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == docId}) as? FTDocumentItemProtocol {
-                self.openPinnedBook(documentItem: shelfItem, onCompletion: nil)
+        self.prepareProviderIfNeeded {
+            FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
+                if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == docId}) as? FTDocumentItemProtocol {
+                    self.openPinnedBook(documentItem: shelfItem, onCompletion: nil)
+                }
             }
         }
     }
@@ -566,29 +568,33 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             }
         }
         else {
-            self.openDocumentAtRelativePath(relativePath, inShelfItem: nil,
-                                            animate: false,
-                                            addToRecent: true,
-                                            bipassPassword: true) {_,_ in 
-                onCompletion?()
-            };
+            self.prepareProviderIfNeeded {
+                self.openDocumentAtRelativePath(relativePath, inShelfItem: nil,
+                                                animate: false,
+                                                addToRecent: true,
+                                                bipassPassword: true) {_,_ in
+                    onCompletion?()
+                };
+                
+            }
         }
     }
     
     func openAndperformActionInsidePinnedNotebook(_ type :FTPinndedWidgetActionType) {
-        FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
-            if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == type.docId}) as? FTDocumentItemProtocol {
-                self.openPinnedBook(documentItem: shelfItem) {[weak self] in
-                    guard let self = self else {
-                        return
-                    }
-                    if let docVc = self.noteBookSplitController?.documentViewController {
-                        docVc.insertNewPageWith(type: type)
+        self.prepareProviderIfNeeded {
+            FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
+                if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == type.docId}) as? FTDocumentItemProtocol {
+                    self.openPinnedBook(documentItem: shelfItem) {[weak self] in
+                        guard let self = self else {
+                            return
+                        }
+                        if let docVc = self.noteBookSplitController?.documentViewController {
+                            docVc.insertNewPageWith(type: type)
+                        }
                     }
                 }
             }
         }
-        
     }
     
     func openDocumentForSelectedNotebook(_ path: URL, isSiriCreateIntent: Bool) {
