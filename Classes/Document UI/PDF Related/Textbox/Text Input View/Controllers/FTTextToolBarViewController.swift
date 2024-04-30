@@ -54,6 +54,7 @@ protocol FTTextToolBarDelegate: FTRootControllerInfo {
     func didSetDefaultStyle(_ info: FTDefaultTextStyleItem)
     func textInputViewCurrentTextView() -> FTTextView?
     func enterIntoEditMode()
+    func isFontSelectionInProgress(value: Bool)
 }
 
 class FTTextToolBarViewController: UIViewController {
@@ -564,6 +565,10 @@ extension FTTextToolBarViewController: FTSystemFontPickerDelegate {
     func didPickFontFromSystemFontPicker(_ viewController : FTFontPickerViewController?, selectedFontDescriptor: UIFontDescriptor, fontStyle: FTTextStyleItem) {
         self.didSelectFontStyle(fontStyle)
         self.toolBarDelegate?.enterIntoEditMode()
+    }
+    
+    func isFontSelectionInProgress(value: Bool) {
+        self.toolBarDelegate?.isFontSelectionInProgress(value: value)
     }
 }
 

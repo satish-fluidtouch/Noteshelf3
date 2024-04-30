@@ -393,15 +393,22 @@ extension FTNewTextStyleViewController {
     @IBAction func tappedOnFontName(_ sender: UIButton) {
         let fontPicker = FTFontPickerViewController(nibName: "FTFontPickerViewController", bundle: Bundle(for: FTFontPickerViewController.self))
 #if !targetEnvironment(macCatalyst)
-        self.dismiss(animated: false) {
-            fontPicker.delegate = self.delegate as? FTSystemFontPickerDelegate
+        if let navVc = self.navigationController, navVc.modalPresentationStyle == .formSheet {
             fontPicker.textFontStyle = self.textFontStyle
-            if let toolBarVc = self.delegate as? FTTextToolBarViewController {
-                var presentingVc = self.presentingViewController ?? self
-                if let rootVc = toolBarVc.rootViewController() {
-                    presentingVc = rootVc
+            fontPicker.delegate = self
+            navVc.pushViewController(fontPicker, animated: true)
+        } else {
+            self.dismiss(animated: false) {
+                fontPicker.delegate = self.delegate as? FTSystemFontPickerDelegate
+                (self.delegate as? FTSystemFontPickerDelegate)?.isFontSelectionInProgress(value: true)
+                fontPicker.textFontStyle = self.textFontStyle
+                if let toolBarVc = self.delegate as? FTTextToolBarViewController {
+                    var presentingVc = self.presentingViewController ?? self
+                    if let rootVc = toolBarVc.rootViewController() {
+                        presentingVc = rootVc
+                    }
+                    presentingVc.ftPresentFormsheet(vcToPresent: fontPicker, animated: false)
                 }
-                presentingVc.ftPresentFormsheet(vcToPresent: fontPicker, animated: false)
             }
         }
 #else

@@ -10,7 +10,13 @@ import UIKit
 
 public protocol FTSystemFontPickerDelegate : AnyObject {
     func didPickFontFromSystemFontPicker(_ viewController : FTFontPickerViewController?, selectedFontDescriptor: UIFontDescriptor, fontStyle: FTTextStyleItem)
+    func isFontSelectionInProgress(value: Bool)
 }
+
+extension FTSystemFontPickerDelegate {
+    func isFontSelectionInProgress(value: Bool) { }
+}
+
 
 public class FTFontPickerViewController: UIViewController, UIFontPickerViewControllerDelegate {
 
@@ -21,6 +27,11 @@ public class FTFontPickerViewController: UIViewController, UIFontPickerViewContr
     @IBOutlet weak var backBtn: UIButton!
     public weak var delegate : FTSystemFontPickerDelegate?
     var textFontStyle: FTTextStyleItem?
+    
+    public override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.delegate?.isFontSelectionInProgress(value: false)
+    }
 
     public override func viewDidLoad() {
         super.viewDidLoad()
