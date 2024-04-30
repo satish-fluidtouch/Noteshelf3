@@ -115,10 +115,7 @@ final class FTWidgetIntentDataHelper {
             filteredURLS.enumerated().forEach({ (_,eachURL) in
                 if(eachURL.pathExtension == FTFileExtension.group) {
                     let dirContents = self.contentsOfURL(eachURL);
-                    //Since we are supporting empty group creation
-                    if dirContents.isEmpty {
-                        notebookUrlList.append(eachURL)
-                    } else {
+                    if !dirContents.isEmpty {
                         notebookUrlList.append(contentsOf: dirContents);
                     }
                 }
