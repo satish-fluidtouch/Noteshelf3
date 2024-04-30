@@ -30,9 +30,12 @@ public class FTCustomButton: UIButton {
         } else {
             title = self.title(for: .normal)?.localized ?? ""
         }
+        
+        let currentFont: UIFont? = self.titleLabel?.font;
         var config = self.configuration
         config?.title = title
         self.configuration = config
+        self.titleLabel?.font = currentFont;
         setUpFont()
     }
 
