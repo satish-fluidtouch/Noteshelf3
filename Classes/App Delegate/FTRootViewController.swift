@@ -125,7 +125,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated);
         if FTWhatsNewManger.canShowWelcomeScreen(onViewController: self) {
-            FTGetstartedHostingViewcontroller.showWelcome(presenterController: self, onDismiss: {
+            FTWelcomeScreenViewController.showWelcome(presenterController: self, onDismiss: {
                 [weak self] in
                 self?.addShelfToolbar();
                 self?.updateProvider({
@@ -142,6 +142,9 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         if let splitVC = self.noteBookSplitController,
            !(splitVC.isBeingDismissed || splitVC.isBeingPresented) {
             return splitVC.prefersStatusBarHidden;
+        }
+        else if self.presentedViewController is FTWelcomeScreenViewController {
+            return self.presentedViewController?.prefersStatusBarHidden ?? super.prefersStatusBarHidden
         }
         return super.prefersStatusBarHidden;
     }
@@ -1416,7 +1419,7 @@ extension FTRootViewController: FTOpenCloseDocumentProtocol {
 //MARK:- FTSceneBackgroundHandling
 extension FTRootViewController: FTSceneBackgroundHandling {
     func configureSceneNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(sceneDidBecomeActive(_:)), name: UIApplication.sceneDidBecomeActive, object: self.sceneToObserve)
+        NotificationCenter.default.addObserver(self, selector: #selector(sceneWillEnterForeground(_:)), name: UIApplication.sceneWillEnterForeground, object: self.sceneToObserve)
         NotificationCenter.default.addObserver(self, selector: #selector(sceneWillResignActive(_:)), name: UIApplication.sceneWillResignActive, object: self.sceneToObserve)
         self.configureForImportAction();
     }
@@ -1428,15 +1431,18 @@ extension FTRootViewController: FTSceneBackgroundHandling {
         self.saveApplicationStateByClosingDocument(false, keepEditingOn: true, onCompletion: nil);
     }
 
-    func sceneDidBecomeActive(_ notification: Notification) {
+    func sceneWillEnterForeground(_ notification: Notification) {
         if(!self.canProceedSceneNotification(notification)) {
             return;
         }
         FTAppConfigHelper.sharedAppConfig().updateAppConfig()
         if FTWhatsNewManger.canShowWelcomeScreen(onViewController: self) {
-            FTGetstartedHostingViewcontroller.showWelcome(presenterController: self, onDismiss: nil);
+            FTWelcomeScreenViewController.showWelcome(presenterController: self, onDismiss: nil);
             self.refreshStatusBarAppearnce();
         } else {
+            if self.showPremiumUpgradeAdScreenIfNeeded() {
+                return;
+            }
             var placeOfSlideShow: FTWhatsNewSlideShowPlace = .shelf
             if nil != self.docuemntViewController {
                 placeOfSlideShow = .notebook
@@ -1658,7 +1664,11 @@ private extension FTRootViewController {
         splitscreen.modalPresentationStyle = .custom;
         #endif
         FTCLSLog("Book: Presenting UI")
+        let createNotebookController = (self.rootContentViewController as? UIViewController)?.children.filter{$0 is FTCreateNotebookViewController};
         controllerToPresent?.present(splitscreen, animated: animate,completion: { [weak splitscreen] in
+            createNotebookController?.forEach { eachItem in
+                eachItem.dismiss(animated: false, completion: nil);
+            }
             snapshotViews.forEach { eachView in
                 eachView.removeFromSuperview();
             }
@@ -1815,5 +1825,22 @@ fileprivate extension FTRootViewController {
         alertContorller.addAction(closeAction)
         alertContorller.addAction(support)
         self.present(alertContorller, animated: true);
+    }
+}
+
+private extension FTRootViewController {
+    func showPremiumUpgradeAdScreenIfNeeded() -> Bool {
+        if !FTIAPurchaseHelper.shared.isPremiumUser && FTCommonUtils.isWithinEarthDayRange() {
+            UserDefaults().appScreenLaunchCount += 1
+            if self.presentedViewController is FTIAPContainerViewController {
+                return true;
+            }
+            if UserDefaults().appScreenLaunchCount > 1, !UserDefaults().isEarthDayOffScreenViewed {
+                self.showPremiumUpgradeScreen()
+                UserDefaults().isEarthDayOffScreenViewed = true
+                return true;
+            }
+        }
+        return false
     }
 }

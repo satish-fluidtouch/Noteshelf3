@@ -54,7 +54,7 @@ public class FTPopoverPresentation: NSObject, UIViewControllerTransitioningDeleg
             presentation.sourceRect = sourceRect ?? sourceView.bounds
             return presentation
         } else {
-            let ftPresent = FTSheetPresentationController(presentedVc: presented, presentingVc: presenting, toGrabFurther: compactGrabFurther)
+            let ftPresent = FTSheetPresentationController(presentedVc: presented, presentingVc: presenting, toGrabFurther: compactGrabFurther,source: source)
             presented.view.backgroundColor = UIColor.appColor(.popoverBgColor)
             return ftPresent
         }
