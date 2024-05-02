@@ -112,9 +112,17 @@ extension FTPageViewController {
             || mode == .deskModeEraser
             || mode == .deskModeShape
             ) {
+#if targetEnvironment(macCatalyst)
+            self.longPressGestureRecognizer?.allowedTouchTypes = [
+                NSNumber(value: UITouch.TouchType.direct.rawValue)
+                ,NSNumber(value: UITouch.TouchType.indirect.rawValue)
+                ,NSNumber(value: UITouch.TouchType.indirectPointer.rawValue)
+            ];
+#else
             self.longPressGestureRecognizer?.allowedTouchTypes = [
                 NSNumber(value: UITouch.TouchType.direct.rawValue)
             ];
+#endif
             FTCLSLog("Interaction: Update gesture: \(mode.rawValue)")
             self.startAcceptingTouches(true);
         }
@@ -266,6 +274,9 @@ extension FTPageViewController {
                                     at:hitPoint)
                 if annotation.isLocked {
                     return
+                }
+                if !UserDefaults.isApplePencilEnabled() {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: FTPDFEnableGestures), object: self.view.window);
                 }
             }
             self.activeAnnotationController?.annotationControllerLongPressDetected()
