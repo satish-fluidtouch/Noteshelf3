@@ -16,10 +16,13 @@ public typealias ProductIdentifier = String
 
 extension FTPremiumUser {    
     func addObsrversIfNeeded() {
-        self.updateNoOfBooks(nil);
+        guard FTIAPManager.shared.isReadyToObserverPremiumUserUpdate, !self.isPremiumUser else {
+            return;
+        }
         NotificationCenter.default.addObserver(self, selector: #selector(self.shelfItemDidAddedRemoved(_:)), name: .shelfItemAdded, object: nil);
         NotificationCenter.default.addObserver(self, selector: #selector(self.shelfItemDidAddedRemoved(_:)), name: .shelfItemRemoved, object: nil);
     }
+    
     func removeObservers() {
         NotificationCenter.default.removeObserver(self, name: .shelfItemAdded, object: nil)
         NotificationCenter.default.removeObserver(self, name: .shelfItemRemoved, object: nil)
@@ -41,10 +44,18 @@ extension FTPremiumUser {
             onCompletion?();
             return;
         }
+        if self.isPremiumUser {
+            onCompletion?();
+            return;
+        }
         FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(.none, parent: nil, searchKey: nil) { allItems in
             FTNoteshelfDocumentProvider.shared.trashShelfItemCollection { trashCollection in
                 trashCollection.shelfItems(.none, parent: nil, searchKey: nil) { items in
                     self.numberOfBookCreate = allItems.count + items.count;
+                    if !FTIAPManager.shared.isReadyToObserverPremiumUserUpdate {
+                        FTIAPManager.shared.isReadyToObserverPremiumUserUpdate = true;
+                        self.addObsrversIfNeeded();
+                    }
                     onCompletion?();
                 }
             }
@@ -90,7 +101,7 @@ class FTIAPManager: NSObject {
 
     // MARK: - Properties
     static let shared = FTIAPManager()
-    
+    var isReadyToObserverPremiumUserUpdate = false;
     var onReceiveProductsHandler: ((Result<[SKProduct], FTIAPHelperError>) -> Void)?
     var onBuyProductHandler: ((Result<Bool, Error>) -> Void)?
     var totalRestoredPurchases = 0
