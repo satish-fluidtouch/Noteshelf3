@@ -31,6 +31,14 @@ extension FTPDFRenderViewController {
         }
     }
 
+    @objc func isZoomSupportedDeskMode(_ mode: RKDeskMode) -> Bool {
+        var status = false
+        if mode == .deskModePen || mode == .deskModeMarker || mode == .deskModeEraser || mode == .deskModeShape || mode == .deskModeFavorites {
+            status = true
+        }
+        return status
+    }
+
     //Cancelling Thumbnail generation
     @objc func cancelAllThumbnailGeneration() {
         self.pdfDocument?.cancelAllThumbnailGeneration()
