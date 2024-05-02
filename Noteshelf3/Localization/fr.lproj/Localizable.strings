@@ -929,7 +929,7 @@
 "Webdav404Error" = "Veuillez vérifier l'emplacement du fichier et si votre compte WebDAV a accès au fichier.";
 "Webdav405Error" = "Le serveur hôte a refusé votre demande.";
 "Webdav409Error" = "Le serveur hôte a refusé votre demande. Veuillez vérifier que votre compte dispose des autorisations nécessaires pour apporter des modifications au dossier, puis réessayez.";
-"Welcome Tour" = "Visite de bienvenue";
+"Welcome" = "Bienvenue";
 "WhatsNewJoinUsInfo" = "Accédez à du contenu exclusif, des astuces, des promotions et bien plus en aimant et en nous suivant sur Facebook et Twitter.";
 "Whiteboard" = "Mode tableau blanc";
 "WhiteboardMessage" = "Utilisez Noteshelf comme un tableau blanc avec un affichage externe ou un projecteur.";
@@ -1571,6 +1571,8 @@
 "textmode.fonttitle" = "Style de police/texte";
 "texttoolbar.fontselectionTitle" = "Sélectionner la police";
 "theams.unsplashDescription" = "Choisissez depuis Unsplash, prenez une photo ou sélectionnez depuis votre bibliothèque de photos pour créer vos couvertures personnalisées.";
+"tipeview.shortcut.message" = "Appuyez longuement sur la barre d'outils pour ajouter, supprimer ou réorganiser les outils comme vous le souhaitez.";
+"tipeview.shortcut.title" = "Nouveaux raccourcis de la barre d'outils ajoutés !";
 "trash.alert.cannotOpenNotebook" = "Ce cahier ne peut pas être ouvert car il a été supprimé. Pour restaurer, maintenez longuement et sélectionnez l'option dans le menu.";
 "trash.alert.title" = "Êtes-vous sûr de vouloir vider votre corbeille ?";
 "unsplash.search.alertMessage" = "Entrez le texte à rechercher";
@@ -1593,7 +1595,7 @@
 "welcome.customizableToolBar.description" = "Sélectionnez les outils dont vous avez besoin et supprimez ceux dont vous n'avez pas besoin.";
 "welcome.dayNightJournal" = "JOURNAL JOUR NUIT";
 "welcome.dayNightJournal.description" = "Un journal spécial conçu pour améliorer la conscience de soi et le bonheur dans la vie.";
-"welcome.digitalDiaries" = "Journaux numériques";
+"welcome.digitalDiaries" = "JOURNAUX NUMÉRIQUES";
 "welcome.digitalDiaries.description" = "Nos journaux sont entièrement personnalisables pour n'importe quelle période de dates.";
 "welcome.emojies" = "ÉMOTICÔNES";
 "welcome.emojies.description" = "Les émojis sont généralement tapés, mais vous pouvez les utiliser comme tampons ici 😲";
@@ -1662,4 +1664,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 19 April 2024 at 6:14 PM
+// Last Synced by Sameer Hussain on 26 April 2024 at 10:34 AM

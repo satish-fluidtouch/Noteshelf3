@@ -20,11 +20,12 @@ protocol FTToolbarCenterPanelDelegate: AnyObject {
 @available (iOS 17.0, *)
 struct NewFeatures: Tip{
     var title : Text {
-        Text("New toolbar shortcuts added!")
+        Text("tipeview.shortcut.title".localized)
             .foregroundStyle(.white)
+            
     }
     var message: Text?{
-        Text("Long-press on the toolbar to add, remove or reorder tools the way you like.")
+        Text("tipeview.shortcut.message".localized)
             .foregroundStyle(Color(uiColor: UIColor.white.withAlphaComponent(0.7) ))
     }
     
@@ -35,44 +36,39 @@ struct NewFeatures: Tip{
 }
 @available (iOS 17.0, *)
 struct CustomTiPView : TipViewStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        VStack(alignment: .center) {
-            
-            HStack(alignment: .top) {
-                configuration.image?
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .padding(EdgeInsets(top: 15, leading: 25, bottom: 50, trailing: 0))
-               
-                VStack(alignment: .leading, spacing: 1.0) {
-                    configuration.title?.font(.headline).padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
-                    configuration.message?.font(.subheadline).padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 30))
-
-
-                    ForEach(configuration.actions) { action in
-                        Button(action: action.handler) {
-                            action.label().foregroundStyle(.blue)
-                        }
-                    }
-                }.frame(minWidth: 330,minHeight: 90)
-            }
-        }
-        
-//        VStack(alignment:.leading, spacing:0) {
-//            HStack(spacing:0) {
-//                configuration.image?
-//                    .frame(width: 32,height: 32)
-//                configuration.title?.font(.headline)
-//                    .padding(.leading,16)
-//            }.padding(.horizontal,16)
-//            configuration.message?.font(.subheadline)
-//                .padding(.trailing,16)
-//                .padding(.leading,64)
-//                
-//        }.frame(width: 330,height: 130)
+  @State var size: CGSize = .zero
+  func makeBody(configuration: Configuration) -> some View {
+    HStack(alignment: .top, spacing: 12) {
+      VStack {
+        configuration.image?
+          .resizable()
+          .frame(width: 24, height: 24)
+          .aspectRatio(contentMode: .fit)
+          .padding(.top,4)
+        Spacer()
+          .frame(maxHeight: self.size.height)
+      }
+      VStack(alignment: .leading) {
+        configuration.title
+          .font(.headline)
+          .fixedSize(horizontal: false, vertical: true)
+        configuration.message?
+          .font(.subheadline)
+          .fixedSize(horizontal: false, vertical: true)
+      }
     }
+    .padding(.horizontal, 16)
+    .padding(.vertical, 12)
+    .background(
+      GeometryReader { geometry in
+        Color.clear
+          .onAppear {
+            self.size = geometry.size
+          }
+      })
+  }
 }
-
+    
 class FTToolbarCenterPanelController: UIViewController {
     private weak var customToolbarObserver: NSObjectProtocol?;
 
@@ -117,7 +113,14 @@ class FTToolbarCenterPanelController: UIViewController {
         addObserverForScrollDirection()
     }
     override func viewDidAppear(_ animated: Bool) {
-        setUpTipForNewFeatures()
+        if setUpTheTimeForTipView() {
+            if self.view.frame.width > 320 {
+                setUpTipForNewFeatures()
+            }else {
+                print("Screen size is not fit")
+            }
+        }
+       
     }
 
     @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
@@ -431,7 +434,7 @@ extension FTToolbarCenterPanelController {
     
     func setUpTipForNewFeatures() {
         if #available(iOS 17.0, *) {
-            var newFeautres = NewFeatures()
+            let newFeautres = NewFeatures()
             Task { @MainActor in
                 for await shouldDisplay in newFeautres.shouldDisplayUpdates {
                     if shouldDisplay {
@@ -445,8 +448,21 @@ extension FTToolbarCenterPanelController {
                 }
             }
         } else {
-            fatalError("using Lower versions then Ios 17")
+            fatalError("Using Lower versions then Ios 17")
         }
         
+    }
+    
+    func setUpTheTimeForTipView() -> Bool {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            let currentTimeInterval = Date().timeIntervalSinceReferenceDate
+            let Interval = currentTimeInterval - (5 * 24 * 60 * 60)
+            if  FTUserDefaults.appInstalledDate < Interval {
+                return true
+            }else {
+                return false
+            }
+        }
+        return true
     }
 }

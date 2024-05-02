@@ -63,9 +63,14 @@ extension FTSidePanelShelfItemPickerDelegate {
     }
 }
 
-@objc class FTSidePanelItemsViewController: FTShelfItemsViewController {
-
+@objc class FTSidePanelItemsViewController: FTShelfItemsViewController,FTPopoverPresentable {
+    var ftPresentationDelegate = FTPopoverPresentation()
     weak var sidePanelDelegate: FTSidePanelShelfItemPickerDelegate?
+    var isFromRecentNotes: Bool = false
+    @IBOutlet weak var tvLeading : NSLayoutConstraint!
+    @IBOutlet weak var tvTrailing : NSLayoutConstraint!
+    var currentIndex = 0
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.navigationController?.isNavigationBarHidden = false
@@ -73,7 +78,25 @@ extension FTSidePanelShelfItemPickerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.configureNavigation(title: collection?.displayTitle ?? "")
+        if isFromRecentNotes {
+            self.configureNavigation(title:"Recent Notebooks")
+            self.navigationItem.leftBarButtonItem?.isHidden = true
+            self.view.backgroundColor = UIColor.appColor(.popoverBgColor)
+            self.tableView.separatorStyle = .singleLine
+        }else {
+            self.configureNavigation(title: collection?.displayTitle ?? "")
+        }
+      
+    }
+    
+    func getHeightOfVisibleCells() -> CGFloat {
+        var totalHeight: CGFloat = 0.0
+        for indexPath in tableView.indexPathsForVisibleRows ?? [] {
+            if let cell = tableView.cellForRow(at: indexPath) {
+                totalHeight += cell.frame.size.height
+            }
+        }
+        return totalHeight
     }
     
     func configureNavigation(title: String) {
@@ -81,7 +104,8 @@ extension FTSidePanelShelfItemPickerDelegate {
         let leftItem = UIBarButtonItem(image: UIImage.image(for: "chevron.backward", font: UIFont.appFont(for: .medium, with: 18)), style: .plain, target: self, action: #selector(buttonTapped(_ :)))
         self.navigationItem.leftBarButtonItems = [leftItem]
         self.navigationItem.title = title
-        self.navigationController?.navigationBar.prefersLargeTitles = true
+        let value =  isFromRecentNotes == true ? false : true
+        self.navigationController?.navigationBar.prefersLargeTitles = value
         self.navigationController?.navigationItem.largeTitleDisplayMode = .always
     }
     
@@ -100,6 +124,41 @@ extension FTSidePanelShelfItemPickerDelegate {
         self.tableView.dragInteractionEnabled = true
         self.tableView.dragDelegate = self
         self.view.backgroundColor = .appColor(.finderBgColor)
+        if isFromRecentNotes {
+            tvLeading.constant = 10
+            tvTrailing.constant = 10
+            
+        }
+    }
+    
+    func setUpcellForRecentNotes(cell:FTShelfItemTableViewCell,index:IndexPath){
+        if  self.isFromRecentNotes {
+            if self.items.count > 1 {
+                  if index.row == 0 {
+                      cell.shapeTopCorners(10.0)
+                  }
+                  if index.row == self.items.count - 1 {
+                      cell.shapeBottomCorners(10.0)
+                  }
+                } else {
+                    cell.layer.cornerRadius = 10.0
+                }
+            if self.currentIndex == index.row {
+                cell.backgroundColor = UIColor(hexString:"186F81",alpha:0.1)
+            }else {
+                if #available(iOS 13.0, *) {
+                    let currentTraitCollection = UIScreen.main.traitCollection
+                    let isDarkMode = currentTraitCollection.userInterfaceStyle == .dark
+                    
+                    if isDarkMode {
+                        cell.backgroundColor = .clear
+                    } else {
+                        cell.backgroundColor = .white
+                    }
+                }
+                
+            }
+        }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -114,6 +173,8 @@ extension FTSidePanelShelfItemPickerDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CellShelfItem") as? FTShelfItemTableViewCell else {
             fatalError("Couldnot find FTShelfItemTableViewCell with id CellShelfItem")
         }
+        
+        cell.backgroundColor = .clear
         cell.mode = self.mode;
         cell.tableView = tableView;
         cell.indexPath = indexPath;
@@ -131,10 +192,10 @@ extension FTSidePanelShelfItemPickerDelegate {
         cell.shadowImageView2.isHidden = true;
         cell.shadowImageView3.isHidden = true;
         cell.passcodeLockStatusView.isHidden = true;
-        
+        cell.setSelectedBgView(value: self.isFromRecentNotes)
+        self.setUpcellForRecentNotes(cell:cell, index: indexPath)
         var displayTitle = "";
         var isCurrent = false;
-
         //Checking if we are inside a collection
         cellDatabinding: if (nil != self.collection) {
             
@@ -221,7 +282,7 @@ extension FTSidePanelShelfItemPickerDelegate {
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true);
-
+        self.currentIndex = indexPath.row
         self.indexPathSelected = indexPath;
         if let _ = self.collection {
             let shelfItem = self.items[indexPath.row];
@@ -232,6 +293,19 @@ extension FTSidePanelShelfItemPickerDelegate {
             }
         }
         self.performSegue(withIdentifier: "SelfPush", sender: nil);
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return CGFloat.leastNonzeroMagnitude
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if self.isFromRecentNotes {
+            return 0
+        }else {
+            return 5
+        }
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

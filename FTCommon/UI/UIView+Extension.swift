@@ -67,6 +67,12 @@ extension UIView {
         self.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
     }
 
+    public func shapeBottomCorners(_ radius: CGFloat = 16.0) {
+        self.clipsToBounds = true
+        self.layer.cornerRadius = radius
+        self.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
+    }
+
     @objc public func isRegularClass() -> Bool
     {
 #if targetEnvironment(macCatalyst)

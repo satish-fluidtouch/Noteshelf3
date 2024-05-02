@@ -37,6 +37,11 @@ class FTCustomizeToolbarController: UITableViewController {
         footerView?.setUpUi()
         footerView?.delegate = self
         tableView.tableFooterView = footerView
+        if self.view.frame.size.width <= 380 {
+            tableView.tableFooterView?.frame.size.height = 120
+        }else {
+            tableView.tableFooterView?.frame.size.height = 90
+        }
     }
 
     private func configNavigationTitle() {

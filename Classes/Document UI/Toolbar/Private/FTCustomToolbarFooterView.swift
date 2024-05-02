@@ -18,7 +18,7 @@ class FTCustomToolbarFooterView : UIView {
     @IBOutlet weak private var topBtn: UIButton!
     @IBOutlet weak private var bgVIew: UIView!
     @IBOutlet weak private var iconsBgView: UIView!
-    @IBOutlet weak private var ideaForShortcutLbl: UILabel!
+    @IBOutlet weak private(set) var ideaForShortcutLbl: UILabel!
     @IBOutlet weak private var requestLbl: UILabel!
     
    weak var delegate : FTCustomToolbarFooterViewProtocal?

@@ -19,6 +19,7 @@ protocol FTShortcutActions: AnyObject {
     func handleTagPage(source: Any, controller: UIViewController, pages: NSSet)
     func cameraAction()
     func scrollingAction(direction: Int)
+    func recentNotesAction(source:Any)
 
     // Media
     func photoAction()
@@ -54,6 +55,7 @@ enum FTCommand: Equatable {
     case tag(source: Any, controller: UIViewController, pages: NSSet)
     case camera
     case scrolling(direction: Int)
+    case recentNotes(source: Any)
 
     // Share
     case shareNoteBookAsPDF(source: Any)
@@ -102,6 +104,9 @@ class FTShortcutExecuter: FTShortcutCommand {
         case .scrolling(let source):
             self.receiver?.scrollingAction(direction: source)
             
+        case .recentNotes(let source):
+            self.receiver?.recentNotesAction(source:source)
+        
             // Media
         case .photo:
             self.receiver?.photoAction()
@@ -141,6 +146,7 @@ class FTShortcutExecuter: FTShortcutCommand {
 }
 
 extension FTPDFRenderViewController: FTShortcutActions {
+    
     @objc func configureShortcutActions() {
         self.executer = FTShortcutExecuter(receiver: self)
     }
@@ -238,6 +244,18 @@ extension FTPDFRenderViewController: FTShortcutActions {
             UserDefaults.standard.pageLayoutType = directionFlow
         }
     }
+    
+    func recentNotesAction(source:Any) {
+        let storyboard = UIStoryboard(name: "FTShelfItems", bundle: nil)
+              if let shelfItemsViewController = storyboard.instantiateViewController(withIdentifier: "FTSidePanelItemsViewController") as? FTSidePanelItemsViewController {
+                shelfItemsViewController.sidePanelDelegate = self
+                  shelfItemsViewController.collection = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection;
+                  shelfItemsViewController.ftPresentationDelegate.source = source as AnyObject
+                  shelfItemsViewController.isFromRecentNotes = true
+                  self.ftPresentPopover(vcToPresent: shelfItemsViewController, contentSize: CGSize(width: 320, height:400), hideNavBar: true)
+        }
+    }
+    
 
     // Media
     func photoAction() {

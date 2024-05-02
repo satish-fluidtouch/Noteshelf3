@@ -166,6 +166,8 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
             self.executer?.execute(type: .scrolling(direction: value))
             let config = FTToastConfiguration(title: title.localized)
             FTToastHostController.showToast(from: self, toastConfig: config)
+        case .recentNotes:
+            self.executer.execute(type: .recentNotes(source: source))
         case .unsplash:
             self.executer.execute(type: .unsplash(source: source))
             

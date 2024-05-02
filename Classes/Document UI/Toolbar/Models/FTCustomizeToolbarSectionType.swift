@@ -71,6 +71,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
     case deletePage
     case scrolling
     case camera
+    case recentNotes
 
     // Share and Save
     case savePageAsPhoto
@@ -136,12 +137,16 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             name = (UserDefaults.standard.pageLayoutType == .vertical) ? "desk_tool_vertical_scrolling" : "desk_tool_horizontal_scrolling"
         case .camera:
             name = "desk_tool_camera"
+        case .recentNotes:
+            name = "desk_tool_recentNotes"
+            
         case .savePageAsPhoto:
             name = "desk_tool_saveAsPhoto"
         case .sharePageAsPng:
             name = "desk_tool_shareAsPNG"
         case .shareNotebookAsPDF:
             name = "desk_tool_shareAsPDF"
+        
         }
         return name
     }
@@ -245,6 +250,8 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             str = "Camera".localized
         case .scrolling:
             str = "customizeToolbar.switchScrollingDirection".localized
+        case .recentNotes:
+            str = "Recent Notebooks"
             
         case .savePageAsPhoto:
             str = "customizeToolbar.savePageAsPhoto".localized
@@ -318,6 +325,8 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             str = "customizeToolbar.camera".localizedEnglish
         case .scrolling:
             str = "customizeToolbar.scrolling".localizedEnglish
+        case .recentNotes:
+            str = "Recent Notebooks"
 
         case .savePageAsPhoto:
             str = "customizeToolbar.savePageAsPhoto".localizedEnglish
@@ -339,7 +348,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
     
     var toShowNewBadge: Bool {
         var status = true
-        if self == .camera || self == .scrolling {
+        if self == .camera || self == .scrolling || self == .recentNotes {
             status = false
         }
         return status

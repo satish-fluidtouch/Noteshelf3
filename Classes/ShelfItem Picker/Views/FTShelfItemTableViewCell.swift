@@ -116,8 +116,15 @@ class FTShelfItemTableViewCell: UITableViewCell,FTShelfItemCellProgressUpdate {
         self.accessoryButton?.isUserInteractionEnabled = false
         self.currentShelfItemIndicator?.isHidden = true
         self.selectionBackgroundView?.isHidden = true
-        self.selectionBackgroundView?.layer.cornerRadius = 10
-        self.selectionBackgroundView?.backgroundColor = UIColor.appColor(.white90)
+    }
+    
+    func setSelectedBgView(value: Bool){
+        if value {
+            self.selectionBackgroundView?.backgroundColor = .clear
+        }else {
+             self.selectionBackgroundView?.layer.cornerRadius = 10
+             self.selectionBackgroundView?.backgroundColor = UIColor.appColor(.white90)
+        }
     }
     
     func setEnable(_ status: Bool) {

@@ -929,7 +929,7 @@
 "Webdav404Error" = "ファイルの場所と、WebDAVアカウントがファイルにアクセスできるかどうかを確認してください。";
 "Webdav405Error" = "ホストサーバーは、あなたのリクエストを拒否しました。";
 "Webdav409Error" = "ホストサーバーは、リクエストを拒否しました。フォルダーへの変更を行うためのアカウント権限を確認し、もう一度お試しください。";
-"Welcome Tour" = "ウェルカムツアー";
+"Welcome" = "ウェルカム";
 "WhatsNewJoinUsInfo" = "FacebookとTwitterでいいね！やフォローをして、限定コンテンツ、ヒント、プロモーションなどにアクセスしましょう。";
 "Whiteboard" = "ホワイトボードモード";
 "WhiteboardMessage" = "外部ディスプレイやプロジェクターでNoteshelfをホワイトボードとして使用します。";
@@ -1571,6 +1571,8 @@
 "textmode.fonttitle" = "フォント/テキストスタイル";
 "texttoolbar.fontselectionTitle" = "フォントを選択";
 "theams.unsplashDescription" = "Unsplash から選択、写真を撮影、または写真ライブラリから選択してカスタムカバーを作成してください。";
+"tipeview.shortcut.message" = "ツールバーを長押しして、お好みの方法でツールを追加、削除、並び替えできます。";
+"tipeview.shortcut.title" = "新しいツールバーショートカットが追加されました！";
 "trash.alert.cannotOpenNotebook" = "このノートブックは削除されたため開けません。復元するには、長押ししてメニューからオプションを選択してください。";
 "trash.alert.title" = "ゴミ箱を空にしますか？";
 "unsplash.search.alertMessage" = "検索するテキストを入力してください";
@@ -1662,4 +1664,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 19 April 2024 at 6:14 PM
+// Last Synced by Sameer Hussain on 26 April 2024 at 10:34 AM

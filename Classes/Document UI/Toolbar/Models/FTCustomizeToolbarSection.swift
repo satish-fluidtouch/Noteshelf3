@@ -111,7 +111,8 @@ final class FTShortcutsToolsSection: FTToolbarSection {
         .duplicatePage,
         .deletePage,
         .scrolling,
-        .camera
+        .camera,
+        .recentNotes
         
     ]
 

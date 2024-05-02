@@ -929,7 +929,7 @@
 "Webdav404Error" = "파일 위치를 확인하고 WebDAV 계정이 파일에 액세스할 수 있는지 확인해주세요.";
 "Webdav405Error" = "호스트 서버가 요청을 거부했습니다.";
 "Webdav409Error" = "호스트 서버가 요청을 거부했습니다. 계정이 해당 폴더에 변경 사항을 적용할 수 있는 권한이 있는지 확인하고 다시 시도해주세요.";
-"Welcome Tour" = "환영 투어";
+"Welcome" = "환영";
 "WhatsNewJoinUsInfo" = "Facebook와 Twitter에서 우리를 좋아하고 팔로우함으로써 독점 콘텐츠, 팁, 프로모션 등에 접근하세요.";
 "Whiteboard" = "화이트보드 모드";
 "WhiteboardMessage" = "외부 디스플레이나 프로젝터로 노트셀프를 화이트보드로 사용하세요.";
@@ -1340,7 +1340,7 @@
 "shelf.discover.tagsTitle" = "메모 정리";
 "shelf.discover.templatesDescription" = "학교, 직장, 일기 작성 등을 위한 수백 가지의 템플릿을 찾아보세요.";
 "shelf.discover.templatesTitle" = "모든 필요에 대한 템플릿";
-"shelf.discover.title" = "가능한 것을 발견하세요.";
+"shelf.discover.title" = "가능한 것을 발견하세요";
 "shelf.discover.whatsNewDescription" = "모든 새로운 Noteshelf와 함께 아름다운 노트를 손쉽게 작성하세요.";
 "shelf.discover.whatsNewTitle" = "노트셀프에서의 새로운 기능은 무엇인가요?";
 "shelf.dragAndDrop.dropAnywhere" = "여기에 파일을 가져오려면 여기에 놓으세요.";
@@ -1571,6 +1571,8 @@
 "textmode.fonttitle" = "글꼴/텍스트 스타일";
 "texttoolbar.fontselectionTitle" = "글꼴 선택";
 "theams.unsplashDescription" = "Unsplash에서 선택, 사진 촬영 또는 사진 라이브러리에서 선택하여 사용자 정의 표지 만들기";
+"tipeview.shortcut.message" = "툴바를 길게 눌러서 원하는 대로 도구를 추가, 제거 또는 재배열하세요.";
+"tipeview.shortcut.title" = "새로운 툴바 단축키가 추가되었습니다!";
 "trash.alert.cannotOpenNotebook" = "이 노트북은 삭제되어 열 수 없습니다. 복원하려면 길게 눌러서 메뉴에서 해당 옵션을 선택하세요.";
 "trash.alert.title" = "당신은 휴지통을 비우시겠습니까?";
 "unsplash.search.alertMessage" = "텍스트를 검색하세요";
@@ -1662,4 +1664,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 19 April 2024 at 6:14 PM
+// Last Synced by Sameer Hussain on 26 April 2024 at 10:34 AM

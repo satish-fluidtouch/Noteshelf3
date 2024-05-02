@@ -929,7 +929,7 @@
 "Webdav404Error" = "Bitte überprüfen Sie den Dateispeicherort und ob Ihr WebDAV-Konto Zugriff auf die Datei hat.";
 "Webdav405Error" = "Der Host-Server hat Ihre Anfrage abgelehnt.";
 "Webdav409Error" = "Der Host-Server hat Ihre Anfrage abgelehnt. Bitte überprüfen Sie, ob Ihr Konto über Berechtigungen zum Ändern des Ordners verfügt, und versuchen Sie es erneut.";
-"Welcome Tour" = "Willkommenstour";
+"Welcome" = "Willkommen";
 "WhatsNewJoinUsInfo" = "Erhalten Sie Zugriff auf exklusive Inhalte, Tipps, Aktionen und mehr, indem Sie uns auf Facebook und Twitter liken und folgen.";
 "Whiteboard" = "Weißwandmodus";
 "WhiteboardMessage" = "Verwenden Sie Noteshelf als Whiteboard mit einem externen Bildschirm oder einem Projektor.";
@@ -1340,7 +1340,7 @@
 "shelf.discover.tagsTitle" = "Organisieren Sie Ihre Notizen";
 "shelf.discover.templatesDescription" = "Entdecke Hunderte von Vorlagen für Schule, Arbeit, Tagebuch und mehr.";
 "shelf.discover.templatesTitle" = "Eine Vorlage für jeden Bedarf";
-"shelf.discover.title" = "Entdecke, was möglich ist.";
+"shelf.discover.title" = "Entdecke, was möglich ist";
 "shelf.discover.whatsNewDescription" = "Nimm wunderschöne Notizen mühelos mit dem brandneuen Noteshelf auf.";
 "shelf.discover.whatsNewTitle" = "Was gibt es Neues in Noteshelf";
 "shelf.dragAndDrop.dropAnywhere" = "Hier ablegen, um die Datei zu importieren.";
@@ -1571,6 +1571,8 @@
 "textmode.fonttitle" = "Schriftart/Textstil";
 "texttoolbar.fontselectionTitle" = "Schrift Auswählen";
 "theams.unsplashDescription" = "Wählen Sie aus Unsplash aus, machen Sie ein Foto oder wählen Sie aus Ihrer Fotobibliothek, um Ihre individuellen Cover zu erstellen.";
+"tipeview.shortcut.message" = "Lange drücken Sie auf die Symbolleiste, um Werkzeuge hinzuzufügen, zu entfernen oder neu anzuordnen, wie Sie möchten.";
+"tipeview.shortcut.title" = "Neue Symbolleisten-Verknüpfungen hinzugefügt!";
 "trash.alert.cannotOpenNotebook" = "Dieses Notizbuch kann nicht geöffnet werden, da es gelöscht wurde. Um es wiederherzustellen, lange drücken und die Option aus dem Menü auswählen.";
 "trash.alert.title" = "Sind Sie sicher, dass Sie Ihren Papierkorb leeren möchten?";
 "unsplash.search.alertMessage" = "Geben Sie den Text zum Suchen ein.";
@@ -1605,7 +1607,7 @@
 "welcome.handWritingRecognition.description" = "Konvertieren Sie Handschrift in Text und suchen Sie nach Handschrift in über 60 Sprachen.";
 "welcome.headerbottomfirstTitle" = "Notizen";
 "welcome.headerbottomsecondTitle" = "mühelos";
-"welcome.headertopTitle" = "Nehmen Sie schön.";
+"welcome.headertopTitle" = "Nehmen Sie schön";
 "welcome.icloudSync" = "ICLOUD-SYNCHRONISIERUNG";
 "welcome.icloudSync.description" = "iPad, iPhone, Mac und Apple Watch - alle synchronisiert mit iCloud.";
 "welcome.imageEditing" = "BILD BEARBEITUNG";
@@ -1662,4 +1664,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 19 April 2024 at 6:14 PM
+// Last Synced by Sameer Hussain on 26 April 2024 at 10:34 AM

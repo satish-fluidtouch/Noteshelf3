@@ -929,7 +929,7 @@
 "Webdav404Error" = "请检查文件位置和您的WebDAV帐户是否有访问该文件的权限。";
 "Webdav405Error" = "主机服务器拒绝了您的请求。";
 "Webdav409Error" = "主机服务器已拒绝您的请求。请检查您的账户是否具有对该文件夹进行更改的权限，然后重试。";
-"Welcome Tour" = "欢迎之旅";
+"Welcome" = "欢迎";
 "WhatsNewJoinUsInfo" = "通过在Facebook和Twitter上点赞和关注我们，获取独家内容、贴士、促销和更多。";
 "Whiteboard" = "白板模式";
 "WhiteboardMessage" = "使用Noteshelf作为外部显示器或投影仪的白板。";
@@ -1266,7 +1266,7 @@
 "password.usefaceid" = "使用 Face ID";
 "password.usetouchid" = "使用 Touch ID";
 "penRack.ballpoint" = "圆珠笔";
-"penRack.felt" = "毛笔";
+"penRack.felt" = "毡笔";
 "penRack.fountain" = "钢笔";
 "penRack.pencil" = "铅笔";
 "presentation.clearAnnotations" = "清除批注";
@@ -1571,6 +1571,8 @@
 "textmode.fonttitle" = "字体/文本样式";
 "texttoolbar.fontselectionTitle" = "选择字体";
 "theams.unsplashDescription" = "从Unsplash选择，拍照或从照片库中选择以创建您的自定义封面。";
+"tipeview.shortcut.message" = "长按工具栏以添加、移除或重新排序您喜欢的工具。";
+"tipeview.shortcut.title" = "已添加新的工具栏快捷方式！";
 "trash.alert.cannotOpenNotebook" = "此笔记本已被删除，无法打开。要恢复，请长按并从菜单中选择该选项。";
 "trash.alert.title" = "你确定要清空垃圾箱吗？";
 "unsplash.search.alertMessage" = "列表视图";
@@ -1662,4 +1664,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 19 April 2024 at 6:14 PM
+// Last Synced by Sameer Hussain on 26 April 2024 at 10:34 AM
