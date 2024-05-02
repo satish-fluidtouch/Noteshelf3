@@ -112,26 +112,26 @@ extension FTPageViewController {
             || mode == .deskModeEraser
             || mode == .deskModeShape
             ) {
+            var allowedTouchTypes: [NSNumber] = [NSNumber(value: UITouch.TouchType.direct.rawValue)];
 #if targetEnvironment(macCatalyst)
-            self.longPressGestureRecognizer?.allowedTouchTypes = [
-                NSNumber(value: UITouch.TouchType.direct.rawValue)
-                ,NSNumber(value: UITouch.TouchType.indirect.rawValue)
-                ,NSNumber(value: UITouch.TouchType.indirectPointer.rawValue)
-            ];
-#else
-            self.longPressGestureRecognizer?.allowedTouchTypes = [
-                NSNumber(value: UITouch.TouchType.direct.rawValue)
-            ];
+            allowedTouchTypes.append(NSNumber(value: UITouch.TouchType.indirectPointer.rawValue))
+            allowedTouchTypes.append(NSNumber(value: UITouch.TouchType.indirect.rawValue))
 #endif
+            self.longPressGestureRecognizer?.allowedTouchTypes = allowedTouchTypes;
             FTCLSLog("Interaction: Update gesture: \(mode.rawValue)")
             self.startAcceptingTouches(true);
         }
         else {
-            self.longPressGestureRecognizer?.allowedTouchTypes = [
+            var allowedTouchTypes: [NSNumber] = [
                 NSNumber(value: UITouch.TouchType.direct.rawValue),
                 NSNumber(value: UITouch.TouchType.pencil.rawValue),
                 NSNumber(value: UITouch.TouchType.indirect.rawValue)
             ];
+#if targetEnvironment(macCatalyst)
+            allowedTouchTypes.append(NSNumber(value: UITouch.TouchType.indirectPointer.rawValue))
+            allowedTouchTypes.append(NSNumber(value: UITouch.TouchType.indirect.rawValue))
+#endif
+            self.longPressGestureRecognizer?.allowedTouchTypes = allowedTouchTypes;
         }
     }
 
