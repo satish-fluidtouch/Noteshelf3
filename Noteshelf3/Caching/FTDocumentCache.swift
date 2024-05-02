@@ -345,8 +345,8 @@ private extension FTDocumentCache {
             // Can be improved by checking for .orderedAscending/orderedDescending, for now we're just replacing the existing cache if the modification dates mismatches.
             let isLatestModified = existingmodified.compare(newModified) == .orderedAscending
             cacheLog(.info, " \(isLatestModified) existing: \(existingmodified) new: \(newModified)", url)
-
-            if isLatestModified {
+            let documentPlistItem = destinationURL.appendingPathComponent(FTCacheFiles.cacheDocumentPlist)
+            if isLatestModified || !_fileManager.fileExists(atPath: documentPlistItem.path(percentEncoded: false)) {
                 do {
                     try FTFileCacheManager.cacheDocumentAt(url, destination: destinationURL);
                     updateMetadataPlistWithRelativePathFor(docUrl: url, documentId: documentUUID)

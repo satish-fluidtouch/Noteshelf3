@@ -160,7 +160,7 @@ struct NotebookCreation_Widget: Widget {
             }
         }.contentMarginsDisabled()
         .configurationDisplayName("Take Notes")
-        .description("Create a blank notebook, record audio or scan and import a document instantly")
+        .description("Create a blank notebook, record audio or scan")
         .supportedFamilies([.systemMedium])
     }
     var widgetGradientBG : [Color] {

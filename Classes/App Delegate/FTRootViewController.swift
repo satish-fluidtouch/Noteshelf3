@@ -546,6 +546,8 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
                 if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == docId}) as? FTDocumentItemProtocol {
                     self.openPinnedBook(documentItem: shelfItem, onCompletion: nil)
+                } else {
+                    UIAlertController.showAlert(withTitle: "", message: NSLocalizedString("NotebookNotAvailable", comment: "NotebookNotAvailable"), from: self, withCompletionHandler: nil)
                 }
             }
         }
@@ -592,6 +594,8 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                             docVc.insertNewPageWith(type: type)
                         }
                     }
+                } else {
+                    UIAlertController.showAlert(withTitle: "", message: NSLocalizedString("NotebookNotAvailable", comment: "NotebookNotAvailable"), from: self, withCompletionHandler: nil)
                 }
             }
         }
