@@ -1833,7 +1833,6 @@ private class FTAppLauncTracker: NSObject {
     }
     @objc func log20SecondWaitError() {
         FTLogError("App Launch Failed - 20")
-        self.rootViewController?.showAppLaunchDelayAlert();
     }
     @objc func log60SecondWaitError() {
         FTLogError("App Launch Failed - 60")
@@ -1874,23 +1873,6 @@ fileprivate extension FTRootViewController {
     func cancelLaunchWaitError() {
         launchTracker?.cancelLaunchWaitError();
         launchTracker = nil;
-    }
-    
-    func showAppLaunchDelayAlert() {
-        guard FTUserDefaults.defaults().iCloudOn else {
-            return;
-        }
-        let alertContorller = UIAlertController(title: "applaunch.delay.msg".localized, message: nil, preferredStyle: .alert)
-        let closeAction = UIAlertAction(title: "Close".localized, style: .default);
-        let support = UIAlertAction(title: "applaunch.delay.contactSupport".localized, style: .default) { [weak self] _ in
-            guard let controller = self else {
-                return;
-            }
-            FTZenDeskManager.shared.showSupportContactUsScreen(controller: controller, defaultSubject: "App Launch Delay", extraTags: ["ns3_app_launc_delay"])
-        }
-        alertContorller.addAction(closeAction)
-        alertContorller.addAction(support)
-        self.present(alertContorller, animated: true);
     }
 }
 
