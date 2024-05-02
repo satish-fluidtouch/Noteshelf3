@@ -20,9 +20,15 @@ class FTShelfCallback: NSObject {
 class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGatherDelegate,FTShelfCacheProtocol,
     FTShelfItemSorting,FTShelfItemSearching,FTUniqueNameProtocol,FTShelfItemDocumentStatusChangePublisher
 {
-    private(set) lazy var indexPlistContent: FTSortingIndexPlistContent? = {
-        return FTSortingIndexPlistContent.init(parent: self)
-    }()
+    
+    private var _indexPlistContent: FTSortingIndexPlistContent?
+    var indexPlistContent: FTSortingIndexPlistContent? {
+        if nil == _indexPlistContent {
+            _indexPlistContent = FTSortingIndexPlistContent.init(parent: self)
+        }
+        return _indexPlistContent;
+    };
+
     lazy var indexCache: FTCustomSortingCache? = {
         if self.collectionType == .default || self.collectionType == .migrated {
             return FTCustomSortingCache(withContainer: self)
@@ -830,7 +836,7 @@ extension FTShelfItemCollectionLocal: FTSortIndexContainerProtocol {
                 (groupItem as? FTSortIndexContainerProtocol)?.handleSortIndexFileUpdates(nil)
             }
             else {
-                self.indexPlistContent?.handleSortIndexFileUpdates(nil)
+                self._indexPlistContent?.handleSortIndexFileUpdates(nil)
             }
         }
     }

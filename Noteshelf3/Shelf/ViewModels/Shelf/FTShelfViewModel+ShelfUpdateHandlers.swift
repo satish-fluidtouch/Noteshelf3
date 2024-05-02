@@ -19,6 +19,14 @@ class FTShelfRefreshOperation : NSObject
 
 //MARK: Handlers for shelf items added, updated and removed
 extension FTShelfViewModel {
+    @objc func shelfSortIndexUpdated(_ notification: Notification) {
+        if self.sortOption == .manual
+            ,let collection = notification.object as? FTShelfItemCollection
+            ,(self.collection.isAllNotesShelfItemCollection || self.collection.uuid == collection.uuid) {
+            self.reloadItems(force: true);
+        }
+    }
+    
     @objc func shelfItemDidGetAdded(_ notification: Notification) {
         if let userInfo = notification.userInfo, let shelfCollection = notification.object as? FTShelfItemCollection {
             if(self.collection.uuid == shelfCollection.uuid ||

@@ -251,7 +251,9 @@ class FTShelfViewModel: NSObject, ObservableObject {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name("ShelfItemDropOperationFinished"), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: FTShelfShowDateChangeNotification), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: shelfCollectionItemsCountNotification), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.sortIndexPlistUpdated, object: nil)
     }
+    
     func addObserversForShelfItems(){
         if isObserversAdded {
             return
@@ -417,6 +419,7 @@ private extension FTShelfViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(shelfItemDropOperationFinished(_:)), name: NSNotification.Name("ShelfItemDropOperationFinished"), object: nil)
         NotificationCenter.default.addObserver(self, selector:#selector(splitDisplayChangeHandler(_:)) , name: NSNotification.Name("SplitDisplayModeChangeNotification"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleShowDateStatusChange), name: Notification.Name(rawValue: FTShelfShowDateChangeNotification), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(shelfSortIndexUpdated(_:)), name: NSNotification.Name.sortIndexPlistUpdated, object: nil)
     }
     @objc func splitDisplayChangeHandler(_ notification: Notification) {
         if let userInfo = notification.userInfo, let displayModeRawvalue = userInfo["splitDisplayMode"] as? Int, let displayMode =  UISplitViewController.DisplayMode(rawValue: displayModeRawvalue) {
