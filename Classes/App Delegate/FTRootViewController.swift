@@ -268,6 +268,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                 FTMobileCommunicationManager.shared.startWatchSession()
                 let collectionName = self.lastSelectedCollectionName();
                 FTCLSLog("Fetching Collection");
+                self.showIcloudMessage();
                 self.shelfCollection(title: collectionName, pickDefault: false, onCompeltion: { collectionToShow in
                     FTCLSLog("Collection Fetched");
                     NotificationCenter.default.post(name: .didChangeUnfiledCategoryLocation, object: nil);
@@ -285,7 +286,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                                        lastSelectedSideBarContentType: .home,
                                        lastSelectedTag: "")
                     }
-                    self.showIcloudMessage();
                     onCompletion?(true);
                 });
             }
