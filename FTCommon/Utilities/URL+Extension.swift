@@ -67,7 +67,7 @@ public extension URL {
     }
     func urlByDeleteingPrivate() -> URL
     {
-        var fileItemURL = self.standardizedFileURL;
+        var fileItemURL = self;
         let filePath = fileItemURL.path;
         let searchString = "/private";
         if(filePath.hasPrefix(searchString)) {

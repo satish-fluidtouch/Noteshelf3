@@ -32,6 +32,8 @@ class FTShelfItemCollectionAll: NSObject, FTShelfItemCollection, FTShelfItemSort
     var collectionError: NSError {
         return NSError.init(domain: "", code: 100, userInfo: [NSLocalizedDescriptionKey : "Error"])
     }
+    
+    private let queue = DispatchQueue(label: "com.fluidtouch.allnotes");
     func shelfItems(_ sortOrder: FTShelfSortOrder, parent: FTGroupItemProtocol?, searchKey: String?, onCompletion completionBlock: @escaping (([FTShelfItemProtocol]) -> Void)) {
         let options = FTFetchShelfItemOptions()
         FTNoteshelfDocumentProvider.shared.fetchAllShelfItems(option:options) {[weak self] (shelfItems) -> (Void) in
@@ -39,8 +41,12 @@ class FTShelfItemCollectionAll: NSObject, FTShelfItemCollection, FTShelfItemSort
                 completionBlock([])
                 return
             }
-            self.childrens = self.sortItems(shelfItems, sortOrder: sortOrder)
-            completionBlock(self.childrens)
+            self.queue.async {
+                let sortedItem = self.sortItems(shelfItems, sortOrder: sortOrder)
+                DispatchQueue.main.async {
+                    completionBlock(sortedItem);
+                }
+            }
         }
     }
     

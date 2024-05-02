@@ -28,10 +28,23 @@ extension NSNotification.Name {
 
     private weak var finishDownloadNotificationObserver: NSObjectProtocol?;
     
-    weak var metadataItem: NSMetadataItem?;
+    private var _displayTitle: String?;
+    var displayTitle: String {
+        return _displayTitle ?? self.URL.title;
+    }
+    
+    weak var metadataItem: NSMetadataItem? {
+        didSet {
+            _displayTitle = metadataItem?.URL()?.title;
+            _fileCreationDate = metadataItem?.creationDate;
+            _fileModificationDate = metadataItem?.modificationDate;
+        }
+    };
+    
+    private var _fileCreationDate: Date?
     var fileCreationDate: Date {
         if let metadata = metadataItem {
-            return metadata.creationDate
+            return self._fileCreationDate ?? metadata.creationDate
         }
         if FileManager().fileExists(atPath: self.URL.path) {
             return self.URL.fileCreationDate;
@@ -263,12 +276,13 @@ extension NSNotification.Name {
         #endif
     }
     
+    private var _fileModificationDate: Date?
     var fileModificationDate: Date {
         if let _date = self.tempFileModificationDate {
             return _date;
         }
-        if self.metadataItem != nil {
-            return self.metadataItem?.modificationDate ?? Date();
+        if let metadata = self.metadataItem {
+            return self._fileModificationDate ?? metadata.modificationDate
         }
         return self.URL.fileModificationDate
     }
