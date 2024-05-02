@@ -22,6 +22,7 @@ class FTShelfItemCollectionICloud: NSObject, FTShelfItemSorting, FTShelfItemSear
 
     lazy var indexCache: FTCustomSortingCache? = {
         if self.collectionType == .default || self.collectionType == .migrated {
+            self.indexPlistContent?.handleSortIndexFileUpdates(nil)
             return FTCustomSortingCache(withContainer: self)
         }
         return nil
