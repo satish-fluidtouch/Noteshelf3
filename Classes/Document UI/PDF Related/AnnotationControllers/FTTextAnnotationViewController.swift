@@ -978,15 +978,8 @@ extension FTTextAnnotationViewController: FTTextToolBarDelegate {
         self.textInputDidChangeStyle(style)
     }
     
-    func enterIntoEditMode() {
-        self.textInputView.becomeFirstResponder()
-    }
-    
     func isFontSelectionInProgress(value: Bool) {
         self._isFontSelectionInProgress = value
-        runInMainThread {
-            self.textInputView.becomeFirstResponder()
-        }
     }
     
     func didChangeBackgroundColor(_ color: UIColor) {

@@ -391,29 +391,35 @@ extension FTNewTextStyleViewController {
     }
     
     @IBAction func tappedOnFontName(_ sender: UIButton) {
-        let fontPicker = FTFontPickerViewController(nibName: "FTFontPickerViewController", bundle: Bundle(for: FTFontPickerViewController.self))
+        let configuration = UIFontPickerViewController.Configuration()
+        configuration.includeFaces = true
+        let fontPicker = FTFontPickerViewController(configuration: configuration)
 #if !targetEnvironment(macCatalyst)
         if let navVc = self.navigationController, navVc.modalPresentationStyle == .formSheet {
             fontPicker.textFontStyle = self.textFontStyle
-            fontPicker.delegate = self
+            fontPicker.fontPickerdelegate = self
             navVc.pushViewController(fontPicker, animated: true)
         } else {
             self.dismiss(animated: false) {
-                fontPicker.delegate = self.delegate as? FTSystemFontPickerDelegate
+                fontPicker.fontPickerdelegate = self.delegate as? FTSystemFontPickerDelegate
                 (self.delegate as? FTSystemFontPickerDelegate)?.isFontSelectionInProgress(value: true)
                 fontPicker.textFontStyle = self.textFontStyle
+                self.delegate?.textInputViewCurrentTextView()?.resignFirstResponder()
                 if let toolBarVc = self.delegate as? FTTextToolBarViewController {
                     var presentingVc = self.presentingViewController ?? self
                     if let rootVc = toolBarVc.rootViewController() {
                         presentingVc = rootVc
                     }
-                    presentingVc.ftPresentFormsheet(vcToPresent: fontPicker, animated: false)
+                    fontPicker.modalPresentationStyle = .formSheet
+                    fontPicker.preferredContentSize = CGSize(width: 540.0, height: 700.0)
+                    presentingVc.present(fontPicker, animated: true)
+
                 }
             }
         }
 #else
         fontPicker.textFontStyle = self.textFontStyle
-        fontPicker.delegate = self
+        fontPicker.fontPickerdelegate = self
         self.present(fontPicker, animated: true)
 #endif
     }
