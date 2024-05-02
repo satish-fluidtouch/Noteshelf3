@@ -260,6 +260,7 @@ extension FTTextStyleCompactViewController {
     @IBAction func tappedOnFontSelector(_ sender: UIButton) {
         let fontPicker: FTFontPickerViewController = FTFontPickerViewController(nibName: "FTFontPickerViewController", bundle: Bundle(for: FTFontPickerViewController.self))
         fontPicker.delegate = self
+        fontPicker.textFontStyle = self.textFontStyle
         self.present(fontPicker, animated: true)
     }
     
@@ -391,16 +392,8 @@ extension FTTextStyleCompactViewController: FTTextPresetSelectedDelegate {
 
 extension FTTextStyleCompactViewController : FTSystemFontPickerDelegate, UIFontPickerViewControllerDelegate {
     
-    func didPickFontFromSystemFontPicker(_ viewController : FTFontPickerViewController?, selectedFontDescriptor: UIFontDescriptor) {
-        if let fontFamily = selectedFontDescriptor.object(forKey: .family) as? String, let displayName = selectedFontDescriptor.object(forKey: .visibleName) as? String {
-            if let _ = selectedFontDescriptor.object(forKey: .face) as? String, let fontName = selectedFontDescriptor.object(forKey: .name) as? String {
-                self.textFontStyle.fontName = fontName
-                self.textFontStyle.fontFamily = fontFamily
-            } else {
-                self.textFontStyle.fontName = displayName
-                self.textFontStyle.fontFamily = fontFamily
-            }
-        }
+    func didPickFontFromSystemFontPicker(_ viewController : FTFontPickerViewController?, selectedFontDescriptor: UIFontDescriptor, fontStyle: FTTextStyleItem) {
+        self.textFontStyle = fontStyle
         self.applyFontChanges()
     }
 }

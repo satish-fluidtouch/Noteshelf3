@@ -54,6 +54,7 @@ class FTTextAnnotationViewController: UIViewController {
     private var knobHandlerImage: UIImageView!
     internal var interaction: UIEditMenuInteraction?
     internal var editMenuConfig: UIEditMenuConfiguration?
+    internal var _isFontSelectionInProgress = false
 
     // Don't make below viewmodel weak as this is needed for eyedropper delegate to be implemented here(since we are dismissing color edit controller)
     internal var penShortcutViewModel: FTPenShortcutViewModel?
@@ -442,7 +443,7 @@ class FTTextAnnotationViewController: UIViewController {
         #else
         shouldRemove = (self.isEmpty && !self.isFirstResponder && !transitionInProgress)
         #endif
-        if shouldRemove {
+        if shouldRemove && !_isFontSelectionInProgress {
             self.delegate?.annotationControllerDidRemoveAnnotation(self, annotation: self.annotation)
         }
         else {
@@ -755,7 +756,7 @@ extension FTTextAnnotationViewController : UITextViewDelegate {
         attr.applyDataDetectorAttributes()
         textView.attributedText = attr
         #if !targetEnvironment(macCatalyst)
-        if(!transitionInProgress) {
+        if(!transitionInProgress && !_isFontSelectionInProgress) {
             self.editMode = false
         }
         resizeTextViewAsNeeded()
@@ -975,6 +976,17 @@ extension FTTextAnnotationViewController: FTTextToolBarDelegate {
     
     func didSelectFontStyle(_ style: FTTextStyleItem) {
         self.textInputDidChangeStyle(style)
+    }
+    
+    func enterIntoEditMode() {
+        self.textInputView.becomeFirstResponder()
+    }
+    
+    func isFontSelectionInProgress(value: Bool) {
+        self._isFontSelectionInProgress = value
+        runInMainThread {
+            self.textInputView.becomeFirstResponder()
+        }
     }
     
     func didChangeBackgroundColor(_ color: UIColor) {
