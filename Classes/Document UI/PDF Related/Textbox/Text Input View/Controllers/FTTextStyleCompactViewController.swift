@@ -9,7 +9,7 @@
 import UIKit
 import FTCommon
 
-protocol FTTextStyleCompactDelegate: FTDefaultTextStyleDelegate, FTRootControllerInfo {
+protocol FTTextStyleCompactDelegate: FTDefaultTextStyleDelegate, FTRootControllerInfo, FTFontSelectionDelegate {
     func didSelectFontStyle(_ style: FTTextStyleItem)
     func didChangeAlignmentStyle(_ style: NSTextAlignment)
     func changeLineSpacing(_ lineSpace: CGFloat)
@@ -261,9 +261,20 @@ extension FTTextStyleCompactViewController {
         let configuration = UIFontPickerViewController.Configuration()
         configuration.includeFaces = true
         let fontPicker: FTFontPickerViewController = FTFontPickerViewController(configuration: configuration)
-        fontPicker.fontPickerdelegate = self
-        fontPicker.textFontStyle = self.textFontStyle
-        self.present(fontPicker, animated: true)
+        self.dismiss(animated: true) {
+            if let toolBarVc = self.delegate as? FTTextToolBarViewController {
+                var presentingVc = self.presentingViewController ?? self
+                if let rootVc = toolBarVc.rootViewController() {
+                    presentingVc = rootVc
+                }
+                self.delegate?.isFontSelectionInProgress(value: true)
+                fontPicker.fontPickerdelegate = self
+                fontPicker.textFontStyle = self.textFontStyle
+                self.present(fontPicker, animated: true)
+                presentingVc.present(fontPicker, animated: true)
+            }
+        }
+        
     }
     
     @IBAction func tappedOnFontSizeStepper(_ sender: UIStepper) {
