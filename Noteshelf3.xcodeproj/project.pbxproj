@@ -660,7 +660,7 @@
 		70E4E0B059B5E459A782F4D5 /* Pods_Noteshelf3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9D0526C5CF6A9527BEB0533 /* Pods_Noteshelf3.framework */; };
 		84485C192B86003C005A981D /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 521982152B7B99D6004ABDCC /* Intents.framework */; };
 		84485C1C2B86003C005A981D /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84485C1B2B86003C005A981D /* IntentHandler.swift */; };
-		84485C202B86003C005A981D /* Noteshelf3 Intents Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 84485C182B86003C005A981D /* Noteshelf3 Intents Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		84485C202B86003C005A981D /* Noteshelf3 Intents Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 84485C182B86003C005A981D /* Noteshelf3 Intents Extension.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		84485C282B860069005A981D /* PinnedIntentDefinition.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 521982392B7B9BB5004ABDCC /* PinnedIntentDefinition.intentdefinition */; };
 		84485C2C2B86040D005A981D /* FTCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA84E442873105500DE801B /* FTCommon.framework */; };
 		8E8D86C0291A385900927EE5 /* FTDeskToolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8D86BE291A385900927EE5 /* FTDeskToolView.swift */; };
@@ -773,7 +773,7 @@
 		97C4531F2B70E40500251C73 /* Noteshelf3_WidgetsBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4531E2B70E40500251C73 /* Noteshelf3_WidgetsBundle.swift */; };
 		97C453212B70E40500251C73 /* FTPinnedNotebookWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C453202B70E40500251C73 /* FTPinnedNotebookWidget.swift */; };
 		97C453232B70E40700251C73 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C453222B70E40700251C73 /* Assets.xcassets */; };
-		97C453272B70E40700251C73 /* Noteshelf3 WidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 97C453182B70E40400251C73 /* Noteshelf3 WidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		97C453272B70E40700251C73 /* Noteshelf3 WidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 97C453182B70E40400251C73 /* Noteshelf3 WidgetsExtension.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		97C453302B70F24000251C73 /* SearchIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4532F2B70F24000251C73 /* SearchIntent.swift */; };
 		97C453312B70F27C00251C73 /* SearchIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4532F2B70F24000251C73 /* SearchIntent.swift */; };
 		97C453402B73538B00251C73 /* FTNotebookCreationWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4533D2B73538B00251C73 /* FTNotebookCreationWidget.swift */; };
@@ -15054,6 +15054,7 @@
 		};
 		84485C1F2B86003C005A981D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = 84485C172B86003C005A981D /* Noteshelf3 Intents Extension */;
 			targetProxy = 84485C1E2B86003C005A981D /* PBXContainerItemProxy */;
 		};
@@ -15064,6 +15065,7 @@
 		};
 		97C453262B70E40700251C73 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = 97C453172B70E40400251C73 /* Noteshelf3 WidgetsExtension */;
 			targetProxy = 97C453252B70E40700251C73 /* PBXContainerItemProxy */;
 		};
