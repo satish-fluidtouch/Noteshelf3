@@ -31,6 +31,7 @@ extension UIViewController {
         } else {
             navController = UINavigationController(rootViewController: vcToPresent)
         }
+        
         navController.isNavigationBarHidden = hideNavBar
         navController.modalPresentationStyle = .custom
         navController.preferredContentSize = contentSize

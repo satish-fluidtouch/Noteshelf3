@@ -19,6 +19,14 @@ class FTShelfRefreshOperation : NSObject
 
 //MARK: Handlers for shelf items added, updated and removed
 extension FTShelfViewModel {
+    @objc func shelfSortIndexUpdated(_ notification: Notification) {
+        if self.sortOption == .manual
+            ,let collection = notification.object as? FTShelfItemCollection
+            ,(self.collection.isAllNotesShelfItemCollection || self.collection.uuid == collection.uuid) {
+            self.reloadItems(force: true);
+        }
+    }
+    
     @objc func shelfItemDidGetAdded(_ notification: Notification) {
         if let userInfo = notification.userInfo, let shelfCollection = notification.object as? FTShelfItemCollection {
             if(self.collection.uuid == shelfCollection.uuid ||
@@ -31,7 +39,7 @@ extension FTShelfViewModel {
                         }
                     }
                 }
-                self.reloadItems();
+                self.reloadItems(force: true);
             }
         }
     }
@@ -48,7 +56,7 @@ extension FTShelfViewModel {
 
         //**************** To handle updates from other categories to All
         if self.collection.isAllNotesShelfItemCollection {
-            self.reloadItems()
+            self.reloadItems(force: false)
         } else {
             //****************
             if(self.collection.uuid == shelfCollection.uuid) {
@@ -69,7 +77,7 @@ extension FTShelfViewModel {
                         eachItem.resetCachedDates()
                     }
                     if shouldReload {
-                        reloadItems()
+                        self.reloadItems(force: false)
                     }
                 }
             }
@@ -80,11 +88,11 @@ extension FTShelfViewModel {
         if let shelfCollection = notification.object as? FTShelfItemCollection {
             //**************** To handle updates from other categories to All
             if self.collection.isAllNotesShelfItemCollection {
-                self.reloadItems();
+                self.reloadItems(force: true);
             } else {
                 //****************
                 if(self.collection.uuid == shelfCollection.uuid) {
-                    self.reloadItems()
+                    self.reloadItems(force: true)
                 }
             }
         }
@@ -94,11 +102,11 @@ extension FTShelfViewModel {
         if let shelfCollection = notification.object as? FTShelfItemCollection {
             //**************** To handle updates from other categories to All
             if self.collection.isAllNotesShelfItemCollection {
-                self.reloadItems();
+                self.reloadItems(force: true);
             } else {
                 //****************
                 if(self.collection.uuid == shelfCollection.uuid) {
-                    self.reloadItems()
+                    self.reloadItems(force: true)
                 }
             }
         }
@@ -111,7 +119,7 @@ extension FTShelfViewModel {
         if let userInfo = notification.userInfo, let shelfCollection = notification.object as? FTShelfItemCollection {
             //**************** To handle updates from other categories to All
             if self.collection.isAllNotesShelfItemCollection {
-                self.reloadItems();
+                self.reloadItems(force: true);
                 return
             }
             //****************
@@ -124,10 +132,10 @@ extension FTShelfViewModel {
                             parent.isUpdated = true
                         }
                     }
-                    self.reloadItems()
+                    self.reloadItems(force: true)
                 }
                 else {
-                    self.reloadItems()
+                    self.reloadItems(force: true)
                 }
             }
             else if self.collection.isStarred {

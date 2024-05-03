@@ -80,9 +80,9 @@ class FTSortingIndexPlistContent: NSObject {
         self.metadataItem = metadata
 
         let modificationTime = self.fileModificationDate.timeIntervalSinceReferenceDate
-        if self.lastUpdatedTime < modificationTime {
+        if self.lastUpdatedTime < modificationTime, let doc = self.indexDocument {
             self.lastUpdatedTime = modificationTime
-            self.indexDocument?.getSortingOrderList({ (items, success) in
+            FTIndexDocumentReader.shared.readIndexDocument(doc) { (items, success) in
                 if success {
                     self.itemsList = items
                     if self.indexDocument?.documentState != .inConflict {
@@ -97,7 +97,7 @@ class FTSortingIndexPlistContent: NSObject {
                         });
                     }
                 }
-            })
+            }
         }
     }
     
@@ -298,5 +298,61 @@ extension FTShelfItemProtocol {
             titleString = String(timeStamp)
         }
         return titleString
+    }
+}
+
+private class FTIndexDocumentReader: NSObject {
+    static let shared = FTIndexDocumentReader();
+    private var operationQueue = OperationQueue();
+    
+    override init() {
+        operationQueue.name = "com.fluidtouch.indexDocumentReader"
+        operationQueue.maxConcurrentOperationCount = 3;
+        operationQueue.qualityOfService = QualityOfService.background;
+    }
+    
+    func readIndexDocument(_ document: FTIndexDocument,onCompletion: @escaping (([String], Bool) -> Void))
+    {
+        let operation = FTindexDocumentReadOperation(document, onCompletion: onCompletion);
+        operationQueue.addOperation(operation);
+    }
+}
+
+private class FTindexDocumentReadOperation: Operation
+{
+    private var document: FTIndexDocument;
+    private var onCompletion: (([String], Bool) -> Void);
+    var taskExecuting:Bool = false {
+        willSet{
+            if(self.taskExecuting != newValue) {
+                self.willChangeValue(forKey: "isFinished");
+            }
+        }
+        didSet {
+            if(self.taskExecuting != oldValue) {
+                self.didChangeValue(forKey: "isFinished");
+            }
+        }
+    }
+
+    required init(_ _document: FTIndexDocument,onCompletion block: @escaping (([String], Bool) -> Void)) {
+        document = _document;
+        onCompletion = block;
+    }
+    
+    override var isConcurrent: Bool {
+        return true;
+    }
+    
+    override var isFinished: Bool {
+        return !taskExecuting;
+    }
+    
+    override func main() {
+        self.taskExecuting = true;
+        document.getSortingOrderList { items, success in
+            self.onCompletion(items,success);
+            self.taskExecuting = false;
+        }
     }
 }

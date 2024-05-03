@@ -29,7 +29,8 @@ public protocol FTStoreCustomDelegate: NSObjectProtocol, FTThemeUpdateURL {
 
 class FTStoreCustomViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet var emptyView: UIView!
+    @IBOutlet private var emptyView: UIView!
+    @IBOutlet private weak var emptyViewCenterYConstraint: NSLayoutConstraint?
 
     private weak var delegate: FTStoreCustomDelegate?;
     private var selectedFile: URL?
@@ -98,6 +99,11 @@ class FTStoreCustomViewController: UIViewController {
         runInMainThread {
             if self.viewModel.items().isEmpty {
                 self.collectionView.backgroundView = self.emptyView
+                if self.sourceType == .addMenu || self.sourceType == .changeTemplate {
+                    self.emptyViewCenterYConstraint?.constant = -30.0
+                } else {
+                    self.emptyViewCenterYConstraint?.constant = 50.0
+                }
             } else {
                 self.collectionView.backgroundView = nil
             }
