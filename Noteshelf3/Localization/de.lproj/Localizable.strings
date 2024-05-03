@@ -1016,6 +1016,7 @@
 "customizeToolbar.pixabay" = "Pixabay";
 "customizeToolbar.present" = "Präsentieren";
 "customizeToolbar.readOnlyMode" = "Nur-Lese-Modus";
+"customizeToolbar.recent.notes" = "Aktuelle Notizbücher";
 "customizeToolbar.requestForShortcut" = "Eine Verknüpfung anfordern";
 "customizeToolbar.resetConfirmation" = "Bist du sicher, dass du die Symbolleiste auf Standard zurücksetzen möchtest?";
 "customizeToolbar.rotatePage" = "Seite drehen";
@@ -1340,7 +1341,7 @@
 "shelf.discover.tagsTitle" = "Organisieren Sie Ihre Notizen";
 "shelf.discover.templatesDescription" = "Entdecke Hunderte von Vorlagen für Schule, Arbeit, Tagebuch und mehr.";
 "shelf.discover.templatesTitle" = "Eine Vorlage für jeden Bedarf";
-"shelf.discover.title" = "Entdecke, was möglich ist.";
+"shelf.discover.title" = "Entdecke, was möglich ist";
 "shelf.discover.whatsNewDescription" = "Nimm wunderschöne Notizen mühelos mit dem brandneuen Noteshelf auf.";
 "shelf.discover.whatsNewTitle" = "Was gibt es Neues in Noteshelf";
 "shelf.dragAndDrop.dropAnywhere" = "Hier ablegen, um die Datei zu importieren.";
@@ -1571,6 +1572,8 @@
 "textmode.fonttitle" = "Schriftart/Textstil";
 "texttoolbar.fontselectionTitle" = "Schrift Auswählen";
 "theams.unsplashDescription" = "Wählen Sie aus Unsplash aus, machen Sie ein Foto oder wählen Sie aus Ihrer Fotobibliothek, um Ihre individuellen Cover zu erstellen.";
+"tipeview.shortcut.message" = "Lange drücken Sie auf die Symbolleiste, um Werkzeuge hinzuzufügen, zu entfernen oder neu anzuordnen, wie Sie möchten.";
+"tipeview.shortcut.title" = "Neue Symbolleisten-Verknüpfungen hinzugefügt!";
 "trash.alert.cannotOpenNotebook" = "Dieses Notizbuch kann nicht geöffnet werden, da es gelöscht wurde. Um es wiederherzustellen, lange drücken und die Option aus dem Menü auswählen.";
 "trash.alert.title" = "Sind Sie sicher, dass Sie Ihren Papierkorb leeren möchten?";
 "unsplash.search.alertMessage" = "Geben Sie den Text zum Suchen ein.";
@@ -1605,7 +1608,7 @@
 "welcome.handWritingRecognition.description" = "Konvertieren Sie Handschrift in Text und suchen Sie nach Handschrift in über 60 Sprachen.";
 "welcome.headerbottomfirstTitle" = "Notizen";
 "welcome.headerbottomsecondTitle" = "mühelos";
-"welcome.headertopTitle" = "Nehmen Sie schön.";
+"welcome.headertopTitle" = "Nehmen Sie schön";
 "welcome.icloudSync" = "ICLOUD-SYNCHRONISIERUNG";
 "welcome.icloudSync.description" = "iPad, iPhone, Mac und Apple Watch - alle synchronisiert mit iCloud.";
 "welcome.imageEditing" = "BILD BEARBEITUNG";
@@ -1657,9 +1660,16 @@
 "whatsnew.planner2.cta" = "Schauen Sie sie sich jetzt an!";
 "whatsnew.planner2.description" = "Entdecken Sie bezaubernde digitale Planer in der Vorlagen-Sektion, die wir von talentierten Erstellern zusammengestellt haben.";
 "whatsnew.planner2.title" = "Mehr 2024 Planer!";
+"widget.nonotes" = "Keine Notizen vorhanden";
+"widget.notebook" = "Notizbuch";
+"widget.pinned.description" = "Schnellen Zugriff auf eines Ihrer Notizbücher erhalten.";
+"widget.quickCreate.large.description" = "Schnell erstellen Sie ein leeres Notizbuch, nehmen Sie Audio auf oder scannen Sie ein Dokument.";
+"widget.quickCreate.small.description" = "Erstellen Sie eine schnelle Notiz.";
+"widget.quicknote" = "Schnelle Notiz";
+"widget.takenotes" = "Notizen machen";
 "widgets" = "Widgets";
 "work" = "Arbeit";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 24 April 2024 at 1:13 PM
+// Last Synced by Fluid Touch on 3 May 2024 at 5:05 PM

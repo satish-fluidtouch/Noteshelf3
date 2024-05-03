@@ -22,12 +22,13 @@ protocol FTOpenCloseDocumentProtocol : NSObjectProtocol {
 private var currentRetryCount = 1
 private var maxRetryCount = 5
 
+// Variables or functions marked as internal are intended for file extensions convenience, not for outside access.
 class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewControllerSupportsScene {
 
     var addedObserverOnScene: Bool = false;
 
     weak var docuemntViewController : FTDocumentViewController?;
-    fileprivate var rootContentViewController: FTShelfPresentable?;
+    internal var rootContentViewController: FTShelfPresentable?;
     fileprivate var isFirstTime = true;
     fileprivate var isOpeningDocument = false;
 
@@ -38,7 +39,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     fileprivate weak var pencilInteraction : NSObject?;
 
     private var importController : FTImportedDocViewController?
-    private weak var noteBookSplitController: FTNoteBookSplitViewController?
+    internal weak var noteBookSplitController: FTNoteBookSplitViewController?
     var contentView : UIView!;
 
     private var keyValueObserver: NSKeyValueObservation?;
@@ -87,7 +88,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         if #available(iOS 12.1, *) {
             self.addPencilInteractionDelegate();
         }
-        
         self.keyValueObserver = FTUserDefaults.defaults().observe(\.showStatusBar, options: [.new]) { [weak self] (userdefaults, change) in
             self?.refreshStatusBarAppearnce();
         }
@@ -353,6 +353,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 
                 let loadingIndicatorViewController = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: NSLocalizedString("Moving", comment: "Moving..."));
                 DispatchQueue.main.async {
+                    FTDocumentCache.shared.clearCachedItems()
                     FTNoteshelfDocumentProvider.shared.moveContentsFromCloudToLocal(onCompletion: { (_) in
                         FTURLReadThumbnailManager.sharedInstance.clearStoredThumbnailCache()
                         FTNoteshelfDocumentProvider.shared.refreshCurrentShelfCollection {
@@ -372,6 +373,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             controller.addAction(keepLocalAction);
 
             let deleteFromLocal = UIAlertAction.init(title: NSLocalizedString("DeleteALocalCopy",comment:"Delete on my iPad"), style: .destructive, handler: { (_) in
+                FTDocumentCache.shared.clearCachedItems()
                 FTURLReadThumbnailManager.sharedInstance.clearStoredThumbnailCache()
                 FTNoteshelfDocumentProvider.shared.resetProviderCache();
                 (weakSelf?.rootContentViewController as? FTShelfSplitViewController)?.updateSidebarCollections()
@@ -529,7 +531,8 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             }
         }
     }
-    private func closeAnyActiveOpenedBook(completion: @escaping () -> Void) {
+
+    internal func closeAnyActiveOpenedBook(completion: @escaping () -> Void) {
 
         self.updateProvider { () -> Void in
 
@@ -559,8 +562,69 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             }
         };
     }
-
+   
     // MARK: - open Document from today widget
+    func openPinnedBook(with docId: String) {
+        self.prepareProviderIfNeeded {
+            FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
+                if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == docId}) as? FTDocumentItemProtocol {
+                    track("widget_smallnbk_book_tap")
+                    self.openPinnedBook(documentItem: shelfItem, onCompletion: nil)
+                } else {
+                    UIAlertController.showAlert(withTitle: "", message: NSLocalizedString("NotebookNotAvailable", comment: "NotebookNotAvailable"), from: self, withCompletionHandler: nil)
+                }
+            }
+        }
+    }
+    
+    func openPinnedBook(documentItem: FTDocumentItemProtocol, onCompletion: (() -> ())?) {
+        let relativePath = documentItem.URL.relativePathWRTCollection()
+        if(FTNoteshelfDocumentProvider.shared.isProviderReady) {
+            if let collection = documentItem.shelfCollection {
+                var groupItem : FTGroupItemProtocol?;
+                if let groupPath = relativePath.relativeGroupPathFromCollection() {
+                    let url = collection.URL.appendingPathComponent(groupPath);
+                    groupItem = collection.groupItemForURL(url);
+                }
+                let shelfItem = collection.documentItemWithName(title: relativePath.documentName(),
+                                                                inGroup: groupItem);
+                self.openDocumentAtRelativePath(relativePath, inShelfItem: shelfItem, animate: false, addToRecent: true, bipassPassword: true) {_,_ in
+                    onCompletion?()
+                }
+            }
+        }
+        else {
+            self.prepareProviderIfNeeded {
+                self.openDocumentAtRelativePath(relativePath, inShelfItem: nil,
+                                                animate: false,
+                                                addToRecent: true,
+                                                bipassPassword: true) {_,_ in
+                    onCompletion?()
+                };
+                
+            }
+        }
+    }
+    
+    func openAndperformActionInsidePinnedNotebook(_ type :FTPinndedWidgetActionType) {
+        self.prepareProviderIfNeeded {
+            FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
+                if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == type.docId}) as? FTDocumentItemProtocol {
+                    self.openPinnedBook(documentItem: shelfItem) {[weak self] in
+                        guard let self = self else {
+                            return
+                        }
+                        if let docVc = self.noteBookSplitController?.documentViewController {
+                            docVc.insertNewPageWith(type: type)
+                        }
+                    }
+                } else {
+                    UIAlertController.showAlert(withTitle: "", message: NSLocalizedString("NotebookNotAvailable", comment: "NotebookNotAvailable"), from: self, withCompletionHandler: nil)
+                }
+            }
+        }
+    }
+    
     func openDocumentForSelectedNotebook(_ path: URL, isSiriCreateIntent: Bool) {
         if let docController = self.docuemntViewController, !docController.canContinueToImportFiles() {
             let result = path.isPinEnabledForDocument()
@@ -668,7 +732,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             }
         }
     }
-
+  
     func showPremiumUpgradeScreen() {
         self.prepareProviderIfNeeded {
             self.closeAnyActiveOpenedBook {
@@ -1179,8 +1243,9 @@ extension FTRootViewController
                                          shelfItem: shelfItem!,
                                          addToRecent: addToRecent,
                                          passcode: nil,
-                                         shouldAskforPasscode: true,
-                                         onCompletion: onCompletion);
+                                         shouldAskforPasscode: true) {docProtocol,success in
+                        onCompletion?(docProtocol, success)
+                    }
                 }
             } else {
                 finalizeBlock(indicatorView);
@@ -1521,7 +1586,8 @@ extension FTRootViewController {
                                     animate : Bool = false,
                                     addToRecent : Bool = false,
                                     igrnoreIfNotDownloaded : Bool = false,
-                                    bipassPassword : Bool = true, onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?)
+                                    bipassPassword : Bool = true,
+                                    onCompletion: ((FTDocumentProtocol?, Bool) -> Void)? = nil)
     {
 
         if(false == FTNoteshelfDocumentProvider.shared.isProviderReady) {
@@ -1548,7 +1614,10 @@ extension FTRootViewController {
                                               inShelfItem: inShelfItem,
                                               addToRecent: addToRecent,
                                               igrnoreIfNotDownloaded: igrnoreIfNotDownloaded,
-                                              bipassPassword: bipassPassword, onCompletion: onCompletion);
+                                              bipassPassword: bipassPassword) {doc,success in
+                onCompletion?(doc, success)
+                
+            }
         }
     }
 
