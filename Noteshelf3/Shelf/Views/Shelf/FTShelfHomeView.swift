@@ -13,70 +13,82 @@ struct FTShelfHomeView: FTShelfBaseView {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @EnvironmentObject var viewModel: FTShelfViewModel
     @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
-
+    @AppStorage("discoverIsExpanded") var discoverExpandStaus: Bool = false
+    
     let supportedDropTypes = FTDragAndDropHelper.supportedTypesForDrop()
-
+    
     var body: some View {
         GeometryReader { geometry in
-            ScrollViewReader { proxy in
-                ScrollView(.vertical) {
-                    VStack(alignment: .center,spacing:0) {
-                        /*
-                         1. show description and top section in compact and ipad very first time
-                         2. once a notebook is created, dont show top section in compact but show in ipad.
-                         */
-                        if viewModel.shouldShowGetStartedInfo{
-                            FTShelfGetStartedDescription()
+            ZStack {
+                ScrollViewReader { proxy in
+                    ScrollView(.vertical) {
+                        VStack(alignment: .center,spacing:0) {
+                            /*
+                             1. show description and top section in compact and ipad very first time
+                             2. once a notebook is created, dont show top section in compact but show in ipad.
+                             */
+                            if viewModel.mode == .normal, (viewModel.shouldShowGetStartedInfo || geometry.size.width > 450) {
+                                FTShelfTopSectionView()
+                                    .frame(height: showMinHeight(geometrySize: geometry.size.width))
+                                    .padding(.horizontal,gridHorizontalPadding)
+                                    .padding(.top,10)
+                                    .environmentObject(viewModel)
+                            }
+                            if viewModel.showNoShelfItemsView {
+                                FTGetStartedPlaceHolderView(noResultsImageName: "noHomeItems",
+                                                            title: "home.getStarted.title".localized,
+                                                            description: "home.getStarted.descrption".localized, placeHolderType: .medium)
+                                .frame(minHeight: 350)
+                            } else {
+                                homeShelfItemsViewForGeometrySize(geometry.size, scrollViewProxy: proxy)
+                                Spacer()
+                            }
+                            if viewModel.shelfDidLoad {
+                                FTDiscoverWhatsNewView(isExpanded: discoverExpandStaus)
+                                    .environmentObject(viewModel)
+                                    .macOnlyPlainButtonStyle()
+                                    .padding(.horizontal,gridHorizontalPadding)
+                                    .padding(.bottom,20)
+                                    .padding(.top,16)
+                            }
                         }
-                        if viewModel.mode == .normal, (viewModel.shouldShowGetStartedInfo || geometry.size.width > 450) {
-                            FTShelfTopSectionView()
-                                .frame(height: showMinHeight(geometrySize: geometry.size.width))
-                                .padding(.horizontal,gridHorizontalPadding)
-                                .padding(.top,10)
-                                .environmentObject(viewModel)
-                        }
+                        .frame(minHeight: geometry.size.height)
                     }
-                    homeShelfItemsViewForGeometrySize(geometry.size, scrollViewProxy: proxy)
-                    if viewModel.shelfDidLoad {
-                        FTDiscoverWhatsNewView()
-                            .environmentObject(viewModel)
-                            .macOnlyPlainButtonStyle()
-                            .padding(.horizontal,gridHorizontalPadding)
-                            .padding(.top,40)
-                            .padding(.bottom,28)
-                    }
+                }
+                
+            }
+            
+        }
+        .overlay(content: {
+            if viewModel.showDropOverlayView {
+                withAnimation {
+                    FTDropOverlayView()
+                        .environmentObject(viewModel)
                 }
             }
-        }
-                .overlay(content: {
-                    if viewModel.showDropOverlayView {
-                        withAnimation {
-                            FTDropOverlayView()
-                                .environmentObject(viewModel)
-                        }
-                    }
-                })
-                .overlay(alignment: .bottom, content: {
-                        FTAdBannerView()
-                            .padding(.bottom,8)
-                })
-                .detectOrientation($viewModel.orientation)
-                .shelfNavBarItems()
-                .allowsHitTesting(viewModel.allowHitTesting)
-                .navigationTitle(viewModel.navigationTitle)
+        })
+        .overlay(alignment: .bottom, content: {
+            FTAdBannerView()
+                .padding(.bottom,8)
+        })
+        .detectOrientation($viewModel.orientation)
+        .shelfNavBarItems()
+        .allowsHitTesting(viewModel.allowHitTesting)
+        .navigationTitle(viewModel.navigationTitle)
 #if targetEnvironment(macCatalyst)
-                .navigationBarBackButtonHidden(true)
+        .navigationBarBackButtonHidden(true)
 #else
-                .navigationBarBackButtonHidden(viewModel.mode == .selection)
+        .navigationBarBackButtonHidden(viewModel.mode == .selection)
 #endif
-                .shelfBottomToolbar()
-                .environmentObject(viewModel.toolbarViewModel)
-                .environmentObject(viewModel)
-                .onTapGesture {
-                    self.hideKeyboard() // if any textfield is in editing state we exit from that mode and perform action. eg.rename category.
-                }
-                .onDrop(of: supportedDropTypes, delegate: FTShelfScrollViewDropDelegate(viewModel: viewModel))
+        .shelfBottomToolbar()
+        .environmentObject(viewModel.toolbarViewModel)
+        .environmentObject(viewModel)
+        .onTapGesture {
+            self.hideKeyboard() // if any textfield is in editing state we exit from that mode and perform action. eg.rename category.
         }
+        .onDrop(of: supportedDropTypes, delegate: FTShelfScrollViewDropDelegate(viewModel: viewModel))
+    }
+    
     private func homeShelfItemsViewForGeometrySize(_ size: CGSize, scrollViewProxy: ScrollViewProxy) -> some View {
         let homeShelfItems = homeShelfItemsForScreenSize(size)
         return VStack(spacing:0) {
@@ -84,13 +96,13 @@ struct FTShelfHomeView: FTShelfBaseView {
                 .if(viewModel.shelfItems.count > 0, transform: { view in
                     view.padding(.top,showSeeAllOption(shelfItemsCount: homeShelfItems.count) ? 16 : 20)
                 })
-                    if showSeeAllOption(shelfItemsCount: homeShelfItems.count) {
-                    seeAllNotesView
-                        .macOnlyPlainButtonStyle()
-                }
+            if showSeeAllOption(shelfItemsCount: homeShelfItems.count) {
+                seeAllNotesView
+                    .macOnlyPlainButtonStyle()
+            }
         }
     }
-
+    
     private var seeAllNotesView: some View {
         Button {
             self.viewModel.didTapOnSeeAllNotes?()
@@ -113,13 +125,13 @@ struct FTShelfHomeView: FTShelfBaseView {
         }
         .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: .slow))
     }
-
+    
     private var seeAllNotesButtonTitle: String {
         let notesCount = viewModel.shelfItems.count
         let seeAllString = NSLocalizedString("shelf.home.seeAllNotes", comment: "See All Notes") + " " + "(" + "\(notesCount)" + ")"
         return seeAllString
     }
-
+    
     private func homeShelfItemsForScreenSize(_ size: CGSize) -> [FTShelfItemViewModel] {
         let isInLandscape = UIScreen.main.bounds.width > UIScreen.main.bounds.height
         if self.viewModel.isSidebarOpen {
@@ -136,7 +148,7 @@ struct FTShelfHomeView: FTShelfBaseView {
             }
         }
     }
-
+    
     private func showSeeAllOption(shelfItemsCount:Int) -> Bool {
         viewModel.shelfItems.count > shelfItemsCount
     }

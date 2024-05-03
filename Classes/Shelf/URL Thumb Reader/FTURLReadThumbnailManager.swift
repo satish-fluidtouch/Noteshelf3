@@ -71,13 +71,17 @@ class FTThumbReadCallbacks : NSObject
         }
 
         if FTDeveloperOption.useQuickLookThumbnailing {
+            if let image = self.imageCache.cachedImageForItem(item: item) {
+                onCompletion(image,nil);
+                return nil;
+            }
             // For NS3 we will be using QLThumbnail, if it fails, we will fallback to old image reading approach
             return ns3ThumbnailReader.thumbnail(for: item, queue: thumbReadOperationQueue) { image, token, fetchError in
                 if nil != fetchError {
                     readThumbnailFromCache(reuseToken: token)
                 }
                 else {
-                    self.imageCache.removeImageCache(url: item.URL);
+                    self.imageCache.addImageToCache(image: image, url: item.URL)
                     onCompletion(image,token);
                 }
             }

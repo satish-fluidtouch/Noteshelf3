@@ -210,7 +210,7 @@ FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {}
 
 -(CGFloat)zoomPanelOverlayheight;
 -(BOOL)isInZoomMode;
-
+-(BOOL)isZoomSupportedDeskMode: (RKDeskMode)mode;
 -(NSInteger)getNewPageInsertIndex;
 
 -(void)showPageAtIndex:(NSInteger)pdfPageIndex

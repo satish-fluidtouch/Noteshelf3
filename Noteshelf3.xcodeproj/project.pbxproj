@@ -61,9 +61,15 @@
 		098F61382B3071B600BB0E16 /* FTPDFPageContentMigrationv1tov2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098F61372B3071B600BB0E16 /* FTPDFPageContentMigrationv1tov2.swift */; };
 		098F613C2B3084C400BB0E16 /* FTDocumentFramework.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9F5DD725B6C57B00864648 /* FTDocumentFramework.xcframework */; };
 		098F613D2B3084C400BB0E16 /* FTDocumentFramework.xcframework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA9F5DD725B6C57B00864648 /* FTDocumentFramework.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		09915D1D2BC7A61500E16EAC /* FTWelcomePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09915D1C2BC7A61500E16EAC /* FTWelcomePreviewViewController.swift */; };
+		09915D1F2BC7A65000E16EAC /* FTWelcomeItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09915D1E2BC7A65000E16EAC /* FTWelcomeItemViewController.swift */; };
 		099C91F62A8A1B3900C1FD07 /* FTdairyDatePickerViewController_Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C91F52A8A1B3900C1FD07 /* FTdairyDatePickerViewController_Mac.swift */; };
 		099C91F82A8A386700C1FD07 /* FTDairyDateSelectionPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C91F72A8A386700C1FD07 /* FTDairyDateSelectionPickerController.swift */; };
 		099D23592ABAD10A00636C42 /* URL+Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7A5F5D2AB0766E006D5284 /* URL+Thumbnail.swift */; };
+		09A1C3C82BCD45B500053114 /* ambient loop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09A1C3C52BCD45B500053114 /* ambient loop.mp3 */; };
+		09A1C3C92BCD45B500053114 /* popup_close.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09A1C3C62BCD45B500053114 /* popup_close.mp3 */; };
+		09A1C3CA2BCD45B500053114 /* popup_open.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09A1C3C72BCD45B500053114 /* popup_open.mp3 */; };
+		09A1C3CC2BCD4A2A00053114 /* FTGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A1C3CB2BCD4A2A00053114 /* FTGradientView.swift */; };
 		09A535572B0B80D60004CA09 /* FTImageResourceCacheHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A535562B0B80D60004CA09 /* FTImageResourceCacheHandler.swift */; };
 		09A67BF02AE7C66900C5500D /* FTPDFContentCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A67BEF2AE7C66900C5500D /* FTPDFContentCache.swift */; };
 		09A67BF32AE8F25100C5500D /* FTCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A67BF22AE8F25100C5500D /* FTCache.swift */; };
@@ -80,6 +86,8 @@
 		09ABDCB22A790FB3008F144D /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 09ABDCB12A790FB3008F144D /* OpenAI */; };
 		09ABDCB42A791077008F144D /* FTPageViewController_OpenAIExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ABDCB32A791077008F144D /* FTPageViewController_OpenAIExtension.swift */; };
 		09AC0D5C2A83B3AC00375B1F /* FTPremiumUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AC0D592A83AC7000375B1F /* FTPremiumUser.swift */; };
+		09B905902BC3DD3E00A03CCC /* FTWelcomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B9058E2BC3DD3E00A03CCC /* FTWelcomeScreenViewController.swift */; };
+		09B905932BC3E4D000A03CCC /* FTWelcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09B905922BC3E4D000A03CCC /* FTWelcome.storyboard */; };
 		09BAE60F2A654B48008CD577 /* FTShelfSplitViewController_Mac_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BAE60E2A654B48008CD577 /* FTShelfSplitViewController_Mac_Extension.swift */; };
 		09BC391D2ACC4BCF0011D8B0 /* FTQLThumbnail_Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BC391C2ACC4BCF0011D8B0 /* FTQLThumbnail_Error.swift */; };
 		09BD0B8C2BAAFD320085DA1D /* FTImageContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BD0B8B2BAAFD320085DA1D /* FTImageContext.swift */; };
@@ -2553,6 +2561,8 @@
 		099094D71E810FCC0027FDDD /* FTShelfItemCollectionLocal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfItemCollectionLocal.swift; sourceTree = "<group>"; };
 		0990BAF01EFA523100BC78CB /* FTNoteshelfDocumentProvider_LocaltoICloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FTNoteshelfDocumentProvider_LocaltoICloud.swift; path = "../../ShelfItem Providers/FTNoteshelfDocumentProvider_LocaltoICloud.swift"; sourceTree = "<group>"; };
 		0990BAF31EFA524300BC78CB /* FTNoteshelfDocumentProvider_iCloudToLocal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FTNoteshelfDocumentProvider_iCloudToLocal.swift; path = "../../ShelfItem Providers/FTNoteshelfDocumentProvider_iCloudToLocal.swift"; sourceTree = "<group>"; };
+		09915D1C2BC7A61500E16EAC /* FTWelcomePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWelcomePreviewViewController.swift; sourceTree = "<group>"; };
+		09915D1E2BC7A65000E16EAC /* FTWelcomeItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWelcomeItemViewController.swift; sourceTree = "<group>"; };
 		0994406E1F14B68B00E2DA09 /* FTUniqueNameProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTUniqueNameProtocol.swift; sourceTree = "<group>"; };
 		09953E7D1F1F2A7F00753F70 /* FTDocumentCreateInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDocumentCreateInfo.swift; sourceTree = "<group>"; };
 		09953E7E1F1F2A7F00753F70 /* FTDocumentFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDocumentFactory.swift; sourceTree = "<group>"; };
@@ -2655,6 +2665,10 @@
 		099D235A2ABAE2B900636C42 /* Noteshelf3 Thumbnail.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf3 Thumbnail.entitlements"; sourceTree = "<group>"; };
 		099F722020526FC7004D3518 /* default_paper_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_paper_image.png; sourceTree = "<group>"; };
 		099F722120526FC7004D3518 /* default_cover_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_cover_image.png; sourceTree = "<group>"; };
+		09A1C3C52BCD45B500053114 /* ambient loop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "ambient loop.mp3"; sourceTree = "<group>"; };
+		09A1C3C62BCD45B500053114 /* popup_close.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = popup_close.mp3; sourceTree = "<group>"; };
+		09A1C3C72BCD45B500053114 /* popup_open.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = popup_open.mp3; sourceTree = "<group>"; };
+		09A1C3CB2BCD4A2A00053114 /* FTGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGradientView.swift; sourceTree = "<group>"; };
 		09A3870D210763F4005E4000 /* FTAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAnnotation.swift; sourceTree = "<group>"; };
 		09A3870F210763FF005E4000 /* FTStroke.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FTStroke.swift; path = "Classes/Document UI/PDF Related/Annotations Model/FTStroke.swift"; sourceTree = SOURCE_ROOT; };
 		09A387112107640D005E4000 /* FTImageAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTImageAnnotation.swift; sourceTree = "<group>"; };
@@ -2709,6 +2723,8 @@
 		09B665E81E852B7A0003DA80 /* FTShelfProviderConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfProviderConstants.swift; sourceTree = "<group>"; };
 		09B78BBB2420B9DF00F10B11 /* PDFPage_BackgroundColor_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFPage_BackgroundColor_Extension.swift; sourceTree = "<group>"; };
 		09B82084241B8DC1001161DF /* FTPDFRenderViewController_FTScrollViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPDFRenderViewController_FTScrollViewDelegate.swift; sourceTree = "<group>"; };
+		09B9058E2BC3DD3E00A03CCC /* FTWelcomeScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWelcomeScreenViewController.swift; sourceTree = "<group>"; };
+		09B905922BC3E4D000A03CCC /* FTWelcome.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FTWelcome.storyboard; sourceTree = "<group>"; };
 		09B924BC1EC5F8C400030EAA /* FTSmartProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTSmartProgressView.swift; sourceTree = "<group>"; };
 		09BAE60E2A654B48008CD577 /* FTShelfSplitViewController_Mac_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfSplitViewController_Mac_Extension.swift; sourceTree = "<group>"; };
 		09BB70AC21F84EF20065B781 /* FTBackgroundTexture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTBackgroundTexture.swift; sourceTree = "<group>"; };
@@ -6345,6 +6361,16 @@
 			path = TextLists;
 			sourceTree = "<group>";
 		};
+		09F290262BCD1B0900B221BD /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				09A1C3C52BCD45B500053114 /* ambient loop.mp3 */,
+				09A1C3C62BCD45B500053114 /* popup_close.mp3 */,
+				09A1C3C72BCD45B500053114 /* popup_open.mp3 */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
 		09FD71761EB44AD8008ACB6B /* FTThemesModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -6379,10 +6405,16 @@
 		143570502A42D33E0088B4EB /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				09F290262BCD1B0900B221BD /* Audio */,
 				143570512A42D37D0088B4EB /* FTWelcomeView.swift */,
 				143570532A42D4080088B4EB /* FTGetStartedItemViewModel.swift */,
 				143570572A42F6040088B4EB /* FTGetstartedHostingViewcontroller.swift */,
 				144AA3282A441DB600C969AC /* FTWelcomeAssets.xcassets */,
+				09B9058E2BC3DD3E00A03CCC /* FTWelcomeScreenViewController.swift */,
+				09915D1E2BC7A65000E16EAC /* FTWelcomeItemViewController.swift */,
+				09915D1C2BC7A61500E16EAC /* FTWelcomePreviewViewController.swift */,
+				09B905922BC3E4D000A03CCC /* FTWelcome.storyboard */,
+				09A1C3CB2BCD4A2A00053114 /* FTGradientView.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -12314,6 +12346,7 @@
 				52BBD4E429E951D1003088AE /* Coming Soon Regular.ttf in Resources */,
 				52BBD4E629E951D1003088AE /* Baskerville T Medium.otf in Resources */,
 				52BBD4E829E951D1003088AE /* Andrea-Normal.ttf in Resources */,
+				09A1C3C92BCD45B500053114 /* popup_close.mp3 in Resources */,
 				14E976882A17534700382189 /* FTSettings_Accounts.storyboard in Resources */,
 				BAF38F5A2859ADF00067CA9F /* BrushAssets_V4.xcassets in Resources */,
 				E7AE403528755A9500C0F3EC /* StockCovers.bundle in Resources */,
@@ -12327,6 +12360,7 @@
 				E7AE404228755D4500C0F3EC /* Midnight.plist in Resources */,
 				BAF38F6E2859ADF00067CA9F /* FTBrandLogoView.xib in Resources */,
 				97C799312B035129001877B2 /* FTENUserInfoTableViewCell.xib in Resources */,
+				09B905932BC3E4D000A03CCC /* FTWelcome.storyboard in Resources */,
 				BAF38F702859ADF00067CA9F /* FTNotebookMoreOptions.storyboard in Resources */,
 				09103B862A86275800739602 /* FTNoteshelfAILocalized.strings in Resources */,
 				E7AE403A28755D4500C0F3EC /* themes_v8_zh-Hans.plist in Resources */,
@@ -12381,6 +12415,7 @@
 				BAF38FC02859ADF00067CA9F /* FTConvertPreferencesViewController.xib in Resources */,
 				52DE39482A150E3A0090A630 /* DancingScript-Regular.ttf in Resources */,
 				E7AE404628755D4500C0F3EC /* themes_v8_fr.plist in Resources */,
+				09A1C3CA2BCD45B500053114 /* popup_open.mp3 in Resources */,
 				BAB4D5072AFFF34D009124EF /* Migration.storyboard in Resources */,
 				E7AE403928755D4500C0F3EC /* themes_v8_zh-Hant.plist in Resources */,
 				BAF38FC72859ADF00067CA9F /* WhatsNewLocalizable.strings in Resources */,
@@ -12395,6 +12430,7 @@
 				BAF38FE22859ADF00067CA9F /* FTAudioPlayerController.xib in Resources */,
 				E7AE403628755A9800C0F3EC /* StockPapers.bundle in Resources */,
 				BAF38FE42859ADF00067CA9F /* FTSettingsCommonTableViewCell.xib in Resources */,
+				09A1C3C82BCD45B500053114 /* ambient loop.mp3 in Resources */,
 				BAF38FE62859ADF00067CA9F /* FTShelfCategoryHeaderView.xib in Resources */,
 				BAF38FE82859ADF00067CA9F /* FTConvertToTextViewController.xib in Resources */,
 				097449E02ABDB51A0008C6B6 /* AICommands.strings in Resources */,
@@ -13160,6 +13196,7 @@
 				0971841F2A82230D00656B36 /* FTPremiumBanner.swift in Sources */,
 				BAF391092859ADF00067CA9F /* FTExportProgressManager.swift in Sources */,
 				BAF3910A2859ADF00067CA9F /* FTWebdavFileHierarchyViewController.swift in Sources */,
+				09B905902BC3DD3E00A03CCC /* FTWelcomeScreenViewController.swift in Sources */,
 				478CA4322B35901900F7C8FB /* FTInlineTableViewCell.swift in Sources */,
 				E7F094492BCF990000177BC5 /* FTCustomToolbarFooterView.swift in Sources */,
 				BA2D9119285CAFCC001BB495 /* FTShelfItemDatasource.swift in Sources */,
@@ -13265,6 +13302,7 @@
 				97A8D9B228DAFBE6008853BF /* FTShelfItemCategoryView.swift in Sources */,
 				BAF3915A2859ADF00067CA9F /* PDFPage_Extension.swift in Sources */,
 				E79E84472A31F73200683B23 /* FTNoResultsViewHostingController.swift in Sources */,
+				09A1C3CC2BCD4A2A00053114 /* FTGradientView.swift in Sources */,
 				9790F8A228C27AA50007BFF9 /* FTNoResultsView.swift in Sources */,
 				47C7C43B297E633600AE4648 /* FTShelfCompactContentViewController.swift in Sources */,
 				091482BE2A72581A009E49C2 /* FTCharToStrokeRender.swift in Sources */,
@@ -13526,6 +13564,7 @@
 				BAF3922F2859ADF00067CA9F /* FTAppConfigHelper.m in Sources */,
 				BAF392302859ADF00067CA9F /* FTPageViewController_AnnotationEditing.swift in Sources */,
 				E75705D92AF5104900699764 /* FTFavoriteShortcutController.swift in Sources */,
+				09915D1D2BC7A61500E16EAC /* FTWelcomePreviewViewController.swift in Sources */,
 				972B52E02A42D806001158D9 /* FTSideBarItemContextMenuPreview.swift in Sources */,
 				BAF392312859ADF00067CA9F /* Constants.swift in Sources */,
 				BAF392322859ADF00067CA9F /* FTSnappingView.swift in Sources */,
@@ -14289,6 +14328,7 @@
 				BAF394A12859ADF10067CA9F /* FTShapeEditController.swift in Sources */,
 				BA2D9110285CAFCC001BB495 /* FTNewNotePopoverViewModel.swift in Sources */,
 				BA2D9115285CAFCC001BB495 /* FTShelfBottomBarOptions.swift in Sources */,
+				09915D1F2BC7A65000E16EAC /* FTWelcomeItemViewController.swift in Sources */,
 				BAF394A42859ADF10067CA9F /* FTThumbnailCache.swift in Sources */,
 				BAF394A52859ADF10067CA9F /* FTInteractiveModalPresentationController.swift in Sources */,
 				472522BE2A1F3353008FFC46 /* FTLoadingIndicatorViewController.swift in Sources */,
@@ -15027,7 +15067,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 EE Dev";
-				APP_VERSION = 1.6.1;
+				APP_VERSION = 1.6.4;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -15052,7 +15092,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 96;
+				CURRENT_PROJECT_VERSION = 102;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -15471,7 +15511,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Noteshelf 3";
-				APP_VERSION = 1.6.1;
+				APP_VERSION = 1.6.4;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -15496,7 +15536,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 96;
+				CURRENT_PROJECT_VERSION = 102;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -15910,7 +15950,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Beta";
-				APP_VERSION = 1.6.1;
+				APP_VERSION = 1.6.4;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -15934,7 +15974,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 96;
+				CURRENT_PROJECT_VERSION = 102;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -16863,7 +16903,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Dev";
-				APP_VERSION = 1.6.1;
+				APP_VERSION = 1.6.4;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -16888,7 +16928,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 96;
+				CURRENT_PROJECT_VERSION = 102;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -16929,7 +16969,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Noteshelf 3";
-				APP_VERSION = 1.6.1;
+				APP_VERSION = 1.6.4;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -16954,7 +16994,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 96;
+				CURRENT_PROJECT_VERSION = 102;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;

@@ -939,11 +939,16 @@ extension FTPDFSelectionView: UIGestureRecognizerDelegate {
             return false;
         }
 
+        let pointOnPdfPage = pdfpage.convertPoint(point,
+                                                  fromView: self.contentView,
+                                                  rotationAngle: Int(page.rotationAngle));
         let newPoint = self.convert(point, to: self.contentView);
         let shouldInteract = self.delegate?.pdfInteractionShouldBegin?(at: newPoint) ?? false;
-        if shouldInteract {
+        if let sel = pdfpage.selectionForWord(at: pointOnPdfPage)
+            ,sel.canSelectText(pdfpage),shouldInteract {
             return true;
         }
+
         logIfNeeded("PDFSelection : interactionShouldBegin final false")
         canInitiateSelection = false;
         self.selectedTextRange = nil;

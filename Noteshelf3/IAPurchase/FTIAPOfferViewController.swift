@@ -9,6 +9,7 @@
 import UIKit
 import StoreKit
 import SafariServices
+import FTCommon
 
 class FTIAPOfferViewController: UIViewController {
     @IBOutlet weak var upgradeButton: UIButton?;
@@ -47,7 +48,7 @@ class FTIAPOfferViewController: UIViewController {
         self.messageLabel?.font = UIFont.appFont(for: .regular, with: 17);
         self.messageLabel?.text = "iap.messageNew".localized
         self.messageLabel?.addCharacterSpacing(kernValue: -0.41)
-        self.miniTitleLabel?.textColor = UIColor.black.withAlphaComponent(0.5)
+        self.miniTitleLabel?.textColor = UIColor.appColor(.black50)
         self.upgradeButton?.layer.shadowColor = UIColor.black.cgColor
         self.upgradeButton?.layer.shadowOpacity = 0.2
         self.upgradeButton?.layer.shadowRadius = 8.0
@@ -102,12 +103,12 @@ class FTIAPOfferViewController: UIViewController {
         let range = (fullText as NSString).range(of: offText)
 
         let redAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.init(hexString: "#D6411c"),
+            .foregroundColor: UIColor.appColor(.discount_percentage_color),
             .font: UIFont(name: "SFProRounded-Bold", size: 36)!
         ]
 
         let blackAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.black,
+            .foregroundColor: UIColor.appColor(.black1),
         ]
         let attributedString = NSMutableAttributedString(string: fullText, attributes: blackAttributes)
         attributedString.addAttributes(redAttributes, range: range)

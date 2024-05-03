@@ -104,8 +104,7 @@ extension FTShelfViewModel {
 // MARK: Group creation logic
 private extension FTShelfViewModel {
     func isGroup(_ fileURL: Foundation.URL) -> Bool {
-        let fileItemURL = fileURL.urlByDeleteingPrivate();
-        if(fileItemURL.pathExtension == FTFileExtension.group) {
+        if(fileURL.pathExtension == FTFileExtension.group) {
             return true;
         }
         return false;
