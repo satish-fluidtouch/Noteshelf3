@@ -115,7 +115,7 @@ class FTToolbarCenterPanelController: UIViewController {
     }
     override func viewDidAppear(_ animated: Bool) {
         self.showTipView = UserDefaults.standard.bool(forKey: "showTipView")
-        if setUpTheTimeForTipView() {
+        if FTUtils.isAppInstalledFor(days: 5) {
             if self.showTipView == false {
                 if self.view.frame.width > 320 {
                     setUpTipForNewFeatures()
@@ -458,16 +458,4 @@ extension FTToolbarCenterPanelController {
         
     }
     
-    func setUpTheTimeForTipView() -> Bool {
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            let currentTimeInterval = Date().timeIntervalSinceReferenceDate
-            let Interval = currentTimeInterval - (5 * 24 * 60 * 60)
-            if  FTUserDefaults.appInstalledDate < Interval {
-                return true
-            }else {
-                return false
-            }
-        }
-        return true
-    }
 }
