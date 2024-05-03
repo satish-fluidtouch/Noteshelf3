@@ -131,7 +131,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FTStoreLibraryCollectionCell" id="giX-8s-6sd" customClass="FTStoreLibraryCollectionCell" customModule="FTTemplatesStore" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="82.5" width="264" height="452"/>
+                                        <rect key="frame" x="0.0" y="75" width="264" height="452"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ow1-Ey-4HK">
                                             <rect key="frame" x="0.0" y="0.0" width="264" height="452"/>
@@ -175,64 +175,6 @@
                                             <outlet property="titleLabel" destination="ypO-1E-EzQ" id="Xor-yn-ALP"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FTStoreLibraryEmptyCollectionCell" id="SZs-t9-QSx" customClass="FTStoreLibraryEmptyCollectionCell" customModule="FTTemplatesStore" customModuleProvider="target">
-                                        <rect key="frame" x="274" y="75" width="327" height="467"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="UbT-5R-LNR">
-                                            <rect key="frame" x="0.0" y="0.0" width="327" height="467"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UAB-7H-sne">
-                                                    <rect key="frame" x="13" y="153.5" width="301" height="160.5"/>
-                                                    <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="library_empty" translatesAutoresizingMaskIntoConstraints="NO" id="9Yc-O8-xpH">
-                                                            <rect key="frame" x="115.5" y="0.0" width="70" height="64"/>
-                                                            <color key="tintColor" name="black50"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="64" id="HSa-fB-Iwl"/>
-                                                                <constraint firstAttribute="width" constant="70" id="qCw-GD-qOV"/>
-                                                            </constraints>
-                                                        </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Library is empty" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EN9-Jb-KBn" customClass="FTCustomLabel" customModule="FTCommon">
-                                                            <rect key="frame" x="0.0" y="96" width="301" height="20.5"/>
-                                                            <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="22"/>
-                                                            <color key="textColor" name="black1"/>
-                                                            <nil key="highlightedColor"/>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="templatesStore.library.empty.title"/>
-                                                            </userDefinedRuntimeAttributes>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Add your preferred templates to the Library from the preview screen for easy access." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1kT-1b-aKw" customClass="FTCustomLabel" customModule="FTCommon">
-                                                            <rect key="frame" x="0.0" y="124.5" width="301" height="36"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                            <color key="textColor" name="black70"/>
-                                                            <nil key="highlightedColor"/>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="templatesStore.library.empty.subTitle"/>
-                                                            </userDefinedRuntimeAttributes>
-                                                        </label>
-                                                    </subviews>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstItem="1kT-1b-aKw" firstAttribute="leading" secondItem="EN9-Jb-KBn" secondAttribute="leading" id="4nU-ER-CMv"/>
-                                                        <constraint firstItem="EN9-Jb-KBn" firstAttribute="leading" secondItem="UAB-7H-sne" secondAttribute="leading" id="N34-DC-Fge"/>
-                                                        <constraint firstAttribute="bottom" secondItem="1kT-1b-aKw" secondAttribute="bottom" id="Nhf-wG-UeW"/>
-                                                        <constraint firstItem="9Yc-O8-xpH" firstAttribute="top" secondItem="UAB-7H-sne" secondAttribute="top" id="XTg-89-Kwa"/>
-                                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="320" id="cDm-kf-pCn"/>
-                                                        <constraint firstItem="1kT-1b-aKw" firstAttribute="top" secondItem="EN9-Jb-KBn" secondAttribute="bottom" constant="8" symbolic="YES" id="fPC-FG-ZjS"/>
-                                                        <constraint firstItem="9Yc-O8-xpH" firstAttribute="centerX" secondItem="UAB-7H-sne" secondAttribute="centerX" id="g6I-sE-kDa"/>
-                                                        <constraint firstItem="1kT-1b-aKw" firstAttribute="trailing" secondItem="EN9-Jb-KBn" secondAttribute="trailing" id="iVl-cP-r8H"/>
-                                                        <constraint firstItem="EN9-Jb-KBn" firstAttribute="top" secondItem="9Yc-O8-xpH" secondAttribute="bottom" constant="32" id="x3b-N4-nLY"/>
-                                                        <constraint firstAttribute="trailing" secondItem="EN9-Jb-KBn" secondAttribute="trailing" id="zD0-ye-Itq"/>
-                                                    </constraints>
-                                                </view>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="UAB-7H-sne" firstAttribute="centerY" secondItem="UbT-5R-LNR" secondAttribute="centerY" id="V6H-wU-Bzs"/>
-                                                <constraint firstItem="UAB-7H-sne" firstAttribute="centerX" secondItem="UbT-5R-LNR" secondAttribute="centerX" id="w9U-Kj-132"/>
-                                            </constraints>
-                                        </collectionViewCellContentView>
-                                    </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="FTLibraryHeaderView" id="O1Z-v2-Xq5" customClass="FTLibraryHeaderView" customModule="FTTemplatesStore" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="768" height="75"/>
@@ -253,6 +195,7 @@
                     <connections>
                         <outlet property="collectionView" destination="Lgv-tH-Glz" id="4e4-Xf-o2d"/>
                         <outlet property="emptyView" destination="ZZT-SN-fgq" id="gvW-OS-qDj"/>
+                        <outlet property="emptyViewCenterYConstraint" destination="MJE-vZ-3sJ" id="XUA-Nb-ltd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cdE-bi-z1H" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -261,7 +204,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vq6-jR-ged">
-                            <rect key="frame" x="191" y="195" width="301" height="160.5"/>
+                            <rect key="frame" x="191" y="115" width="301" height="160.5"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="library_empty" translatesAutoresizingMaskIntoConstraints="NO" id="KoS-57-alr">
                                     <rect key="frame" x="115.5" y="0.0" width="70" height="64"/>
@@ -307,7 +250,7 @@
                     </subviews>
                     <viewLayoutGuide key="safeArea" id="HpX-WT-ckQ"/>
                     <constraints>
-                        <constraint firstItem="Vq6-jR-ged" firstAttribute="centerY" secondItem="HpX-WT-ckQ" secondAttribute="centerY" constant="50" id="MJE-vZ-3sJ"/>
+                        <constraint firstItem="Vq6-jR-ged" firstAttribute="centerY" secondItem="HpX-WT-ckQ" secondAttribute="centerY" constant="-30" id="MJE-vZ-3sJ"/>
                         <constraint firstItem="Vq6-jR-ged" firstAttribute="centerX" secondItem="HpX-WT-ckQ" secondAttribute="centerX" id="UpM-oh-s10"/>
                     </constraints>
                 </view>
@@ -377,64 +320,6 @@
                                             <outlet property="titleLabel" destination="zTf-9U-plV" id="LvJ-Vu-d1C"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FTStoreLibraryEmptyCollectionCell" id="QZS-ej-2m5" customClass="FTStoreLibraryEmptyCollectionCell" customModule="FTTemplatesStore" customModuleProvider="target">
-                                        <rect key="frame" x="285" y="67" width="293" height="363"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="brb-6J-d9t">
-                                            <rect key="frame" x="0.0" y="0.0" width="293" height="363"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EZS-o5-t5S">
-                                                    <rect key="frame" x="-9" y="101.5" width="311" height="160.5"/>
-                                                    <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="custom_empty" translatesAutoresizingMaskIntoConstraints="NO" id="Ix0-KI-6Zl">
-                                                            <rect key="frame" x="120.5" y="0.0" width="70" height="64"/>
-                                                            <color key="tintColor" name="black50"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="70" id="N26-xh-X1W"/>
-                                                                <constraint firstAttribute="height" constant="64" id="frW-8E-5Hh"/>
-                                                            </constraints>
-                                                        </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Import custom templates" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="juI-9V-Fpg" customClass="FTCustomLabel" customModule="FTCommon">
-                                                            <rect key="frame" x="0.0" y="96" width="311" height="20.5"/>
-                                                            <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="22"/>
-                                                            <color key="textColor" name="black1"/>
-                                                            <nil key="highlightedColor"/>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="templatesStore.custom.empty.title"/>
-                                                            </userDefinedRuntimeAttributes>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Import PDFs or images and use them as your own custom paper" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4AM-6R-Twd" customClass="FTCustomLabel" customModule="FTCommon">
-                                                            <rect key="frame" x="0.0" y="124.5" width="311" height="36"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                            <color key="textColor" name="black70"/>
-                                                            <nil key="highlightedColor"/>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="templatesStore.custom.empty.subTitle"/>
-                                                            </userDefinedRuntimeAttributes>
-                                                        </label>
-                                                    </subviews>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstItem="4AM-6R-Twd" firstAttribute="leading" secondItem="juI-9V-Fpg" secondAttribute="leading" id="5o1-jE-Iok"/>
-                                                        <constraint firstItem="Ix0-KI-6Zl" firstAttribute="top" secondItem="EZS-o5-t5S" secondAttribute="top" id="Aac-a0-48O"/>
-                                                        <constraint firstItem="juI-9V-Fpg" firstAttribute="leading" secondItem="EZS-o5-t5S" secondAttribute="leading" id="FKm-rI-VPA"/>
-                                                        <constraint firstItem="4AM-6R-Twd" firstAttribute="top" secondItem="juI-9V-Fpg" secondAttribute="bottom" constant="8" symbolic="YES" id="Iju-7k-kvO"/>
-                                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="320" id="NnC-08-P3d"/>
-                                                        <constraint firstAttribute="trailing" secondItem="juI-9V-Fpg" secondAttribute="trailing" id="irn-k7-FrX"/>
-                                                        <constraint firstAttribute="bottom" secondItem="4AM-6R-Twd" secondAttribute="bottom" id="jMc-qd-1t9"/>
-                                                        <constraint firstItem="Ix0-KI-6Zl" firstAttribute="centerX" secondItem="EZS-o5-t5S" secondAttribute="centerX" id="qIl-mz-gVO"/>
-                                                        <constraint firstItem="juI-9V-Fpg" firstAttribute="top" secondItem="Ix0-KI-6Zl" secondAttribute="bottom" constant="32" id="rFg-zr-rhs"/>
-                                                        <constraint firstItem="4AM-6R-Twd" firstAttribute="trailing" secondItem="juI-9V-Fpg" secondAttribute="trailing" id="vup-F0-ho4"/>
-                                                    </constraints>
-                                                </view>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="EZS-o5-t5S" firstAttribute="centerX" secondItem="brb-6J-d9t" secondAttribute="centerX" id="OB9-Cg-wbJ"/>
-                                                <constraint firstItem="EZS-o5-t5S" firstAttribute="centerY" secondItem="brb-6J-d9t" secondAttribute="centerY" id="yS8-zk-6yJ"/>
-                                            </constraints>
-                                        </collectionViewCellContentView>
-                                    </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FTLibraryHeaderView" id="LLi-yd-1si" customClass="FTLibraryHeaderView" customModule="FTTemplatesStore" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="768" height="50"/>
@@ -455,6 +340,7 @@
                     <connections>
                         <outlet property="collectionView" destination="jRa-HH-GLz" id="GLm-cq-eij"/>
                         <outlet property="emptyView" destination="NhW-Bo-OuE" id="5bO-3E-8kQ"/>
+                        <outlet property="emptyViewCenterYConstraint" destination="n9L-y7-a8M" id="iXb-Ef-4jf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GgN-b2-Cnu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -463,7 +349,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2CC-4X-cbF">
-                            <rect key="frame" x="225.5" y="130.5" width="311" height="160.5"/>
+                            <rect key="frame" x="225.5" y="50.5" width="311" height="160.5"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="custom_empty" translatesAutoresizingMaskIntoConstraints="NO" id="fsE-Cn-cUn">
                                     <rect key="frame" x="120.5" y="0.0" width="70" height="64"/>
@@ -510,7 +396,7 @@
                     <viewLayoutGuide key="safeArea" id="qNk-sH-fr7"/>
                     <constraints>
                         <constraint firstItem="2CC-4X-cbF" firstAttribute="centerX" secondItem="qNk-sH-fr7" secondAttribute="centerX" id="QhA-y6-M73"/>
-                        <constraint firstItem="2CC-4X-cbF" firstAttribute="centerY" secondItem="qNk-sH-fr7" secondAttribute="centerY" constant="50" id="n9L-y7-a8M"/>
+                        <constraint firstItem="2CC-4X-cbF" firstAttribute="centerY" secondItem="qNk-sH-fr7" secondAttribute="centerY" constant="-30" id="n9L-y7-a8M"/>
                     </constraints>
                 </view>
             </objects>
@@ -1315,7 +1201,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ppe-HR-epz" userLabel="From Stack View">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="196"/>
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="512"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mkq-b1-Ufk">
                                         <rect key="frame" x="0.0" y="0.0" width="768" height="36"/>
@@ -1326,7 +1212,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RDP-ro-H0A">
-                                        <rect key="frame" x="0.0" y="36" width="768" height="160"/>
+                                        <rect key="frame" x="0.0" y="36" width="768" height="476"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="160" id="bTx-Th-r4z"/>
@@ -1344,7 +1230,7 @@
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qbj-y0-Q1g" userLabel="Horizontal Seperator">
-                                <rect key="frame" x="0.0" y="195.5" width="768" height="0.5"/>
+                                <rect key="frame" x="0.0" y="511.5" width="768" height="0.5"/>
                                 <color key="backgroundColor" name="cellSeparatorColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="1ot-9n-x7l"/>
@@ -1358,7 +1244,7 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="a3o-66-4jz" userLabel="To Stack View">
-                                <rect key="frame" x="0.0" y="196" width="768" height="196"/>
+                                <rect key="frame" x="0.0" y="512" width="768" height="512"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="End Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jVk-fB-K7y">
                                         <rect key="frame" x="0.0" y="0.0" width="768" height="36"/>
@@ -1369,7 +1255,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3JF-cQ-dwS">
-                                        <rect key="frame" x="0.0" y="36" width="768" height="160"/>
+                                        <rect key="frame" x="0.0" y="36" width="768" height="476"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="160" id="Dcs-VD-xrX"/>
