@@ -15,6 +15,7 @@ struct FTPenSizeView: View {
     let showIndicator: Bool
     let viewSize: CGSize
     let favoriteSizeValue: CGFloat
+    let placement: FTShortcutPlacement
 
     var body: some View {
         if showIndicator {
@@ -35,7 +36,6 @@ struct FTPenSizeView: View {
 
     private func toShowSizeIndicatorAtBottom() -> Bool {
         var toShow = false
-        let placement = FTShortcutPlacement.getSavedPlacement()
         if placement == .top {
             toShow = true
         }
@@ -76,6 +76,6 @@ struct FTPenSizeView: View {
 
 struct FTPenSizeView_Previews: PreviewProvider {
     static var previews: some View {
-        FTPenSizeView(isSelected: true, showIndicator: true, viewSize: CGSize(width: 12.0, height: 3.0), favoriteSizeValue: 3.0)
+        FTPenSizeView(isSelected: true, showIndicator: true, viewSize: CGSize(width: 12.0, height: 3.0), favoriteSizeValue: 3.0, placement: .centerLeft)
     }
 }

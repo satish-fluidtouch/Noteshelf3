@@ -40,7 +40,7 @@ class FTPenSizeEditController: UIHostingController<FTPenSizeEditView>, FTPopover
     init(viewModel: FTFavoriteSizeViewModel, editPosition: FavoriteSizePosition) {
         let size = viewModel.favoritePenSizes[editPosition.rawValue]
         self.sizeEditModel = FTPenSizeEditModel(currentSize: size.size)
-        let sizeEditView = FTPenSizeEditView(penType: viewModel.currentPenset.type, favoriteSizeValue: size.size, sizeEditModel: sizeEditModel, rackType: viewModel.getRackType())
+        let sizeEditView = FTPenSizeEditView(penType: viewModel.currentPenset.type, favoriteSizeValue: size.size, sizeEditModel: sizeEditModel, rackType: viewModel.getRackType(), placement: viewModel.getCurrentPlacement())
         self.viewModel = viewModel
         self.viewModel.sizeEditPostion = editPosition
         super.init(rootView: sizeEditView)

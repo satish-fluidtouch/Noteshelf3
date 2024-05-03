@@ -174,6 +174,10 @@ class FTFavoriteSizeViewModel: ObservableObject {
     func getRackType() -> FTRackType {
         return self.rackData.type
     }
+
+    func getCurrentPlacement() -> FTShortcutPlacement {
+        return FTShortcutPlacement.getSavedPlacement(activity: rackData.userActivity)
+    }
 }
 
 extension FTFavoriteSizeViewModel {

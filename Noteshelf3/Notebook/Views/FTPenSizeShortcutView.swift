@@ -19,7 +19,7 @@ struct FTPenSizeShortcutView: View {
                 let viewSize = viewModel.currentPenset.type.getIndicatorSize(using: favSize.size)
 
                 if self.canShowSizeView(favSize: favSize) {
-                    FTPenSizeView(isSelected: favSize.isSelected, showIndicator: false, viewSize: viewSize, favoriteSizeValue: favSize.size)
+                    FTPenSizeView(isSelected: favSize.isSelected, showIndicator: false, viewSize: viewSize, favoriteSizeValue: favSize.size, placement: viewModel.getCurrentPlacement())
                         .hoverEffect()
                         .onTapGesture {
                             self.handleTapAction(sizeModel: favSize, index: index)
