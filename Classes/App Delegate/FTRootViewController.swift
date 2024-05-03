@@ -545,6 +545,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         self.prepareProviderIfNeeded {
             FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
                 if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == docId}) as? FTDocumentItemProtocol {
+                    track("widget_smallnbk_book_tap")
                     self.openPinnedBook(documentItem: shelfItem, onCompletion: nil)
                 } else {
                     UIAlertController.showAlert(withTitle: "", message: NSLocalizedString("NotebookNotAvailable", comment: "NotebookNotAvailable"), from: self, withCompletionHandler: nil)

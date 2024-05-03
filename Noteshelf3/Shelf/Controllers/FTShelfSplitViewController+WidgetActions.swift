@@ -48,5 +48,8 @@ extension FTShelfSplitViewController {
         default:
             break
         }
+        if let _type = type as? FTNotebookCreateWidgetActionType {
+            track(_type.eventName, params: ["action": _type.parameterName])
+        }
     }
 }

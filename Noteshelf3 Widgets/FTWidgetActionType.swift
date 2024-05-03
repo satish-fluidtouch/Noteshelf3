@@ -71,6 +71,35 @@ public enum FTNotebookCreateWidgetActionType: FTWidgetActionType {
     public var relativePath: String {
         return ""
     }
+    
+    var eventName: String {
+        var value = ""
+        switch self {
+        case .quickNote, .newNotebook, .audioNote, .scan:
+            value = "widget_takenotes_action_tap"
+        case .search:
+            value = "widget_takenotes_search_tap"
+        }
+        return value
+    }
+    
+    var parameterName: String {
+        var value = ""
+        switch self {
+        case .quickNote:
+            value = "quick note"
+        case .newNotebook:
+            value = "notebook"
+        case .audioNote:
+            value = "audio note"
+        case .scan:
+            value = "scan"
+        case .search:
+            value = "search"
+
+        }
+        return value
+    }
 }
 
 public enum FTPinndedWidgetActionType: FTWidgetActionType {
@@ -129,5 +158,33 @@ public enum FTPinndedWidgetActionType: FTWidgetActionType {
             boolValue = false
         }
         return boolValue
+    }
+    
+    var eventName: String {
+        var value = ""
+        switch self {
+        case .pen, .audio, .text, .openAI:
+            value = "widget_bignbk_tool_tap"
+        case .bookOpen:
+            value = "widget_bignbk_book_tap"
+        }
+        return value
+    }
+    
+    var parameterName: String {
+        var value = ""
+        switch self {
+        case .pen:
+            value = "pen"
+        case .audio:
+            value = "audio"
+        case .text:
+            value = "text"
+        case .openAI:
+            value = "openAI"
+        case .bookOpen:
+            value = ""
+        }
+        return value
     }
 }

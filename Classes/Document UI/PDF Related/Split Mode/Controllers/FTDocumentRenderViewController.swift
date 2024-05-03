@@ -435,7 +435,7 @@ extension FTDocumentRenderViewController: FTDocumentViewPresenter {
                 }
             }
         }
-        
+        track(type.eventName, params: ["tool": type.parameterName])
     }
     
     
