@@ -2007,6 +2007,16 @@
 		E76CEDC22A93605C00E4E22F /* FTRecentSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76CEDC02A93605C00E4E22F /* FTRecentSectionHeader.xib */; };
 		E76CEDC32A93605C00E4E22F /* FTRecentSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76CEDC12A93605C00E4E22F /* FTRecentSectionHeader.swift */; };
 		E76EA45A2BBBDEBB009DD911 /* Noteshelf 3 Watch Widget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E7CCFF622BA975E000DB59CE /* Noteshelf 3 Watch Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E772BBAA2BE4CDF9007D787A /* HuePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E772BBA02BE4CDF9007D787A /* HuePickerView.swift */; };
+		E772BBAB2BE4CDF9007D787A /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E772BBA12BE4CDF9007D787A /* UIColorExtension.swift */; };
+		E772BBAC2BE4CDF9007D787A /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E772BBA22BE4CDF9007D787A /* ColorPickerView.swift */; };
+		E772BBAD2BE4CDF9007D787A /* PickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E772BBA32BE4CDF9007D787A /* PickerView.swift */; };
+		E772BBAE2BE4CDF9007D787A /* CGColorSpaceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E772BBA42BE4CDF9007D787A /* CGColorSpaceExtension.swift */; };
+		E772BBAF2BE4CDF9007D787A /* ColorValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = E772BBA52BE4CDF9007D787A /* ColorValues.swift */; };
+		E772BBB02BE4CDF9007D787A /* SaturationBrightnessPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E772BBA62BE4CDF9007D787A /* SaturationBrightnessPickerView.swift */; };
+		E772BBB12BE4CDF9007D787A /* ReplaceMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E772BBA72BE4CDF9007D787A /* ReplaceMe.swift */; };
+		E772BBB22BE4CDF9007D787A /* CGContextExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E772BBA82BE4CDF9007D787A /* CGContextExtension.swift */; };
+		E772BBB32BE4CDF9007D787A /* AlphaPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E772BBA92BE4CDF9007D787A /* AlphaPickerView.swift */; };
 		E776FB582A54531D00AFA38E /* FTGlobalSearchController_MacExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E776FB572A54531D00AFA38E /* FTGlobalSearchController_MacExtension.swift */; };
 		E7780F212B96F38100DD134D /* FTFileItemPDFTemp.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E41AB21F9712CB00A591F1 /* FTFileItemPDFTemp.m */; };
 		E779DE3B2B5143B1007FBFE1 /* FTLinkPageThumbnailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E779DE3A2B5143B1007FBFE1 /* FTLinkPageThumbnailCell.swift */; };
@@ -4372,6 +4382,16 @@
 		E76CEDC02A93605C00E4E22F /* FTRecentSectionHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FTRecentSectionHeader.xib; sourceTree = "<group>"; };
 		E76CEDC12A93605C00E4E22F /* FTRecentSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTRecentSectionHeader.swift; sourceTree = "<group>"; };
 		E7721A332681DFDC00EB2312 /* FTWhatsNewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWhatsNewHelper.swift; sourceTree = "<group>"; };
+		E772BBA02BE4CDF9007D787A /* HuePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HuePickerView.swift; sourceTree = "<group>"; };
+		E772BBA12BE4CDF9007D787A /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		E772BBA22BE4CDF9007D787A /* ColorPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
+		E772BBA32BE4CDF9007D787A /* PickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerView.swift; sourceTree = "<group>"; };
+		E772BBA42BE4CDF9007D787A /* CGColorSpaceExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGColorSpaceExtension.swift; sourceTree = "<group>"; };
+		E772BBA52BE4CDF9007D787A /* ColorValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorValues.swift; sourceTree = "<group>"; };
+		E772BBA62BE4CDF9007D787A /* SaturationBrightnessPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaturationBrightnessPickerView.swift; sourceTree = "<group>"; };
+		E772BBA72BE4CDF9007D787A /* ReplaceMe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaceMe.swift; sourceTree = "<group>"; };
+		E772BBA82BE4CDF9007D787A /* CGContextExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGContextExtension.swift; sourceTree = "<group>"; };
+		E772BBA92BE4CDF9007D787A /* AlphaPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlphaPickerView.swift; sourceTree = "<group>"; };
 		E7733993251A11A200940601 /* FTShapeDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShapeDetector.swift; sourceTree = "<group>"; };
 		E774D2CF2705848B00008B07 /* FTModernDiaryMonthTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTModernDiaryMonthTemplate.swift; sourceTree = "<group>"; };
 		E7752E6A270B005E00BD95A9 /* FTModernDiaryDayTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTModernDiaryDayTemplate.swift; sourceTree = "<group>"; };
@@ -10840,6 +10860,31 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		E772BB9E2BE4CDF9007D787A /* ColorPickerControls */ = {
+			isa = PBXGroup;
+			children = (
+				E772BB9F2BE4CDF9007D787A /* IMGLYColorPicker */,
+			);
+			path = ColorPickerControls;
+			sourceTree = "<group>";
+		};
+		E772BB9F2BE4CDF9007D787A /* IMGLYColorPicker */ = {
+			isa = PBXGroup;
+			children = (
+				E772BBA02BE4CDF9007D787A /* HuePickerView.swift */,
+				E772BBA12BE4CDF9007D787A /* UIColorExtension.swift */,
+				E772BBA22BE4CDF9007D787A /* ColorPickerView.swift */,
+				E772BBA32BE4CDF9007D787A /* PickerView.swift */,
+				E772BBA42BE4CDF9007D787A /* CGColorSpaceExtension.swift */,
+				E772BBA52BE4CDF9007D787A /* ColorValues.swift */,
+				E772BBA62BE4CDF9007D787A /* SaturationBrightnessPickerView.swift */,
+				E772BBA72BE4CDF9007D787A /* ReplaceMe.swift */,
+				E772BBA82BE4CDF9007D787A /* CGContextExtension.swift */,
+				E772BBA92BE4CDF9007D787A /* AlphaPickerView.swift */,
+			);
+			path = IMGLYColorPicker;
+			sourceTree = "<group>";
+		};
 		E7777B452702F47C00908120 /* Modern */ = {
 			isa = PBXGroup;
 			children = (
@@ -11262,6 +11307,7 @@
 		E7B8DAB528803A2E00F0AE78 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E772BB9E2BE4CDF9007D787A /* ColorPickerControls */,
 				E7B947432912333500BE4430 /* Share */,
 				E7A9768028C0C5D6009B43DC /* Presenter */,
 				E7AE4D9D289947DB004CF608 /* Shapes */,
@@ -13188,6 +13234,7 @@
 				52B34DB129E561F600360F10 /* UIFonts+Custom.swift in Sources */,
 				BA6C51D628DC728F006504EB /* FTDocumentCache.swift in Sources */,
 				BAF3910B2859ADF00067CA9F /* FTDynamicTemplateTypes.swift in Sources */,
+				E772BBAB2BE4CDF9007D787A /* UIColorExtension.swift in Sources */,
 				BAF3910C2859ADF00067CA9F /* FTRootViewController.swift in Sources */,
 				BAF3910D2859ADF00067CA9F /* FTNoteshelfDocumentProvider_iCloudToLocal.swift in Sources */,
 				BAF3910E2859ADF00067CA9F /* FTRecognitionLangResource.swift in Sources */,
@@ -13439,6 +13486,7 @@
 				97B411A829E804E900ADFE1F /* FTSidebarTopSectionGridItemView.swift in Sources */,
 				BAF391DC2859ADF00067CA9F /* FTAudioListViewController.m in Sources */,
 				52C01E132A00F4880038C21A /* FTFinderHelper.swift in Sources */,
+				E772BBAC2BE4CDF9007D787A /* ColorPickerView.swift in Sources */,
 				BAF391E32859ADF00067CA9F /* FTDiagnosisHandler.swift in Sources */,
 				9715E0372AEA9D2C00EC48D4 /* ENAFURLConnectionOperation.m in Sources */,
 				BAF391E42859ADF00067CA9F /* FTMidnightDiaryTemplateFormat.swift in Sources */,
@@ -13499,6 +13547,7 @@
 				BAF392122859ADF00067CA9F /* FTQuickCreateInfoTipViewController.swift in Sources */,
 				BAF392142859ADF00067CA9F /* FTPageViewController_FTPageContentDelegate.swift in Sources */,
 				BAF392172859ADF00067CA9F /* FTBrushBuilder_v3.swift in Sources */,
+				E772BBB12BE4CDF9007D787A /* ReplaceMe.swift in Sources */,
 				4708DEC32A022B870009F071 /* FTThemesLibrary.swift in Sources */,
 				BAF392182859ADF00067CA9F /* FTPageNumberView.swift in Sources */,
 				BA111C382988E4CD001E854F /* NSAttributedString+Helper.swift in Sources */,
@@ -13785,6 +13834,7 @@
 				BAF392F42859ADF00067CA9F /* FTSearchResultCategory.swift in Sources */,
 				BAF392F62859ADF00067CA9F /* FTDateInfo.swift in Sources */,
 				09CDCB222A541BC0000340FB /* FTNotebookToolbarItem.swift in Sources */,
+				E772BBAE2BE4CDF9007D787A /* CGColorSpaceExtension.swift in Sources */,
 				E70FACB32B3B05C2009B88C9 /* FTShapeCurveAnnotationController.swift in Sources */,
 				BAF392F72859ADF00067CA9F /* URLSessionProvider.swift in Sources */,
 				BAF392F82859ADF00067CA9F /* FTShadowImageView.swift in Sources */,
@@ -13868,6 +13918,7 @@
 				BAF393292859ADF00067CA9F /* FTImportActionManager.swift in Sources */,
 				BAF3932A2859ADF00067CA9F /* FTFileSizeGenerator.m in Sources */,
 				BAF3932B2859ADF00067CA9F /* FTOutlineSearchViewController.swift in Sources */,
+				E772BBB32BE4CDF9007D787A /* AlphaPickerView.swift in Sources */,
 				E779DE3B2B5143B1007FBFE1 /* FTLinkPageThumbnailCell.swift in Sources */,
 				BAF3932C2859ADF00067CA9F /* FTUserDefaults.swift in Sources */,
 				42B2F3A328A4D385002430C5 /* FTShelfCategoryViewController.swift in Sources */,
@@ -14134,6 +14185,7 @@
 				E75B19F32A7A32D3004ECFEC /* FTErrorInfoViewController.swift in Sources */,
 				97B411A729E804E900ADFE1F /* FTSidebarTopSectionGridView.swift in Sources */,
 				42B2F3A528A50B83002430C5 /* FTPDFRenderViewController+SidePanel.swift in Sources */,
+				E772BBB02BE4CDF9007D787A /* SaturationBrightnessPickerView.swift in Sources */,
 				BAF394112859ADF00067CA9F /* FTBrushBuilder_v4.swift in Sources */,
 				BAF394122859ADF00067CA9F /* FTBulletConstants.swift in Sources */,
 				BAF394132859ADF00067CA9F /* ImageAnimationHelper.swift in Sources */,
@@ -14141,6 +14193,7 @@
 				BAF394152859ADF00067CA9F /* FTDeleteItemRequest.swift in Sources */,
 				09DBD5262A7CDA3E00987ED1 /* FTNoteshelfAITokensConsumedAlertViewController.swift in Sources */,
 				09CDCB4B2A55915A000340FB /* FTBookSessionRootViewController.swift in Sources */,
+				E772BBAD2BE4CDF9007D787A /* PickerView.swift in Sources */,
 				E75705DB2AF51E8F00699764 /* FTFavoriteEditViewController.swift in Sources */,
 				09ABDCAA2A790F94008F144D /* FTNoteshelfAITextViewViewController.swift in Sources */,
 				BA2D9134285CB221001BB495 /* FTShelfItemAddNewTableViewCell.swift in Sources */,
@@ -14180,6 +14233,7 @@
 				BAF394342859ADF00067CA9F /* FTHeaderView.swift in Sources */,
 				3DAA689E2911041900848434 /* FTTextColorCollectionView.swift in Sources */,
 				BAF394352859ADF00067CA9F /* FTGoogleDriveBackupPublisher.swift in Sources */,
+				E772BBAF2BE4CDF9007D787A /* ColorValues.swift in Sources */,
 				4728E0542AEF7DB0002DBB5C /* FTBookmarksProvider.swift in Sources */,
 				BAF394362859ADF00067CA9F /* FTGoogleDriveBackupEntry.swift in Sources */,
 				47C7C43D297E633600AE4648 /* FTShelfCompactContentContainerView.swift in Sources */,
@@ -14492,9 +14546,11 @@
 				E7ADB528288173BB005E03B7 /* FTPenColorEditView.swift in Sources */,
 				BAF395482859ADF10067CA9F /* FTPDFSelectionView.swift in Sources */,
 				BAF395492859ADF10067CA9F /* FTPenRackUtils.swift in Sources */,
+				E772BBB22BE4CDF9007D787A /* CGContextExtension.swift in Sources */,
 				E776FB582A54531D00AFA38E /* FTGlobalSearchController_MacExtension.swift in Sources */,
 				974E8A682A01192A00EFF8D8 /* FTShelfHomeView.swift in Sources */,
 				BAF3954C2859ADF10067CA9F /* FTModernDiaryiPhoneFormat.swift in Sources */,
+				E772BBAA2BE4CDF9007D787A /* HuePickerView.swift in Sources */,
 				4747C4192A95EC5700B1AB59 /* FTEvent.swift in Sources */,
 				09C3697F2A5EBB35009BCC3F /* FTTextToStrokeDataProvider.swift in Sources */,
 				E7B4B3CF2994C4A1006F447A /* FTGlobalSearchConstants.swift in Sources */,

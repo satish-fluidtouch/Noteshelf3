@@ -63,3 +63,37 @@ struct FTToolSeperator: View {
             .foregroundColor(Color.appColor(.toolSeperator))
     }
 }
+
+struct FTSpectrumView: UIViewRepresentable {
+    typealias UIViewType = ColorPickerView
+
+    @Binding var color: String
+    weak var delegate: ColorPickerViewDelegate?
+
+    func makeUIView(context: Context) -> ColorPickerView {
+        let colorPickerView = ColorPickerView()
+        colorPickerView.delegate = context.coordinator
+        return colorPickerView
+    }
+
+    func updateUIView(_ uiView: ColorPickerView, context: Context) {
+    }
+
+    func makeCoordinator() -> FTSpectrumCoordinator {
+        FTSpectrumCoordinator(color: $color, delegate: self)
+    }
+}
+
+class FTSpectrumCoordinator: NSObject, ColorPickerViewDelegate {
+    @Binding var color: String
+    var parent: FTSpectrumView
+
+    init(color: Binding<String>, delegate: FTSpectrumView) {
+        _color = color
+        parent = delegate
+    }
+
+    func colorDidChange(_ color: UIColor) {
+        parent.color = color.hexString
+    }
+}

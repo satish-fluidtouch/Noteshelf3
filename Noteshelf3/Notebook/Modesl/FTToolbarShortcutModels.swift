@@ -33,7 +33,8 @@ enum FTColorsFlowType {
 enum FTPenColorSegment: String {
     case presets
     case grid
-
+    case spectrum
+    
     func saveSelection(for flow: FTColorsFlowType) {
         let key = "SegmentType" + "_" + flow.typeKey
         UserDefaults.standard.set(self.rawValue, forKey: key)

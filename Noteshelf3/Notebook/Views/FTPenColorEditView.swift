@@ -14,6 +14,8 @@ struct FTPenColorEditView: View {
     @State private var showRestoreAlert = false
     @State var isScrollEnabled: Bool = false
 
+    @State private var selectedSpectrumColor: String = blackColorHex
+
     var body: some View {
         GeometryReader { geometry in
             NavigationView {
@@ -26,11 +28,22 @@ struct FTPenColorEditView: View {
                                 .onAppear {
                                     self.isScrollEnabled = self.checkIfContentSizeIsBigger(geometry)
                                 }
-                        } else {
+                        } else if self.viewModel.colorEditSegment == .grid {
                             FTColorGridView(colorMode: .select)
                                 .environmentObject(viewModel)
                                 .onAppear {
                                     self.isScrollEnabled = self.checkIfContentSizeIsBigger(geometry)
+                                }
+                        } else {
+                            FTSpectrumView(color: $selectedSpectrumColor)
+                                .frame(width: 300, height: 244)
+                                .onAppear {
+                                    self.selectedSpectrumColor = viewModel.currentSelectedColor
+                                }
+                                .onChange(of: selectedSpectrumColor) { color in
+                                    if color != self.viewModel.currentSelectedColor {
+                                        self.viewModel.updateCurrentSelection(colorHex: color)
+                                    }
                                 }
                         }
                     }
@@ -103,6 +116,9 @@ struct FTPenColorEditView: View {
                 .font(.appFont(for: .medium, with: 13.0))
             Text("shelf.notebook.textstyle.grid".localized)
                 .tag(FTPenColorSegment.grid)
+                .font(.appFont(for: .medium, with: 13.0))
+            Text("Spectrum")
+                .tag(FTPenColorSegment.spectrum)
                 .font(.appFont(for: .medium, with: 13.0))
         }
         .pickerStyle(.segmented)
