@@ -2010,6 +2010,7 @@
 		E744290A2BB290A10079DD89 /* FTWatchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75329C62B99968D00C22267 /* FTWatchUtils.swift */; };
 		E746A99129A48248009B95B4 /* FTStickersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E746A99029A48248009B95B4 /* FTStickersViewController.swift */; };
 		E7485B7E2B7CDFE500EE9BF2 /* FTQuickNoteCreateWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7485B7C2B7CD8DE00EE9BF2 /* FTQuickNoteCreateWidget.swift */; };
+		E74E48802BE4FED000E43B14 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7A912E22861F20C00BACD79 /* Localizable.strings */; };
 		E75329C72B99968D00C22267 /* FTWatchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75329C62B99968D00C22267 /* FTWatchUtils.swift */; };
 		E75329C92B999E8F00C22267 /* FTWatchLandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75329C82B999E8F00C22267 /* FTWatchLandView.swift */; };
 		E755B7592B7B7D15007DDC30 /* FTTextView_MenuHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E755B7582B7B7D15007DDC30 /* FTTextView_MenuHandler.swift */; };
@@ -12480,6 +12481,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97C453232B70E40700251C73 /* Assets.xcassets in Resources */,
+				E74E48802BE4FED000E43B14 /* Localizable.strings in Resources */,
 				97C453672B74E3B900251C73 /* Clearface-Serial-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

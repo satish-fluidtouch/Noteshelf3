@@ -159,8 +159,8 @@ struct NotebookCreation_Widget: Widget {
                     .background()
             }
         }.contentMarginsDisabled()
-        .configurationDisplayName("Take Notes")
-        .description("Create a blank notebook, record audio or scan")
+            .configurationDisplayName("widget.takenotes".localized)
+        .description("widget.quickCreate.large.description".localized)
         .supportedFamilies([.systemMedium])
     }
 }
@@ -175,8 +175,8 @@ struct FTPinnedWidget: Widget {
                     .widgetURL(URLComponents(type: "pinnedWidget", entry: entry)?.url)
         }
         .supportedFamilies([.systemSmall])
-        .configurationDisplayName("Notebook")
-        .description(" Get quick access to one of your notebooks.")
+        .configurationDisplayName("widget.notebook".localized)
+        .description("widget.pinned.description".localized)
     }
 }
 
@@ -191,8 +191,8 @@ struct FTPinnedNotebookOptionsWidget: Widget {
                 })
         }
         .supportedFamilies([.systemMedium])
-        .configurationDisplayName("Notebook")
-        .description(" Get quick access to one of your notebooks.")
+        .configurationDisplayName("widget.notebook".localized)
+        .description("widget.pinned.description".localized)
     }
 }
 
@@ -212,8 +212,8 @@ struct FTQuickNoteCreateWidget: Widget {
                     .background()
             }
         }.contentMarginsDisabled()
-            .configurationDisplayName("Quick Note")
-            .description("Create a quick note")
+            .configurationDisplayName("widget.quicknote".localized)
+            .description("widget.quickCreate.small.description".localized)
             .supportedFamilies([.systemSmall])
     }
 }

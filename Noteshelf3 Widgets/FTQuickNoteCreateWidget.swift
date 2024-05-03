@@ -18,7 +18,7 @@ struct FTQuickNoteCreateView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding([.top, .leading], 16.0)
             Spacer()
-            Text("Create \nQuick Note")
+            Text(quickNoteTitle)
                 .lineSpacing(6)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .font(.clearFaceFont(for: .bold, with: 20))
@@ -27,6 +27,12 @@ struct FTQuickNoteCreateView: View {
         }
         .frame(width: 155, height: 155)
         .clipShape(RoundedRectangle(cornerRadius: 24.0))
+    }
+    
+    private var quickNoteTitle : String {
+        let create = "Create".localized
+        let quickNote = "QuickNote".localized
+        return "\(create) \n\(quickNote)"
     }
 }
 

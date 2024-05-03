@@ -23,15 +23,15 @@ public enum FTNotebookCreateWidgetActionType: FTWidgetActionType {
         let title : String
         switch self {
         case .quickNote:
-            title = "Quick Note"
+            title = "QuickNote".localized
         case .newNotebook:
-            title = "Notebook"
+            title = "Notebook".localized
         case .audioNote:
-            title = "Audio Note"
+            title = "AudioNote".localized
         case .scan:
-            title = "Scan"
+            title = "Scan".localized
         case .search:
-            title = "Search"
+            title = "Search".localized
         }
         return title
     }

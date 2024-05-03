@@ -105,7 +105,7 @@ struct EmptyNotesView: View {
             RoundedRectangle(cornerRadius: 10)                
                 .frame(width:119, height: 64)
             .foregroundColor(Color("EmptyNotesBG"))
-            Text("No notes yet")
+            Text("widget.nonotes".localized)
                 .font(.appFont(for: .medium, with: 13))
                 .foregroundColor(Color("EmptyNotesTitle"))
         }

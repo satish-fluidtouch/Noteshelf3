@@ -94,7 +94,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
             RoundedRectangle(cornerRadius: 10)
                 .frame(width: 150, height: 120)
                 .foregroundColor(Color(uiColor: UIColor(hexString: "FFFFFF",alpha: 0.1)))
-            Text("No notes yet")
+            Text("widget.nonotes".localized)
                 .font(.appFont(for: .medium, with: 13))
                 .foregroundColor(Color(uiColor: UIColor(hexString: "FFFFFF")))
         }
