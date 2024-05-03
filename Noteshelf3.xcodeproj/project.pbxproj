@@ -1001,7 +1001,6 @@
 		BAF38FE42859ADF00067CA9F /* FTSettingsCommonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C806A3BA21E872DB0053322C /* FTSettingsCommonTableViewCell.xib */; };
 		BAF38FE62859ADF00067CA9F /* FTShelfCategoryHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 098A3B5523A78CE80068E502 /* FTShelfCategoryHeaderView.xib */; };
 		BAF38FE82859ADF00067CA9F /* FTConvertToTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C825338F213D085C00110CA4 /* FTConvertToTextViewController.xib */; };
-		BAF38FE92859ADF00067CA9F /* FTFontPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BBAE17224FE14DC0007931A /* FTFontPickerViewController.xib */; };
 		BAF38FEB2859ADF00067CA9F /* iRate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 211E3A111E028265007B5CAD /* iRate.bundle */; };
 		BAF38FED2859ADF00067CA9F /* FTNewNotebookSettingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47AF5CB91EB346A300BEFCF5 /* FTNewNotebookSettingTableViewCell.xib */; };
 		BAF38FEF2859ADF00067CA9F /* FTExport.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0995903B1E0E47F100CA1B6C /* FTExport.storyboard */; };
@@ -3541,7 +3540,6 @@
 		766E9F561A596682FA7F6E73 /* Pods-Noteshelf3.debug enterprise.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Noteshelf3.debug enterprise.xcconfig"; path = "Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3.debug enterprise.xcconfig"; sourceTree = "<group>"; };
 		8BA0318B1A06107500891239 /* Noteshelf-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Noteshelf-Info.plist"; path = "Resources/Noteshelf-Info.plist"; sourceTree = SOURCE_ROOT; };
 		8BBAE17124FE14DC0007931A /* FTFontPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFontPickerViewController.swift; sourceTree = "<group>"; };
-		8BBAE17224FE14DC0007931A /* FTFontPickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTFontPickerViewController.xib; sourceTree = "<group>"; };
 		8BFDC50F24F4F50E00D8025D /* FTPenSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPenSet.swift; sourceTree = "<group>"; };
 		8BFDC51A24F4F50E00D8025D /* FTPenRackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPenRackViewController.swift; sourceTree = "<group>"; };
 		8BFDC52224F4F50E00D8025D /* FTEraserRackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTEraserRackViewController.swift; sourceTree = "<group>"; };
@@ -11615,7 +11613,6 @@
 				ED60EF731F738469003DA6B1 /* DefaultCustomColors.plist */,
 				ED60EF761F738807003DA6B1 /* FTDefaultTextStyle.swift */,
 				8BBAE17124FE14DC0007931A /* FTFontPickerViewController.swift */,
-				8BBAE17224FE14DC0007931A /* FTFontPickerViewController.xib */,
 				3DAC3FCE29192543009B7BC7 /* FTColorPickerViewController.swift */,
 				3DAC3FCF29192543009B7BC7 /* FTColorPickerViewController.xib */,
 			);
@@ -12421,7 +12418,6 @@
 				BAF38FE62859ADF00067CA9F /* FTShelfCategoryHeaderView.xib in Resources */,
 				BAF38FE82859ADF00067CA9F /* FTConvertToTextViewController.xib in Resources */,
 				097449E02ABDB51A0008C6B6 /* AICommands.strings in Resources */,
-				BAF38FE92859ADF00067CA9F /* FTFontPickerViewController.xib in Resources */,
 				E7AE404428755D4500C0F3EC /* themes_v8_ja.plist in Resources */,
 				BAF38FEB2859ADF00067CA9F /* iRate.bundle in Resources */,
 				BAF38FED2859ADF00067CA9F /* FTNewNotebookSettingTableViewCell.xib in Resources */,
