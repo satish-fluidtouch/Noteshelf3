@@ -112,18 +112,26 @@ extension FTPageViewController {
             || mode == .deskModeEraser
             || mode == .deskModeShape
             ) {
-            self.longPressGestureRecognizer?.allowedTouchTypes = [
-                NSNumber(value: UITouch.TouchType.direct.rawValue)
-            ];
+            var allowedTouchTypes: [NSNumber] = [NSNumber(value: UITouch.TouchType.direct.rawValue)];
+#if targetEnvironment(macCatalyst)
+            allowedTouchTypes.append(NSNumber(value: UITouch.TouchType.indirectPointer.rawValue))
+            allowedTouchTypes.append(NSNumber(value: UITouch.TouchType.indirect.rawValue))
+#endif
+            self.longPressGestureRecognizer?.allowedTouchTypes = allowedTouchTypes;
             FTCLSLog("Interaction: Update gesture: \(mode.rawValue)")
             self.startAcceptingTouches(true);
         }
         else {
-            self.longPressGestureRecognizer?.allowedTouchTypes = [
+            var allowedTouchTypes: [NSNumber] = [
                 NSNumber(value: UITouch.TouchType.direct.rawValue),
                 NSNumber(value: UITouch.TouchType.pencil.rawValue),
                 NSNumber(value: UITouch.TouchType.indirect.rawValue)
             ];
+#if targetEnvironment(macCatalyst)
+            allowedTouchTypes.append(NSNumber(value: UITouch.TouchType.indirectPointer.rawValue))
+            allowedTouchTypes.append(NSNumber(value: UITouch.TouchType.indirect.rawValue))
+#endif
+            self.longPressGestureRecognizer?.allowedTouchTypes = allowedTouchTypes;
         }
     }
 
@@ -266,6 +274,9 @@ extension FTPageViewController {
                                     at:hitPoint)
                 if annotation.isLocked {
                     return
+                }
+                if !UserDefaults.isApplePencilEnabled() {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: FTPDFEnableGestures), object: self.view.window);
                 }
             }
             self.activeAnnotationController?.annotationControllerLongPressDetected()

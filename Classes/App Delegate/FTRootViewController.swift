@@ -132,6 +132,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                 });
             });
             self.refreshStatusBarAppearnce();
+            track("Welcome_Viewed", screenName: FTScreenNames.welcomeScreen)
         }
         else {
             self.addShelfToolbar();
@@ -267,27 +268,43 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             if(isUpdated || nil == self.rootContentViewController) {
                 FTMobileCommunicationManager.shared.startWatchSession()
                 let collectionName = self.lastSelectedCollectionName();
+
+                let messageType = FTNSiCloudManager.shared().messageTypeToShow
+                var loader: FTLoadingIndicatorViewController?
+                if messageType == .kiCloudUserTurnedOnAction {
+                    self.view.isUserInteractionEnabled = false
+                    loader = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: "Moving".localized)
+                    showCollection()
+                } else {
+                    showCollection()
+                }
                 FTCLSLog("Fetching Collection");
-                self.shelfCollection(title: collectionName, pickDefault: false, onCompeltion: { collectionToShow in
-                    FTCLSLog("Collection Fetched");
-                    NotificationCenter.default.post(name: .didChangeUnfiledCategoryLocation, object: nil);
-                    if let isInNonCollectionMode = self.isInNonCollectionMode(),
-                       isInNonCollectionMode {
-                        let lastSelectedContentTypeRawString = (self.lastSelectedNonCollectionType() ?? "home")
-                        self.showShelf(isInNonCollectionMode: isInNonCollectionMode,
-                                       lastSelectedSideBarContentType: FTSideBarItemType(rawValue: lastSelectedContentTypeRawString) ?? .home,
-                                       lastSelectedTag: (self.lastSelectedTag() ?? ""))
-                    } else if collectionName == collectionToShow?.title, let collection = collectionToShow {
-                        self.showShelf(updateWithLastSelected: collection);
-                    } else {
-                        // if collection from user activity is nil we are showing "Home" now instead of "All Notes" collection
-                        self.showShelf(isInNonCollectionMode: true,
-                                       lastSelectedSideBarContentType: .home,
-                                       lastSelectedTag: "")
-                    }
-                    self.showIcloudMessage();
-                    onCompletion?(true);
-                });
+
+                func showCollection() {
+                    self.shelfCollection(title: collectionName, pickDefault: false, onCompeltion: { collectionToShow in
+                        FTCLSLog("Collection Fetched");
+                        NotificationCenter.default.post(name: .didChangeUnfiledCategoryLocation, object: nil);
+                        if let isInNonCollectionMode = self.isInNonCollectionMode(),
+                           isInNonCollectionMode {
+                            let lastSelectedContentTypeRawString = (self.lastSelectedNonCollectionType() ?? "home")
+                            self.showShelf(isInNonCollectionMode: isInNonCollectionMode,
+                                           lastSelectedSideBarContentType: FTSideBarItemType(rawValue: lastSelectedContentTypeRawString) ?? .home,
+                                           lastSelectedTag: (self.lastSelectedTag() ?? ""))
+                        } else if collectionName == collectionToShow?.title, let collection = collectionToShow {
+                            self.showShelf(updateWithLastSelected: collection);
+                        } else {
+                            // if collection from user activity is nil we are showing "Home" now instead of "All Notes" collection
+                            self.showShelf(isInNonCollectionMode: true,
+                                           lastSelectedSideBarContentType: .home,
+                                           lastSelectedTag: "")
+                        }
+                        self.showIcloudMessage(messageType: messageType, onCompletion: {
+                            loader?.hide();
+                            self.view.isUserInteractionEnabled = true
+                        });
+                        onCompletion?(true);
+                    });
+                }
             }
             else {
                 onCompletion?(false);
@@ -295,8 +312,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         }
     }
 
-    fileprivate func showIcloudMessage() {
-        let messageType = FTNSiCloudManager.shared().messageTypeToShow;
+    fileprivate func showIcloudMessage(messageType: FTiCloudActionType, onCompletion : (() -> Void)?) {
         weak var weakSelf = self;
         switch messageType {
         case .kiCloudStartUsingMessageAction:
@@ -369,9 +385,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 
         case .kiCloudUserTurnedOnAction:
             //move from local to icloud
-            self.view.isUserInteractionEnabled = false;
-
-            let loadingIndicatorViewController = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: NSLocalizedString("Moving", comment: "Moving..."));
             DispatchQueue.main.async {
                 FTNoteshelfDocumentProvider.shared.moveContentsFromLocalToiCloud(onCompletion: { (_, error) in                    (error as NSError?)?.showAlert(from: self.view.window?.visibleViewController)
                     FTURLReadThumbnailManager.sharedInstance.clearStoredThumbnailCache()
@@ -380,8 +393,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                         weakSelf?.shelfCollection(title: nil, pickDefault: false, onCompeltion: { (collection) in
                             weakSelf?.rootContentViewController?.currentShelfViewModel?.collection = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection;
                             weakSelf?.refreshShelfCollection(setToDefault: true, animate: true) {
-                                loadingIndicatorViewController.hide();
-                                self.view.isUserInteractionEnabled = true;
+                                onCompletion?()
                             }
                         });
                     }
@@ -492,12 +504,23 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         let loadingIndicatorViewController = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: NSLocalizedString("Loading", comment: "Loading..."));
         runInMainThread(1.0) {
             loadingIndicatorViewController.hide() { [weak self] in
-                self?._updateProvider({ [weak self] isUpdated in
+                guard let self else { return }
+                self._updateProvider({ [weak self] isUpdated in
+                    guard let self else { return }
                     if(!isUpdated) {
                         runInMainThread {
                             if currentRetryCount < maxRetryCount {
                                 currentRetryCount += 1
-                                self?.showIcloudMessage();
+                                let messageType = FTNSiCloudManager.shared().messageTypeToShow
+                                var loader: FTLoadingIndicatorViewController?
+                                if messageType == .kiCloudUserTurnedOnAction {
+                                    self.view.isUserInteractionEnabled = false
+                                    loader = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: "Moving".localized)
+                                }
+                                self.showIcloudMessage(messageType: messageType, onCompletion: {
+                                    loader?.hide()
+                                    self.view.isUserInteractionEnabled = true
+                                })
                             } else {
                                 track("icloud_retry_exceed")
                                 fatalError("icloud_retry_exceed")
@@ -1824,11 +1847,28 @@ extension FTRootViewController: SFSafariViewControllerDelegate {
 }
 
 
-private var launchTracker: FTAppLauncTracker?
-private class FTAppLauncTracker: NSObject {
-    weak var rootViewController: FTRootViewController?
+private var launchTracker: FTAppLaunchTracker?
+private class FTAppLaunchTracker: NSObject {
+    private weak var rootViewController: FTRootViewController?
     let delayedLaunchKey = "DelayedLaunch";
     var startTime: TimeInterval = Date.timeIntervalSinceReferenceDate;
+    
+    required init(rootViewController controller: FTRootViewController?) {
+        super.init()
+        if let _controller = controller {
+            self.rootViewController = _controller;
+            NotificationCenter.default.addObserver(self, selector: #selector(sceneWillEnterForeground(_:)), name: UIApplication.sceneWillEnterForeground, object: _controller.sceneToObserve)
+            NotificationCenter.default.addObserver(self, selector: #selector(sceneWillResignActive(_:)), name: UIApplication.sceneDidEnterBackground, object: _controller.sceneToObserve)
+        }
+    }
+    
+    @objc private func sceneWillEnterForeground(_  notification: Notification) {
+        self.scheduleLaunchWaitError();
+    }
+    
+    @objc private func sceneWillResignActive(_  notification: Notification) {
+        self.cancelLaunchWaitError(false);
+    }
     
     @objc func log5SecondWaitError() {
         FTLogError("App Launch Failed - 5")
@@ -1842,6 +1882,7 @@ private class FTAppLauncTracker: NSObject {
     @objc func log60SecondWaitError() {
         FTLogError("App Launch Failed - 60")
         UserDefaults.standard.setValue(true, forKey: delayedLaunchKey)
+        self.rootViewController?.showAppLaunchDelayAlert();
     }
     
     func scheduleLaunchWaitError() {
@@ -1851,9 +1892,11 @@ private class FTAppLauncTracker: NSObject {
         self.perform(#selector(self.log60SecondWaitError), with: nil, afterDelay: 60);
     }
     
-    func cancelLaunchWaitError() {
+    func cancelLaunchWaitError(_ finalize: Bool = true) {
         NSObject.cancelPreviousPerformRequests(withTarget: self);
-        self.logTimeTaken();
+        if finalize {
+            self.logTimeTaken();
+        }
     }
     
     func logTimeTaken() {
@@ -1862,6 +1905,7 @@ private class FTAppLauncTracker: NSObject {
             FTLogError("App Launch Time", attributes: ["Time" : time])
         }
         else if UserDefaults.standard.bool(forKey: delayedLaunchKey) {
+            UserDefaults.standard.removeObject(forKey: delayedLaunchKey)
             FTLogError("App Launch Recovered", attributes: ["Time" : time])
         }
     }
@@ -1870,14 +1914,30 @@ private class FTAppLauncTracker: NSObject {
 fileprivate extension FTRootViewController {
     func scheduleLaunchWaitError() {
         self.cancelLaunchWaitError();
-        launchTracker = FTAppLauncTracker();
-        launchTracker?.rootViewController = self;
+        launchTracker = FTAppLaunchTracker(rootViewController: self);
         launchTracker?.scheduleLaunchWaitError();
     }
     
     func cancelLaunchWaitError() {
         launchTracker?.cancelLaunchWaitError();
         launchTracker = nil;
+    }
+    
+    func showAppLaunchDelayAlert() {
+        guard FTUserDefaults.defaults().iCloudOn else {
+            return;
+        }
+        let alertContorller = UIAlertController(title: "applaunch.delay.msg".localized, message: nil, preferredStyle: .alert)
+        let closeAction = UIAlertAction(title: "Close".localized, style: .default);
+        let support = UIAlertAction(title: "applaunch.delay.contactSupport".localized, style: .default) { [weak self] _ in
+            guard let controller = self else {
+                return;
+            }
+            FTZenDeskManager.shared.showSupportContactUsScreen(controller: controller, defaultSubject: "App Launch Delay", extraTags: ["ns3_app_launc_delay"])
+        }
+        alertContorller.addAction(closeAction)
+        alertContorller.addAction(support)
+        self.present(alertContorller, animated: true);
     }
 }
 

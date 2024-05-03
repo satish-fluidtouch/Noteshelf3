@@ -24,7 +24,7 @@ class FTTextStyle: NSObject, Decodable {
 }
 
 
-class FTTextStyleItem: NSObject, Decodable {
+public class FTTextStyleItem: NSObject, Decodable {
     var displayName: String = key_Default_Style_Name
     var fontFamily: String = "Helvetica Neue"
     var fontName: String = "HelveticaNeue"
@@ -53,7 +53,7 @@ class FTTextStyleItem: NSObject, Decodable {
         return fontInfoDict
     }
     
-    override func isEqual(_ object: Any?) -> Bool {
+    public override func isEqual(_ object: Any?) -> Bool {
         let lhs = self;
         if let rhs = object as? FTTextStyleItem {
             let value = lhs.fontName == rhs.fontName && lhs.fontFamily == rhs.fontFamily &&  lhs.fontSize == rhs.fontSize && lhs.textColor.replacingOccurrences(of: "#", with: "") == rhs.textColor.replacingOccurrences(of: "#", with: "") && lhs.isUnderLined == rhs.isUnderLined && lhs.strikeThrough == rhs.strikeThrough

@@ -2044,13 +2044,12 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:FTAppDidEnterZoomMode object:nil];
         
         //Initiate zoom mode
-        //Make sure desk mode is pen or eraser
-        if (!(self.currentDeskMode == kDeskModePen
-              || self.currentDeskMode == kDeskModeMarker
-              || self.currentDeskMode == kDeskModeEraser
-              || self.currentDeskMode == kDeskModeShape
-              || self.currentDeskMode == kDeskModeFavorites)) {
-            [self switchMode:kDeskModePen];
+        if(!([self isZoomSupportedDeskMode: self.currentDeskMode])) {
+            if((self.currentDeskMode == kDeskModeClipboard) && ([self isZoomSupportedDeskMode: self.previousDeskMode])) {
+                [self switchMode:self.previousDeskMode];
+            } else {
+                [self switchMode:kDeskModePen];
+            }
         }
 
         [[self.pdfDocument localMetadataCache] setZoomModeEnabled:true];
