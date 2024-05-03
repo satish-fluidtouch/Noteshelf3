@@ -733,9 +733,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         }
     }
   
-    func showAlertWith(title: String, message: String) {
-        UIAlertController.showAlert(withTitle: title, message: message, from: self, withCompletionHandler: nil)
-    }
     func showPremiumUpgradeScreen() {
         self.prepareProviderIfNeeded {
             self.closeAnyActiveOpenedBook {

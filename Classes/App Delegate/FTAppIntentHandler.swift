@@ -86,7 +86,6 @@ protocol FTIntentHandlingProtocol: UIUserActivityRestoring {
     func startNS2ToNS3Migration()
     func showPremiumUpgradeScreen()
     func openPinnedBook(with docId: String)
-    func showAlertWith(title : String,message : String)
     func handleWidgetAction(type: FTWidgetActionType)
 }
 
@@ -260,10 +259,7 @@ final class FTAppIntentHandler {
             intentHandler?.createNotebookWithScannedPhoto()
         }
     }
-    func showAlertForIntentWith(title : String,message : String) {
-        intentHandler?.showAlertWith(title: title, message: message)
-    }
-
+    
     func handleWidgetAction(for type: FTWidgetActionType) {
         intentHandler?.handleWidgetAction(type: type)
     }
