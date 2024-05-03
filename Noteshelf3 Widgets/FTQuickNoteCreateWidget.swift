@@ -21,9 +21,9 @@ struct FTQuickNoteCreateView: View {
             Text("Create \nQuick Note")
                 .lineSpacing(6)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .font(.clearFaceFont(for: .bold, with: 17))
+                .font(.clearFaceFont(for: .bold, with: 20))
                 .foregroundColor(Color.white)
-                .padding([.bottom, .leading], 16.0)
+                .padding([.bottom, .leading], 20.0)
         }
         .frame(width: 155, height: 155)
         .clipShape(RoundedRectangle(cornerRadius: 24.0))

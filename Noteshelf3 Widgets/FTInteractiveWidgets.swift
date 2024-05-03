@@ -163,13 +163,6 @@ struct NotebookCreation_Widget: Widget {
         .description("Create a blank notebook, record audio or scan")
         .supportedFamilies([.systemMedium])
     }
-    var widgetGradientBG : [Color] {
-        if colorScheme == .light {
-            return [Color(uiColor: UIColor(hexString: "#F0EEEB")),Color(uiColor: UIColor(hexString: "#FFFFFF"))]
-        } else {
-            return [Color(uiColor: UIColor(hexString: "#282828")),Color(uiColor: UIColor(hexString: "#141414"))]
-        }
-    }
 }
 
 struct FTPinnedWidget: Widget {
@@ -193,7 +186,9 @@ struct FTPinnedNotebookOptionsWidget: Widget {
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: FTPinnedIntentConfigurationIntent.self, provider: FTPinnedTimelineProvider()) { entry in
             FTPinnedNotebookOptionsWidgetView(entry: entry)
-                .containerBackground(.clear, for: .widget)
+                .containerBackground(for: .widget, content: {
+                    Rectangle().fill(LinearGradient(colors: [Color("widgetBG1"),Color("widgetBG2")], startPoint: .top, endPoint: .bottom))
+                })
         }
         .supportedFamilies([.systemMedium])
         .configurationDisplayName("Notebook")

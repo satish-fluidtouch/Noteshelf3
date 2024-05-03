@@ -38,16 +38,6 @@ struct FTPinnedNotebookOptionsWidgetView: View {
     
     private var sideView: some View {
         return VStack {
-            Spacer()
-            VStack(spacing: 0) {
-                Text(entry.time)
-                    .lineLimit(1)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .font(.appFont(for: .medium, with: 12))
-                    .foregroundColor(color.isLightColor() ? Color.black.opacity(0.5) : Color.white.opacity(0.5))
-            }
-            .padding(.leading, 20)
-            .padding(.bottom, 18)
         }
         .frame(width: 190, height: 155)
         .background(Color(uiColor: color))
@@ -74,12 +64,21 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                         }
                         HStack {
                             Text(entry.name.lastPathComponent)
-                                .lineLimit(2)
+                                .lineLimit(1)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .foregroundColor(color.isLightColor() ? Color.black : Color.white)
-                                .padding(.top, 16)
-                                .font(.appFont(for: .medium, with: 14))
+                                .padding(.top, 13)
+                                .font(.appFont(for: .medium, with: 16))
                             Spacer(minLength: 14)
+                        }
+                        HStack {
+                            Text(entry.time)
+                                .lineLimit(1)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .font(.appFont(for: .medium, with: 12))
+                                .foregroundColor(color.isLightColor() ? Color.black.opacity(0.5) : Color.white.opacity(0.5))
+                                .padding(.top, 2)
+                                Spacer(minLength: 14)
                         }
                         Spacer()
                     }.padding(.leading, 20)
@@ -109,9 +108,9 @@ struct FTPinnedNotebookOptionsWidgetView: View {
     }
     
     private func imageSize(for entry: FTPinnedBookEntry) -> CGSize {
-        var size = CGSize(width: 40, height: 54)
+        var size = CGSize(width: 49, height: 68)
         if image.size.width > image.size.height {
-            size = CGSize(width: 54, height: 40)
+            size = CGSize(width: 68, height: 49)
         }
         return size
     }

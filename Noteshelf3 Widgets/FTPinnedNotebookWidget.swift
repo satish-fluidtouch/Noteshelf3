@@ -32,14 +32,6 @@ struct FTPinnedWidgetView : View {
                                 .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 3)
                             Spacer()
                         }
-                        HStack {
-                            Text(entry.name.lastPathComponent)
-                                .lineLimit(2)
-                                .padding(.top,15)
-                                .foregroundColor(Color.label)
-                                .font(.appFont(for: .medium, with: 14))
-                            Spacer(minLength: 16)
-                        }
                     }.padding(.leading, 20)
                     Spacer()
                 }
@@ -55,9 +47,9 @@ struct FTPinnedWidgetView : View {
     }
     
     private func imageSize(for entry: FTPinnedBookEntry) -> CGSize {
-        var size = CGSize(width: 46, height: 60)
+        var size = CGSize(width: 49, height: 68)
         if image.size.width > image.size.height {
-            size = CGSize(width: 60, height: 44)
+            size = CGSize(width: 68, height: 49)
         }
         return size
     }
@@ -124,15 +116,25 @@ struct NoteBookInfoView: View {
     let entry: FTPinnedBookEntry
     var body: some View {
         HStack {
-            VStack() {
+            VStack(spacing: 3) {
                 Spacer()
-                Text(entry.time)
-                    .lineLimit(1)
-                    .font(.appFont(for: .medium, with: 12))
-                    .foregroundColor(Color("black50"))
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                HStack {
+                    Text(entry.name.lastPathComponent)
+                        .lineLimit(1)
+                        .foregroundColor(Color.label)
+                        .font(.appFont(for: .medium, with: 16))
+                    Spacer(minLength: 16)
+                }
+                HStack {
+                    Text(entry.time)
+                        .lineLimit(1)
+                        .font(.appFont(for: .medium, with: 12))
+                        .foregroundColor(Color("black50"))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Spacer(minLength: 16)
+                }
             }.padding(.leading, 20)
-                .padding(.bottom, 16)
+                .padding(.bottom, 22)
             Spacer()
         }
     }
