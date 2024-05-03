@@ -125,6 +125,8 @@ class FTWelcomeScreenViewController: UIViewController {
             self.loadAudioFiles();
         }
         self.validatePlayPauseButton(self.view.frame.size);
+        scrollView1?.delegate = self
+        scrollView2?.delegate = self
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -228,6 +230,7 @@ class FTWelcomeScreenViewController: UIViewController {
         UserDefaults.standard.set(true, forKey: WelcomeScreenViewed)
         UserDefaults.standard.synchronize();
         self.muteBackgroundMusic(true)
+        track("Welcome_GetStarted_Tap", screenName: FTScreenNames.welcomeScreen)
         self.dismiss(animated: true) {
             self.displayLink.invalidate();
             self.onDismissBlock?();
@@ -414,6 +417,12 @@ private extension FTWelcomeScreenViewController {
             }
             self.bgAudioPlayer?.setVolume(0.5, fadeDuration: 1);
         }
+    }
+}
+
+extension FTWelcomeScreenViewController : UIScrollViewDelegate {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        track("Welcome_Tile_Swipe", screenName: FTScreenNames.welcomeScreen);
     }
 }
 

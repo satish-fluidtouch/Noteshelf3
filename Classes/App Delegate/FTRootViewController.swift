@@ -132,6 +132,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                 });
             });
             self.refreshStatusBarAppearnce();
+            track("Welcome_Viewed", screenName: FTScreenNames.welcomeScreen)
         }
         else {
             self.addShelfToolbar();
