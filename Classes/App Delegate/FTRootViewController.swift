@@ -1754,11 +1754,28 @@ extension FTRootViewController: SFSafariViewControllerDelegate {
 }
 
 
-private var launchTracker: FTAppLauncTracker?
-private class FTAppLauncTracker: NSObject {
-    weak var rootViewController: FTRootViewController?
+private var launchTracker: FTAppLaunchTracker?
+private class FTAppLaunchTracker: NSObject {
+    private weak var rootViewController: FTRootViewController?
     let delayedLaunchKey = "DelayedLaunch";
     var startTime: TimeInterval = Date.timeIntervalSinceReferenceDate;
+    
+    required init(rootViewController controller: FTRootViewController?) {
+        super.init()
+        if let _controller = controller {
+            self.rootViewController = _controller;
+            NotificationCenter.default.addObserver(self, selector: #selector(sceneWillEnterForeground(_:)), name: UIApplication.sceneWillEnterForeground, object: _controller.sceneToObserve)
+            NotificationCenter.default.addObserver(self, selector: #selector(sceneWillResignActive(_:)), name: UIApplication.sceneDidEnterBackground, object: _controller.sceneToObserve)
+        }
+    }
+    
+    @objc private func sceneWillEnterForeground(_  notification: Notification) {
+        self.scheduleLaunchWaitError();
+    }
+    
+    @objc private func sceneWillResignActive(_  notification: Notification) {
+        self.cancelLaunchWaitError(false);
+    }
     
     @objc func log5SecondWaitError() {
         FTLogError("App Launch Failed - 5")
@@ -1772,6 +1789,7 @@ private class FTAppLauncTracker: NSObject {
     @objc func log60SecondWaitError() {
         FTLogError("App Launch Failed - 60")
         UserDefaults.standard.setValue(true, forKey: delayedLaunchKey)
+        self.rootViewController?.showAppLaunchDelayAlert();
     }
     
     func scheduleLaunchWaitError() {
@@ -1781,9 +1799,11 @@ private class FTAppLauncTracker: NSObject {
         self.perform(#selector(self.log60SecondWaitError), with: nil, afterDelay: 60);
     }
     
-    func cancelLaunchWaitError() {
+    func cancelLaunchWaitError(_ finalize: Bool = true) {
         NSObject.cancelPreviousPerformRequests(withTarget: self);
-        self.logTimeTaken();
+        if finalize {
+            self.logTimeTaken();
+        }
     }
     
     func logTimeTaken() {
@@ -1792,6 +1812,7 @@ private class FTAppLauncTracker: NSObject {
             FTLogError("App Launch Time", attributes: ["Time" : time])
         }
         else if UserDefaults.standard.bool(forKey: delayedLaunchKey) {
+            UserDefaults.standard.removeObject(forKey: delayedLaunchKey)
             FTLogError("App Launch Recovered", attributes: ["Time" : time])
         }
     }
@@ -1800,14 +1821,30 @@ private class FTAppLauncTracker: NSObject {
 fileprivate extension FTRootViewController {
     func scheduleLaunchWaitError() {
         self.cancelLaunchWaitError();
-        launchTracker = FTAppLauncTracker();
-        launchTracker?.rootViewController = self;
+        launchTracker = FTAppLaunchTracker(rootViewController: self);
         launchTracker?.scheduleLaunchWaitError();
     }
     
     func cancelLaunchWaitError() {
         launchTracker?.cancelLaunchWaitError();
         launchTracker = nil;
+    }
+    
+    func showAppLaunchDelayAlert() {
+        guard FTUserDefaults.defaults().iCloudOn else {
+            return;
+        }
+        let alertContorller = UIAlertController(title: "applaunch.delay.msg".localized, message: nil, preferredStyle: .alert)
+        let closeAction = UIAlertAction(title: "Close".localized, style: .default);
+        let support = UIAlertAction(title: "applaunch.delay.contactSupport".localized, style: .default) { [weak self] _ in
+            guard let controller = self else {
+                return;
+            }
+            FTZenDeskManager.shared.showSupportContactUsScreen(controller: controller, defaultSubject: "App Launch Delay", extraTags: ["ns3_app_launc_delay"])
+        }
+        alertContorller.addAction(closeAction)
+        alertContorller.addAction(support)
+        self.present(alertContorller, animated: true);
     }
 }
 
