@@ -1016,6 +1016,7 @@
 "customizeToolbar.pixabay" = "픽사베이";
 "customizeToolbar.present" = "프레젠테이션";
 "customizeToolbar.readOnlyMode" = "읽기 전용 모드";
+"customizeToolbar.recent.notes" = "최근에 열린 공책";
 "customizeToolbar.requestForShortcut" = "단축키 요청";
 "customizeToolbar.resetConfirmation" = "기본 도구 모음으로 재설정하시겠습니까?";
 "customizeToolbar.rotatePage" = "페이지 회전";
@@ -1664,4 +1665,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 26 April 2024 at 10:34 AM
+// Last Synced by Sameer Hussain on 3 May 2024 at 3:03 PM

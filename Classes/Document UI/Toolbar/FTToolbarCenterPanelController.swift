@@ -84,7 +84,7 @@ class FTToolbarCenterPanelController: UIViewController {
 
     private var dataSourceItems: [FTDeskCenterPanelTool] = []
     private(set) var screenMode = FTScreenMode.normal
-   
+    private var showTipView :  Bool = false
 
     weak var delegate: FTToolbarCenterPanelDelegate?
 
@@ -111,13 +111,18 @@ class FTToolbarCenterPanelController: UIViewController {
         longPressGesture.minimumPressDuration = 0.6
         self.view.addGestureRecognizer(longPressGesture)
         addObserverForScrollDirection()
+        
     }
     override func viewDidAppear(_ animated: Bool) {
+        self.showTipView = UserDefaults.standard.bool(forKey: "showTipView")
         if setUpTheTimeForTipView() {
-            if self.view.frame.width > 320 {
-                setUpTipForNewFeatures()
-            }else {
-                print("Screen size is not fit")
+            if self.showTipView == false {
+                if self.view.frame.width > 320 {
+                    setUpTipForNewFeatures()
+                }else {
+                    print("Screen size is not fit")
+                }
+                UserDefaults.standard.set(true, forKey: "showTipView")
             }
         }
        

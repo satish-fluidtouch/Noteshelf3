@@ -67,8 +67,8 @@ extension FTSidePanelShelfItemPickerDelegate {
     var ftPresentationDelegate = FTPopoverPresentation()
     weak var sidePanelDelegate: FTSidePanelShelfItemPickerDelegate?
     var isFromRecentNotes: Bool = false
-    @IBOutlet weak var tvLeading : NSLayoutConstraint!
-    @IBOutlet weak var tvTrailing : NSLayoutConstraint!
+    @IBOutlet weak private var tvLeading : NSLayoutConstraint!
+    @IBOutlet weak private var tvTrailing : NSLayoutConstraint!
     var currentIndex = 0
 
     override func viewDidLayoutSubviews() {
@@ -79,24 +79,14 @@ extension FTSidePanelShelfItemPickerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if isFromRecentNotes {
-            self.configureNavigation(title:"Recent Notebooks")
+            self.configureNavigation(title:"customizeToolbar.recent.notes".localized)
             self.navigationItem.leftBarButtonItem?.isHidden = true
             self.view.backgroundColor = UIColor.appColor(.popoverBgColor)
-            self.tableView.separatorStyle = .singleLine
+            
         }else {
             self.configureNavigation(title: collection?.displayTitle ?? "")
         }
       
-    }
-    
-    func getHeightOfVisibleCells() -> CGFloat {
-        var totalHeight: CGFloat = 0.0
-        for indexPath in tableView.indexPathsForVisibleRows ?? [] {
-            if let cell = tableView.cellForRow(at: indexPath) {
-                totalHeight += cell.frame.size.height
-            }
-        }
-        return totalHeight
     }
     
     func configureNavigation(title: String) {
@@ -130,33 +120,26 @@ extension FTSidePanelShelfItemPickerDelegate {
             
         }
     }
-    
+
     func setUpcellForRecentNotes(cell:FTShelfItemTableViewCell,index:IndexPath){
         if  self.isFromRecentNotes {
             if self.items.count > 1 {
+                cell.separatorView?.isHidden = false
                   if index.row == 0 {
                       cell.shapeTopCorners(10.0)
                   }
                   if index.row == self.items.count - 1 {
                       cell.shapeBottomCorners(10.0)
+                      cell.separatorView?.isHidden = true
                   }
                 } else {
                     cell.layer.cornerRadius = 10.0
+                    cell.separatorView?.isHidden = true
                 }
             if self.currentIndex == index.row {
-                cell.backgroundColor = UIColor(hexString:"186F81",alpha:0.1)
+                cell.backgroundColor = UIColor.appColor(.accentBg)
             }else {
-                if #available(iOS 13.0, *) {
-                    let currentTraitCollection = UIScreen.main.traitCollection
-                    let isDarkMode = currentTraitCollection.userInterfaceStyle == .dark
-                    
-                    if isDarkMode {
-                        cell.backgroundColor = .clear
-                    } else {
-                        cell.backgroundColor = .white
-                    }
-                }
-                
+                cell.backgroundColor = UIColor.appColor(.cellBackgroundColor)
             }
         }
     }

@@ -1016,6 +1016,7 @@
 "customizeToolbar.pixabay" = "Pixabay";
 "customizeToolbar.present" = "示範";
 "customizeToolbar.readOnlyMode" = "唯讀模式";
+"customizeToolbar.recent.notes" = "最近的筆記本";
 "customizeToolbar.requestForShortcut" = "請求快捷方式";
 "customizeToolbar.resetConfirmation" = "您確定要重設為預設工具列嗎？";
 "customizeToolbar.rotatePage" = "旋轉頁面";
@@ -1664,4 +1665,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 26 April 2024 at 10:34 AM
+// Last Synced by Sameer Hussain on 3 May 2024 at 3:03 PM

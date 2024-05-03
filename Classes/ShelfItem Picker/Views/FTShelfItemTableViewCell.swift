@@ -47,6 +47,7 @@ class FTShelfItemTableViewCell: UITableViewCell,FTShelfItemCellProgressUpdate {
     @IBOutlet weak var progressView: UIProgressView?
     @IBOutlet weak var passcodeLockStatusView: UIView!
     @IBOutlet weak var currentShelfItemIndicator: UIImageView?
+    @IBOutlet weak var separatorView: UIView?
     
     @IBOutlet weak var shadowImageView: FTShelfItemShadowImageView!
     @IBOutlet weak var shadowImageView2: FTShelfItemShadowImageView!
