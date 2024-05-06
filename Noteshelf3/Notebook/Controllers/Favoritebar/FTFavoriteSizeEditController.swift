@@ -26,9 +26,9 @@ class FTFavoriteSizeEditController: UIHostingController<FTPenSizeEditView>, FTPo
     weak var delegate: FTFavoriteSizeUpdateDelegate?
     private var cancellables = Set<AnyCancellable>()
 
-    init(size: CGFloat, penType: FTPenType, displayMode: FTPenSizeEditViewDisplayMode = .favoriteEdit) {
+    init(size: CGFloat, penType: FTPenType, displayMode: FTPenSizeEditViewDisplayMode = .favoriteEdit, activity: NSUserActivity? = nil) {
         self.sizeEditModel = FTPenSizeEditModel(currentSize: size)
-        let hostView = FTPenSizeEditView(displayMode: displayMode, penType: penType, favoriteSizeValue: size, sizeEditModel: sizeEditModel, rackType: penType.rackType)
+        let hostView = FTPenSizeEditView(displayMode: displayMode, penType: penType, favoriteSizeValue: size, sizeEditModel: sizeEditModel, rackType: penType.rackType, placement: FTShortcutPlacement.getSavedPlacement(activity: activity))
         super.init(rootView: hostView)
         self.sizeEditModel.$currentSize
             .dropFirst()
