@@ -1016,6 +1016,7 @@
 "customizeToolbar.pixabay" = "Pixabay";
 "customizeToolbar.present" = "演示";
 "customizeToolbar.readOnlyMode" = "只读模式";
+"customizeToolbar.recent.notes" = "最近的笔记本";
 "customizeToolbar.requestForShortcut" = "请求快捷方式";
 "customizeToolbar.resetConfirmation" = "您确定要重置为默认工具栏吗？";
 "customizeToolbar.rotatePage" = "旋转页面";
@@ -1266,7 +1267,7 @@
 "password.usefaceid" = "使用 Face ID";
 "password.usetouchid" = "使用 Touch ID";
 "penRack.ballpoint" = "圆珠笔";
-"penRack.felt" = "毛笔";
+"penRack.felt" = "毡笔";
 "penRack.fountain" = "钢笔";
 "penRack.pencil" = "铅笔";
 "presentation.clearAnnotations" = "清除批注";
@@ -1571,6 +1572,8 @@
 "textmode.fonttitle" = "字体/文本样式";
 "texttoolbar.fontselectionTitle" = "选择字体";
 "theams.unsplashDescription" = "从Unsplash选择，拍照或从照片库中选择以创建您的自定义封面。";
+"tipeview.shortcut.message" = "长按工具栏以添加、移除或重新排序您喜欢的工具。";
+"tipeview.shortcut.title" = "已添加新的工具栏快捷方式！";
 "trash.alert.cannotOpenNotebook" = "此笔记本已被删除，无法打开。要恢复，请长按并从菜单中选择该选项。";
 "trash.alert.title" = "你确定要清空垃圾箱吗？";
 "unsplash.search.alertMessage" = "列表视图";
@@ -1657,9 +1660,16 @@
 "whatsnew.planner2.cta" = "现在就来看看吧！";
 "whatsnew.planner2.description" = "在模板部分发现我们从一些有才华的创作者那里精心挑选的令人愉悦的数字计划者。";
 "whatsnew.planner2.title" = "更多2024年的计划者！";
+"widget.nonotes" = "还没有笔记";
+"widget.notebook" = "笔记本";
+"widget.pinned.description" = "快速访问您的一个笔记本。";
+"widget.quickCreate.large.description" = "快速创建一个空白笔记本，录制音频或扫描文档。";
+"widget.quickCreate.small.description" = "创建一个快速笔记。";
+"widget.quicknote" = "快速笔记";
+"widget.takenotes" = "做笔记";
 "widgets" = "小部件";
 "work" = "工作";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 24 April 2024 at 1:13 PM
+// Last Synced by Fluid Touch on 3 May 2024 at 5:05 PM

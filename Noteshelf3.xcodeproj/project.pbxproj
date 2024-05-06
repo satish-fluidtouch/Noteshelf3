@@ -444,17 +444,22 @@
 		47F39E872A04DF7400CB1599 /* FTPDFFileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E7736B1E71632900E086AB /* FTPDFFileGenerator.swift */; };
 		47F39E892A04E0FB00CB1599 /* FTPDFFileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E7736B1E71632900E086AB /* FTPDFFileGenerator.swift */; };
 		47F5F2A42AC308890095CBA9 /* FTWatchRecordedListReprasentableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F5F2A32AC308890095CBA9 /* FTWatchRecordedListReprasentableView.swift */; };
+		5206098F2B7CA14400487CBC /* ColorThief.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5206098B2B7CA06500487CBC /* ColorThief.swift */; };
+		520609902B7CA14600487CBC /* MMCQ.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5206098C2B7CA06500487CBC /* MMCQ.swift */; };
 		520DA2A52A2DAC94003A6F22 /* FTBookmarkCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520DA2A42A2DAC94003A6F22 /* FTBookmarkCollectionViewCell.swift */; };
 		520DA2AA2A2DF3D8003A6F22 /* FTFinderUI.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4213C34E288955DB00A7A6F3 /* FTFinderUI.storyboard */; };
 		520DA2BC2A2F493C003A6F22 /* FTBookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520DA2BB2A2F493C003A6F22 /* FTBookmarkViewController.swift */; };
 		520DA2BE2A2F55C4003A6F22 /* FTBookmarkColorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520DA2BD2A2F55C4003A6F22 /* FTBookmarkColorCell.swift */; };
 		520DA2C82A304D1E003A6F22 /* FTBookmarkColorSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520DA2C72A304D1E003A6F22 /* FTBookmarkColorSectionHeader.swift */; };
 		520DA2CA2A306C05003A6F22 /* FTBookmarkColorFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520DA2C92A306C05003A6F22 /* FTBookmarkColorFooter.swift */; };
+		5219823B2B7B9BC1004ABDCC /* PinnedIntentDefinition.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 521982392B7B9BB5004ABDCC /* PinnedIntentDefinition.intentdefinition */; };
+		5219823D2B7B9BC7004ABDCC /* PinnedIntentDefinition.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 521982392B7B9BB5004ABDCC /* PinnedIntentDefinition.intentdefinition */; };
 		5238E7CE2A0B6E5900F8F171 /* FTNoteBookSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5238E7CD2A0B6E5900F8F171 /* FTNoteBookSettingsViewController.swift */; };
 		5238E7D22A0B705000F8F171 /* FTNoteBookSettingsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5238E7D12A0B705000F8F171 /* FTNoteBookSettingsHelper.swift */; };
 		5238E7D42A0B712900F8F171 /* FTNoteBookSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5238E7D32A0B712900F8F171 /* FTNoteBookSettings.storyboard */; };
 		5238E7D72A0B7C2A00F8F171 /* FTNoteBookSegmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5238E7D62A0B7C2A00F8F171 /* FTNoteBookSegmentCell.swift */; };
 		523DFE8B2A6FCED100924E9A /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAA84E2628730FA800DE801B /* Colors.xcassets */; };
+		524627982B8480BC00ED5E73 /* FTSharedGroupID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0966EE4E213FE7A000B2B456 /* FTSharedGroupID.swift */; };
 		524B27C22B6CEED3003AE5A6 /* FTNotebookEventTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524B27C12B6CEED3003AE5A6 /* FTNotebookEventTracker.swift */; };
 		52550E872A70FCAD00E7A1E7 /* FTNewNotebook.docc in Sources */ = {isa = PBXBuildFile; fileRef = 52550E402A70FCAD00E7A1E7 /* FTNewNotebook.docc */; };
 		52550E882A70FCAD00E7A1E7 /* FTNewNotebookConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550E422A70FCAD00E7A1E7 /* FTNewNotebookConstants.swift */; };
@@ -645,11 +650,19 @@
 		52C234EA2A7BC7C300E73F1B /* FTNoteBookToolsHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52C234E92A7BC7C300E73F1B /* FTNoteBookToolsHeaderView.xib */; };
 		52C234EC2A7BC91A00E73F1B /* FTNotebookToolsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C234EB2A7BC91A00E73F1B /* FTNotebookToolsHeaderView.swift */; };
 		52C98BE82A0E3D8C00070F4A /* FTOutLineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C98BE72A0E3D8C00070F4A /* FTOutLineCell.swift */; };
+		52D5B10F2B8DB23D00567AC5 /* FTWidgetIntentDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D5B10E2B8DB23D00567AC5 /* FTWidgetIntentDataHelper.swift */; };
+		52D5B1102B8DB2B700567AC5 /* FTWidgetIntentDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D5B10E2B8DB23D00567AC5 /* FTWidgetIntentDataHelper.swift */; };
 		52D7D5BD2A70E56900F3089E /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAA84E2628730FA800DE801B /* Colors.xcassets */; };
 		52D7D5BE2A70F4C600F3089E /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAA84E2628730FA800DE801B /* Colors.xcassets */; };
 		52DE39482A150E3A0090A630 /* DancingScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52BBD4F329E9590B003088AE /* DancingScript-Regular.ttf */; };
 		52E36A452ABDA68A00FDDC78 /* FTPageUndoRedoGestureDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E36A442ABDA68A00FDDC78 /* FTPageUndoRedoGestureDetector.swift */; };
+		52FFA33D2B7220CF00740FB9 /* FTCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA84E442873105500DE801B /* FTCommon.framework */; };
 		70E4E0B059B5E459A782F4D5 /* Pods_Noteshelf3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9D0526C5CF6A9527BEB0533 /* Pods_Noteshelf3.framework */; };
+		84485C192B86003C005A981D /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 521982152B7B99D6004ABDCC /* Intents.framework */; };
+		84485C1C2B86003C005A981D /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84485C1B2B86003C005A981D /* IntentHandler.swift */; };
+		84485C202B86003C005A981D /* Noteshelf3 Intents Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 84485C182B86003C005A981D /* Noteshelf3 Intents Extension.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		84485C282B860069005A981D /* PinnedIntentDefinition.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 521982392B7B9BB5004ABDCC /* PinnedIntentDefinition.intentdefinition */; };
+		84485C2C2B86040D005A981D /* FTCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA84E442873105500DE801B /* FTCommon.framework */; };
 		8E8D86C0291A385900927EE5 /* FTDeskToolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8D86BE291A385900927EE5 /* FTDeskToolView.swift */; };
 		8E8D86C3291A392800927EE5 /* FTDeskToolView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E8D86C1291A392800927EE5 /* FTDeskToolView.xib */; };
 		970EA3192B3D61FB00D4B7C2 /* FTDiaryPageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970EA3182B3D61FB00D4B7C2 /* FTDiaryPageInfo.swift */; };
@@ -755,6 +768,29 @@
 		97BE883B2931DB01007C1E2D /* FTShelfViewModel+ShelfUpdateHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BE883A2931DB01007C1E2D /* FTShelfViewModel+ShelfUpdateHandlers.swift */; };
 		97BEB93D294215BA00147961 /* FTSideBar.plist in Resources */ = {isa = PBXBuildFile; fileRef = 97BEB93C294215B900147961 /* FTSideBar.plist */; };
 		97BEB93F294216F200147961 /* FTSidebarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BEB93E294216F200147961 /* FTSidebarManager.swift */; };
+		97C4531A2B70E40500251C73 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C453192B70E40500251C73 /* WidgetKit.framework */; };
+		97C4531C2B70E40500251C73 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C4531B2B70E40500251C73 /* SwiftUI.framework */; };
+		97C4531F2B70E40500251C73 /* Noteshelf3_WidgetsBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4531E2B70E40500251C73 /* Noteshelf3_WidgetsBundle.swift */; };
+		97C453212B70E40500251C73 /* FTPinnedNotebookWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C453202B70E40500251C73 /* FTPinnedNotebookWidget.swift */; };
+		97C453232B70E40700251C73 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C453222B70E40700251C73 /* Assets.xcassets */; };
+		97C453272B70E40700251C73 /* Noteshelf3 WidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 97C453182B70E40400251C73 /* Noteshelf3 WidgetsExtension.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		97C453302B70F24000251C73 /* SearchIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4532F2B70F24000251C73 /* SearchIntent.swift */; };
+		97C453312B70F27C00251C73 /* SearchIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4532F2B70F24000251C73 /* SearchIntent.swift */; };
+		97C453402B73538B00251C73 /* FTNotebookCreationWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4533D2B73538B00251C73 /* FTNotebookCreationWidget.swift */; };
+		97C453442B735A0100251C73 /* FTInteractiveWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C453412B735A0100251C73 /* FTInteractiveWidgets.swift */; };
+		97C453472B73721400251C73 /* QuickNoteIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C453462B73721400251C73 /* QuickNoteIntent.swift */; };
+		97C453492B73721400251C73 /* QuickNoteIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C453462B73721400251C73 /* QuickNoteIntent.swift */; };
+		97C4534B2B73722C00251C73 /* NewNotebookIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4534A2B73722C00251C73 /* NewNotebookIntent.swift */; };
+		97C4534D2B73722C00251C73 /* NewNotebookIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4534A2B73722C00251C73 /* NewNotebookIntent.swift */; };
+		97C4534F2B73723D00251C73 /* AudioNoteIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4534E2B73723D00251C73 /* AudioNoteIntent.swift */; };
+		97C453512B73723D00251C73 /* AudioNoteIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4534E2B73723D00251C73 /* AudioNoteIntent.swift */; };
+		97C453532B73725000251C73 /* ScanIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C453522B73725000251C73 /* ScanIntent.swift */; };
+		97C453552B73725000251C73 /* ScanIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C453522B73725000251C73 /* ScanIntent.swift */; };
+		97C4535C2B74AF0D00251C73 /* FTWidgetActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4535B2B74AF0D00251C73 /* FTWidgetActionType.swift */; };
+		97C4535E2B74AF0D00251C73 /* FTWidgetActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4535B2B74AF0D00251C73 /* FTWidgetActionType.swift */; };
+		97C453612B74B02900251C73 /* FTWidgetActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C453602B74B02900251C73 /* FTWidgetActionController.swift */; };
+		97C453632B74B02900251C73 /* FTWidgetActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C453602B74B02900251C73 /* FTWidgetActionController.swift */; };
+		97C453672B74E3B900251C73 /* Clearface-Serial-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1457399F2B0CB1E10052103F /* Clearface-Serial-Bold.otf */; };
 		97C52E4B292223E800BAA299 /* FTShelfViewModel+ShelfItemContextualOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C52E48292223E700BAA299 /* FTShelfViewModel+ShelfItemContextualOperations.swift */; };
 		97C52E4C292223E800BAA299 /* FTShelfViewModel+ShelfItemOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C52E49292223E700BAA299 /* FTShelfViewModel+ShelfItemOperations.swift */; };
 		97C52E4D292223E800BAA299 /* FTShelfViewModel+BottomBarOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C52E4A292223E800BAA299 /* FTShelfViewModel+BottomBarOptions.swift */; };
@@ -767,6 +803,7 @@
 		97C799332B04ECEF001877B2 /* FTNSiCloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C799322B04ECEF001877B2 /* FTNSiCloudManager.swift */; };
 		97C799342B04ECEF001877B2 /* FTNSiCloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C799322B04ECEF001877B2 /* FTNSiCloudManager.swift */; };
 		97CBAB5D2AEB98DB00267A17 /* ENOAuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CBAB5C2AEB98DA00267A17 /* ENOAuthViewController.m */; };
+		97CFD9D32B7B9EBC007949B2 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA84E2328730FA800DE801B /* Colors.swift */; };
 		97D2A4FA2AC6E8E800A0E509 /* FTFavoritePensetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D2A4F92AC6E8E800A0E509 /* FTFavoritePensetManager.swift */; };
 		97D2A4FC2AC6EE0600A0E509 /* FavoritePensets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 97D2A4FB2AC6EE0600A0E509 /* FavoritePensets.plist */; };
 		97D2A4FE2AC6F01000A0E509 /* FTFavoritePensetDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D2A4FD2AC6F01000A0E509 /* FTFavoritePensetDataManager.swift */; };
@@ -1001,7 +1038,6 @@
 		BAF38FE42859ADF00067CA9F /* FTSettingsCommonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C806A3BA21E872DB0053322C /* FTSettingsCommonTableViewCell.xib */; };
 		BAF38FE62859ADF00067CA9F /* FTShelfCategoryHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 098A3B5523A78CE80068E502 /* FTShelfCategoryHeaderView.xib */; };
 		BAF38FE82859ADF00067CA9F /* FTConvertToTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C825338F213D085C00110CA4 /* FTConvertToTextViewController.xib */; };
-		BAF38FE92859ADF00067CA9F /* FTFontPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BBAE17224FE14DC0007931A /* FTFontPickerViewController.xib */; };
 		BAF38FEB2859ADF00067CA9F /* iRate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 211E3A111E028265007B5CAD /* iRate.bundle */; };
 		BAF38FED2859ADF00067CA9F /* FTNewNotebookSettingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47AF5CB91EB346A300BEFCF5 /* FTNewNotebookSettingTableViewCell.xib */; };
 		BAF38FEF2859ADF00067CA9F /* FTExport.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0995903B1E0E47F100CA1B6C /* FTExport.storyboard */; };
@@ -1972,11 +2008,16 @@
 		E74429092BB2902B0079DD89 /* FTSharedGroupID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0966EE4E213FE7A000B2B456 /* FTSharedGroupID.swift */; };
 		E744290A2BB290A10079DD89 /* FTWatchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75329C62B99968D00C22267 /* FTWatchUtils.swift */; };
 		E746A99129A48248009B95B4 /* FTStickersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E746A99029A48248009B95B4 /* FTStickersViewController.swift */; };
+		E7485B7E2B7CDFE500EE9BF2 /* FTQuickNoteCreateWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7485B7C2B7CD8DE00EE9BF2 /* FTQuickNoteCreateWidget.swift */; };
+		E74E48802BE4FED000E43B14 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7A912E22861F20C00BACD79 /* Localizable.strings */; };
 		E75329C72B99968D00C22267 /* FTWatchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75329C62B99968D00C22267 /* FTWatchUtils.swift */; };
 		E75329C92B999E8F00C22267 /* FTWatchLandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75329C82B999E8F00C22267 /* FTWatchLandView.swift */; };
 		E755B7592B7B7D15007DDC30 /* FTTextView_MenuHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E755B7582B7B7D15007DDC30 /* FTTextView_MenuHandler.swift */; };
 		E75705D92AF5104900699764 /* FTFavoriteShortcutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75705D82AF5104900699764 /* FTFavoriteShortcutController.swift */; };
 		E75705DB2AF51E8F00699764 /* FTFavoriteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75705DA2AF51E8F00699764 /* FTFavoriteEditViewController.swift */; };
+		E759A9672B7DE3F500B97F29 /* FTPinnedNotebookOptionsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E759A9662B7DE3F500B97F29 /* FTPinnedNotebookOptionsWidget.swift */; };
+		E759A9692B7DE93B00B97F29 /* FTPinnedIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E759A9682B7DE93B00B97F29 /* FTPinnedIntents.swift */; };
+		E759A96A2B7E1AD600B97F29 /* FTPinnedIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E759A9682B7DE93B00B97F29 /* FTPinnedIntents.swift */; };
 		E75A36342B4FA47E00833348 /* FTLinkToSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A36332B4FA47E00833348 /* FTLinkToSelectViewController.swift */; };
 		E75A36362B4FB52000833348 /* FTLinkTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A36352B4FB52000833348 /* FTLinkTextTableViewCell.swift */; };
 		E75A36382B4FB53300833348 /* FTLinkBookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A36372B4FB53300833348 /* FTLinkBookTableViewCell.swift */; };
@@ -2002,6 +2043,8 @@
 		E760233C2A4F003E00B16084 /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E760233A2A4EFBA100B16084 /* UIApplication+Extension.swift */; };
 		E760A1F92A7B904200E9CF51 /* FTShelfTagsViewController_MacExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E760A1F82A7B904200E9CF51 /* FTShelfTagsViewController_MacExtension.swift */; };
 		E762186F2A4D809D004A8428 /* FTShelfBaseHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E762186E2A4D809D004A8428 /* FTShelfBaseHostingController.swift */; };
+		E76244102B7F38920045DA75 /* FTRootViewController_WidgetActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E762440F2B7F38920045DA75 /* FTRootViewController_WidgetActions.swift */; };
+		E76244122B7F3CA80045DA75 /* FTShelfSplitViewController+WidgetActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76244112B7F3CA80045DA75 /* FTShelfSplitViewController+WidgetActions.swift */; };
 		E7654DF02966A8AA00E0F7A7 /* FTGlobalSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7654DEF2966A8AA00E0F7A7 /* FTGlobalSettingsController.swift */; };
 		E76AF9272B9AE0F500B65517 /* FTPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76AF9262B9AE0F500B65517 /* FTPlayerViewModel.swift */; };
 		E76CEDC22A93605C00E4E22F /* FTRecentSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76CEDC02A93605C00E4E22F /* FTRecentSectionHeader.xib */; };
@@ -2261,6 +2304,27 @@
 			remoteGlobalIDString = BAA84E1428730F5800DE801B;
 			remoteInfo = FTStyles;
 		};
+		84485C1E2B86003C005A981D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84485C172B86003C005A981D;
+			remoteInfo = "Noteshelf3 Intents Extension";
+		};
+		84485C2E2B86040D005A981D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BAA84E432873105500DE801B;
+			remoteInfo = FTCommon;
+		};
+		97C453252B70E40700251C73 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 97C453172B70E40400251C73;
+			remoteInfo = "Noteshelf3 WidgetsExtension";
+		};
 		BAA84E1B28730F5800DE801B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -2387,7 +2451,9 @@
 			dstSubfolderSpec = 13;
 			files = (
 				BAB142312AF3746E001114C0 /* Noteshelf3 Thumbnail.appex in Embed Foundation Extensions */,
+				84485C202B86003C005A981D /* Noteshelf3 Intents Extension.appex in Embed Foundation Extensions */,
 				47B0AF202AF22E4200C15810 /* Noteshelf3 Action.appex in Embed Foundation Extensions */,
+				97C453272B70E40700251C73 /* Noteshelf3 WidgetsExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3343,11 +3409,15 @@
 		47FBFD9F1EC9719B0083AA1E /* FTShelfItemPublishRequest_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfItemPublishRequest_Extension.swift; sourceTree = "<group>"; };
 		47FBFDAE1ECC1ABB0083AA1E /* UIView+RounderCorner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+RounderCorner.swift"; sourceTree = "<group>"; };
 		517DC74247BEB79AB799009B /* Pods-Noteshelf3.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Noteshelf3.debug.xcconfig"; path = "Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3.debug.xcconfig"; sourceTree = "<group>"; };
+		5206098B2B7CA06500487CBC /* ColorThief.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorThief.swift; sourceTree = "<group>"; };
+		5206098C2B7CA06500487CBC /* MMCQ.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MMCQ.swift; sourceTree = "<group>"; };
 		520DA2A42A2DAC94003A6F22 /* FTBookmarkCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTBookmarkCollectionViewCell.swift; sourceTree = "<group>"; };
 		520DA2BB2A2F493C003A6F22 /* FTBookmarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTBookmarkViewController.swift; sourceTree = "<group>"; };
 		520DA2BD2A2F55C4003A6F22 /* FTBookmarkColorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTBookmarkColorCell.swift; sourceTree = "<group>"; };
 		520DA2C72A304D1E003A6F22 /* FTBookmarkColorSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTBookmarkColorSectionHeader.swift; sourceTree = "<group>"; };
 		520DA2C92A306C05003A6F22 /* FTBookmarkColorFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTBookmarkColorFooter.swift; sourceTree = "<group>"; };
+		521982152B7B99D6004ABDCC /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		521982392B7B9BB5004ABDCC /* PinnedIntentDefinition.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = PinnedIntentDefinition.intentdefinition; sourceTree = "<group>"; };
 		5238E7CD2A0B6E5900F8F171 /* FTNoteBookSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNoteBookSettingsViewController.swift; sourceTree = "<group>"; };
 		5238E7D12A0B705000F8F171 /* FTNoteBookSettingsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNoteBookSettingsHelper.swift; sourceTree = "<group>"; };
 		5238E7D32A0B712900F8F171 /* FTNoteBookSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FTNoteBookSettings.storyboard; sourceTree = "<group>"; };
@@ -3521,7 +3591,9 @@
 		52C01E122A00F4880038C21A /* FTFinderHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFinderHelper.swift; sourceTree = "<group>"; };
 		52C234E92A7BC7C300E73F1B /* FTNoteBookToolsHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTNoteBookToolsHeaderView.xib; sourceTree = "<group>"; };
 		52C234EB2A7BC91A00E73F1B /* FTNotebookToolsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNotebookToolsHeaderView.swift; sourceTree = "<group>"; };
+		52C31F132B7F713C004BE21B /* Noteshelf3 WidgetsExtensionDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf3 WidgetsExtensionDebug.entitlements"; sourceTree = "<group>"; };
 		52C98BE72A0E3D8C00070F4A /* FTOutLineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOutLineCell.swift; sourceTree = "<group>"; };
+		52D5B10E2B8DB23D00567AC5 /* FTWidgetIntentDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWidgetIntentDataHelper.swift; sourceTree = "<group>"; };
 		52E36A442ABDA68A00FDDC78 /* FTPageUndoRedoGestureDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPageUndoRedoGestureDetector.swift; sourceTree = "<group>"; };
 		5E26C20520220A8300D19A53 /* FTWatchRecordings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FTWatchRecordings.storyboard; sourceTree = "<group>"; };
 		5E31A16520062B2B007C28F5 /* FTExportProgressManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTExportProgressManager.swift; sourceTree = "<group>"; };
@@ -3549,9 +3621,15 @@
 		5EEAAA5A2020395D0073E9F9 /* FTWatchRecordedAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTWatchRecordedAudio.swift; sourceTree = "<group>"; };
 		5EFEF3121FFCD2C000CFF9B3 /* FTSelectExportFormatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSelectExportFormatViewController.swift; sourceTree = "<group>"; };
 		766E9F561A596682FA7F6E73 /* Pods-Noteshelf3.debug enterprise.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Noteshelf3.debug enterprise.xcconfig"; path = "Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3.debug enterprise.xcconfig"; sourceTree = "<group>"; };
+		84485C182B86003C005A981D /* Noteshelf3 Intents Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Noteshelf3 Intents Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		84485C1B2B86003C005A981D /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		84485C1D2B86003C005A981D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84485C212B86003D005A981D /* Noteshelf3 Intents Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf3 Intents Extension.entitlements"; sourceTree = "<group>"; };
+		84485C292B8600A7005A981D /* Noteshelf3 Intents ExtensionBeta.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Noteshelf3 Intents ExtensionBeta.entitlements"; sourceTree = "<group>"; };
+		84485C2A2B8600A7005A981D /* Noteshelf3 Intents ExtensionDebug.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Noteshelf3 Intents ExtensionDebug.entitlements"; sourceTree = "<group>"; };
+		84485C2B2B860256005A981D /* Noteshelf3 WidgetsExtensionBeta.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Noteshelf3 WidgetsExtensionBeta.entitlements"; sourceTree = "<group>"; };
 		8BA0318B1A06107500891239 /* Noteshelf-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Noteshelf-Info.plist"; path = "Resources/Noteshelf-Info.plist"; sourceTree = SOURCE_ROOT; };
 		8BBAE17124FE14DC0007931A /* FTFontPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFontPickerViewController.swift; sourceTree = "<group>"; };
-		8BBAE17224FE14DC0007931A /* FTFontPickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTFontPickerViewController.xib; sourceTree = "<group>"; };
 		8BFDC50F24F4F50E00D8025D /* FTPenSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPenSet.swift; sourceTree = "<group>"; };
 		8BFDC51A24F4F50E00D8025D /* FTPenRackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPenRackViewController.swift; sourceTree = "<group>"; };
 		8BFDC52224F4F50E00D8025D /* FTEraserRackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTEraserRackViewController.swift; sourceTree = "<group>"; };
@@ -3788,6 +3866,23 @@
 		97BE883A2931DB01007C1E2D /* FTShelfViewModel+ShelfUpdateHandlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTShelfViewModel+ShelfUpdateHandlers.swift"; sourceTree = "<group>"; };
 		97BEB93C294215B900147961 /* FTSideBar.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FTSideBar.plist; sourceTree = "<group>"; };
 		97BEB93E294216F200147961 /* FTSidebarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSidebarManager.swift; sourceTree = "<group>"; };
+		97C453182B70E40400251C73 /* Noteshelf3 WidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Noteshelf3 WidgetsExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		97C453192B70E40500251C73 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		97C4531B2B70E40500251C73 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		97C4531E2B70E40500251C73 /* Noteshelf3_WidgetsBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Noteshelf3_WidgetsBundle.swift; sourceTree = "<group>"; };
+		97C453202B70E40500251C73 /* FTPinnedNotebookWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPinnedNotebookWidget.swift; sourceTree = "<group>"; };
+		97C453222B70E40700251C73 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		97C453242B70E40700251C73 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		97C453282B70E40900251C73 /* Noteshelf3 WidgetsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf3 WidgetsExtension.entitlements"; sourceTree = "<group>"; };
+		97C4532F2B70F24000251C73 /* SearchIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIntent.swift; sourceTree = "<group>"; };
+		97C4533D2B73538B00251C73 /* FTNotebookCreationWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNotebookCreationWidget.swift; sourceTree = "<group>"; };
+		97C453412B735A0100251C73 /* FTInteractiveWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTInteractiveWidgets.swift; sourceTree = "<group>"; };
+		97C453462B73721400251C73 /* QuickNoteIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickNoteIntent.swift; sourceTree = "<group>"; };
+		97C4534A2B73722C00251C73 /* NewNotebookIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNotebookIntent.swift; sourceTree = "<group>"; };
+		97C4534E2B73723D00251C73 /* AudioNoteIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioNoteIntent.swift; sourceTree = "<group>"; };
+		97C453522B73725000251C73 /* ScanIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanIntent.swift; sourceTree = "<group>"; };
+		97C4535B2B74AF0D00251C73 /* FTWidgetActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWidgetActionType.swift; sourceTree = "<group>"; };
+		97C453602B74B02900251C73 /* FTWidgetActionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWidgetActionController.swift; sourceTree = "<group>"; };
 		97C52E48292223E700BAA299 /* FTShelfViewModel+ShelfItemContextualOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FTShelfViewModel+ShelfItemContextualOperations.swift"; sourceTree = "<group>"; };
 		97C52E49292223E700BAA299 /* FTShelfViewModel+ShelfItemOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FTShelfViewModel+ShelfItemOperations.swift"; sourceTree = "<group>"; };
 		97C52E4A292223E800BAA299 /* FTShelfViewModel+BottomBarOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FTShelfViewModel+BottomBarOptions.swift"; sourceTree = "<group>"; };
@@ -4319,6 +4414,7 @@
 		DAC6A84F23BDF8A2007E4123 /* Quotes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Quotes.plist; sourceTree = "<group>"; };
 		DAC77D3E2448615E002A5A03 /* FTGoogleDriveBackupPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGoogleDriveBackupPublisher.swift; sourceTree = "<group>"; };
 		DC887DE594A853A3DE110AAC /* Pods-Noteshelf3.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Noteshelf3.release.xcconfig"; path = "Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3.release.xcconfig"; sourceTree = "<group>"; };
+		E7051CA72BBE83AC00C13427 /* Noteshelf3 Watch WidgetExtensionRelease Enterprise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf3 Watch WidgetExtensionRelease Enterprise.entitlements"; sourceTree = "<group>"; };
 		E70705F92AC2B7D500A7B341 /* FTFavoritebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritebarViewController.swift; sourceTree = "<group>"; };
 		E70FACB02B3B04BC009B88C9 /* FTShapeCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShapeCurve.swift; sourceTree = "<group>"; };
 		E70FACB22B3B05C2009B88C9 /* FTShapeCurveAnnotationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShapeCurveAnnotationController.swift; sourceTree = "<group>"; };
@@ -4334,6 +4430,7 @@
 		E743C12125A6EADF00D59BBF /* FTInfoTipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTInfoTipView.swift; sourceTree = "<group>"; };
 		E743C12A25A7039300D59BBF /* FTQuickCreateInfoTipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTQuickCreateInfoTipViewController.swift; sourceTree = "<group>"; };
 		E746A99029A48248009B95B4 /* FTStickersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStickersViewController.swift; sourceTree = "<group>"; };
+		E7485B7C2B7CD8DE00EE9BF2 /* FTQuickNoteCreateWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTQuickNoteCreateWidget.swift; sourceTree = "<group>"; };
 		E75329C62B99968D00C22267 /* FTWatchUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWatchUtils.swift; sourceTree = "<group>"; };
 		E75329C82B999E8F00C22267 /* FTWatchLandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWatchLandView.swift; sourceTree = "<group>"; };
 		E75516D9274F8F9800401F45 /* FTExportDataInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTExportDataInfoCell.swift; sourceTree = "<group>"; };
@@ -4343,6 +4440,8 @@
 		E755B7582B7B7D15007DDC30 /* FTTextView_MenuHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTextView_MenuHandler.swift; sourceTree = "<group>"; };
 		E75705D82AF5104900699764 /* FTFavoriteShortcutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoriteShortcutController.swift; sourceTree = "<group>"; };
 		E75705DA2AF51E8F00699764 /* FTFavoriteEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoriteEditViewController.swift; sourceTree = "<group>"; };
+		E759A9662B7DE3F500B97F29 /* FTPinnedNotebookOptionsWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPinnedNotebookOptionsWidget.swift; sourceTree = "<group>"; };
+		E759A9682B7DE93B00B97F29 /* FTPinnedIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPinnedIntents.swift; sourceTree = "<group>"; };
 		E75A36332B4FA47E00833348 /* FTLinkToSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTLinkToSelectViewController.swift; sourceTree = "<group>"; };
 		E75A36352B4FB52000833348 /* FTLinkTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTLinkTextTableViewCell.swift; sourceTree = "<group>"; };
 		E75A36372B4FB53300833348 /* FTLinkBookTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTLinkBookTableViewCell.swift; sourceTree = "<group>"; };
@@ -4372,6 +4471,8 @@
 		E760A1F82A7B904200E9CF51 /* FTShelfTagsViewController_MacExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfTagsViewController_MacExtension.swift; sourceTree = "<group>"; };
 		E761FE792BBFC12B00136797 /* Noteshelf3-WatchApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Noteshelf3-WatchApp-Info.plist"; sourceTree = SOURCE_ROOT; };
 		E762186E2A4D809D004A8428 /* FTShelfBaseHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfBaseHostingController.swift; sourceTree = "<group>"; };
+		E762440F2B7F38920045DA75 /* FTRootViewController_WidgetActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTRootViewController_WidgetActions.swift; sourceTree = "<group>"; };
+		E76244112B7F3CA80045DA75 /* FTShelfSplitViewController+WidgetActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTShelfSplitViewController+WidgetActions.swift"; sourceTree = "<group>"; };
 		E762F6E4272FA5C700F46DCE /* FTQuickNoteSaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTQuickNoteSaveViewController.swift; sourceTree = "<group>"; };
 		E76383F6269710C5000EECDA /* FTTextAnnotationViewController_MenuHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTextAnnotationViewController_MenuHandler.swift; sourceTree = "<group>"; };
 		E765250B27574F9600ABBAEC /* FTBackUpOptionsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTBackUpOptionsFooterView.swift; sourceTree = "<group>"; };
@@ -4742,6 +4843,25 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		84485C152B86003C005A981D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84485C192B86003C005A981D /* Intents.framework in Frameworks */,
+				84485C2C2B86040D005A981D /* FTCommon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97C453152B70E40400251C73 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52FFA33D2B7220CF00740FB9 /* FTCommon.framework in Frameworks */,
+				97C4531C2B70E40500251C73 /* SwiftUI.framework in Frameworks */,
+				97C4531A2B70E40500251C73 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BAA84E1228730F5800DE801B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -6680,6 +6800,8 @@
 				BAF0DCCA2A6FE2A9006D293B /* FTNewNotebook.framework */,
 				BAF0DD6D2A6FE675006D293B /* FTTemplatesStore.framework */,
 				0964D0682AB9C27400C79C01 /* Noteshelf3 Thumbnail.appex */,
+				97C453182B70E40400251C73 /* Noteshelf3 WidgetsExtension.appex */,
+				84485C182B86003C005A981D /* Noteshelf3 Intents Extension.appex */,
 				E75CD84A2B8F0B4300D59F21 /* Noteshelf3 Watch App.app */,
 				E7CCFF622BA975E000DB59CE /* Noteshelf 3 Watch Widget.appex */,
 			);
@@ -6689,6 +6811,7 @@
 		211E2C3B1E027D72007B5CAD /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				97C4535F2B74AFB500251C73 /* Interactive Widgets */,
 				09C369792A5EBAE5009BCC3F /* AI Related */,
 				1897DD2124BD603C0016DFE2 /* FTServiceLayer */,
 				ED5AFC31243611720073EE1B /* FTPointerInteraction */,
@@ -6735,6 +6858,7 @@
 				09CDCB682A58320B000340FB /* FTSceneDelegate.swift */,
 				09CDCAB42A4AB653000340FB /* Mac Catalyst Toolbar */,
 				09668A061EC5720B00E042F4 /* FTRootViewController.swift */,
+				E762440F2B7F38920045DA75 /* FTRootViewController_WidgetActions.swift */,
 				095A20E22341ED14002B4236 /* FTRootViewCOntroller_ImportAction.swift */,
 				BA57454122F9875300310882 /* FTAppIntentHandler.swift */,
 				BAF1DAB322D7662700D0555F /* App Configuration */,
@@ -7573,6 +7697,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				E7051CA72BBE83AC00C13427 /* Noteshelf3 Watch WidgetExtensionRelease Enterprise.entitlements */,
 				09DCDBA82BBAF070006055DB /* Noteshelf3 WatchApp */,
 				BA2D8EAC2859E4C8001BB495 /* Noteshelf3 */,
 				0904BC5D2373F31400239DB8 /* MacCatalyst */,
@@ -7584,6 +7709,8 @@
 				52550E3F2A70FCAD00E7A1E7 /* FTNewNotebook */,
 				BAA84E452873105500DE801B /* FTCommon */,
 				0964D06A2AB9C27500C79C01 /* Noteshelf3 Thumbnail */,
+				97C4531D2B70E40500251C73 /* Noteshelf3 Widgets */,
+				84485C1A2B86003C005A981D /* Noteshelf3 Intents Extension */,
 				E75CD84B2B8F0B4600D59F21 /* Noteshelf3 WatchApp Watch App */,
 				E7CCFF672BA975E100DB59CE /* Noteshelf3 Watch Widget */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -7593,6 +7720,7 @@
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				BA0C9CA821E5CCE00003FAF6 /* Swiftlint Rules */,
 				FA5649C96845458A702DCA19 /* Pods */,
+				E74ADF152BBE7ED4008C7D43 /* Recovered References */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -7604,8 +7732,9 @@
 				F9D0526C5CF6A9527BEB0533 /* Pods_Noteshelf3.framework */,
 				BA7A5F332AB06951006D5284 /* QuickLook.framework */,
 				BA7A5F4B2AB069AB006D5284 /* QuickLookThumbnailing.framework */,
-				E7CCFF632BA975E000DB59CE /* WidgetKit.framework */,
-				E7CCFF652BA975E000DB59CE /* SwiftUI.framework */,
+				97C453192B70E40500251C73 /* WidgetKit.framework */,
+				97C4531B2B70E40500251C73 /* SwiftUI.framework */,
+				521982152B7B99D6004ABDCC /* Intents.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -8122,6 +8251,15 @@
 				095E9F402366EBD3003277A4 /* FTSaveAsTemplateActivity.swift */,
 			);
 			path = SaveAsTemplate;
+			sourceTree = "<group>";
+		};
+		5206098A2B7CA03C00487CBC /* FTColorFetcher */ = {
+			isa = PBXGroup;
+			children = (
+				5206098B2B7CA06500487CBC /* ColorThief.swift */,
+				5206098C2B7CA06500487CBC /* MMCQ.swift */,
+			);
+			path = FTColorFetcher;
 			sourceTree = "<group>";
 		};
 		5238E7CC2A0B6E3500F8F171 /* Notebook Settings */ = {
@@ -8657,6 +8795,18 @@
 			path = WatchCommunication;
 			sourceTree = "<group>";
 		};
+		84485C1A2B86003C005A981D /* Noteshelf3 Intents Extension */ = {
+			isa = PBXGroup;
+			children = (
+				84485C212B86003D005A981D /* Noteshelf3 Intents Extension.entitlements */,
+				84485C292B8600A7005A981D /* Noteshelf3 Intents ExtensionBeta.entitlements */,
+				84485C2A2B8600A7005A981D /* Noteshelf3 Intents ExtensionDebug.entitlements */,
+				84485C1B2B86003C005A981D /* IntentHandler.swift */,
+				84485C1D2B86003C005A981D /* Info.plist */,
+			);
+			path = "Noteshelf3 Intents Extension";
+			sourceTree = "<group>";
+		};
 		8BA031271A060E8300891239 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -9040,6 +9190,50 @@
 				97A663C329966D08006F13C8 /* FTPreviewShape.swift */,
 			);
 			path = ShelfItemShapes;
+			sourceTree = "<group>";
+		};
+		97C4531D2B70E40500251C73 /* Noteshelf3 Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				52C31F132B7F713C004BE21B /* Noteshelf3 WidgetsExtensionDebug.entitlements */,
+				84485C2B2B860256005A981D /* Noteshelf3 WidgetsExtensionBeta.entitlements */,
+				97C453282B70E40900251C73 /* Noteshelf3 WidgetsExtension.entitlements */,
+				5206098A2B7CA03C00487CBC /* FTColorFetcher */,
+				97C453452B7371EB00251C73 /* Intents */,
+				97C4531E2B70E40500251C73 /* Noteshelf3_WidgetsBundle.swift */,
+				97C453202B70E40500251C73 /* FTPinnedNotebookWidget.swift */,
+				521982392B7B9BB5004ABDCC /* PinnedIntentDefinition.intentdefinition */,
+				97C453222B70E40700251C73 /* Assets.xcassets */,
+				97C453242B70E40700251C73 /* Info.plist */,
+				97C4533D2B73538B00251C73 /* FTNotebookCreationWidget.swift */,
+				97C453412B735A0100251C73 /* FTInteractiveWidgets.swift */,
+				97C4535B2B74AF0D00251C73 /* FTWidgetActionType.swift */,
+				E7485B7C2B7CD8DE00EE9BF2 /* FTQuickNoteCreateWidget.swift */,
+				E759A9662B7DE3F500B97F29 /* FTPinnedNotebookOptionsWidget.swift */,
+				52D5B10E2B8DB23D00567AC5 /* FTWidgetIntentDataHelper.swift */,
+			);
+			path = "Noteshelf3 Widgets";
+			sourceTree = "<group>";
+		};
+		97C453452B7371EB00251C73 /* Intents */ = {
+			isa = PBXGroup;
+			children = (
+				97C4532F2B70F24000251C73 /* SearchIntent.swift */,
+				97C453462B73721400251C73 /* QuickNoteIntent.swift */,
+				97C4534A2B73722C00251C73 /* NewNotebookIntent.swift */,
+				97C4534E2B73723D00251C73 /* AudioNoteIntent.swift */,
+				97C453522B73725000251C73 /* ScanIntent.swift */,
+				E759A9682B7DE93B00B97F29 /* FTPinnedIntents.swift */,
+			);
+			path = Intents;
+			sourceTree = "<group>";
+		};
+		97C4535F2B74AFB500251C73 /* Interactive Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				97C453602B74B02900251C73 /* FTWidgetActionController.swift */,
+			);
+			path = "Interactive Widgets";
 			sourceTree = "<group>";
 		};
 		97EAB18C26A91AA200545FBB /* Midnight */ = {
@@ -9590,6 +9784,7 @@
 			children = (
 				97F60C0B291E11450050C3F3 /* Sidebar */,
 				97F60C0A291E10150050C3F3 /* Shelf */,
+				E76244112B7F3CA80045DA75 /* FTShelfSplitViewController+WidgetActions.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -10778,6 +10973,15 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		E74ADF152BBE7ED4008C7D43 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				E7CCFF652BA975E000DB59CE /* SwiftUI.framework */,
+				E7CCFF632BA975E000DB59CE /* WidgetKit.framework */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		E75516D8274F8F7700401F45 /* ExportDataCells */ = {
 			isa = PBXGroup;
 			children = (
@@ -11661,7 +11865,6 @@
 				ED60EF731F738469003DA6B1 /* DefaultCustomColors.plist */,
 				ED60EF761F738807003DA6B1 /* FTDefaultTextStyle.swift */,
 				8BBAE17124FE14DC0007931A /* FTFontPickerViewController.swift */,
-				8BBAE17224FE14DC0007931A /* FTFontPickerViewController.xib */,
 				3DAC3FCE29192543009B7BC7 /* FTColorPickerViewController.swift */,
 				3DAC3FCF29192543009B7BC7 /* FTColorPickerViewController.xib */,
 			);
@@ -11975,6 +12178,41 @@
 			productReference = 0964D0682AB9C27400C79C01 /* Noteshelf3 Thumbnail.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		84485C172B86003C005A981D /* Noteshelf3 Intents Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84485C272B86003E005A981D /* Build configuration list for PBXNativeTarget "Noteshelf3 Intents Extension" */;
+			buildPhases = (
+				84485C142B86003C005A981D /* Sources */,
+				84485C152B86003C005A981D /* Frameworks */,
+				84485C162B86003C005A981D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				84485C2F2B86040D005A981D /* PBXTargetDependency */,
+			);
+			name = "Noteshelf3 Intents Extension";
+			productName = "Noteshelf3 Intents Extension";
+			productReference = 84485C182B86003C005A981D /* Noteshelf3 Intents Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		97C453172B70E40400251C73 /* Noteshelf3 WidgetsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 97C4532E2B70E40C00251C73 /* Build configuration list for PBXNativeTarget "Noteshelf3 WidgetsExtension" */;
+			buildPhases = (
+				97C453142B70E40400251C73 /* Sources */,
+				97C453152B70E40400251C73 /* Frameworks */,
+				97C453162B70E40400251C73 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Noteshelf3 WidgetsExtension";
+			productName = "Noteshelf3 WidgetsExtension";
+			productReference = 97C453182B70E40400251C73 /* Noteshelf3 WidgetsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		BAA84E1428730F5800DE801B /* FTStyles */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = BAA84E1F28730F5900DE801B /* Build configuration list for PBXNativeTarget "FTStyles" */;
@@ -12089,6 +12327,8 @@
 				BAF0DCCF2A6FE2A9006D293B /* PBXTargetDependency */,
 				09BC39172ACC3F880011D8B0 /* PBXTargetDependency */,
 				BAB258B7295B1B400072AEBB /* PBXTargetDependency */,
+				97C453262B70E40700251C73 /* PBXTargetDependency */,
+				84485C1F2B86003C005A981D /* PBXTargetDependency */,
 			);
 			name = Noteshelf3;
 			packageProductDependencies = (
@@ -12178,6 +12418,12 @@
 					0964D0672AB9C27400C79C01 = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
+					84485C172B86003C005A981D = {
+						CreatedOnToolsVersion = 15.0.1;
+					};
+					97C453172B70E40400251C73 = {
+						CreatedOnToolsVersion = 15.2;
+					};
 					BAA84E1428730F5800DE801B = {
 						CreatedOnToolsVersion = 13.4;
 					};
@@ -12251,6 +12497,8 @@
 				BAA84E1428730F5800DE801B /* FTStyles */,
 				BAF0DCC92A6FE2A9006D293B /* FTNewNotebook */,
 				BAF0DD6C2A6FE675006D293B /* FTTemplatesStore */,
+				97C453172B70E40400251C73 /* Noteshelf3 WidgetsExtension */,
+				84485C172B86003C005A981D /* Noteshelf3 Intents Extension */,
 				E7CCFF612BA975E000DB59CE /* Noteshelf3 Watch WidgetExtension */,
 			);
 		};
@@ -12261,6 +12509,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84485C162B86003C005A981D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97C453162B70E40400251C73 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97C453232B70E40700251C73 /* Assets.xcassets in Resources */,
+				E74E48802BE4FED000E43B14 /* Localizable.strings in Resources */,
+				97C453672B74E3B900251C73 /* Clearface-Serial-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12467,7 +12732,6 @@
 				BAF38FE62859ADF00067CA9F /* FTShelfCategoryHeaderView.xib in Resources */,
 				BAF38FE82859ADF00067CA9F /* FTConvertToTextViewController.xib in Resources */,
 				097449E02ABDB51A0008C6B6 /* AICommands.strings in Resources */,
-				BAF38FE92859ADF00067CA9F /* FTFontPickerViewController.xib in Resources */,
 				E7AE404428755D4500C0F3EC /* themes_v8_ja.plist in Resources */,
 				BAF38FEB2859ADF00067CA9F /* iRate.bundle in Resources */,
 				BAF38FED2859ADF00067CA9F /* FTNewNotebookSettingTableViewCell.xib in Resources */,
@@ -12813,6 +13077,43 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		84485C142B86003C005A981D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84485C1C2B86003C005A981D /* IntentHandler.swift in Sources */,
+				52D5B1102B8DB2B700567AC5 /* FTWidgetIntentDataHelper.swift in Sources */,
+				84485C282B860069005A981D /* PinnedIntentDefinition.intentdefinition in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97C453142B70E40400251C73 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97C4535E2B74AF0D00251C73 /* FTWidgetActionType.swift in Sources */,
+				97CFD9D32B7B9EBC007949B2 /* Colors.swift in Sources */,
+				524627982B8480BC00ED5E73 /* FTSharedGroupID.swift in Sources */,
+				97C453552B73725000251C73 /* ScanIntent.swift in Sources */,
+				E759A9692B7DE93B00B97F29 /* FTPinnedIntents.swift in Sources */,
+				97C453442B735A0100251C73 /* FTInteractiveWidgets.swift in Sources */,
+				97C453312B70F27C00251C73 /* SearchIntent.swift in Sources */,
+				97C453512B73723D00251C73 /* AudioNoteIntent.swift in Sources */,
+				97C453632B74B02900251C73 /* FTWidgetActionController.swift in Sources */,
+				97C453402B73538B00251C73 /* FTNotebookCreationWidget.swift in Sources */,
+				E7485B7E2B7CDFE500EE9BF2 /* FTQuickNoteCreateWidget.swift in Sources */,
+				52D5B10F2B8DB23D00567AC5 /* FTWidgetIntentDataHelper.swift in Sources */,
+				97C453492B73721400251C73 /* QuickNoteIntent.swift in Sources */,
+				97C4534D2B73722C00251C73 /* NewNotebookIntent.swift in Sources */,
+				5219823B2B7B9BC1004ABDCC /* PinnedIntentDefinition.intentdefinition in Sources */,
+				E759A9672B7DE3F500B97F29 /* FTPinnedNotebookOptionsWidget.swift in Sources */,
+				97C453212B70E40500251C73 /* FTPinnedNotebookWidget.swift in Sources */,
+				5206098F2B7CA14400487CBC /* ColorThief.swift in Sources */,
+				97C4531F2B70E40500251C73 /* Noteshelf3_WidgetsBundle.swift in Sources */,
+				520609902B7CA14600487CBC /* MMCQ.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BAA84E1128730F5800DE801B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -13040,7 +13341,9 @@
 				09DBD52A2A7D255B00987ED1 /* FTFormSheetTransitionDelegate.swift in Sources */,
 				BAF390682859ADF00067CA9F /* FTTileMap.swift in Sources */,
 				E7B8DA95287FF62600F0AE78 /* FTPenShortcutView.swift in Sources */,
+				E76244122B7F3CA80045DA75 /* FTShelfSplitViewController+WidgetActions.swift in Sources */,
 				BAF390692859ADF00067CA9F /* FTShapeControllerBuilder.swift in Sources */,
+				97C4535C2B74AF0D00251C73 /* FTWidgetActionType.swift in Sources */,
 				BAF3906A2859ADF00067CA9F /* FTShapeParallelogramResizing.swift in Sources */,
 				BAF3906B2859ADF00067CA9F /* FTDiaryTemplateInfoProtocol.swift in Sources */,
 				3DD2399B290A97E6006E3AC3 /* FTTextStyle.swift in Sources */,
@@ -13100,6 +13403,7 @@
 				BAF390A02859ADF00067CA9F /* FTNewSettingsConstant.swift in Sources */,
 				098F61332B306DC300BB0E16 /* FTPDFPageCacheFactory.swift in Sources */,
 				BAF390A12859ADF00067CA9F /* FTBetaAlertHandler.swift in Sources */,
+				E759A96A2B7E1AD600B97F29 /* FTPinnedIntents.swift in Sources */,
 				BAF390A32859ADF00067CA9F /* FTTheme.swift in Sources */,
 				BAF390A42859ADF00067CA9F /* FTPlannerDiaryTrackerTemplateFormat.swift in Sources */,
 				E7BD929F2AB42C1000176039 /* FTNotebookInfoToastView.swift in Sources */,
@@ -13172,6 +13476,7 @@
 				BAF390D92859ADF00067CA9F /* FTExportImportTargetProtocol.swift in Sources */,
 				42835D4B2892C73A00B041A3 /* FTFinderPresentAnimator.swift in Sources */,
 				BAF390DB2859ADF00067CA9F /* UIFont_Traits_Extension.swift in Sources */,
+				97C4534F2B73723D00251C73 /* AudioNoteIntent.swift in Sources */,
 				BAF390DC2859ADF00067CA9F /* FTFiveMinJournalTemplateFormat.swift in Sources */,
 				3DF1B34328EAB5D800018AA5 /* FTClipAnnotation_SQLiteHelper.swift in Sources */,
 				09ABDCAF2A790F94008F144D /* FTNoteshelfAIViewController.swift in Sources */,
@@ -13481,6 +13786,7 @@
 				9790985C28C8C6AA00AE9528 /* FTShelfItemContextualMenuViewModel.swift in Sources */,
 				BAF391D82859ADF00067CA9F /* FTPlannerDiaryYearTemplateFormat.swift in Sources */,
 				BAF391D92859ADF00067CA9F /* FTNoteshelfDocument.swift in Sources */,
+				97C453302B70F24000251C73 /* SearchIntent.swift in Sources */,
 				42890CB12965626700B2796C /* PDFDocument+Extension.swift in Sources */,
 				BAF391DB2859ADF00067CA9F /* FTSearchSectionContent.swift in Sources */,
 				97B411A829E804E900ADFE1F /* FTSidebarTopSectionGridItemView.swift in Sources */,
@@ -13607,10 +13913,12 @@
 				1449D16429F8256C00C7EC49 /* FTShelfHomeTopSectionModel.swift in Sources */,
 				BAF392342859ADF00067CA9F /* FTAudioPlayerController.m in Sources */,
 				BAF392352859ADF00067CA9F /* FTPDFRenderViewController+Finder.swift in Sources */,
+				E76244102B7F38920045DA75 /* FTRootViewController_WidgetActions.swift in Sources */,
 				098C09ED2B0616FC0072C3C9 /* FTFileCacheManager.swift in Sources */,
 				BAF392362859ADF00067CA9F /* FTPDFPagePublishRequest.swift in Sources */,
 				97C5A22E29F1032600B8E251 /* FTSidebarItemContextualMenuVM.swift in Sources */,
 				BAF392382859ADF00067CA9F /* FTPDFScrollView.m in Sources */,
+				97C4534B2B73722C00251C73 /* NewNotebookIntent.swift in Sources */,
 				BAF3923A2859ADF00067CA9F /* FTWebdavPublishRequest.swift in Sources */,
 				BAF3923B2859ADF00067CA9F /* CITreeViewController.swift in Sources */,
 				BAF3923C2859ADF00067CA9F /* FTFiveMinJournalHelpTemplate.swift in Sources */,
@@ -13940,6 +14248,7 @@
 				095B826B2BB2BD9C00E8E82C /* FTDocumentFrameworkLogHelper.m in Sources */,
 				BA50E03C2959CB4800CDC0FD /* FTShelfTagsRepresentableView.swift in Sources */,
 				BAF393372859ADF00067CA9F /* FTPencilBrushBuilder_V2.swift in Sources */,
+				97C453532B73725000251C73 /* ScanIntent.swift in Sources */,
 				BA2D911C285CAFCC001BB495 /* FTSidebarSectionType.swift in Sources */,
 				BAF393382859ADF00067CA9F /* FTSearchResultContentHeader.swift in Sources */,
 				BAF393392859ADF00067CA9F /* FTBrushBuilder.swift in Sources */,
@@ -13947,6 +14256,7 @@
 				BAF3933B2859ADF00067CA9F /* CocoaCryptoHashing.swift in Sources */,
 				E7AA516D28E311210008E473 /* FTCustomizeToolbarDataSource.swift in Sources */,
 				BAF3933C2859ADF00067CA9F /* FTNS1MigrationInfoView.swift in Sources */,
+				5219823D2B7B9BC7004ABDCC /* PinnedIntentDefinition.intentdefinition in Sources */,
 				BAF3933F2859ADF00067CA9F /* FTDBBackupManager.swift in Sources */,
 				BAF393402859ADF00067CA9F /* FTDocumentItem.swift in Sources */,
 				BA2D90D9285CAE65001BB495 /* FTShelfItemsViewController.swift in Sources */,
@@ -14090,6 +14400,7 @@
 				BA111C392988E5DC001E854F /* CTRun+Metrics.swift in Sources */,
 				BAF393C82859ADF00067CA9F /* FTOneDriveFiles_Base.swift in Sources */,
 				BAF393C92859ADF00067CA9F /* FTStylusPenSettingsProtocol.swift in Sources */,
+				97C453472B73721400251C73 /* QuickNoteIntent.swift in Sources */,
 				BAF393CA2859ADF00067CA9F /* FTAccountsViewController.swift in Sources */,
 				BAF393CB2859ADF00067CA9F /* FTPenBrushBuilder_V1.swift in Sources */,
 				BAF393CC2859ADF00067CA9F /* FTMobileCommunicationManager.swift in Sources */,
@@ -14159,6 +14470,7 @@
 				BA2D911A285CAFCC001BB495 /* FTSidebarSection.swift in Sources */,
 				BAF393FC2859ADF00067CA9F /* FTVisionRecognitionTask.swift in Sources */,
 				BAF393FD2859ADF00067CA9F /* FTEmojiCollectionViewCell.swift in Sources */,
+				97C453612B74B02900251C73 /* FTWidgetActionController.swift in Sources */,
 				BAF393FE2859ADF00067CA9F /* ParentReference.swift in Sources */,
 				BAF393FF2859ADF00067CA9F /* FTVisionRecognitionTaskProcessor.swift in Sources */,
 				BAF394012859ADF00067CA9F /* FTiRateManager.swift in Sources */,
@@ -14792,6 +15104,23 @@
 			target = BAA84E1428730F5800DE801B /* FTStyles */;
 			targetProxy = 5283D3A62A5E7AA000C6C125 /* PBXContainerItemProxy */;
 		};
+		84485C1F2B86003C005A981D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = 84485C172B86003C005A981D /* Noteshelf3 Intents Extension */;
+			targetProxy = 84485C1E2B86003C005A981D /* PBXContainerItemProxy */;
+		};
+		84485C2F2B86040D005A981D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BAA84E432873105500DE801B /* FTCommon */;
+			targetProxy = 84485C2E2B86040D005A981D /* PBXContainerItemProxy */;
+		};
+		97C453262B70E40700251C73 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = 97C453172B70E40400251C73 /* Noteshelf3 WidgetsExtension */;
+			targetProxy = 97C453252B70E40700251C73 /* PBXContainerItemProxy */;
+		};
 		BAA84E1C28730F5800DE801B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BAA84E1428730F5800DE801B /* FTStyles */;
@@ -15035,7 +15364,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Thumbnail/Noteshelf3 Thumbnail.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
@@ -15187,7 +15515,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
-				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_MODULE_VERIFIER = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -15222,7 +15549,6 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DSR_DEBUG -Xfrontend -debug-time-function-bodies";
 				PRODUCT_NAME = "$(APP_DISPLAY_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				RUN_CLANG_STATIC_ANALYZER = NO;
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -15335,7 +15661,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = "Debug Enterprise";
@@ -15641,7 +15966,6 @@
 				CODE_SIGN_ENTITLEMENTS = "Resources/Entitlements/Enterprise/Release Enterprise.entitlements";
 				DEFINES_MODULE = YES;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
-				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_MODULE_VERIFIER = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/App Delegate/Noteshelf_Prefix.pch";
@@ -15672,7 +15996,6 @@
 					"-fcxx-modules",
 				);
 				PRODUCT_NAME = "$(APP_DISPLAY_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/App Delegate/Noteshelf-Bridging-Header.h";
@@ -15752,7 +16075,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Thumbnail/Noteshelf3 Thumbnail.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
@@ -15783,7 +16105,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = "Release Enterprise";
@@ -15985,6 +16306,506 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = "Release Enterprise";
+		};
+		84485C222B86003E005A981D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Intents Extension/Noteshelf3 Intents ExtensionDebug.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Noteshelf3 Intents Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf3 Intents Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3-dev.intents";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		84485C232B86003E005A981D /* Debug Enterprise */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Intents Extension/Noteshelf3 Intents ExtensionDebug.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Noteshelf3 Intents Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf3 Intents Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3-dev.intents";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Debug Enterprise";
+		};
+		84485C242B86003E005A981D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Intents Extension/Noteshelf3 Intents Extension.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Noteshelf3 Intents Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf3 Intents Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.noteshelf3.intents;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		84485C252B86003E005A981D /* Release Enterprise */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Intents Extension/Noteshelf3 Intents Extension.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Noteshelf3 Intents Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf3 Intents Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.noteshelf3.intents;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Release Enterprise";
+		};
+		84485C262B86003E005A981D /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Intents Extension/Noteshelf3 Intents ExtensionBeta.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Noteshelf3 Intents Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf3 Intents Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3-beta.intents";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Beta;
+		};
+		97C453292B70E40B00251C73 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Widgets/Noteshelf3 WidgetsExtensionDebug.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Noteshelf3 Widgets/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf3 Widgets";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				OTHER_SWIFT_FLAGS = "-D NOTESHELF_WIDGET";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3-dev.widgets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		97C4532A2B70E40B00251C73 /* Debug Enterprise */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Widgets/Noteshelf3 WidgetsExtensionBeta.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Noteshelf3 Widgets/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf3 Widgets";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				OTHER_SWIFT_FLAGS = "-D NOTESHELF_WIDGET";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3-dev.widgets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Debug Enterprise";
+		};
+		97C4532B2B70E40B00251C73 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Widgets/Noteshelf3 WidgetsExtension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Noteshelf3 Widgets/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf3 Widgets";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				OTHER_SWIFT_FLAGS = "-D NOTESHELF_WIDGET";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.noteshelf3.widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		97C4532C2B70E40B00251C73 /* Release Enterprise */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Widgets/Noteshelf3 WidgetsExtension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Noteshelf3 Widgets/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf3 Widgets";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				OTHER_SWIFT_FLAGS = "-D NOTESHELF_WIDGET";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.noteshelf3.widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Release Enterprise";
+		};
+		97C4532D2B70E40B00251C73 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Widgets/Noteshelf3 WidgetsExtensionBeta.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Noteshelf3 Widgets/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Noteshelf3 Widgets";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				OTHER_SWIFT_FLAGS = "-D NOTESHELF_WIDGET";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3-beta.widgets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Beta;
 		};
 		97F36F9E126D620C00FA092E /* Beta */ = {
 			isa = XCBuildConfiguration;
@@ -16188,7 +17009,6 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.FTStyles;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
@@ -16320,7 +17140,6 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 69;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 69;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -16342,7 +17161,6 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.FTCommon;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
@@ -16361,7 +17179,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -16370,7 +17187,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -16753,7 +17569,6 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DSR_DEBUG -Xfrontend -debug-time-function-bodies";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3-dev";
 				PRODUCT_NAME = "$(APP_DISPLAY_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				RUN_CLANG_STATIC_ANALYZER = NO;
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -16807,7 +17622,6 @@
 				CODE_SIGN_ENTITLEMENTS = "Resources/Entitlements/Entitlements-AppStore.entitlements";
 				DEFINES_MODULE = YES;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
-				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_MODULE_VERIFIER = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -16845,7 +17659,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.noteshelf3;
 				PRODUCT_NAME = "$(APP_DISPLAY_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/App Delegate/Noteshelf-Bridging-Header.h";
@@ -16879,7 +17692,6 @@
 				CODE_SIGN_ENTITLEMENTS = "Resources/Entitlements/Entitlements-Beta.entitlements";
 				DEFINES_MODULE = YES;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
-				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_MODULE_VERIFIER = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -16918,7 +17730,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3-beta";
 				PRODUCT_NAME = "$(APP_DISPLAY_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "${inherited} FORCE_THEME_DOWNLOAD";
@@ -17504,7 +18315,9 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Watch Widget/Entitlements/Noteshelf3 Watch WidgetExtension.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -17528,6 +18341,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3-dev.watchkitapp.watch-widget";
 				PRODUCT_NAME = "Noteshelf 3 Watch Widget";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
@@ -17652,7 +18466,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Watch Widget/Entitlements/Noteshelf3 Watch WidgetExtension.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Watch WidgetExtensionRelease Enterprise.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -17741,6 +18555,30 @@
 				0964D0742AB9C27C00C79C01 /* Release */,
 				09AD80FA2AFBB3910049022B /* Release Enterprise */,
 				0964D0752AB9C27C00C79C01 /* Beta */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		84485C272B86003E005A981D /* Build configuration list for PBXNativeTarget "Noteshelf3 Intents Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84485C222B86003E005A981D /* Debug */,
+				84485C232B86003E005A981D /* Debug Enterprise */,
+				84485C242B86003E005A981D /* Release */,
+				84485C252B86003E005A981D /* Release Enterprise */,
+				84485C262B86003E005A981D /* Beta */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		97C4532E2B70E40C00251C73 /* Build configuration list for PBXNativeTarget "Noteshelf3 WidgetsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				97C453292B70E40B00251C73 /* Debug */,
+				97C4532A2B70E40B00251C73 /* Debug Enterprise */,
+				97C4532B2B70E40B00251C73 /* Release */,
+				97C4532C2B70E40B00251C73 /* Release Enterprise */,
+				97C4532D2B70E40B00251C73 /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

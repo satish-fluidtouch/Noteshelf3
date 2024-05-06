@@ -28,6 +28,7 @@ class FTWelcomeScreenViewController: UIViewController {
 
     @IBOutlet weak var subTitle: UILabel?;
     @IBOutlet private weak var topHeaderView: UIStackView?;
+    @IBOutlet private weak var bottomStackView: UIStackView?;
 
     private weak var selectedSlide: FTWelcomeItemViewController?;
     @IBOutlet private weak var headerConstraintTop: NSLayoutConstraint?;
@@ -73,7 +74,7 @@ class FTWelcomeScreenViewController: UIViewController {
     override func updateViewConstraints() {
         let viewHeight = self.view.frame.size.height;
         
-        let contentHeight = 2 * itemSize + 16 + (self.dismissButton?.frame.height ?? 0) + (self.topHeaderView?.frame.height ?? 0);
+        let contentHeight = 2 * itemSize + 16 + (self.bottomStackView?.frame.height ?? 0) + (self.topHeaderView?.frame.height ?? 0);
         let remainingHeight = (viewHeight - contentHeight) / 4;
                
         self.contentHeightConstraint?.constant = 2 * itemSize + 16;
@@ -93,10 +94,9 @@ class FTWelcomeScreenViewController: UIViewController {
 
         self.titleLable?.textColor = UIColor.label;
         self.titleLable?.text = self.model.headerTopTitle
-        self.updateUI();
         
         self.tapTileInfoLable?.text = "welcome.taptileinfo".localized
-        self.tapTileInfoLable?.textColor = UIColor.label.withAlphaComponent(0.5);
+        self.tapTileInfoLable?.textColor = UIColor.appColor(.accent)
         
         self.dismissButton?.setAttributedTitle(NSAttributedString(string: model.btntitle, attributes: [
             .font : UIFont.clearFaceFont(for: .medium, with: 20)
@@ -125,6 +125,8 @@ class FTWelcomeScreenViewController: UIViewController {
             self.loadAudioFiles();
         }
         self.validatePlayPauseButton(self.view.frame.size);
+        scrollView1?.delegate = self
+        scrollView2?.delegate = self
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -141,6 +143,8 @@ class FTWelcomeScreenViewController: UIViewController {
         if currentSize != self.view.frame.size {
             currentSize = self.view.frame.size;
             self.validatePlayPauseButton(currentSize);
+            self.updateUI();
+            self.updateViewConstraints();
         }
     }
     
@@ -164,12 +168,9 @@ class FTWelcomeScreenViewController: UIViewController {
         let isPaused = self.displayLink.isPaused;
         self.stopAnimation()
         coordinator.animate { context in
-            self.view.setNeedsUpdateConstraints();
-            self.view.updateConstraintsIfNeeded();
+            self.updateViewConstraints();
             self.view.layoutIfNeeded()
             self.previewController?.updateViewConstraintsOntransition()
-            self.validatePlayPauseButton(size);
-            self.updateUI();
         } completion: { _ in
             if !isPaused {
                 self.startAnimation()
@@ -228,6 +229,7 @@ class FTWelcomeScreenViewController: UIViewController {
         UserDefaults.standard.set(true, forKey: WelcomeScreenViewed)
         UserDefaults.standard.synchronize();
         self.muteBackgroundMusic(true)
+        track("Welcome_GetStarted_Tap", screenName: FTScreenNames.welcomeScreen)
         self.dismiss(animated: true) {
             self.displayLink.invalidate();
             self.onDismissBlock?();
@@ -414,6 +416,12 @@ private extension FTWelcomeScreenViewController {
             }
             self.bgAudioPlayer?.setVolume(0.5, fadeDuration: 1);
         }
+    }
+}
+
+extension FTWelcomeScreenViewController : UIScrollViewDelegate {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        track("Welcome_Tile_Swipe", screenName: FTScreenNames.welcomeScreen);
     }
 }
 

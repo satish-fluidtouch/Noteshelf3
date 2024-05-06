@@ -1016,6 +1016,7 @@
 "customizeToolbar.pixabay" = "Pixabay";
 "customizeToolbar.present" = "Présenter";
 "customizeToolbar.readOnlyMode" = "Mode lecture seule";
+"customizeToolbar.recent.notes" = "Carnets récents";
 "customizeToolbar.requestForShortcut" = "Demander un raccourci";
 "customizeToolbar.resetConfirmation" = "Êtes-vous sûr de vouloir réinitialiser la barre d'outils par défaut ?";
 "customizeToolbar.rotatePage" = "Faire pivoter la page";
@@ -1571,6 +1572,8 @@
 "textmode.fonttitle" = "Style de police/texte";
 "texttoolbar.fontselectionTitle" = "Sélectionner la police";
 "theams.unsplashDescription" = "Choisissez depuis Unsplash, prenez une photo ou sélectionnez depuis votre bibliothèque de photos pour créer vos couvertures personnalisées.";
+"tipeview.shortcut.message" = "Appuyez longuement sur la barre d'outils pour ajouter, supprimer ou réorganiser les outils comme vous le souhaitez.";
+"tipeview.shortcut.title" = "Nouveaux raccourcis de la barre d'outils ajoutés !";
 "trash.alert.cannotOpenNotebook" = "Ce cahier ne peut pas être ouvert car il a été supprimé. Pour restaurer, maintenez longuement et sélectionnez l'option dans le menu.";
 "trash.alert.title" = "Êtes-vous sûr de vouloir vider votre corbeille ?";
 "unsplash.search.alertMessage" = "Entrez le texte à rechercher";
@@ -1593,7 +1596,7 @@
 "welcome.customizableToolBar.description" = "Sélectionnez les outils dont vous avez besoin et supprimez ceux dont vous n'avez pas besoin.";
 "welcome.dayNightJournal" = "JOURNAL JOUR NUIT";
 "welcome.dayNightJournal.description" = "Un journal spécial conçu pour améliorer la conscience de soi et le bonheur dans la vie.";
-"welcome.digitalDiaries" = "Journaux numériques";
+"welcome.digitalDiaries" = "JOURNAUX NUMÉRIQUES";
 "welcome.digitalDiaries.description" = "Nos journaux sont entièrement personnalisables pour n'importe quelle période de dates.";
 "welcome.emojies" = "ÉMOTICÔNES";
 "welcome.emojies.description" = "Les émojis sont généralement tapés, mais vous pouvez les utiliser comme tampons ici 😲";
@@ -1657,9 +1660,16 @@
 "whatsnew.planner2.cta" = "Découvrez-les maintenant !";
 "whatsnew.planner2.description" = "Découvrez des planificateurs numériques charmants dans la section Modèles que nous avons sélectionnés parmi des créateurs talentueux.";
 "whatsnew.planner2.title" = "Plus de planificateurs 2024 !";
+"widget.nonotes" = "Pas encore de notes";
+"widget.notebook" = "Carnet";
+"widget.pinned.description" = "Accédez rapidement à l'un de vos carnets.";
+"widget.quickCreate.large.description" = "Créez rapidement un carnet de notes vierge, enregistrez un audio ou numérisez un document.";
+"widget.quickCreate.small.description" = "Créer une note rapide.";
+"widget.quicknote" = "Note rapide";
+"widget.takenotes" = "Prenez des notes";
 "widgets" = "Widgets";
 "work" = "Travail";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 24 April 2024 at 1:13 PM
+// Last Synced by Fluid Touch on 3 May 2024 at 5:05 PM
