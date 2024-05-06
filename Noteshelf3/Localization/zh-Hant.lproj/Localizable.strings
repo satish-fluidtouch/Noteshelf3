@@ -1061,6 +1061,7 @@
 "finder.bookmark.description" = "收藏頁面並保持對龐大的筆記本和PDF的概覽。";
 "finder.bookmarks" = "書籤";
 "finder.clear.recents" = "你想要清除最近的內容嗎？";
+"finder.documentonly" = "Document Only";
 "finder.downloadPermissionText" = "選定的筆記本尚未下載。 您是否希望下載筆記本並移動頁面？";
 "finder.duplicate" = "複製";
 "finder.fullscreen" = "全螢幕";
@@ -1672,4 +1673,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 3 May 2024 at 5:05 PM
+// Last Synced by Fluid Touch on 6 May 2024 at 12:42 PM
