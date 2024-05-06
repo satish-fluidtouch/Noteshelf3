@@ -141,7 +141,18 @@ extension FTSidePanelShelfItemPickerDelegate {
             }else {
                 cell.backgroundColor = UIColor.appColor(.cellBackgroundColor)
             }
+            cell.accessoryButton?.isHidden = false
+            cell.accessoryWidthConstraint?.constant = 32.0
+            cell.accessoryButton?.setImage(UIImage(named: "desk_tool_open_recents"), for: .normal)
+            cell.accessoryButton?.tag = index.row
+            cell.accessoryButton?.isUserInteractionEnabled = true
+            cell.accessoryButton?.addTarget(self, action:#selector(self.tappedOnRecentNotes), for: .touchUpInside)
         }
+    }
+    
+    @objc func tappedOnRecentNotes(sender: UIButton) {
+        let shelfItem = self.items[sender.tag]
+        self.openItemInNewWindow(shelfItem,pageIndex: nil)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

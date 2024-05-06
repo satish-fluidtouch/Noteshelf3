@@ -42,15 +42,15 @@ struct CustomTiPView : TipViewStyle {
       VStack {
         configuration.image?
           .resizable()
-          .frame(width: 24, height: 24)
+          .frame(width: 32, height: 32)
           .aspectRatio(contentMode: .fit)
-          .padding(.top,4)
+          .padding(.top,2)
         Spacer()
           .frame(maxHeight: self.size.height)
       }
       VStack(alignment: .leading) {
         configuration.title
-          .font(.headline)
+              .font(.system(size:17,weight: .bold))
           .fixedSize(horizontal: false, vertical: true)
         configuration.message?
           .font(.subheadline)

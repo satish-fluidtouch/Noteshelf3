@@ -623,7 +623,7 @@
                                                         <constraint firstAttribute="width" constant="32" id="si6-qj-riP"/>
                                                         <constraint firstAttribute="height" constant="32" id="zpU-fd-7iK"/>
                                                     </constraints>
-                                                    <color key="tintColor" name="imageTintColor"/>
+                                                    <color key="tintColor" name="homeIconTint"/>
                                                     <state key="normal" image="chevron.right" catalog="system">
                                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
                                                             <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
@@ -1306,6 +1306,9 @@
         </namedColor>
         <namedColor name="headerColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="homeIconTint">
+            <color red="0.76078431372549016" green="0.37254901960784315" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="imageTintColor">
             <color red="0.2196078431372549" green="0.2196078431372549" blue="0.2196078431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

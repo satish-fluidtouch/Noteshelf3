@@ -68,6 +68,7 @@ extension FTDeskCenterPanelTool {
             ,FTDeskCenterPanelTool.duplicatePage.toolbarIdentifier
             ,FTDeskCenterPanelTool.camera.toolbarIdentifier
             ,FTDeskCenterPanelTool.scrolling.toolbarIdentifier
+            ,FTDeskCenterPanelTool.recentNotes.toolbarIdentifier
             ,FTDeskCenterPanelTool.savePageAsPhoto.toolbarIdentifier
             ,FTDeskCenterPanelTool.sharePageAsPng.toolbarIdentifier
             ,FTDeskCenterPanelTool.shareNotebookAsPDF.toolbarIdentifier

@@ -37,11 +37,11 @@ class FTCustomizeToolbarController: UITableViewController {
         footerView?.setUpUi()
         footerView?.delegate = self
         tableView.tableFooterView = footerView
-        if self.view.frame.size.width <= 380 {
-            tableView.tableFooterView?.frame.size.height = 120
-        }else {
-            tableView.tableFooterView?.frame.size.height = 90
-        }
+//        if self.view.frame.size.width <= 380 {
+//            tableView.tableFooterView?.frame.size.height = 120
+//        }else {
+//            tableView.tableFooterView?.frame.size.height = 90
+//                        }
     }
 
     private func configNavigationTitle() {
@@ -153,7 +153,15 @@ class FTCustomizeToolbarController: UITableViewController {
         if !(tool == .sharePageAsPng || tool == .shareNotebookAsPDF || tool == .savePageAsPhoto) {
             config.imageProperties.tintColor = UIColor.label
         }
-        cell.newBgView.isHidden = tool.toShowNewBadge
+        cell.newLbl.text = "New".localized
+        cell.newBgView.backgroundColor = UIColor.appColor(.homeSelectedBG)
+        cell.newViewWidth.constant = 0
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            if self.view.frame.width > 380 {
+                cell.newBgView.isHidden = tool.toShowNewBadge
+                cell.setNewBgWidth(value:Double(cell.newLbl.text?.count ?? 0))
+            }
+        }
         cell.iconImg.image = UIImage(named: tool.iconName())
         config.imageProperties.reservedLayoutSize = CGSize(width: 24.0, height: 24.0)
         let attributes = [NSAttributedString.Key.font: UIFont.appFont(for: .regular, with: 17.0)]

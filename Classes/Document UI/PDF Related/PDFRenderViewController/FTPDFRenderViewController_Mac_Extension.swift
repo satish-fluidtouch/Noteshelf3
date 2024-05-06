@@ -96,6 +96,8 @@ extension FTPDFRenderViewController {
             let config = FTToastConfiguration(title: title.localized)
             FTToastHostController.showToast(from: self, toastConfig: config)
             self.executer?.execute(type: .scrolling(direction: value))
+        case .recentNotes:
+            self.executer?.execute(type: .recentNotes(source: toolbarItem))
         case .tag:
             if let page = self.firstPageController()?.pdfPage as? FTThumbnailable {
                 let pagesSet = NSSet(array: [page])

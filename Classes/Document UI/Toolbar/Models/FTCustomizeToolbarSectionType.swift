@@ -251,7 +251,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
         case .scrolling:
             str = "customizeToolbar.switchScrollingDirection".localized
         case .recentNotes:
-            str = "Recent Notebooks"
+            str = "customizeToolbar.recent.notes".localized
             
         case .savePageAsPhoto:
             str = "customizeToolbar.savePageAsPhoto".localized
@@ -322,11 +322,11 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
         case .deletePage:
             str = "customizeToolbar.deletePage".localizedEnglish
         case .camera:
-            str = "customizeToolbar.camera".localizedEnglish
+            str = "Camera".localizedEnglish
         case .scrolling:
-            str = "customizeToolbar.scrolling".localizedEnglish
+            str = "customizeToolbar.switchScrollingDirection".localizedEnglish
         case .recentNotes:
-            str = "Recent Notebooks"
+            str = "customizeToolbar.recent.notes".localizedEnglish
 
         case .savePageAsPhoto:
             str = "customizeToolbar.savePageAsPhoto".localizedEnglish
