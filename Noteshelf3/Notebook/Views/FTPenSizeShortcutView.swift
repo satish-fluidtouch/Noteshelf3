@@ -19,7 +19,7 @@ struct FTPenSizeShortcutView: View {
                 let viewSize = viewModel.currentPenset.type.getIndicatorSize(using: favSize.size)
 
                 if self.canShowSizeView(favSize: favSize) {
-                    FTPenSizeView(isSelected: favSize.isSelected, showIndicator: false, viewSize: viewSize, favoriteSizeValue: favSize.size)
+                    FTPenSizeView(isSelected: favSize.isSelected, showIndicator: false, viewSize: viewSize, favoriteSizeValue: favSize.size, placement: viewModel.getCurrentPlacement())
                         .hoverEffect()
                         .onTapGesture {
                             self.handleTapAction(sizeModel: favSize, index: index)
@@ -53,9 +53,11 @@ struct FTPenSizeShortcutView: View {
     }
 
     private func handleSizeSelection(sizeModel: FTPenSizeModel, index: Int) {
-        self.viewModel.resetSizeSelection()
-        sizeModel.isSelected = true
-        self.viewModel.updateCurrentPenSize(size: sizeModel.size, sizeMode: .sizeSelect)
+        if !sizeModel.isSelected {
+            self.viewModel.resetSizeSelection()
+            sizeModel.isSelected = true
+            self.viewModel.updateCurrentPenSize(size: sizeModel.size, sizeMode: .sizeSelect)
+        }
     }
 
     private func handleLongpressAction(sizeModel: FTPenSizeModel, index: Int) {

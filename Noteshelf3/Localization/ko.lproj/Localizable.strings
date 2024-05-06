@@ -1061,6 +1061,7 @@
 "finder.bookmark.description" = "즐겨찾는 페이지 및 대형 노트북과 PDF 파일을 개요로 유지하세요.";
 "finder.bookmarks" = "즐겨찾기";
 "finder.clear.recents" = "최근 기록을 지우시겠습니까?";
+"finder.documentonly" = "공책만";
 "finder.downloadPermissionText" = "선택한 노트북은 아직 다운로드되지 않았습니다. 노트북을 다운로드하고 페이지를 이동하시겠습니까?";
 "finder.duplicate" = "중복";
 "finder.fullscreen" = "전체 화면";
@@ -1672,4 +1673,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 3 May 2024 at 5:05 PM
+// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM

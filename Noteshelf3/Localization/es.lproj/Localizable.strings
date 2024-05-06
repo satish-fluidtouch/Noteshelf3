@@ -1061,6 +1061,7 @@
 "finder.bookmark.description" = "Páginas favoritas y mantener una vista general de cuadernos grandes y PDFs.";
 "finder.bookmarks" = "Marcadores";
 "finder.clear.recents" = "¿Quieres borrar lo reciente?";
+"finder.documentonly" = "Solo el Cuaderno";
 "finder.downloadPermissionText" = "El cuaderno seleccionado aún no se ha descargado. ¿Desea descargar el cuaderno y mover las páginas?";
 "finder.duplicate" = "Duplicar";
 "finder.fullscreen" = "Pantalla completa.";
@@ -1672,4 +1673,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 3 May 2024 at 5:05 PM
+// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
