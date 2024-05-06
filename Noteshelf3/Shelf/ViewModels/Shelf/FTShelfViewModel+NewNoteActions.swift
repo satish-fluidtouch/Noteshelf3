@@ -25,16 +25,3 @@ extension FTShelfViewModel: FTNewNotePopoverDelegate {
     }
 
 }
-// MARK: New note popover operations
-extension FTShelfViewModel {
-    func presentNewNotebookPopover() {
-        delegate?.showNewBookPopverOnShelf()
-    }
-    func createBookUsing(notebookDetails: FTNewNotebookDetails){
-        self.delegate?.createNewNotebookInside(collection: collection, group: groupItem, notebookDetails: notebookDetails, isQuickCreate: false, mode: .basic, onCompletion: {[weak self] error, shelfItem in
-            if error == nil, let item = shelfItem, !FTDeveloperOption.bookScaleAnim {
-                self?.setcurrentActiveShelfItem(FTCurrentShelfItem(item, pin: notebookDetails.documentPin?.pin))
-            }
-        })
-    }
-}

@@ -399,6 +399,46 @@ extension FTDocumentRenderViewController: FTDocumentViewPresenter {
         documentViewController.insertNewPage(fromItem: url, onCompletion: onCompletion);
     }
     
+    func insertNewPageWith(type: FTPinndedWidgetActionType) {
+        if let doc = self.documentViewController.pdfDocument, let refPage = doc.pages().last, type.shouldAddNewPage() {
+            guard let insertedPage = doc.insertPageBelow(page: refPage) else {
+               return
+            }
+            doc.saveDocument { _ in
+                self.documentViewController.showPage(at: insertedPage.pageIndex(), forceReLayout: true, animate: false)
+                switch type {
+                case .pen:
+                    self.documentViewController.updateToolBar(with: RKDeskMode.deskModePen)
+                    break;
+                case .audio:
+                    FTNotebookUtils.checkIfAudioIsNotPlaying(forDocument: self.documentViewController.pdfDocument, alertMessage: "AudioRecoring_Progress_Message".localized, onViewController: self) { success in
+                        if success {
+                            self.documentViewController.audioButtonAction()
+                        }
+                    }
+                    break;
+                case .openAI:
+                    //                self.documentViewController.switch(RKDeskMode.des)
+                    self.documentViewController.firstPageController()?.startOpenAiForPage()
+                    break;
+                case .text:
+                    self.documentViewController.updateToolBar(with: RKDeskMode.deskModeText)
+                    let info = FTTextAnnotationInfo();
+                    info.localmetadataCache = insertedPage.parentDocument?.localMetadataCache;
+                    info.visibleRect = self.documentViewController.firstPageController()?.scrollView?.visibleRect() ?? self.view.frame
+                    info.atPoint = self.contentHolderView?.center ?? .zero;
+                    info.scale = self.documentViewController.contentScaleInNormalMode;
+                    self.documentViewController.firstPageController()?.addAnnotation(info: info)
+                    break;
+                case .bookOpen(_):
+                    break
+                }
+            }
+        }
+        track(type.eventName, params: ["tool": type.parameterName])
+    }
+    
+    
     func addRecordingToPage(actionType: FTAudioActionType,
                             audio: FTAudioFileToImport,
                             onCompletion : ((Bool,NSError?) -> Void)?) {
