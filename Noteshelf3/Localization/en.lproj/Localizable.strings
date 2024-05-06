@@ -1061,7 +1061,7 @@
 "finder.bookmark.description" = "Favorite pages and keep an overview of large notebooks and PDFs.";
 "finder.bookmarks" = "Bookmarks";
 "finder.clear.recents" = "Do you want to clear recents";
-"finder.documentonly" = "Document Only";
+"finder.documentonly" = "Notebook Only";
 "finder.downloadPermissionText" = "Selected Notebook is not downloaded yet. Do you wish to download the notebook and move the pages?";
 "finder.duplicate" = "Duplicate";
 "finder.fullscreen" = "Full Screen";
@@ -1673,4 +1673,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 6 May 2024 at 12:42 PM
+// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
