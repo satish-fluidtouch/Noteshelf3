@@ -1061,6 +1061,7 @@
 "finder.bookmark.description" = "Favorisierte Seiten und behalten Sie den Überblick über große Notizbücher und PDFs.";
 "finder.bookmarks" = "Lesezeichen";
 "finder.clear.recents" = "Möchten Sie Verlauf löschen?";
+"finder.documentonly" = "Nur das Notizbuch";
 "finder.downloadPermissionText" = "Ausgewähltes Notebook ist noch nicht heruntergeladen. Möchten Sie das Notebook herunterladen und die Seiten verschieben?";
 "finder.duplicate" = "Duplikat";
 "finder.fullscreen" = "Vollbild";
@@ -1672,4 +1673,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 3 May 2024 at 5:05 PM
+// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM

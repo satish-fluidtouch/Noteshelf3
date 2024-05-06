@@ -75,6 +75,7 @@ public class FTRackDataManager {
             info = rackData
             let data = try PropertyListEncoder().encode(rackData)
             try data.write(to: self.rackPlistURL)
+            NotificationCenter.default.post(name: .rackDataSaved, object: nil)
         }
         catch {
             FTLogError("PEN RACK SAVE FAILED: \(error)")
