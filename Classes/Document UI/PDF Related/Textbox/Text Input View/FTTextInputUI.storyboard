@@ -716,50 +716,56 @@
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="ITu-4d-l1V" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="44" height="40"/>
                                                                 <constraints>
+                                                                    <constraint firstAttribute="width" constant="44" id="PCq-2I-vqj"/>
                                                                     <constraint firstAttribute="width" priority="999" constant="44" id="fzE-hs-kZ7"/>
                                                                 </constraints>
                                                                 <color key="tintColor" name="black1"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="plain" title="H1"/>
+                                                                <variation key="default">
+                                                                    <mask key="constraints">
+                                                                        <exclude reference="PCq-2I-vqj"/>
+                                                                    </mask>
+                                                                </variation>
+                                                                <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=regular">
+                                                                    <mask key="constraints">
+                                                                        <exclude reference="fzE-hs-kZ7"/>
+                                                                        <include reference="PCq-2I-vqj"/>
+                                                                    </mask>
+                                                                </variation>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="55J-x2-MTa" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
                                                                 <rect key="frame" x="50" y="0.0" width="44" height="40"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" priority="999" constant="44" id="brf-fE-3Tb"/>
-                                                                </constraints>
                                                                 <color key="tintColor" name="black1"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="plain" title="H1"/>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="w3T-aH-yDh" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
                                                                 <rect key="frame" x="100" y="0.0" width="44" height="40"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" priority="999" constant="44" id="3ag-zF-HdX"/>
-                                                                </constraints>
                                                                 <color key="tintColor" name="black1"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="plain" title="H1"/>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="Ida-nO-0AL" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
                                                                 <rect key="frame" x="150" y="0.0" width="44" height="40"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" priority="999" constant="44" id="Kxl-UJ-Fif"/>
-                                                                </constraints>
                                                                 <color key="tintColor" name="black1"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="plain" title="H1"/>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="NKS-fQ-S6s" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
                                                                 <rect key="frame" x="200" y="0.0" width="44" height="40"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" priority="999" constant="44" id="8cw-qX-ekR"/>
-                                                                </constraints>
                                                                 <color key="tintColor" name="black1"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="plain" title="H1"/>
                                                             </button>
                                                         </subviews>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="Ida-nO-0AL" firstAttribute="width" secondItem="ITu-4d-l1V" secondAttribute="width" id="6mq-kV-2K9"/>
+                                                            <constraint firstItem="NKS-fQ-S6s" firstAttribute="width" secondItem="ITu-4d-l1V" secondAttribute="width" id="NGK-YQ-h2v"/>
+                                                            <constraint firstItem="55J-x2-MTa" firstAttribute="width" secondItem="ITu-4d-l1V" secondAttribute="width" id="cvO-Nn-qZf"/>
+                                                            <constraint firstItem="w3T-aH-yDh" firstAttribute="width" secondItem="ITu-4d-l1V" secondAttribute="width" id="nJa-VP-UYu"/>
+                                                        </constraints>
                                                     </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="lN7-SX-Ota" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
                                                         <rect key="frame" x="260" y="6.5" width="40" height="27"/>
