@@ -1061,6 +1061,7 @@
 "finder.bookmark.description" = "Favorite pages and keep an overview of large notebooks and PDFs.";
 "finder.bookmarks" = "Bookmarks";
 "finder.clear.recents" = "Do you want to clear recents";
+"finder.documentonly" = "Notebook Only";
 "finder.downloadPermissionText" = "Selected Notebook is not downloaded yet. Do you wish to download the notebook and move the pages?";
 "finder.duplicate" = "Duplicate";
 "finder.fullscreen" = "Full Screen";
@@ -1660,9 +1661,20 @@
 "whatsnew.planner2.cta" = "Check them out now!";
 "whatsnew.planner2.description" = "Discover delightful digital planners in the Templates section that we’ve curated from amazing creators.";
 "whatsnew.planner2.title" = "More 2024 planners!";
+"widget.nonotes" = "No notes yet";
+"widget.notebook" = "Notebook";
+"widget.pinned.description" = "Get quick access to one of your notebooks.";
+"widget.quickCreate.large.description" = "Quicky create a blank notebook, record audio or scan a document.";
+"widget.quickCreate.small.description" = "Create a quick note.";
+"widget.quicknote" = "Quick Note";
+"widget.takenotes" = "Take notes";
 "widgets" = "Widgets";
 "work" = "Work";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
+<<<<<<< HEAD
 // Last Synced by Sameer Hussain on 3 May 2024 at 3:18 PM
+=======
+// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
+>>>>>>> develop

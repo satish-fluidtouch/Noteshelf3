@@ -1061,6 +1061,7 @@
 "finder.bookmark.description" = "お気に入りのページと、大きなノートやPDFの概要を保持します。";
 "finder.bookmarks" = "ブックマーク";
 "finder.clear.recents" = "最近の履歴を消去しますか？";
+"finder.documentonly" = "ノートブックのみ";
 "finder.downloadPermissionText" = "選択されたノートブックはまだダウンロードされていません。ノートブックをダウンロードしてページを移動しますか？";
 "finder.duplicate" = "複製";
 "finder.fullscreen" = "フルスクリーン";
@@ -1660,9 +1661,20 @@
 "whatsnew.planner2.cta" = "今すぐチェック";
 "whatsnew.planner2.description" = "テンプレートセクションで厳選した才能あるクリエイターたちからの魅力的なデジタルプランナーを見つけてください。";
 "whatsnew.planner2.title" = "より多くの2024年プランナー";
+"widget.nonotes" = "まだノートはありません";
+"widget.notebook" = "ノートブック";
+"widget.pinned.description" = "あなたのノートブックの1つに素早くアクセスしてください。";
+"widget.quickCreate.large.description" = "クイックに空白のノートブックを作成し、オーディオを記録するか、文書をスキャンしてください。";
+"widget.quickCreate.small.description" = "クイックノートを作成します。";
+"widget.quicknote" = "クイックノート";
+"widget.takenotes" = "メモを取る";
 "widgets" = "ウィジェット";
 "work" = "仕事";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
+<<<<<<< HEAD
 // Last Synced by Sameer Hussain on 3 May 2024 at 3:18 PM
+=======
+// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
+>>>>>>> develop

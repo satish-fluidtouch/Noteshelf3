@@ -1061,6 +1061,7 @@
 "finder.bookmark.description" = "收藏頁面並保持對龐大的筆記本和PDF的概覽。";
 "finder.bookmarks" = "書籤";
 "finder.clear.recents" = "你想要清除最近的內容嗎？";
+"finder.documentonly" = "只有筆記本";
 "finder.downloadPermissionText" = "選定的筆記本尚未下載。 您是否希望下載筆記本並移動頁面？";
 "finder.duplicate" = "複製";
 "finder.fullscreen" = "全螢幕";
@@ -1660,9 +1661,20 @@
 "whatsnew.planner2.cta" = "現在就來看看吧！";
 "whatsnew.planner2.description" = "在模板部分發現我們從一些有才華的創作者那裡精心挑選的令人愉悅的數位筆記本。";
 "whatsnew.planner2.title" = "更多2024年的計劃者！";
+"widget.nonotes" = "還沒有筆記";
+"widget.notebook" = "筆記本";
+"widget.pinned.description" = "快速存取您的一本筆記本。";
+"widget.quickCreate.large.description" = "快速創建一個空白筆記本，錄製音頻或掃描文件。";
+"widget.quickCreate.small.description" = "創建快速筆記。";
+"widget.quicknote" = "快速筆記";
+"widget.takenotes" = "記筆記";
 "widgets" = "小部件";
 "work" = "工作";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
+<<<<<<< HEAD
 // Last Synced by Sameer Hussain on 3 May 2024 at 3:18 PM
+=======
+// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
+>>>>>>> develop

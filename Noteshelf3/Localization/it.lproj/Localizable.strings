@@ -1061,6 +1061,7 @@
 "finder.bookmark.description" = "Pagine preferite e permette una overview per notebook e PDF di grandi dimensioni.";
 "finder.bookmarks" = "Segnalibri";
 "finder.clear.recents" = "Vuoi cancellare i recenti?";
+"finder.documentonly" = "Solo il Quaderno";
 "finder.downloadPermissionText" = "Il quaderno selezionato non è ancora scaricato. Vuoi scaricare il notebook e spostare le pagine?";
 "finder.duplicate" = "Duplicato";
 "finder.fullscreen" = "Schermo intero";
@@ -1660,9 +1661,20 @@
 "whatsnew.planner2.cta" = "Dai un'occhiata adesso!";
 "whatsnew.planner2.description" = "Scopri deliziosi pianificatori digitali nella sezione Modelli che abbiamo selezionato da alcuni creatori talentuosi.";
 "whatsnew.planner2.title" = "Più pianificatori per il 2024!";
+"widget.nonotes" = "Ancora nessuna nota";
+"widget.notebook" = "Quaderno";
+"widget.pinned.description" = "Ottieni un accesso rapido a uno dei tuoi quaderni.";
+"widget.quickCreate.large.description" = "Crea rapidamente un quaderno vuoto, registra audio o scannerizza un documento.";
+"widget.quickCreate.small.description" = "Creare una nota veloce.";
+"widget.quicknote" = "Nota veloce";
+"widget.takenotes" = "Prendi appunti";
 "widgets" = "Widget";
 "work" = "Lavoro";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
+<<<<<<< HEAD
 // Last Synced by Sameer Hussain on 3 May 2024 at 3:18 PM
+=======
+// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
+>>>>>>> develop

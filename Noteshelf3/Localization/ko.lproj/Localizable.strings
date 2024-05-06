@@ -1061,6 +1061,7 @@
 "finder.bookmark.description" = "즐겨찾는 페이지 및 대형 노트북과 PDF 파일을 개요로 유지하세요.";
 "finder.bookmarks" = "즐겨찾기";
 "finder.clear.recents" = "최근 기록을 지우시겠습니까?";
+"finder.documentonly" = "공책만";
 "finder.downloadPermissionText" = "선택한 노트북은 아직 다운로드되지 않았습니다. 노트북을 다운로드하고 페이지를 이동하시겠습니까?";
 "finder.duplicate" = "중복";
 "finder.fullscreen" = "전체 화면";
@@ -1660,9 +1661,20 @@
 "whatsnew.planner2.cta" = "지금 확인해 보세요!";
 "whatsnew.planner2.description" = "일부 유능한 창작자들로부터 선별한 템플릿 섹션에서 매력적인 디지털 플래너를 발견하세요.";
 "whatsnew.planner2.title" = "더 많은 2024 계획자!";
+"widget.nonotes" = "아직 노트가 없습니다";
+"widget.notebook" = "공책";
+"widget.pinned.description" = "하나의 공책에 빠르게 액세스하세요.";
+"widget.quickCreate.large.description" = "빠르게 빈 노트북을 만들고 오디오를 녹음하거나 문서를 스캔하세요.";
+"widget.quickCreate.small.description" = "빠른 메모 만들기.";
+"widget.quicknote" = "빠른 메모";
+"widget.takenotes" = "메모를 작성하다";
 "widgets" = "위젯";
 "work" = "일";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
+<<<<<<< HEAD
 // Last Synced by Sameer Hussain on 3 May 2024 at 3:18 PM
+=======
+// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
+>>>>>>> develop

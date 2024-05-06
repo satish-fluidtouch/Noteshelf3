@@ -1061,6 +1061,7 @@
 "finder.bookmark.description" = "Pages favorites et gardez une vue d'ensemble des grands cahiers et PDF.";
 "finder.bookmarks" = "Marque-pages";
 "finder.clear.recents" = "Voulez-vous effacer les récents ?";
+"finder.documentonly" = "Seulement le carnet";
 "finder.downloadPermissionText" = "Le cahier sélectionné n'est pas encore téléchargé. Souhaitez-vous le télécharger et déplacer les pages ?";
 "finder.duplicate" = "Dupliquer";
 "finder.fullscreen" = "Plein écran.";
@@ -1660,9 +1661,20 @@
 "whatsnew.planner2.cta" = "Découvrez-les maintenant !";
 "whatsnew.planner2.description" = "Découvrez des planificateurs numériques charmants dans la section Modèles que nous avons sélectionnés parmi des créateurs talentueux.";
 "whatsnew.planner2.title" = "Plus de planificateurs 2024 !";
+"widget.nonotes" = "Pas encore de notes";
+"widget.notebook" = "Carnet";
+"widget.pinned.description" = "Accédez rapidement à l'un de vos carnets.";
+"widget.quickCreate.large.description" = "Créez rapidement un carnet de notes vierge, enregistrez un audio ou numérisez un document.";
+"widget.quickCreate.small.description" = "Créer une note rapide.";
+"widget.quicknote" = "Note rapide";
+"widget.takenotes" = "Prenez des notes";
 "widgets" = "Widgets";
 "work" = "Travail";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
+<<<<<<< HEAD
 // Last Synced by Sameer Hussain on 3 May 2024 at 3:18 PM
+=======
+// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
+>>>>>>> develop

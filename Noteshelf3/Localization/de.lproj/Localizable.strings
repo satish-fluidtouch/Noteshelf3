@@ -1061,6 +1061,7 @@
 "finder.bookmark.description" = "Favorisierte Seiten und behalten Sie den Überblick über große Notizbücher und PDFs.";
 "finder.bookmarks" = "Lesezeichen";
 "finder.clear.recents" = "Möchten Sie Verlauf löschen?";
+"finder.documentonly" = "Nur das Notizbuch";
 "finder.downloadPermissionText" = "Ausgewähltes Notebook ist noch nicht heruntergeladen. Möchten Sie das Notebook herunterladen und die Seiten verschieben?";
 "finder.duplicate" = "Duplikat";
 "finder.fullscreen" = "Vollbild";
@@ -1660,9 +1661,19 @@
 "whatsnew.planner2.cta" = "Schauen Sie sie sich jetzt an!";
 "whatsnew.planner2.description" = "Entdecken Sie bezaubernde digitale Planer in der Vorlagen-Sektion, die wir von talentierten Erstellern zusammengestellt haben.";
 "whatsnew.planner2.title" = "Mehr 2024 Planer!";
+"widget.nonotes" = "Keine Notizen vorhanden";
+"widget.notebook" = "Notizbuch";
+"widget.pinned.description" = "Schnellen Zugriff auf eines Ihrer Notizbücher erhalten.";
+"widget.quickCreate.large.description" = "Schnell erstellen Sie ein leeres Notizbuch, nehmen Sie Audio auf oder scannen Sie ein Dokument.";
+"widget.quickCreate.small.description" = "Erstellen Sie eine schnelle Notiz.";
+"widget.quicknote" = "Schnelle Notiz";
+"widget.takenotes" = "Notizen machen";
 "widgets" = "Widgets";
 "work" = "Arbeit";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
+
 // Last Synced by Sameer Hussain on 3 May 2024 at 3:18 PM
+// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
+

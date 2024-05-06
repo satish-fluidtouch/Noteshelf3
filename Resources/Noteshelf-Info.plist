@@ -331,6 +331,7 @@
 		<string>$(PRODUCT_BUNDLE_IDENTIFIER).createNotebook</string>
 		<string>$(PRODUCT_BUNDLE_IDENTIFIER).openNotebook</string>
 		<string>$(PRODUCT_BUNDLE_IDENTIFIER).openNotebook.newSession</string>
+		<string>FTPinnedIntentConfigurationIntent</string>
 	</array>
 	<key>UIAppFonts</key>
 	<array>

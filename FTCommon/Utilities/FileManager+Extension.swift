@@ -76,3 +76,24 @@ public extension FileManager {
     }
 }
 #endif
+
+public extension URL {
+    func relativePathWRTCollection() -> String
+    {
+        let original = self
+        var urlComponents = original.pathComponents;
+        var relativePaths = [String]();
+        
+        var eachComponent = urlComponents.last;
+        while let lastComp = eachComponent, !lastComp.hasSuffix(FTFileExtension.shelf)  {
+            relativePaths.insert(eachComponent!, at: 0);
+            urlComponents.removeLast();
+            eachComponent = urlComponents.last;
+        }
+        if let comp = eachComponent {
+            relativePaths.insert(comp, at: 0);
+        }
+        let returnPath = relativePaths.joined(separator: "/");
+        return returnPath;
+    }
+}

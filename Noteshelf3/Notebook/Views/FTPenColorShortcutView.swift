@@ -40,7 +40,7 @@ struct FTPenColorShortcutView: View {
         } else {
             Button {
                 if !favColor.isSelected {
-                    self.handleTapAction(favColor: favColor, position: colorPosition)
+                    self.handleColorSelection(colorModel: favColor)
                 }
             } label: {
                 FTPenColorCircleView(hexColor: favColor.hex, isSelected: favColor.isSelected)
@@ -90,16 +90,12 @@ struct FTPenColorShortcutView: View {
         }
     }
 
-    private func handleTapAction(favColor: FTPenColorModel, position: FavoriteColorPosition) {
-        if !favColor.isSelected {
-            self.handleColorSelection(colorModel: favColor)
-        }
-    }
-
     private func handleColorSelection(colorModel: FTPenColorModel) {
-        self.viewModel.resetFavoriteColorSelection()
-        colorModel.isSelected = true
-        self.viewModel.updateCurrentSelection(colorHex: colorModel.hex)
+        if !colorModel.isSelected {
+            self.viewModel.resetFavoriteColorSelection()
+            colorModel.isSelected = true
+            self.viewModel.updateCurrentSelection(colorHex: colorModel.hex)
+        }
     }
 }
 
