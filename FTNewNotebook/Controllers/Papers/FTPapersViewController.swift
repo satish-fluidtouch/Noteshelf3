@@ -39,11 +39,7 @@ class FTPapersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.setUpCollectionViewConstraints()
-        collectionView?.reloadData()
-    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.scrollCollectionViewToSelectedTheme()
@@ -76,18 +72,20 @@ class FTPapersViewController: UIViewController {
             }
             self.collectionView?.collectionViewLayout = layout
         }
-        var offset: CGFloat = 0.0
+        var offset: CGFloat = 4.0
         if self.view.frame.width > regularThreshold {
             offset = 12.0
         }
         let insets = UIEdgeInsets(top: offset, left: offset, bottom: offset, right: offset)
         self.collectionView?.contentInset = insets
+        self.collectionView?.reloadData()
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if self.size != self.view.frame.size {
             self.size = self.view.frame.size
             self.setUpCollectionViewConstraints()
+            self.scrollCollectionViewToSelectedTheme()
         }
     }
     func reloadTemplatesViewWithLatest(selectedVariantsAndTheme:FTSelectedPaperVariantsAndTheme){
@@ -159,9 +157,6 @@ extension FTPapersViewController: UICollectionViewDataSource, UICollectionViewDe
                     cell.isCellSelected = isPaperSelected
                     if isPaperSelected {
                         self.selectedPaperThemeCellIndexPath = indexPath
-                    }
-                    if isPaperSelected {
-                        collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredHorizontally)
                     }
                 } else {
                     cell.isCellSelected = false

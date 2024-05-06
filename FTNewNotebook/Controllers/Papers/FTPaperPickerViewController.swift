@@ -152,6 +152,7 @@ class FTPaperPickerViewController: UIViewController {
                 if templateSizeModel.size == .mobile {
                     self.selectedPaperVariantsAndTheme.orientation = .portrait
                 }
+                self.varaintsVc?.selectedPaperVariants.size = templateSizeModel.size
                 self.varaintsVc?.updateOrientationSegmentVisibility(!self.toShowOrientationSegment)
             }
             sizeActions.append(action)
@@ -256,8 +257,10 @@ class FTPaperPickerViewController: UIViewController {
         let chevronAttachment = NSTextAttachment()
         chevronAttachment.image = chevronImage
         let attributedString = NSMutableAttributedString(attachment: aspectRatioimageAttachment)
-        let orientation = templateSize == .mobile ? "" : self.selectedPaperVariantsAndTheme.orientation.title
-        let paperSizeWithOrientationTitle = sizeDisplayTitle + " (\(orientation))"
+        var paperSizeWithOrientationTitle = sizeDisplayTitle
+        if templateSize != .mobile {
+            paperSizeWithOrientationTitle += " (\(self.selectedPaperVariantsAndTheme.orientation.title))"
+        }
         let titleAttributedString = NSAttributedString(string: "  " + paperSizeWithOrientationTitle + "  ",attributes: [.font: UIFont.appFont(for: .medium, with: 13), .foregroundColor : FTNewNotebook.Constants.SelectedAccent.tint])
         attributedString.append(titleAttributedString)
         let chevronString = NSAttributedString(attachment: chevronAttachment)
