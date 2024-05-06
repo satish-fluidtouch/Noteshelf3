@@ -168,6 +168,7 @@ class FTPaperPickerViewController: UIViewController {
                 guard let self = self else { return }
                 let resizeThumbnail = self.selectedPaperVariantsAndTheme.orientation != .landscape
                 self.selectedPaperVariantsAndTheme.orientation = .landscape
+                self.varaintsVc?.selectedPaperVariants.orientation = .landscape
                 self.setAttributedTextToTemplateSizeButton(self.selectedPaperVariantsAndTheme.size)
                 self.setThumbnailToPreviewImageView(toResize: resizeThumbnail)
                 if let templateSizeMenu = self.templateSizeButton?.menu {
@@ -178,6 +179,7 @@ class FTPaperPickerViewController: UIViewController {
                 guard let self = self else { return }
                 let resizeThumbnail = self.selectedPaperVariantsAndTheme.orientation != .portrait
                 self.selectedPaperVariantsAndTheme.orientation = .portrait
+                self.varaintsVc?.selectedPaperVariants.orientation = .portrait
                 self.setThumbnailToPreviewImageView(toResize: resizeThumbnail)
                 self.setThumbnailToPreviewImageView(toResize: resizeThumbnail)
                 if let templateSizeMenu = self.templateSizeButton?.menu {
@@ -254,10 +256,9 @@ class FTPaperPickerViewController: UIViewController {
         let chevronAttachment = NSTextAttachment()
         chevronAttachment.image = chevronImage
         let attributedString = NSMutableAttributedString(attachment: aspectRatioimageAttachment)
-        let orientation = templateSize == .mobile ? FTTemplateOrientation.portrait.title : self.selectedPaperVariantsAndTheme.orientation.title
+        let orientation = templateSize == .mobile ? "" : self.selectedPaperVariantsAndTheme.orientation.title
         let paperSizeWithOrientationTitle = sizeDisplayTitle + " (\(orientation))"
-        let title = (self.isRegularClass() && templateSize != .mobile) ? sizeDisplayTitle : paperSizeWithOrientationTitle
-        let titleAttributedString = NSAttributedString(string: "  " + title + "  ",attributes: [.font: UIFont.appFont(for: .medium, with: 13), .foregroundColor : FTNewNotebook.Constants.SelectedAccent.tint])
+        let titleAttributedString = NSAttributedString(string: "  " + paperSizeWithOrientationTitle + "  ",attributes: [.font: UIFont.appFont(for: .medium, with: 13), .foregroundColor : FTNewNotebook.Constants.SelectedAccent.tint])
         attributedString.append(titleAttributedString)
         let chevronString = NSAttributedString(attachment: chevronAttachment)
         attributedString.append(chevronString)
@@ -498,6 +499,7 @@ extension FTPaperPickerViewController: FTChoosePaperDelegate {
         if self.view.frame.width > regularThreshold {
             self.selectedPaperVariantsAndTheme.orientation = variants.orientation
         }
+        self.setAttributedTextToTemplateSizeButton(variants.size)
         self.setThumbnailToPreviewImageView(toResize: resizeThumbnail)
     }
     func didTapCancel() {

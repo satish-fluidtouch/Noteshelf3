@@ -119,10 +119,7 @@ class FTPaperTemplatesVariantsController: UIViewController {
         orientationSegmentedControl?.setDividerImage(UIImage(), forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
         orientationSegmentedControl?.backgroundColor = UIColor.black.withAlphaComponent(0.04)
         orientationSegmentedControl?.clipsToBounds = true
-        var shouldShow = self.view.frame.width > regularThreshold
-        if selectedPaperVariants.size == FTTemplateSize.mobile {
-            shouldShow = false
-        }
+        let shouldShow = self.view.frame.width > regularThreshold && selectedPaperVariants.size != FTTemplateSize.mobile
         updateOrientationSegmentVisibility(!shouldShow)
     }
     @IBAction func templateOrientaionChanged(_ sender: UISegmentedControl) {
