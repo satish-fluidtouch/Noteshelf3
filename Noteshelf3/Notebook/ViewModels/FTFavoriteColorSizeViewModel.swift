@@ -118,11 +118,13 @@ extension FTFavoriteColorViewModel {
     }
 
     func updateCurrentSelection(colorHex: String) {
-        self.currentPenset.color = colorHex
-        self.currentSelectedColor = colorHex
-        self.rackData.currentPenset = self.currentPenset
-        self.rackData.saveFavoriteColors(self.favoriteColors, type: self.currentPenset.type)
-        self.delegate?.didChangeCurrentPenset(self.currentPenset, dismissSizeEditView: true)
+        if self.currentPenset.color != colorHex {
+            self.currentPenset.color = colorHex
+            self.currentSelectedColor = colorHex
+            self.rackData.currentPenset = self.currentPenset
+            self.rackData.saveFavoriteColors(self.favoriteColors, type: self.currentPenset.type)
+            self.delegate?.didChangeCurrentPenset(self.currentPenset, dismissSizeEditView: true)
+        }
     }
 
     func updateCurrentFavoriteColors() {
@@ -172,6 +174,10 @@ class FTFavoriteSizeViewModel: ObservableObject {
     func getRackType() -> FTRackType {
         return self.rackData.type
     }
+
+    func getCurrentPlacement() -> FTShortcutPlacement {
+        return FTShortcutPlacement.getSavedPlacement(activity: rackData.userActivity)
+    }
 }
 
 extension FTFavoriteSizeViewModel {
@@ -190,14 +196,16 @@ extension FTFavoriteSizeViewModel {
 
     func updateCurrentPenSize(size: CGFloat, sizeMode: FTFavoriteSizeMode) {
         let formattedSize = size.roundToDecimal(1)
-        self.currentSelectedSize = formattedSize
-        if let penSize = FTPenSize(rawValue: formattedSize.rounded().toInt) {
-            self.currentPenset.size = penSize
+        if formattedSize != self.currentSelectedSize {
+            self.currentSelectedSize = formattedSize
+            if let penSize = FTPenSize(rawValue: formattedSize.rounded().toInt) {
+                self.currentPenset.size = penSize
+            }
+            self.currentPenset.preciseSize = formattedSize
+            self.rackData.currentPenset = self.currentPenset
+            self.rackData.saveFavoriteSizes(self.favoritePenSizes, type: self.currentPenset.type)
+            self.delegate?.didChangeCurrentPenset(self.currentPenset, dismissSizeEditView: sizeMode == .sizeSelect)
         }
-        self.currentPenset.preciseSize = formattedSize
-        self.rackData.currentPenset = self.currentPenset
-        self.rackData.saveFavoriteSizes(self.favoritePenSizes, type: self.currentPenset.type)
-        self.delegate?.didChangeCurrentPenset(self.currentPenset, dismissSizeEditView: sizeMode == .sizeSelect)
     }
 
     func updateFavoriteSize(with size: CGFloat, at index: Int) {
