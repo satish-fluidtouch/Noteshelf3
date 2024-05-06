@@ -39,6 +39,8 @@ class FTFiveMinJournaliPhoneFormat : FTFiveMinJournalFormat {
             let yearRect = CGRect(x: (currentPageRect.width*templateInfo.baseBoxX/100), y: (currentPageRect.height*templateInfo.yearY/100), width: yearString.size().width, height: yearString.size().height)
             let yearLocation = CGPoint(x: yearRect.origin.x, y: yearRect.origin.y)
             yearString.draw(at: yearLocation)
+            // Today Pill
+            self.addTodayPillInIPhoneRelativeToRect(yearRect, toContext: context)
         }
         
         var monthY = currentPageRect.height*templateInfo.baseBoxY/100
@@ -155,6 +157,8 @@ class FTFiveMinJournaliPhoneFormat : FTFiveMinJournalFormat {
         if let utcDate = monthInfo.dayInfo.first?.date.utcDate() { // setting date to first page of the month
             diaryPagesInfo.append(FTDiaryPageInfo(type: .month,date: utcDate.timeIntervalSinceReferenceDate))
         }
+        // Today Pill
+        self.addTodayPillInIPhoneRelativeToRect(CGRect(x: monthLocation.x, y: monthLocation.y, width: monthString.size().width, height: monthString.size().height), toContext: context)
     }
     private func addBezierPathWithRect( rect : CGRect, toContext context : CGContext, title:String?, tileColor : UIColor ){
         let bezierpath = UIBezierPath(roundedRect: rect, cornerRadius: 10)
@@ -228,7 +232,10 @@ class FTFiveMinJournaliPhoneFormat : FTFiveMinJournalFormat {
                                    y: titleY)
         dayString.draw(at: dayLocation)
         dayRectsInfo.append(currentDayRectsInfo)
+        // Today Pill
+        self.addTodayPillInIPhoneRelativeToRect(CGRect(x: dayLocation.x, y: dayLocation.y, width: dayString.size().width, height: dayString.size().height), toContext: context)
     }
+    
     override func renderHelpPage(context : CGContext){
         super.renderFiveMinJournalPDF(context: context, pdfTemplatePath: self.helpTemplate)
         

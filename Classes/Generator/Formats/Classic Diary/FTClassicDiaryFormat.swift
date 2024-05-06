@@ -70,16 +70,16 @@ class FTClassicDiaryFormat : FTDairyFormat {
         let screenType = customVariants.selectedDevice.isiPad ? "iPad" : "iPhone"
         let screenSize = FTFiveMinJournalFormat.getScreenSize(fromVariants: customVariants)
         let key = type.displayName + "_" + screenType + "_" + orientation +  "_" + "\(screenSize.width)" + "_"
-            + "\(screenSize.height)"
-//        let pdfURL = self.rootPath.appendingPathComponent(key).appendingPathExtension("pdf")
-//        if FileManager.default.fileExists(atPath: pdfURL.path){
-//            return pdfURL.path
-//        }else{
+            + "\(screenSize.height)" + "_version2"
+        let pdfURL = self.rootPath.appendingPathComponent(key).appendingPathExtension("pdf")
+        if FileManager.default.fileExists(atPath: pdfURL.path){
+            return pdfURL.path
+        }else{
             let templateDiaryInfo = FTClassicDiaryTemplateInfo(templateType: type,customVariants: customVariants)
             let generator = FTClassicDiaryTemplateAssetGenerator(templateInfo: templateDiaryInfo)
             let generatedPDFURL = generator.generate()
             return generatedPDFURL.path
-        //}
+        }
     }
     class func getScreenSize(fromVariants variants: FTPaperVariants) -> CGSize {
         let dimension = variants.isLandscape ? variants.selectedDevice.dimension_land : variants.selectedDevice.dimension_port
@@ -334,4 +334,38 @@ class FTClassicDiaryFormat : FTDairyFormat {
                 }
             }
         }
+}
+extension FTClassicDiaryFormat {
+    func addTodayPillWith(rightXOffsetPercent : CGFloat, yPercnt : CGFloat, toContext context : CGContext) {
+        // Today Pill
+        let font = UIFont.SpectralBold(withFontSize:10)
+        let textColor = UIColor.init(hexString: "#585855")
+        let isLandscape = self.formatInfo.customVariants.isLandscape
+        let rightXOffset = currentPageRect.width*rightXOffsetPercent/100
+        let yAxis = currentPageRect.height*yPercnt/100
+        var todayPillHeightPercnt : CGFloat = (isLandscape ? 2.20 : 1.62)
+        if !isiPad {
+            todayPillHeightPercnt = 2.34
+        }
+        let todayPillHorizontalPaddingPercnt: CGFloat = 0.35
+
+        let todayPillHorizontalPadding = self.currentPageRect.width*todayPillHorizontalPaddingPercnt/100
+
+        var todayFont = font
+        if self.layoutRequiresExplicitFont(){
+            todayFont = font.withSize(8)
+        }
+
+        let todayAttrs: [NSAttributedString.Key: Any] = [.font: todayFont,
+                                                        .kern: 1.6,
+                                                        .foregroundColor: textColor]
+        let todayString = NSAttributedString.init(string: "TODAY",attributes: todayAttrs)
+
+        let todayPillWidth = todayString.size().width + todayPillHorizontalPadding*2
+
+        let todayPillHeight = currentPageRect.height*todayPillHeightPercnt/100
+        let xAxis = currentPageRect.width - (rightXOffset + todayPillWidth)
+        let todayPillRect = CGRect(x: xAxis, y: yAxis, width: 0, height: todayPillHeight)
+        self.addTodayLink(toContext: context, withRect: todayPillRect, withFont: font, withTextColor: textColor, WithBackgroundColor: UIColor.init(hexString: "#DCDCDA"))
+    }
 }

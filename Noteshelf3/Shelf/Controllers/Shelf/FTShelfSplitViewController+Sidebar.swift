@@ -341,6 +341,7 @@ extension FTShelfSplitViewController: FTStoreContainerDelegate {
             if let theme = FTTheme.theme(url: plannerUrl, themeType: .papers) as? FTAutoTemlpateDiaryTheme {
                 theme.startDate = startDate
                 theme.endDate = endDate
+                theme.weekFormat = NSCalendar.current.firstWeekday == 2 ? .Monday : .Sunday
 
                 var varients = FTBasicTemplatesDataSource.shared.getDefaultVariants()
                 varients.isLandscape = isLandScape

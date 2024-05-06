@@ -119,6 +119,8 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
                 monthY += cellHeight + (currentPageRect.height*templateInfo.cellOffsetY/100)
             }
         }
+        self.addTodayPillToCalenderPageWith(context: context)
+        self.diaryPagesInfo.append(FTDiaryPageInfo(type: .calendar))
     }
     
     override func renderPrioritiesPage(context: CGContext, weeklyInfo: FTWeekInfo?, dayInfo: FTDayInfo?) {
@@ -144,7 +146,8 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
         let weekInfoAttrs: [NSAttributedString.Key : Any] = [.font : UIFont.robotoMedium(dayNewFontSize),
                                                              NSAttributedString.Key.kern : 0.0,
                                                              .foregroundColor : UIColor.init(hexString: "#4FA4FF")];
-        
+        let todayPillXOffsetPercnt = formatInfo.customVariants.isLandscape ? 1.25 : 1.67 // gap between today pill and day/week info
+
         if let weekInfo = weeklyInfo{
             
             let titleString = NSMutableAttributedString.init(string: "Weekly Priorities", attributes: titleAttrs)
@@ -172,7 +175,12 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
             let weekInfoRect = CGRect(x: weekInfoRectX, y: weekInfoRectY, width: weekInfoAttrString.size().width, height: weekInfoAttrString.size().height)
             let weekInfoDrawLocation = CGPoint(x: weekInfoRect.origin.x, y: weekInfoRect.origin.y)
             weekInfoAttrString.draw(at: weekInfoDrawLocation)
-            weekPrioritiesInfo.weekRect = getLinkRect(location: weekInfoDrawLocation, frameSize: weekInfoAttrString.size())
+            self.weekPrioritiesInfo.append(FTDiaryWeeklyPrioritiesRectInfo(weekRect: getLinkRect(location: weekInfoDrawLocation, frameSize: weekInfoAttrString.size())))
+            //Today pill
+            let weekInfoXPercnt = (weekInfoRect.origin.x/currentPageRect.width)*100
+            let rightXOffsetPercnt = 100.0 - (weekInfoXPercnt - todayPillXOffsetPercnt)
+            let yAxisPercent : CGFloat = ((weekInfoRect.midY - (todayPillHeight/2))/currentPageRect.height)*100
+            self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, yAxisPercent: yAxisPercent, toContext: context)
         }
         if let dayInfo = dayInfo {
             let title = formatInfo.customVariants.selectedDevice.isiPad ? "Daily Priorities" : "Daily Plan"
@@ -192,7 +200,13 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
             let dayInfoRect = CGRect(x: dayInfoRectX, y: dayInfoRectY, width: dayInfoAttrString.size().width, height: dayInfoAttrString.size().height)
             let dayInfoDrawLocation = CGPoint(x: dayInfoRect.origin.x, y: dayInfoRect.origin.y)
             dayInfoAttrString.draw(at: dayInfoDrawLocation)
-            dailyPrioritiesInfo.dayRect = getLinkRect(location: dayInfoDrawLocation, frameSize: dayInfoAttrString.size())
+            dailyPrioritiesInfo.append(FTDiaryDailyPrioritiesRectInfo(dayRect: getLinkRect(location: dayInfoDrawLocation, frameSize: dayInfoAttrString.size())))
+
+            //Today pill
+            let dayInfoXPercnt = (dayInfoRect.origin.x/currentPageRect.width)*100
+            let rightXOffsetPercnt = 100.0 - (dayInfoXPercnt - todayPillXOffsetPercnt)
+            let yAxisPercent : CGFloat = ((dayInfoRect.midY - (todayPillHeight/2))/currentPageRect.height)*100
+            self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, yAxisPercent: yAxisPercent, toContext: context)
         }
     }
     override func renderMonthPage(context: CGContext, monthInfo: FTMonthlyCalendarInfo, calendarYear: FTYearFormatInfo) {
@@ -204,10 +218,12 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
                             5*(currentPageRect.height*templateInfo.cellOffsetY/100))/6
         let font = UIFont.robotoMedium(screenInfo.fontsInfo.monthPageDetails.yearFontSize)
         let newFontSize = UIFont.getScaledFontSizeFor(font: font, screenSize: currentPageRect.size, minPointSize: 33)
+        let paragraphStyle = NSMutableParagraphStyle.init()
+        paragraphStyle.alignment = .center
         let yearAttrs: [NSAttributedString.Key: Any] = [.font: UIFont.robotoMedium(newFontSize),
                                                         .kern: 0.0,
-                                                        .foregroundColor: UIColor.init(hexString: "#C4C4C4")]
-        
+                                                        .foregroundColor: UIColor.init(hexString: "#C4C4C4"),.paragraphStyle : paragraphStyle]
+
         let yearString = NSMutableAttributedString.init(string: monthInfo.year, attributes: yearAttrs)
         let yearLocation = CGPoint(x: (currentPageRect.width*templateInfo.baseBoxX/100), y: (currentPageRect.height*templateInfo.monthY/100) )
         yearString.draw(in: CGRect(x: yearLocation.x, y: yearLocation.y, width: yearString.size().width, height: yearString.size().height))
@@ -236,7 +252,22 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
                                                                        .foregroundColor : UIColor(hexString: "4FA4FF")]
         let weekX = (currentPageRect.width*templateInfo.baseBoxX/100)
         var weekY = (currentPageRect.height*templateInfo.baseBoxY/100)
-        for week in weekNumberStrings {
+
+        var weekNumbers : [String] = []
+        var weekNumber : Int = 0
+        for (index, day) in monthInfo.dayInfo.enumerated() {
+            let weekNumberOBJ = FTPlannerWeekNumber()
+            if index == 0 {
+                weekNumber += 1
+                weekNumbers.append("WEEK \(weekNumber)")
+            }
+            else if index % 7 == 0, day.fullMonthString == monthInfo.fullMonth {
+                weekNumber += 1
+                weekNumbers.append("WEEK \(weekNumber)")
+            }
+        }
+
+        for week in weekNumbers {
             let weekString = NSMutableAttributedString.init(string: week,attributes: weekNumberTextAttribute)
             let location = CGPoint(x: weekX + 5, y: weekY - weekString.size().height - 2)
             weekString.draw(at: location)
@@ -246,9 +277,6 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
         
         
         let symbols = getWeekSymbols(monthInfo: monthInfo)
-        
-        let paragraphStyle = NSMutableParagraphStyle.init()
-        paragraphStyle.alignment = .center
         let weekSymbolFont = UIFont.montserratFont(for: .bold, with: screenInfo.fontsInfo.monthPageDetails.weekFontSize)
         let weekSymbolNewFontSize = UIFont.getScaledFontSizeFor(font: weekSymbolFont, screenSize: currentPageRect.size, minPointSize: 8)
         
@@ -282,10 +310,10 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
             let dayString = NSMutableAttributedString.init(string: day.dayString, attributes: dayAttrs)
             let drawRect = CGRect(x: dayX - 6 - dayString.size().width, y: dayY + 6, width: dayString.size().width, height: dayString.size().height)
             let drawLocation = CGPoint(x: drawRect.origin.x, y: drawRect.origin.y)
-            dayString.draw(at:drawLocation)
             if day.belongsToSameMonth {
                 let tappableHeight = formatInfo.customVariants.isLandscape ? cellHeight/3 : cellHeight/4
                 currentMonthRectsInfo.dayRects.append(getLinkRect(location: CGPoint(x: (linkX + cellWidth - cellWidth/3), y: dayY), frameSize: CGSize(width: cellWidth/3, height: tappableHeight)))
+                dayString.draw(at:drawLocation)
             }
             if(index % 7 == 0) {
                 dayX = (currentPageRect.width*templateInfo.baseBoxX/100) + cellWidth;
@@ -299,6 +327,7 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
             index += 1;
         })
         monthRectsInfo.append(currentMonthRectsInfo)
+        self.addTodayPillToMonthPageWith(context: context)
     }
     override func renderWeekPage(context: CGContext, weeklyInfo: FTWeekInfo) {
         super.renderWeekPage(context: context, weeklyInfo: weeklyInfo)
@@ -335,15 +364,16 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
             weekDayInfoY += currentPageRect.height*templateInfo.cellHeight/100 + (currentPageRect.height*templateInfo.cellOffsetY/100)
         }))
         currentWeekRectInfo.weekDayRects.append(contentsOf: weekDayRects)
-        let chevronImage = UIImage(named: "right_chevron")
-        let prioritiesChevronRect = CGRect(x: (prioritiesRect.origin.x + prioritiesBoxWidth - 4 - 24), y: (prioritiesRect.origin.y + 4), width: 24, height: 24)
+        let chevronImage = UIImage(named: "right_chevron_big")
+        let prioritiesChevronRect = CGRect(x: (prioritiesRect.origin.x + prioritiesBoxWidth - 4 - 32), y: (prioritiesRect.origin.y + 4), width: 32, height: 32)
         chevronImage?.draw(at: CGPoint(x: prioritiesChevronRect.origin.x, y: prioritiesChevronRect.origin.y))
-        currentWeekRectInfo.prioritiesRect = getLinkRect(location: CGPoint(x: prioritiesChevronRect.origin.x, y: prioritiesChevronRect.origin.y), frameSize: prioritiesChevronRect.size)
-        
-        let notesChevronRect = CGRect(x: (notesBoxX + notesBoxWidth - 4 - 24), y: notesBoxY + 4, width: 24, height: 24)
+        currentWeekRectInfo.prioritiesRect = getLinkRect(location: CGPoint(x: prioritiesChevronRect.origin.x - 4, y: prioritiesChevronRect.origin.y - 4), frameSize: CGSize(width: 40, height: 40))
+
+        let notesChevronRect = CGRect(x: (notesBoxX + notesBoxWidth - 4 - 32), y: notesBoxY + 4, width: 32, height: 32)
         chevronImage?.draw(at: CGPoint(x: notesChevronRect.origin.x, y: notesChevronRect.origin.y))
-        currentWeekRectInfo.notesRect = getLinkRect(location: CGPoint(x: notesChevronRect.origin.x, y: notesChevronRect.origin.y), frameSize: notesChevronRect.size)
+        currentWeekRectInfo.notesRect = getLinkRect(location: CGPoint(x: notesChevronRect.origin.x - 4, y: notesChevronRect.origin.y - 4), frameSize: CGSize(width: 40, height: 40))
         weekRectsInfo.append(currentWeekRectInfo)
+        self.addTodayPillToWeekPageWith(context: context)
     }
     override func renderDayPage(context: CGContext, dayInfo: FTDayInfo) {
         if !dayInfo.belongsToSameMonth {
@@ -356,11 +386,12 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
         let prioritiesBoxWidth : CGFloat = currentPageRect.width*templateInfo.priorityBoxWidth/100
         let prioritiesBoxHeight : CGFloat = currentPageRect.height*templateInfo.priorityBoxHeight/100
         let prioritiesRect = CGRect(x: prioritiesBoxX, y: prioritiesBoxY, width: prioritiesBoxWidth, height: prioritiesBoxHeight)
-        let chevronImage = UIImage(named: "right_chevron")
-        let prioritiesChevronRect = CGRect(x: (prioritiesRect.origin.x + prioritiesBoxWidth - 4 - 24), y: (prioritiesRect.origin.y + 4), width: 24, height: 24)
+        let chevronImage = UIImage(named: "right_chevron_big")
+        let prioritiesChevronRect = CGRect(x: (prioritiesRect.origin.x + prioritiesBoxWidth - 4 - 32), y: (prioritiesRect.origin.y + 4), width: 32, height: 32)
         chevronImage?.draw(at: CGPoint(x: prioritiesChevronRect.origin.x, y: prioritiesChevronRect.origin.y))
-        currentDayRectsInfo.prioritiesRect = getLinkRect(location: CGPoint(x: prioritiesChevronRect.origin.x, y: prioritiesChevronRect.origin.y), frameSize: prioritiesChevronRect.size)
+        currentDayRectsInfo.prioritiesRect = getLinkRect(location: CGPoint(x: prioritiesChevronRect.origin.x - 4 , y: prioritiesChevronRect.origin.y - 4), frameSize: CGSize(width: 40, height: 40))
         dayRectsInfo.append(currentDayRectsInfo)
+        self.addTodayPillToDayPageWith(context: context)
     }
     override func renderNotesPage(context: CGContext, weeklyInfo: FTWeekInfo?, dayInfo: FTDayInfo?) {
         
@@ -391,6 +422,7 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
         let weekInfoAttrs: [NSAttributedString.Key : Any] = [.font : UIFont.robotoMedium(dayNewFontSize),
                                                              NSAttributedString.Key.kern : 0.0,
                                                              .foregroundColor : UIColor.init(hexString: "#4FA4FF")];
+        let todayPillXOffsetPercnt = formatInfo.customVariants.isLandscape ? 1.25 : 1.67 // gap between today pill and day/week info
         if let weekInfo = weeklyInfo{
             // week info drawing
             let weekFirstDate = weekInfo.dayInfo.first
@@ -411,7 +443,12 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
             let weekInfoRect = CGRect(x: weekInfoRectX, y: weekInfoRectY, width: weekInfoAttrString.size().width, height: weekInfoAttrString.size().height)
             let weekInfoDrawLocation = CGPoint(x: weekInfoRect.origin.x, y: weekInfoRect.origin.y)
             weekInfoAttrString.draw(at: weekInfoDrawLocation)
-            weekNotesInfo.weekRect = getLinkRect(location: weekInfoDrawLocation, frameSize: weekInfoAttrString.size())
+            weekNotesInfo.append(FTDiaryWeeklyNotesRectInfo(weekRect:getLinkRect(location: weekInfoDrawLocation, frameSize: weekInfoAttrString.size())))
+            //Today pill
+            let weekInfoXPercnt = (weekInfoRect.origin.x/currentPageRect.width)*100
+            let rightXOffsetPercnt = 100.0 - (weekInfoXPercnt - todayPillXOffsetPercnt)
+            let yAxisPercent : CGFloat = ((weekInfoRect.midY - (todayPillHeight/2))/currentPageRect.height)*100
+            self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, yAxisPercent: yAxisPercent, toContext: context)
         }
         if let dayInfo = dayInfo {
             let monthString = dayInfo.monthString
@@ -423,7 +460,12 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
             let dayInfoRect = CGRect(x: dayInfoRectX, y: dayInfoRectY, width: dayInfoAttrString.size().width, height: dayInfoAttrString.size().height)
             let dayInfoDrawLocation = CGPoint(x: dayInfoRect.origin.x, y: dayInfoRect.origin.y)
             dayInfoAttrString.draw(at: dayInfoDrawLocation)
-            dailyNotesInfo.dayRect = getLinkRect(location: dayInfoDrawLocation, frameSize: dayInfoAttrString.size())
+            dailyNotesInfo.append(FTDiaryDailyNotesRectInfo(dayRect: getLinkRect(location: dayInfoDrawLocation, frameSize: dayInfoAttrString.size())))
+            //Today pill
+            let dayInfoXPercnt = (dayInfoRect.origin.x/currentPageRect.width)*100
+            let rightXOffsetPercnt = 100.0 - (dayInfoXPercnt - todayPillXOffsetPercnt)
+            let yAxisPercent : CGFloat = ((dayInfoRect.midY - (todayPillHeight/2))/currentPageRect.height)*100
+            self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, yAxisPercent: yAxisPercent, toContext: context)
         }
     }
 }

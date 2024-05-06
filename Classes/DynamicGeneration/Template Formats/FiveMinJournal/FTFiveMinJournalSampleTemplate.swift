@@ -154,7 +154,7 @@ class FTFiveMinJournalSampleTemplate : FTFiveMinJournalTemplateFormat {
         }
         let isLandscape = templateInfo.customVariants.isLandscape
         quoteX = isLandscape ? 50.08 : 4.79
-        quoteY   = isLandscape ? 5.45 : 11.92
+        quoteY   = isLandscape ? 8.96 : 13.83
         quoteWidth   = isLandscape ? 45.41 : 90.4
         headingWidth   = isLandscape ? 92.8 : 90.4
         headingX   = isLandscape ? 4.85 : 6.11
@@ -164,7 +164,7 @@ class FTFiveMinJournalSampleTemplate : FTFiveMinJournalTemplateFormat {
         heading4Y   = isLandscape ? 63.9 : 68.7
         heading5Y   = isLandscape ? 81.92 : 82.72
         yearX = isLandscape ? 4.04 : 5.39
-        yearY = isLandscape ? 5.45 : 4
+        yearY = isLandscape ? 8.96 : 7.82
         
         let titleX = templateInfo.screenSize.width*yearX/100
         let titleY = templateInfo.screenSize.height*yearY/100

@@ -86,7 +86,7 @@ class FTFiveMinJournalFormat : FTDairyFormat {
         let screenType = customVariants.selectedDevice.isiPad ? "iPad" : "iPhone"
         let screenSize = FTFiveMinJournalFormat.getScreenSize(fromVariants: customVariants)
         let key = type.displayName + "_" + screenType + "_" + orientation +  "_" + "\(screenSize.width)" + "_"
-            + "\(screenSize.height)"
+            + "\(screenSize.height)" + "_version2"
         let pdfURL = self.rootPath.appendingPathComponent(key).appendingPathExtension("pdf")
         if FileManager.default.fileExists(atPath: pdfURL.path){
             return pdfURL.path
@@ -292,5 +292,47 @@ extension FTFiveMinJournalFormat {
             daySuffix = "th"
         }
         return daySuffix
+    }
+}
+extension FTFiveMinJournalFormat {
+    var todayPillXOffsetPercnt : CGFloat {
+        let isLandscape = self.formatInfo.customVariants.isLandscape
+        return self.isiPad ? (isLandscape ? 1.79 : 2.39) : 5.33
+    }
+    var todayPillHeightPercnt : CGFloat {
+        let isLandscape = self.formatInfo.customVariants.isLandscape
+        return self.isiPad ? (isLandscape ? 2.20 : 1.62) : 2.34
+    }
+    var todayPillHeight : CGFloat {
+        return currentPageRect.height*todayPillHeightPercnt/100
+    }
+    func addTodayPillRelativeToRect(_ rect : CGRect, YAxisPercnt : CGFloat, toContext context : CGContext) {
+        // Today Pill
+        let pillYPercnt : CGFloat = YAxisPercnt
+        let pillXOffset = currentPageRect.width*todayPillXOffsetPercnt/100
+        let pillY = currentPageRect.height*pillYPercnt/100
+        let pillHeight = currentPageRect.height*todayPillHeightPercnt/100
+        let pillX = rect.origin.x + rect.width + pillXOffset
+        let pillRect = CGRect(x: pillX, y: pillY, width: 0, height: pillHeight)
+        self.addTodayLink(toContext: context, withRect: pillRect, withFont: UIFont.LoraBold(10), withTextColor: UIColor.init(hexString: "#585855"), WithBackgroundColor: UIColor.init(hexString: "#D6E2E0"))
+    }
+    func addTodayPillInIPhoneRelativeToRect(_ rect : CGRect, toContext context : CGContext) {
+        // Today Pill
+        let pillXOffset = currentPageRect.width*todayPillXOffsetPercnt/100
+
+        var font = UIFont.LoraBold(10)
+        if self.layoutRequiresExplicitFont(){
+            font = font.withSize(8)
+        }
+
+        let attrs: [NSAttributedString.Key: Any] = [.font: font,
+                                                        .kern: 1.6]
+
+        let todayString = NSAttributedString.init(string: "TODAY",attributes: attrs)
+        let pillY = rect.origin.y + (rect.height - todayString.size().height)/2 //currentPageRect.height*todayPillYPercnt/100
+        let pillHeight = currentPageRect.height*todayPillHeightPercnt/100
+        let pillX = rect.origin.x + rect.width + pillXOffset
+        let pillRect = CGRect(x: pillX, y: pillY, width: 0, height: pillHeight)
+        self.addTodayLink(toContext: context, withRect: pillRect, withFont:font , withTextColor: UIColor.init(hexString: "#585855"), WithBackgroundColor: UIColor.init(hexString: "#D6E2E0"))
     }
 }

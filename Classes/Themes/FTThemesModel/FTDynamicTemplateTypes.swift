@@ -15,6 +15,7 @@ class FTAutoTemlpateDiaryTheme : FTPaperTheme {
     var startDate: Date?
     var endDate: Date?
     var diaryStartYear : Int?
+    var weekFormat : FTWeekFormat = .Sunday
 
     override init(url : URL,metaData : NSDictionary) {
         super.init(url: url, metaData: metaData)

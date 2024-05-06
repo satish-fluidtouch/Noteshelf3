@@ -65,7 +65,7 @@ class FTModernDiaryFormat : FTDairyFormat {
         let screenType = customVariants.selectedDevice.isiPad ? "iPad" : "iPhone"
         let screenSize = FTModernDiaryFormat.getScreenSize(fromVariants: customVariants)
         let key = type.displayName + "_" + screenType + "_" + orientation +  "_" + "\(screenSize.width)" + "_"
-            + "\(screenSize.height)"
+            + "\(screenSize.height)" + "_version2"
         let pdfURL = self.rootPath.appendingPathComponent(key).appendingPathExtension("pdf")
         if FileManager.default.fileExists(atPath: pdfURL.path){
             return pdfURL.path
@@ -221,6 +221,8 @@ class FTModernDiaryFormat : FTDairyFormat {
                 monthX += cellWidth + (currentPageRect.size.width*templateInfo.cellOffsetX/100)
             }
         }
+        // Today Pill
+        self.addTodayPillToYearPageWith(context: context)
     }
 
     override func renderMonthPage(context: CGContext, monthInfo: FTMonthlyCalendarInfo, calendarYear: FTYearFormatInfo) {
@@ -244,8 +246,8 @@ class FTModernDiaryFormat : FTDairyFormat {
                                                         .foregroundColor: UIColor.init(hexString: "35383D")]
 
         let monthString = NSMutableAttributedString.init(string: monthInfo.shortMonth.uppercased(), attributes: monthAttrs)
-        let monthXpercentage: CGFloat = isiPad ? (isLandscape ? 3.59 : 5.03) : 5.33
-        let monthYPecrcentage: CGFloat = isiPad ? (isLandscape ? 20.64 : 10.59) : 2.76
+        let monthXpercentage: CGFloat = isiPad ? (isLandscape ? 3.59 : 5.99) : 4.53
+        let monthYPecrcentage: CGFloat = isiPad ? (isLandscape ? 24.15 : 13.64) : 2.76
         let monthX: CGFloat = currentPageRect.width*monthXpercentage/100
         var monthY: CGFloat = currentPageRect.height*monthYPecrcentage/100
         if self.customVariants.selectedDevice.identifier == "standard4" || self.customVariants.selectedDevice.identifier == "standard2" || (self.customVariants.selectedDevice.identifier == "standard1" && isLandscape ) {
@@ -269,28 +271,24 @@ class FTModernDiaryFormat : FTDairyFormat {
                                                         .foregroundColor: UIColor.init(hexString: "A1A1A1")]
 
         let yearString = NSMutableAttributedString.init(string: monthInfo.year, attributes: yearAttrs)
-        let yearXpercentage: CGFloat = isiPad ? (isLandscape ? 3.95 : 41.36) : 73.86
-        let yearYPecrcentage: CGFloat = isiPad ? (isLandscape ? 37.14 : 19.84) : 9.80
+        let yearXpercentage: CGFloat = isiPad ? (isLandscape ? 3.77 : 35.13) : 73.86
+        let yearYPecrcentage: CGFloat = isiPad ? (isLandscape ? 38.31 : 17.84) : 10.77
         var yearX: CGFloat = currentPageRect.width*yearXpercentage/100
         var yearY: CGFloat = currentPageRect.height*yearYPecrcentage/100
+        let gapBtwYearAndMonthPercent: CGFloat = isiPad ? (isLandscape ? 0 : 4.79) : 5.33
 
         if isiPad && !isLandscape { // iPad template Portrait(iPhone+iPad)
-            let gapBtwYearAndMonth: CGFloat = 5.03
-            yearX = monthX + monthString.size().width + (currentPageRect.width*gapBtwYearAndMonth/100)
+            yearX = monthX + monthString.size().width + (currentPageRect.width*gapBtwYearAndMonthPercent/100)
             let yearYOffset: CGFloat = 20.0
             yearY = monthY + monthString.size().height - yearString.size().height - yearYOffset
-        } else if UIDevice.current.isPhone() { // iPhone Device
+        } else if !isiPad { // iPhone Device
             if isLandscape {
                 yearY = monthY + monthString.size().height
             } else {
-                let yearYOffset: CGFloat = 20.0
-                yearY = monthY + monthString.size().height - yearString.size().height - yearYOffset
+                yearX = monthX + monthString.size().width + (currentPageRect.width*gapBtwYearAndMonthPercent/100)
             }
-        } else if !isiPad && !isLandscape { // iPhone Template+Portrait
-            let yearYOffset: CGFloat = 8.0
-            yearY = monthY + monthString.size().height - yearString.size().height - yearYOffset
         }
-        
+
         let yearLocation = CGPoint(x: yearX, y: yearY)
         yearString.draw(in: CGRect(x: yearLocation.x, y: yearLocation.y, width: yearString.size().width, height: yearString.size().height))
         currentMonthRectsInfo.yearRect = getLinkRect(location: yearLocation, frameSize: yearString.size())
@@ -351,8 +349,7 @@ class FTModernDiaryFormat : FTDairyFormat {
             let dayString = NSMutableAttributedString.init(string: day.dayString, attributes: dayAttrs)
             let drawRect = CGRect(x: dayX+6.0, y: dayY+3.0, width: dayString.size().width, height: dayString.size().height)
             let drawLocation = CGPoint(x: drawRect.origin.x, y: drawRect.origin.y)
-            dayString.draw(at:drawLocation)
-            
+
             let cellHeight = (currentPageRect.height - (currentPageRect.height*templateInfo.baseBoxY/100) - (currentPageRect.height*templateInfo.boxBottomOffset/100))/6
 
             if day.belongsToSameMonth {
@@ -366,6 +363,7 @@ class FTModernDiaryFormat : FTDairyFormat {
                 let linkRect = CGRect(x: linkX, y: pageRect().height - dayY - (rectHeight >= minLength ? rectHeight : minLength),
                                                              width: rectWidth >= minLength ? rectWidth : minLength,
                                                              height: rectHeight >= minLength ? rectHeight : minLength)
+                dayString.draw(at:drawLocation)
                 currentMonthRectsInfo.dayRects.append(linkRect)
             }
 
@@ -436,7 +434,8 @@ class FTModernDiaryFormat : FTDairyFormat {
             weekY += cellHeight
             currentMonthRectsInfo.weekRects.append(getLinkRect(location: location, frameSize: weekString.size()))
         }
-        
+        let referenceRect : CGRect = isLandscape ? CGRect(x: yearLocation.x, y: yearLocation.y, width: yearString.size().width, height: yearString.size().height) : CGRect(x:monthLocation.x , y: monthLocation.y, width: monthString.size().width, height: monthString.size().height)
+        self.addTodayPillToMonthPageWithPageWith(context: context, relativeToRect:  referenceRect)
     }
     
     override func renderWeekPage(context: CGContext, weeklyInfo: FTWeekInfo) {
@@ -444,8 +443,8 @@ class FTModernDiaryFormat : FTDairyFormat {
         let isLandscape = self.formatInfo.customVariants.isLandscape
         currentWeekRectInfo  = FTDiaryWeekRectsInfo()
         // Rendering week range string
-        let weekRangeXposPercentage: CGFloat = isiPad ? (isLandscape ? 3.95 : 5.39) : 5.6
-        let weekRangeYPosPercentage: CGFloat = isiPad ? (isLandscape ? 5.06 : 5.15) : 4.41
+        let weekRangeXposPercentage: CGFloat = isiPad ? (isLandscape ? 3.59 : 5.39) : 5.6
+        let weekRangeYPosPercentage: CGFloat = isiPad ? (isLandscape ? 7.82 : 7.53) : 4.41
         let weekRangeXpos: CGFloat = currentPageRect.width*weekRangeXposPercentage/100
         var weekRangeYpos: CGFloat = currentPageRect.height*weekRangeYPosPercentage/100
 
@@ -453,7 +452,7 @@ class FTModernDiaryFormat : FTDairyFormat {
             weekRangeYpos -= 10.0
         }
         
-        let weekRangeFont = UIFont.robotoRegular(isiPad ? 14 : 12)
+        let weekRangeFont = UIFont.robotoRegular(14)
         let weekRangeNewFontSize = UIFont.getScaledFontSizeFor(font: weekRangeFont, screenSize: currentPageRect.size, minPointSize: isiPad ? 10 : 8)
         let weekRangeAttrs: [NSAttributedString.Key: Any] = [.font: UIFont.robotoRegular(weekRangeNewFontSize),
                                                         .kern: 0.0,
@@ -487,7 +486,7 @@ class FTModernDiaryFormat : FTDairyFormat {
         weekRangeString.draw(at: weekRangeLocation)
 
         // Draw horizantal divider
-        let dividerXPercentage: CGFloat = isiPad ? (isLandscape ? 3.95 : 5.39) : 5.6
+        let dividerXPercentage: CGFloat = weekRangeXposPercentage
         let weekRangeDividerGapPercentage: CGFloat = isiPad ? (isLandscape ? 0.6 : 0.76) : 1.0
         let dividerX: CGFloat = currentPageRect.width*dividerXPercentage/100.0
         let weekRangeDividerGap: CGFloat = currentPageRect.width*weekRangeDividerGapPercentage/100
@@ -497,11 +496,11 @@ class FTModernDiaryFormat : FTDairyFormat {
         self.addHorizantalBezierLine(rect: CGRect(x: dividerX, y: dividerY, width: dividerWidth, height: 1.0), toContext: context, withColor: UIColor(hexString: "A2A2A2"))
         
         // Rendering month year string
-        let monthXposPercentage: CGFloat = isiPad ? (isLandscape ? 3.95 : 5.39) : 5.6
+        let monthXposPercentage: CGFloat = weekRangeXposPercentage
         let monthXpos: CGFloat = currentPageRect.width*monthXposPercentage/100
-        let monthYpos: CGFloat = dividerY + weekRangeDividerGap
+        let monthYpos: CGFloat = dividerY + 1 + weekRangeDividerGap // 1 is divider height
 
-        let monthFont = UIFont.robotoRegular(isiPad ? 14 : 12)
+        let monthFont = UIFont.robotoRegular(14)
         let monthNewFontSize = UIFont.getScaledFontSizeFor(font: monthFont, screenSize: currentPageRect.size, minPointSize: isiPad ? 10 : 8)
         let fullMonthAttrs: [NSAttributedString.Key: Any] = [.font: UIFont.robotoRegular(monthNewFontSize),
                                                         .kern: 0.0,
@@ -515,6 +514,7 @@ class FTModernDiaryFormat : FTDairyFormat {
         let yearLocation = CGPoint(x: monthXpos + monthString.size().width + yearXOffset , y: monthYpos)
         yearString.draw(at: yearLocation)
         currentWeekRectInfo.yearRect = getLinkRect(location: yearLocation , frameSize: yearString.size())
+        self.addTodayPillToWeekPageWith(context: context, relativeToRect: CGRect(x: yearLocation.x, y: yearLocation.y, width: yearString.size().width, height: yearString.size().height))
     }
     
         override func calendarOffsetCount() -> Int {
@@ -528,7 +528,7 @@ class FTModernDiaryFormat : FTDairyFormat {
         let currentDayRectsInfo: FTDiaryDayRectsInfo = FTDiaryDayRectsInfo()
         // Rendering Day
         let dayXPosPercentage: CGFloat = isiPad ? (isLandscape ? 3.77 : 5.27) : 5.33
-        let dayYPosPercentage: CGFloat = isiPad ? (isLandscape ? 4.15 : 3.81) : 2.76
+        let dayYPosPercentage: CGFloat = isiPad ? (isLandscape ? 9.74 : 7.63) : 2.76
         let dayXpos: CGFloat = currentPageRect.width*dayXPosPercentage/100
         var dayYpos: CGFloat = currentPageRect.height*dayYPosPercentage/100
         if self.customVariants.selectedDevice.identifier == "standard4" ||  self.customVariants.selectedDevice.identifier == "standard2" || (self.customVariants.selectedDevice.identifier == "standard1" && isLandscape) {
@@ -553,7 +553,7 @@ class FTModernDiaryFormat : FTDairyFormat {
         
         // Rendering month
         let monthXPosPercentage: CGFloat = isiPad ? (isLandscape ? 3.77 : 5.27) : 5.33
-        let monthYPosPercentage: CGFloat = isiPad ? (isLandscape ? 12.07 : 10.01) : 7.87
+        let monthYPosPercentage: CGFloat = isiPad ? (isLandscape ? 16.49 : 12.78) : 7.87
         let monthXpos: CGFloat = currentPageRect.width*monthXPosPercentage/100
         let monthYpos: CGFloat = currentPageRect.height*monthYPosPercentage/100
         
@@ -570,7 +570,7 @@ class FTModernDiaryFormat : FTDairyFormat {
         
         // Rendering Week info
         let weekInfoXPosPercentage: CGFloat = isiPad ? (isLandscape ? 3.77 : 5.27) : 5.33
-        let weekInfoYPosPercentage: CGFloat = isiPad ? (isLandscape ? 15.32 : 12.78) : 11.18
+        let weekInfoYPosPercentage: CGFloat = isiPad ? (isLandscape ? 19.48 : 15.55) : 11.18
         let weekInfoXpos: CGFloat = currentPageRect.width*weekInfoXPosPercentage/100
         var weekInfoYpos: CGFloat = currentPageRect.height*weekInfoYPosPercentage/100
         
@@ -613,7 +613,7 @@ class FTModernDiaryFormat : FTDairyFormat {
         quoteAttrs[.paragraphStyle] = style
         
         let quoteXPercentage: CGFloat = isiPad ? (isLandscape ? 58.90 : 58.63) : 42.66
-        let quoteYPercentage: CGFloat = isiPad ? (isLandscape ? 5.45 : 5.24) : 2.90
+        let quoteYPercentage: CGFloat = isiPad ? (isLandscape ? 9.35 : 8.01) : 2.90
         let quoteWidthPercentage: CGFloat = isiPad ? (isLandscape ? 37.51 : 36.21) : 51.73
         let quoteX = currentPageRect.width*quoteXPercentage/100
         var quoteY = currentPageRect.height*quoteYPercentage/100
@@ -651,7 +651,7 @@ class FTModernDiaryFormat : FTDairyFormat {
         let rightOffsetPercentage: CGFloat = isiPad ? (isLandscape ? 3.57 : 5.15) : 5.52
         let rightOffset: CGFloat = currentPageRect.width*rightOffsetPercentage/100
         let yearXpos: CGFloat = currentPageRect.width - rightOffset
-        let yearYPosPercentage: CGFloat = isiPad ? (isLandscape ? 14.41 : 12.21) : 11.18
+        let yearYPosPercentage: CGFloat = isiPad ? (isLandscape ? 18.83 : 14.98) : 11.18
         var yearYpos: CGFloat = currentPageRect.height*yearYPosPercentage/100
         
         if UIDevice.current.isPhone() && ((self.customVariants.selectedDevice.identifier == "standard4") || (self.customVariants.selectedDevice.identifier == "standard1" && !isLandscape)) {
@@ -668,6 +668,7 @@ class FTModernDiaryFormat : FTDairyFormat {
         yearString.draw(at: yearLocation)
         currentDayRectsInfo.yearRect = getLinkRect(location: yearLocation, frameSize: yearString.size())
         dayRectsInfo.append(currentDayRectsInfo)
+        self.addTodayPillToDayPageWithWith(context: context, relativeToRect: CGRect(x: weekInfoLocation.x, y: weekInfoLocation.y, width: weekInfoString.size().width, height: weekInfoString.size().height))
     }
 
     func drawDot( rect : CGRect, toContext context : CGContext, rectBGColor : UIColor, borderColor : UIColor, cornerRadius: CGFloat){
@@ -884,4 +885,56 @@ class FTModernDiaryFormat : FTDairyFormat {
         }
     }
 
+}
+extension FTModernDiaryFormat {
+    var todayPillHeightPercnt : CGFloat {
+        let isLandscape = self.formatInfo.customVariants.isLandscape
+        var height = isLandscape ? 1.95 : 1.43
+        if !isiPad {
+            height = 2.08
+        }
+        return height
+    }
+    func addTodayPillWith(xPercnt : CGFloat, yPercnt : CGFloat, toContext context : CGContext) {
+        // Today Pill
+        let xAxis = currentPageRect.width*xPercnt/100
+        let yAxis = currentPageRect.height*yPercnt/100
+        let todayPillHeight = currentPageRect.height*todayPillHeightPercnt/100
+        let todayPillRect = CGRect(x: xAxis, y: yAxis, width: 0, height: todayPillHeight)
+        self.addTodayLink(toContext: context, withRect: todayPillRect, withFont: UIFont.robotoBold(10.0), withTextColor: UIColor.init(hexString: "#35383D"), WithBackgroundColor: UIColor.init(hexString: "#64645f",alpha: 0.3))
+    }
+    func addTodayPillWith(xAxis : CGFloat, yAxis : CGFloat, toContext context : CGContext) {
+        // Today Pill
+        let todayPillHeight = currentPageRect.height*todayPillHeightPercnt/100
+        let todayPillRect = CGRect(x: xAxis, y: yAxis, width: 0, height: todayPillHeight)
+        self.addTodayLink(toContext: context, withRect: todayPillRect, withFont: UIFont.robotoBold(10.0), withTextColor: UIColor.init(hexString: "#35383D"), WithBackgroundColor: UIColor.init(hexString: "#64645f",alpha: 0.3))
+    }
+    private func addTodayPillToYearPageWith(context : CGContext) {
+        let isLandscaped = formatInfo.customVariants.isLandscape
+        let xAxisPercnt : CGFloat = isiPad ? (isLandscaped ? 4.22 : 5.15) : 6.66
+        let yAxisPercnt : CGFloat = isiPad ? (isLandscaped ? 29.35 : 24.23) : 17.95
+        self.addTodayPillWith(xPercnt: xAxisPercnt, yPercnt: yAxisPercnt, toContext: context)
+    }
+    private func addTodayPillToMonthPageWithPageWith(context : CGContext, relativeToRect rect: CGRect) {
+        let isLandscaped = formatInfo.customVariants.isLandscape
+        let yOffsetPercnt : CGFloat = isiPad ? (isLandscaped ? 1.81 : 1.90) : 1.38
+        let xAxisPercnt : CGFloat = isiPad ? (isLandscaped ? 3.95 : 6.47) : 5.33
+        let yAxis : CGFloat = rect.origin.y + rect.height + currentPageRect.height*yOffsetPercnt/100
+        let xAxis : CGFloat = currentPageRect.width*xAxisPercnt/100
+        self.addTodayPillWith(xAxis: xAxis, yAxis: yAxis, toContext: context)
+    }
+    private func addTodayPillToWeekPageWith(context : CGContext, relativeToRect rect: CGRect) {
+        let isLandscaped = formatInfo.customVariants.isLandscape
+        let xOffsetPercnt : CGFloat = isiPad ? (isLandscaped ? 1.79 : 2.39) : 5.33
+        let xAxis = rect.origin.x + rect.width + (currentPageRect.width*xOffsetPercnt/100)
+        self.addTodayPillWith(xAxis: xAxis, yAxis: rect.origin.y, toContext: context)
+    }
+    private func addTodayPillToDayPageWithWith(context : CGContext, relativeToRect rect: CGRect) {
+        let isLandscaped = formatInfo.customVariants.isLandscape
+        let yAxisPercnt : CGFloat = isiPad ? (isLandscaped ? 19.09 : 15.45) : 11.04
+        let xOffsetPercnt : CGFloat = isiPad ? (isLandscaped ? 1.79 : 2.39) : 5.33
+        let xAxis = rect.origin.x + rect.width + (currentPageRect.width*xOffsetPercnt/100)
+        let yAxis = currentPageRect.height*yAxisPercnt/100
+        self.addTodayPillWith(xAxis: xAxis, yAxis: yAxis, toContext: context)
+    }
 }

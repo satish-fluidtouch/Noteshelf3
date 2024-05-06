@@ -34,10 +34,16 @@ class FTModernDiaryDayTemplate: FTModernDiaryTemplateFormat {
         
         let lineWidth: CGFloat = self.templateInfo.screenSize.width*widthPercentage/100
         let verticalGap: CGFloat = self.templateInfo.screenSize.height*verticalGapPercentage/100
-        
+
+        var isFirstLine : Bool = true
+        var bezierLineWidth : CGFloat = isIpad ? 2 : 1
         while lineYpos < (self.templateInfo.screenSize.height - bottomOffset) {
-            let bezierlineRect = CGRect(x: lineXpos, y: lineYpos, width: lineWidth, height: 1)
-            self.addHorizantalBezierLine(rect: bezierlineRect, toContext: context, withColor: UIColor(hexString: "A2A2A2"))
+            let bezierlineRect = CGRect(x: lineXpos, y: lineYpos, width: lineWidth, height: 1.0)
+            self.addHorizantalBezierLine(rect: bezierlineRect, toContext: context, withColor: UIColor(hexString: "A2A2A2"),bezierLineWidth: bezierLineWidth)
+            if isIpad && isFirstLine {
+                isFirstLine = false
+                bezierLineWidth = 1
+            }
             lineYpos +=  verticalGap
         }
     }

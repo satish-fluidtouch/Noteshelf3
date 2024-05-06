@@ -126,7 +126,8 @@ private class FTAutoTemplateDiaryGenerator: NSObject,FTAutoTemplateGeneratorProt
 
         let formatInfo = FTYearFormatInfo(startDate: startDate!,
                                           endDate: endDate!,
-                                          theme: self.theme)
+                                          theme: self.theme,
+                                          weekFormat: self.theme.weekFormat)
         let generator = FTDairyGenerator.init(self.theme,format: FTDairyFormat.getFormat(formatInfo: formatInfo), formatInfo: formatInfo)
 
         let docInfo = FTDocumentInputInfo()

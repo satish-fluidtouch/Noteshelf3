@@ -309,5 +309,29 @@ extension UIFont {
         }
         return font
     }
+    static func SpectralBold(withFontSize fontSize : CGFloat) -> UIFont {
+        guard let font = UIFont(name: "Spectral-Bold", size: fontSize) else {
+            return UIFont.systemFont(ofSize: fontSize);
+        }
+        return font
+    }
+    static func robotoBold(_ fontSize : CGFloat) -> UIFont {
+        guard let font = UIFont(name: "Roboto-Bold", size: fontSize) else {
+            return UIFont.systemFont(ofSize: fontSize);
+        }
+        return font
+    }
+    static func LoraBold(_ fontSize : CGFloat) -> UIFont {
+        guard let font = UIFont(name: "Lora-Bold", size: fontSize) else {
+            return UIFont.systemFont(ofSize: fontSize);
+        }
+        return font
+    }
+    static func InterBold(_ fontSize : CGFloat) -> UIFont {
+        guard let font = UIFont(name: "Inter-Bold", size: fontSize) else {
+            return UIFont.systemFont(ofSize: fontSize);
+        }
+        return font
+    }
 }
 #endif

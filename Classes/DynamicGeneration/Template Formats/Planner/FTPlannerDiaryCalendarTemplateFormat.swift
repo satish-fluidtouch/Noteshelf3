@@ -17,7 +17,7 @@ class FTPlannerDiaryCalendarTemplateFormat : FTPlannerDiaryTemplateFormat {
     var horizontalGapBWBoxes : CGFloat = 2.87
     var verticalGapBWBoxes : CGFloat = 6.39
     var startingXAxis : CGFloat = 4.91
-    var startingYAxis : CGFloat = 14.41
+    var startingYAxis : CGFloat = 15.36
     
     override func renderTemplate(context: CGContext) {
         super.renderTemplate(context: context)
@@ -28,7 +28,7 @@ class FTPlannerDiaryCalendarTemplateFormat : FTPlannerDiaryTemplateFormat {
         boxWidth = isLandscaped ? 19.96 : 26.61
         boxHeight = isLandscaped ? 20.38 : 14.97
         startingXAxis = isLandscaped ? 4.94 : 4.91
-        startingYAxis = isLandscaped ? 17.40 : 14.41
+        startingYAxis = isLandscaped ? 18.83 : 15.36
         horizontalGapBWBoxes = isLandscaped ? 2.24 : 2.87
         verticalGapBWBoxes = isLandscaped ? 8.05 :6.39
         

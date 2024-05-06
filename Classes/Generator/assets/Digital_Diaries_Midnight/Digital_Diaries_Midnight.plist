@@ -21,12 +21,12 @@
 				<key>boxRightOffset</key>
 				<real>4.67</real>
 				<key>yearY</key>
-				<real>3.91</real>
+				<real>6.67</real>
 			</dict>
 			<key>month</key>
 			<dict>
 				<key>monthY</key>
-				<real>3.91</real>
+				<real>6.67</real>
 				<key>baseBoxX</key>
 				<real>4.79</real>
 				<key>baseBoxY</key>
@@ -59,7 +59,7 @@
 				<key>baseBoxY</key>
 				<real>11.74</real>
 				<key>titleLineY</key>
-				<real>3.91</real>
+				<real>6.67</real>
 				<key>cellOffsetX</key>
 				<real>2.16</real>
 				<key>cellOffsetY</key>
@@ -90,16 +90,16 @@
 				<key>baseX</key>
 				<real>4.79</real>
 				<key>baseY</key>
-				<real>3.91</real>
+				<real>6.67</real>
 			</dict>
 			<key>notes</key>
 			<dict>
 				<key>boxWidth</key>
 				<real>90.28</real>
 				<key>dayInfoY</key>
-				<real>4.96</real>
+				<real>6.67</real>
 				<key>titleY</key>
-				<real>4</real>
+				<real>6.67</real>
 				<key>titleX</key>
 				<real>5.75</real>
 				<key>boxY</key>
@@ -112,9 +112,9 @@
 				<key>boxWidth</key>
 				<real>90.40000000000001</real>
 				<key>dayInfoY</key>
-				<real>4.86</real>
+				<real>6.67</real>
 				<key>titleY</key>
-				<integer>4</integer>
+				<real>6.67</real>
 				<key>titleX</key>
 				<real>5.75</real>
 				<key>boxY</key>
@@ -140,12 +140,12 @@
 				<key>boxRightOffset</key>
 				<real>3.5</real>
 				<key>yearY</key>
-				<real>5.32</real>
+				<real>8.83</real>
 			</dict>
 			<key>month</key>
 			<dict>
 				<key>monthY</key>
-				<real>5.45</real>
+				<real>8.83</real>
 				<key>baseBoxX</key>
 				<real>3.59</real>
 				<key>baseBoxY</key>
@@ -178,7 +178,7 @@
 				<key>baseBoxY</key>
 				<real>15.84</real>
 				<key>titleLineY</key>
-				<real>5.19</real>
+				<real>8.83</real>
 				<key>cellOffsetX</key>
 				<real>1.82</real>
 				<key>cellOffsetY</key>
@@ -209,16 +209,16 @@
 				<key>baseX</key>
 				<real>3.77</real>
 				<key>baseY</key>
-				<real>5.32</real>
+				<real>8.83</real>
 			</dict>
 			<key>priorities</key>
 			<dict>
 				<key>boxWidth</key>
 				<real>92.8</real>
 				<key>dayInfoY</key>
-				<real>6.36</real>
+				<real>9.85</real>
 				<key>titleY</key>
-				<real>5.19</real>
+				<real>8.83</real>
 				<key>titleX</key>
 				<real>4.31</real>
 				<key>boxY</key>
@@ -231,9 +231,9 @@
 				<key>boxWidth</key>
 				<real>92.8</real>
 				<key>dayInfoY</key>
-				<real>6.36</real>
+				<real>9.85</real>
 				<key>titleY</key>
-				<real>5.19</real>
+				<real>8.83</real>
 				<key>titleX</key>
 				<real>4.31</real>
 				<key>boxY</key>
@@ -469,23 +469,23 @@
 				<key>dayFontSize</key>
 				<integer>30</integer>
 				<key>yearFontSize</key>
-				<integer>40</integer>
+				<integer>30</integer>
 			</dict>
 			<key>year</key>
 			<dict>
 				<key>outMonthFontSize</key>
 				<integer>0</integer>
 				<key>yearFontSize</key>
-				<integer>40</integer>
+				<integer>30</integer>
 				<key>titleMonthFontSize</key>
 				<integer>13</integer>
 			</dict>
 			<key>month</key>
 			<dict>
 				<key>monthFontSize</key>
-				<integer>40</integer>
+				<integer>30</integer>
 				<key>yearFontSize</key>
-				<integer>40</integer>
+				<integer>30</integer>
 				<key>weekFontSize</key>
 				<integer>11</integer>
 				<key>dayFontSize</key>
@@ -494,9 +494,9 @@
 			<key>week</key>
 			<dict>
 				<key>monthFontSize</key>
-				<integer>40</integer>
+				<integer>30</integer>
 				<key>yearFontSize</key>
-				<integer>40</integer>
+				<integer>30</integer>
 				<key>weekFontSize</key>
 				<integer>11</integer>
 				<key>dayFontSize</key>
@@ -505,9 +505,9 @@
 			<key>day</key>
 			<dict>
 				<key>yearFontSize</key>
-				<integer>40</integer>
+				<integer>30</integer>
 				<key>monthFontSize</key>
-				<integer>40</integer>
+				<integer>30</integer>
 				<key>dayFontSize</key>
 				<integer>11</integer>
 				<key>weekFontSize</key>

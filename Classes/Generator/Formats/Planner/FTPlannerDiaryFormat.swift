@@ -20,6 +20,7 @@ class FTPlannerDiaryFormat : FTDairyFormat {
     let weekNumberStripColors : [Int: String] = [1 :"#AAEBF1",2:"#C4F2E7",3:"#F3E3B5",4:"#F0CBC2",5:"#F1C7EA",6:"#DDC3F2"]
     let weekDaysPastalColors = ["#AAEBF1","#C4F2E7","#F3E3B5","#F0CBC2","#F1C7EA","#DDC3F2","#AAEBF1","#C4F2E7"]
     let notesBandBGColor = UIColor(hexString: "#E7E7E7")
+    let placeHolderStripColor = UIColor(hexString: "#DDC3F2")
     //**************************************************//
 
 
@@ -33,6 +34,7 @@ class FTPlannerDiaryFormat : FTDairyFormat {
     let darkPlannerWeekNumberStripColors : [Int: String] = [1 :"#6EB8BF",2:"#45B298",3:"#BAA15C",4:"#B27D6F",5:"#BD7AB2",6:"#A889C2"]
     let darkPlannerWeekDaysPastalColors = ["#6EB8BF","#45B298","#BAA15C","#B27D6F","#BD7AB2","#A889C2","#6EB8BF","#45B298"]
     let darkPlannerNotesBandBGColor = UIColor(hexString: "#504F4F")
+    let darkPlannerPlaceHolderStripColor = UIColor(hexString: "#A889C2")
     //**************************************************//
 
 
@@ -164,7 +166,7 @@ class FTPlannerDiaryFormat : FTDairyFormat {
         let screenSize = FTModernDiaryFormat.getScreenSize(fromVariants: customVariants)
         let displayName = isDarkTemplate ? type.displayName + "(Dark)" : type.displayName
         let key = displayName + "_" + screenType + "_" + orientation +  "_" + "\(screenSize.width)" + "_"
-            + "\(screenSize.height)"
+            + "\(screenSize.height)" + "_version2"
         let pdfURL = self.rootPath.appendingPathComponent(key).appendingPathExtension("pdf")
         if FileManager().fileExists(atPath: pdfURL.path) , let data = try? Data(contentsOf: pdfURL), !data.isEmpty {
             return pdfURL.path
@@ -209,9 +211,6 @@ class FTPlannerDiaryFormat : FTDairyFormat {
         
     }
     func renderTrackerPage(context: CGContext, monthInfo: FTMonthlyCalendarInfo, calendarYear: FTYearFormatInfo){
-        
-    }
-    func renderExtrasPage(atIndex index : Int,context: CGContext){
         
     }
     func renderYearPage(atIndex index : Int,context: CGContext, months: [FTMonthInfo], calendarYear: FTYearFormatInfo){
@@ -307,12 +306,6 @@ class FTPlannerDiaryFormat : FTDairyFormat {
             }
 
         }
-        
-        // Render extras page
-        for index in 1...3 {
-            self.renderExtrasPage(atIndex : index,context: context)
-            self.diaryPagesInfo.append(FTDiaryPageInfo(type: .extras))
-        }
     }
     func shouldAddWeekOffsetToCalendarWith(firstDay : FTDayInfo?) -> Bool {
         return firstDay?.month != formatInfo.startMonth.month
@@ -400,17 +393,21 @@ class FTPlannerDiaryFormat : FTDairyFormat {
         let pageIndex = index
         let calendarMonths = monthlyFormatter.monthCalendarInfo;
         let numberYearPages = self.formatInfo.customVariants.isLandscape ? 3 : 2
-        let daysBeforeCount = 1 + numberYearPages
+        let monthBeforeCount = 1 + numberYearPages
         var dayAndWeekPagesCount = 0
         var monthRectsCount = 0
+        var daysBeforeCount: Int = 1 + numberYearPages
         self.linkSideNavigationStrips(doc: doc,atPoint: atPoint, monthlyFormatter: monthlyFormatter, forPageAtIndex: 0)
         var addWeekOffset : Bool = true
-        calendarMonths.forEach { (eachMonth) in
+        for (monthIndex, eachMonth) in calendarMonths.enumerated() {
             let monthRects = format.calendarRectsInfo.monthRects
-            let numberOfWeeksOfMonth = eachMonth.getWeeksCount()
+            var weeksCount = eachMonth.weeksCount
+            if monthIndex == 0 && shouldAddWeekOffsetToCalendarWith(firstDay: eachMonth.dayInfo.first) { // checking whether to add a week offset to first month of calendar duration
+                weeksCount += 1
+            }
             let numberOfDaysInMonth = eachMonth.dayInfo.filter({$0.belongsToSameMonth}).count
             let calendarPage = doc.page(at: index)
-            if let page = doc.page(at: dayAndWeekPagesCount + daysBeforeCount) {
+            if let page = doc.page(at: dayAndWeekPagesCount + monthBeforeCount) {
                 calendarPage?.addLinkAnnotation(bounds: monthRects[monthRectsCount], goToPage: page, at: atPoint)
             }
             if addWeekOffset {
@@ -419,7 +416,29 @@ class FTPlannerDiaryFormat : FTDairyFormat {
                     dayAndWeekPagesCount += 1
                 }
             }
-            dayAndWeekPagesCount += numberOfWeeksOfMonth + numberOfDaysInMonth + 2  + 1 // every month, notes and tracker pages are added
+            dayAndWeekPagesCount += weeksCount + numberOfDaysInMonth + 2  + 1 // every month, notes and tracker pages are added
+
+            daysBeforeCount +=  1 + weeksCount // every month and weeksCount
+            let dayRects = format.calendarRectsInfo.dayRects[monthIndex]
+            var dayRectsCount = 0
+            eachMonth.dayInfo.forEach({(eachDay) in
+                let calendarPage = doc.page(at: index)
+                if isBelongToCalendar(currentDate: eachDay.date, startDate: startDate, endDate: endDate) {
+                    if eachDay.belongsToSameMonth {
+                        if dayRects.count > dayRectsCount {
+                            let dayIndex = daysBeforeCount
+                            if let page = doc.page(at: dayIndex)
+                            {
+                                calendarPage?.addLinkAnnotation(bounds: dayRects[dayRectsCount], goToPage: page, at: atPoint)
+                            }
+                            daysBeforeCount += 1
+                        }
+                        dayRectsCount += 1
+
+                    }
+                }
+            })
+            daysBeforeCount += 2 // every month days, notes and tracker pages are added
             monthRectsCount += 1
         }
         return pageIndex + 1
@@ -913,4 +932,54 @@ extension FTPlannerDiaryFormat {
             return notesBandBGColor
         }
     }
+    var placeHolderStripBGColor : UIColor {
+        return isDarkTemplate ? darkPlannerPlaceHolderStripColor : placeHolderStripColor
+    }
+}
+extension FTPlannerDiaryFormat {
+    var todayPillHeightPercnt : CGFloat {
+        let height = self.formatInfo.customVariants.isLandscape ? 2.08 : 1.53
+        return height
+    }
+    func addTodayPillWith(rightXOffsetPercent : CGFloat,yAxisPercnt : CGFloat, toContext context : CGContext) {
+        // Today Pill
+        let font = UIFont.InterBold(10)
+        let textColor = isDarkTemplate ? UIColor(hexString: "#FEFEF5") : UIColor(hexString: "#363636")
+        let pillBGColor = isDarkTemplate ? UIColor(hexString: "#727272") : UIColor(hexString: "#D8D8D8")
+        let rightXOffset = currentPageRect.width*rightXOffsetPercent/100
+        let yAxis = currentPageRect.height*yAxisPercnt/100
+        let todayPillHorizontalPaddingPercnt: CGFloat = 0.35
+
+        let todayPillHorizontalPadding = self.currentPageRect.width*todayPillHorizontalPaddingPercnt/100
+
+        var todayFont = font
+        if self.layoutRequiresExplicitFont(){
+            todayFont = font.withSize(9)
+        }
+
+        let todayAttrs: [NSAttributedString.Key: Any] = [.font: todayFont,
+                                                        .kern: 1.6,
+                                                        .foregroundColor: textColor]
+        let todayString = NSAttributedString.init(string: "TODAY",attributes: todayAttrs)
+
+        let todayPillWidth = todayString.size().width + todayPillHorizontalPadding*2
+
+        let todayPillHeight = currentPageRect.height*todayPillHeightPercnt/100
+        let xAxis = currentPageRect.width - (rightXOffset + todayPillWidth)
+        let todayPillRect = CGRect(x: xAxis, y: yAxis, width: 0, height: todayPillHeight)
+        self.addTodayLink(toContext: context, withRect: todayPillRect, withFont: font, withTextColor: textColor, WithBackgroundColor: pillBGColor)
+    }
+    func addTodayPillToCalenderPageWith(context : CGContext) {
+        let rightXOffsetPercnt = formatInfo.customVariants.isLandscape ? 8.45 : 9.47
+        let yAxis : CGFloat = formatInfo.customVariants.isLandscape ? 9.35 : 7.53
+        self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, yAxisPercnt: yAxis, toContext: context)
+    }
+    func addTodayPillToYearPageWith(context : CGContext, rightXOffsetPercnt : CGFloat) {
+        let yAxisPercnt : CGFloat = formatInfo.customVariants.isLandscape ? 8.83 : 7.25
+        self.addTodayPillWith(rightXOffsetPercent: (100 - rightXOffsetPercnt), yAxisPercnt: yAxisPercnt, toContext: context)
+    }
+    func addTodayPillInlineWithTopNavCalendarOptionsFor(context : CGContext, rightXOffsetPercent : CGFloat, yAxisPercent : CGFloat) {
+        self.addTodayPillWith(rightXOffsetPercent: (100 - rightXOffsetPercent), yAxisPercnt: yAxisPercent, toContext: context)
+    }
+
 }

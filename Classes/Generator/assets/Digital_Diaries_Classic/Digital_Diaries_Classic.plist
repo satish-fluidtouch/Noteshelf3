@@ -21,12 +21,12 @@
 				<key>boxRightOffset</key>
 				<real>4.91</real>
 				<key>yearY</key>
-				<real>3.91</real>
+				<real>7.34</real>
 			</dict>
 			<key>month</key>
 			<dict>
 				<key>monthY</key>
-				<real>3.91</real>
+				<real>6.9</real>
 				<key>baseBoxX</key>
 				<real>20.02</real>
 				<key>baseBoxY</key>
@@ -36,7 +36,7 @@
 				<key>cellOffsetY</key>
 				<real>3.77</real>
 				<key>boxRightOffset</key>
-				<real>8.390000000000001</real>
+				<real>4.67</real>
 				<key>boxBottomOffset</key>
 				<real>37.4</real>
 			</dict>
@@ -47,7 +47,7 @@
 				<key>baseBoxY</key>
 				<real>10.4</real>
 				<key>titleLineY</key>
-				<real>3.91</real>
+				<real>6.77</real>
 				<key>cellWidth</key>
 				<real>90.40000000000001</real>
 				<key>cellHeight</key>
@@ -56,9 +56,9 @@
 			<key>day</key>
 			<dict>
 				<key>baseX</key>
-				<real>4.79</real>
+				<real>4.43</real>
 				<key>baseY</key>
-				<real>1.94</real>
+				<real>5.53</real>
 			</dict>
 		</dict>
 		<key>Land</key>
@@ -78,12 +78,12 @@
 				<key>boxRightOffset</key>
 				<real>3.77</real>
 				<key>yearY</key>
-				<real>5.32</real>
+				<real>9.609999999999999</real>
 			</dict>
 			<key>month</key>
 			<dict>
 				<key>monthY</key>
-				<real>10.64</real>
+				<real>9.609999999999999</real>
 				<key>baseBoxX</key>
 				<real>14.21</real>
 				<key>baseBoxY</key>
@@ -93,7 +93,7 @@
 				<key>cellOffsetY</key>
 				<real>4.8</real>
 				<key>boxRightOffset</key>
-				<real>39.65</real>
+				<real>39.56</real>
 				<key>boxBottomOffset</key>
 				<real>13.5</real>
 			</dict>
@@ -104,7 +104,7 @@
 				<key>baseBoxY</key>
 				<real>12.04</real>
 				<key>titleLineY</key>
-				<real>5.32</real>
+				<real>7.66</real>
 				<key>cellWidth</key>
 				<real>92.8</real>
 				<key>cellHeight</key>
@@ -115,7 +115,7 @@
 				<key>baseX</key>
 				<real>3.59</real>
 				<key>baseY</key>
-				<real>3.37</real>
+				<real>7.19</real>
 			</dict>
 		</dict>
 	</dict>
@@ -354,7 +354,7 @@
 			<key>day</key>
 			<dict>
 				<key>dayFontSize</key>
-				<integer>45</integer>
+				<integer>40</integer>
 				<key>monthFontSize</key>
 				<integer>22</integer>
 				<key>weekFontSize</key>

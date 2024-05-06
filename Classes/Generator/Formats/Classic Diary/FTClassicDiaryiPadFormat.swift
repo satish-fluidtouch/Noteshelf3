@@ -69,7 +69,7 @@ class FTClassicDiaryiPadFormat : FTClassicDiaryFormat{
                                                         .kern: 0.0,
                                                         .foregroundColor: UIColor.init(hexString: "#64645F")]
         if let diaryStartYear = months.first?.year, let diaryEndYear = months.last?.year{
-            let yearText = diaryStartYear + "-" + diaryEndYear.suffix(2)
+            let yearText = (diaryStartYear == diaryEndYear) ? diaryStartYear : (diaryStartYear + "-" + diaryEndYear.suffix(2))
             let yearString = NSMutableAttributedString.init(string: yearText, attributes: yearAttrs)
             let yearXValue = currentPageRect.width*CGFloat(50)/100 - yearString.size().width/2
             var yearY : CGFloat = templateInfo.yearY
@@ -178,6 +178,12 @@ class FTClassicDiaryiPadFormat : FTClassicDiaryFormat{
                 }
             }
         }
+        // Today Pill
+        let isLandscaped = formatInfo.customVariants.isLandscape
+        //let xAxisPercnt : CGFloat = isLandscaped ? 91.90 : 89.32
+        let yAxisPercnt : CGFloat = isLandscaped ? 10.38 : 7.91
+        let rightXOffsetPercnt = isLandscaped ? 3.77: 4.91
+        self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, yPercnt: yAxisPercnt, toContext: context)
     }
     override func renderMonthPage(context: CGContext, monthInfo: FTMonthlyCalendarInfo, calendarYear: FTYearFormatInfo) {
         super.renderMonthPage(context: context, monthInfo: monthInfo, calendarYear: calendarYear)
@@ -282,6 +288,11 @@ class FTClassicDiaryiPadFormat : FTClassicDiaryFormat{
             currentMonthRectsInfo.weekRects.append(getLinkRect(location: location, frameSize: weekString.size()))
         }
         monthRectsInfo.append(currentMonthRectsInfo)
+        // Today Pill
+        let isLandscaped = formatInfo.customVariants.isLandscape
+        let yAxisPercnt : CGFloat = isLandscaped ? 10.51 : 7.53
+        let rightXOffsetPercnt = isLandscaped ? 45.77: 12.94
+        self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, yPercnt: yAxisPercnt, toContext: context)
     }
     
     override func renderWeekPage(context: CGContext, weeklyInfo: FTWeekInfo) {
@@ -400,6 +411,12 @@ class FTClassicDiaryiPadFormat : FTClassicDiaryFormat{
         }))
         currentWeekRectInfo.weekDayRects.append(contentsOf: weekDayRects)
         weekRectsInfo.append(currentWeekRectInfo)
+
+        // Today Pill
+        let isLandscaped = formatInfo.customVariants.isLandscape
+        let yAxisPercnt : CGFloat = isLandscaped ? 8.57 : 7.44
+        let rightXOffsetPercnt = isLandscaped ? 9.71: 12.94
+        self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, yPercnt: yAxisPercnt, toContext: context)
     }
     override func renderDayPage(context: CGContext, dayInfo: FTDayInfo) {
         
@@ -436,9 +453,9 @@ class FTClassicDiaryiPadFormat : FTClassicDiaryFormat{
                                                           NSAttributedString.Key.kern : 0.0,
                                                           .foregroundColor : UIColor.init(hexString: "#64645F")];
         let monthString = NSAttributedString.init(string: dayInfo.fullMonthString, attributes: monthAttr);
-        var monthY : CGFloat =   isLandscaped ? 10 : 7.15
+        var monthY : CGFloat =   isLandscaped ? 13.50 : 10.01
         if formatInfo.customVariants.selectedDevice.identifier == "standard4" && isLandscaped {
-            monthY = 10.38
+            monthY = 13.85
         }
         let monthYvalue = currentPageRect.height*monthY/100
         let monthRect = CGRect(x : dayX, y: monthYvalue , width: monthString.size().width, height: monthString.size().height)
@@ -452,9 +469,9 @@ class FTClassicDiaryiPadFormat : FTClassicDiaryFormat{
                                                           NSAttributedString.Key.kern : 0.0,
                                                           .foregroundColor : UIColor.init(hexString: "#64645F")];
         let weekString = NSAttributedString.init(string: dayInfo.weekString, attributes: weekAttr);
-        var weekY : CGFloat = isLandscaped ? 14.15 : 10.49
+        var weekY : CGFloat = isLandscaped ? 17.53 : 13.35
         if formatInfo.customVariants.selectedDevice.identifier == "standard4" && isLandscaped {
-            weekY = 14.54
+            weekY = 17.90
         }
         let weekYValue = currentPageRect.height*weekY/100
         let weekRect = CGRect(x : dayX, y: weekYValue, width: weekString.size().width, height: 23)
@@ -470,9 +487,9 @@ class FTClassicDiaryiPadFormat : FTClassicDiaryFormat{
         weekNumberString.draw(in: weekNumberRect)
         currentDayRectsInfo.weekRect = getLinkRect(location: CGPoint(x: weekNumberRect.origin.x + bulletString.size().width, y: weekNumberRect.origin.y), frameSize: CGSize(width: weekNumString.size().width, height: weekNumberString.size().height))
         
-        let yearXPercentFromRightSide : CGFloat = formatInfo.customVariants.isLandscape ? 2.87 : 4.55
+        let yearXPercentFromRightSide : CGFloat = formatInfo.customVariants.isLandscape ? 3.59  : 4.79
         let yearX = self.currentPageRect.width - (self.currentPageRect.width*yearXPercentFromRightSide/100)
-        let yearYPercent : CGFloat = formatInfo.customVariants.isLandscape ? 5.19 : 3.33
+        let yearYPercent : CGFloat = formatInfo.customVariants.isLandscape ? 13.50 : 10.01
         let yearY = self.currentPageRect.height*yearYPercent/100
         let yearFont = UIFont.SpectralSemiBold(withFontSize: screenInfo.fontsInfo.dayPageDetails.yearFontSize)
         let yearMinFontSize : CGFloat = 18
@@ -485,5 +502,10 @@ class FTClassicDiaryiPadFormat : FTClassicDiaryFormat{
         currentDayRectsInfo.yearRect = getLinkRect(location: CGPoint(x: yearRect.origin.x, y: yearRect.origin.y), frameSize: yearString.size())
         yearString.draw(in: yearRect)
         dayRectsInfo.append(currentDayRectsInfo)
+
+        // Today Pill
+        let yAxisPercnt : CGFloat = isLandscaped ? 14.41 : 10.68
+        let rightXOffsetPercnt = isLandscaped ? 9.71: 12.94
+        self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, yPercnt: yAxisPercnt, toContext: context)
     }
 }
