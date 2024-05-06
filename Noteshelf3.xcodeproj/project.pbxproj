@@ -656,11 +656,7 @@
 		52D7D5BE2A70F4C600F3089E /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAA84E2628730FA800DE801B /* Colors.xcassets */; };
 		52DE39482A150E3A0090A630 /* DancingScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52BBD4F329E9590B003088AE /* DancingScript-Regular.ttf */; };
 		52E36A452ABDA68A00FDDC78 /* FTPageUndoRedoGestureDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E36A442ABDA68A00FDDC78 /* FTPageUndoRedoGestureDetector.swift */; };
-<<<<<<< HEAD
-		52F131622BE3C56900644722 /* FTShelfItems.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52F131612BE3C56900644722 /* FTShelfItems.storyboard */; };
-=======
 		52FFA33D2B7220CF00740FB9 /* FTCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA84E442873105500DE801B /* FTCommon.framework */; };
->>>>>>> develop
 		70E4E0B059B5E459A782F4D5 /* Pods_Noteshelf3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9D0526C5CF6A9527BEB0533 /* Pods_Noteshelf3.framework */; };
 		84485C192B86003C005A981D /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 521982152B7B99D6004ABDCC /* Intents.framework */; };
 		84485C1C2B86003C005A981D /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84485C1B2B86003C005A981D /* IntentHandler.swift */; };
