@@ -1016,6 +1016,7 @@
 "customizeToolbar.pixabay" = "Pixabay";
 "customizeToolbar.present" = "Present";
 "customizeToolbar.readOnlyMode" = "Read only Mode";
+"customizeToolbar.recent.notes" = "Recent Notebooks";
 "customizeToolbar.requestForShortcut" = "Request a shortcut";
 "customizeToolbar.resetConfirmation" = "Are you sure you want to reset to default Toolbar?";
 "customizeToolbar.rotatePage" = "Rotate Page";
@@ -1571,6 +1572,8 @@
 "textmode.fonttitle" = "Font/text style";
 "texttoolbar.fontselectionTitle" = "Select Font";
 "theams.unsplashDescription" = "Select from Unsplash, take a photo or select from your Photo Library to create your custom covers";
+"tipeview.shortcut.message" = "Long-press on the toolbar to add, remove or reorder tools the way you like.";
+"tipeview.shortcut.title" = "New toolbar shortcuts added!";
 "trash.alert.cannotOpenNotebook" = "This notebook cannot be opened as it has been deleted. To restore, long-press and select the option from the menu.";
 "trash.alert.title" = "Are you sure you want empty your Trash?";
 "unsplash.search.alertMessage" = "Enter text to search";
@@ -1657,9 +1660,16 @@
 "whatsnew.planner2.cta" = "Check them out now!";
 "whatsnew.planner2.description" = "Discover delightful digital planners in the Templates section that we’ve curated from amazing creators.";
 "whatsnew.planner2.title" = "More 2024 planners!";
+"widget.nonotes" = "No notes yet";
+"widget.notebook" = "Notebook";
+"widget.pinned.description" = "Get quick access to one of your notebooks.";
+"widget.quickCreate.large.description" = "Quicky create a blank notebook, record audio or scan a document.";
+"widget.quickCreate.small.description" = "Create a quick note.";
+"widget.quicknote" = "Quick Note";
+"widget.takenotes" = "Take notes";
 "widgets" = "Widgets";
 "work" = "Work";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 24 April 2024 at 1:13 PM
+// Last Synced by Fluid Touch on 3 May 2024 at 5:05 PM

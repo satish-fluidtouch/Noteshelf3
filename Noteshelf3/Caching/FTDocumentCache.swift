@@ -8,6 +8,7 @@
 
 import Foundation
 import FTCommon
+import WidgetKit
 
 /* Steps:
  These tasks should be on low priority and should not interrupt the user at any point.
@@ -53,7 +54,7 @@ final class FTDocumentCache {
     }();
         
     static let shared = FTDocumentCache()
-    let cacheFolderURL: URL
+    var sharedCacheFolderURL: URL
 
     private var itemsToCache = [FTItemToCache]();
     private var cacheDisabled = false;
@@ -61,17 +62,43 @@ final class FTDocumentCache {
     // MARK: Private
     private let queue = DispatchQueue(label: FTCacheFiles.cacheFolderName, qos: .utility)
     private init() {
+        if let url = FileManager().containerURL(forSecurityApplicationGroupIdentifier: FTUtils.getGroupId()) {
+            sharedCacheFolderURL = url.appending(path: FTCacheFiles.cacheFolderName);
+        } else {
+            guard let cacheFolder = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).last else {
+                fatalError("Unable to find cache directory")
+            }
+            sharedCacheFolderURL = Foundation.URL(fileURLWithPath: cacheFolder).appendingPathComponent(FTCacheFiles.cacheFolderName)
+        }
+    }
+    
+    var localCacheFolderURL : URL {
         guard let cacheFolder = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).last else {
             fatalError("Unable to find cache directory")
         }
-        cacheFolderURL = Foundation.URL(fileURLWithPath: cacheFolder).appendingPathComponent(FTCacheFiles.cacheFolderName)
+        return Foundation.URL(fileURLWithPath: cacheFolder).appendingPathComponent(FTCacheFiles.cacheFolderName)
     }
-
+    
     func start() {
-        createCachesDirectoryIfNeeded()
-        cacheLog(.info, cacheFolderURL)
-
+        createOrmoveCacheFolderToSharedIfNeeded()
+        cacheLog(.info, sharedCacheFolderURL)
         addObservers()
+    }
+    
+    func clearCachedItems() {
+        if  let items = try? FileManager.default.contentsOfDirectory(atPath: sharedCacheFolderURL.path(percentEncoded: false)) {
+            items.forEach { eachItem in
+                if eachItem.pathExtension == FTFileExtension.ns3 {
+                    do {
+                        let url = cachedLocation(for: eachItem.deletingPathExtension)
+                        try FileManager.default.removeItem(at: url)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+            self.reloadWidgetTimeLines()
+        }
     }
 
     func stop() {
@@ -81,19 +108,35 @@ final class FTDocumentCache {
     private func createCachesDirectoryIfNeeded() {
         let _fileManager = FileManager()
 #if DEBUG
-        if cleanOnNextLaunch, _fileManager.fileExists(atPath: cacheFolderURL.path) {
+        if cleanOnNextLaunch, _fileManager.fileExists(atPath: sharedCacheFolderURL.path) {
             do {
-                try _fileManager.removeItem(at: cacheFolderURL)
+                try _fileManager.removeItem(at: sharedCacheFolderURL)
             } catch {
                 cacheLog(.error, error)
             }
         }
 #endif
-        if !_fileManager.fileExists(atPath: cacheFolderURL.path) {
+        if !_fileManager.fileExists(atPath: sharedCacheFolderURL.path) {
             do {
-                try _fileManager.createDirectory(at: cacheFolderURL, withIntermediateDirectories: true)
+                try _fileManager.createDirectory(at: sharedCacheFolderURL, withIntermediateDirectories: true)
             } catch {
                 cacheLog(.error, error)
+            }
+        }
+    }
+    
+    func createOrmoveCacheFolderToSharedIfNeeded() {
+        let _fileManager = FileManager()
+        if _fileManager.fileExists(atPath: localCacheFolderURL.path(percentEncoded: false)) && !_fileManager.fileExists(atPath: sharedCacheFolderURL.path(percentEncoded: false)) {
+            try? FileManager().createDirectory(at: sharedCacheFolderURL, withIntermediateDirectories: true);
+            try? _fileManager.moveItem(at: localCacheFolderURL, to: sharedCacheFolderURL)
+        } else {
+            if !_fileManager.fileExists(atPath: sharedCacheFolderURL.path(percentEncoded: false)) {
+                do {
+                    try _fileManager.createDirectory(at: sharedCacheFolderURL, withIntermediateDirectories: true)
+                } catch {
+                    cacheLog(.error, error)
+                }
             }
         }
     }
@@ -174,7 +217,7 @@ extension FTDocumentCache {
     }
 
     func cachedLocation(for docUUID: String) -> URL {
-        let destinationURL = cacheFolderURL.appendingPathComponent(docUUID).appendingPathExtension(FTFileExtension.ns3)
+        let destinationURL = sharedCacheFolderURL.appendingPathComponent(docUUID).appendingPathExtension(FTFileExtension.ns3)
         return destinationURL
     }
 
@@ -208,6 +251,7 @@ extension FTDocumentCache {
                     FTCacheTagsProcessor.shared.cacheTagsForDocuments(items: itemsCached)
                     FTBookmarksProvider.shared.updateBookmarkItemsFor(cacheItems: itemsCached)
                 }
+                self.reloadWidgetTimeLines()
             }
         }
     }
@@ -223,6 +267,7 @@ extension FTDocumentCache {
         queue.async {
             do {
                 try self.cacheShelfItemIfRequired(url: url, documentUUID: documentUUID)
+                self.reloadWidgetTimeLines()
                 let itemToCache = FTItemToCache(url: url, documentID: documentUUID)
                 FTCacheTagsProcessor.shared.cacheTagsForDocuments(items: [itemToCache])
                 FTBookmarksProvider.shared.updateBookmarkItemsFor(cacheItems: [itemToCache])
@@ -300,8 +345,8 @@ private extension FTDocumentCache {
             // Can be improved by checking for .orderedAscending/orderedDescending, for now we're just replacing the existing cache if the modification dates mismatches.
             let isLatestModified = existingmodified.compare(newModified) == .orderedAscending
             cacheLog(.info, " \(isLatestModified) existing: \(existingmodified) new: \(newModified)", url)
-
-            if isLatestModified {
+            let documentPlistItem = destinationURL.appendingPathComponent(FTCacheFiles.cacheDocumentPlist)
+            if isLatestModified || !_fileManager.fileExists(atPath: documentPlistItem.path(percentEncoded: false)) {
                 do {
                     try FTFileCacheManager.cacheDocumentAt(url, destination: destinationURL);
                     updateMetadataPlistWithRelativePathFor(docUrl: url, documentId: documentUUID)
@@ -330,6 +375,7 @@ private extension FTDocumentCache {
                     FTCacheTagsProcessor.shared.removeTagsFor(documentUUID: docUUID)
                     FTBookmarksProvider.shared.removeBookmarkFor(documentId: docUUID)
                     try _fileManger.removeItem(at: destinationURL)
+                    reloadWidgetTimeLines()
                     cacheLog(.success, "Remove", doc.URL.lastPathComponent)
                 } catch {
                     cacheLog(.error, "Remove", doc.URL.lastPathComponent)
@@ -337,5 +383,9 @@ private extension FTDocumentCache {
             }
         }
     }
-
+    
+    private func reloadWidgetTimeLines() {
+        WidgetCenter.shared.reloadTimelines(ofKind: FTWidgetKind.pinnedWidget.rawValue)
+        WidgetCenter.shared.reloadTimelines(ofKind: FTWidgetKind.pinnedOptionsWidget.rawValue)
+    }
 }

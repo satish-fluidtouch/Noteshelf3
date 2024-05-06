@@ -47,7 +47,13 @@ extension UIApplication {
             .flatMap({ $0 as? UIWindowScene })?.windows
             .first(where: \.isKeyWindow)
     }
-    
+
+    public var sceneDelegate: UISceneDelegate? {
+        return UIApplication.shared.connectedScenes
+            .first(where: { $0 is UIWindowScene })
+            .flatMap({ $0.delegate})
+    }
+
     public func uiColorScheme() -> UIUserInterfaceStyle {
         return self.keyWindow?.traitCollection.userInterfaceStyle ?? .light
     }

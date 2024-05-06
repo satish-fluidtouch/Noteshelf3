@@ -80,26 +80,26 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
     }
     //TODO: RK Remove this default collection creation once we get confirmation from amar or akshay.
     fileprivate func defaultCollection(_ onCompletion : @escaping ((FTShelfItemCollection) -> Void))
-    {
+      {
         let myNotesCollectionName = "DefaultCategoryName".localized;
         self._createShelf(myNotesCollectionName.appending(".shelf"), onCompletion: { (error, collection) in
-            guard let collection = collection else {
-                debugPrint("error: \(String(describing: error))")
-                return
+          guard let collection = collection else {
+            debugPrint("error: \(String(describing: error))")
+            return
+          }
+          if(nil != error) {
+            if(ENABLE_SHELF_RPOVIDER_LOGS) {
+              debugPrint("error: \(String(describing: error))");
             }
-            if(nil != error) {
-                if(ENABLE_SHELF_RPOVIDER_LOGS) {
-                    debugPrint("error: \(String(describing: error))");
-                }
-                onCompletion(collection);
-            }
-            else {
-                UserDefaults.standard.set(true, forKey: "DefaultShelfCreated");
-                UserDefaults.standard.synchronize();
-                onCompletion(collection);
-            }
+            onCompletion(collection);
+          }
+          else {
+            UserDefaults.standard.set(true, forKey: "DefaultShelfCreated");
+            UserDefaults.standard.synchronize();
+            onCompletion(collection);
+          }
         });
-    }
+      }
     
     func createShelf(_ title: String, onCompletion:  @escaping ((NSError?, FTShelfItemCollection?) -> Void))
     {
@@ -304,7 +304,7 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
             }
         }
     }
-    
+
     fileprivate func createDefaultShelfs(_ onCompletion :@escaping (()->Void))
     {
         //createDefaultShelfCollection;

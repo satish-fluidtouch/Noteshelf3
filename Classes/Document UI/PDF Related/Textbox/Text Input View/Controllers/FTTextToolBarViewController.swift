@@ -38,7 +38,7 @@ protocol FTStyleSelectionDelegate: NSObjectProtocol {
     func didHighLightSelectedStyle(attr: [NSAttributedString.Key : Any]?, scale: CGFloat)
 }
 
-protocol FTTextToolBarDelegate: FTRootControllerInfo {
+protocol FTTextToolBarDelegate: FTRootControllerInfo, FTFontSelectionDelegate {
     func didSelectTextToolbarOption(_ option: FTTextToolBarOption)
     func didSelectFontStyle(_ style: FTTextStyleItem)
     func didChangeBackgroundColor(_ color: UIColor)
@@ -53,6 +53,10 @@ protocol FTTextToolBarDelegate: FTRootControllerInfo {
     func didToggleStrikeThrough()
     func didSetDefaultStyle(_ info: FTDefaultTextStyleItem)
     func textInputViewCurrentTextView() -> FTTextView?
+}
+
+protocol FTFontSelectionDelegate {
+    func isFontSelectionInProgress(value: Bool)
 }
 
 class FTTextToolBarViewController: UIViewController {
@@ -556,6 +560,16 @@ extension FTTextToolBarViewController: FTTextAnnotationDelegate {
     func didChangeSelectionAttributes(_ attributes: [NSAttributedString.Key : Any]?, scale: CGFloat) {
         self.textSelectionDelegate?.didChangeTextSelectionAttributes(attributes, scale: scale)
         self.updateToolBarSelectionForattributes(attributes, scale: scale)
+    }
+}
+
+extension FTTextToolBarViewController: FTSystemFontPickerDelegate {
+    func didPickFontFromSystemFontPicker(selectedFontDescriptor: UIFontDescriptor, fontStyle: FTTextStyleItem) {
+        self.didSelectFontStyle(fontStyle)
+    }
+    
+    func isFontSelectionInProgress(value: Bool) {
+        self.toolBarDelegate?.isFontSelectionInProgress(value: value)
     }
 }
 
