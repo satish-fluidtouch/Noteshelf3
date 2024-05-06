@@ -275,6 +275,8 @@ extension FTNotebookMoreOptionsViewController: UITableViewDelegate, UITableViewD
             self.handleSiriSetting()
         case is FTNotebookAddToStylus:
             self.navigateToStylus()
+        case is FTNotebookAddScrollingDirection:
+            print("Screen is Rotating..")
         default:
 #if DEBUG
             print("Setting", setting.localizedTitle)
