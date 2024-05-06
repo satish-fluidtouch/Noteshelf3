@@ -444,7 +444,11 @@ extension FTPDFRenderViewController {
             }
 
             // Orientation automation
-            let pageSize = page.pdfPageRect.size
+            var pageSize = page.pdfPageRect.size
+            let roundedWidth = pageSize.width.rounded()
+            let roundedHeight = pageSize.height.rounded()
+            pageSize = CGSize(width: roundedWidth, height: roundedHeight)
+
             variants.orientaion = FTTemplateOrientation.orientation(for: pageSize)
 
             // Size automation
