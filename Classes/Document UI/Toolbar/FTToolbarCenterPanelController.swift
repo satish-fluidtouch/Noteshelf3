@@ -119,8 +119,6 @@ class FTToolbarCenterPanelController: UIViewController {
             if self.showTipView == false {
                 if self.view.frame.width > 320 {
                     setUpTipForNewFeatures()
-                }else {
-                    print("Screen size is not fit")
                 }
                 UserDefaults.standard.set(true, forKey: "showTipView")
             }
@@ -453,7 +451,7 @@ extension FTToolbarCenterPanelController {
                 }
             }
         } else {
-            fatalError("Using Lower versions then Ios 17")
+            debugPrint("Using Lower versions then Ios 17")
         }
         
     }

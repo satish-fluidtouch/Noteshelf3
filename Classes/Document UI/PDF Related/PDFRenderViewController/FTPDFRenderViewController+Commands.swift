@@ -251,7 +251,7 @@ extension FTPDFRenderViewController: FTShortcutActions {
                 shelfItemsViewController.sidePanelDelegate = self
                   shelfItemsViewController.collection = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection;
                   shelfItemsViewController.ftPresentationDelegate.source = source as AnyObject
-                  shelfItemsViewController.isFromRecentNotes = true
+                  shelfItemsViewController.mode = .recentNotes
                   self.ftPresentPopover(vcToPresent: shelfItemsViewController, contentSize: CGSize(width: 320, height:400), hideNavBar: true)
         }
     }

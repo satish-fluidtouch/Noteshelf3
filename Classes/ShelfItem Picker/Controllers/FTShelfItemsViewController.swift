@@ -20,6 +20,7 @@ import FTNewNotebook
     case movePage
     case recent
     case webdavBackUp
+    case recentNotes
 }
 
 enum FTShelfItemDataMode: Equatable {
@@ -151,7 +152,10 @@ class FTShelfItemsViewController: UIViewController, UITableViewDataSource, UITab
             }
         }
         self.moveButton?.isHidden = true;
-        if nil != self.collection {
+        if self.mode == .recentNotes {
+           self.dataMode = .shelfItem(.normal);
+           self.fetchAndDisplayRecentAndPinnedItems()
+       } else if nil != self.collection {
             
             let dataMode: FTShelfItemDataMode!
             if let group = self.group {
@@ -168,12 +172,7 @@ class FTShelfItemsViewController: UIViewController, UITableViewDataSource, UITab
             }
             
             self.fetchAndDisplayShelfItems();
-        }
-        else if self.mode == .recent {
-            self.dataMode = .shelfItem(.normal);
-            self.fetchAndDisplayRecentAndPinnedItems()
-        }
-        else {
+        } else {
             self.fetchAndDisplayCollections();
         }
         
@@ -855,9 +854,9 @@ class FTShelfItemsViewController: UIViewController, UITableViewDataSource, UITab
     
     fileprivate func fetchAndDisplayRecentAndPinnedItems() {
         
-        var actionInProgress : [FTRecentItemType] = [.recent,.favorites];
+        var actionInProgress : [FTRecentItemType] = [.recent];
         let completionBlock : (FTRecentItemType)->() = { [weak self] (section) in
-            let index = actionInProgress.index(of:section);
+            let index = actionInProgress.firstIndex(of:section);
             if(nil != index) {
                 actionInProgress.remove(at: index!);
                 if(actionInProgress.isEmpty) {
@@ -866,11 +865,11 @@ class FTShelfItemsViewController: UIViewController, UITableViewDataSource, UITab
             }
         };
 
-        FTNoteshelfDocumentProvider.shared.favoritesShelfItems(.byModifiedDate, parent: nil, searchKey: nil, onCompletion: { [weak self] (shelfItems) in
-            self?.favoriteItems.removeAll()
-            self?.favoriteItems.append(contentsOf: shelfItems)
-            completionBlock(.favorites);
-        })
+//        FTNoteshelfDocumentProvider.shared.favoritesShelfItems(.byModifiedDate, parent: nil, searchKey: nil, onCompletion: { [weak self] (shelfItems) in
+//            self?.favoriteItems.removeAll()
+//            self?.favoriteItems.append(contentsOf: shelfItems)
+//            completionBlock(.favorites);
+//        })
         
         FTNoteshelfDocumentProvider.shared.recentShelfItems(.byModifiedDate, parent: nil, searchKey: nil, onCompletion: { [weak self] (shelfItems) in
             self?.items.removeAll()
