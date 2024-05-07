@@ -106,17 +106,17 @@ enum FTNotebookSidebarMenuType: Int {
         let displayTitle: String;
         switch self {
         case .showDocumentOnly:
-            displayTitle = NSLocalizedString("DocumentOnly", comment: "Document Only");
+            displayTitle = NSLocalizedString("finder.documentonly", comment: "Document Only");
         case .thumbnails:
-            displayTitle = NSLocalizedString("Thumbnail", comment: "Thumbnail");
+            displayTitle = "Pages".localized
         case .bookmarks:
-            displayTitle = NSLocalizedString("Bookmarks", comment: "Bookmarks");
+            displayTitle = "finder.bookmarks".localized
         case .mediaContent:
-            displayTitle = NSLocalizedString("MediaContent", comment: "Media Content");
+            displayTitle = "finder.tabbar.content".localized
         case .tableOfContents:
-            displayTitle = NSLocalizedString("TableOfContents", comment: "Table Of Contents");
+            displayTitle = "finder.outline".localized
         case .search:
-            displayTitle = NSLocalizedString("Search", comment: "Search");
+            displayTitle = "Search".localized
         }
         return displayTitle;
     }

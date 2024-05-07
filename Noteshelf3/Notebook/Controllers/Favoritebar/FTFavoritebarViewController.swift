@@ -56,7 +56,7 @@ class FTFavoritebarViewController: UIViewController {
 
     @objc func sizeTapped() {
         let curPenset = self.getCurrentPenset()
-        let sizeEditVc = FTFavoriteSizeEditController(size: curPenset.preciseSize, penType: curPenset.type, displayMode: .favoriteEdit)
+        let sizeEditVc = FTFavoriteSizeEditController(size: curPenset.preciseSize, penType: curPenset.type, displayMode: .favoriteEdit, activity: self.activity)
         sizeEditVc.delegate = self
         sizeEditVc.ftPresentationDelegate.source = sizeTapView
         sizeEditVc.ftPresentationDelegate.sourceRect = sizeTapView.bounds
@@ -129,7 +129,7 @@ private extension FTFavoritebarViewController {
     }
 
     func getTheRotationAngleForDragPreviewContent() -> CGFloat {
-        let placement = FTShortcutPlacement.getSavedPlacement()
+        let placement = FTShortcutPlacement.getSavedPlacement(activity: self.activity)
         var angle: CGFloat = 0.0
         if placement.isLeftPlacement() {
             angle = -.pi/2.0
@@ -138,7 +138,7 @@ private extension FTFavoritebarViewController {
     }
 
     func handlePenTypeCellTransformation(cell: UICollectionViewCell) {
-        let placement = FTShortcutPlacement.getSavedPlacement()
+        let placement = FTShortcutPlacement.getSavedPlacement(activity: self.activity)
         cell.contentView.alpha = 0.0
         cell.contentView.transform = .identity
         if placement.isLeftPlacement() {
@@ -176,7 +176,7 @@ private extension FTFavoritebarViewController {
         controller.activity = self.activity
         controller.ftPresentationDelegate.source = sourceView
         var rect = sourceView.bounds
-        let placement = FTShortcutPlacement.getSavedPlacement()
+        let placement = FTShortcutPlacement.getSavedPlacement(activity: self.activity)
         // To fix the arrow position
         let offset: CGFloat = 8.0
         if placement == .top || placement.isRightPlacement() {

@@ -48,7 +48,8 @@ struct FTPenSizeEditView: View {
     @State var favoriteSizeValue: CGFloat
     @ObservedObject var sizeEditModel: FTPenSizeEditModel
     let rackType: FTRackType
-    
+    let placement: FTShortcutPlacement
+
     @State private var sliderTapped = false
     @State private var selected: Bool = true
     @State private var showIndicator: Bool = true
@@ -76,7 +77,7 @@ struct FTPenSizeEditView: View {
                                     VStack {
                                     })
                             .background(Image("sliderBg").resizable().frame(width: overlaySize.width,height: 8)).contentShape(Rectangle()),
-                        thumb: FTPenSizeView(isSelected: selected, showIndicator: showIndicator, viewSize: penType.getIndicatorSize(using: favoriteSizeValue), favoriteSizeValue: favoriteSizeValue),
+                        thumb: FTPenSizeView(isSelected: selected, showIndicator: showIndicator, viewSize: penType.getIndicatorSize(using: favoriteSizeValue), favoriteSizeValue: favoriteSizeValue, placement: placement),
                         thumbSize: CGSize(width: 40, height: 40),
                         options: .interactiveTrack
                     )

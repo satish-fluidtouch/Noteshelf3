@@ -164,7 +164,7 @@ private extension FTShortcutToolPresenter {
         var placement: FTShortcutPlacement = .centerLeft
         if let parent = self.parentVC?.view {
             placement = FTShortcutPlacement.nearestPlacement(for: shortcutView, topOffset: self.toolbarOffset, in: parent)
-            placement.save()
+            placement.save(activity: self.activity)
         }
         NotificationCenter.default.post(name: NSNotification.Name("ViewMovementEnded"), object: nil)
         UIView.animate(withDuration: animDuration) { [weak self] in

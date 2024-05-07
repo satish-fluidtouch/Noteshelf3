@@ -63,17 +63,40 @@ enum FTShortcutPlacement: String, CaseIterable {
         return size
     }
 
-    func save() {
-        UserDefaults.standard.set(self.rawValue, forKey: "FTShortcutPlacement")
-        UserDefaults.standard.synchronize()
+    func save(activity: NSUserActivity? = nil) {
+        guard let userActivity = activity else {
+            saveInUserDefaults()
+            return
+        }
+        if userActivity.userInfo == nil {
+            userActivity.userInfo = [String:String]()
+        }
+        userActivity.userInfo?["FTShortcutPlacement"] = self.rawValue
+        saveInUserDefaults()
+
+        func saveInUserDefaults() {
+            UserDefaults.standard.set(self.rawValue, forKey: "FTShortcutPlacement")
+            UserDefaults.standard.synchronize()
+        }
     }
 
-    static func getSavedPlacement() -> FTShortcutPlacement {
-        var placement: FTShortcutPlacement = .centerLeft
-        if let value = UserDefaults.standard.string(forKey: "FTShortcutPlacement") {
-            placement = FTShortcutPlacement(rawValue: value) ?? .centerLeft
+    static func getSavedPlacement(activity: NSUserActivity? = nil) -> FTShortcutPlacement {
+        var placement: FTShortcutPlacement = getPlacementFromUserDefaults()
+        guard let userActivity = activity else {
+            return placement
+        }
+        if let value = userActivity.userInfo?["FTShortcutPlacement"] as? String, let place = FTShortcutPlacement(rawValue: value) {
+             placement = place
         }
         return placement
+
+        func getPlacementFromUserDefaults() -> FTShortcutPlacement {
+            var placement: FTShortcutPlacement = .centerLeft
+            if let value = UserDefaults.standard.string(forKey: "FTShortcutPlacement") {
+                placement = FTShortcutPlacement(rawValue: value) ?? .centerLeft
+            }
+            return placement
+        }
     }
 
     func isLeftPlacement() -> Bool {

@@ -1061,6 +1061,7 @@
 "finder.bookmark.description" = "Pages favorites et gardez une vue d'ensemble des grands cahiers et PDF.";
 "finder.bookmarks" = "Marque-pages";
 "finder.clear.recents" = "Voulez-vous effacer les récents ?";
+"finder.documentonly" = "Seulement le carnet";
 "finder.downloadPermissionText" = "Le cahier sélectionné n'est pas encore téléchargé. Souhaitez-vous le télécharger et déplacer les pages ?";
 "finder.duplicate" = "Dupliquer";
 "finder.fullscreen" = "Plein écran.";
@@ -1672,4 +1673,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 3 May 2024 at 5:05 PM
+// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
