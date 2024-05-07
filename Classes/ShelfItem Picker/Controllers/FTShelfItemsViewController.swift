@@ -59,7 +59,7 @@ class FTShelfItemsViewController: UIViewController, UITableViewDataSource, UITab
     }
 
     var isResizing: Bool = false
-    
+    private let recentsMaxCount = 10
     private var containsGroupItemForMoving : Bool = false // used while moving groups
     var groupedItem : FTGroupItemProtocol?
     var selectedShelfItemsForMove: [FTShelfItemProtocol]?
@@ -860,7 +860,7 @@ class FTShelfItemsViewController: UIViewController, UITableViewDataSource, UITab
             if(nil != index) {
                 actionInProgress.remove(at: index!);
                 if(actionInProgress.isEmpty) {
-                    self?.arrangeRecentsDataSourceAndReload()
+                    self?.tableView.reloadData()
                 }
             }
         };
@@ -873,7 +873,7 @@ class FTShelfItemsViewController: UIViewController, UITableViewDataSource, UITab
         
         FTNoteshelfDocumentProvider.shared.recentShelfItems(.byModifiedDate, parent: nil, searchKey: nil, onCompletion: { [weak self] (shelfItems) in
             self?.items.removeAll()
-            self?.items.append(contentsOf: shelfItems)
+            self?.items.append(contentsOf: shelfItems.prefix(self?.recentsMaxCount ?? 10))
             completionBlock(.recent);
         })
     }
