@@ -170,9 +170,9 @@ class FTShelfItemTableViewCell: UITableViewCell,FTShelfItemCellProgressUpdate {
             self.updateEvernoteSyncUI();
         default:
             self.labelSubTitle.text = shelfItem.fileModificationDate.shelfShortStyleFormat();
-            if mode == .recent {
-                self.cellAccessoryType = .detailButton
-            }
+//            if mode == .recent {
+//                self.cellAccessoryType = .detailButton
+//            }
         }
     }
     

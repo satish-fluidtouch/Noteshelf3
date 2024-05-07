@@ -66,7 +66,6 @@ extension FTSidePanelShelfItemPickerDelegate {
 @objc class FTSidePanelItemsViewController: FTShelfItemsViewController,FTPopoverPresentable {
     var ftPresentationDelegate = FTPopoverPresentation()
     weak var sidePanelDelegate: FTSidePanelShelfItemPickerDelegate?
-    var isFromRecentNotes: Bool = false
     @IBOutlet weak private var tvLeading : NSLayoutConstraint!
     @IBOutlet weak private var tvTrailing : NSLayoutConstraint!
     var currentIndex = 0
@@ -78,7 +77,7 @@ extension FTSidePanelShelfItemPickerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if isFromRecentNotes {
+        if self.mode == .recentNotes {
             self.configureNavigation(title:"customizeToolbar.recent.notes".localized)
             self.navigationItem.leftBarButtonItem?.isHidden = true
             self.view.backgroundColor = UIColor.appColor(.popoverBgColor)
@@ -94,8 +93,7 @@ extension FTSidePanelShelfItemPickerDelegate {
         let leftItem = UIBarButtonItem(image: UIImage.image(for: "chevron.backward", font: UIFont.appFont(for: .medium, with: 18)), style: .plain, target: self, action: #selector(buttonTapped(_ :)))
         self.navigationItem.leftBarButtonItems = [leftItem]
         self.navigationItem.title = title
-        let value =  isFromRecentNotes == true ? false : true
-        self.navigationController?.navigationBar.prefersLargeTitles = value
+        self.navigationController?.navigationBar.prefersLargeTitles = (self.mode != .recentNotes)
         self.navigationController?.navigationItem.largeTitleDisplayMode = .always
     }
     
@@ -114,15 +112,15 @@ extension FTSidePanelShelfItemPickerDelegate {
         self.tableView.dragInteractionEnabled = true
         self.tableView.dragDelegate = self
         self.view.backgroundColor = .appColor(.finderBgColor)
-        if isFromRecentNotes {
-            tvLeading.constant = 10
-            tvTrailing.constant = 10
+        if self.mode == .recentNotes {
+            tvLeading.constant = 16
+            tvTrailing.constant = 16
             
         }
     }
 
     func setUpcellForRecentNotes(cell:FTShelfItemTableViewCell,index:IndexPath){
-        if  self.isFromRecentNotes {
+        if  self.mode == .recentNotes {
             if self.items.count > 1 {
                 cell.separatorView?.isHidden = false
                   if index.row == 0 {
@@ -141,12 +139,15 @@ extension FTSidePanelShelfItemPickerDelegate {
             }else {
                 cell.backgroundColor = UIColor.appColor(.cellBackgroundColor)
             }
-            cell.accessoryButton?.isHidden = false
-            cell.accessoryWidthConstraint?.constant = 32.0
-            cell.accessoryButton?.setImage(UIImage(named: "desk_tool_open_recents"), for: .normal)
-            cell.accessoryButton?.tag = index.row
-            cell.accessoryButton?.isUserInteractionEnabled = true
-            cell.accessoryButton?.addTarget(self, action:#selector(self.tappedOnRecentNotes), for: .touchUpInside)
+            if UIDevice.current.userInterfaceIdiom != .phone {
+                cell.accessoryButton?.isHidden = false
+                cell.accessoryWidthConstraint?.constant = 32.0
+                cell.accessoryButton?.setImage(UIImage(named: "desk_tool_open_recents"), for: .normal)
+                cell.accessoryButton?.tag = index.row
+                cell.accessoryButton?.isUserInteractionEnabled = true
+                cell.accessoryButton?.addTarget(self, action:#selector(self.tappedOnRecentNotes), for: .touchUpInside)
+            }
+            
         }
     }
     
@@ -154,6 +155,7 @@ extension FTSidePanelShelfItemPickerDelegate {
         let shelfItem = self.items[sender.tag]
         self.dismiss(animated:true) {
             self.openItemInNewWindow(shelfItem,pageIndex: nil)
+            track("recentnotebooks_notebook_newwindow_tap")
         }
     }
     
@@ -188,7 +190,7 @@ extension FTSidePanelShelfItemPickerDelegate {
         cell.shadowImageView2.isHidden = true;
         cell.shadowImageView3.isHidden = true;
         cell.passcodeLockStatusView.isHidden = true;
-        cell.setSelectedBgView(value: self.isFromRecentNotes)
+        cell.setSelectedBgView(value: (self.mode == .recentNotes))
         self.setUpcellForRecentNotes(cell:cell, index: indexPath)
         var displayTitle = "";
         var isCurrent = false;
@@ -284,7 +286,7 @@ extension FTSidePanelShelfItemPickerDelegate {
             let shelfItem = self.items[indexPath.row];
             if shelfItem.type != RKShelfItemType.group {
                 self.sidePanelDelegate?.shelfCategory(self, didSelectShelfItem: shelfItem, inCollection: shelfItem.shelfCollection)
-                if isFromRecentNotes {
+                if self.mode == .recentNotes {
                     track("recentnotebooks_notebook_tap")
                 } else {
                     FTFinderEventTracker.trackFinderEvent(with: "quickaccess_book_tap")
@@ -301,7 +303,7 @@ extension FTSidePanelShelfItemPickerDelegate {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if self.isFromRecentNotes {
+        if self.mode == .recentNotes {
             return 0
         }else {
             return 5
