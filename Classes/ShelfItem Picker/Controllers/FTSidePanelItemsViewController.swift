@@ -284,10 +284,15 @@ extension FTSidePanelShelfItemPickerDelegate {
             let shelfItem = self.items[indexPath.row];
             if shelfItem.type != RKShelfItemType.group {
                 self.sidePanelDelegate?.shelfCategory(self, didSelectShelfItem: shelfItem, inCollection: shelfItem.shelfCollection)
-                FTFinderEventTracker.trackFinderEvent(with: "quickaccess_book_tap")
+                if isFromRecentNotes {
+                    track("recentnotebooks_notebook_tap")
+                } else {
+                    FTFinderEventTracker.trackFinderEvent(with: "quickaccess_book_tap")
+                }
                 return;
             }
         }
+       
         self.performSegue(withIdentifier: "SelfPush", sender: nil);
     }
     

@@ -166,6 +166,8 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
             self.executer?.execute(type: .scrolling(direction: value))
             let config = FTToastConfiguration(title: title.localized)
             FTToastHostController.showToast(from: self, toastConfig: config)
+            let param = (UserDefaults.standard.pageLayoutType == .vertical) ? "vertical" : "horizontal"
+            track("toolbar_switchscrolling_tap", params: ["scrolling": param], screenName: FTScreenNames.notebook)
         case .recentNotes:
             self.executer.execute(type: .recentNotes(source: source))
         case .unsplash:

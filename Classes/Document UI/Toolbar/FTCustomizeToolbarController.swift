@@ -265,5 +265,6 @@ extension FTCustomizeToolbarController {
 extension FTCustomizeToolbarController :FTCustomToolbarFooterViewProtocal {
     func navigateToContactUsPage() {
         FTZenDeskManager.shared.showSupportContactUsScreen(controller: self, defaultSubject: "App Launch Delay", extraTags: ["ns3_app_launc_delay"])
+        track(EventName.customizabletoolbar_requestshortcut_tap)
     }
 }
