@@ -150,7 +150,7 @@ class FTDeveloperOptionsViewController: UIViewController {
     }
 
     @IBAction func resetCacheFolder(sender: UIButton?) {
-        try? FileManager.default.removeItem(at: FTDocumentCache.shared.cacheFolderURL)
+        try? FileManager.default.removeItem(at: FTDocumentCache.shared.sharedCacheFolderURL)
     }
 
     @IBAction func animationValueChanged(_ sender: UIStepper) {

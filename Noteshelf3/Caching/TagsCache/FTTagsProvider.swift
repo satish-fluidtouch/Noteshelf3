@@ -227,7 +227,7 @@ private extension FTTagsProvider {
         guard NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).last != nil else {
             fatalError("Unable to find cache directory")
         }
-        let cacheFolderURL = FTDocumentCache.shared.cacheFolderURL
+        let cacheFolderURL = FTDocumentCache.shared.sharedCacheFolderURL
         let cachedTagsPlistURL = cacheFolderURL.appendingPathComponent(FTCacheFiles.cacheTagsPlist)
         return cachedTagsPlistURL
     }

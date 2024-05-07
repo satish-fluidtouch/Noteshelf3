@@ -33,6 +33,7 @@ class FTGroupItem : NSObject,FTGroupItemProtocol, FTShelfItemSorting
     };
     
     lazy var indexCache: FTCustomSortingCache? = {
+        self.indexPlistContent?.handleSortIndexFileUpdates(nil);
         return FTCustomSortingCache(withContainer: self)
     }()
     

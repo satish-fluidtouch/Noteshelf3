@@ -104,7 +104,7 @@ class FTShelfViewModel: NSObject, ObservableObject {
     @Published var showNotebookModifiedDate: Bool = UserDefaults.standard.bool(forKey: "Shelf_ShowDate")
     @Published var orientation = UIDevice.current.orientation
     @Published var isSidebarOpen: Bool = true
-    @Published var shouldShowGetStartedInfo: Bool = FTUserDefaults.isFirstLaunch()
+    @Published var shouldShowGetStartedInfo: Bool = false //FTUserDefaults.isFirstLaunch()
     @Published var selectedShelfItems: [FTShelfItemViewModel] = []
 
     // MARK: Normal Variables
@@ -147,8 +147,7 @@ class FTShelfViewModel: NSObject, ObservableObject {
     }
     
     private func configAndObserveDisplayStyle() {
-        let style = UserDefaults.standard.integer(forKey: "displayStyle")
-        self.displayStlye = FTShelfDisplayStyle(rawValue: style) ?? .Gallery
+        self.displayStlye = FTShelfDisplayStyle(rawValue: UserDefaults.standard.shelfDisplayStyle) ?? .Icon;
         observer = UserDefaults.standard.observe(\.shelfDisplayStyle, options: [.new]) { [weak self] (userDefaults, change) in
             guard let self else { return }
             let value = userDefaults.shelfDisplayStyle
@@ -252,7 +251,9 @@ class FTShelfViewModel: NSObject, ObservableObject {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name("ShelfItemDropOperationFinished"), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: FTShelfShowDateChangeNotification), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: shelfCollectionItemsCountNotification), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.sortIndexPlistUpdated, object: nil)
     }
+    
     func addObserversForShelfItems(){
         if isObserversAdded {
             return
@@ -377,7 +378,7 @@ private extension FTShelfViewModel {
                 } else {
                     if !FTUserDefaults.isFirstLaunch() {
                         FTUserDefaults.setFirstLaunch(true)
-                        self.shouldShowGetStartedInfo = true
+                        self.shouldShowGetStartedInfo = false
                     }
                 }
             }
@@ -418,6 +419,7 @@ private extension FTShelfViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(shelfItemDropOperationFinished(_:)), name: NSNotification.Name("ShelfItemDropOperationFinished"), object: nil)
         NotificationCenter.default.addObserver(self, selector:#selector(splitDisplayChangeHandler(_:)) , name: NSNotification.Name("SplitDisplayModeChangeNotification"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleShowDateStatusChange), name: Notification.Name(rawValue: FTShelfShowDateChangeNotification), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(shelfSortIndexUpdated(_:)), name: NSNotification.Name.sortIndexPlistUpdated, object: nil)
     }
     @objc func splitDisplayChangeHandler(_ notification: Notification) {
         if let userInfo = notification.userInfo, let displayModeRawvalue = userInfo["splitDisplayMode"] as? Int, let displayMode =  UISplitViewController.DisplayMode(rawValue: displayModeRawvalue) {
@@ -536,16 +538,8 @@ extension FTShelfViewModel {
                                    parent: groupItem,
                                    searchKey: nil) { [weak self ] _shelfItems in
             guard let self = self else { return }
-            if self.isInHomeMode && _shelfItems.count == 0 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)){
-                    self.setShelfItems(_shelfItems, animate: animate);
-                    onCompletion?()
-                }
-                
-            } else {
-                self.setShelfItems(_shelfItems, animate: animate);
-                onCompletion?()
-            }
+            self.setShelfItems(_shelfItems, animate: animate);
+            onCompletion?()
         }
     }
 }

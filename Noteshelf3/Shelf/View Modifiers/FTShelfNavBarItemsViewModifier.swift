@@ -117,7 +117,9 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                 view.toolbar {
                     ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
                         Button {
-                            shelfViewModel.mode = .normal
+                            withAnimation {
+                                shelfViewModel.mode = .normal
+                            }
                             shelfViewModel.finalizeShelfItemsEdit()
                             shelfMenuOverlayInfo.isMenuShown = false
                             if idiom == .phone {

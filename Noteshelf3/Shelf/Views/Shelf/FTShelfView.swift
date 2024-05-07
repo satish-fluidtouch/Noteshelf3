@@ -23,27 +23,30 @@ struct FTShelfView: View,FTShelfBaseView {
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
 
     var body: some View {
-
-//         let _ = Self._printChanges()
+        
+        //         let _ = Self._printChanges()
         GeometryReader { geometry in
             ZStack {
-                if viewModel.showNoShelfItemsView {
-                        emptyShelfItemsView()
-                }
                 ScrollViewReader { proxy in
                     ScrollView(.vertical) {
                         VStack(alignment: .center, spacing:0) {
                             if viewModel.showNewNoteView , geometry.size.width > 450, viewModel.mode == .normal {
                                 FTShelfTopSectionView()
-                                    .frame(maxWidth:.infinity,minHeight: showMinHeight(geometrySize: geometry.size.width), maxHeight: .infinity,alignment: .center)
+                                    .frame(height: showMinHeight(geometrySize: geometry.size.width),alignment: .center)
                                     .padding(.horizontal,gridHorizontalPadding)
                                     .padding(.top,10)
                                     .environmentObject(viewModel)
-                                
                             }
-                            shelfGridView(items: viewModel.shelfItems, size: geometry.size, scrollViewProxy: proxy)
-                                .padding(.top,20)
+                            if viewModel.showNoShelfItemsView {
+                                emptyShelfItemsView()
+                                    .frame(maxWidth: .infinity)
+                            }
+                            else {
+                                shelfGridView(items: viewModel.shelfItems, size: geometry.size, scrollViewProxy: proxy)
+                                    .padding(.top,20)
+                            }
                         }
+                        .frame(minHeight: viewModel.showNoShelfItemsView ? geometry.size.height : nil)
                     }
                 }
                 .overlay(content: {
@@ -56,11 +59,11 @@ struct FTShelfView: View,FTShelfBaseView {
                 })
                 .navigationTitle(viewModel.navigationTitle)
                 .allowsHitTesting(viewModel.allowHitTesting)
-                #if targetEnvironment(macCatalyst)
+#if targetEnvironment(macCatalyst)
                 .navigationBarBackButtonHidden(true)
-                #else
+#else
                 .navigationBarBackButtonHidden(viewModel.mode == .selection)
-                #endif
+#endif
                 .if(!viewModel.collection.isTrash, transform: { view in
                     view.shelfNavBarItems()
                         .environmentObject(viewModel)
@@ -70,16 +73,16 @@ struct FTShelfView: View,FTShelfBaseView {
                         .environmentObject(viewModel)
                 })
                 .shelfBottomToolbar()
-                    .environmentObject(viewModel.toolbarViewModel)
-                    .environmentObject(viewModel)
+                .environmentObject(viewModel.toolbarViewModel)
+                .environmentObject(viewModel)
                 .onTapGesture {
                     self.hideKeyboard() // if any textfield is in editing state we exit from that mode and perform action. eg.rename category.
                 }
                 .onDrop(of: supportedDropTypes, delegate: FTShelfScrollViewDropDelegate(viewModel: viewModel))
             }
             .overlay(alignment: .bottom, content: {
-                    FTAdBannerView()
-                        .padding(.bottom,8)
+                FTAdBannerView()
+                    .padding(.bottom,8)
             })
         }
     }

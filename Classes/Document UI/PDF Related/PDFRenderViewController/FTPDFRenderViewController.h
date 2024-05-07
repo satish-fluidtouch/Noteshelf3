@@ -193,6 +193,8 @@ FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {}
 
 // eraser option action
 -(void)setToPreviousTool;
+-(void)switchMode:(RKDeskMode)mode;
+-(void)updateToolBarWith:(RKDeskMode)mode;
 
 -(void)minimizeFavToolBarIfNeeded;
 
@@ -210,7 +212,7 @@ FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {}
 
 -(CGFloat)zoomPanelOverlayheight;
 -(BOOL)isInZoomMode;
-
+-(BOOL)isZoomSupportedDeskMode: (RKDeskMode)mode;
 -(NSInteger)getNewPageInsertIndex;
 
 -(void)showPageAtIndex:(NSInteger)pdfPageIndex

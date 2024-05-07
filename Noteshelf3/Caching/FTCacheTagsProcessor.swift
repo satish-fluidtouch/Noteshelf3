@@ -19,6 +19,7 @@ enum FTTagsCacheError: Error {
 
 final class FTCacheTagsProcessor {
     private let queue = DispatchQueue(label: FTCacheFiles.cacheTagsPlist, qos: .utility)
+
     func createCacheTagsPlistIfNeeded(_ onCompletion: (()->())?) {
         queue.async {
             self.loadTagsFromDocuments(onCompletion)
