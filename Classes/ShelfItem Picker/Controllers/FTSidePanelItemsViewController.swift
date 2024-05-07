@@ -152,7 +152,9 @@ extension FTSidePanelShelfItemPickerDelegate {
     
     @objc func tappedOnRecentNotes(sender: UIButton) {
         let shelfItem = self.items[sender.tag]
-        self.openItemInNewWindow(shelfItem,pageIndex: nil)
+        self.dismiss(animated:true) {
+            self.openItemInNewWindow(shelfItem,pageIndex: nil)
+        }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

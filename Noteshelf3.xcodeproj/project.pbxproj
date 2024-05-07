@@ -610,6 +610,7 @@
 		5292B2322A27283C00216330 /* FTNotebookSettingViewController+Siri.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5292B2312A27283C00216330 /* FTNotebookSettingViewController+Siri.swift */; };
 		5292B2362A27323B00216330 /* FTUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211E2C9F1E027D72007B5CAD /* FTUserDefaults.swift */; };
 		52941CA72A84F2A90022243D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7A912E22861F20C00BACD79 /* Localizable.strings */; };
+		52A89C902BE9EAB800945A03 /* FTShelfItems.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52F131612BE3C56900644722 /* FTShelfItems.storyboard */; };
 		52B34DB129E561F600360F10 /* UIFonts+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B34DB029E561F600360F10 /* UIFonts+Custom.swift */; };
 		52B34DFC29E5684400360F10 /* Montserrat-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52B34DF629E5684100360F10 /* Montserrat-Bold.otf */; };
 		52B34DFD29E5684400360F10 /* Montserrat-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52B34DF729E5684100360F10 /* Montserrat-Light.otf */; };
@@ -12603,7 +12604,6 @@
 				52BBD4FB29E95BC9003088AE /* Inter-Medium.ttf in Resources */,
 				52BBD4FC29E95BC9003088AE /* Inter-Light.ttf in Resources */,
 				52BBD4FD29E95BC9003088AE /* Inter-SemiBold.ttf in Resources */,
-				52F131622BE3C56900644722 /* FTShelfItems.storyboard in Resources */,
 				BAF38F562859ADF00067CA9F /* BrushAssets_V2.xcassets in Resources */,
 				52BBD4DF29E951D1003088AE /* Baskerville.ttc in Resources */,
 				52BBD4E129E951D1003088AE /* Abel-Regular.ttf in Resources */,
@@ -12658,6 +12658,7 @@
 				E713D9AD299CC23D008FDC77 /* FTCustomDictViewController.xib in Resources */,
 				BAF38FA72859ADF00067CA9F /* FTRecentsHeaderView.xib in Resources */,
 				BAF38FAC2859ADF00067CA9F /* default_paper_image.png in Resources */,
+				52A89C902BE9EAB800945A03 /* FTShelfItems.storyboard in Resources */,
 				BAF38FAF2859ADF00067CA9F /* FTActiveStickyIndicatorViewController.xib in Resources */,
 				09ABDCA82A790F94008F144D /* NoteshelfAI.xcassets in Resources */,
 				BAF38FB12859ADF00067CA9F /* FTQuickPageNavigatorViewController.xib in Resources */,
