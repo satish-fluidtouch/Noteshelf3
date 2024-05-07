@@ -143,14 +143,19 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
 
     //MARK:- Notifications Handling
     func didAddNewTag(tag: String) {
-        if tag.count > 0 {
+        if !tag.isEmpty {
             tagsView?.isHidden = false
-            if nil == self.tagItemsList.firstIndex(where: {$0.text.localizedCaseInsensitiveCompare(tag) == .orderedSame}) {
+            let curTag = self.tagItemsList.first(where: {$0.text.localizedCaseInsensitiveCompare(tag) == .orderedSame});
+            if nil == curTag {
                 let tagModel = FTTagModel(id: UUID().uuidString, text: tag, image: nil, isSelected: true);
                 self.tagItemsList.append(tagModel);
                 self.tagsView?.items = self.tagItemsList;
                 self.tagsView?.refresh()
                 track("tag_action", params: ["isAdded" : true])
+            }
+            else if let _tag = curTag, !_tag.isSelected {
+                _tag.isSelected = true
+                self.tagsView?.refresh()
             }
         }
     }
