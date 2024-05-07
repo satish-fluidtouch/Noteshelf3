@@ -33,15 +33,15 @@ class FTCustomizeToolbarController: UITableViewController {
     }
     
     private func setUpFooterViewtoTableView(){
-        let footerView = Bundle.main.loadNibNamed("FTCustomToolbarFooterView", owner: nil)?[0] as? FTCustomToolbarFooterView
-        footerView?.setUpUi()
-        footerView?.delegate = self
+        guard let footerView = Bundle.main.loadNibNamed("FTCustomToolbarFooterView", owner: nil)?[0] as? FTCustomToolbarFooterView else {
+            return
+        }
+        footerView.setUpUi()
+        footerView.delegate = self
         tableView.tableFooterView = footerView
-//        if self.view.frame.size.width <= 380 {
-//            tableView.tableFooterView?.frame.size.height = 120
-//        }else {
-//            tableView.tableFooterView?.frame.size.height = 90
-//                        }
+        footerView.layoutIfNeeded()
+        let reqHeight = footerView.getHeight()
+        tableView.tableFooterView?.frame.size.height = reqHeight
     }
 
     private func configNavigationTitle() {
