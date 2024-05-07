@@ -152,10 +152,7 @@ class FTShelfItemsViewController: UIViewController, UITableViewDataSource, UITab
             }
         }
         self.moveButton?.isHidden = true;
-        if self.mode == .recentNotes {
-           self.dataMode = .shelfItem(.normal);
-           self.fetchAndDisplayRecentAndPinnedItems()
-       } else if nil != self.collection {
+        if nil != self.collection {
             
             let dataMode: FTShelfItemDataMode!
             if let group = self.group {
