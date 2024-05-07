@@ -195,11 +195,6 @@ struct FTFavoriteColorGridView: View {
             return nil
         }
     }
-
-    private enum FTPenColorSelectModeImage: String {
-        case add = "plus.circle.fill"
-        case done = "checkmark.circle.fill"
-    }
 }
 
 struct FTFavoriteColorGridView_Previews: PreviewProvider {

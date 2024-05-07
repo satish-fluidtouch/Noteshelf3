@@ -164,10 +164,7 @@ extension FTTextAnnotationViewController {
     @objc internal func performColorMenu(_ sender: Any?) {
         let rackData = FTRackData(type: .pen, userActivity: self.view.window?.windowScene?.userActivity)
         let editMode = FTPenColorSegment.savedSegment(for: .text)
-        var contentSize = FTPenColorEditController.presetViewSize
-        if editMode == .grid {
-            contentSize = FTPenColorEditController.gridViewSize
-        }
+        let contentSize = editMode.contentSize
         let model = FTPenShortcutViewModel(rackData: rackData)
         let hostingVc = FTPenColorEditController(viewModel: model, delegate: self)
         self.penShortcutViewModel = model

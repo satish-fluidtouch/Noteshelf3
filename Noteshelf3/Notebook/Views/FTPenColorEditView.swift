@@ -14,36 +14,29 @@ struct FTPenColorEditView: View {
     @State private var showRestoreAlert = false
     @State var isScrollEnabled: Bool = false
 
-    @State private var selectedSpectrumColor: String = blackColorHex
-
     var body: some View {
         GeometryReader { geometry in
             NavigationView {
                 ScrollView {
                     VStack(spacing: FTSpacing.small) {
                         self.segmentControl
-                        if self.viewModel.colorEditSegment == .presets {
+                        if self.viewModel.colorSelectSegment == .presets {
                             FTPresetColorsView(selectedPage: self.viewModel.requiredPresetPage())
                                 .environmentObject(viewModel)
                                 .onAppear {
                                     self.isScrollEnabled = self.checkIfContentSizeIsBigger(geometry)
                                 }
-                        } else if self.viewModel.colorEditSegment == .grid {
+                        } else if self.viewModel.colorSelectSegment == .grid {
                             FTColorGridView(colorMode: .select)
                                 .environmentObject(viewModel)
                                 .onAppear {
                                     self.isScrollEnabled = self.checkIfContentSizeIsBigger(geometry)
                                 }
                         } else {
-                            FTSpectrumView(color: $selectedSpectrumColor)
-                                .frame(width: 300, height: 244)
+                            FTSpectrumView(color: self.viewModel.currentSelectedColor, colorMode: .select)
+                                .environmentObject(self.viewModel)
                                 .onAppear {
-                                    self.selectedSpectrumColor = viewModel.currentSelectedColor
-                                }
-                                .onChange(of: selectedSpectrumColor) { color in
-                                    if color != self.viewModel.currentSelectedColor {
-                                        self.viewModel.updateCurrentSelection(colorHex: color)
-                                    }
+                                    self.isScrollEnabled = self.checkIfContentSizeIsBigger(geometry)
                                 }
                         }
                     }
@@ -65,11 +58,7 @@ struct FTPenColorEditView: View {
 
     private func checkIfContentSizeIsBigger(_ geometry: GeometryProxy) -> Bool {
         let visibleSize = geometry.size
-        var contentSize = FTPenColorEditController.gridViewSize
-        if self.viewModel.colorEditSegment == .presets {
-            contentSize = FTPenColorEditController.presetViewSize
-        }
-        let isBigger = visibleSize.height < contentSize.height
+        let isBigger = visibleSize.height < viewModel.colorSelectSegment.contentSize.height
         return isBigger
     }
 
@@ -110,7 +99,7 @@ struct FTPenColorEditView: View {
     }
 
     private var segmentControl: some View {
-        Picker("", selection: $viewModel.colorEditSegment) {
+        Picker("", selection: $viewModel.colorSelectSegment) {
             Text("shelf.notebook.textstyle.Presets".localized)
                 .tag(FTPenColorSegment.presets)
                 .font(.appFont(for: .medium, with: 13.0))
@@ -125,7 +114,7 @@ struct FTPenColorEditView: View {
         .frame(width: 288.0, height: 32.0)
         .padding(.bottom, FTSpacing.extraSmall)
         .padding(.top, FTSpacing.zero)
-        .onChange(of: viewModel.colorEditSegment) { segment in
+        .onChange(of: viewModel.colorSelectSegment) { segment in
             segment.saveSelection(for: viewModel.colorsFlow)
             viewModel.presetEditIndex = nil
             self.viewModel.updateColorEditViewSizeIfNeeded(isPresetEdit: false)

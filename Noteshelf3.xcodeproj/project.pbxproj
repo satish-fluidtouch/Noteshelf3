@@ -2010,6 +2010,7 @@
 		E746A99129A48248009B95B4 /* FTStickersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E746A99029A48248009B95B4 /* FTStickersViewController.swift */; };
 		E7485B7E2B7CDFE500EE9BF2 /* FTQuickNoteCreateWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7485B7C2B7CD8DE00EE9BF2 /* FTQuickNoteCreateWidget.swift */; };
 		E74E48802BE4FED000E43B14 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7A912E22861F20C00BACD79 /* Localizable.strings */; };
+		E75062882BEA11E800D0A8E4 /* FTPresetEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75062872BEA11E800D0A8E4 /* FTPresetEditView.swift */; };
 		E75329C72B99968D00C22267 /* FTWatchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75329C62B99968D00C22267 /* FTWatchUtils.swift */; };
 		E75329C92B999E8F00C22267 /* FTWatchLandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75329C82B999E8F00C22267 /* FTWatchLandView.swift */; };
 		E755B7592B7B7D15007DDC30 /* FTTextView_MenuHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E755B7582B7B7D15007DDC30 /* FTTextView_MenuHandler.swift */; };
@@ -2050,6 +2051,8 @@
 		E76CEDC22A93605C00E4E22F /* FTRecentSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76CEDC02A93605C00E4E22F /* FTRecentSectionHeader.xib */; };
 		E76CEDC32A93605C00E4E22F /* FTRecentSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76CEDC12A93605C00E4E22F /* FTRecentSectionHeader.swift */; };
 		E76EA45A2BBBDEBB009DD911 /* Noteshelf 3 Watch Widget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E7CCFF622BA975E000DB59CE /* Noteshelf 3 Watch Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E77280032BE90E0F00A0760E /* FTHexFieldFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77280022BE90E0F00A0760E /* FTHexFieldFooterView.swift */; };
+		E77280052BE90F7700A0760E /* FTSpectrumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77280042BE90F7700A0760E /* FTSpectrumView.swift */; };
 		E772BBAA2BE4CDF9007D787A /* HuePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E772BBA02BE4CDF9007D787A /* HuePickerView.swift */; };
 		E772BBAB2BE4CDF9007D787A /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E772BBA12BE4CDF9007D787A /* UIColorExtension.swift */; };
 		E772BBAC2BE4CDF9007D787A /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E772BBA22BE4CDF9007D787A /* ColorPickerView.swift */; };
@@ -4431,6 +4434,7 @@
 		E743C12A25A7039300D59BBF /* FTQuickCreateInfoTipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTQuickCreateInfoTipViewController.swift; sourceTree = "<group>"; };
 		E746A99029A48248009B95B4 /* FTStickersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStickersViewController.swift; sourceTree = "<group>"; };
 		E7485B7C2B7CD8DE00EE9BF2 /* FTQuickNoteCreateWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTQuickNoteCreateWidget.swift; sourceTree = "<group>"; };
+		E75062872BEA11E800D0A8E4 /* FTPresetEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPresetEditView.swift; sourceTree = "<group>"; };
 		E75329C62B99968D00C22267 /* FTWatchUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWatchUtils.swift; sourceTree = "<group>"; };
 		E75329C82B999E8F00C22267 /* FTWatchLandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWatchLandView.swift; sourceTree = "<group>"; };
 		E75516D9274F8F9800401F45 /* FTExportDataInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTExportDataInfoCell.swift; sourceTree = "<group>"; };
@@ -4483,6 +4487,8 @@
 		E76CEDC02A93605C00E4E22F /* FTRecentSectionHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FTRecentSectionHeader.xib; sourceTree = "<group>"; };
 		E76CEDC12A93605C00E4E22F /* FTRecentSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTRecentSectionHeader.swift; sourceTree = "<group>"; };
 		E7721A332681DFDC00EB2312 /* FTWhatsNewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWhatsNewHelper.swift; sourceTree = "<group>"; };
+		E77280022BE90E0F00A0760E /* FTHexFieldFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTHexFieldFooterView.swift; sourceTree = "<group>"; };
+		E77280042BE90F7700A0760E /* FTSpectrumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSpectrumView.swift; sourceTree = "<group>"; };
 		E772BBA02BE4CDF9007D787A /* HuePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HuePickerView.swift; sourceTree = "<group>"; };
 		E772BBA12BE4CDF9007D787A /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		E772BBA22BE4CDF9007D787A /* ColorPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
@@ -11521,6 +11527,9 @@
 				E7B3DFA22889205C0045019F /* FTPenSizeShortcutView.swift */,
 				E7ADB527288173BB005E03B7 /* FTPenColorEditView.swift */,
 				E7A41D7A28AB92F80078C5FC /* FTPresetColorsView.swift */,
+				E75062872BEA11E800D0A8E4 /* FTPresetEditView.swift */,
+				E77280042BE90F7700A0760E /* FTSpectrumView.swift */,
+				E77280022BE90E0F00A0760E /* FTHexFieldFooterView.swift */,
 				E7ADA7922888230500309D16 /* FTColorGridView.swift */,
 				E7ADB52928818B98005E03B7 /* FTPenColorCircleView.swift */,
 				E7B3DFA4288921180045019F /* FTPenSizeView.swift */,
@@ -13308,6 +13317,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E77280052BE90F7700A0760E /* FTSpectrumView.swift in Sources */,
 				BAF390502859ADF00067CA9F /* FTOnScreenDrawingViewController_FTStylusPenDelegate.swift in Sources */,
 				97C52E4C292223E800BAA299 /* FTShelfViewModel+ShelfItemOperations.swift in Sources */,
 				BAF390512859ADF00067CA9F /* FTAccountSettingTableViewCell.swift in Sources */,
@@ -13678,6 +13688,7 @@
 				BAF391762859ADF00067CA9F /* FTNoteshelfPage_PDFExportHelper.swift in Sources */,
 				BAF3917A2859ADF00067CA9F /* FTVisionRecognitionTaskManager.swift in Sources */,
 				BAF3917B2859ADF00067CA9F /* FTUIAlertController+Convenience.swift in Sources */,
+				E77280032BE90E0F00A0760E /* FTHexFieldFooterView.swift in Sources */,
 				BAF3917C2859ADF00067CA9F /* FTTemplateMoreOptionsTableViewCell.swift in Sources */,
 				BAF3917D2859ADF00067CA9F /* FTCSIndexCacheManager.m in Sources */,
 				09C7145B2A407D7D00E69E4A /* FTNotebookCoverView.swift in Sources */,
@@ -14439,6 +14450,7 @@
 				BAF393E42859ADF00067CA9F /* FTOneDriveFileListTask.swift in Sources */,
 				4747C4132A95EC4A00B1AB59 /* FTEventsTracker.m in Sources */,
 				BAF393E52859ADF00067CA9F /* FTNotebookContentSearchProcessor.swift in Sources */,
+				E75062882BEA11E800D0A8E4 /* FTPresetEditView.swift in Sources */,
 				9715E0252AEA9D2C00EC48D4 /* NSString+XMLAdditions.m in Sources */,
 				E7ADB526288172C3005E03B7 /* FTPenColorShortcutView.swift in Sources */,
 				BAF393E62859ADF00067CA9F /* FTShelfItemProtocols_Extension.swift in Sources */,

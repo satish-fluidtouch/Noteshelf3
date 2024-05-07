@@ -15,68 +15,26 @@ struct FTColorGridView: View {
     @StateObject var hexInputVm = FTColorHexInputViewModel()
 
     @State private var colorSelectModeImage = FTPenColorSelectModeImage.add
-    // To avoid hex input initalization get observed
-    @State var hexChangeToBeObserved = false
-    @State var touchLocation: CGPoint?
+    @State private var touchLocation: CGPoint?
 
     @EnvironmentObject var viewModel: FTPenShortcutViewModel
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
     var colorMode: FTPenColorMode
-    var showDeleteButton: Bool = false
 
     var body: some View {
         ZStack {
             VStack(spacing: FTSpacing.small) {
                 self.colorsGridView
-                self.hexFieldView
+                FTHexFieldFooterView(colorSelectModeImage: $colorSelectModeImage, colorMode: colorMode)
+                    .environmentObject(self.hexInputVm)
+                    .environmentObject(self.viewModel)
             }
             .padding(.bottom, FTSpacing.large)
         }
         .coordinateSpace(name: "screen")
-        .navigationBarBackButtonHidden()
-        
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                btnBack
-            }
-
-            ToolbarItem(placement: .principal) {
-                Text(colorMode == .presetEdit ? "SelectColor".localized : "Color".localized)
-                    .font(.clearFaceFont(for: .medium, with: 20.0))
-            }
-
-            if showDeleteButton {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Image(systemName: "trash")
-                        .foregroundColor(.red)
-                        .font(.appFont(for: .medium, with: 16.0))
-                        .onTapGesture {
-                            self.viewModel.deleteColorAction()
-                            self.viewModel.updateCurrentColors()
-                            self.viewModel.updateColorEditViewSizeIfNeeded(isPresetEdit: false)
-                            self.presentationMode.wrappedValue.dismiss()
-                        }
-                }
-            }
-        }
         .onAppear {
             self.hexInputVm.text = self.viewModel.currentSelectedColor
         }
-    }
-
-    private var btnBack : some View {
-        Button {
-            self.viewModel.updateColorEditViewSizeIfNeeded(isPresetEdit: false)
-            self.presentationMode.wrappedValue.dismiss()
-        } label: {
-            HStack {
-                Image(systemName: "chevron.backward")
-                    .foregroundColor(Color.appColor(.accent))
-                    .font(.appFont(for: .regular, with: 16.0))
-            }
-        }
-        .isHidden(self.colorMode == .select)
     }
 
     private var colorsGridView: some View {
@@ -120,88 +78,8 @@ struct FTColorGridView: View {
         return self.viewModel.currentSelectedColor == colorModel.color
     }
 
-    private var hexFieldView: some View {
-        HStack(spacing: FTSpacing.zero) {
-            Text("#")
-                .padding(.leading)
-                .padding(.trailing, FTSpacing.zero)
-            TextField("",
-                      text: $hexInputVm.text)
-            .padding(.leading, FTSpacing.zero)
-            .onChange(of: self.hexInputVm.text) { currentHex in
-                if let reqHex = self.getRequiredHex(currentHex: currentHex), hexChangeToBeObserved {
-                    self.viewModel.updateCurrentSelection(colorHex: reqHex)
-                }
-                hexChangeToBeObserved = true
-            }
-            .onSubmit {
-                if let reqHex = self.getRequiredHex(currentHex: self.hexInputVm.text) {
-                    self.hexInputVm.text = reqHex
-                } else {
-                    self.hexInputVm.text = self.viewModel.currentSelectedColor
-                }
-            }
-
-            Spacer()
-
-            VStack {
-            }
-            .frame(width: 97.0, height: 23.0)
-            .background(Color(hex: self.viewModel.currentSelectedColor))
-            .cornerRadius(6.0)
-            .shadow(color: Color.appColor(.black4), radius: 1, x: 0.0, y: 3.0)
-            .shadow(color: Color.appColor(.black3), radius: 1, x: 0.0, y: 3.0)
-            .padding(.trailing, FTSpacing.small)
-            
-            if colorMode == .select {
-                Image(systemName: colorSelectModeImage.rawValue)
-                    .foregroundColor(Color.appColor(.accent))
-                    .onTapGesture {
-                        if colorSelectModeImage == .add {
-                            self.viewModel.addSelectedColorToPresets()
-                            self.viewModel.updateCurrentColors()
-                            colorSelectModeImage = .done
-                        }
-                    }
-            } else {
-                Image(systemName: "eyedropper")
-                    .foregroundColor(Color.appColor(.accent))
-                    .font(Font.appFont(for: .regular, with: 16.0))
-                    .onTapGesture {
-                        self.viewModel.didTapOnColorEyeDropper()
-                    }
-            }
-            Spacer()
-                .frame(width: 8.0)
-        }
-        .frame(width: 288.0, height: 36.0)
-        .background(Color.appColor(.gray60).opacity(0.12))
-        .cornerRadius(10.0)
-        .padding(.horizontal)
-    }
-
     private var gridItemLayout: [GridItem] {
         return [GridItem(.adaptive(minimum: 24.0, maximum: 24.0), spacing: FTSpacing.zero)]
-    }
-
-    private func getRequiredHex(currentHex: String) -> String? {
-        if currentHex.count == 6 {
-            return currentHex
-        } else {
-            var reqHex: String = currentHex
-            if (currentHex.count > 3) {
-                reqHex = (reqHex as NSString).substring(from: 1)
-                let uiColor = UIColor(hexString: reqHex)
-                reqHex = uiColor.hexString
-                return reqHex
-            }
-            return nil
-        }
-    }
-
-    private enum FTPenColorSelectModeImage: String {
-        case add = "plus.circle.fill"
-        case done = "checkmark.circle.fill"
     }
 }
 

@@ -64,7 +64,7 @@ struct FTToolSeperator: View {
     }
 }
 
-struct FTSpectrumView: UIViewRepresentable {
+struct FTSpectrumRepresentedView: UIViewRepresentable {
     typealias UIViewType = ColorPickerView
 
     @Binding var color: String
@@ -72,6 +72,7 @@ struct FTSpectrumView: UIViewRepresentable {
 
     func makeUIView(context: Context) -> ColorPickerView {
         let colorPickerView = ColorPickerView()
+        colorPickerView.color = UIColor(hexString: color)
         colorPickerView.delegate = context.coordinator
         return colorPickerView
     }
@@ -86,14 +87,19 @@ struct FTSpectrumView: UIViewRepresentable {
 
 class FTSpectrumCoordinator: NSObject, ColorPickerViewDelegate {
     @Binding var color: String
-    var parent: FTSpectrumView
+    var parent: FTSpectrumRepresentedView
 
-    init(color: Binding<String>, delegate: FTSpectrumView) {
+    init(color: Binding<String>, delegate: FTSpectrumRepresentedView) {
         _color = color
         parent = delegate
     }
 
     func colorDidChange(_ color: UIColor) {
-        parent.color = color.hexString
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(updateColor(_ :)), object: nil)
+        self.perform(#selector(updateColor(_ :)), with: color, afterDelay: 0.1)
+    }
+
+    @objc func updateColor(_ color: UIColor) {
+        parent.color = color.hexStringFromColor()// to fetch first 6 digits hex
     }
 }

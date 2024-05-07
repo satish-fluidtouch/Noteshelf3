@@ -117,7 +117,7 @@ protocol ColorPickerViewDelegate: AnyObject {
     }
 
     private func configureConstraints() {
-        self.updateHueWidth(to: 76, andSpacing: 24)
+        self.updateHueWidth(to: 64, andSpacing: 8)
     }
     func updateHueWidth(to width:CGFloat, andSpacing spacing:CGFloat){
         NSLayoutConstraint.deactivate(currentConstraints)
