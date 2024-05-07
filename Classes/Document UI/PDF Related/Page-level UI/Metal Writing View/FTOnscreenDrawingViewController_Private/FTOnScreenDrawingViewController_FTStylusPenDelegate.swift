@@ -108,6 +108,17 @@ extension FTOnScreenWritingViewController : FTStylusPenDelegate
         if(!self.strokeInProgress) {
             if let controller = self.delegate?.activeController() as? FTShapeAnnotationController {
                 controller.processTouchesMoved(touch.activeUItouch, with: nil)
+            } else {
+                if let editableShapeAnnotaion, let uiTouch = touch.activeUItouch {
+                    let touchLocation = uiTouch.location(in: self.view)
+                    let previousLocation = uiTouch.previousLocation(in: self.view)
+                    let distanceX = touchLocation.x - previousLocation.x
+                    let distanceY = touchLocation.y - previousLocation.y
+                    let totalDistance = sqrt(distanceX * distanceX + distanceY * distanceY)
+                    if totalDistance > 0.5 {
+                        self.delegate?.editShapeAnnotation(with:editableShapeAnnotaion, point: touch.activeUItouch.location(in: self.view))
+                    }
+                }
             }
             return;
         }
@@ -126,8 +137,8 @@ extension FTOnScreenWritingViewController : FTStylusPenDelegate
         }
         
         if(self.currentDrawingMode == RKDeskMode.deskModePen
-            || self.currentDrawingMode == RKDeskMode.deskModeMarker
-            || self.currentDrawingMode == RKDeskMode.deskModeShape
+           || self.currentDrawingMode == RKDeskMode.deskModeMarker
+           || self.currentDrawingMode == RKDeskMode.deskModeShape
            || self.currentDrawingMode == RKDeskMode.deskModeLaser || self.currentDrawingMode == RKDeskMode.deskModeFavorites) {
             self.strokeInProgress = true
             self.processVertex(touch: touch, vertexType: .InterimVertex);
@@ -148,10 +159,13 @@ extension FTOnScreenWritingViewController : FTStylusPenDelegate
         if(!self.strokeInProgress) {
             if let controller = self.delegate?.activeController() as? FTShapeAnnotationController {
                 controller.processTouchesEnded(touch.activeUItouch, with: nil)
-                if let del = self.delegate, del.mode == FTRenderModeZoom {
-                    self.delegate?.endActiveShapeAnnotation(with: controller.shapeAnnotation)
-                }
+                controller.generateStrokeSegments()
+                self.delegate?.endActiveShapeAnnotation(with: controller.shapeAnnotation)
+                controller.shapeAnnotation.inLineEditing = false
+            } else {
+                editableShapeAnnotaion?.inLineEditing = false
             }
+            editableShapeAnnotaion = nil
             return;
         }
         self.strokeInProgress = false;

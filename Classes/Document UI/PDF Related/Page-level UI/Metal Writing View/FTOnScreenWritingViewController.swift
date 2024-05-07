@@ -22,7 +22,7 @@ class FTOnScreenWritingViewController: UIViewController {
     fileprivate var currentExecutingID : String?;
     fileprivate var previousRefreshRect = CGRect.null;
     fileprivate var previousTouch: FTTouch?;
-    
+    internal var editableShapeAnnotaion: FTAnnotation?
     var lastWritingMode : RKDeskMode = RKDeskMode.deskModePen;
     var currentWritingModeChanged : Bool = false;
     var strokeInProgress = false;
@@ -435,7 +435,7 @@ extension FTOnScreenWritingViewController
                     rectToRefresh = detectedShape.areaToRefresh;
                     if let ann = detectedShape.strokes?.first as? FTAnnotation {
                         ann.inLineEditing = isShapeEnabled
-                        self.delegate?.editShapeAnnotation(with: ann, point: touch.activeUItouch.location(in: self.view))
+                        editableShapeAnnotaion = ann
                     }
                 }
             }
