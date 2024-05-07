@@ -113,8 +113,8 @@ extension FTSidePanelShelfItemPickerDelegate {
         self.tableView.dragDelegate = self
         self.view.backgroundColor = .appColor(.finderBgColor)
         if self.mode == .recentNotes {
-            tvLeading.constant = 10
-            tvTrailing.constant = 10
+            tvLeading.constant = 16
+            tvTrailing.constant = 16
             
         }
     }
@@ -155,6 +155,7 @@ extension FTSidePanelShelfItemPickerDelegate {
         let shelfItem = self.items[sender.tag]
         self.dismiss(animated:true) {
             self.openItemInNewWindow(shelfItem,pageIndex: nil)
+            track("recentnotebooks_notebook_newwindow_tap")
         }
     }
     
