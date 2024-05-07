@@ -115,7 +115,6 @@ extension FTOnScreenWritingViewController : FTStylusPenDelegate
                     let distanceX = touchLocation.x - previousLocation.x
                     let distanceY = touchLocation.y - previousLocation.y
                     let totalDistance = sqrt(distanceX * distanceX + distanceY * distanceY)
-                    print("&&&&& Total Distance \(totalDistance)")
                     if totalDistance > 0.5 {
                         self.delegate?.editShapeAnnotation(with:editableShapeAnnotaion, point: touch.activeUItouch.location(in: self.view))
                     }
@@ -163,7 +162,10 @@ extension FTOnScreenWritingViewController : FTStylusPenDelegate
                 controller.generateStrokeSegments()
                 self.delegate?.endActiveShapeAnnotation(with: controller.shapeAnnotation)
                 controller.shapeAnnotation.inLineEditing = false
+            } else {
+                editableShapeAnnotaion?.inLineEditing = false
             }
+            editableShapeAnnotaion = nil
             return;
         }
         self.strokeInProgress = false;
