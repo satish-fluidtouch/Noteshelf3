@@ -38,7 +38,7 @@ protocol FTStyleSelectionDelegate: NSObjectProtocol {
     func didHighLightSelectedStyle(attr: [NSAttributedString.Key : Any]?, scale: CGFloat)
 }
 
-protocol FTTextToolBarDelegate: FTRootControllerInfo {
+protocol FTTextToolBarDelegate: FTRootControllerInfo, FTFontSelectionDelegate {
     func didSelectTextToolbarOption(_ option: FTTextToolBarOption)
     func didSelectFontStyle(_ style: FTTextStyleItem)
     func didChangeBackgroundColor(_ color: UIColor)
@@ -53,6 +53,10 @@ protocol FTTextToolBarDelegate: FTRootControllerInfo {
     func didToggleStrikeThrough()
     func didSetDefaultStyle(_ info: FTDefaultTextStyleItem)
     func textInputViewCurrentTextView() -> FTTextView?
+}
+
+protocol FTFontSelectionDelegate {
+    func isFontSelectionInProgress(value: Bool)
 }
 
 class FTTextToolBarViewController: UIViewController {
@@ -145,7 +149,10 @@ extension FTTextToolBarViewController {
     private func loadTextStyles() {
         if isRegular {
             let textStyles = fetchStyles()
-            let showCount = textStyles.styles.count
+            var showCount = textStyles.styles.count
+            if showCount >= 5 {
+                showCount = 5
+            }
             let styles = textStyles.styles.prefix(Int(showCount))
             if let subviews = textStyleView?.arrangedSubviews, styles.count > 0, subviews.count == styles.count {
                 for (idx, item) in styles.enumerated() {
@@ -553,6 +560,16 @@ extension FTTextToolBarViewController: FTTextAnnotationDelegate {
     func didChangeSelectionAttributes(_ attributes: [NSAttributedString.Key : Any]?, scale: CGFloat) {
         self.textSelectionDelegate?.didChangeTextSelectionAttributes(attributes, scale: scale)
         self.updateToolBarSelectionForattributes(attributes, scale: scale)
+    }
+}
+
+extension FTTextToolBarViewController: FTSystemFontPickerDelegate {
+    func didPickFontFromSystemFontPicker(selectedFontDescriptor: UIFontDescriptor, fontStyle: FTTextStyleItem) {
+        self.didSelectFontStyle(fontStyle)
+    }
+    
+    func isFontSelectionInProgress(value: Bool) {
+        self.toolBarDelegate?.isFontSelectionInProgress(value: value)
     }
 }
 

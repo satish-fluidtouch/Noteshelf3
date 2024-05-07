@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "rocket_light.pdf",
+      "filename" : "freemium.pdf",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "rocket_dark.pdf",
+      "filename" : "freemium 1.pdf",
       "idiom" : "universal"
     }
   ],

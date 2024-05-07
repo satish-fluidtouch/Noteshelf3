@@ -50,7 +50,7 @@ class FTFavoriteShapeViewModel: ObservableObject {
     }
 
     private func updateContentTransfromIfNeeded() {
-        let placement = FTShortcutPlacement.getSavedPlacement()
+        let placement = FTShortcutPlacement.getSavedPlacement(activity: rackData.userActivity)
         self.contentTransformation = .zero
         if placement.isLeftPlacement() || placement.isRightPlacement() {
             self.contentTransformation = .degrees(-90)

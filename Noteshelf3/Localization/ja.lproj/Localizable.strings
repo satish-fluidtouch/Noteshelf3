@@ -1016,6 +1016,7 @@
 "customizeToolbar.pixabay" = "Pixabay";
 "customizeToolbar.present" = "プレゼン";
 "customizeToolbar.readOnlyMode" = "読み取り専用モード";
+"customizeToolbar.recent.notes" = "最近のノートブック";
 "customizeToolbar.requestForShortcut" = "ショートカットをリクエスト";
 "customizeToolbar.resetConfirmation" = "デフォルトのツールバーにリセットしてもよろしいですか？";
 "customizeToolbar.rotatePage" = "ページを回転させる";
@@ -1060,6 +1061,7 @@
 "finder.bookmark.description" = "お気に入りのページと、大きなノートやPDFの概要を保持します。";
 "finder.bookmarks" = "ブックマーク";
 "finder.clear.recents" = "最近の履歴を消去しますか？";
+"finder.documentonly" = "ノートブックのみ";
 "finder.downloadPermissionText" = "選択されたノートブックはまだダウンロードされていません。ノートブックをダウンロードしてページを移動しますか？";
 "finder.duplicate" = "複製";
 "finder.fullscreen" = "フルスクリーン";
@@ -1571,6 +1573,8 @@
 "textmode.fonttitle" = "フォント/テキストスタイル";
 "texttoolbar.fontselectionTitle" = "フォントを選択";
 "theams.unsplashDescription" = "Unsplash から選択、写真を撮影、または写真ライブラリから選択してカスタムカバーを作成してください。";
+"tipeview.shortcut.message" = "ツールバーを長押しして、お好みの方法でツールを追加、削除、並び替えできます。";
+"tipeview.shortcut.title" = "新しいツールバーショートカットが追加されました！";
 "trash.alert.cannotOpenNotebook" = "このノートブックは削除されたため開けません。復元するには、長押ししてメニューからオプションを選択してください。";
 "trash.alert.title" = "ゴミ箱を空にしますか？";
 "unsplash.search.alertMessage" = "検索するテキストを入力してください";
@@ -1657,9 +1661,16 @@
 "whatsnew.planner2.cta" = "今すぐチェック";
 "whatsnew.planner2.description" = "テンプレートセクションで厳選した才能あるクリエイターたちからの魅力的なデジタルプランナーを見つけてください。";
 "whatsnew.planner2.title" = "より多くの2024年プランナー";
+"widget.nonotes" = "まだノートはありません";
+"widget.notebook" = "ノートブック";
+"widget.pinned.description" = "あなたのノートブックの1つに素早くアクセスしてください。";
+"widget.quickCreate.large.description" = "クイックに空白のノートブックを作成し、オーディオを記録するか、文書をスキャンしてください。";
+"widget.quickCreate.small.description" = "クイックノートを作成します。";
+"widget.quicknote" = "クイックノート";
+"widget.takenotes" = "メモを取る";
 "widgets" = "ウィジェット";
 "work" = "仕事";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 24 April 2024 at 1:13 PM
+// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM

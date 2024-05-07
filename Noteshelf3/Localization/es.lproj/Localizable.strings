@@ -311,7 +311,7 @@
 "EnterThePasswordFor" = "Introduce la contraseña para %@";
 "EraseEntireStroke" = "Borrar trazo completo";
 "EraseHighlighterOnly" = "Borrar solo el resaltador";
-"ErasePencilOnly" = "Borrar solo lápiz.";
+"ErasePencilOnly" = "Borrar solo lápiz";
 "Error" = "Error";
 "ErrorConnecting" = "Error de conexión";
 "ErrorSavingToPhotosAlbum" = "Se produjo un error al exportar. Verifique si Noteshelf tiene permiso para escribir en el álbum de fotos en Configuración -> Privacidad -> Fotos.";
@@ -1016,6 +1016,7 @@
 "customizeToolbar.pixabay" = "Pixabay";
 "customizeToolbar.present" = "Presentar";
 "customizeToolbar.readOnlyMode" = "Modo de solo lectura";
+"customizeToolbar.recent.notes" = "Cuadernos recientes";
 "customizeToolbar.requestForShortcut" = "Solicitar un atajo";
 "customizeToolbar.resetConfirmation" = "¿Estás seguro de que deseas restablecer la barra de herramientas predeterminada?";
 "customizeToolbar.rotatePage" = "Rotar página";
@@ -1060,6 +1061,7 @@
 "finder.bookmark.description" = "Páginas favoritas y mantener una vista general de cuadernos grandes y PDFs.";
 "finder.bookmarks" = "Marcadores";
 "finder.clear.recents" = "¿Quieres borrar lo reciente?";
+"finder.documentonly" = "Solo el Cuaderno";
 "finder.downloadPermissionText" = "El cuaderno seleccionado aún no se ha descargado. ¿Desea descargar el cuaderno y mover las páginas?";
 "finder.duplicate" = "Duplicar";
 "finder.fullscreen" = "Pantalla completa.";
@@ -1266,8 +1268,8 @@
 "password.usefaceid" = "Usar Face ID";
 "password.usetouchid" = "Usar Touch ID";
 "penRack.ballpoint" = "Bolígrafo";
-"penRack.felt" = "Rotulador.";
-"penRack.fountain" = "Pluma estilográfica.";
+"penRack.felt" = "Rotulador";
+"penRack.fountain" = "Pluma estilográfica";
 "penRack.pencil" = "Lápiz";
 "presentation.clearAnnotations" = "Borrar anotaciones";
 "presentation.clearAnnotationsAlert" = "¿Estás seguro de que quieres borrar todas las anotaciones?";
@@ -1329,7 +1331,7 @@
 "shelf.discover.customToolbarDescription" = "Haz que la barra de herramientas sea tuya con todas tus herramientas favoritas al alcance.";
 "shelf.discover.customToolbarTitle" = "Personaliza tu barra de herramientas.";
 "shelf.discover.digitalDiariesDescription" = "Planifica y organiza tus días con diarios digitales personalizables.";
-"shelf.discover.digitalDiariesTitle" = "Agendas y planificadores digitales.";
+"shelf.discover.digitalDiariesTitle" = "Agendas y planificadores digitales";
 "shelf.discover.focusModeDescription" = "Ir sin distracciones para tomar notas enfocadas.";
 "shelf.discover.focusModeTitle" = "Modo de enfoque";
 "shelf.discover.getInspiredDescription" = "Explora hermosas notas escritas a mano creadas en Noteshelf 3.";
@@ -1337,10 +1339,10 @@
 "shelf.discover.migrationDescription" = "Lleva todas tus categorías, grupos y notas a Noteshelf 3.";
 "shelf.discover.migrationTitle" = "Emigrar de Noteshelf 2";
 "shelf.discover.tagsDescription" = "Mantén organizado y encuentra tus notas al instante.";
-"shelf.discover.tagsTitle" = "Organice sus notas.";
+"shelf.discover.tagsTitle" = "Organice sus notas";
 "shelf.discover.templatesDescription" = "Descubre cientos de plantillas para la escuela, el trabajo, la escritura de diarios y más.";
-"shelf.discover.templatesTitle" = "Una plantilla para cada necesidad.";
-"shelf.discover.title" = "Descubre lo que es posible.";
+"shelf.discover.templatesTitle" = "Una plantilla para cada necesidad";
+"shelf.discover.title" = "Descubre lo que es posible";
 "shelf.discover.whatsNewDescription" = "Tome notas hermosas sin esfuerzo con el nuevo Noteshelf.";
 "shelf.discover.whatsNewTitle" = "¿Qué hay de nuevo en Noteshelf?";
 "shelf.dragAndDrop.dropAnywhere" = "Suelta aquí para importar el archivo.";
@@ -1571,6 +1573,8 @@
 "textmode.fonttitle" = "Estilo de fuente/texto";
 "texttoolbar.fontselectionTitle" = "Seleccionar Fuente";
 "theams.unsplashDescription" = "Seleccionar de Unsplash, tomar una foto o seleccionar de tu Biblioteca de Fotos para crear tus portadas personalizadas.";
+"tipeview.shortcut.message" = "Mantén presionado en la barra de herramientas para agregar, quitar o reorganizar las herramientas como desees.";
+"tipeview.shortcut.title" = "¡Se han añadido nuevos accesos directos a la barra de herramientas!";
 "trash.alert.cannotOpenNotebook" = "Esta libreta no se puede abrir ya que ha sido eliminada. Para restaurar, mantén presionado y selecciona la opción del menú.";
 "trash.alert.title" = "¿Estás seguro de que quieres vaciar tu Papelera?";
 "unsplash.search.alertMessage" = "Introducir texto para buscar'";
@@ -1593,7 +1597,7 @@
 "welcome.customizableToolBar.description" = "Elige las herramientas que uses a menudo y elimina las que no necesitas. Simple, pero poderoso.";
 "welcome.dayNightJournal" = "DIARIO DÍA NOCHE";
 "welcome.dayNightJournal.description" = "Un diario especial diseñado para mejorar la autoconciencia y la felicidad en la vida.";
-"welcome.digitalDiaries" = "DIARIOS DIGITALES'";
+"welcome.digitalDiaries" = "DIARIOS DIGITALES";
 "welcome.digitalDiaries.description" = "Nuestros diarios son totalmente personalizables para cualquier rango de fechas.";
 "welcome.emojies" = "EMOJIS";
 "welcome.emojies.description" = "Los emojis generalmente se escriben, pero puedes usarlos como sellos en Noteshelf 😲";
@@ -1657,9 +1661,16 @@
 "whatsnew.planner2.cta" = "¡Échales un vistazo ahora!";
 "whatsnew.planner2.description" = "Descubre encantadores planificadores digitales en la sección de Plantillas que hemos seleccionado de talentosos creadores.";
 "whatsnew.planner2.title" = "¡Más planificadores para el 2024!";
+"widget.nonotes" = "Todavía no hay notas";
+"widget.notebook" = "Cuaderno";
+"widget.pinned.description" = "Obtén acceso rápido a una de tus cuadernos.";
+"widget.quickCreate.large.description" = "Rápido crea un cuaderno en blanco, graba audio o escanea un documento.";
+"widget.quickCreate.small.description" = "Crear una nota rápida.";
+"widget.quicknote" = "Nota rápida";
+"widget.takenotes" = "Tomar notas";
 "widgets" = "Widgets";
 "work" = "Trabajo";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 24 April 2024 at 1:13 PM
+// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM

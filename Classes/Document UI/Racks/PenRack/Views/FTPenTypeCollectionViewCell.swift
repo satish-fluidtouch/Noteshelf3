@@ -56,8 +56,12 @@ class FTPenTypeCollectionViewCell: FTPenStyleCollectionViewCell {
     }
 
     func configure(penType: FTPenType, currentPenSet: FTPenSetProtocol, color: String) {
-        self.penColor = color
         self.penType = penType
+        if penType == currentPenSet.type {
+            self.penColor = currentPenSet.color
+        } else {
+            self.penColor = color
+        }
 
         self.imageViewShadow.image = UIImage(named: penType.shadowImageName, in: Bundle(for: FTPenTypeCollectionViewCell.self), compatibleWith: nil)
 

@@ -31,7 +31,6 @@ let AppDelegate = UIApplication.shared.delegate as! NoteshelfAppDelegate
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         FTDocumentFrameworkLogHelper.config()
         self.clearTempCache();
-        FTStyles.registerFonts()
         FTImportStorageManager.resetCorruptedStatusWhenTerminated()
         FTCLSLog("--- didFinishLaunchingWithOptions ---")
         FTUserDefaults.configure()

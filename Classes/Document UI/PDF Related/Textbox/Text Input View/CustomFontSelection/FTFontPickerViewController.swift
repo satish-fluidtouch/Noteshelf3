@@ -9,50 +9,41 @@
 import UIKit
 
 public protocol FTSystemFontPickerDelegate : AnyObject {
-    func didPickFontFromSystemFontPicker(_ viewController : FTFontPickerViewController?, selectedFontDescriptor: UIFontDescriptor)
+    func didPickFontFromSystemFontPicker(selectedFontDescriptor: UIFontDescriptor, fontStyle: FTTextStyleItem)
+    func isFontSelectionInProgress(value: Bool)
 }
 
-public class FTFontPickerViewController: UIViewController, UIFontPickerViewControllerDelegate {
+extension FTSystemFontPickerDelegate {
+    func isFontSelectionInProgress(value: Bool) { }
+}
 
-    @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var titleView: UIView!
-    @IBOutlet weak var titleLbl: UILabel!
-    @IBOutlet weak var closeBtn: UIButton!
-    @IBOutlet weak var backBtn: UIButton!
-    public weak var delegate : FTSystemFontPickerDelegate?
-    
-    public override func viewDidLoad() {
+class FTFontPickerViewController: UIFontPickerViewController, UIFontPickerViewControllerDelegate {
+    public weak var fontPickerdelegate : FTSystemFontPickerDelegate?
+    var textFontStyle: FTTextStyleItem?
+
+    override func viewDidLoad() {
         super.viewDidLoad()
-        self.titleLbl.text = "texttoolbar.fontselectionTitle".localized
-        self.titleLbl.font = .clearFaceFont(for: .medium, with: 20.0)
-        self.configureSystemFontPicker()
-        if self.navigationController != nil {
-            self.closeBtn.isHidden = true
-            self.navigationController?.setNavigationBarHidden(true, animated: false)
-        } else {
-            self.backBtn.isHidden = true
-        }
+        self.navigationItem.backButtonDisplayMode = .minimal
+        self.delegate = self
     }
     
-    public override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    public override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.fontPickerdelegate?.isFontSelectionInProgress(value: false)
     }
-    
-    private func configureSystemFontPicker() {
-        let configuration = UIFontPickerViewController.Configuration()
-        configuration.includeFaces = true
-        let fontPickerController = UIFontPickerViewController(configuration: configuration)
-        self.addChild(fontPickerController)
-        fontPickerController.view.addFullConstraints(self.containerView)
-        fontPickerController.didMove(toParent: self)
-        fontPickerController.delegate = self
-    }
-    
+
     public func fontPickerViewControllerDidPickFont(_ viewController: UIFontPickerViewController) {
-        guard let descriptor = viewController.selectedFontDescriptor else { return }
-        self.delegate?.didPickFontFromSystemFontPicker(self, selectedFontDescriptor: descriptor)
+        guard let selectedFontDescriptor = viewController.selectedFontDescriptor else { return }
+        if let fontFamily = selectedFontDescriptor.object(forKey: .family) as? String, let displayName = selectedFontDescriptor.object(forKey: .visibleName) as? String, let textFontStyle = self.textFontStyle  {
+            if let _ = selectedFontDescriptor.object(forKey: .face) as? String, let fontName = selectedFontDescriptor.object(forKey: .name) as? String {
+               textFontStyle.fontName = fontName
+               textFontStyle.fontFamily = fontFamily
+            } else {
+               textFontStyle.fontName = displayName
+               textFontStyle.fontFamily = fontFamily
+            }
+        }
+        self.fontPickerdelegate?.didPickFontFromSystemFontPicker(selectedFontDescriptor: selectedFontDescriptor, fontStyle: self.textFontStyle ?? FTTextStyleItem())
         self.backButtonTapped(nil)
     }
-    
 }

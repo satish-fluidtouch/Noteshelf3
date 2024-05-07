@@ -49,8 +49,28 @@ extension FTShelfSplitViewController: FTCreateNotebookDelegate {
         }
         let coverTheme = notebookDetailsModel.selectedCoverTheme
         let newNotebookDetails = FTNewNotebookDetails(coverTheme: coverTheme, paperTheme: notebookDetailsModel.selectedPaperWithVariants.theme, documentPin: FTDocumentPin(pin: notebookDetailsModel.passwordDetails?.pin, hint: notebookDetailsModel.passwordDetails?.hint, isTouchIDEnabled: notebookDetailsModel.passwordDetails?.useBiometric), title: notebookDetailsModel.title)
-        self.currentShelfViewModel?.createBookUsing(notebookDetails: newNotebookDetails)
+        var shelfViewModel = currentShelfViewModel
+        let blockToExecute : () -> () = { () in
+            if let shelfViewModel  {
+                self.createNewNotebookInside(collection: shelfViewModel.collection, group: shelfViewModel.groupItem, notebookDetails: newNotebookDetails, isQuickCreate: false, mode: .basic, onCompletion: { error, shelfItem in
+                    if error == nil, let item = shelfItem, !FTDeveloperOption.bookScaleAnim {
+                        shelfViewModel.setcurrentActiveShelfItem(FTCurrentShelfItem(item, pin: newNotebookDetails.documentPin?.pin))
+                    }
+                })
+            }
+        }
+        if let shelfViewModel, !(shelfViewModel.collection.isTrash || shelfViewModel.collection.isStarred) {
+            blockToExecute()
+        } else {
+            FTNoteshelfDocumentProvider.shared.uncategorizedNotesCollection { collection in
+                if let collection {
+                    shelfViewModel = FTShelfViewModel(collection: collection)
+                    blockToExecute()
+                }
+            }
+        }
     }
+    
     func openPasswordController(on controller: UIViewController, at sourceView: UIView?, passwordDetails: FTPasswordModel?) {
         let passcodeController = FTPasswordHostController(passwordViewDelegate: controller as? FTCreateNotebookViewController, passwordDetails: passwordDetails)
         let navigationController = UINavigationController(rootViewController: passcodeController)
