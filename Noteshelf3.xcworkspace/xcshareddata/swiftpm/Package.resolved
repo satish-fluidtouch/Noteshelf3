@@ -77,8 +77,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/dropbox/SwiftyDropbox.git",
       "state" : {
-        "revision" : "900b1d88168d8bbda73485c9723c09f5f7f1bc76",
-        "version" : "10.0.4"
+        "revision" : "6f247e4571dc672f571b5825df0cc4e417505dd8",
+        "version" : "10.0.3"
       }
     },
     {
