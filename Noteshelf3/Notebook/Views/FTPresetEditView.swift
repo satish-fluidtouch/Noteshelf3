@@ -77,7 +77,6 @@ struct FTPresetEditView: View {
         .frame(width: 288.0, height: 32.0)
         .onChange(of: editSegment) { segment in
             segment.saveSelection(for: viewModel.colorsFlow, colorMode: .presetEdit)
-            viewModel.presetEditIndex = nil
             self.viewModel.updateColorEditViewSizeIfNeeded(isPresetEdit: true)
         }
     }

@@ -37,5 +37,10 @@ struct FTSpectrumView: View {
                 self.hexInputVm.text = color
             }
         }
+        .onChange(of: hexInputVm.text) { color in
+            if color != self.viewModel.currentSelectedColor {
+                self.color = self.hexInputVm.text
+            }
+        }
     }
 }

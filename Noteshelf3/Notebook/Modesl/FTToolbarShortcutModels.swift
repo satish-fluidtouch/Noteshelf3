@@ -13,6 +13,7 @@ enum FTColorsFlowType {
     case lasso
     case shape
     case text
+    case favorites
 
     var typeKey: String {
         let key: String
@@ -25,6 +26,8 @@ enum FTColorsFlowType {
             key = "Shape"
         case .text:
             key = "Text"
+        case .favorites:
+            key = "favorites"
         }
         return key
     }

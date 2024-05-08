@@ -78,6 +78,7 @@ struct FTSpectrumRepresentedView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: ColorPickerView, context: Context) {
+        uiView.color = UIColor(hexString: color)
     }
 
     func makeCoordinator() -> FTSpectrumCoordinator {
