@@ -2127,7 +2127,7 @@
 		E7AC024E2A14E46B009AE92A /* FTPenTypeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7AC024C2A14E46B009AE92A /* FTPenTypeCollectionViewCell.xib */; };
 		E7AC024F2A14E46B009AE92A /* FTPenTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AC024D2A14E46B009AE92A /* FTPenTypeCollectionViewCell.swift */; };
 		E7AD96C9291A85B0002A6DB2 /* FTPHPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD96C8291A85B0002A6DB2 /* FTPHPicker.swift */; };
-		E7ADA7932888230500309D16 /* FTColorGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ADA7922888230500309D16 /* FTColorGridView.swift */; };
+		E7ADA7932888230500309D16 /* FTPenColorGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ADA7922888230500309D16 /* FTPenColorGridView.swift */; };
 		E7ADA795288825A300309D16 /* GridColors.plist in Resources */ = {isa = PBXBuildFile; fileRef = E7ADA794288825A200309D16 /* GridColors.plist */; };
 		E7ADA7972888262D00309D16 /* FTGridDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ADA7962888262D00309D16 /* FTGridDataProvider.swift */; };
 		E7ADB526288172C3005E03B7 /* FTPenColorShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ADB525288172C3005E03B7 /* FTPenColorShortcutView.swift */; };
@@ -4567,7 +4567,7 @@
 		E7ACD69D27564676008EA23F /* FTBackupFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTBackupFooterView.swift; sourceTree = "<group>"; };
 		E7ACD69F27564689008EA23F /* FTBackupFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTBackupFooterView.xib; sourceTree = "<group>"; };
 		E7AD96C8291A85B0002A6DB2 /* FTPHPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPHPicker.swift; sourceTree = "<group>"; };
-		E7ADA7922888230500309D16 /* FTColorGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTColorGridView.swift; sourceTree = "<group>"; };
+		E7ADA7922888230500309D16 /* FTPenColorGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPenColorGridView.swift; sourceTree = "<group>"; };
 		E7ADA794288825A200309D16 /* GridColors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GridColors.plist; sourceTree = "<group>"; };
 		E7ADA7962888262D00309D16 /* FTGridDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGridDataProvider.swift; sourceTree = "<group>"; };
 		E7ADB525288172C3005E03B7 /* FTPenColorShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPenColorShortcutView.swift; sourceTree = "<group>"; };
@@ -11525,7 +11525,7 @@
 				E75062872BEA11E800D0A8E4 /* FTPresetEditView.swift */,
 				E77280042BE90F7700A0760E /* FTSpectrumView.swift */,
 				E77280022BE90E0F00A0760E /* FTHexFieldFooterView.swift */,
-				E7ADA7922888230500309D16 /* FTColorGridView.swift */,
+				E7ADA7922888230500309D16 /* FTPenColorGridView.swift */,
 				E7ADB52928818B98005E03B7 /* FTPenColorCircleView.swift */,
 				E7B3DFA4288921180045019F /* FTPenSizeView.swift */,
 				E7C0D03B288A6D32005A87BC /* FTPenSizeEditView.swift */,
@@ -14629,7 +14629,7 @@
 				BAF3947B2859ADF10067CA9F /* FTConvertToTextCell.swift in Sources */,
 				BAF3947D2859ADF10067CA9F /* CGAffineTransformUtils.swift in Sources */,
 				09F81DC4291544ED0040E023 /* FTToolbarView.swift in Sources */,
-				E7ADA7932888230500309D16 /* FTColorGridView.swift in Sources */,
+				E7ADA7932888230500309D16 /* FTPenColorGridView.swift in Sources */,
 				BAF3947F2859ADF10067CA9F /* FTBaseCommunicationManager.swift in Sources */,
 				BAF394802859ADF10067CA9F /* Noteshelf.xcdatamodeld in Sources */,
 				BAF394812859ADF10067CA9F /* FTObjCMethods.m in Sources */,

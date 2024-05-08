@@ -130,7 +130,7 @@ struct FTFavoritePresetSectionView: View {
 
     @ViewBuilder
     private func getNavlinkForSelectedItem() -> some View {
-        NavigationLink(destination: FTFavoriteColorGridView(colorMode: .presetEdit, showDeleteButton: true)
+        NavigationLink(destination: FTFavoritePenColorEditView()
             .environmentObject(viewModel),
                        isActive: $isAlreadySelected, label: {
             EmptyView()
