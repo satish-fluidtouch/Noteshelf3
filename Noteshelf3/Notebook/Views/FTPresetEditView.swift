@@ -23,11 +23,23 @@ struct FTPresetEditView: View {
                     if editSegment == .grid {
                         FTColorGridView(colorMode: .presetEdit)
                             .environmentObject(viewModel)
+                            .onAppear {
+                                self.isScrollEnabled = self.checkIfContentSizeIsBigger(geometry)
+                            }
                     } else if editSegment == .spectrum {
                         FTSpectrumView(color: self.viewModel.currentSelectedColor, colorMode: .presetEdit)
                             .environmentObject(viewModel)
+                            .onAppear {
+                                self.isScrollEnabled = self.checkIfContentSizeIsBigger(geometry)
+                            }
                     }
                 }
+            }
+            .onAppear {
+                self.editSegment = FTPenColorSegment.savedSegment(for: viewModel.colorsFlow, colorMode: .presetEdit)
+            }
+            .toolbar {
+                self.toolBar
             }
             .scrollDisabled(!isScrollEnabled)
             // Observing height to update scrollEnabled during keyboard usage
@@ -36,31 +48,29 @@ struct FTPresetEditView: View {
             }
         }
         .navigationBarBackButtonHidden()
+    }
 
-        .onAppear {
-            self.editSegment = FTPenColorSegment.savedSegment(for: viewModel.colorsFlow, colorMode: .presetEdit)
+    @ToolbarContentBuilder
+    private var toolBar: some ToolbarContent {
+        ToolbarItem(placement: .navigationBarLeading) {
+            btnBack
         }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                btnBack
-            }
 
-            ToolbarItem(placement: .principal) {
-                Text("SelectColor".localized)
-                    .font(.clearFaceFont(for: .medium, with: 20.0))
-            }
+        ToolbarItem(placement: .principal) {
+            Text("SelectColor".localized)
+                .font(.clearFaceFont(for: .medium, with: 20.0))
+        }
 
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Image(systemName: "trash")
-                    .foregroundColor(.red)
-                    .font(.appFont(for: .medium, with: 16.0))
-                    .onTapGesture {
-                        self.viewModel.deleteColorAction()
-                        self.viewModel.updateCurrentColors()
-                        self.viewModel.updateColorEditViewSizeIfNeeded(isPresetEdit: false)
-                        self.presentationMode.wrappedValue.dismiss()
-                    }
-            }
+        ToolbarItem(placement: .navigationBarTrailing) {
+            Image(systemName: "trash")
+                .foregroundColor(.red)
+                .font(.appFont(for: .medium, with: 16.0))
+                .onTapGesture {
+                    self.viewModel.deleteColorAction()
+                    self.viewModel.updateCurrentColors()
+                    self.viewModel.updateColorEditViewSizeIfNeeded(isPresetEdit: false)
+                    self.presentationMode.wrappedValue.dismiss()
+                }
         }
     }
 

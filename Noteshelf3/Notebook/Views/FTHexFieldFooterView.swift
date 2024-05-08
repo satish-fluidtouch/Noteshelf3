@@ -27,13 +27,13 @@ struct FTHexFieldFooterView: View {
                       text: $hexInputVm.text)
             .padding(.leading, FTSpacing.zero)
             .onChange(of: self.hexInputVm.text) { currentHex in
-                if let reqHex = self.getRequiredHex(currentHex: currentHex), hexChangeToBeObserved {
+                if let reqHex = currentHex.getRequiredHex(), hexChangeToBeObserved {
                     self.viewModel.updateCurrentSelection(colorHex: reqHex)
                 }
                 hexChangeToBeObserved = true
             }
-            .onSubmit {
-                if let reqHex = self.getRequiredHex(currentHex: self.hexInputVm.text) {
+            .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in
+                if let reqHex = self.hexInputVm.text.getRequiredHex() {
                     self.hexInputVm.text = reqHex
                 } else {
                     self.hexInputVm.text = self.viewModel.currentSelectedColor
@@ -77,13 +77,20 @@ struct FTHexFieldFooterView: View {
         .cornerRadius(10.0)
         .padding(.horizontal)
     }
+}
 
-    private func getRequiredHex(currentHex: String) -> String? {
-        if currentHex.count == 6 {
-            return currentHex
+enum FTPenColorSelectModeImage: String {
+    case add = "plus.circle.fill"
+    case done = "checkmark.circle.fill"
+}
+
+extension String {
+    func getRequiredHex() -> String? {
+        if self.count == 6 {
+            return self
         } else {
-            var reqHex: String = currentHex
-            if (currentHex.count > 3) {
+            var reqHex: String = self
+            if (self.count > 3) {
                 reqHex = (reqHex as NSString).substring(from: 1)
                 let uiColor = UIColor(hexString: reqHex)
                 reqHex = uiColor.hexString
@@ -92,9 +99,4 @@ struct FTHexFieldFooterView: View {
             return nil
         }
     }
-}
-
-enum FTPenColorSelectModeImage: String {
-    case add = "plus.circle.fill"
-    case done = "checkmark.circle.fill"
 }

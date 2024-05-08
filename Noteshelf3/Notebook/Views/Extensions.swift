@@ -68,6 +68,8 @@ struct FTSpectrumRepresentedView: UIViewRepresentable {
     typealias UIViewType = ColorPickerView
 
     @Binding var color: String
+    @Binding var toUpdateUIview: Bool // to have explicit update of UIView
+
     weak var delegate: ColorPickerViewDelegate?
 
     func makeUIView(context: Context) -> ColorPickerView {
@@ -78,7 +80,10 @@ struct FTSpectrumRepresentedView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: ColorPickerView, context: Context) {
-        uiView.color = UIColor(hexString: color)
+        if self.toUpdateUIview {
+            uiView.color = UIColor(hexString: color)
+            toUpdateUIview = false
+        }
     }
 
     func makeCoordinator() -> FTSpectrumCoordinator {

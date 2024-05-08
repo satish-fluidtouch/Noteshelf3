@@ -12,6 +12,7 @@ import FTStyles
 struct FTSpectrumView: View {
     @State var color: String = blackColorHex
     @State private var colorSelectModeImage = FTPenColorSelectModeImage.add
+    @State private var toUpdateUIView = false
 
     @StateObject private var hexInputVm = FTColorHexInputViewModel()
     @EnvironmentObject var viewModel: FTPenShortcutViewModel
@@ -21,7 +22,7 @@ struct FTSpectrumView: View {
     var body: some View {
         ZStack {
             VStack(spacing: FTSpacing.small) {
-                FTSpectrumRepresentedView(color: $color)
+                FTSpectrumRepresentedView(color: $color, toUpdateUIview: $toUpdateUIView)
                     .frame(width: 288, height: 244)
                 FTHexFieldFooterView(colorSelectModeImage: $colorSelectModeImage, colorMode: colorMode)
                     .environmentObject(hexInputVm)
@@ -29,17 +30,18 @@ struct FTSpectrumView: View {
         }            
         .padding(.bottom, FTSpacing.large)
         .onAppear {
-            self.hexInputVm.text = self.color
+            self.hexInputVm.text = viewModel.currentSelectedColor
         }
-        .onChange(of: color) { color in
+        .onChange(of: self.color) { color in
             if color != self.viewModel.currentSelectedColor {
                 self.viewModel.updateCurrentSelection(colorHex: color)
                 self.hexInputVm.text = color
             }
         }
-        .onChange(of: hexInputVm.text) { color in
-            if color != self.viewModel.currentSelectedColor {
-                self.color = self.hexInputVm.text
+        .onChange(of: self.viewModel.currentSelectedColor) { newValue in
+            if newValue != self.color, let hex = newValue.getRequiredHex() {
+                self.color = hex
+                self.toUpdateUIView = true
             }
         }
     }
