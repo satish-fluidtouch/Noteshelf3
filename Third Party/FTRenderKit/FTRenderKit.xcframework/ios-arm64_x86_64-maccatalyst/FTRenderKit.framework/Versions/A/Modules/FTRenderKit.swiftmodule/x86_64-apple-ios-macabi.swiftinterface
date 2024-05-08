@@ -1,8 +1,9 @@
 // swift-interface-format-version: 1.0
 // swift-compiler-version: Apple Swift version 5.9.2 (swiftlang-5.9.2.2.56 clang-1500.1.0.2.5)
-// swift-module-flags: -target x86_64-apple-ios13.1-macabi -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name FTRenderKit
+// swift-module-flags: -target x86_64-apple-ios14.0-macabi -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name FTRenderKit
 // swift-module-flags-ignorable: -enable-bare-slash-regex
 import CoreGraphics
+import FTInkStrokeSmoother
 @_exported import FTRenderKit
 import Foundation
 import Metal
@@ -273,6 +274,7 @@ public struct FTStrokeAttributes {
   public init(curDrag: CoreFoundation.CGFloat, curmass: CoreFoundation.CGFloat, penDiffFactor: CoreFoundation.CGFloat, penMinFactor: CoreFoundation.CGFloat, penVelocityFactor: CoreFoundation.CGFloat, brushWidth: CoreFoundation.CGFloat, velocitySensitive: Swift.Bool)
 }
 @objc open class FTCurrentStroke : ObjectiveC.NSObject {
+  public static var USE_CATMUL: Swift.Bool
   public var stroke: any FTRenderKit.FTStrokeAnnotationProtocol
   public init(withScale scale: CoreFoundation.CGFloat, stroke inStroke: any FTRenderKit.FTStrokeAnnotationProtocol, attributes: FTRenderKit.FTStrokeAttributes, renderDelegate: any FTRenderKit.FTRendererDelegate)
   public func processTouch(_ touch: any FTRenderKit.FTTouchProcess, vertexType: FTRenderKit.FTVertexType, touchView: UIKit.UIView?)

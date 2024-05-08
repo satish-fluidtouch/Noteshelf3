@@ -360,6 +360,7 @@ extension FTOnScreenWritingViewController
                                                                  isShapeTool: self.isShapeDetectionEnabled(),
                                                                  version: FTStroke.defaultAnnotationVersion());
                 let strokeAttributes = properties.asStrokeAttributes()
+                FTCurrentStroke.USE_CATMUL = FTDeveloperOption.useCatmulStroke
                 self.currentStroke = FTCurrentStroke(withScale: self.scale,
                                                      stroke: stroke,
                                                      attributes:strokeAttributes,

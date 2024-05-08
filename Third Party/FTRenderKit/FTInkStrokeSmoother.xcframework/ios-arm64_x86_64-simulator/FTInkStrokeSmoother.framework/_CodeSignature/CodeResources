@@ -4,110 +4,66 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>Headers/FTRenderKit-Swift.h</key>
+		<key>Headers/FTInkModelerHelper.h</key>
 		<data>
-		uqWDQYo7T8z+o47fs2JnCMwPpl0=
+		iYQazhlrdbwo1L+5DI643pLVzrw=
 		</data>
-		<key>Headers/FTRenderKit.h</key>
+		<key>Headers/FTInkModelerResult.h</key>
 		<data>
-		jS7p6ow1aXoM3PNj8MmcWzzA6W4=
+		AkzToVI+bUfUU0LS3qaoIz54Eq4=
+		</data>
+		<key>Headers/FTInkStrokeSmoother.h</key>
+		<data>
+		e3dQ8RjX7wuY/zjdBtVyd/0aMhY=
+		</data>
+		<key>Headers/FTTouchEvent.h</key>
+		<data>
+		ux9HZTJnGz+RGngz8QN76n7bplU=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		83AMV/Mn1iJl5L6ArWDhlaEO+zU=
-		</data>
-		<key>Modules/FTRenderKit.swiftmodule/arm64-apple-ios.abi.json</key>
-		<data>
-		OUGVVRj475FwQq544zVAFKDQR44=
-		</data>
-		<key>Modules/FTRenderKit.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
-		<data>
-		bkNlMjIV0i7v2sUvfBvJhA2tNe8=
-		</data>
-		<key>Modules/FTRenderKit.swiftmodule/arm64-apple-ios.swiftdoc</key>
-		<data>
-		tf1W5W9TOoZfRW8IDt6o71VjZxM=
-		</data>
-		<key>Modules/FTRenderKit.swiftmodule/arm64-apple-ios.swiftinterface</key>
-		<data>
-		bkNlMjIV0i7v2sUvfBvJhA2tNe8=
-		</data>
-		<key>Modules/FTRenderKit.swiftmodule/arm64-apple-ios.swiftmodule</key>
-		<data>
-		xyaggYcAjPWcbpr2r+GPuZZIs+Y=
+		kBeax23J5YmIZtTsnNt5K0Sg8lU=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
-		xpv/r342tCUTSiY2Bamd9wce42U=
-		</data>
-		<key>default.metallib</key>
-		<data>
-		MsGxcbIhuia4AguEa1zV804QOqI=
+		CBzrQdxU3/UZj3YgXvpTh6SFEq4=
 		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>Headers/FTRenderKit-Swift.h</key>
+		<key>Headers/FTInkModelerHelper.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ygCgYIcEsage1BpzFySqQM1EagXtl5TLp/iPmvSTk+Y=
+			pm5gAmBcOvLzf2TgkUc11MsRNBdO9ALlZBlUPebWj00=
 			</data>
 		</dict>
-		<key>Headers/FTRenderKit.h</key>
+		<key>Headers/FTInkModelerResult.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			qAHVNDKJoZcsbYQwIak6sY1whniONmqllsRzazfCG/s=
+			FKfv/ybTE1neuZfow/MfmEeXirg+OfQ8I9fWAlh25U4=
 			</data>
 		</dict>
-		<key>Modules/FTRenderKit.swiftmodule/arm64-apple-ios.abi.json</key>
+		<key>Headers/FTInkStrokeSmoother.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			cx5dtrbhAmrMGoRj9IUUECJVmDugkKPHHZd0pTo79UA=
+			NN3eoQ8zWn7jYvhkqIVOrNipPqngRAWEMB4z9NnKrPg=
 			</data>
 		</dict>
-		<key>Modules/FTRenderKit.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
+		<key>Headers/FTTouchEvent.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			XXFpGFLgO/AfRu4SlV5Mlgo1HiyiClIcvEgYsZzuL2M=
-			</data>
-		</dict>
-		<key>Modules/FTRenderKit.swiftmodule/arm64-apple-ios.swiftdoc</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			/pviuN+sOvkCeXAzot57+zSENliSQhBiwT1l518Xv/E=
-			</data>
-		</dict>
-		<key>Modules/FTRenderKit.swiftmodule/arm64-apple-ios.swiftinterface</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			XXFpGFLgO/AfRu4SlV5Mlgo1HiyiClIcvEgYsZzuL2M=
-			</data>
-		</dict>
-		<key>Modules/FTRenderKit.swiftmodule/arm64-apple-ios.swiftmodule</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			y2ZZ81DjHc1x+c5JpT0bVteD1Fc9rwsl2MqtLLX/KjQ=
+			TpIuIxnALImsbT3i6AtS1u3FnqoSxmaqqJCO10gTTa0=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			olyzA2+1e1dR1znzkPaQ3HLO1ZUDIRqMOBH4D4fVloE=
-			</data>
-		</dict>
-		<key>default.metallib</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			/S1fdp2xgsSs50QJZA1J6NLkGrmLWS0ZohM9ULmbvJ0=
+			i2ZgEWghZfjrqydZuSgEtgcura8k+aNGkYMo82/GtVs=
 			</data>
 		</dict>
 	</dict>

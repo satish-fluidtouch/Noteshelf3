@@ -1,0 +1,6 @@
+framework module FTInkStrokeSmoother {
+  umbrella header "FTInkStrokeSmoother.h"
+  export *
+
+  module * { export * }
+}

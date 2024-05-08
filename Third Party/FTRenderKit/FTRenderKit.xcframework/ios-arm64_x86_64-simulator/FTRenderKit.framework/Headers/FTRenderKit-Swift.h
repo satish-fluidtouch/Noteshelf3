@@ -344,6 +344,19 @@ SWIFT_CLASS("_TtC11FTRenderKit13FTBlitEncoder") SWIFT_DEPRECATED_MSG("Use `FTTex
 @end
 
 
+SWIFT_CLASS("_TtC11FTRenderKit22FTCatmulCurvePredictor")
+@interface FTCatmulCurvePredictor : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+SWIFT_CLASS("_TtC11FTRenderKit14FTCatmulResult")
+@interface FTCatmulResult : NSObject
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
 SWIFT_CLASS("_TtC11FTRenderKit14FTClearEncoder")
 @interface FTClearEncoder : NSObject
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
@@ -358,9 +371,18 @@ SWIFT_CLASS("_TtC11FTRenderKit15FTCurrentStroke")
 
 
 
+
+
 SWIFT_CLASS("_TtC11FTRenderKit10FTDebugLog")
 @interface FTDebugLog : NSObject
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+SWIFT_CLASS("_TtC11FTRenderKit22FTGoogleCurvePredictor")
+@interface FTGoogleCurvePredictor : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
 
@@ -835,6 +857,19 @@ SWIFT_CLASS("_TtC11FTRenderKit13FTBlitEncoder") SWIFT_DEPRECATED_MSG("Use `FTTex
 @end
 
 
+SWIFT_CLASS("_TtC11FTRenderKit22FTCatmulCurvePredictor")
+@interface FTCatmulCurvePredictor : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+SWIFT_CLASS("_TtC11FTRenderKit14FTCatmulResult")
+@interface FTCatmulResult : NSObject
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
 SWIFT_CLASS("_TtC11FTRenderKit14FTClearEncoder")
 @interface FTClearEncoder : NSObject
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
@@ -849,9 +884,18 @@ SWIFT_CLASS("_TtC11FTRenderKit15FTCurrentStroke")
 
 
 
+
+
 SWIFT_CLASS("_TtC11FTRenderKit10FTDebugLog")
 @interface FTDebugLog : NSObject
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+SWIFT_CLASS("_TtC11FTRenderKit22FTGoogleCurvePredictor")
+@interface FTGoogleCurvePredictor : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
 

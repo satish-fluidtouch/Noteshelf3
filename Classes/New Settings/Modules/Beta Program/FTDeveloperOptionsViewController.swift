@@ -14,6 +14,7 @@ struct FTDeveloperOption {
     // Never ever change these values without consent.
     // USe Debug/Beta macro if required
     static var bookScaleAnim = true
+    static var useCatmulStroke = false
     static var cacheTextureTileImage: Bool = false
     static var enablePDFSelection: Bool = true
     static var textToStrokeWrapChar: Bool = false
@@ -84,7 +85,7 @@ class FTDeveloperOptionsViewController: UIViewController {
             showTileInfoSwitch?.isEnabled = false
         }
         
-        bookOpenAnimScale?.isOn = FTDeveloperOption.bookScaleAnim
+        bookOpenAnimScale?.isOn = FTDeveloperOption.useCatmulStroke
         textToStrokeWrapChar?.isOn = FTDeveloperOption.textToStrokeWrapChar
         enablePremiumMode?.isOn = FTIAPurchaseHelper.shared.isPremiumUser
         textToStrokeSnapToLineHeight?.isOn = FTDeveloperOption.textToStrokeWrapChar
@@ -124,7 +125,7 @@ class FTDeveloperOptionsViewController: UIViewController {
     }
 
     @IBAction func toggleBookOpenScaleAnim(swicth: UISwitch) {
-        FTDeveloperOption.bookScaleAnim = swicth.isOn
+        FTDeveloperOption.useCatmulStroke = swicth.isOn
     }
 
     @IBAction func toggleTextToStrokeCharWrap(swicth: UISwitch) {

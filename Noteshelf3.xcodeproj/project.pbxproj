@@ -40,6 +40,11 @@
 		093F78EC2B2C35BE00F124AE /* FTAudioAnnotation_DictInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093F78EB2B2C35BE00F124AE /* FTAudioAnnotation_DictInfo.swift */; };
 		09415E312ACFFB8A00BB1EAA /* FTNoteshelfAIPremiumUserCreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09415E302ACFFB8A00BB1EAA /* FTNoteshelfAIPremiumUserCreditsViewController.swift */; };
 		09415E332ACFFBA000BB1EAA /* FTNoteshelfAIFreeUserCreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09415E322ACFFBA000BB1EAA /* FTNoteshelfAIFreeUserCreditsViewController.swift */; };
+		094D85DD2BEB6A5300CFF4F3 /* FTRenderKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA35A28926022057002581BF /* FTRenderKit.xcframework */; };
+		094D85E42BEB71D800CFF4F3 /* FTInkStrokeSmoother.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 094D85DB2BEB6A4600CFF4F3 /* FTInkStrokeSmoother.xcframework */; };
+		094D85E52BEB71D800CFF4F3 /* FTInkStrokeSmoother.xcframework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 094D85DB2BEB6A4600CFF4F3 /* FTInkStrokeSmoother.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		094D85E62BEB71DC00CFF4F3 /* FTRenderKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA35A28926022057002581BF /* FTRenderKit.xcframework */; };
+		094D85E72BEB71DC00CFF4F3 /* FTRenderKit.xcframework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA35A28926022057002581BF /* FTRenderKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0951BA9C2AD01D3D00E9E02C /* FTNoteshelfAITokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0951BA9B2AD01D3D00E9E02C /* FTNoteshelfAITokenManager.swift */; };
 		095B826B2BB2BD9C00E8E82C /* FTDocumentFrameworkLogHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 095B82692BB2BD9C00E8E82C /* FTDocumentFrameworkLogHelper.m */; };
 		095F042E2ACD43E100205BF7 /* FTOpenAIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095F042D2ACD43E100205BF7 /* FTOpenAIResponse.swift */; };
@@ -1977,10 +1982,8 @@
 		BAF395592859ADF10067CA9F /* FTThemeCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E1F9761EC032CF00684AEC /* FTThemeCategoryTableViewCell.swift */; };
 		BAF3955A2859ADF10067CA9F /* FTStroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A3870F210763FF005E4000 /* FTStroke.swift */; };
 		BAF3955B2859ADF10067CA9F /* FTPopOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AFD9462637E28000652DD6 /* FTPopOver.swift */; };
-		BAF3956A2859ADF10067CA9F /* FTRenderKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA35A28926022057002581BF /* FTRenderKit.xcframework */; };
 		BAF3956F2859ADF10067CA9F /* libGPUImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 211E3A0F1E028265007B5CAD /* libGPUImage.a */; platformFilter = ios; };
 		BAF395752859ADF10067CA9F /* Webdav.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 976AA9C425E7E1D00003B793 /* Webdav.xcframework */; };
-		BAF3959B2859ADF10067CA9F /* FTRenderKit.xcframework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA35A28926022057002581BF /* FTRenderKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BAF3959D2859ADF10067CA9F /* Webdav.xcframework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 976AA9C425E7E1D00003B793 /* Webdav.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BAF6A8F72A1CC5EF00A755DB /* FTTextToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF6A8F62A1CC5EF00A755DB /* FTTextToolbarButton.swift */; };
 		BAF7268B2B1E01D1009E8265 /* FTAppConfigHelper_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF7268A2B1E01D1009E8265 /* FTAppConfigHelper_Extension.swift */; };
@@ -2454,12 +2457,13 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				094D85E72BEB71DC00CFF4F3 /* FTRenderKit.xcframework in CopyFiles */,
 				BAF0DCD12A6FE2A9006D293B /* FTNewNotebook.framework in CopyFiles */,
-				BAF3959B2859ADF10067CA9F /* FTRenderKit.xcframework in CopyFiles */,
 				098F613D2B3084C400BB0E16 /* FTDocumentFramework.xcframework in CopyFiles */,
 				BAF0DD742A6FE676006D293B /* FTTemplatesStore.framework in CopyFiles */,
 				BAF3959D2859ADF10067CA9F /* Webdav.xcframework in CopyFiles */,
 				BAA84E4D2873105500DE801B /* FTCommon.framework in CopyFiles */,
+				094D85E52BEB71D800CFF4F3 /* FTInkStrokeSmoother.xcframework in CopyFiles */,
 				BAA84E1E28730F5800DE801B /* FTStyles.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2554,6 +2558,7 @@
 		094B94541E4C86C50047B9D6 /* FTRemoteMessagePopupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTRemoteMessagePopupController.swift; sourceTree = "<group>"; };
 		094B945C1E4C939B0047B9D6 /* FTRemoteAlertAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTRemoteAlertAction.swift; sourceTree = "<group>"; };
 		094C985C22A0F10C00C93401 /* FTNoteshelfDocumentProvider_AllShelfItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNoteshelfDocumentProvider_AllShelfItems.swift; sourceTree = "<group>"; };
+		094D85DB2BEB6A4600CFF4F3 /* FTInkStrokeSmoother.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = FTInkStrokeSmoother.xcframework; sourceTree = "<group>"; };
 		094E5E4D20ADABEA009171B6 /* FTImageAnnotationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTImageAnnotationViewController.swift; sourceTree = "<group>"; };
 		094E5E5020ADB094009171B6 /* FTImageResizeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTImageResizeViewController.xib; sourceTree = "<group>"; };
 		0951BA9B2AD01D3D00E9E02C /* FTNoteshelfAITokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNoteshelfAITokenManager.swift; sourceTree = "<group>"; };
@@ -4853,6 +4858,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				094D85DD2BEB6A5300CFF4F3 /* FTRenderKit.xcframework in Frameworks */,
 				47C561BD29FA7B8000E35D06 /* FTStyles.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4883,7 +4889,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BAF3956A2859ADF10067CA9F /* FTRenderKit.xcframework in Frameworks */,
 				BAF3956F2859ADF10067CA9F /* libGPUImage.a in Frameworks */,
 				BA909A36298BE75D00260538 /* libMyScriptEngine.xcframework in Frameworks */,
 				BA3F7FB1299E2F51003964C6 /* libMyScriptText.xcframework in Frameworks */,
@@ -4892,6 +4897,7 @@
 				BA3F7FB3299E2F51003964C6 /* libMyScriptGesture.xcframework in Frameworks */,
 				BAB46652296FD98A004FCBDC /* OpenCV in Frameworks */,
 				BAA84E1D28730F5800DE801B /* FTStyles.framework in Frameworks */,
+				094D85E62BEB71DC00CFF4F3 /* FTRenderKit.xcframework in Frameworks */,
 				BA8BA67329795F4A00946CFE /* GoogleAPIClientForREST_Drive in Frameworks */,
 				BA3F7FB8299E2F51003964C6 /* libMyScriptMath.xcframework in Frameworks */,
 				BA3F7FB7299E2F51003964C6 /* libMyScriptAnalyzer.xcframework in Frameworks */,
@@ -4903,6 +4909,7 @@
 				BAF0DCD02A6FE2A9006D293B /* FTNewNotebook.framework in Frameworks */,
 				BAF0DD732A6FE676006D293B /* FTTemplatesStore.framework in Frameworks */,
 				BA3F7FB5299E2F51003964C6 /* libMyScriptInk.xcframework in Frameworks */,
+				094D85E42BEB71D800CFF4F3 /* FTInkStrokeSmoother.xcframework in Frameworks */,
 				BAA84E4C2873105500DE801B /* FTCommon.framework in Frameworks */,
 				BA3F7FB4299E2F51003964C6 /* libMyScriptDocument.xcframework in Frameworks */,
 				70E4E0B059B5E459A782F4D5 /* Pods_Noteshelf3.framework in Frameworks */,
@@ -6137,6 +6144,7 @@
 		09D18F4121BFA25300882B19 /* FTRenderKit */ = {
 			isa = PBXGroup;
 			children = (
+				094D85DB2BEB6A4600CFF4F3 /* FTInkStrokeSmoother.xcframework */,
 				BA35A28926022057002581BF /* FTRenderKit.xcframework */,
 			);
 			path = FTRenderKit;
@@ -15404,7 +15412,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 102;
+				CURRENT_PROJECT_VERSION = 131;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -15845,7 +15853,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 102;
+				CURRENT_PROJECT_VERSION = 131;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -16779,7 +16787,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 102;
+				CURRENT_PROJECT_VERSION = 131;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -17723,7 +17731,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 102;
+				CURRENT_PROJECT_VERSION = 131;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -17789,7 +17797,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 102;
+				CURRENT_PROJECT_VERSION = 131;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
