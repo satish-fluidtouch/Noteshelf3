@@ -210,7 +210,9 @@ class FTGlobalSettingsController: UITableViewController {
             #endif
 
         case .about:
-            let childView = FTAboutNoteShelfViewHostingController(aboutsettingsVm: FTSettingsAboutViewModel())
+            let model = FTSettingsAboutViewModel();
+            model.presentingViewController = self
+            let childView = FTAboutNoteShelfViewHostingController(aboutsettingsVm: model)
             childView.title = FTNewSettingsOptions.aboutNoteshelf.rawValue.localized
             self.navigationController?.pushViewController(childView, animated: true)
 

@@ -929,7 +929,7 @@
 "Webdav404Error" = "파일 위치를 확인하고 WebDAV 계정이 파일에 액세스할 수 있는지 확인해주세요.";
 "Webdav405Error" = "호스트 서버가 요청을 거부했습니다.";
 "Webdav409Error" = "호스트 서버가 요청을 거부했습니다. 계정이 해당 폴더에 변경 사항을 적용할 수 있는 권한이 있는지 확인하고 다시 시도해주세요.";
-"Welcome Tour" = "환영 투어";
+"Welcome" = "환영";
 "WhatsNewJoinUsInfo" = "Facebook와 Twitter에서 우리를 좋아하고 팔로우함으로써 독점 콘텐츠, 팁, 프로모션 등에 접근하세요.";
 "Whiteboard" = "화이트보드 모드";
 "WhiteboardMessage" = "외부 디스플레이나 프로젝터로 노트셀프를 화이트보드로 사용하세요.";
@@ -1016,6 +1016,7 @@
 "customizeToolbar.pixabay" = "픽사베이";
 "customizeToolbar.present" = "프레젠테이션";
 "customizeToolbar.readOnlyMode" = "읽기 전용 모드";
+"customizeToolbar.recent.notes" = "최근에 열린 공책";
 "customizeToolbar.requestForShortcut" = "단축키 요청";
 "customizeToolbar.resetConfirmation" = "기본 도구 모음으로 재설정하시겠습니까?";
 "customizeToolbar.rotatePage" = "페이지 회전";
@@ -1060,6 +1061,7 @@
 "finder.bookmark.description" = "즐겨찾는 페이지 및 대형 노트북과 PDF 파일을 개요로 유지하세요.";
 "finder.bookmarks" = "즐겨찾기";
 "finder.clear.recents" = "최근 기록을 지우시겠습니까?";
+"finder.documentonly" = "공책만";
 "finder.downloadPermissionText" = "선택한 노트북은 아직 다운로드되지 않았습니다. 노트북을 다운로드하고 페이지를 이동하시겠습니까?";
 "finder.duplicate" = "중복";
 "finder.fullscreen" = "전체 화면";
@@ -1340,7 +1342,7 @@
 "shelf.discover.tagsTitle" = "메모 정리";
 "shelf.discover.templatesDescription" = "학교, 직장, 일기 작성 등을 위한 수백 가지의 템플릿을 찾아보세요.";
 "shelf.discover.templatesTitle" = "모든 필요에 대한 템플릿";
-"shelf.discover.title" = "가능한 것을 발견하세요.";
+"shelf.discover.title" = "가능한 것을 발견하세요";
 "shelf.discover.whatsNewDescription" = "모든 새로운 Noteshelf와 함께 아름다운 노트를 손쉽게 작성하세요.";
 "shelf.discover.whatsNewTitle" = "노트셀프에서의 새로운 기능은 무엇인가요?";
 "shelf.dragAndDrop.dropAnywhere" = "여기에 파일을 가져오려면 여기에 놓으세요.";
@@ -1571,6 +1573,8 @@
 "textmode.fonttitle" = "글꼴/텍스트 스타일";
 "texttoolbar.fontselectionTitle" = "글꼴 선택";
 "theams.unsplashDescription" = "Unsplash에서 선택, 사진 촬영 또는 사진 라이브러리에서 선택하여 사용자 정의 표지 만들기";
+"tipeview.shortcut.message" = "툴바를 길게 눌러서 원하는 대로 도구를 추가, 제거 또는 재배열하세요.";
+"tipeview.shortcut.title" = "새로운 툴바 단축키가 추가되었습니다!";
 "trash.alert.cannotOpenNotebook" = "이 노트북은 삭제되어 열 수 없습니다. 복원하려면 길게 눌러서 메뉴에서 해당 옵션을 선택하세요.";
 "trash.alert.title" = "당신은 휴지통을 비우시겠습니까?";
 "unsplash.search.alertMessage" = "텍스트를 검색하세요";
@@ -1657,9 +1661,16 @@
 "whatsnew.planner2.cta" = "지금 확인해 보세요!";
 "whatsnew.planner2.description" = "일부 유능한 창작자들로부터 선별한 템플릿 섹션에서 매력적인 디지털 플래너를 발견하세요.";
 "whatsnew.planner2.title" = "더 많은 2024 계획자!";
+"widget.nonotes" = "아직 노트가 없습니다";
+"widget.notebook" = "공책";
+"widget.pinned.description" = "하나의 공책에 빠르게 액세스하세요.";
+"widget.quickCreate.large.description" = "빠르게 빈 노트북을 만들고 오디오를 녹음하거나 문서를 스캔하세요.";
+"widget.quickCreate.small.description" = "빠른 메모 만들기.";
+"widget.quicknote" = "빠른 메모";
+"widget.takenotes" = "메모를 작성하다";
 "widgets" = "위젯";
 "work" = "일";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 19 April 2024 at 6:14 PM
+// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM

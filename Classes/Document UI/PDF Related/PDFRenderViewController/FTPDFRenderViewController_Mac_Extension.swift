@@ -88,6 +88,17 @@ extension FTPDFRenderViewController {
                 }
             }
 
+        case .camera:
+            self.executer?.execute(type: .camera)
+        case .scrolling:
+            let oppLayout = UserDefaults.standard.pageLayoutType.oppositeLayout
+            self.executer?.execute(type: .scrolling(source: oppLayout))
+            let layout = UserDefaults.standard.pageLayoutType
+            let config = FTToastConfiguration(title: layout.toastTitle.localized)
+            FTToastHostController.showToast(from: self, toastConfig: config)
+            layout.trackLayout()
+        case .recentNotes:
+            self.executer?.execute(type: .recentNotes(source: toolbarItem))
         case .tag:
             if let page = self.firstPageController()?.pdfPage as? FTThumbnailable {
                 let pagesSet = NSSet(array: [page])
@@ -221,7 +232,7 @@ extension FTPDFRenderViewController {
 
 extension FTPDFRenderViewController: FTMenuActionResponder {
     
-    func canPeformAction(action: Selector) -> Bool {
+    func  canPeformAction(action: Selector) -> Bool {
         var canPerform = false;
         if action == #selector(importDocumentFromFinderClicked(_:))
             || action == #selector(FTMenuActionResponder.zoomInClicked(_:))

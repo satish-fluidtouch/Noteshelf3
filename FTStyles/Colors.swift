@@ -36,6 +36,7 @@ public enum AssetsColor: String, CaseIterable {
     case welcomeBtnColor
     case welcometopGradiantColor
     case welcomeBottonGradiantColor
+    case WelcomeContentShadowColor
     case neroColor
     case readOnlyModePageNumberBG
     case readOnlyModePageNumberTint
@@ -107,6 +108,10 @@ public enum AssetsColor: String, CaseIterable {
     case shortcutSlotHighlightBorderColor
     case favoriteEmptySlotColor
     case lock_icon_bgcolor
+    case creationWidgetButtonTint
+    case creationWidgetButtonBG
+    case pinnedBookOptionBgColor
+    case discount_percentage_color
 
     // System
     case black1

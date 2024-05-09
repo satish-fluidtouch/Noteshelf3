@@ -11,6 +11,7 @@ import FirebaseAnalytics
 import FirebaseCrashlytics
 import FTStyles
 import FTTemplatesStore
+import TipKit
 
 let AppDelegate = UIApplication.shared.delegate as! NoteshelfAppDelegate
 
@@ -31,7 +32,6 @@ let AppDelegate = UIApplication.shared.delegate as! NoteshelfAppDelegate
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         FTDocumentFrameworkLogHelper.config()
         self.clearTempCache();
-        FTStyles.registerFonts()
         FTImportStorageManager.resetCorruptedStatusWhenTerminated()
         FTCLSLog("--- didFinishLaunchingWithOptions ---")
         FTUserDefaults.configure()
@@ -60,6 +60,7 @@ let AppDelegate = UIApplication.shared.delegate as! NoteshelfAppDelegate
         FTStoreLibraryHandler.shared.start()
         FTStoreCustomTemplatesHandler.shared.start()
         FTSavedClipsProvider.shared.start()
+        self.configTipsIfNeeded()
         return true
     }
 
@@ -246,6 +247,15 @@ private extension NoteshelfAppDelegate {
         DispatchQueue.global().async {
             let tempLocation = URL(fileURLWithPath: (FTUtils.applicationCacheDirectory() as NSString).appendingPathComponent("TempZip"))
             try? FileManager().removeItem(at: tempLocation)
+        }
+    }
+}
+
+private extension NoteshelfAppDelegate {
+    func configTipsIfNeeded() {
+        if #available(iOS 17.0, *) {
+            try? Tips.resetDatastore()
+            try? Tips.configure([.displayFrequency(.daily)])
         }
     }
 }

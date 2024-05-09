@@ -17,7 +17,9 @@ struct FTDiscoverItemModel: Identifiable {
     var eventTrackName: String
 }
 struct FTDiscoverWhatsNewView: View {
-    @AppStorage("discoverIsExpanded") var isExpanded: Bool = false
+    @AppStorage("discoverIsExpanded") var discoverExpandStaus: Bool = false
+    @State var isExpanded: Bool = false
+
     @EnvironmentObject var sheflViewModel: FTShelfViewModel
 
     var body: some View {
@@ -26,41 +28,16 @@ struct FTDiscoverWhatsNewView: View {
                 get: { isExpanded},
                 set: { isExpanding in
                     isExpanded = isExpanding
+                    discoverExpandStaus = isExpanding
                     let eventName = isExpanding ? EventName.discover_expand : EventName.discover_collapse
                     track(eventName, screenName: ScreenName.shelf)
                 }
             )) {  ScrollView(.horizontal,showsIndicators: false) {
-                    HStack(alignment: .top, spacing:0){
+                    HStack(alignment: .top, spacing:24){
                         ForEach(discoverItemsDatasource){ item in
-                            VStack(alignment: .leading,spacing:0){
-                                Image(uiImage: UIImage(named: item.imageName)!)
-                                    .resizable()
-                                    .frame(width: 248,height:165,alignment:.top)
-
-                                VStack(alignment: .leading,spacing: 2) {
-                                    Text(item.title.localized)
-                                        .frame(maxWidth:.infinity,maxHeight:22,alignment:.leading)
-                                        .foregroundColor(.appColor(.black1))
-                                        .font(.clearFaceFont(for: .regular, with: 17))
-                                        .multilineTextAlignment(.leading)
-                                        .padding(.top,12)
-
-                                    Text(item.description.localized)
-                                        .frame(maxWidth:.infinity, alignment:.leading)
-                                        .foregroundColor(.appColor(.black70))
-                                        .font(.appFont(for: .regular, with: 12))
-                                        .multilineTextAlignment(.leading)
-                                }
-                                .padding(.horizontal,12)
-                                .frame(width: 248,height: 95,alignment: .top)
-                                .background(Color.appColor(.white100))
-                            }
-                            .cornerRadius(4)
-                            .frame(width: 248,height: 260)
-                            .padding(.top,16)
-                            .padding(.trailing,24)
-                            .padding(.bottom,24)
-                            .shadow(color: Color.appColor(.black16), radius:4, x: 0, y: 2)
+                            footerView(item: item)
+                            .padding(.top, 16)
+                            .padding(.bottom, 16)
                             .onTapGesture {
                                 track(EventName.discover_blog_tap, params:[EventParameterKey.title:"\(item.eventTrackName)"], screenName: ScreenName.shelf)
                                 self.sheflViewModel.delegate?.openDiscoveryItemsURL(item.url)
@@ -71,20 +48,65 @@ struct FTDiscoverWhatsNewView: View {
                 }
             } label: {
                 Text("shelf.discover.title".localized)
-                    .font(.clearFaceFont(for: .medium, with: 22))
+                    .font(.appFont(for: .bold, with: 15))
                     .padding(.leading,8)
             }
-            .padding(.top,24)
-            .padding(.trailing,24)
-            .padding(.leading,16)
+            .padding(.top,16)
+            .padding(.horizontal,24)
             .if(!isExpanded, transform: { view in
-                view.padding(.bottom,24)
+                view.padding(.bottom,16)
             })
             .accentColor(.appColor(.black1))
         }
         .background(Color.appColor(.black5))
         .cornerRadius(16)
     }
+    
+    private func footerView(item: FTDiscoverItemModel) -> some View {
+        return VStack {
+            VStack(spacing: 8) {
+                Image(uiImage: UIImage(named: item.imageName)!)
+                    .frame(width: 120, height:80)
+                Text(item.title.localized)
+                    .appFont(for: .medium, with: 13)
+            }
+        }
+        .frame(width: 120)
+        
+    }
+    
+    private func discoverableView(item: FTDiscoverItemModel) -> some View {
+        return VStack(alignment: .leading,spacing:0){
+             Image(uiImage: UIImage(named: item.imageName)!)
+                 .resizable()
+                 .frame(width: 248,height:165,alignment:.top)
+             
+             VStack(alignment: .leading,spacing: 2) {
+                 Text(item.title.localized)
+                     .frame(maxWidth:.infinity,maxHeight:22,alignment:.leading)
+                     .foregroundColor(.appColor(.black1))
+                     .font(.clearFaceFont(for: .regular, with: 17))
+                     .multilineTextAlignment(.leading)
+                     .padding(.top,12)
+                 
+                 Text(item.description.localized)
+                     .frame(maxWidth:.infinity, alignment:.leading)
+                     .foregroundColor(.appColor(.black70))
+                     .font(.appFont(for: .regular, with: 12))
+                     .multilineTextAlignment(.leading)
+             }
+             .padding(.horizontal,12)
+             .frame(width: 248,height: 95,alignment: .top)
+             .background(Color.appColor(.white100))
+         }
+         .cornerRadius(4)
+         .frame(width: 248,height: 260)
+         .padding(.top,16)
+         .padding(.trailing,24)
+         .padding(.bottom,24)
+         .shadow(color: Color.appColor(.black16), radius:4, x: 0, y: 2)
+    }
+    
     private var discoverItemsDatasource: [FTDiscoverItemModel] {
         return [
             FTDiscoverItemModel(imageName: "whatsNew", title: "shelf.discover.whatsNewTitle", description: "shelf.discover.whatsNewDescription", url: URL(string: "https://medium.com/noteshelf/introducing-all-new-noteshelf-3-3a89f78fd240"), eventTrackName: "What’s new in Noteshelf"),

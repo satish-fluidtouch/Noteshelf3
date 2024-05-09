@@ -69,6 +69,9 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
     case rotatePage
     case duplicatePage
     case deletePage
+    case scrolling
+    case camera
+    case recentNotes
 
     // Share and Save
     case savePageAsPhoto
@@ -130,13 +133,20 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             name = "desk_tool_duplicatePage"
         case .deletePage:
             name = "desk_tool_deletePage"
-
+        case .scrolling:
+            name = UserDefaults.standard.pageLayoutType.toolIconName
+        case .camera:
+            name = "desk_tool_camera"
+        case .recentNotes:
+            name = "desk_tool_recentNotes"
+            
         case .savePageAsPhoto:
             name = "desk_tool_saveAsPhoto"
         case .sharePageAsPng:
             name = "desk_tool_shareAsPNG"
         case .shareNotebookAsPDF:
             name = "desk_tool_shareAsPDF"
+        
         }
         return name
     }
@@ -236,6 +246,12 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             str = "customizeToolbar.duplicatePage".localized
         case .deletePage:
             str = "customizeToolbar.deletePage".localized
+        case .camera:
+            str = "Camera".localized
+        case .scrolling:
+            str = "customizeToolbar.switchScrollingDirection".localized
+        case .recentNotes:
+            str = "customizeToolbar.recent.notes".localized
             
         case .savePageAsPhoto:
             str = "customizeToolbar.savePageAsPhoto".localized
@@ -305,6 +321,12 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             str = "customizeToolbar.duplicatePage".localizedEnglish
         case .deletePage:
             str = "customizeToolbar.deletePage".localizedEnglish
+        case .camera:
+            str = "Camera".localizedEnglish
+        case .scrolling:
+            str = "customizeToolbar.switchScrollingDirection".localizedEnglish
+        case .recentNotes:
+            str = "customizeToolbar.recent.notes".localizedEnglish
 
         case .savePageAsPhoto:
             str = "customizeToolbar.savePageAsPhoto".localizedEnglish
@@ -322,6 +344,14 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             mode = .deskModeTool
         }
         return mode
+    }
+    
+    var toShowNewBadge: Bool {
+        var status = false
+        if self == .camera || self == .scrolling || self == .recentNotes {
+            status = true
+        }
+        return status
     }
 
     func isColorEditTool() -> Bool {

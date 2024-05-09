@@ -9,6 +9,8 @@ import UIKit
 import FTCommon
 import FTStyles
 
+private let PRESENT_APPROACH = false;
+
 public protocol FTCoversInfoDelegate: FTCustomCoverInfoDelegate {
     func fetchCoversData() -> [FTCoverSectionModel]
     func fetchNoCoverTheme() -> FTThemeable?
@@ -430,14 +432,42 @@ public class FTCreateNotebookViewController: UIViewController {
                 createNotebookViewController.navigationItem.rightBarButtonItem = rightBar;
             }
 #else
-            createNotebookViewController.modalPresentationStyle = .custom
-            createNotebookViewController.transitioningDelegate = createNotebookViewController.customTransitionDelegate;
-            createNotebookViewController.view.frame = viewController.view.frame
-            viewController.present(createNotebookViewController, animated: true)
+            if(PRESENT_APPROACH) {
+                createNotebookViewController.modalPresentationStyle = .custom
+                createNotebookViewController.transitioningDelegate = createNotebookViewController.customTransitionDelegate;
+                createNotebookViewController.view.frame = viewController.view.frame
+                viewController.present(createNotebookViewController, animated: true)
+                return;
+            }
+            createNotebookViewController.view.frame = viewController.view.bounds
+            createNotebookViewController.view.addVisualEffectBlur(style: .light, cornerRadius: 0, frameToBlur: .zero);
+            viewController.add(createNotebookViewController);
+            viewController.view.addSubview(createNotebookViewController.view);
+            createNotebookViewController.view.addEqualConstraintsToView(toView: viewController.view);
+            viewController.view.layoutIfNeeded();
+            
+            createNotebookViewController.animateView(true, onCompletion: nil);
 #endif
         }
     }
     
+    public override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+#if targetEnvironment(macCatalyst)
+        super.dismiss(animated: flag, completion: completion);
+#else
+        guard !PRESENT_APPROACH else {
+            super.dismiss(animated: flag, completion: completion);
+            return
+        }
+        if !flag {
+            self.view.removeFromSuperview();
+            self.removeFromParent();
+            completion?();
+            return
+        }
+        self.animateView(false, onCompletion: completion);
+#endif
+    }
     @objc private func clearNotebookTitle(){
         self.notebookTitleTextfield?.text = ""
     }
@@ -660,5 +690,31 @@ public extension FTCreateNotebookViewController {
         snapView.insertSubview(blurEffectView, at: 0);
 #endif
         return snapView;
+    }
+}
+
+private extension FTCreateNotebookViewController {
+    func animateView(_ isPresenting: Bool, onCompletion: (()->())?) {
+        
+        let smallTransform = CGAffineTransform(scaleX: 0.7, y: 0.7);
+        let normalTransform = CGAffineTransform.identity;
+        
+        self.view.alpha = isPresenting ? 0 : 1;
+        self.view.transform = isPresenting ? smallTransform : normalTransform;
+
+        UIView.animate(withDuration: 0.4,
+                       delay: 0,
+                       usingSpringWithDamping: 0.9,
+                       initialSpringVelocity: 10,
+                       animations: {
+            self.view.alpha = isPresenting ? 1 : 0;
+            self.view.transform = isPresenting ? normalTransform : smallTransform;
+        }) { finished in
+            if !isPresenting {
+                self.view.removeFromSuperview();
+                self.removeFromParent();
+            }
+            onCompletion?();
+        };
     }
 }

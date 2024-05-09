@@ -120,7 +120,7 @@ extension FTShelfViewModel: FTShelfBottomToolbarDelegate {
             self?.addObserversForShelfItems()
             self?.resetShelfModeTo(.normal)
              // After trashing, we are not getting updates on current collection, instead its gives on trash collection so explicitly refreshing the shelf
-                self?.reloadItems()
+                self?.reloadItems(force: true)
         })
     }
 
@@ -147,7 +147,7 @@ extension FTShelfViewModel: FTShelfBottomToolbarDelegate {
             self?.addObserversForShelfItems()
             self?.resetShelfModeTo(.normal)
             #if targetEnvironment(macCatalyst)
-            self?.reloadItems()
+            self?.reloadItems(force: true)
             #endif
         })
     }
