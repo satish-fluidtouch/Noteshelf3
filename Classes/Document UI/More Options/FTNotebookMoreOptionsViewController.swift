@@ -276,7 +276,7 @@ extension FTNotebookMoreOptionsViewController: UITableViewDelegate, UITableViewD
         case is FTNotebookAddToStylus:
             self.navigateToStylus()
         case is FTNotebookAddScrollingDirection:
-            print("Screen is Rotating..")
+            self.navigateToScrollingPage()
         default:
 #if DEBUG
             print("Setting", setting.localizedTitle)
@@ -449,6 +449,14 @@ extension FTNotebookMoreOptionsViewController {
             stylusController.contentSize = CGSize(width: defaultPopoverWidth, height: 210)
             stylusController.hideNavButtons = true
             self.navigationController?.pushViewController(stylusController, animated: true)
+        }
+    }
+    
+    func navigateToScrollingPage(){
+        let storyboard = UIStoryboard(name: "FTNotebookMoreOptions", bundle: nil)
+        if let scrollingController = storyboard.instantiateViewController(withIdentifier: "FTScrollingDirectionViewController") as? FTScrollingDirectionViewController {
+            scrollingController.contentSize = CGSize(width: defaultPopoverWidth, height: 150)
+            self.navigationController?.pushViewController(scrollingController, animated: true)
         }
     }
 }

@@ -9,16 +9,13 @@
 import UIKit
 
 class FTScrollingDirectionCell: UITableViewCell {
+    
+    @IBOutlet weak var titleLBl: UILabel!
+    @IBOutlet weak var iconImg: UIImageView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
     }
 
 }
