@@ -17,92 +17,85 @@ struct FTPinnedNotebookOptionsWidgetView: View {
     @State var image = UIImage(named: "noCover")!
 
     var body: some View {
-        HStack(spacing: 0) {
-            Button(intent: entry.bookOpenintent) {
-                if entry.relativePath.isEmpty {
-                    NoNotesView
-                } else {
-                    sideView
+        GeometryReader { geometry in
+            HStack(spacing: 0) {
+                Button(intent: entry.bookOpenintent) {
+                    if entry.relativePath.isEmpty {
+                        ZStack {
+                            Color(uiColor: color)
+                            RoundedRectangle(cornerRadius: 10)
+                                .frame(width: geometry.size.width * 0.43, height: geometry.size.height * 0.77)
+                                .foregroundColor(Color(uiColor: UIColor(hexString: "FFFFFF",alpha: 0.1)))
+                            Text("widget.nonotes".localized)
+                                .font(.appFont(for: .medium, with: 13))
+                                .foregroundColor(Color(uiColor: UIColor(hexString: "FFFFFF")))
+                        }
+                        .frame(width: geometry.size.width * 0.54, height: geometry.size.height)
+                    } else {
+                        VStack {
+                        }
+                        .frame(width: geometry.size.width * 0.54, height: geometry.size.height)
+                        .background(Color(uiColor: color))
+                        .overlay() {
+                            ZStack(alignment: .top) {
+                                if entry.hasCover {
+                                    if color.isLightColor() {
+                                        Color.black.opacity(0.2)
+                                    } else {
+                                        Color.white.opacity(0.2)
+                                    }
+                                }
+                                HStack{
+                                    VStack(spacing:0) {
+                                        HStack {
+                                            Image(uiImage: image)
+                                                .resizable()
+                                                .frame(width: imageSize(for: entry).width,height: imageSize(for: entry).height)
+                                                .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
+                                                .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .bottomRight]))
+                                                .padding(.top, image.size.width > image.size.height ? 30 : 18)
+                                                .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 3)
+                                            Spacer()
+                                        }
+                                        HStack {
+                                            Text(entry.name.lastPathComponent)
+                                                .lineLimit(1)
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                                .foregroundColor(color.isLightColor() ? Color.black : Color.white)
+                                                .padding(.top, 13)
+                                                .font(.appFont(for: .medium, with: 16))
+                                            Spacer(minLength: 14)
+                                        }
+                                        HStack {
+                                            Text(entry.time)
+                                                .lineLimit(1)
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                                .font(.appFont(for: .medium, with: 12))
+                                                .foregroundColor(color.isLightColor() ? Color.black.opacity(0.5) : Color.white.opacity(0.5))
+                                                .padding(.top, 2)
+                                            Spacer(minLength: 14)
+                                        }
+                                        Spacer()
+                                    }.padding(.leading, 20)
+                                    Spacer()
+                                }
+
+                            }
+                        }.isHidden(entry.relativePath.isEmpty)
+                    }
+                }.buttonStyle(.plain)
+                VStack {
+                    optionsView
                 }
-            }.buttonStyle(.plain)
-            VStack {
-                optionsView
+                .frame(width: geometry.size.width * 0.46)
             }
-            .frame(width: 155, height: 155)
         }
         .onAppear {
             image = imageFrom(entry: entry)
             color = entry.hasCover ? adaptiveColorFromImage() : UIColor(hexString: "#E06E51",alpha: 0.85)
         }
     }
-    
-    private var sideView: some View {
-        return VStack {
-        }
-        .frame(width: 190, height: 155)
-        .background(Color(uiColor: color))
-        .overlay() {
-            ZStack(alignment: .top) {
-                if entry.hasCover {
-                    if color.isLightColor() {
-                        Color.black.opacity(0.2)
-                    } else {
-                        Color.white.opacity(0.2)
-                    }
-                }
-                HStack{
-                    VStack(spacing:0) {
-                        HStack {
-                            Image(uiImage: image)
-                                .resizable()
-                                .frame(width: imageSize(for: entry).width,height: imageSize(for: entry).height)
-                                .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
-                                .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .bottomRight]))
-                                .padding(.top, image.size.width > image.size.height ? 30 : 18)
-                                .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 3)
-                            Spacer()
-                        }
-                        HStack {
-                            Text(entry.name.lastPathComponent)
-                                .lineLimit(1)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .foregroundColor(color.isLightColor() ? Color.black : Color.white)
-                                .padding(.top, 13)
-                                .font(.appFont(for: .medium, with: 16))
-                            Spacer(minLength: 14)
-                        }
-                        HStack {
-                            Text(entry.time)
-                                .lineLimit(1)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .font(.appFont(for: .medium, with: 12))
-                                .foregroundColor(color.isLightColor() ? Color.black.opacity(0.5) : Color.white.opacity(0.5))
-                                .padding(.top, 2)
-                                Spacer(minLength: 14)
-                        }
-                        Spacer()
-                    }.padding(.leading, 20)
-                    Spacer()
-                }
-                
-            }
-        }.isHidden(entry.relativePath.isEmpty)
-    }
-    
-    private  var NoNotesView: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 10)
-                .frame(width: 150, height: 120)
-                .foregroundColor(Color(uiColor: UIColor(hexString: "FFFFFF",alpha: 0.1)))
-            Text("widget.nonotes".localized)
-                .font(.appFont(for: .medium, with: 13))
-                .foregroundColor(Color(uiColor: UIColor(hexString: "FFFFFF")))
-        }
-        .frame(width: 190, height: 155)
-        .background(Color(uiColor: color))
-        
-    }
-    
+
     private func imageFrom(entry : FTPinnedBookEntry) -> UIImage {
         return UIImage(contentsOfFile: entry.coverImage) ?? UIImage(named: "noCover")!
     }

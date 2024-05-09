@@ -12,13 +12,18 @@ import FTCommon
 struct FTPinnedWidgetView : View {
     let entry: FTPinnedBookEntry
     @State var image = UIImage(named: "noCover")!
+    @Environment(\.widgetContentMargins) var margins
+
     var body: some View {
-        VStack {
-            VStack(spacing: 0) {
-                topView(entry: entry)
-                bottomView(entry: entry)
+        GeometryReader { geometry in
+            VStack {
+                VStack(spacing: 0) {
+                    topView(entry: entry, height: geometry.size.height/3)
+                    bottomView(entry: entry, height: geometry.size.height * 2/3)
+                }
             }
-        }.overlay(alignment: .topLeading) {
+        }
+        .overlay(alignment: .topLeading) {
             if !entry.relativePath.isEmpty {
                 HStack {
                     VStack(spacing:0) {
@@ -57,11 +62,12 @@ struct FTPinnedWidgetView : View {
 struct topView: View {
     let entry: FTPinnedBookEntry
     @State var color: UIColor = .black
-    
+    @State var height: CGFloat = 55
+
     var body: some View {
         ZStack {
             Color(uiColor: color)
-        }.frame(width: 160, height: 55)
+        }.frame(height: height)
             .onAppear {
                 color = entry.hasCover ? adaptiveColorFromImage() : UIColor(hexString: "#E06E51")
             }
@@ -87,15 +93,20 @@ struct topView: View {
 
 struct bottomView: View {
     let entry: FTPinnedBookEntry
+    @State var height: CGFloat = 110
+
     var body: some View {
-        HStack {
-            if entry.relativePath.isEmpty {
-                EmptyNotesView()
-            } else {
-                NoteBookInfoView(entry: entry)
+        ZStack {
+            Rectangle().fill(LinearGradient(colors: [Color("widgetBG1"),Color("widgetBG2")], startPoint: .top, endPoint: .bottom))
+            HStack {
+                if entry.relativePath.isEmpty {
+                    EmptyNotesView()
+                } else {
+                    NoteBookInfoView(entry: entry)
+                }
             }
-        }.frame(width: 160, height: 110)
-            .background(Rectangle().fill(LinearGradient(colors: [Color("widgetBG1"),Color("widgetBG2")], startPoint: .top, endPoint: .bottom)))
+        }
+        .frame(height: height)
     }
 }
 
