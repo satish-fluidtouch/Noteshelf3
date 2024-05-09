@@ -22,26 +22,27 @@ struct FTPinnedWidgetView : View {
                     bottomView(entry: entry, height: geometry.size.height * 2/3)
                 }
             }
-        }
-        .overlay(alignment: .topLeading) {
-            if !entry.relativePath.isEmpty {
-                HStack {
-                    VStack(spacing:0) {
-                        HStack {
-                            Image(uiImage: image)
-                                .resizable()
-                                .frame(width: imageSize(for: entry).width,height: imageSize(for: entry).height)
-                                .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
-                                .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .bottomRight]))
-                                .padding(.top, image.size.width > image.size.height ? 34 : 22)
-                                .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 3)
-                            Spacer()
-                        }
-                    }.padding(.leading, 20)
-                    Spacer()
+            .overlay(alignment: .topLeading) {
+                if !entry.relativePath.isEmpty {
+                    HStack {
+                        VStack(spacing:0) {
+                            HStack {
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .frame(width: imageSize(for: entry).width,height: imageSize(for: entry).height)
+                                    .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
+                                    .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .bottomRight]))
+                                    .padding(.top, image.size.width > image.size.height ? geometry.size.height * 0.19 : geometry.size.height * 0.13)
+                                    .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 3)
+                                Spacer()
+                            }
+                        }.padding(.leading, 20)
+                        Spacer()
+                    }
                 }
             }
-        }.onAppear {
+        }
+        .onAppear {
             image = imageFrom(entry : entry)
         }
     }
@@ -102,7 +103,7 @@ struct bottomView: View {
                 if entry.relativePath.isEmpty {
                     EmptyNotesView()
                 } else {
-                    NoteBookInfoView(entry: entry)
+                    NoteBookInfoView(entry: entry, height: height)
                 }
             }
         }
@@ -125,6 +126,8 @@ struct EmptyNotesView: View {
 
 struct NoteBookInfoView: View {
     let entry: FTPinnedBookEntry
+    @State var height: CGFloat = 110
+
     var body: some View {
         HStack {
             VStack(spacing: 3) {
@@ -144,8 +147,8 @@ struct NoteBookInfoView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                     Spacer(minLength: 16)
                 }
-            }.padding(.leading, 20)
-                .padding(.bottom, 22)
+            }.padding(.leading, 18)
+                .padding(.bottom, 18)
             Spacer()
         }
     }

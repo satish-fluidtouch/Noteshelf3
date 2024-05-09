@@ -53,7 +53,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                                                 .frame(width: imageSize(for: entry).width,height: imageSize(for: entry).height)
                                                 .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
                                                 .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .bottomRight]))
-                                                .padding(.top, image.size.width > image.size.height ? 30 : 18)
+                                                .padding(.top, image.size.width > image.size.height ? geometry.size.height * 0.19 : geometry.size.height * 0.13)
                                                 .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 3)
                                             Spacer()
                                         }
