@@ -21251,203 +21251,203 @@
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "IntegerLiteral",
-      "offset": 10935,
+      "offset": 10948,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "FloatLiteral",
-      "offset": 11079,
+      "offset": 11160,
       "length": 3,
       "value": "1.0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "IntegerLiteral",
-      "offset": 11192,
+      "offset": 11273,
       "length": 1,
       "value": "9"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "IntegerLiteral",
-      "offset": 11228,
+      "offset": 11309,
       "length": 1,
       "value": "9"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "IntegerLiteral",
-      "offset": 11265,
+      "offset": 11346,
       "length": 1,
       "value": "9"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "FloatLiteral",
-      "offset": 11289,
+      "offset": 11370,
       "length": 3,
       "value": "1.0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "FloatLiteral",
-      "offset": 11386,
+      "offset": 11467,
       "length": 3,
       "value": "0.0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "IntegerLiteral",
-      "offset": 11466,
+      "offset": 11547,
       "length": 2,
       "value": "10"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "IntegerLiteral",
-      "offset": 11470,
+      "offset": 11551,
       "length": 1,
       "value": "9"
-    },
-    {
-      "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
-      "kind": "IntegerLiteral",
-      "offset": 11550,
-      "length": 2,
-      "value": "10"
-    },
-    {
-      "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
-      "kind": "IntegerLiteral",
-      "offset": 11554,
-      "length": 1,
-      "value": "9"
-    },
-    {
-      "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
-      "kind": "IntegerLiteral",
-      "offset": 11627,
-      "length": 2,
-      "value": "10"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "IntegerLiteral",
       "offset": 11631,
+      "length": 2,
+      "value": "10"
+    },
+    {
+      "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
+      "kind": "IntegerLiteral",
+      "offset": 11635,
       "length": 1,
       "value": "9"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "IntegerLiteral",
-      "offset": 11695,
+      "offset": 11708,
+      "length": 2,
+      "value": "10"
+    },
+    {
+      "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
+      "kind": "IntegerLiteral",
+      "offset": 11712,
+      "length": 1,
+      "value": "9"
+    },
+    {
+      "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
+      "kind": "IntegerLiteral",
+      "offset": 11776,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "FloatLiteral",
-      "offset": 11698,
+      "offset": 11779,
       "length": 3,
       "value": "0.1"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "FloatLiteral",
-      "offset": 11720,
+      "offset": 11801,
       "length": 3,
       "value": "2.0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "FloatLiteral",
-      "offset": 11725,
+      "offset": 11806,
       "length": 3,
       "value": "3.0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "FloatLiteral",
-      "offset": 11746,
+      "offset": 11827,
       "length": 3,
       "value": "0.1"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "IntegerLiteral",
-      "offset": 11999,
+      "offset": 12080,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "BooleanLiteral",
-      "offset": 12042,
+      "offset": 12123,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "IntegerLiteral",
-      "offset": 12218,
+      "offset": 12299,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "IntegerLiteral",
-      "offset": 12374,
+      "offset": 12455,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "FloatLiteral",
-      "offset": 12436,
+      "offset": 12517,
       "length": 3,
       "value": "1.0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "IntegerLiteral",
-      "offset": 12820,
+      "offset": 12901,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "IntegerLiteral",
-      "offset": 13136,
+      "offset": 13217,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "FloatLiteral",
-      "offset": 13139,
+      "offset": 13220,
       "length": 3,
       "value": "0.1"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "FloatLiteral",
-      "offset": 13161,
+      "offset": 13242,
       "length": 3,
       "value": "2.0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "FloatLiteral",
-      "offset": 13166,
+      "offset": 13247,
       "length": 3,
       "value": "3.0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTCurrentStroke.swift",
       "kind": "FloatLiteral",
-      "offset": 13187,
+      "offset": 13268,
       "length": 3,
       "value": "0.1"
     },
@@ -22884,7 +22884,7 @@
       "kind": "IntegerLiteral",
       "offset": 6046,
       "length": 1,
-      "value": "2"
+      "value": "1"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/CurvePredictor\/FTCatmulCurvePredictor.swift",
