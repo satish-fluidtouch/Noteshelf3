@@ -1926,11 +1926,11 @@ fileprivate extension FTRootViewController {
         }
         let alertContorller = UIAlertController(title: "applaunch.delay.msg".localized, message: nil, preferredStyle: .alert)
         let closeAction = UIAlertAction(title: "Close".localized, style: .default);
-        let support = UIAlertAction(title: "applaunch.delay.contactSupport".localized, style: .default) { [weak self] _ in
+        let support = UIAlertAction(title: "LearnMore".localized, style: .default) { [weak self] _ in
             guard let controller = self else {
                 return;
             }
-            FTZenDeskManager.shared.showSupportContactUsScreen(controller: controller, defaultSubject: "App Launch Delay", extraTags: ["ns3_app_launc_delay"])
+            FTZenDeskManager.shared.showArticle("32015682831385", in: controller, completion: nil);
         }
         alertContorller.addAction(closeAction)
         alertContorller.addAction(support)
