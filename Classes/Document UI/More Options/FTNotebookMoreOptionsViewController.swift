@@ -130,7 +130,14 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
             let value = FTUserDefaults.defaults().showStatusBar ? "on" : "off"
             track("nbk_statusbar_toggle", params: ["toggle": value], screenName: FTScreenNames.notebook)
         }
+        
     }
+    
+    func switchvalueChanged(for setting: FTNotebookMoreOption,_ uiSwitch:UISwitch) {
+       toggleEvernoteSyncStatusFor(uiSwitch: uiSwitch)
+       let str = uiSwitch.isOn ? "on" : "off"
+       FTNotebookEventTracker.trackNotebookEvent(with: setting.eventName, params: ["toggle": str])
+   }
     
     private func addTableHeaderview() {
         guard let view = Bundle.main.loadNibNamed("FTNoteBookToolsHeaderView", owner: nil, options: nil)?.first as? FTNotebookToolsHeaderView else {
@@ -209,7 +216,9 @@ extension FTNotebookMoreOptionsViewController: UITableViewDelegate, UITableViewD
                 let toggleSwitch = UISwitch(frame: CGRect.zero)
                 toggleSwitch.preferredStyle = .sliding
                 self.updateEvernoteToggleSwitch(uiSwitch: toggleSwitch, withStatus: FTENPublishManager.shared.isSyncEnabled(forDocumentUUID: notebookDocument.documentUUID))
-                
+                toggleSwitch.addAction(UIAction(handler: {[weak self] action in
+                    self?.switchvalueChanged(for:setting, toggleSwitch)
+                }), for: .valueChanged)
             case is FTNotebookAddScrollingDirection :
                 settingCell.scrollingValueLbl?.isHidden = false
             case is FTNotebookStatusBarSetting :

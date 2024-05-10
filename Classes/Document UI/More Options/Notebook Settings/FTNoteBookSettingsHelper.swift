@@ -12,6 +12,7 @@ enum FTNoteBookSettingCellTye {
     case toggle
     case disclosure
     case custom
+    case defaultCell
 }
 
 @objc enum FTNoteBookSettings: Int, CaseIterable {
@@ -32,10 +33,12 @@ enum FTNoteBookSettingCellTye {
         switch self {
         case .autoBackup, .autoLock, .hideUiInPresentMode, .allowHyperLinks,.evernoteSync :
             cellType = .toggle
-        case .password, .stylus, .addToSiri,.gestures,.noteShelfHelp :
+        case .password, .stylus, .addToSiri :
             cellType = .disclosure
         case .scrolling:
             cellType = .custom
+        case .gestures,.noteShelfHelp:
+            cellType = .defaultCell
         }
         return cellType
     }
