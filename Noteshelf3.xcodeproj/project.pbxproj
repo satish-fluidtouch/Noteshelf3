@@ -512,7 +512,6 @@
 		52550EB72A70FCAD00E7A1E7 /* FTCoverEditPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550E7E2A70FCAD00E7A1E7 /* FTCoverEditPreview.swift */; };
 		52550EB82A70FCAD00E7A1E7 /* FTCoversInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550E802A70FCAD00E7A1E7 /* FTCoversInfo.swift */; };
 		52550EB92A70FCAD00E7A1E7 /* FTNewNotebook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550E812A70FCAD00E7A1E7 /* FTNewNotebook.swift */; };
-		52550EBA2A70FCAD00E7A1E7 /* FTPaperTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550E822A70FCAD00E7A1E7 /* FTPaperTemplate.swift */; };
 		52550EBB2A70FCAD00E7A1E7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550E842A70FCAD00E7A1E7 /* Extensions.swift */; };
 		52550EBC2A70FCAD00E7A1E7 /* FTPreviewSizeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550E852A70FCAD00E7A1E7 /* FTPreviewSizeHelper.swift */; };
 		52550EBD2A70FCAD00E7A1E7 /* FTNewNotebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 52550E862A70FCAD00E7A1E7 /* FTNewNotebook.h */; };
@@ -3467,7 +3466,6 @@
 		52550E7E2A70FCAD00E7A1E7 /* FTCoverEditPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTCoverEditPreview.swift; sourceTree = "<group>"; };
 		52550E802A70FCAD00E7A1E7 /* FTCoversInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTCoversInfo.swift; sourceTree = "<group>"; };
 		52550E812A70FCAD00E7A1E7 /* FTNewNotebook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTNewNotebook.swift; sourceTree = "<group>"; };
-		52550E822A70FCAD00E7A1E7 /* FTPaperTemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPaperTemplate.swift; sourceTree = "<group>"; };
 		52550E842A70FCAD00E7A1E7 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		52550E852A70FCAD00E7A1E7 /* FTPreviewSizeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPreviewSizeHelper.swift; sourceTree = "<group>"; };
 		52550E862A70FCAD00E7A1E7 /* FTNewNotebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTNewNotebook.h; sourceTree = "<group>"; };
@@ -8442,7 +8440,6 @@
 			children = (
 				52550E802A70FCAD00E7A1E7 /* FTCoversInfo.swift */,
 				52550E812A70FCAD00E7A1E7 /* FTNewNotebook.swift */,
-				52550E822A70FCAD00E7A1E7 /* FTPaperTemplate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -13187,7 +13184,6 @@
 				52550EA62A70FCAD00E7A1E7 /* FTCoverStyleVariantsController.swift in Sources */,
 				52550E932A70FCAD00E7A1E7 /* Constants.swift in Sources */,
 				52550EB62A70FCAD00E7A1E7 /* FTCoverStyleCollectionViewCell.swift in Sources */,
-				52550EBA2A70FCAD00E7A1E7 /* FTPaperTemplate.swift in Sources */,
 				52550EAA2A70FCAD00E7A1E7 /* FTPaperCollectionViewCell.swift in Sources */,
 				52550EB82A70FCAD00E7A1E7 /* FTCoversInfo.swift in Sources */,
 				52550EB02A70FCAD00E7A1E7 /* FTPapersContainerCell.swift in Sources */,
@@ -15395,7 +15391,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 EE Dev";
-				APP_VERSION = 1.7;
+				APP_VERSION = 1.7.1;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -15420,7 +15416,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 128;
+				CURRENT_PROJECT_VERSION = 104;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -15836,7 +15832,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Noteshelf 3";
-				APP_VERSION = 1.7;
+				APP_VERSION = 1.7.1;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -15861,7 +15857,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 128;
+				CURRENT_PROJECT_VERSION = 104;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -16771,7 +16767,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Beta";
-				APP_VERSION = 1.7;
+				APP_VERSION = 1.7.1;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -16795,7 +16791,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 128;
+				CURRENT_PROJECT_VERSION = 104;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -17714,7 +17710,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Dev";
-				APP_VERSION = 1.7;
+				APP_VERSION = 1.7.1;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -17739,7 +17735,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 128;
+				CURRENT_PROJECT_VERSION = 104;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -17780,7 +17776,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Noteshelf 3";
-				APP_VERSION = 1.7;
+				APP_VERSION = 1.7.1;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -17805,7 +17801,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 128;
+				CURRENT_PROJECT_VERSION = 104;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;

@@ -34,15 +34,12 @@ class FTPapersViewController: UIViewController {
     var selectedPaperVariantsAndTheme: FTSelectedPaperVariantsAndTheme!
     private var selectedPaperThemeCellIndexPath: IndexPath?
     var paperPickerMode:FTPaperPickerMode = FTPaperPickerMode.paperPicker
+    private var size: CGSize = .zero
 
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.setUpCollectionViewConstraints()
-        collectionView?.reloadData()
-    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.scrollCollectionViewToSelectedTheme()
@@ -75,10 +72,21 @@ class FTPapersViewController: UIViewController {
             }
             self.collectionView?.collectionViewLayout = layout
         }
+        var offset: CGFloat = 4.0
+        if self.view.frame.width > regularThreshold {
+            offset = 12.0
+        }
+        let insets = UIEdgeInsets(top: offset, left: offset, bottom: offset, right: offset)
+        self.collectionView?.contentInset = insets
+        self.collectionView?.reloadData()
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.setUpCollectionViewConstraints()
+        if self.size != self.view.frame.size {
+            self.size = self.view.frame.size
+            self.setUpCollectionViewConstraints()
+            self.scrollCollectionViewToSelectedTheme()
+        }
     }
     func reloadTemplatesViewWithLatest(selectedVariantsAndTheme:FTSelectedPaperVariantsAndTheme){
         self.selectedPaperVariantsAndTheme = selectedVariantsAndTheme
@@ -86,11 +94,9 @@ class FTPapersViewController: UIViewController {
             for (index,theme) in themes.enumerated() {
                 if let cell = self.collectionView?.cellForItem(at: IndexPath(row: index, section: 0)) as? FTPaperCollectionViewCell {
                     cell.applySelectedColorVariant(UIColor(hexString: selectedVariantsAndTheme.templateColorModel.hex))
-                    Task {
-                        var variantsWithTheme = selectedVariantsAndTheme
-                        variantsWithTheme.theme = theme
-                        await cell.thumbnailForVariantsAndTheme(variantsWithTheme)
-                    }
+                    var variantsWithTheme = selectedVariantsAndTheme
+                    variantsWithTheme.theme = theme
+                    cell.thumbnailForVariantsAndTheme(variantsWithTheme)
                 }
             }
         }
@@ -130,7 +136,7 @@ extension FTPapersViewController: UICollectionViewDataSource, UICollectionViewDe
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: moreTemplateCellReuseId, for: indexPath) as? FTMoreTemplatesCollectionViewCell else {
                 fatalError("FTMoreTemplatesCollectionViewCell cell doesn't exists")
             }
-            cell.configureCell()
+            cell.configureCell(mode: self.paperPickerMode)
             return cell
         } else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: templateCellReuseId, for: indexPath) as? FTPaperCollectionViewCell else {
@@ -146,21 +152,16 @@ extension FTPapersViewController: UICollectionViewDataSource, UICollectionViewDe
                 variantsAndTheme.theme = paperTheme
                 variantsAndTheme.orientation = .portrait
                 cell.configureCellWith(title: paperTheme.displayName,
-                                       thumbnailColorHex: variantsAndTheme.templateColorModel.hex)
+                                       thumbnailColorHex: variantsAndTheme.templateColorModel.hex, mode: self.paperPickerMode)
                 if paperPickerMode == .paperPicker || paperPickerMode == .quickCreateSettings{
                     cell.isCellSelected = isPaperSelected
                     if isPaperSelected {
                         self.selectedPaperThemeCellIndexPath = indexPath
                     }
-                    if isPaperSelected {
-                        collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredHorizontally)
-                    }
                 } else {
                     cell.isCellSelected = false
                 }
-                Task {
-                    await cell.thumbnailForVariantsAndTheme(variantsAndTheme)
-                }
+                  cell.thumbnailForVariantsAndTheme(variantsAndTheme)
             }
             return cell
         }
@@ -173,7 +174,6 @@ extension FTPapersViewController: UICollectionViewDataSource, UICollectionViewDe
                 self.papersDelegate?.setCurrentSelectedURL(url: selectedPaperVariantsAndTheme.theme.themeFileURL)
             }
         }
-        if paperPickerMode == .paperPicker || paperPickerMode == .quickCreateSettings {
             if let currenSelectedCell = self.collectionView?.cellForItem(at: indexPath) as? FTPaperCollectionViewCell {
                 if let previousSelectedCellIndexPath = self.selectedPaperThemeCellIndexPath, let previousSelectedCell = self.collectionView?.cellForItem(at: previousSelectedCellIndexPath) as? FTPaperCollectionViewCell {
                     previousSelectedCell.isCellSelected = false
@@ -186,9 +186,6 @@ extension FTPapersViewController: UICollectionViewDataSource, UICollectionViewDe
             }else if let _ = self.collectionView?.cellForItem(at: indexPath) as? FTMoreTemplatesCollectionViewCell {
                 self.showAlertToNavigateToTemplatesView()
             }
-        } else {
-            didSelectTheme()
-        }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if paperPickerMode == .paperPicker{

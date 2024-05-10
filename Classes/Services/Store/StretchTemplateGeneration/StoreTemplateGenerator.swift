@@ -11,12 +11,11 @@ import Foundation
 class FTStoreTemplateGenerator: NSObject {
     private var templateFormat: FTStoreTemplateFormat;
 
-    init(safeAreaInsets: UIEdgeInsets? ,theme: FTStoreTemplatePaperTheme) {
+    init(theme: FTStoreTemplatePaperTheme) {
         guard let variants = theme.customvariants else {
             fatalError("variants missing");
         }
-        self.templateFormat = FTStoreTemplateFormat.init(variants.isLandscape,
-                                                           safeAreaInsets, variants,
+        self.templateFormat = FTStoreTemplateFormat(variants.isLandscape, variants,
                                                            templateUrl: theme.themeFileURL);
         self.templateFormat.bgColor = variants.selectedColor.colorHex;
     }

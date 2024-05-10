@@ -61,40 +61,32 @@ class FTDynamicTemplateTheme: FTPaperTheme,FTPaperThumbnailGenerator {
         }
 
     }
-    @available(*, renamed: "generateThumbnail(theme:)")
-    override func generateThumbnail(theme: FTThemeable, completionhandler: @escaping (UIImage?) -> ()) {
-        Task {
-            let result = await generateThumbnail(theme: theme)
-            completionhandler(result)
+
+    override func generateThumbnailFor(selectedVariantsAndTheme: FTSelectedPaperVariantsAndTheme, forPreview:Bool) -> UIImage? {
+        var paperVariants = FTBasicTemplatesDataSource.shared.fetchSelectedVaraintsForMode(.basic)
+        let deviceModel: FTDeviceModel?
+        if selectedVariantsAndTheme.size == .iPad || selectedVariantsAndTheme.size == .mobile {
+            deviceModel = FTBasicTemplatesDataSource.shared.getDeviceModelForIPadOrMobile(selectedVariantsAndTheme.size)
+        } else {
+            deviceModel = FTBasicTemplatesDataSource.shared.getDeviceDataFor(templateSize: selectedVariantsAndTheme.size)
         }
+        if let lineType =  FTBasicTemplatesDataSource.shared.getLineTypeFor(lineHeight: selectedVariantsAndTheme.lineHeight),
+           let templateColor = FTBasicTemplatesDataSource.shared.getTemplateColorFor(templateColorModel: selectedVariantsAndTheme.templateColorModel),
+           var deviceModel {
+            if !forPreview {
+                deviceModel = FTDeviceDataManager().standardiPadDevice
+            }
+            paperVariants = FTSelectedVariants(lineType: lineType, selectedDevice: deviceModel, isLandscape: selectedVariantsAndTheme.orientation.isLandscape, selectedColor: templateColor)
+        }
+        let result = self.generateThumbnailFor(theme: selectedVariantsAndTheme.theme, variants: paperVariants)
+        return result
     }
 
-    override func generateThumbnailFor(selectedVariantsAndTheme: FTSelectedPaperVariantsAndTheme,forPreview:Bool, completionhandler: @escaping (UIImage?) -> ())  {
-        Task {
-            var paperVariants = FTBasicTemplatesDataSource.shared.fetchSelectedVaraintsForMode(.basic)
-            let basicTemplateColors = FTBasicTemplatesDataSource.shared.getTemplateSizeData().first(where: {$0.size == selectedVariantsAndTheme.size})
-            let deviceModel: FTDeviceModel?
-            if selectedVariantsAndTheme.size == .iPad || selectedVariantsAndTheme.size == .mobile {
-                deviceModel = FTBasicTemplatesDataSource.shared.getDeviceModelForIPadOrMobile(selectedVariantsAndTheme.size)
-            } else {
-                deviceModel = FTBasicTemplatesDataSource.shared.getDeviceDataFor(templateSize: selectedVariantsAndTheme.size)
-            }
-            if let lineType =  FTBasicTemplatesDataSource.shared.getLineTypeFor(lineHeight: selectedVariantsAndTheme.lineHeight),
-                let templateColor = FTBasicTemplatesDataSource.shared.getTemplateColorFor(templateColorModel: selectedVariantsAndTheme.templateColorModel),
-                var deviceModel {
-                if !forPreview {
-                    deviceModel = FTDeviceDataManager().standardiPadDevice
-                }
-                paperVariants = FTSelectedVariants(lineType: lineType, selectedDevice: deviceModel, isLandscape: selectedVariantsAndTheme.orientation.isLandscape, selectedColor: templateColor)
-            }
-            let result = await self.generateThumbnailFor(theme: selectedVariantsAndTheme.theme, variants: paperVariants)
-            completionhandler(result)
-        }
+    override func generateThumbnail(theme: FTThemeable) -> UIImage? {
+        self.generateThumbnailFor(theme: theme, variants: self.customvariants)
     }
-    override func generateThumbnail(theme: FTThemeable) async -> UIImage? {
-        await self.generateThumbnailFor(theme: theme, variants: self.customvariants)
-    }
-    private func generateThumbnailFor(theme:FTThemeable,variants:FTPaperVariants?) async -> UIImage? {
+
+    private func generateThumbnailFor(theme:FTThemeable,variants:FTPaperVariants?) -> UIImage? {
         guard let variants = variants else {
             return nil
         }
@@ -107,12 +99,13 @@ class FTDynamicTemplateTheme: FTPaperTheme,FTPaperThumbnailGenerator {
 
         if let cachedImage = getImageFromDirectory(key) {
             imageToReturn = cachedImage
+            print("zzzz - fateched from cache")
         } else if let theme = theme as? FTTheme {
             let generator = FTAutoTemplateGenerator.autoTemplateGenerator(theme: theme, generationType: .thumbnail)
             do {
-                let docInfo = try await generator.generate()
+                let docInfo = generator.generate()
                   if let url = docInfo.inputFileURL {
-                    let img = try await self.drawPDFfromURL(url: url)
+                      let img = try self.drawPDFfromURL(url: url)
                     self.saveImageToDocumentDirectory(image: img, key)
                     imageToReturn = img
                 } else {
@@ -165,9 +158,9 @@ class FTStretchTemplateTheme: FTPaperTheme {
         return templateURL!;
     }
 
-    override func preview() async -> UIImage? {
+    override func preview() -> UIImage? {
         do {
-            let previewImage = try await self.drawPDFfromURL(url: self.themeTemplateURL())
+            let previewImage = try self.drawPDFfromURL(url: self.themeTemplateURL())
             return previewImage
         }
         catch {
@@ -175,12 +168,12 @@ class FTStretchTemplateTheme: FTPaperTheme {
         }
     }
 
-    override func generateThumbnail(theme: FTThemeable, completionhandler: @escaping (UIImage?) -> ()) {
+    override func generateThumbnail(theme: FTThemeable) -> UIImage? {
         let url =  self.themeThumbnailURL(variants: self.customvariants)
         if let image = UIImage.init(contentsOfFile: url.path){
-            completionhandler(image)
+            return image
         }
-        completionhandler(getDefaultPaperImage())
+        return getDefaultPaperImage()
     }
 
     override func themeThumbnail() -> UIImage {
