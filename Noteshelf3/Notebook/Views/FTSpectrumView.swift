@@ -23,12 +23,12 @@ struct FTSpectrumView: View {
         ZStack {
             VStack(spacing: FTSpacing.small) {
                 FTSpectrumRepresentedView(color: $color, toUpdateUIview: $toUpdateUIView)
-                    .frame(width: 288, height: 244)
+                    .frame(height: 240)
                 FTHexFieldFooterView(colorSelectModeImage: $colorSelectModeImage, colorMode: colorMode)
                     .environmentObject(hexInputVm)
             }
-        }            
-        .padding(.bottom, FTSpacing.large)
+        }  
+        .frame(width: 288.0)
         .onAppear {
             self.hexInputVm.text = viewModel.currentSelectedColor
         }

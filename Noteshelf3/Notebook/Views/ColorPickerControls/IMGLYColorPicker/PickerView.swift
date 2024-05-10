@@ -46,7 +46,7 @@ class PickerView: UIControl {
         markerView.layer.shadowRadius = 2
         markerView.layer.cornerRadius = 12
         markerView.layer.borderColor = UIColor.white.withAlphaComponent(0.9).cgColor
-        markerView.layer.borderWidth = 1.2
+        markerView.layer.borderWidth = 2.5
         addSubview(markerView)
 
         isOpaque = false

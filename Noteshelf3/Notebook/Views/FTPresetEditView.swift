@@ -18,7 +18,7 @@ struct FTPresetEditView: View {
     var body: some View {
         GeometryReader { geometry in
             ScrollView {
-                VStack(spacing: FTSpacing.extraSmall) {
+                VStack(spacing: FTSpacing.small) {
                     self.segmentControl
                     if editSegment == .grid {
                         FTColorGridView(colorMode: .presetEdit)
@@ -47,6 +47,7 @@ struct FTPresetEditView: View {
                 self.isScrollEnabled = self.checkIfContentSizeIsBigger(geometry)
             }
         }
+        .frame(width: 288)
         .navigationBarBackButtonHidden()
     }
 
@@ -84,7 +85,7 @@ struct FTPresetEditView: View {
                 .font(.appFont(for: .medium, with: 13.0))
         }
         .pickerStyle(.segmented)
-        .frame(width: 288.0, height: 32.0)
+        .frame(height: 32.0)
         .onChange(of: editSegment) { segment in
             segment.saveSelection(for: viewModel.colorsFlow, colorMode: .presetEdit)
             self.viewModel.updateColorEditViewSizeIfNeeded(isPresetEdit: true)

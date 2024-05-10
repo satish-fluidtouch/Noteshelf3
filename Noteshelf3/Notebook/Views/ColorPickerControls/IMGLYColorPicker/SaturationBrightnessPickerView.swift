@@ -71,7 +71,7 @@ class SaturationBrightnessPickerView: UIControl {
         markerView.center = .zero
 
         markerView.layer.borderColor = UIColor.white.withAlphaComponent(0.9).cgColor
-        markerView.layer.borderWidth = 1.2
+        markerView.layer.borderWidth = 2.5
         markerView.layer.cornerRadius = 12
         markerView.layer.shadowColor = UIColor.black.cgColor
         markerView.layer.shadowOffset = CGSize(width: 0, height: 2)

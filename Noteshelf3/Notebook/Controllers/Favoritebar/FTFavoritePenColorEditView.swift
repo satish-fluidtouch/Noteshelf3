@@ -18,7 +18,7 @@ struct FTFavoritePenColorEditView: View {
     var body: some View {
         GeometryReader { geometry in
             ScrollView {
-                VStack(spacing: FTSpacing.extraSmall) {
+                VStack(spacing: FTSpacing.small) {
                     self.segmentControl
                     if editSegment == .grid {
                         FTFavoriteColorGridView()
@@ -47,6 +47,7 @@ struct FTFavoritePenColorEditView: View {
                 self.isScrollEnabled = self.checkIfContentSizeIsBigger(geometry)
             }
         }
+        .frame(width: 308)
         .navigationBarBackButtonHidden()
     }
 
@@ -83,7 +84,7 @@ struct FTFavoritePenColorEditView: View {
                 .font(.appFont(for: .medium, with: 13.0))
         }
         .pickerStyle(.segmented)
-        .frame(width: 288.0, height: 32.0)
+        .frame(height: 32.0)
         .onChange(of: editSegment) { segment in
             segment.saveSelection(for: .favorites, colorMode: .presetEdit)
         }
@@ -121,13 +122,12 @@ struct FTFavoriteSpectrumView: View {
         ZStack {
             VStack(spacing: FTSpacing.small) {
                 FTSpectrumRepresentedView(color: $color, toUpdateUIview: $toUpdateUIView)
-                    .frame(width: 288, height: 244)
+                    .frame(height: 256)
                 FTFavHexFieldFooterView(colorSelectModeImage: $colorSelectModeImage)
                     .environmentObject(hexInputVm)
                     .environmentObject(viewModel)
             }
         }
-        .padding(.bottom, FTSpacing.large)
         .onAppear {
             self.hexInputVm.text = viewModel.currentSelectedColor
         }
@@ -194,9 +194,8 @@ struct FTFavHexFieldFooterView: View {
             Spacer()
                 .frame(width: 8.0)
         }
-        .frame(width: 288.0, height: 36.0)
+        .frame(height: 36.0)
         .background(Color.appColor(.gray60).opacity(0.12))
         .cornerRadius(10.0)
-        .padding(.horizontal)
     }
 }

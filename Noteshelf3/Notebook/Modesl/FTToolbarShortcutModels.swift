@@ -55,9 +55,9 @@ enum FTPenColorSegment: String {
     }
 
     var contentSize: CGSize {
-        var size = CGSize(width: 320.0, height: 402.0)
+        var size = CGSize(width: 320.0, height: 390.0)
         if self == .presets {
-            size = CGSize(width: 320.0, height: 293.0)
+            size = CGSize(width: 320.0, height: 281.0)
         }
         return size
     }

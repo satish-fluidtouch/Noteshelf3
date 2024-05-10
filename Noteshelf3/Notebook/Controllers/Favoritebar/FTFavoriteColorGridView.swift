@@ -26,7 +26,6 @@ struct FTFavoriteColorGridView: View {
                     .environmentObject(self.hexInputVm)
                     .environmentObject(self.viewModel)
             }
-            .padding(.bottom, FTSpacing.large)
         }
         .coordinateSpace(name: "screen")
         .onAppear {
@@ -40,7 +39,7 @@ struct FTFavoriteColorGridView: View {
                 let gridColor = self.gridVm.gridColors[index]
                 let color = gridColor.color
                 HStack {
-                }.frame(width: 24.0,height: 24.0)
+                }.frame(width: 25.6,height: 25.6)
                     .zIndex(self.isSelectedColor(colorModel: gridColor) ? 1 : 0)
                     .background(
                         GeometryReader { geometry in
@@ -67,8 +66,6 @@ struct FTFavoriteColorGridView: View {
                 }
             }
         }
-        .frame(width: 288.0, height: 244.0)
-        .padding(.horizontal, FTSpacing.large)
     }
 
     private func isSelectedColor(colorModel: FTGridColor) -> Bool {
@@ -76,7 +73,7 @@ struct FTFavoriteColorGridView: View {
     }
 
     private var gridItemLayout: [GridItem] {
-        return [GridItem(.adaptive(minimum: 24.0, maximum: 24.0), spacing: FTSpacing.zero)]
+        return [GridItem(.adaptive(minimum: 25.6, maximum: 25.6), spacing: FTSpacing.zero)]
     }
 }
 

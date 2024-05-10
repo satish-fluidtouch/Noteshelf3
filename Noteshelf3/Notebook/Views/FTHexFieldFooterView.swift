@@ -72,10 +72,9 @@ struct FTHexFieldFooterView: View {
             Spacer()
                 .frame(width: 8.0)
         }
-        .frame(width: 288.0, height: 36.0)
+        .frame(height: 36.0)
         .background(Color.appColor(.gray60).opacity(0.12))
         .cornerRadius(10.0)
-        .padding(.horizontal)
     }
 }
 

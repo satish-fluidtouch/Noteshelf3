@@ -112,8 +112,6 @@ struct FTPenColorEditView: View {
         }
         .pickerStyle(.segmented)
         .frame(width: 288.0, height: 32.0)
-        .padding(.bottom, FTSpacing.extraSmall)
-        .padding(.top, FTSpacing.zero)
         .onChange(of: viewModel.colorSelectSegment) { segment in
             segment.saveSelection(for: viewModel.colorsFlow)
             viewModel.presetEditIndex = nil

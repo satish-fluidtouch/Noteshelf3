@@ -29,8 +29,8 @@ struct FTColorGridView: View {
                     .environmentObject(self.hexInputVm)
                     .environmentObject(self.viewModel)
             }
-            .padding(.bottom, FTSpacing.large)
         }
+        .frame(width: 288.0)
         .coordinateSpace(name: "screen")
         .onAppear {
             self.hexInputVm.text = self.viewModel.currentSelectedColor
@@ -52,7 +52,7 @@ struct FTColorGridView: View {
                                     gridColor.location = geometry.frame(in: CoordinateSpace.named("screen"))
                                 })
                         })
-                    .overlay(self.isSelectedColor(colorModel: gridColor) ? Image("selectedGrid").resizable().frame(width: 27.0, height: 27.0).shadow(color: Color.appColor(.black20), radius: 2.0, x: 0.0, y: 0.0) : nil)
+                    .overlay(self.isSelectedColor(colorModel: gridColor) ? Image("selectedGrid").resizable().frame(width: 25.0, height: 25.0).shadow(color: Color.appColor(.black20), radius: 2.0, x: 0.0, y: 0.0) : nil)
                         .onTapGesture {
                         colorSelectModeImage = .add
                         self.hexInputVm.text = color
@@ -70,8 +70,6 @@ struct FTColorGridView: View {
                 }
             }
         }
-        .frame(width: 288.0, height: 244.0)
-        .padding(.horizontal, FTSpacing.large)
     }
 
     private func isSelectedColor(colorModel: FTGridColor) -> Bool {
