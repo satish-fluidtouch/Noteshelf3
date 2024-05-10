@@ -12,6 +12,8 @@ import FTNewNotebook
 
 protocol FTNoteBookSettingsVCDelegate : NSObject {
     func presentPasswordScreen()
+    func presentGesturesScreen()
+    func presentNoteShelfHelpScreen()
 }
 
 class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -21,10 +23,11 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
     weak var notebookDocument: FTDocumentProtocol!
     weak var notebookShelfItem: FTShelfItemProtocol!
     weak var delegate: FTNoteBookSettingsVCDelegate?
+    weak var page: FTPageProtocol!
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        var height: CGFloat = 448.0
+        var height: CGFloat = 360
 #if targetEnvironment(macCatalyst)
         height -= 44.0
 #endif
@@ -37,16 +40,21 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
         firstSection.append(.addToSiri)
         firstSection.append(.evernoteSync)
 #endif
-        var secondSection : [FTNoteBookSettings] = [.scrolling, .hideUiInPresentMode, .allowHyperLinks, .autoLock]
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            secondSection.append(.stylus)
-        }
-        settings.append(firstSection)
+        var secondSection : [FTNoteBookSettings] = [ .hideUiInPresentMode, .allowHyperLinks, .autoLock]
+//        if UIDevice.current.userInterfaceIdiom == .pad {
+//            secondSection.append(.stylus)
+//        }
+     //   settings.append(firstSection)
+        
+        var thirdSection : [FTNoteBookSettings] = [.gestures,.noteShelfHelp]
+        
         settings.append(secondSection)
+        settings.append(thirdSection)
+        
         tableView?.register(UITableViewCell.self, forCellReuseIdentifier: "standardCell")
         self.tableView?.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView?.sectionHeaderTopPadding = 0
-        configureFooter()
+      //  configureFooter()
         self.tableView?.estimatedRowHeight = UITableView.automaticDimension
 //        isSiriShortcutAvailable(for: self.notebookShelfItem) {[weak self] shortCut in
 //            self?.siriShortcut = shortCut
@@ -74,7 +82,8 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 1 {
-            return "more.globalsettings.caps".localized
+            //return "more.globalsettings.caps".localized
+            return "Help"
         }
         return nil
     }
@@ -106,6 +115,9 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
                 let phrase = "\(siriShortcut.invocationPhrase)"
                 content.secondaryAttributedText = NSAttributedString(string: phrase, attributes: [.font: UIFont.appFont(for: .regular, with: 15), .foregroundColor: UIColor.appColor(.black50)])
             }
+            if eachSetting == .noteShelfHelp {
+                content.image = UIImage(systemName:"folder.fill")
+            }
             let attributes = [NSAttributedString.Key.font: UIFont.appFont(for: .regular, with: 17.0)]
             content.attributedText = NSAttributedString(string: eachSetting.title(), attributes: attributes)
 #if targetEnvironment(macCatalyst)
@@ -113,6 +125,8 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
             content.directionalLayoutMargins.trailing = 16.0
 #endif
             cell.contentConfiguration = content
+            
+            
         }
         cell.backgroundColor = UIColor.appColor(.cellBackgroundColor)
         if eachSetting.cellType() == .toggle {
@@ -189,6 +203,10 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
             //self.handleSiriSetting()
         } else if eachSetting == .password {
             self.delegate?.presentPasswordScreen()
+        } else if eachSetting == .gestures {
+            self.delegate?.presentGesturesScreen()
+        } else if eachSetting == .noteShelfHelp {
+            self.delegate?.presentNoteShelfHelpScreen()
         }
         FTNotebookEventTracker.trackNotebookEvent(with: eachSetting.eventName)
     }

@@ -363,9 +363,19 @@ extension FTNotebookMoreOptionsViewController: FTShareBeginnerDelegate, FTGetInf
     }
 }
 extension FTNotebookMoreOptionsViewController: FTNoteBookSettingsVCDelegate {
+
     func presentPasswordScreen() {
         self.delegate?.presentPasswordScreen(settingsController: self)
     }
+    
+    func presentNoteShelfHelpScreen() {
+        self.delegate?.didTapBasicOption(option: .help, with: page, controller: self)
+    }
+    
+    func presentGesturesScreen() {
+        self.delegate?.didTapBasicOption(option: .gestures, with: page, controller: self)
+    }
+    
 }
 
 

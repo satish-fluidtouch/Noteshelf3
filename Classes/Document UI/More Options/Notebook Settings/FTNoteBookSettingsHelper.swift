@@ -24,13 +24,15 @@ enum FTNoteBookSettingCellTye {
     case hideUiInPresentMode
     case allowHyperLinks
     case evernoteSync
+    case gestures
+    case noteShelfHelp
     
     func cellType() -> FTNoteBookSettingCellTye {
         var cellType = FTNoteBookSettingCellTye.toggle
         switch self {
         case .autoBackup, .autoLock, .hideUiInPresentMode, .allowHyperLinks,.evernoteSync :
             cellType = .toggle
-        case .password, .stylus, .addToSiri :
+        case .password, .stylus, .addToSiri,.gestures,.noteShelfHelp :
             cellType = .disclosure
         case .scrolling:
             cellType = .custom
@@ -59,6 +61,10 @@ enum FTNoteBookSettingCellTye {
             title = "notebookSettings.allowHyperlinks"
         case .evernoteSync:
             title = "EvernoteSync"
+        case .gestures:
+            title = "Gesture"
+        case .noteShelfHelp:
+            title = "SettingsNoteShelfHelp"
         }
         return title.localized
     }
@@ -84,6 +90,10 @@ enum FTNoteBookSettingCellTye {
             title = FTNotebookEventTracker.nbk_moresettings_hyperlinks_toggle
         case .evernoteSync:
             title = FTNotebookEventTracker.nbk_moresettings_synctoevernote_tap
+        case .gestures:
+            title = FTNotebookEventTracker.nbk_more_gestures_tap
+        case .noteShelfHelp:
+            title = FTNotebookEventTracker.nbk_more_help_tap
         }
         return title
     }
