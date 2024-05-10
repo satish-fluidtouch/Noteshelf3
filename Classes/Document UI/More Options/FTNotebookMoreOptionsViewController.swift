@@ -10,9 +10,9 @@ import IntentsUI
 import UIKit
 import FTCommon
 
-enum FTNotebookBasicOption: String {
+enum FTNotebookBasicOption {
     case bookMark
-    case saveAsTemplate
+    case saveAsTemplate(fileName: String)
     case present
     case zoomBox
     case gestures
@@ -213,12 +213,14 @@ extension FTNotebookMoreOptionsViewController: UITableViewDelegate, UITableViewD
             }
             switch setting {
             case is FTNotebookEverNoteSetting:
+                cell.accessoryType = .none
                 let toggleSwitch = UISwitch(frame: CGRect.zero)
                 toggleSwitch.preferredStyle = .sliding
                 self.updateEvernoteToggleSwitch(uiSwitch: toggleSwitch, withStatus: FTENPublishManager.shared.isSyncEnabled(forDocumentUUID: notebookDocument.documentUUID))
                 toggleSwitch.addAction(UIAction(handler: {[weak self] action in
                     self?.switchvalueChanged(for:setting, toggleSwitch)
                 }), for: .valueChanged)
+                cell.accessoryView = toggleSwitch
             case is FTNotebookAddScrollingDirection :
                 settingCell.scrollingValueLbl?.isHidden = false
             case is FTNotebookStatusBarSetting :
@@ -277,7 +279,12 @@ extension FTNotebookMoreOptionsViewController: UITableViewDelegate, UITableViewD
         case is FTNotebookOptionZoomBox:
             self.delegate?.didTapBasicOption(option: .zoomBox, with: page, controller: self)
         case is FTNotebookOptionSaveAsTemplate:
-            self.delegate?.didTapBasicOption(option: .saveAsTemplate, with: page, controller: self)
+            UIAlertController.showTextFieldAlertOn(viewController: self, title: "SaveAsTemplate".localized, message: "saveAsTemplate_message".localized, textfieldPlaceHolder: "Untitled", submitButtonTitle: "ok".localized, cancelButtonTitle: "Cancel".localized) { title in
+                self.delegate?.didTapBasicOption(option: .saveAsTemplate(fileName: title ?? ""), with: self.page, controller: self)
+            } cancelAction: {
+                self.dismiss(animated: true)
+            }
+
         case is FTNotebookPassword :
             self.delegate?.presentPasswordScreen(settingsController: self)
         case is FTNotebookAddToSiri:

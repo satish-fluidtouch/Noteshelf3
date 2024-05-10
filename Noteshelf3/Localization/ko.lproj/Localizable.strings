@@ -1283,6 +1283,7 @@
 "reset" = "리셋";
 "retry" = "재시도";
 "save" = "저장";
+"saveAsTemplate_message" = "템플릿은 템플릿의 사용자 정의 섹션에 저장됩니다.";
 "school" = "학교";
 "search.tryNewSearch" = "새로 검색해 보세요";
 "seeAll" = "재응시";
@@ -1673,4 +1674,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
+// Last Synced by Sameer Hussain on 10 May 2024 at 3:52 PM

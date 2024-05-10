@@ -65,7 +65,7 @@ class FTNotebookMoreOptionsCell: UITableViewCell {
     }
     
     func setValueForScrollDirection() {
-        let value = (UserDefaults.standard.pageLayoutType.rawValue == 1) ? "Horizontal" : "Vertical"
+        let value = UserDefaults.standard.pageLayoutType.localizedTitle
         scrollingValueLbl?.text = value
     }
 

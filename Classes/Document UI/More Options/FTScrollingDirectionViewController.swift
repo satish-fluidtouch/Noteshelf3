@@ -17,7 +17,7 @@ class FTScrollingDirectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabelView.backgroundColor = .clear
-        self.configureCustomNavigation(title: "Notebook Scrolling")
+        self.configureCustomNavigation(title: "notebookSettings.scrolling".localized)
         self.tabelView.separatorInset = UIEdgeInsets(top:0, left: 0, bottom: 0, right: 0)
     }
     

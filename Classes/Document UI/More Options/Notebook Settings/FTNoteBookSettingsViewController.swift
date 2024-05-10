@@ -60,7 +60,7 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
         //            self?.siriShortcut = shortCut
         //            self?.tableView?.reloadData()
         //        }
-        self.configureCustomNavigation(title: "Scrolling".localized)
+        self.configureCustomNavigation(title: "notebook.settings.moresettings".localized)
         
     }
     

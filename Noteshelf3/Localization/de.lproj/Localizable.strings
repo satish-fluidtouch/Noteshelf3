@@ -1283,6 +1283,7 @@
 "reset" = "Zurücksetzen";
 "retry" = "Erneut versuchen";
 "save" = "Speichern";
+"saveAsTemplate_message" = "Die Vorlage wird im Abschnitt „Benutzerdefiniert“ unter „Vorlagen“ gespeichert.";
 "school" = "Schule";
 "search.tryNewSearch" = "Versuchen Sie es mit einer neuen Suche";
 "seeAll" = "Wiederholen";
@@ -1673,6 +1674,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-
-// Last Synced by Sameer Hussain on 3 May 2024 at 3:18 PM
-// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
+// Last Synced by Sameer Hussain on 10 May 2024 at 3:52 PM

@@ -1283,6 +1283,7 @@
 "reset" = "Restablecer";
 "retry" = "Reintentar";
 "save" = "Guardar";
+"saveAsTemplate_message" = "La plantilla se guardará dentro de la sección Personalizada en Plantillas.";
 "school" = "Escuela";
 "search.tryNewSearch" = "Prueba una nueva búsqueda";
 "seeAll" = "Repetir.";
@@ -1673,4 +1674,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
+// Last Synced by Sameer Hussain on 10 May 2024 at 3:52 PM

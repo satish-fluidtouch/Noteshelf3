@@ -1283,6 +1283,7 @@
 "reset" = "Reset";
 "retry" = "Retry";
 "save" = "Save";
+"saveAsTemplate_message" = "Template will be saved inside Custom section in Templates.";
 "school" = "School";
 "search.tryNewSearch" = "Try a new search";
 "seeAll" = "See All";
@@ -1673,4 +1674,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
+// Last Synced by Sameer Hussain on 10 May 2024 at 3:52 PM
