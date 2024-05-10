@@ -109,10 +109,10 @@ class FTPaperTheme: FTTheme, FTPaperThemeable {
         return getDefaultPaperImage()
     }
 
-    override func preview() async -> UIImage? {
+    override func preview() -> UIImage? {
         if self.isCustom {
             do {
-                let previewImage = try await self.drawPDFfromURL(url: self.themeTemplateURL())
+                let previewImage = try self.drawPDFfromURL(url: self.themeTemplateURL())
                 return previewImage
             }
             catch {
@@ -127,9 +127,9 @@ class FTPaperTheme: FTTheme, FTPaperThemeable {
             } else {
                 let generator = FTAutoTemplateGenerator.autoTemplateGenerator(theme: self, generationType: .preview)
                 do {
-                    let doct = try await generator.generate()
+                    let doct = generator.generate()
                     if let inputUrl = doct.inputFileURL {
-                        let previewImage = try await self.drawPDFfromURL(url: inputUrl)
+                        let previewImage = try self.drawPDFfromURL(url: inputUrl)
                         previewImageCache.setObject(previewImage, forKey: key as NSString)
                         return previewImage
                     }
@@ -157,18 +157,12 @@ class FTPaperTheme: FTTheme, FTPaperThemeable {
         return fileExisits;
     }
 
-    @available(*, renamed: "generateThumbnail(theme:)")
-    func generateThumbnail(theme: FTThemeable, completionhandler: @escaping (UIImage?) -> ()) {
-        Task {
-            let result = await generateThumbnail(theme: theme)
-            completionhandler(result)
-        }
+    func generateThumbnailFor(selectedVariantsAndTheme: FTSelectedPaperVariantsAndTheme,forPreview:Bool) -> UIImage? {
+        return UIImage(named: "")
     }
-    func generateThumbnailFor(selectedVariantsAndTheme: FTSelectedPaperVariantsAndTheme,forPreview:Bool, completionhandler: @escaping (UIImage?) -> ()) {
-        completionhandler(UIImage.init(named: ""))
-    }
-    func generateThumbnail(theme: FTThemeable) async -> UIImage? {
-        return UIImage.init(named: "")
+
+    func generateThumbnail(theme: FTThemeable) -> UIImage? {
+        return UIImage(named: "")
     }
 
     func themeThumbnailURL(variants: FTPaperVariants?) -> URL {
@@ -188,23 +182,7 @@ class FTPaperTheme: FTTheme, FTPaperThemeable {
         return thumbURL
     }
 
-    func drawPDFfromURL(url: URL) -> UIImage? {
-        guard let document = CGPDFDocument(url as CFURL) else { return nil }
-        guard let page = document.page(at: 1) else { return nil }
-        let pageRect = page.getBoxRect(.cropBox)
-        let renderer = UIGraphicsImageRenderer(size: pageRect.size)
-        let img = renderer.image { ctx in
-            UIColor.white.set()
-            ctx.cgContext.interpolationQuality = .high
-            ctx.fill(pageRect)
-            ctx.cgContext.translateBy(x: 0.0, y: pageRect.size.height)
-            ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
-            ctx.cgContext.drawPDFPage(page)
-        }
-        return img
-    }
-
-    func drawPDFfromURL(url: URL) async throws -> UIImage {
+    func drawPDFfromURL(url: URL) throws -> UIImage {
         guard let document = CGPDFDocument(url as CFURL) else {
             throw ImageGenerationError.invalidPath
         }

@@ -172,7 +172,7 @@ private extension FTBookSessionRootViewController {
 
 extension FTBookSessionRootViewController: FTOpenCloseDocumentProtocol {
     func openRecentItem(shelfItemManagedObject: FTDocumentItemWrapperObject, addToRecent: Bool) {
-        
+        self.openItemInNewWindow(shelfItemManagedObject.shelfItemProtocol, pageIndex: nil)
     }
     
     func closeDocument(shelfItemManagedObject:FTDocumentItemWrapperObject, animate: Bool, onCompletion : (() -> Void)?) {

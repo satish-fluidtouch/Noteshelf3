@@ -20,6 +20,28 @@ class FTCustomizeToolbarController: UITableViewController {
         self.tableView.isEditing = true
         self.configNavigationTitle()
         self.configBarButtonItems()
+        self.registerCells()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.setUpFooterViewtoTableView()
+
+    }
+    
+    private func registerCells() {
+        tableView.register(UINib(nibName:"FTCustomizeToolbarCell", bundle: nil), forCellReuseIdentifier: "FTCustomizeToolbarCell")
+    }
+    
+    private func setUpFooterViewtoTableView(){
+        guard let footerView = Bundle.main.loadNibNamed("FTCustomToolbarFooterView", owner: nil)?[0] as? FTCustomToolbarFooterView else {
+            return
+        }
+        footerView.setUpUi()
+        footerView.delegate = self
+        tableView.tableFooterView = footerView
+        footerView.layoutIfNeeded()
+        let reqHeight = footerView.getHeight()
+        tableView.tableFooterView?.frame.size.height = reqHeight
     }
 
     private func configNavigationTitle() {
@@ -119,7 +141,10 @@ class FTCustomizeToolbarController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "FTCustomizeToolbarCell", for: indexPath) as? FTCustomizeToolbarCell else {
+              fatalError("Programming Error ")
+        }
+        
         let displaySection = self.dataSource.sections[indexPath.section]
         let displayableTools = displaySection.displayTools
 
@@ -128,11 +153,19 @@ class FTCustomizeToolbarController: UITableViewController {
         if !(tool == .sharePageAsPng || tool == .shareNotebookAsPDF || tool == .savePageAsPhoto) {
             config.imageProperties.tintColor = UIColor.label
         }
-        config.image = UIImage(named: tool.iconName())
+        cell.newLbl.text = "New".localized
+        cell.newBgView.backgroundColor = UIColor.appColor(.homeSelectedBG)
+        cell.newViewWidth.constant = 0
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            if self.view.frame.width > 380 {
+                cell.newBgView.isHidden = tool.toShowNewBadge
+                cell.setNewBgWidth(value:Double(cell.newLbl.text?.count ?? 0))
+            }
+        }
+        cell.iconImg.image = UIImage(named: tool.iconName())
         config.imageProperties.reservedLayoutSize = CGSize(width: 24.0, height: 24.0)
         let attributes = [NSAttributedString.Key.font: UIFont.appFont(for: .regular, with: 17.0)]
-        config.attributedText = NSAttributedString(string: displayableTools[indexPath.row].localizedString(), attributes: attributes)
-        cell.contentConfiguration = config
+        cell.titleLbl.attributedText = NSAttributedString(string: displayableTools[indexPath.row].localizedString(), attributes: attributes)
         cell.backgroundColor = UIColor.appColor(.white60)
         return cell
     }
@@ -215,6 +248,7 @@ class FTCustomizeToolbarController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
         return "Remove".localized
     }
+    
 }
 
 extension FTCustomizeToolbarController {
@@ -225,5 +259,12 @@ extension FTCustomizeToolbarController {
             navController.view.backgroundColor = UIColor.appColor(.formSheetBgColor)
             controller.ftPresentFormsheet(vcToPresent: navController, hideNavBar: false)
         }
+    }
+}
+
+extension FTCustomizeToolbarController :FTCustomToolbarFooterViewProtocal {
+    func navigateToContactUsPage() {
+        FTZenDeskManager.shared.showSupportContactUsScreen(controller: self, defaultSubject: "App Launch Delay", extraTags: ["ns3_app_launc_delay"])
+        track(EventName.customizabletoolbar_requestshortcut_tap)
     }
 }

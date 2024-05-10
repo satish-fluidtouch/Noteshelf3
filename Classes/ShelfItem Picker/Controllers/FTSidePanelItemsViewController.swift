@@ -63,9 +63,13 @@ extension FTSidePanelShelfItemPickerDelegate {
     }
 }
 
-@objc class FTSidePanelItemsViewController: FTShelfItemsViewController {
-
+@objc class FTSidePanelItemsViewController: FTShelfItemsViewController,FTPopoverPresentable {
+    var ftPresentationDelegate = FTPopoverPresentation()
     weak var sidePanelDelegate: FTSidePanelShelfItemPickerDelegate?
+    @IBOutlet weak private var tvLeading : NSLayoutConstraint!
+    @IBOutlet weak private var tvTrailing : NSLayoutConstraint!
+    var currentIndex = 0
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.navigationController?.isNavigationBarHidden = false
@@ -73,7 +77,15 @@ extension FTSidePanelShelfItemPickerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.configureNavigation(title: collection?.displayTitle ?? "")
+        if self.mode == .recentNotes {
+            self.configureNavigation(title:"customizeToolbar.recent.notes".localized)
+            self.navigationItem.leftBarButtonItem?.isHidden = true
+            self.view.backgroundColor = UIColor.appColor(.popoverBgColor)
+            
+        }else {
+            self.configureNavigation(title: collection?.displayTitle ?? "")
+        }
+      
     }
     
     func configureNavigation(title: String) {
@@ -81,7 +93,7 @@ extension FTSidePanelShelfItemPickerDelegate {
         let leftItem = UIBarButtonItem(image: UIImage.image(for: "chevron.backward", font: UIFont.appFont(for: .medium, with: 18)), style: .plain, target: self, action: #selector(buttonTapped(_ :)))
         self.navigationItem.leftBarButtonItems = [leftItem]
         self.navigationItem.title = title
-        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationBar.prefersLargeTitles = (self.mode != .recentNotes)
         self.navigationController?.navigationItem.largeTitleDisplayMode = .always
     }
     
@@ -100,6 +112,51 @@ extension FTSidePanelShelfItemPickerDelegate {
         self.tableView.dragInteractionEnabled = true
         self.tableView.dragDelegate = self
         self.view.backgroundColor = .appColor(.finderBgColor)
+        if self.mode == .recentNotes {
+            tvLeading.constant = 16
+            tvTrailing.constant = 16
+            
+        }
+    }
+
+    func setUpcellForRecentNotes(cell:FTShelfItemTableViewCell,index:IndexPath){
+        if  self.mode == .recentNotes {
+            if self.items.count > 1 {
+                cell.separatorView?.isHidden = false
+                  if index.row == 0 {
+                      cell.shapeTopCorners(10.0)
+                  }
+                  if index.row == self.items.count - 1 {
+                      cell.shapeBottomCorners(10.0)
+                      cell.separatorView?.isHidden = true
+                  }
+                } else {
+                    cell.layer.cornerRadius = 10.0
+                    cell.separatorView?.isHidden = true
+                }
+            if self.currentIndex == index.row {
+                cell.backgroundColor = UIColor.appColor(.accentBg)
+            }else {
+                cell.backgroundColor = UIColor.appColor(.cellBackgroundColor)
+            }
+            if UIDevice.current.userInterfaceIdiom != .phone {
+                cell.accessoryButton?.isHidden = false
+                cell.accessoryWidthConstraint?.constant = 32.0
+                cell.accessoryButton?.setImage(UIImage(named: "desk_tool_open_recents"), for: .normal)
+                cell.accessoryButton?.tag = index.row
+                cell.accessoryButton?.isUserInteractionEnabled = true
+                cell.accessoryButton?.addTarget(self, action:#selector(self.tappedOnRecentNotes), for: .touchUpInside)
+            }
+            
+        }
+    }
+    
+    @objc func tappedOnRecentNotes(sender: UIButton) {
+        let shelfItem = self.items[sender.tag]
+        self.dismiss(animated:true) {
+            self.openItemInNewWindow(shelfItem,pageIndex: nil)
+            track("recentnotebooks_notebook_newwindow_tap")
+        }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -114,6 +171,8 @@ extension FTSidePanelShelfItemPickerDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CellShelfItem") as? FTShelfItemTableViewCell else {
             fatalError("Couldnot find FTShelfItemTableViewCell with id CellShelfItem")
         }
+        
+        cell.backgroundColor = .clear
         cell.mode = self.mode;
         cell.tableView = tableView;
         cell.indexPath = indexPath;
@@ -131,10 +190,10 @@ extension FTSidePanelShelfItemPickerDelegate {
         cell.shadowImageView2.isHidden = true;
         cell.shadowImageView3.isHidden = true;
         cell.passcodeLockStatusView.isHidden = true;
-        
+        cell.setSelectedBgView(value: (self.mode == .recentNotes))
+        self.setUpcellForRecentNotes(cell:cell, index: indexPath)
         var displayTitle = "";
         var isCurrent = false;
-
         //Checking if we are inside a collection
         cellDatabinding: if (nil != self.collection) {
             
@@ -221,17 +280,35 @@ extension FTSidePanelShelfItemPickerDelegate {
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true);
-
+        self.currentIndex = indexPath.row
         self.indexPathSelected = indexPath;
         if let _ = self.collection {
             let shelfItem = self.items[indexPath.row];
             if shelfItem.type != RKShelfItemType.group {
                 self.sidePanelDelegate?.shelfCategory(self, didSelectShelfItem: shelfItem, inCollection: shelfItem.shelfCollection)
-                FTFinderEventTracker.trackFinderEvent(with: "quickaccess_book_tap")
+                if self.mode == .recentNotes {
+                    track("recentnotebooks_notebook_tap")
+                } else {
+                    FTFinderEventTracker.trackFinderEvent(with: "quickaccess_book_tap")
+                }
                 return;
             }
         }
+       
         self.performSegue(withIdentifier: "SelfPush", sender: nil);
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return CGFloat.leastNonzeroMagnitude
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if self.mode == .recentNotes {
+            return 0
+        }else {
+            return 5
+        }
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
