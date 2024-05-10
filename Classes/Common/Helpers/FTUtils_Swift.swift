@@ -62,6 +62,18 @@ extension FTUtils {
         _ = try? FileManager.default.copyItem(atPath: path as String, toPath: fileLoc)
         return fileLoc
     }
+    
+#if !NOTESHELF_ACTION
+    class func isAppInstalledFor(days: Double) -> Bool {
+        let currentTimeInterval = Date().timeIntervalSinceReferenceDate
+        let Interval = currentTimeInterval - (days * 24 * 60 * 60)
+        if  FTUserDefaults.appInstalledDate < Interval {
+            return true
+        }else {
+            return false
+        }
+    }
+    #endif
 }
 
 extension CGSize
