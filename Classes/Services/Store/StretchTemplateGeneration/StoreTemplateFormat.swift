@@ -20,15 +20,15 @@ class FTStoreTemplateFormat: NSObject {
         return CGRect(x: 0, y: 0, width: self.width, height: self.height)
     }
        
-    init(_ isLandscape: Bool, _ safeAreaInsets: UIEdgeInsets?,_ variants: FTPaperVariants, templateUrl: URL) {
+    init(_ isLandscape: Bool,_ variants: FTPaperVariants, templateUrl: URL) {
         super.init()
         self.isLandscape = isLandscape
         self.customVariants = variants
         self.templateUrl = templateUrl
         
-        setTemplateSize(safeAreaInsets)
+        setTemplateSize()
     }
-    func setTemplateSize(_ safeAreaInsets: UIEdgeInsets?) {
+    func setTemplateSize() {
         var screenSize = ""
         if !self.isLandscape {
             screenSize = customVariants.selectedDevice.dimension_port
@@ -59,7 +59,7 @@ class FTStoreTemplateFormat: NSObject {
                 self.height = 704
             }
         } else {
-            setTemplateSize(safeAreaInsets)
+            setTemplateSize()
         }
     }
     

@@ -29,4 +29,12 @@ public enum FTTemplateOrientation: String, CaseIterable {
         }
         return img ?? UIImage()
     }
+
+    public static func orientation(for size: CGSize) -> FTTemplateOrientation {
+        var orientation = FTTemplateOrientation.portrait
+        if size.width > size.height {
+            orientation = .landscape
+        }
+        return orientation
+    }
 }

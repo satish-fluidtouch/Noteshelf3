@@ -16,6 +16,15 @@ public struct FTTemplateSizeModel: Hashable {
         self.portraitSize = portraitSize
         self.landscapeSize = landscapeSize
     }
+
+    public func requiredSize(with orientation: FTTemplateOrientation) -> CGSize {
+        let sizeStr = orientation == .portrait ? portraitSize : landscapeSize
+        let measurements = sizeStr.split(separator: "_")
+        guard let width = Int(measurements[0]), let height = Int(measurements[1]) else {
+            return .zero
+        }
+        return CGSize(width: width, height: height)
+    }
 }
 
 // swiftlint:disable all
