@@ -47,6 +47,7 @@ class FTShelfItemTableViewCell: UITableViewCell,FTShelfItemCellProgressUpdate {
     @IBOutlet weak var progressView: UIProgressView?
     @IBOutlet weak var passcodeLockStatusView: UIView!
     @IBOutlet weak var currentShelfItemIndicator: UIImageView?
+    @IBOutlet weak var separatorView: UIView?
     
     @IBOutlet weak var shadowImageView: FTShelfItemShadowImageView!
     @IBOutlet weak var shadowImageView2: FTShelfItemShadowImageView!
@@ -116,8 +117,15 @@ class FTShelfItemTableViewCell: UITableViewCell,FTShelfItemCellProgressUpdate {
         self.accessoryButton?.isUserInteractionEnabled = false
         self.currentShelfItemIndicator?.isHidden = true
         self.selectionBackgroundView?.isHidden = true
-        self.selectionBackgroundView?.layer.cornerRadius = 10
-        self.selectionBackgroundView?.backgroundColor = UIColor.appColor(.white90)
+    }
+    
+    func setSelectedBgView(value: Bool){
+        if value {
+            self.selectionBackgroundView?.backgroundColor = .clear
+        }else {
+             self.selectionBackgroundView?.layer.cornerRadius = 10
+             self.selectionBackgroundView?.backgroundColor = UIColor.appColor(.white90)
+        }
     }
     
     func setEnable(_ status: Bool) {
@@ -162,9 +170,9 @@ class FTShelfItemTableViewCell: UITableViewCell,FTShelfItemCellProgressUpdate {
             self.updateEvernoteSyncUI();
         default:
             self.labelSubTitle.text = shelfItem.fileModificationDate.shelfShortStyleFormat();
-            if mode == .recent {
-                self.cellAccessoryType = .detailButton
-            }
+//            if mode == .recent {
+//                self.cellAccessoryType = .detailButton
+//            }
         }
     }
     

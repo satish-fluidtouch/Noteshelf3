@@ -8,24 +8,45 @@
 import UIKit
 import PDFKit
 import FTStyles
+import FTCommon
 
-class FTPaperCollectionViewCell: UICollectionViewCell {
+class FTPaperCollectionViewCell: FTTraitCollectionViewCell {
     @IBOutlet weak var shadowImage: UIImageView?
     @IBOutlet weak private var selectedImageView: UIImageView?
     @IBOutlet weak private var imgView: UIImageView?
     @IBOutlet weak private var themeTitle: UILabel?
+    @IBOutlet private weak var imgWidthConstraint: NSLayoutConstraint?
+    
+    private var paperPickerMode: FTPaperPickerMode = .paperPicker
+
     private var thumbnailColorHex: String?
     var isCellSelected: Bool = false {
         didSet {
             setBorderAndSelectionToThumbnail()
         }
     }
-    func configureCellWith(title: String?, thumbnailColorHex:String){
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.updateImgWidthConstraint()
+    }
+
+    func updateImgWidthConstraint() {
+        if self.paperPickerMode == .paperPicker {
+            self.imgWidthConstraint?.constant = self.isRegular ? 120 : 100
+        } else {
+            self.imgWidthConstraint?.constant = 120
+        }
+    }
+
+    func configureCellWith(title: String?, thumbnailColorHex:String, mode: FTPaperPickerMode){
+        self.paperPickerMode = mode
         self.thumbnailColorHex = thumbnailColorHex
         let color = UIColor(hexWithAlphaString: thumbnailColorHex)
         self.applySelectedColorVariant(color)
         self.imgView?.image = UIImage(named: "samplePaperTemplateThumbnail", in: currentBundle, with: nil)?.withRenderingMode(.alwaysTemplate)
         self.themeTitle?.text = title ?? "Plain"
+        self.updateImgWidthConstraint()
     }
     private func applyBorderToThemeImage(){
         self.imgView?.layer.borderWidth = 1.0
@@ -66,43 +87,26 @@ class FTPaperCollectionViewCell: UICollectionViewCell {
         self.shadowImage?.layer.shadowOpacity = 0
         self.shadowImage?.layer.shadowColor = UIColor.clear.cgColor
     }
-    func thumbnailForVariantsAndTheme(_ variantsAndTheme: FTSelectedPaperVariantsAndTheme) async {
+    func thumbnailForVariantsAndTheme(_ variantsAndTheme: FTSelectedPaperVariantsAndTheme)  {
         var themWithVariants: FTSelectedPaperVariantsAndTheme = variantsAndTheme
         themWithVariants.orientation = .portrait
-        guard let paperTheme = (themWithVariants.theme as? FTPaperThumbnailGenerator) else {
-            return
-        }
-        let thumbnailSize = FTNewNotebook.Constants.ChoosePaperPanel.thumbnailRegularSize
-        paperTheme.generateThumbnailFor(selectedVariantsAndTheme: variantsAndTheme,forPreview:false) { thumbImage in
-            DispatchQueue.main.async {
-                if let thumbImage = thumbImage?.resizedImage(FTNewNotebook.Constants.ChoosePaperPanel.preview.regularLandscapeOrientationPortraitSize) {
-                    let croppedThumbImage = self.getRequiredPortionOfImageAsThumnail(thumbImage, requiredRect:CGRect(x: 0, y: 0, width: thumbnailSize.width, height: thumbnailSize.height))
-                    self.imgView?.image = croppedThumbImage
+        var imgName = variantsAndTheme.thumbImagePrefix
+        if !imgName.isEmpty {
+            let color = UIColor(hexWithAlphaString: variantsAndTheme.templateColorModel.hex)
+            if variantsAndTheme.templateColorModel.color == .legal {
+                imgName = imgName + "_legal"
+            } else {
+                if color.isLightColor() {
+                    imgName = imgName + "_light"
+                } else {
+                    imgName = imgName + "_dark"
                 }
             }
+            if let image = UIImage(named: imgName, in: currentBundle, with: nil)?.withRenderingMode(.alwaysOriginal) {
+                self.imgView?.backgroundColor = color
+                self.imgView?.image = image
+            }
         }
-    }
-    private func getRequiredPortionOfImageAsThumnail(_ thumbnailImage: UIImage,
-                                                     requiredRect:CGRect) -> UIImage {
-        let pdfPath = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0] as NSString
-            let pdfFilePath = pdfPath.appendingPathComponent("thumnailPDF.pdf")
-            let pdfBounds = CGRect(x: 0, y: 0, width: thumbnailImage.size.width, height: thumbnailImage.size.height)
-        UIGraphicsBeginPDFContextToFile(pdfFilePath, pdfBounds, nil)
-        UIGraphicsBeginPDFPage()
-        let context = UIGraphicsGetCurrentContext()
-        context?.translateBy(x: 0, y: thumbnailImage.size.height);
-        context?.scaleBy(x: 1, y: -1);
-        context!.draw(thumbnailImage.cgImage!, in: pdfBounds)
-        UIGraphicsEndPDFContext()
-        guard let pdf = PDFDocument(url: URL(fileURLWithPath: pdfFilePath)),
-              let page = pdf.page(at: 0) else {
-            fatalError("pdf page note found")
-        }
-        let renderer = UIGraphicsImageRenderer(size: requiredRect.size)
-        let thumbImage = renderer.image { context in
-            page.draw(with: PDFDisplayBox.cropBox, to: context.cgContext)
-        }
-        return thumbImage
     }
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)

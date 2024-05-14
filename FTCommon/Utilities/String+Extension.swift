@@ -132,5 +132,14 @@ public extension String {
         }
         return nil
     }
+
+    func isEqualToHexColor(_ otherColor: String) -> Bool {
+        // Remove "#" if present
+        let cleanedSelf = self.replacingOccurrences(of: "#", with: "")
+        let cleanedOtherColor = otherColor.replacingOccurrences(of: "#", with: "")
+        let color1 = UIColor(hexString: cleanedSelf)
+        let color2 = UIColor(hexString: cleanedOtherColor)
+        return color1.isEqualTo(color2)
+    }
 }
 
