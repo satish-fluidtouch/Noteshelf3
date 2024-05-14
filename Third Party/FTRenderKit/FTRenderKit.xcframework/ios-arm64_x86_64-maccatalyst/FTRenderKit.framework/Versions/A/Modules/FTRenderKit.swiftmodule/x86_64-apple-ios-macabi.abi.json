@@ -623,6 +623,54 @@
             ]
           },
           {
+            "kind": "Var",
+            "name": "timeStamp",
+            "printedName": "timeStamp",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@FTRenderKit@objc(pl)FTTouchProcess(py)timeStamp",
+            "mangledName": "$s11FTRenderKit14FTTouchProcessP9timeStampSdvp",
+            "moduleName": "FTRenderKit",
+            "protocolReq": true,
+            "declAttributes": [
+              "ObjC"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Double",
+                    "printedName": "Swift.Double",
+                    "usr": "s:Sd"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@FTRenderKit@objc(pl)FTTouchProcess(im)timeStamp",
+                "mangledName": "$s11FTRenderKit14FTTouchProcessP9timeStampSdvg",
+                "moduleName": "FTRenderKit",
+                "genericSig": "<τ_0_0 where τ_0_0 : FTRenderKit.FTTouchProcess>",
+                "sugared_genericSig": "<Self where Self : FTRenderKit.FTTouchProcess>",
+                "protocolReq": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "reqNewWitnessTableEntry": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
             "kind": "Function",
             "name": "touchView",
             "printedName": "touchView()",
@@ -19228,35 +19276,35 @@
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/Helpers\/FTMetalRenderConstants.swift",
       "kind": "IntegerLiteral",
-      "offset": 2785,
+      "offset": 2824,
       "length": 3,
       "value": "256"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/Helpers\/FTMetalRenderConstants.swift",
       "kind": "BooleanLiteral",
-      "offset": 2841,
+      "offset": 2880,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/Helpers\/FTMetalRenderConstants.swift",
       "kind": "BooleanLiteral",
-      "offset": 3062,
+      "offset": 3101,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/Helpers\/FTMetalRenderConstants.swift",
       "kind": "StringLiteral",
-      "offset": 3139,
+      "offset": 3178,
       "length": 3,
       "value": "\" \""
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/General\/NS2MetalDemo\/FTRenderKit\/Classes\/Helpers\/FTMetalRenderConstants.swift",
       "kind": "StringLiteral",
-      "offset": 3165,
+      "offset": 3204,
       "length": 4,
       "value": "\"\n\""
     },

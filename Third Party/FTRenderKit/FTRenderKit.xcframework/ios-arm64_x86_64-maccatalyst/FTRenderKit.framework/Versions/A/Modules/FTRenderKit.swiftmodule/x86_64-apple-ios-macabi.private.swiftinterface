@@ -39,6 +39,7 @@ public enum FTVertexType {
 }
 @objc public protocol FTTouchProcess : ObjectiveC.NSObjectProtocol {
   @objc var pressure: CoreFoundation.CGFloat { get }
+  @objc var timeStamp: Foundation.TimeInterval { get }
   @objc func touchView() -> UIKit.UIView
   @objc func location(inView view: UIKit.UIView?) -> CoreFoundation.CGPoint
   @objc func coalescedTouches() -> [any FTRenderKit.FTTouchProcess]?

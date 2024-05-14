@@ -485,6 +485,7 @@ SWIFT_CLASS("_TtC11FTRenderKit13FTTextureTile")
 SWIFT_PROTOCOL("_TtP11FTRenderKit14FTTouchProcess_")
 @protocol FTTouchProcess <NSObject>
 @property (nonatomic, readonly) CGFloat pressure;
+@property (nonatomic, readonly) NSTimeInterval timeStamp;
 - (UIView * _Nonnull)touchView SWIFT_WARN_UNUSED_RESULT;
 - (CGPoint)locationInView:(UIView * _Nullable)view SWIFT_WARN_UNUSED_RESULT;
 - (NSArray<id <FTTouchProcess>> * _Nullable)coalescedTouches SWIFT_WARN_UNUSED_RESULT;
@@ -998,6 +999,7 @@ SWIFT_CLASS("_TtC11FTRenderKit13FTTextureTile")
 SWIFT_PROTOCOL("_TtP11FTRenderKit14FTTouchProcess_")
 @protocol FTTouchProcess <NSObject>
 @property (nonatomic, readonly) CGFloat pressure;
+@property (nonatomic, readonly) NSTimeInterval timeStamp;
 - (UIView * _Nonnull)touchView SWIFT_WARN_UNUSED_RESULT;
 - (CGPoint)locationInView:(UIView * _Nullable)view SWIFT_WARN_UNUSED_RESULT;
 - (NSArray<id <FTTouchProcess>> * _Nullable)coalescedTouches SWIFT_WARN_UNUSED_RESULT;
