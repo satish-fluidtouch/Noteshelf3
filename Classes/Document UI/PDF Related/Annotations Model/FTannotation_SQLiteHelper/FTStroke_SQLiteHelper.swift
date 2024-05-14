@@ -8,11 +8,12 @@
 
 import UIKit
 import FTDocumentFramework
+import FTRenderKit
 
 private let strokeInsertQuery = """
-INSERT INTO annotation (annotationType,strokeWidth,strokeColor,penType,boundingRect_x,boundingRect_y,boundingRect_w,boundingRect_h,segmentCount,stroke_segments_v3,createdTime,modifiedTime,isReadonly,version, id, groupId)
+INSERT INTO annotation (annotationType,strokeWidth,strokeColor,penType,boundingRect_x,boundingRect_y,boundingRect_w,boundingRect_h,segmentCount,stroke_segments_v3,createdTime,modifiedTime,isReadonly,version, id, groupId,strokeReferenceX,strokeReferenceY)
 VALUES
-(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
 """;
 
 extension FTStroke {
@@ -21,6 +22,7 @@ extension FTStroke {
     }
     
     override func saveToDatabase(_ db : FMDatabase) -> Bool {
+        self.referencePoint = self.segmentArray.first?.startPoint;
         return db.executeUpdate(strokeInsertQuery, withArgumentsIn: [
             NSNumber.init(value: FTAnnotationType.stroke.rawValue), //Changed to stroke, as we're subclssing this to FTShape and saving intermediately.
             NSNumber.init(value: Float(self.strokeWidth) as Float),
@@ -31,13 +33,15 @@ extension FTStroke {
             NSNumber.init(value: Float(self.boundingRect.size.width) as Float),
             NSNumber.init(value: Float(self.boundingRect.size.height) as Float),
             NSNumber.init(value: Int32(self.segmentCount)),
-            self.segmentData(),
+            self.storableSegmentData(),
             NSNumber.init(value: self.createdTimeInterval as Double),
             NSNumber.init(value: self.modifiedTimeInterval as Double),
             NSNumber.init(value: self.isReadonly),
             NSNumber.init(value: self.version),
             self.uuid,
             self.groupId ?? NSNull()
+            ,(self.referencePoint != nil) ? NSNumber(value: self.referencePoint!.x) : NSNull()
+            ,(self.referencePoint != nil) ? NSNumber(value: self.referencePoint!.y) : NSNull()
             ]);
         
     }
@@ -56,9 +60,15 @@ extension FTStroke {
         }
         let segCount = Int(set.int(forColumn: "segmentCount"));
 
+        if !set.columnIsNull("strokeReferenceX"), !set.columnIsNull("strokeReferenceY") {
+            let pointx = set.FloatValue(forColumn: "strokeReferenceX")
+            let pointy = set.FloatValue(forColumn: "strokeReferenceY")
+            self.referencePoint = FTPoint(x: pointx, y: pointy);
+        }
+        
         if -1 != set.columnIndex(forName: "stroke_segments_v3") {
             if let data = set.data(forColumn: "stroke_segments_v3") {
-                self.setSegmentsData(data, segmentCount: segCount);
+                self.updateSegments(data, inSegmentCount: segCount);
             }
         } else if -1 != set.columnIndex(forName: "stroke_segments") {
             if let data = set.data(forColumn: "stroke_segments") {
@@ -81,5 +91,24 @@ extension FTStroke {
         } else {
             return [self]
         }
+    }
+}
+
+private extension FTStroke {
+    func updateSegments(_ data: Data,inSegmentCount: Int) {
+        if data.count == (MemoryLayout<FTSegmentStruct>.stride * inSegmentCount) {
+            self.setSegmentsData(data, segmentCount: inSegmentCount);
+        }
+        else {
+            self.setOptimizedSegmentsData(data, inSegmentCount: inSegmentCount);
+        }
+    }
+    
+    func storableSegmentData() -> Data {
+        if let nsdoc = self.associatedPage?.parentDocument as? FTNoteshelfDocument
+            , (nsdoc.openPurpose == .writeOptimize || !self.optimizedSegmentArray.isEmpty) {
+            return self.optimizedSegmentsData()
+        }
+        return self.segmentData();
     }
 }

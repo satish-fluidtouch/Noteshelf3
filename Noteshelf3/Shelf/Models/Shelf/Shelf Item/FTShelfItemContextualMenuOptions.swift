@@ -25,6 +25,7 @@ enum FTShelfItemContexualOption {
     case restore
     case delete
     case removeFromRecents
+    case optimizeDocument
 
     var displayTitle: String {
         let title: String
@@ -59,6 +60,8 @@ enum FTShelfItemContexualOption {
             title = "delete".localized
         case .removeFromRecents:
             title = "RemoveFromRecents".localized
+        case .optimizeDocument:
+            title = "Optimize Storage";
         }
         return title
     }
@@ -96,6 +99,8 @@ enum FTShelfItemContexualOption {
             icon = FTIcon.showEnclosingFolder
         case .removeFromRecents:
             icon = FTIcon.trash
+        case .optimizeDocument:
+            icon = FTIcon.clock
         }
         return icon
     }
@@ -136,6 +141,9 @@ struct FTShelfItemContextualMenuOptions: Identifiable {
         var section1: [FTShelfItemContexualOption] = [.openInNewWindow]
         if !shelfItem.isNotDownloaded {
             section1.append((shelfItem.isFavorited ? .removeFromStarred : .addToStarred))
+#if DEBUG || BETA
+            section1.append(.optimizeDocument)
+#endif
         }
         var section2: [FTShelfItemContexualOption] = [.rename, .changeCover]
         if !shelfItem.isNotDownloaded {

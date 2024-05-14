@@ -5,7 +5,7 @@
 //  Created by Amar on 25/3/17.
 //  Copyright © 2017 Fluid Touch Pte Ltd. All rights reserved.
 //
-let APP_SUPPORTED_MAX_DOC_VERSION = Float(10);
+let APP_SUPPORTED_MAX_DOC_VERSION = Float(10.1);
 let DOC_VERSION : String = "10.0";
 let DOCUMENTS_KEY : String = "documents";
 let DOCUMENT_TYPE = "document_type"
@@ -42,7 +42,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     private var lastOpenedDate: Date?;
     
     fileprivate var searchOperationQueue = OperationQueue();
-    fileprivate var openPurpose = FTDocumentOpenPurpose.write;
+    fileprivate(set) var openPurpose = FTDocumentOpenPurpose.write;
     
     internal weak var documentPlistItem: FTNSDocumentInfoPlistItem?;
 
@@ -654,7 +654,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     
     func saveDocument(completionHandler : ((Bool) -> Void)?)
     {
-        if(self.openPurpose == .read) {
+        if(!self.openPurpose.isWriteIntent) {
             FTCLSLog("Doc Saved in Readonly: \(self.addressString) - \(self.URL.title)");
             FTLogError("Doc Saved in Readonly");
             completionHandler?(true);
@@ -870,7 +870,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     }
     
     override func writeContents(_ contents: Any, andAttributes additionalFileAttributes: [AnyHashable : Any]? = nil, safelyTo url: URL, for saveOperation: UIDocument.SaveOperation) throws {
-        if(self.openPurpose == .read) {
+        if(!self.openPurpose.isWriteIntent) {
             FTLogError("Doc writeContents in Readonly");
             return;
         }
@@ -1012,7 +1012,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     }
     
     override func autosave(completionHandler: ((Bool) -> Void)? = nil) {
-        if(self.openPurpose == .read) {
+        if(!self.openPurpose.isWriteIntent) {
             FTLogError("Doc Auto Save in Readonly",attributes: ["title": self.URL.title]);
             completionHandler?(true);
         }

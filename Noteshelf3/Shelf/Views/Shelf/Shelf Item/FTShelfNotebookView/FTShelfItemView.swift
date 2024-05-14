@@ -98,7 +98,12 @@ struct FTShelfItemView: View {
                 })
                 .popover(item: $shelfItem.popoverType) { type in
                     if type == .getInfo {
-                        FTShelfItemInfoView(shelfItemInfo: FTShelfItemInfo(title: shelfItem.title, location: shelfItemLocation, modifiedDate: shelfItem.model.fileModificationDate.shelfShortStyleFormat() , createdDate: shelfItem.model.fileCreationDate.shelfItemCreatedDateFormat()))
+                        FTShelfItemInfoView(shelfItemInfo: FTShelfItemInfo(title: shelfItem.title
+                                                                           , location: shelfItemLocation
+                                                                           , modifiedDate: shelfItem.model.fileModificationDate.shelfShortStyleFormat()
+                                                                           , createdDate: shelfItem.model.fileCreationDate.shelfItemCreatedDateFormat()
+                                                                           ,fileSize:
+                                                                            fileSize(FTFileSizeGenerator.getDirectoryFileSize(shelfItem.model.URL))))
                             .frame(minWidth: 330,
                                    idealWidth: 330,
                                    maxWidth: .infinity,

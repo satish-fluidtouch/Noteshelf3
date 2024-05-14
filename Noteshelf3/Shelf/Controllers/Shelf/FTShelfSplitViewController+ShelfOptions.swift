@@ -1644,3 +1644,37 @@ class FTPDFViewController: UIViewController {
     }
 }
 #endif
+
+extension FTShelfSplitViewController {
+    func performAction(_ action: FTShelfItemContexualOption, items: [FTShelfItemProtocol]) {
+        if action == .optimizeDocument, let item = items.first {
+            let indicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: "Optimizing Storage");
+            runInMainThread {
+                let beforeOptimize = FTFileSizeGenerator.getDirectoryFileSize(item.URL)
+                let optimize = FTDocumentStorageOptimize()
+                optimize.optimizeDocument(at: item.URL) { error in
+                    indicator.hide {
+                        debugLog("optimize: \(optimize)");
+                        if let _error = error {
+                            (_error as NSError).showAlert(from: self);
+                        }
+                        else {
+                            let afterOptimize = FTFileSizeGenerator.getDirectoryFileSize(item.URL)
+                            let differenceL = beforeOptimize - afterOptimize;
+                            if differenceL > 10 {
+                                let difference = fileSize(differenceL);
+                                let before = fileSize(beforeOptimize);
+                                let after = fileSize(afterOptimize);
+                                
+                                UIAlertController.showAlert(withTitle: "Optized successfully: Saved: \(difference)", message: "Notebook optimized from \(before) to \(after)", from: self, withCompletionHandler: nil);
+                            }
+                            else {
+                                UIAlertController.showAlert(withTitle: "Nothing to optimize", message: "", from: self, withCompletionHandler: nil);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

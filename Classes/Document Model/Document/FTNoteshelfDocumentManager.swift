@@ -32,7 +32,7 @@ typealias FTDocumentOpenCallBack = ((FTDocumentOpenToken,FTDocumentProtocol?,Err
 
     func openDocument(request:FTDocumentOpenRequest,onCmmpletion : @escaping FTDocumentOpenCallBack) {
         request.onCompletion = onCmmpletion;
-        if(request.purpose == .read) {
+        if(!request.purpose.isWriteIntent) {
             self.processDocumentReadRequest(request);
         }
         else {
@@ -48,7 +48,7 @@ typealias FTDocumentOpenCallBack = ((FTDocumentOpenToken,FTDocumentProtocol?,Err
     func closeDocument(document:FTDocumentProtocol,
                        token:FTDocumentOpenToken,
                        onCompletion: FTocumentCloseCallBack?) {
-        if token.purpose == .write,
+        if token.purpose.isWriteIntent,
            let storedToken = self.token(for: document.URL) {
             if storedToken.removeToken(token) {
                 if(storedToken.canClose) {
@@ -201,7 +201,7 @@ private class FTDocumentTokenInfo : NSObject {
     }
     
     @discardableResult func removeToken(_ token:FTDocumentOpenToken) -> Bool {
-        if let index = self.tokens.index(of: token) {
+        if let index = self.tokens.firstIndex(of: token) {
             self.tokens.remove(at: index);
             return true;
         }

@@ -38,6 +38,9 @@ private let annotationCreateQuery = """
             isLocked NUMERIC DEFAULT 0,
             clipString TEXT DEFAULT null,
             groupId TEXT DEFAULT null
+            ,strokeReferenceX NUMERIC DEFAULT 0
+            ,strokeReferenceY NUMERIC DEFAULT 0
+
 )
 """;
 

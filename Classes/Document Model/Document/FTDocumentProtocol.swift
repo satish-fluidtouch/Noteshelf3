@@ -13,6 +13,7 @@ import FTDocumentFramework
 {
     case write;
     case read;
+    case writeOptimize;
     
     var displayTitle: String {
         switch self {
@@ -20,6 +21,19 @@ import FTDocumentFramework
             return "Write";
         case .read:
             return "Read";
+        case .writeOptimize:
+            return "Optimize";
+        }
+    }
+    
+    var isWriteIntent: Bool {
+        switch self {
+        case .write:
+            return true;
+        case .writeOptimize:
+            return true;
+        case .read:
+            return false;
         }
     }
 }

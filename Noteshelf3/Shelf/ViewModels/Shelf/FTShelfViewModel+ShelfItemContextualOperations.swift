@@ -95,6 +95,8 @@ extension FTShelfViewModel {
             self.showEnclosingFolderFor(shelfItem.model)
         case .removeFromRecents:
             self.removeRecentItemsFromRecents([shelfItem.model])
+        case .optimizeDocument:
+            self.delegate?.performAction(option,items: [shelfItem.model])
         }
     }
     func favoriteOrUnFavoriteShelfItem(_ item: FTShelfItemViewModel){
@@ -111,6 +113,9 @@ private extension FTShelfViewModel {
             var section1: [FTShelfItemContexualOption] = [.openInNewWindow,.showEnclosingFolder]
             if !item.isNotDownloaded {
                 section1.append((item.isFavorited ? .removeFromStarred : .addToStarred))
+#if DEBUG || BETA
+               section1.append(.optimizeDocument)
+#endif
             }
             
             var section2: [FTShelfItemContexualOption] = [.rename, .changeCover]

@@ -78,6 +78,7 @@ extension FTPenType {
     var segmentCount: Int = 0
     var strokeInProgress: Bool = false;
     var segmentArray: [FTSegmentStruct] = [FTSegmentStruct]()
+    var optimizedSegmentArray: [FTSegmentStructOptimized] = [FTSegmentStructOptimized]()
     
     var segmentsTransientArray: [FTSegmentTransient] = [FTSegmentTransient]()
 
@@ -96,8 +97,35 @@ extension FTPenType {
         return (segment as? FTSegmentStruct)?.isErased ?? false;
     }
     
+    var referencePoint: FTPoint?
+    
     func segment(at index: Int) -> FTSegmentProtocol {
-        return self.segmentArray[index];
+        objc_sync_enter(self)
+        if self.segmentArray.count - 1 < index {
+            let start = max(0,self.segmentArray.count);
+            let totalToFill = start - index;
+            #if DEBUG
+            if totalToFill > 0 {
+                debugLog("Filling in liip: \(totalToFill)")
+            }
+            #endif
+            for i in start...index {
+                if !self.optimizedSegmentArray.isEmpty {
+                    let curSegment = self.optimizedSegmentArray[i];
+                    let nextSegment = self.optimizedSegmentArray[i+1];
+                    
+                    var reference = self.referencePoint ?? FTPoint(x: 0, y: 0);
+                    if i > 0 {
+                        reference = self.segmentArray[i-1].startPoint;
+                    }
+                    let segment = FTSegmentStruct(segment: curSegment, nextSegment: nextSegment, referencePoint: reference);
+                    self.segmentArray.append(segment)
+                }
+            }
+        }
+        let segment = self.segmentArray[index];
+        objc_sync_exit(self)
+        return segment
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -241,7 +269,7 @@ extension FTPenType {
         
         if(boundingRect.origin.x < 0 || boundingRect.origin.y < 0) {
             for i in 0..<segmentCount {
-                let segment = self.segmentArray[i];
+                let segment = self.segment(at: i);
                 if(maxSegBrushWidh == -1) {
                     minX = min(segment.startPoint.x, segment.endPoint.x);
                     minY = min(segment.startPoint.y, segment.endPoint.y);
@@ -318,7 +346,7 @@ extension FTPenType {
         var points = [CGPoint]();
         let segCount = self.segmentCount;
         for index in 0..<segCount {
-            let seg = self.segmentArray[index];
+            let seg = self.segment(at: index)
             points.append(CGPoint(ftpoint: seg.startPoint));
             points.append(CGPoint(ftpoint: seg.endPoint));
             totalThickness += CGFloat(seg.thickness);
@@ -342,9 +370,9 @@ extension FTPenType {
     override func repairIfRequired() -> Bool {
         var shouldSave = false
         if FTUserDefaults.isInSafeMode() {
-            var previousSeg : FTSegmentStruct?
+            var previousSeg : FTSegmentProtocol?
             for i in 0..<segmentCount {
-                let segment = self.segmentArray[i];
+                let segment = self.segment(at: i)
                 if let _prevSeg = previousSeg {
                     if segment.startPoint.x != _prevSeg.endPoint.x
                         || segment.startPoint.y != _prevSeg.endPoint.y {
@@ -551,8 +579,8 @@ extension FTStroke : FTAnnotationContainsProtocol
         if(boundingRect1.intersects(selectionPathBounds)) {
             //Check if any of the segment is within the selection path
             for i in 0..<self.segmentCount {
-                let segment = self.segmentArray[i];
-                if !segment.isErased {
+                if let segment = self.segment(at: i) as? FTSegmentStruct
+                ,!segment.isErased {
                     var scaledPoint = CGPointScale(CGPoint.init(ftpoint: segment.startPoint), scale);
                     scaledPoint = CGPointTranslate(scaledPoint, -selectionOffset.x, -selectionOffset.y);
                     if(inSelectionPath.contains(scaledPoint)) {

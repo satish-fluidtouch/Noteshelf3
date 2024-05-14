@@ -12,6 +12,7 @@ enum FTShelfItemInfoTypes {
     case location
     case modifiedDate
     case createdDate
+    case fileSize
 
     var displayTitle: String {
         switch self {
@@ -23,49 +24,55 @@ enum FTShelfItemInfoTypes {
             return "shelfItemInfo.modified".localized
         case .createdDate:
             return "Created".localized
+        case .fileSize:
+            return "Size";
         }
     }
 }
 
 struct FTShelfItemInfoView: View {
     var shelfItemInfo: FTShelfItemInfo
-    let infoDetails: [FTShelfItemInfoTypes] = [.title,.location,.modifiedDate,.createdDate]
+    let infoDetails: [FTShelfItemInfoTypes] = [.title,.location,.modifiedDate,.createdDate,.fileSize]
+    
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
                 VStack {
-                    VStack(spacing:0.0) {
-                        ForEach(infoDetails.indices,id: \.self) { index in
-                            let itemDetailType = infoDetails[index]
-                            let isLastItemInList = index == infoDetails.count - 1
-                            VStack(spacing:0.0) {
-                                VStack(alignment: .center) {
-                                    HStack(alignment: .center) {
-                                        Text(itemDetailType.displayTitle)
-                                            .appFont(for: .regular, with: 15)
-                                            .foregroundColor(Color.appColor(.black70))
-                                            .multilineTextAlignment(.trailing)
-                                        Spacer(minLength: 12)
-                                        Text(shelfItemInfo.getDisplayStringForType(itemDetailType))
-                                            .appFont(for: .regular, with: 15)
-                                            .foregroundColor(Color.label)
-                                            .multilineTextAlignment(.trailing)
+                    ScrollView {
+                        VStack(spacing:0.0) {
+                            ForEach(infoDetails.indices,id: \.self) { index in
+                                let itemDetailType = infoDetails[index]
+                                let isLastItemInList = index == infoDetails.count - 1
+                                VStack(spacing:0.0) {
+                                    VStack(alignment: .center) {
+                                        HStack(alignment: .center) {
+                                            Text(itemDetailType.displayTitle)
+                                                .appFont(for: .regular, with: 15)
+                                                .foregroundColor(Color.appColor(.black70))
+                                                .multilineTextAlignment(.trailing)
+                                            Spacer(minLength: 12)
+                                            Text(shelfItemInfo.getDisplayStringForType(itemDetailType))
+                                                .appFont(for: .regular, with: 15)
+                                                .foregroundColor(Color.label)
+                                                .multilineTextAlignment(.trailing)
+                                        }
+                                        .padding(.leading,16)
+                                        .padding(.trailing,16)
                                     }
-                                    .padding(.leading,16)
-                                    .padding(.trailing,16)
-                                }
-                                .frame(minHeight: 43.0,alignment: .center)
-                                .contentShape(Rectangle())
-                                if !isLastItemInList {
-                                    Rectangle()
-                                        .frame(height: 0.5,alignment: .bottom)
-                                        .foregroundColor(.appColor(.black10))
+                                    .frame(minHeight: 43.0,alignment: .center)
+                                    .contentShape(Rectangle())
+                                    if !isLastItemInList {
+                                        Rectangle()
+                                            .frame(height: 0.5,alignment: .bottom)
+                                            .foregroundColor(.appColor(.black10))
+                                    }
                                 }
                             }
+                            .background(Color.appColor(.cellBackgroundColor))
+                            .cornerRadius(10)
                         }
+                        .padding(.bottom, 16)
                     }
-                    .background(Color.appColor(.cellBackgroundColor))
-                    .cornerRadius(10)
                 }
                 .frame(minHeight:170,maxHeight:.infinity ,alignment: .top)
                 .padding(.trailing,16)
@@ -86,7 +93,7 @@ struct FTShelfItemInfoView: View {
 
 struct FTShelfItemInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        FTShelfItemInfoView(shelfItemInfo: FTShelfItemInfo(title: "Sample", location: "Keto/New", modifiedDate: "Sampleee", createdDate: "Sample"))
+        FTShelfItemInfoView(shelfItemInfo: FTShelfItemInfo(title: "Sample", location: "Keto/New", modifiedDate: "Sampleee", createdDate: "Sample",fileSize: "100 MB"))
     }
 }
 struct FTShelfItemInfo {
@@ -94,6 +101,7 @@ struct FTShelfItemInfo {
     var location: String
     var modifiedDate: String
     var createdDate: String
+    var fileSize: String = "";
 
     func getDisplayStringForType(_ type: FTShelfItemInfoTypes) -> String {
         switch type {
@@ -105,6 +113,8 @@ struct FTShelfItemInfo {
             return modifiedDate
         case .createdDate:
             return createdDate
+        case .fileSize:
+            return fileSize;
         }
     }
 }

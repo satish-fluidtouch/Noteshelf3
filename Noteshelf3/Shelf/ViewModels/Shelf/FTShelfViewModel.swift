@@ -42,7 +42,7 @@ protocol FTShelfViewModelProtocol: AnyObject {
     func openDiscoveryItemsURL(_ url:URL?)
     func recordingViewController(_ recordingsViewController: FTWatchRecordedListViewController, didSelectRecording recordedAudio:FTWatchRecordedAudio, forAction actionType:FTAudioActionType);
     func canProcessNotification() -> Bool
-
+    func performAction(_ action:FTShelfItemContexualOption, items: [FTShelfItemProtocol]);
 }
 protocol FTShelfCompactViewModelProtocol: AnyObject {
     func didChangeSelectMode(_ mode: FTShelfMode)
