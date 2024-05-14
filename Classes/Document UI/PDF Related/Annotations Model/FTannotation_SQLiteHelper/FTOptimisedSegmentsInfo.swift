@@ -12,6 +12,14 @@ struct FTPointOffset {
     var x,y : Int16;
 }
 
+private extension Float {
+    var toInt16: Int16 {
+        if fabsf(self*1000) > Float(Int16.max) {
+            FTLogError("Stroke Float to int failed", attributes: ["value": self])
+        }
+        return Int16(max(min(self*1000,Float(Int16.max)), Float(Int16.min)))
+    }
+}
 struct FTSegmentStructOptimized {
     var startPoint: FTPointOffset;
     var thickness: Int16;
@@ -22,7 +30,7 @@ struct FTSegmentStructOptimized {
         let xOffset =  isLastSeg ? (segment.endPoint.x - referencePoint.x) : (segment.startPoint.x - referencePoint.x);
         let yOffset =  isLastSeg ? (segment.endPoint.y - referencePoint.y) : (segment.startPoint.y - referencePoint.y);
 
-        self.startPoint = FTPointOffset(x: Int16(xOffset*1000), y: Int16(yOffset*1000));
+        self.startPoint = FTPointOffset(x: xOffset.toInt16, y: yOffset.toInt16);
         self.thickness = Int16(segment.thickness * 100)
         self.opacity = Int16(segment.opacity * 100)
         self.isErased = segment.isErased;

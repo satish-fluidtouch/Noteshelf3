@@ -309,6 +309,8 @@
 		<string>msauthv3</string>
 		<string>$(NS2_APP_URL_SCHEME)</string>
 	</array>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<false/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -425,7 +427,7 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>UISupportsDocumentBrowser</key>
-	<true/>
+	<false/>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
 	<key>UTExportedTypeDeclarations</key>
