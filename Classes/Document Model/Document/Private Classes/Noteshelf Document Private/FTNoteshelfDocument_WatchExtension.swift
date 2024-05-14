@@ -148,7 +148,7 @@ extension FTNoteshelfDocument : FTDocumentCreateWatchExtension {
             Task {
                 let generator = FTAutoTemplateGenerator.autoTemplateGenerator(theme: theme, generationType: .template)
                 do {
-                    let documentInfo = try await generator.generate()
+                    let documentInfo = generator.generate()
                     documentInfo.footerOption = theme.footerOption
                     documentInfo.annotationInfo = theme.annotationInfo
                     documentInfo.isNewBook = true

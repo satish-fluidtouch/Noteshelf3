@@ -1517,6 +1517,11 @@ extension FTRootViewController: FTSceneBackgroundHandling {
         }
         self.saveApplicationStateByClosingDocument(false, keepEditingOn: true, onCompletion: nil);
     }
+    
+    internal func sceneDidBecomeActive(_ notification: Notification) {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        self.presentImportsControllerifNeeded();
+    }
 
     func sceneWillEnterForeground(_ notification: Notification) {
         if(!self.canProceedSceneNotification(notification)) {
@@ -1542,7 +1547,7 @@ extension FTRootViewController: FTSceneBackgroundHandling {
             else {
                 FTBetaAlertHandler.showiOS13BetaAlertIfNeeded(onViewController: self);
                 FTOneDriveAlertHandler.showOneDriveAuthenticationAlertIfNeeded(self)
-                self.presentImportsControllerifNeeded();
+                NotificationCenter.default.addObserver(self, selector: #selector(self.sceneDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil);
             }
         }
     }

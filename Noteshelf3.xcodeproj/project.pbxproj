@@ -1994,6 +1994,8 @@
 		C85AFDF423324C0E00D25D5F /* NSString_Backup_Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 211E30201E027D73007B5CAD /* NSString_Backup_Additions.m */; };
 		DDAD78EC2A08C550001D8B21 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = DDAD78EB2A08C550001D8B21 /* SDWebImage */; };
 		E70705FA2AC2B7D500A7B341 /* FTFavoritebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70705F92AC2B7D500A7B341 /* FTFavoritebarViewController.swift */; };
+		E7087A622BE8EDE6008AB614 /* FTRenderKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA35A28926022057002581BF /* FTRenderKit.xcframework */; };
+		E7087A652BE8EDED008AB614 /* FTDocumentFramework.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9F5DD725B6C57B00864648 /* FTDocumentFramework.xcframework */; };
 		E70B909D2BAAED05002B5292 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CCFF6A2BA975E100DB59CE /* AppIntent.swift */; };
 		E70FACB12B3B04BC009B88C9 /* FTShapeCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70FACB02B3B04BC009B88C9 /* FTShapeCurve.swift */; };
 		E70FACB32B3B05C2009B88C9 /* FTShapeCurveAnnotationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70FACB22B3B05C2009B88C9 /* FTShapeCurveAnnotationController.swift */; };
@@ -4859,6 +4861,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7087A622BE8EDE6008AB614 /* FTRenderKit.xcframework in Frameworks */,
 				47C561BD29FA7B8000E35D06 /* FTStyles.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4924,6 +4927,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BAF0DD622A6FE48E006D293B /* FTNewNotebook.framework in Frameworks */,
+				E7087A652BE8EDED008AB614 /* FTDocumentFramework.xcframework in Frameworks */,
 				5283D3A42A5E7AA000C6C125 /* FTStyles.framework in Frameworks */,
 				BAB258B0295B19040072AEBB /* FTCommon.framework in Frameworks */,
 				5288FB452A553F5100EBC37C /* ZipArchive in Frameworks */,

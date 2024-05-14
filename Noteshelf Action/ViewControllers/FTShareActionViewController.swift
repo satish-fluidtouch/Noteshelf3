@@ -44,7 +44,13 @@ class FTShareActionViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let folder = selectedItem?.collection?.title ?? "Unfiled"
-        noteBookNameLabel.text = "\(folder) / New Notebook"
+        let newBookText = "New Notebook"
+        var title  = "\(folder) / \(newBookText)"
+        if selectedItem?.type == .noteBook {
+            title = "\(folder) / \(selectedItem?.noteBook?.title ?? newBookText )"
+        }
+        noteBookNameLabel.text = title
+
     }
     
     override func viewDidLoad() {
@@ -199,11 +205,11 @@ class FTShareActionViewController: UIViewController {
     @IBAction func didTapImport(_ sender: Any) {
         if let attachmentsInfo {
             if attachmentsInfo.hasOnlyImageFiles() {
-                self.handleImageItems(attachmentsInfo.imageItems)
+                self.handleImageItems(attachmentsInfo.publicImageURLs)
             } else if attachmentsInfo.hasOnlyWebsiteLinks() {
                 self.handleWebsiteLinks()
             } else if attachmentsInfo.hasOnlyPublicImageURLs() {
-                self.handleImageItems(imagesToImport)
+                self.handleImageItems(attachmentsInfo.publicImageURLs)
             } else if attachmentsInfo.hasPublicFiles() {
                 self.handlePublicUrls()
             }
@@ -225,14 +231,14 @@ class FTShareActionViewController: UIViewController {
         self.shareActionAlertView?.doneButton.addTarget(self, action: #selector(doneTapped), for: .touchUpInside)
     }
     
-    private func handleImageItems(_ imageItems: [UIImage]) {
+    private func handleImageItems(_ urls: [URL]) {
         self.animationState = .started
-        let _: Progress = FTPDFFileGenerator().generatePDFFile(withImages: imageItems, onCompletion: {[weak self] (filePath) in
-            self?.addImportAction(for: URL(fileURLWithPath: filePath))
+        urls.forEach { eachUrl in
+            self.addImportAction(for: eachUrl)
             FTUserDefaults.defaults().userImportCount += 1;
-            self?.shareActionAlertView?.numberOfSharedItems = imageItems.count
-            self?.animationState = .ended
-        })
+        }
+        self.shareActionAlertView?.numberOfSharedItems = urls.count
+        self.animationState = .ended
     }
     
     private func handlePublicUrls() {
@@ -241,9 +247,12 @@ class FTShareActionViewController: UIViewController {
             attachmentsInfo.publicURLs.forEach { (importedURL) in
                 self.addImportAction(for: importedURL)
             }
+            attachmentsInfo.publicImageURLs.forEach { (importedURL) in
+                self.addImportAction(for: importedURL)
+            }
             FTUserDefaults.defaults().userImportCount += 1;
             if !attachmentsInfo.imageItems.isEmpty {
-                self.handleImageItems(attachmentsInfo.imageItems)
+                self.handleImageItems(attachmentsInfo.publicImageURLs)
             }
             else {
                 self.shareActionAlertView?.numberOfSharedItems = attachmentsInfo.publicURLs.count
@@ -255,7 +264,8 @@ class FTShareActionViewController: UIViewController {
    private func addImportAction(for url: URL) {
         let group = self.selectedItem?.group?.URL.relativePathWRTCollection()
         let collection = self.selectedItem?.collection?.title ?? uncategorizedShefItemCollectionTitle
-        FTImportStorageManager.addNewImportAction(url, group: group, collection: collection)
+       let notebookPath = self.selectedItem?.noteBook?.URL.relativePathWRTCollection()
+        FTImportStorageManager.addNewImportAction(url, group: group, collection: collection, notebook: notebookPath)
     }
     
     private func handleWebsiteLinks() {

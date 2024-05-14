@@ -140,10 +140,18 @@ extension FTShareActionItemsViewController: UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var item = self.arrayOfItems[indexPath.section][indexPath.row]
+        let item = self.arrayOfItems[indexPath.section][indexPath.row]
         if item.itemType == .noteBook {
             // select notebook to import
             self.selectedShareItem = item
+            let model = FTShareItemsFetchModel()
+            model.collection = item.collection
+            model.noteBook = item.shelfItem
+            model.type = item.itemType
+            if let vcs = self.navigationController?.viewControllers, let firstVc = vcs.first as? FTShareActionViewController {
+                firstVc.selectedItem = model
+            }
+            self.navigationController?.popToRootViewController(animated: true)
         } else {
             self.navigate(with: item)
         }
