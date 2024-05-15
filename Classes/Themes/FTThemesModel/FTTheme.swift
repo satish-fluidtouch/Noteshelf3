@@ -157,7 +157,7 @@ class FTTheme: NSObject, FTThemeable {
         return UIImage()
     }
 
-    func preview() async -> UIImage? {
+    func preview() -> UIImage? {
         NSException.init(name: NSExceptionName(rawValue: "Theme"), reason: "subclass should override ", userInfo: nil).raise()
         return nil
     }

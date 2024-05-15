@@ -12,7 +12,6 @@ public protocol FTPasswordDelegate: NSObject {
     func didTapCancelPassword()
 }
 public protocol FTPaperThumbnailGenerator {
-    func generateThumbnailFor(selectedVariantsAndTheme: FTSelectedPaperVariantsAndTheme,forPreview:Bool,completionhandler: @escaping (_ thumbImage : UIImage?)->())
-    func generateThumbnail(theme: FTThemeable,completionhandler: @escaping (_ thumbImage : UIImage?)->());
-    func generateThumbnail(theme: FTThemeable) async -> UIImage?
+    func generateThumbnailFor(selectedVariantsAndTheme: FTSelectedPaperVariantsAndTheme, forPreview:Bool) -> UIImage?
+    func generateThumbnail(theme: FTThemeable) -> UIImage?
 }

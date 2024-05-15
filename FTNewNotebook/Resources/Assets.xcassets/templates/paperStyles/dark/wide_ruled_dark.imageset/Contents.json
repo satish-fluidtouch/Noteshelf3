@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Ruled Wide.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
