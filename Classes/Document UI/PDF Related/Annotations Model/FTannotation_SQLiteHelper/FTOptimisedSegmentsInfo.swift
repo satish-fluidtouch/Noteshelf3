@@ -17,7 +17,7 @@ private extension Float {
         if fabsf(self*1000) > Float(Int16.max) {
             FTLogError("Stroke Float to int failed", attributes: ["value": self])
         }
-        return Int16(max(min(self*1000,Float(Int16.max)), Float(Int16.min)))
+        return Int16(max(min(self*100,Float(Int16.max)), Float(Int16.min)))
     }
 }
 struct FTSegmentStructOptimized {
@@ -30,6 +30,7 @@ struct FTSegmentStructOptimized {
         let xOffset =  isLastSeg ? (segment.endPoint.x - referencePoint.x) : (segment.startPoint.x - referencePoint.x);
         let yOffset =  isLastSeg ? (segment.endPoint.y - referencePoint.y) : (segment.startPoint.y - referencePoint.y);
 
+//        self.startPoint = isLastSeg ? segment.startPoint : segment.endPoint
         self.startPoint = FTPointOffset(x: xOffset.toInt16, y: yOffset.toInt16);
         self.thickness = Int16(segment.thickness * 100)
         self.opacity = Int16(segment.opacity * 100)
@@ -39,17 +40,19 @@ struct FTSegmentStructOptimized {
 
 extension FTSegmentStruct {
     init(segment: FTSegmentStructOptimized,nextSegment: FTSegmentStructOptimized, referencePoint: FTPoint) {
-        let pointX = referencePoint.x + (Float(segment.startPoint.x) * 0.001);
-        let pointy = referencePoint.y + (Float(segment.startPoint.y) * 0.001);
+        let pointX = referencePoint.x + (Float(segment.startPoint.x) * 0.01);
+        let pointy = referencePoint.y + (Float(segment.startPoint.y) * 0.01);
         self.startPoint = FTPoint(x: pointX, y: pointy);
-        
+//        self.startPoint = segment.startPoint;
+
         self.thickness = Float(segment.thickness) * 0.01
         self.opacity = Float(segment.opacity)  * 0.01
         self.isErased = segment.isErased;
 
-        let endpointX = referencePoint.x + (Float(nextSegment.startPoint.x) * 0.001);
-        let endpointy = referencePoint.y + (Float(nextSegment.startPoint.y) * 0.001);
+        let endpointX = referencePoint.x + (Float(nextSegment.startPoint.x) * 0.01);
+        let endpointy = referencePoint.y + (Float(nextSegment.startPoint.y) * 0.01);
         self.endPoint = FTPoint(x: endpointX, y: endpointy);
+//        self.endPoint = nextSegment.startPoint
     }
 }
 
