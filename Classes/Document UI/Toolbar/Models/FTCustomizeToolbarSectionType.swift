@@ -134,7 +134,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
         case .deletePage:
             name = "desk_tool_deletePage"
         case .scrolling:
-            name = (UserDefaults.standard.pageLayoutType == .vertical) ? "desk_tool_vertical_scrolling" : "desk_tool_horizontal_scrolling"
+            name = UserDefaults.standard.pageLayoutType.toolIconName
         case .camera:
             name = "desk_tool_camera"
         case .recentNotes:
@@ -347,9 +347,9 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
     }
     
     var toShowNewBadge: Bool {
-        var status = true
+        var status = false
         if self == .camera || self == .scrolling || self == .recentNotes {
-            status = false
+            status = true
         }
         return status
     }
