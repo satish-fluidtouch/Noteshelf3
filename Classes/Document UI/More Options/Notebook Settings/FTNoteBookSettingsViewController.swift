@@ -63,7 +63,6 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
         self.configureCustomNavigation(title: "notebook.settings.moresettings".localized)
         
     }
-    
     private func configureFooter() {
         let footer = UILabel(frame: CGRect(origin: CGPoint(x: 32.0, y: 0.0), size: CGSize(width: 280, height: 50.0)))
         footer.text = "more.settings.footer".localized
@@ -188,10 +187,6 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
                 self.updateIdleTimerDisabledStatus()
                 let str = !disableAutoLock ? "on" : "off"
                 FTNotebookEventTracker.trackNotebookEvent(with: setting.eventName, params: ["toggle": str])
-            } else if setting == .evernoteSync {
-                toggleEvernoteSyncStatusFor(uiSwitch: uiSwitch)
-                let str = uiSwitch.isOn ? "on" : "off"
-                FTNotebookEventTracker.trackNotebookEvent(with: setting.eventName, params: ["toggle": str])
             }
         }
         
@@ -222,53 +217,4 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
         }
     }
     
-    //MARK: Evernote settings
-    extension FTNoteBookSettingsViewController {
-        func toggleEvernoteSyncStatusFor(uiSwitch: UISwitch) {
-#if NOTESHELF_RETAIL_DEMO
-            UIAlertController.showDemoLimitationAlert(withMessageID: "AutoPublishLimitation", onController: self)
-            return
-#endif
-            
-            guard let localShelfItem = self.notebookShelfItem as? FTDocumentItemProtocol else {
-                FTLogError("EN Sync Backup Failed", attributes: ["reason": "shelf item not found"]);
-                return;
-            }
-            let evernotePublishManager = FTENPublishManager.shared;
-            evernotePublishManager.checkENSyncPrerequisite(from: self) { success in
-                if success {
-                    let documentItemProtocol = localShelfItem ;
-                    if let documentUUID = documentItemProtocol.documentUUID {
-                        if evernotePublishManager.isSyncEnabled(forDocumentUUID: documentItemProtocol.documentUUID!) {
-                            FTENPublishManager.recordSyncLog("User disabled Sync for notebook \(documentUUID)");
-                            self.updateEvernoteToggleSwitch(uiSwitch: uiSwitch, withStatus: false);
-                            evernotePublishManager.disableSync(for: documentItemProtocol);
-                            evernotePublishManager.disableBackupForShelfItem(withUUID: documentUUID);
-                        } else {
-                            FTENPublishManager.recordSyncLog("User enabled Sync for notebook: \(documentUUID)");
-                            evernotePublishManager.showAccountChooser(self, withCompletionHandler: { [weak self] accountType in
-                                if accountType != EvernoteAccountType.evernoteAccountUnknown {
-                                    guard let strongSelf = self else { return }
-                                    
-                                    strongSelf.updateEvernoteToggleSwitch(uiSwitch: uiSwitch, withStatus: true);
-                                    
-                                    if let pin = (strongSelf.notebookDocument as? FTDocument)?.pin {
-                                        FTDocument.keychainSet(pin, forKey: strongSelf.notebookDocument.documentUUID)
-                                    }
-                                    
-                                    evernotePublishManager.enableSync(for: documentItemProtocol);
-                                    evernotePublishManager.updateSyncRecord(forShelfItem: localShelfItem, withDocumentUUID: documentUUID);
-                                    evernotePublishManager.updateSyncRecord(forShelfItemAtURL: localShelfItem.URL, withDeleteOption: true, andAccountType: accountType);
-                                } else {
-                                    self?.updateEvernoteToggleSwitch(uiSwitch: uiSwitch, withStatus: false);
-                                }
-                            });
-                        }
-                    }
-                } else {
-                    self.updateEvernoteToggleSwitch(uiSwitch: uiSwitch, withStatus: false);
-                }
-            }
-        }
-    }
 

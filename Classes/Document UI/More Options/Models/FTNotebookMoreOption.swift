@@ -559,7 +559,7 @@ class FTNotebookEverNoteSetting: FTNotebookOptionToggle {
 
 class FTNotebookAddToStylus: FTNotebookMoreOption {
     var imageIcon: FTIcon {
-        return .StylusIcon
+        return .stylusIcon
     }
     
     var eventName: String {
@@ -581,11 +581,7 @@ class FTNotebookAddToStylus: FTNotebookMoreOption {
 
 class FTNotebookAddScrollingDirection: FTNotebookMoreOption {
     var imageIcon: FTIcon {
-        if UserDefaults.standard.pageLayoutType.rawValue == 1 {
-            return.horizontalScrollingIcon
-        }else {
-            return.verticalScrollingIcon
-        }
+        FTIcon(bundleName: UserDefaults.standard.pageLayoutType.toolIconName)
     }
     
     var eventName: String {

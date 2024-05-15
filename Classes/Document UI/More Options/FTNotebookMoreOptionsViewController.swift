@@ -223,6 +223,7 @@ extension FTNotebookMoreOptionsViewController: UITableViewDelegate, UITableViewD
                 cell.accessoryView = toggleSwitch
             case is FTNotebookAddScrollingDirection :
                 settingCell.scrollingValueLbl?.isHidden = false
+                settingCell.setValueForScrollDirection()
             case is FTNotebookStatusBarSetting :
                 settingCell.scrollingValueLbl?.isHidden = true
             default:
@@ -279,7 +280,7 @@ extension FTNotebookMoreOptionsViewController: UITableViewDelegate, UITableViewD
         case is FTNotebookOptionZoomBox:
             self.delegate?.didTapBasicOption(option: .zoomBox, with: page, controller: self)
         case is FTNotebookOptionSaveAsTemplate:
-            UIAlertController.showTextFieldAlertOn(viewController: self, title: "SaveAsTemplate".localized, message: "saveAsTemplate_message".localized, textfieldPlaceHolder: "Untitled", submitButtonTitle: "ok".localized, cancelButtonTitle: "Cancel".localized) { title in
+            UIAlertController.showTextFieldAlertOn(viewController: self, title: "SaveAsTemplate".localized, message: "saveAsTemplate_message".localized, textfieldPlaceHolder: "Untitled".localized, submitButtonTitle: "ok".localized, cancelButtonTitle: "Cancel".localized) { title in
                 self.delegate?.didTapBasicOption(option: .saveAsTemplate(fileName: title ?? ""), with: self.page, controller: self)
             } cancelAction: {
                 self.dismiss(animated: true)
