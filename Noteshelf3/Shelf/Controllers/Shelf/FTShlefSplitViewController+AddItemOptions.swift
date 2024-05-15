@@ -145,7 +145,7 @@ extension FTShelfSplitViewController {
                     if !importInfo.notebook.isEmpty {
                         var subProgress1 = Progress()
                         // Fetch the document and open and insert image as annotation
-                        subProgress1 = self.insertFileItem(item, atIndex: 0) { sucess, error in
+                        subProgress1 = self.insertFileInsideNotebook(item, atIndex: 0) { sucess, error in
                             onCompletion?(nil, error)
                         }
                         progress.addChild(subProgress1, withPendingUnitCount: 1);
@@ -191,7 +191,7 @@ extension FTShelfSplitViewController {
             if !importInfo.notebook.isEmpty {
                 var subProgress1 = Progress()
                 // Fetch the document and open and insert image as annotation
-                subProgress1 = self.insertFileItem(item, atIndex: 0) { sucess, error in
+                subProgress1 = self.insertFileInsideNotebook(item, atIndex: 0) { sucess, error in
                     onCompletion?(nil, error)
                 }
                 progress.addChild(subProgress1, withPendingUnitCount: 1);
@@ -207,7 +207,7 @@ extension FTShelfSplitViewController {
                                 let importItemInfo = FTImportItemInfo(collection: item.imporItemInfo?.collection ?? "", group: "", notebook: shelfItem.URL.relativePathWRTCollection())
                                 _importItem.imporItemInfo = importItemInfo
                                 var subProgress1 = Progress()
-                                subProgress1 = self.insertFileItem(_importItem, shelfItemProtocol: shelfItem, atIndex: 0) { sucess, error in
+                                subProgress1 = self.insertFileInsideNotebook(_importItem, shelfItemProtocol: shelfItem, atIndex: 0) { sucess, error in
                                     onCompletion?(shelfItem, error)
                                 }
                                 progress.addChild(subProgress1, withPendingUnitCount: 1);
@@ -229,7 +229,7 @@ extension FTShelfSplitViewController {
                     if let importInfo = item.imporItemInfo {
                         if !importInfo.notebook.isEmpty {
                             // Fetch the document and open and insert new page
-                            subProgress1 = self.insertFileItem(item, atIndex: 0) { sucess, error in
+                            subProgress1 = self.insertFileInsideNotebook(item, atIndex: 0) { sucess, error in
                                 onCompletion?(nil, error)
                             }
                             progress.addChild(subProgress1, withPendingUnitCount: 1);
@@ -270,7 +270,7 @@ extension FTShelfSplitViewController {
     }
     
     
-    private func insertFileItem(_ item : FTImportItem,
+    private func insertFileInsideNotebook(_ item : FTImportItem,
                                                  shelfItemProtocol: FTShelfItemProtocol? = nil,
                                                  atIndex : Int,
                                                  onCompletion:((FTShelfItemProtocol?,Error?) -> Void)?) -> Progress
@@ -379,22 +379,23 @@ extension FTShelfSplitViewController {
     private func insertImageInDocument(img: UIImage, with notebookUrl: URL, onCompletion : @escaping ((Bool,NSError?) -> Void)) {
         let docrequest = FTDocumentOpenRequest(url: notebookUrl, purpose: .write)
         FTNoteshelfDocumentManager.shared.openDocument(request: docrequest) { docToken, ftDocument, error in
-            if let ftDocument, error == nil {
-                if let lastPage = ftDocument.pages().last as? FTNoteshelfPage {
-                    if let image = img.scaleAndRotateImageFor1x() {
-                        let pageRect = lastPage.pdfPageRect
-                        let startingFrame = image.aspectFrame(withinScreenArea: pageRect, zoomScale: 1)
-                        let imageInfo = FTImageAnnotationInfo(image: image)
-                        imageInfo.boundingRect = startingFrame
-                        imageInfo.scale = 1
-                        if let imageAnn = imageInfo.annotation() {
-                            imageAnn.associatedPage = lastPage
-                            lastPage.addAnnotations([imageAnn], indices: nil)
-                        }
-                        FTNoteshelfDocumentManager.shared.saveAndClose(document: ftDocument, token: docToken) { _ in
-                            onCompletion(true,nil);
-                        }
+            if let ftDocument, error == nil, let lastPage = ftDocument.pages().last as? FTNoteshelfPage {
+                let page = ftDocument.insertPageBelow(page: lastPage)
+                if let insertedPage = page as? FTNoteshelfPage, let image = img.scaleAndRotateImageFor1x() {
+                    let pageRect = insertedPage.pdfPageRect
+                    let startingFrame = image.aspectFrame(withinScreenArea: pageRect, zoomScale: 1)
+                    let imageInfo = FTImageAnnotationInfo(image: image)
+                    imageInfo.boundingRect = startingFrame
+                    imageInfo.scale = 1
+                    if let imageAnn = imageInfo.annotation() {
+                        imageAnn.associatedPage = insertedPage
+                        insertedPage.addAnnotations([imageAnn], indices: nil)
                     }
+                    FTNoteshelfDocumentManager.shared.saveAndClose(document: ftDocument, token: docToken) { _ in
+                        onCompletion(true,nil);
+                    }
+                } else {
+                    onCompletion(false, nil)
                 }
             } else {
                 onCompletion(false, nil)
@@ -407,11 +408,14 @@ extension FTShelfSplitViewController {
         FTNoteshelfDocumentManager.shared.openDocument(request: docrequest) { docToken, ftDocument, error in
             if let ftDocument, error == nil {
                 if let lastPage = ftDocument.pages().last as? FTNoteshelfPage {
-                    (ftDocument as? FTDocumentCreateWatchExtension)?.addAudioAnnotations(urls: [audioUrl], toPage: lastPage, onCompletion: { (annotations) in
+                    let insertedPage = ftDocument.insertPageBelow(page: lastPage)
+                    (ftDocument as? FTDocumentCreateWatchExtension)?.addAudioAnnotations(urls: [audioUrl], toPage: insertedPage ?? lastPage, onCompletion: { (annotations) in
                         FTNoteshelfDocumentManager.shared.saveAndClose(document: ftDocument, token: docToken) { _ in
                             onCompletion(true, nil)
                         }
                     })
+                } else {
+                    onCompletion(false, nil)
                 }
             } else {
                 onCompletion(false, nil)
