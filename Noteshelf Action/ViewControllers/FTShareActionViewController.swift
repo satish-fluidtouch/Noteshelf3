@@ -246,18 +246,15 @@ class FTShareActionViewController: UIViewController {
             self.animationState = .started
             attachmentsInfo.publicURLs.forEach { (importedURL) in
                 self.addImportAction(for: importedURL)
+                FTUserDefaults.defaults().userImportCount += 1;
             }
             attachmentsInfo.publicImageURLs.forEach { (importedURL) in
                 self.addImportAction(for: importedURL)
+                FTUserDefaults.defaults().userImportCount += 1;
             }
-            FTUserDefaults.defaults().userImportCount += 1;
-            if !attachmentsInfo.imageItems.isEmpty {
-                self.handleImageItems(attachmentsInfo.publicImageURLs)
-            }
-            else {
-                self.shareActionAlertView?.numberOfSharedItems = attachmentsInfo.publicURLs.count
-                self.animationState = .ended
-            }
+            let count = attachmentsInfo.publicURLs.count + attachmentsInfo.publicImageURLs.count
+            self.shareActionAlertView?.numberOfSharedItems = count
+            self.animationState = .ended
         }
     }
     

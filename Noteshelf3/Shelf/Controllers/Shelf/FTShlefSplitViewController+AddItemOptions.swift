@@ -273,7 +273,7 @@ extension FTShelfSplitViewController {
     private func insertFileItem(_ item : FTImportItem,
                                                  shelfItemProtocol: FTShelfItemProtocol? = nil,
                                                  atIndex : Int,
-                                                 onCompletion : @escaping ((Bool,NSError?) -> Void)) -> Progress
+                                                 onCompletion:((FTShelfItemProtocol?,Error?) -> Void)?) -> Progress
     {
         let importer = FTFileImporter();
         weak var weakSelf = self;
@@ -281,7 +281,7 @@ extension FTShelfSplitViewController {
         progress.totalUnitCount = 1;
         guard let importItemInfo = item.imporItemInfo else {
             progress.completedUnitCount += 1;
-            onCompletion(false,nil);
+            onCompletion?(nil,nil);
             return progress;
         }
         FTNoteshelfDocumentProvider.shared.getShelfItemDetails(relativePath: importItemInfo.notebook, igrnoreIfNotDownloaded: true) { shelfItemColleciton, groupItem, _shelfItem in
@@ -299,11 +299,13 @@ extension FTShelfSplitViewController {
                     }
                     if let dataOfImage = imageData, let img = UIImage(data: dataOfImage) {
                         let notebookUrl = shelfItem.URL
-                        self.insertImageInDocument(img: img, with: notebookUrl, onCompletion: onCompletion)
+                        self.insertImageInDocument(img: img, with: notebookUrl) { success, error in
+                            onCompletion?(shelfItem, error)
+                        }
                         progress.completedUnitCount += 1;
                     } else {
                         progress.completedUnitCount += 1;
-                        onCompletion(false, nil)
+                        onCompletion?(shelfItem, nil)
                     }
                 } else if let fileURL = item.importItem as? URL, isAudioFile(fileURL.path) {
                     if isSupportedAudioFile(fileURL.path) {
@@ -311,11 +313,13 @@ extension FTShelfSplitViewController {
                         item.fileName = fileURL.deletingPathExtension().lastPathComponent
                         item.isWatchRecording = false
                         let notebookUrl = shelfItem.URL
-                        self.insertAudioInDocument(audioUrl: item, with: notebookUrl, onCompletion: onCompletion)
+                        self.insertAudioInDocument(audioUrl: item, with: notebookUrl){ success, error in
+                            onCompletion?(shelfItem, error)
+                        }
                         progress.completedUnitCount += 1;
                     } else {
                         progress.completedUnitCount += 1;
-                        onCompletion(false, nil)
+                        onCompletion?(shelfItem, nil)
                         let alertController = UIAlertController(title: "",
                                                                 message: NSLocalizedString("NotSupportedFormat", comment: "Note supported format"),
                                                                 preferredStyle: .alert);
@@ -329,12 +333,12 @@ extension FTShelfSplitViewController {
                         if(nil != error) {
                             //                progress.completedUnitCount += 1;
                             FTLogError("Insertion: Download Error", attributes: error?.userInfo);
-                            onCompletion(false,error);
+                            onCompletion?(shelfItem,error);
                         }
                         else {
                             if((filePath == nil) || (nil == weakSelf)) {
                                 //                    progress.completedUnitCount += 1;
-                                onCompletion(false,NSError.init(domain: "NSImportError", code: 1001, userInfo: nil));
+                                onCompletion?(shelfItem,NSError.init(domain: "NSImportError", code: 1001, userInfo: nil));
                                 return;
                             }
                             let info = FTDocumentInputInfo();
@@ -351,12 +355,12 @@ extension FTShelfSplitViewController {
                                     ftDocument.insertFile(info, onCompletion: { error, success in
                                         FTNoteshelfDocumentManager.shared.saveAndClose(document: ftDocument, token: docToken) { _ in
                                             progress.completedUnitCount += 1;
-                                            onCompletion(success, error)
+                                            onCompletion?(shelfItem,error);
                                         }
                                     })
                                 } else {
                                     progress.completedUnitCount += 1;
-                                    onCompletion(false, nil)
+                                    onCompletion?(shelfItem, nil)
                                 }
                             }
                             
@@ -366,7 +370,7 @@ extension FTShelfSplitViewController {
                 }
             } else {
                 progress.completedUnitCount += 1;
-                onCompletion(false, nil)
+                onCompletion?(nil, nil)
             }
         }
         return progress;
