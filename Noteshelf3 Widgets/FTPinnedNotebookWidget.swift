@@ -18,8 +18,8 @@ struct FTPinnedWidgetView : View {
         GeometryReader { geometry in
             VStack {
                 VStack(spacing: 0) {
-                    topView(entry: entry, height: geometry.size.height/3)
-                    bottomView(entry: entry, height: geometry.size.height * 2/3)
+                    topView(entry: entry, geometry: geometry)
+                    bottomView(entry: entry, geometry: geometry)
                 }
             }
             .overlay(alignment: .topLeading) {
@@ -29,14 +29,14 @@ struct FTPinnedWidgetView : View {
                             HStack {
                                 Image(uiImage: image)
                                     .resizable()
-                                    .frame(width: imageSize(for: entry).width,height: imageSize(for: entry).height)
+                                    .frame(width: imageSize(for: entry, geometry: geometry).width,height: imageSize(for: entry, geometry: geometry).height)
                                     .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
                                     .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .bottomRight]))
                                     .padding(.top, image.size.width > image.size.height ? geometry.size.height * 0.19 : geometry.size.height * 0.13)
                                     .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 3)
                                 Spacer()
                             }
-                        }.padding(.leading, 20)
+                        }.padding(.leading, geometry.size.width * FTPinnedWidgetConfigFactors.padding20)
                         Spacer()
                     }
                 }
@@ -52,10 +52,12 @@ struct FTPinnedWidgetView : View {
         return image ?? UIImage(named: "noCover")!
     }
     
-    private func imageSize(for entry: FTPinnedBookEntry) -> CGSize {
-        var size = CGSize(width: 49, height: 68)
+    private func imageSize(for entry: FTPinnedBookEntry, geometry: GeometryProxy) -> CGSize {
+        let portraitDimension = geometry.size.width * FTPinnedWidgetConfigFactors.thumbnailPortrait
+        let landscapeDimension = geometry.size.height * FTPinnedWidgetConfigFactors.thumbnailLandscape
+        var size = CGSize(width: portraitDimension, height: landscapeDimension)
         if image.size.width > image.size.height {
-            size = CGSize(width: 68, height: 49)
+            size = CGSize(width: landscapeDimension, height: portraitDimension)
         }
         return size
     }
@@ -63,12 +65,12 @@ struct FTPinnedWidgetView : View {
 struct topView: View {
     let entry: FTPinnedBookEntry
     @State var color: UIColor = .black
-    @State var height: CGFloat = 55
+    var geometry: GeometryProxy
 
     var body: some View {
         ZStack {
             Color(uiColor: color)
-        }.frame(height: height)
+        }.frame(height: FTPinnedWidgetConfigFactors.topViewHeight * geometry.size.height)
             .onAppear {
                 color = entry.hasCover ? adaptiveColorFromImage() : UIColor(hexString: "#E06E51")
             }
@@ -94,28 +96,30 @@ struct topView: View {
 
 struct bottomView: View {
     let entry: FTPinnedBookEntry
-    @State var height: CGFloat = 110
+    var geometry: GeometryProxy
 
     var body: some View {
         ZStack {
             Rectangle().fill(LinearGradient(colors: [Color("widgetBG1"),Color("widgetBG2")], startPoint: .top, endPoint: .bottom))
             HStack {
                 if entry.relativePath.isEmpty {
-                    EmptyNotesView()
+                    EmptyNotesView(geometry: geometry)
                 } else {
-                    NoteBookInfoView(entry: entry, height: height)
+                    NoteBookInfoView(entry: entry, geometry: geometry)
                 }
             }
         }
-        .frame(height: height)
+        .frame(height: FTPinnedWidgetConfigFactors.bottomViewHeight * geometry.size.height)
     }
 }
 
 struct EmptyNotesView: View {
+    var geometry: GeometryProxy
+
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 10)                
-                .frame(width:119, height: 64)
+                .frame(width:FTPinnedWidgetConfigFactors.emptyNotesWidth * geometry.size.width, height: FTPinnedWidgetConfigFactors.emptyNotesHeight * geometry.size.height)
             .foregroundColor(Color("EmptyNotesBG"))
             Text("widget.nonotes".localized)
                 .font(.appFont(for: .medium, with: 13))
@@ -126,7 +130,7 @@ struct EmptyNotesView: View {
 
 struct NoteBookInfoView: View {
     let entry: FTPinnedBookEntry
-    @State var height: CGFloat = 110
+    var geometry: GeometryProxy
 
     var body: some View {
         HStack {
@@ -137,7 +141,7 @@ struct NoteBookInfoView: View {
                         .lineLimit(1)
                         .foregroundColor(Color.label)
                         .font(.appFont(for: .medium, with: 16))
-                    Spacer(minLength: 16)
+                    Spacer(minLength: FTPinnedWidgetConfigFactors.padding16 * geometry.size.width)
                 }
                 HStack {
                     Text(entry.time)
@@ -145,13 +149,27 @@ struct NoteBookInfoView: View {
                         .font(.appFont(for: .medium, with: 12))
                         .foregroundColor(Color("black50"))
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    Spacer(minLength: 16)
+                    Spacer(minLength: FTPinnedWidgetConfigFactors.padding16 * geometry.size.width)
                 }
-            }.padding(.leading, 18)
-                .padding(.bottom, 18)
+            }.padding(.leading, FTPinnedWidgetConfigFactors.padding18 * geometry.size.width)
+                .padding(.bottom, FTPinnedWidgetConfigFactors.padding18 * geometry.size.width)
             Spacer()
         }
     }
+}
+
+// Below factors are calculated based on widget size 155*155 as per figma to maintain in all devices properly
+fileprivate struct FTPinnedWidgetConfigFactors {
+    static let thumbnailPortrait: CGFloat = 0.31 // 49
+    static let thumbnailLandscape: CGFloat = 0.43 // 68
+    static let emptyNotesWidth = 0.76 // 119
+    static let emptyNotesHeight = 0.41 // 64
+    static let topViewHeight = 0.33 // 55
+    static let bottomViewHeight = 0.67 // 110
+
+    static let padding16 = 0.10 // 16
+    static let padding18 = 0.115 // 18
+    static let padding20 = 0.13 // 20
 }
 
 extension UIColor {
