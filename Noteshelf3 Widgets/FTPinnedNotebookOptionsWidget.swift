@@ -24,17 +24,17 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                         ZStack {
                             Color(uiColor: color)
                             RoundedRectangle(cornerRadius: 10)
-                                .frame(width: geometry.size.width * FTNotebookOptionsWidgetConfigFactors.emptyViewWidth, height: geometry.size.height * FTNotebookOptionsWidgetConfigFactors.emptyViewHeight)
+                                .frame(width: self.getWidthPercentFactor(using: geometry, for: 150), height: self.getHeightPercentFactor(using: geometry, for: 120))
                                 .foregroundColor(Color(uiColor: UIColor(hexString: "FFFFFF",alpha: 0.1)))
                             Text("widget.nonotes".localized)
                                 .font(.appFont(for: .medium, with: 13))
                                 .foregroundColor(Color(uiColor: UIColor(hexString: "FFFFFF")))
                         }
-                        .frame(width: geometry.size.width * FTNotebookOptionsWidgetConfigFactors.bookInfoViewWidth, height: geometry.size.height)
+                        .frame(width: 0.55*geometry.size.width, height: geometry.size.height)
                     } else {
                         VStack {
                         }
-                        .frame(width: geometry.size.width * FTNotebookOptionsWidgetConfigFactors.bookInfoViewWidth, height: geometry.size.height)
+                        .frame(width: 0.55*geometry.size.width, height: geometry.size.height)
                         .background(Color(uiColor: color))
                         .overlay() {
                             ZStack(alignment: .top) {
@@ -53,7 +53,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                                                 .frame(width: imageSize(for: entry, geometry: geometry).width,height: imageSize(for: entry, geometry: geometry).height)
                                                 .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
                                                 .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .bottomRight]))
-                                                .padding(.top, image.size.width > image.size.height ? geometry.size.height * FTNotebookOptionsWidgetConfigFactors.verticalPadding30 : geometry.size.height * FTNotebookOptionsWidgetConfigFactors.verticalPadding20)
+                                                .padding(.top, image.size.width > image.size.height ?  self.getHeightPercentFactor(using: geometry, for: 30) : self.getHeightPercentFactor(using: geometry, for: 20))
                                                 .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 3)
                                             Spacer()
                                         }
@@ -62,7 +62,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                                                 .lineLimit(1)
                                                 .frame(maxWidth: .infinity, alignment: .leading)
                                                 .foregroundColor(color.isLightColor() ? Color.black : Color.white)
-                                                .padding(.top, FTNotebookOptionsWidgetConfigFactors.verticalPadding13 * geometry.size.height)
+                                                .padding(.top, self.getHeightPercentFactor(using: geometry, for: 13))
                                                 .font(.appFont(for: .medium, with: 16))
                                             Spacer(minLength: 14)
                                         }
@@ -76,7 +76,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                                             Spacer(minLength: 14)
                                         }
                                         Spacer()
-                                    }.padding(.leading, FTNotebookOptionsWidgetConfigFactors.horzPadding20*geometry.size.width)
+                                    }.padding(.leading, self.getWidthPercentFactor(using: geometry, for: 20))
                                     Spacer()
                                 }
 
@@ -87,7 +87,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                 VStack {
                     optionsView(geometry: geometry)
                 }
-                .frame(width: geometry.size.width * FTNotebookOptionsWidgetConfigFactors.optionsViewWidth)
+                .frame(width: 0.45*geometry.size.width)
             }
         }
         .onAppear {
@@ -101,8 +101,8 @@ struct FTPinnedNotebookOptionsWidgetView: View {
     }
     
     private func imageSize(for entry: FTPinnedBookEntry, geometry: GeometryProxy) -> CGSize {
-        let portraitDimension = geometry.size.width * FTNotebookOptionsWidgetConfigFactors.thumbnailPortrait
-        let landscapeDimension = geometry.size.height * FTNotebookOptionsWidgetConfigFactors.thumbnailLandscape
+        let portraitDimension = self.getWidthPercentFactor(using: geometry, for: 49)
+        let landscapeDimension = self.getHeightPercentFactor(using: geometry, for: 68)
         var size = CGSize(width: portraitDimension, height: landscapeDimension)
         if image.size.width > image.size.height {
             size = CGSize(width: landscapeDimension, height: portraitDimension)
@@ -119,7 +119,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
     }
 
     private func optionsView(geometry: GeometryProxy) -> some View {
-        Grid(alignment: .center, horizontalSpacing: FTNotebookOptionsWidgetConfigFactors.space8 * geometry.size.height, verticalSpacing: FTNotebookOptionsWidgetConfigFactors.space8 * geometry.size.height) {
+        Grid(alignment: .center, horizontalSpacing: self.getHeightPercentFactor(using: geometry, for: 8), verticalSpacing: self.getHeightPercentFactor(using: geometry, for: 8)) {
             GridRow {
                 optionViewForType(.pen(entry.relativePath), intent: entry.penIntent, geometry: geometry)
                 optionViewForType(.audio(entry.relativePath), intent: entry.audioIntent, geometry: geometry)
@@ -136,42 +136,29 @@ struct FTPinnedNotebookOptionsWidgetView: View {
         Button(intent: intent) {
             HStack {
                 Image("\(type.iconName)")
-                    .frame(height: FTNotebookOptionsWidgetConfigFactors.optionViewDimension * geometry.size.height)
+                    .frame(height: self.getHeightPercentFactor(using: geometry, for: 54))
                     .aspectRatio(1, contentMode: .fit)
                     .scaledToFit()
                     .foregroundStyle(Color(type.docId.isEmpty ? "imageDisabledTintColor" : "creationWidgetButtonTint"))
             }
         }
-        .buttonStyle(FTPinnedBookOptionButtonStyle(color: Color(type.docId.isEmpty ? "pinnedBookEmptyBgColor" : "pinnedBookOptionBgColor")))
+        .buttonStyle(FTPinnedBookOptionButtonStyle(color: Color(type.docId.isEmpty ? "pinnedBookEmptyBgColor" : "pinnedBookOptionBgColor"), geometry: geometry))
         .disabled(type.docId.isEmpty)
     }
 }
 
-fileprivate struct FTNotebookOptionsWidgetConfigFactors {
-    static let thumbnailPortrait: CGFloat = 0.14 // 49
-    static let thumbnailLandscape: CGFloat = 0.43 // 68
-    static let optionsViewWidth: CGFloat = 0.46 // 134
-    static let bookInfoViewWidth: CGFloat = 0.54 // 165
-    static let emptyViewWidth: CGFloat = 0.43
-    static let emptyViewHeight: CGFloat = 0.77
-    static let verticalPadding13: CGFloat = 0.08 // 13
-    static let verticalPadding20: CGFloat = 0.13 //20
-    static let verticalPadding30: CGFloat = 0.19 //30
-    static let horzPadding20: CGFloat = 0.05 // 20
-    static let optionViewDimension: CGFloat = 0.34 // 54
-    static let space8: CGFloat = 0.05 // 8 - wrto height
-}
-
 struct FTPinnedBookOptionButtonStyle: ButtonStyle {
     let bgColor: Color
+    let geometry: GeometryProxy
 
-    public init(color: Color) {
+    public init(color: Color, geometry: GeometryProxy) {
         self.bgColor = color
+        self.geometry = geometry
     }
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .frame(width: 54, height: 54)
+            .frame(width: geometry.size.height*54/155, height: geometry.size.height*54/155)
             .background(bgColor)
             .clipShape(RoundedRectangle(cornerRadius: 12))
     }

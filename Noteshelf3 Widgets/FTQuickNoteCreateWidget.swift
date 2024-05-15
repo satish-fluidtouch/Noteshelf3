@@ -17,14 +17,14 @@ struct FTQuickNoteCreateView: View {
             VStack {
                 Image("createQuickNote")
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding([.top, .leading], geometry.size.width * FTQuickNoteWidgetConfigFactors.padding16)
+                    .padding([.top, .leading], self.getWidthPercentFactor(using: geometry, for: 16))
                 Spacer()
                 Text(quickNoteTitle)
                     .lineSpacing(6)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.clearFaceFont(for: .bold, with: 20))
                     .foregroundColor(Color.white)
-                    .padding([.bottom, .leading], FTQuickNoteWidgetConfigFactors.padding20 * geometry.size.width)
+                    .padding([.bottom, .leading], self.getWidthPercentFactor(using: geometry, for: 20))
             }
             .clipShape(RoundedRectangle(cornerRadius: 24.0))
         }
@@ -35,12 +35,6 @@ struct FTQuickNoteCreateView: View {
         let quickNote = "QuickNote".localized
         return "\(create) \n\(quickNote)"
     }
-}
-
-// Below factors are calculated based on widget size as per figma to maintain in all devices properly
-fileprivate struct FTQuickNoteWidgetConfigFactors {
-    static let padding16 = 0.10 // 16
-    static let padding20 = 0.13 // 20
 }
 
 struct FTQuickNoteCreateView_Previews: PreviewProvider {
