@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 import FTCommon
+import Combine
+import Reachability
 
 enum FTSuggestionType: String, Codable {
     case text
@@ -45,6 +47,11 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
     
     @IBOutlet weak var finderContainerView: UIView!
     @IBOutlet weak var recentsTableView: UITableView!
+    @IBOutlet weak var premiumStackView: UIStackView!
+    @IBOutlet weak var premiumStackViewFullScreen: UIStackView!
+    @IBOutlet weak var upgradeNow: UIButton!
+    @IBOutlet weak var upgradeNowFullScreen: UIButton!
+
     private var resultsList : [String] = [String]()
     private weak var seperatorView: UIView?
     var suggestionItems = [FTSuggestedItem]()
@@ -57,6 +64,7 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
     private weak var expandButton: UIButton?
     private weak var editButton: UIButton?
     private weak var primaryButton: UIButton?
+    private var premiumCancellableEvent: AnyCancellable?;
 
     @IBOutlet weak var seperatorViewTopConstraint: NSLayoutConstraint!
 
@@ -72,6 +80,12 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
     }
     @IBOutlet weak var trailingConstraint: NSLayoutConstraint!
     @IBOutlet weak var leadingConstraint: NSLayoutConstraint!
+
+    deinit{
+        self.premiumCancellableEvent?.cancel();
+        self.premiumCancellableEvent = nil;
+    }
+
     func didChangeState(to screenState: FTFinderScreenState) {
     }
     
@@ -117,6 +131,7 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
 #if !targetEnvironment(macCatalyst)
         updateNavBarMargins()
 #endif
+        updatePremiumView()
     }
     
     override func viewDidLoad() {
@@ -139,8 +154,11 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
         updateSubViews(isSearching: isSearching)
         finderController?.searchDelegate = self
         initializeActivityIndicator()
+        premiumCancellableEvent = FTIAPManager.shared.premiumUser.$isPremiumUser.sink { [weak self] isPremium in
+            self?.updatePremiumView()
+        }
     }
-    
+
     private func reloadData() {
         self.finderController?.updateBackgroundViewForSearch()
         self.updateFilterAndCreateSnapShot();
@@ -238,7 +256,39 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
         self.activityIndicator.isHidden = false
         self.activityIndicator.startAnimating()
     }
-    
+
+    private func updatePremiumView() {
+        if FTIAPManager.shared.premiumUser.isPremiumUser {
+            premiumStackView.isHidden = true
+            premiumStackViewFullScreen.isHidden = true
+        } else {
+            if screenMode == .fullScreen {
+                view.bringSubviewToFront(premiumStackViewFullScreen)
+                upgradeNowFullScreen.layer.cornerRadius = 8.0
+                premiumStackViewFullScreen.layer.cornerRadius = 12.0
+                premiumStackViewFullScreen.isHidden = false
+                premiumStackView.isHidden = true
+            } else {
+                view.bringSubviewToFront(premiumStackView)
+                upgradeNow.layer.cornerRadius = 8.0
+                premiumStackView.layer.cornerRadius = 12.0
+                premiumStackViewFullScreen.isHidden = true
+                premiumStackView.isHidden = false
+            }
+        }
+    }
+
+    @IBAction func upgradeNowAction(_ sender: Any) {
+        let reachability: Reachability = Reachability.forInternetConnection()
+        let status: NetworkStatus = reachability.currentReachabilityStatus();
+        if status == NetworkStatus.NotReachable {
+            UIAlertController.showAlert(withTitle: "MakeSureYouAreConnected".localized, message: "", from: self, withCompletionHandler: nil)
+            return
+        } else {
+            FTIAPurchaseHelper.shared.presentIAPIfNeeded(on: self);
+        }
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let finderController = segue.destination as? FTFinderViewController, let doc = self.document {
             self.finderController = finderController
