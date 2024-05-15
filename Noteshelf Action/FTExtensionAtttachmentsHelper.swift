@@ -126,7 +126,10 @@ class FTAttachmentsInfo: NSObject {
     func hasAudioUrlsOnly() -> Bool {
         return (publicURLs.isEmpty && websiteURLs.isEmpty && imageItems.isEmpty && publicImageURLs.isEmpty && !audioUrls.isEmpty)
     }
-   
+    
+    func hasAnyNoteShelfFiles() -> Bool {
+        return self.publicURLs.contains { $0.pathExtension.lowercased() == "noteshelf" }
+    }
 }
 //****************************************
 //MARK:- NSExtensionContext

@@ -27,7 +27,7 @@ class FTShareItemTableViewCell: UITableViewCell {
         super.awakeFromNib()
     }
     
-    func configureCell(item: FTShareItem?, indexPath: IndexPath) {
+    func configureCell(item: FTShareItem?, indexPath: IndexPath, shouldDisable: Bool = false) {
         if let item = item {
             titleLabel?.text = item.title
             if let groupItem = item.shelfItem as? FTGroupItem, groupItem.shelfCollection != nil {
@@ -47,6 +47,15 @@ class FTShareItemTableViewCell: UITableViewCell {
                 self.subTitleLabel?.text = item.shelfItem?.fileModificationDate.shelfShortStyleFormat()
                 accessoryImageView.isHidden = true
                 self.readThumbnailFor(item: shelfItem, imageView: thumbnailImageView)
+                if shouldDisable {
+                    self.isUserInteractionEnabled = false
+                    self.titleLabel?.textColor = UIColor.appColor(.black50)
+                    self.subTitleLabel?.textColor = UIColor.appColor(.black20)
+                } else {
+                    self.isUserInteractionEnabled = true
+                    self.titleLabel?.textColor = UIColor.label
+                    self.subTitleLabel?.textColor = UIColor.appColor(.black50)
+                }
             }
         }
     }

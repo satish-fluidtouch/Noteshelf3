@@ -424,26 +424,17 @@ extension FTShelfSplitViewController {
     onCompeltion : @escaping (FTShelfItemCollection?, FTGroupItemProtocol?, FTShelfItemProtocol?)->()) {
         let defaultCollection = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection
         let currentGroup = self.currentShelfViewModel?.groupItem // this can be nil
+        var relativePath = info.collection
         if !info.notebook.isEmpty {
-            FTNoteshelfDocumentProvider.shared.getShelfItemDetails(relativePath: info.notebook, igrnoreIfNotDownloaded: true) { shelfItemColleciton, groupItem, shelfItem in
-                if let shelfItemColleciton, let shelfItem {
-                    onCompeltion(shelfItemColleciton,groupItem,shelfItem)
-                } else {
-                    onCompeltion(defaultCollection,currentGroup, nil)
-                }
-            }
+            relativePath = info.notebook
         } else if !info.group.isEmpty {
-            FTNoteshelfDocumentProvider.shared.getShelfItemDetails(relativePath: info.group, igrnoreIfNotDownloaded: true) { shelfItemColleciton, groupItem, shelfItem in
-                if let shelfItemColleciton, let groupItem {
-                    onCompeltion(shelfItemColleciton,groupItem, shelfItem)
-                } else {
-                    onCompeltion(defaultCollection,currentGroup, nil)
-                }
-            }
-        } else if !info.collection.isEmpty  {
-            FTNoteshelfDocumentProvider.shared.shelfCollection(title: info.collection) { shelfItemColleciton in
+            relativePath = info.group
+        }
+        if !relativePath.isEmpty {
+            FTNoteshelfDocumentProvider.shared.getShelfItemDetails(relativePath: relativePath, igrnoreIfNotDownloaded: true) { shelfItemColleciton, groupItem, shelfItem in
                 let collection = shelfItemColleciton ?? defaultCollection
-                onCompeltion(collection,currentGroup, nil)
+                let group = groupItem ?? currentGroup
+                onCompeltion(collection,group, shelfItem)
             }
         } else {
             onCompeltion(defaultCollection, currentGroup, nil)

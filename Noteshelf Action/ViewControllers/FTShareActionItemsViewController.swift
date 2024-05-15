@@ -116,7 +116,7 @@ extension FTShareActionItemsViewController: UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var item = self.arrayOfItems[indexPath.section][indexPath.row]
+        let item = self.arrayOfItems[indexPath.section][indexPath.row]
         if currentItemModel?.collection == nil {
             let cell = tableView.dequeueReusableCell(withIdentifier: "standardCell", for: indexPath) as UITableViewCell
             var config = cell.defaultContentConfiguration()
@@ -132,11 +132,18 @@ extension FTShareActionItemsViewController: UITableViewDelegate, UITableViewData
         } else {
             if let shareItemCell = tableView.dequeueReusableCell(withIdentifier: "FTShareItemTableViewCell", for: indexPath) as? FTShareItemTableViewCell {
                 shareItemCell.selectionStyle = .none
-                shareItemCell.configureCell(item: item, indexPath: indexPath)
+                shareItemCell.configureCell(item: item, indexPath: indexPath, shouldDisable: hasAnyNoteshelfFiles())
                 return shareItemCell
             }
         }
         return UITableViewCell()
+    }
+    
+    func hasAnyNoteshelfFiles() -> Bool {
+        if let vcs = self.navigationController?.viewControllers, let firstVc = vcs.first as? FTShareActionViewController {
+            return firstVc.hasAnyNoteshelfFiles()
+        }
+        return false
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

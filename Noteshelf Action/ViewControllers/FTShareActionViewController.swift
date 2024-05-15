@@ -177,6 +177,10 @@ class FTShareActionViewController: UIViewController {
         self.extensionContext?.completeRequest(returningItems: self.extensionContext?.inputItems, completionHandler: nil)
     }
     
+    func hasAnyNoteshelfFiles() -> Bool {
+        return self.attachmentsInfo?.hasAnyNoteShelfFiles() ?? false
+    }
+    
     private func configureNavigationBar() {
         self.navigationItem.backButtonTitle = "Back".localized
         let leftBarButton = UIBarButtonItem(title: "Cancel".localized, style: .plain, target: self, action: #selector(didTapCancel))
@@ -260,8 +264,8 @@ class FTShareActionViewController: UIViewController {
     
    private func addImportAction(for url: URL) {
         let group = self.selectedItem?.group?.URL.relativePathWRTCollection()
-        let collection = self.selectedItem?.collection?.title ?? uncategorizedShefItemCollectionTitle
-       let notebookPath = self.selectedItem?.noteBook?.URL.relativePathWRTCollection()
+        let collection = self.selectedItem?.collection?.URL.relativePathWRTCollection()
+        let notebookPath = self.selectedItem?.noteBook?.URL.relativePathWRTCollection()
         FTImportStorageManager.addNewImportAction(url, group: group, collection: collection, notebook: notebookPath)
     }
     
