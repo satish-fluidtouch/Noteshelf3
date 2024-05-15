@@ -35,8 +35,8 @@ struct FTSegmentStructOptimized {
 
 //        self.startPoint = isLastSeg ? segment.startPoint : segment.endPoint
         self.startPoint = FTPointOffset(x: xOffset.toInt16, y: yOffset.toInt16);
-        self.thickness = segment.thickness.toInt16
-        self.opacity = segment.opacity.toInt16
+        self.thickness = Int16(segment.thickness * 100)
+        self.opacity = Int16(segment.opacity * 100)
         self.isErased = segment.isErased;
     }
 }
@@ -49,8 +49,8 @@ extension FTSegmentStruct {
         self.startPoint = FTPoint(x: pointX, y: pointy);
 //        self.startPoint = segment.startPoint;
 
-        self.thickness = Float(segment.thickness) * presValue
-        self.opacity = Float(segment.opacity)  * presValue
+        self.thickness = Float(segment.thickness) * 0.01
+        self.opacity = Float(segment.opacity)  * 0.01
         self.isErased = segment.isErased;
 
         let endpointX = referencePoint.x + (Float(nextSegment.startPoint.x) * presValue);
