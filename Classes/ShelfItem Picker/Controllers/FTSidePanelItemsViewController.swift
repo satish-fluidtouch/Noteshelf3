@@ -64,7 +64,7 @@ extension FTSidePanelShelfItemPickerDelegate {
 }
 
 @objc class FTSidePanelItemsViewController: FTShelfItemsViewController,FTPopoverPresentable {
-    var ftPresentationDelegate = FTPopoverPresentation()
+      var ftPresentationDelegate = FTPopoverPresentation()
     weak var sidePanelDelegate: FTSidePanelShelfItemPickerDelegate?
     @IBOutlet weak private var tvLeading : NSLayoutConstraint!
     @IBOutlet weak private var tvTrailing : NSLayoutConstraint!
@@ -190,7 +190,7 @@ extension FTSidePanelShelfItemPickerDelegate {
         cell.shadowImageView2.isHidden = true;
         cell.shadowImageView3.isHidden = true;
         cell.passcodeLockStatusView.isHidden = true;
-        cell.setSelectedBgView(value: (self.mode == .recentNotes))
+        cell.setSelectedBgView(isFromRecents: (self.mode == .recentNotes))
         self.setUpcellForRecentNotes(cell:cell, index: indexPath)
         var displayTitle = "";
         var isCurrent = false;
@@ -303,11 +303,8 @@ extension FTSidePanelShelfItemPickerDelegate {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if self.mode == .recentNotes {
-            return 0
-        }else {
-            return 5
-        }
+        let value : CGFloat = self.mode == .recentNotes ? 0 : 5
+        return value
         
     }
     

@@ -24,9 +24,6 @@ class FTCustomToolbarFooterView : UIView {
     @IBOutlet weak var stackView: UIStackView!
     weak var delegate : FTCustomToolbarFooterViewProtocal?
     
-    override class func awakeFromNib() {
-        
-    }
     
     func getHeight() -> CGFloat {
         let size1 = ideaForShortcutLbl.sizeThatFits(CGSize(width: stackView.frame.width, height: 0)).width

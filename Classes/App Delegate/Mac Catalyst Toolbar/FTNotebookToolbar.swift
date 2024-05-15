@@ -49,9 +49,8 @@ class FTNotebookToolbar: NSToolbar {
             }
             
             if let item = self?.toolbarItem(FTDeskCenterPanelTool.scrolling.toolbarIdentifier) {
-                let value = (UserDefaults.standard.pageLayoutType == .vertical) ? 1 : 0
-                let scroollIcon = value == 1 ? "desk_tool_horizontal_scrolling" : "desk_tool_vertical_scrolling"
-                item.image = UIImage(named: scroollIcon)
+                let layout = UserDefaults.standard.pageLayoutType
+                item.image = UIImage(named: layout.toolIconName)
             }
         }
     }
