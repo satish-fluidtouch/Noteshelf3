@@ -80,23 +80,23 @@ class FTShareActionViewController: UIViewController {
             }
             self.attachmentsInfo = attachmentsInfo
             if attachmentsInfo.hasOnlyImageFiles(), !attachmentsInfo.imageItems.isEmpty {
-                let imageCount = attachmentsInfo.imageItems.count
-                if imageCount >= 3 {
-                    self.imageView2.isHidden  = false
-                    self.imageView3.isHidden  = false
-                } else if imageCount == 2 {
-                    self.imageView2.isHidden = false
-                }
-                for (index, image) in attachmentsInfo.imageItems.enumerated() {
+                for (index, _image) in attachmentsInfo.imageItems.enumerated() {
+                    let image = UIImage(contentsOfFile: _image.path(percentEncoded: false))
                     if index > 2 {
                         break
                     }
-                    if index == 0 {
-                        self.imageView1.image = image
-                    } else if index == 1 {
-                        self.imageView2.image = image
-                    } else if index == 2 {
-                        self.imageView3.image = image
+                    switch index {
+                    case 0:
+                        imageView1.image = image
+                        self.imageView1.isHidden = false
+                    case 1:
+                        imageView2.image = image
+                        self.imageView2.isHidden = false
+                    case 2:
+                        imageView3.image = image
+                        self.imageView3.isHidden = false
+                    default:
+                        break
                     }
                 }
                 self.updateCountLabel(count: attachmentsInfo.imageItems.count)
@@ -121,7 +121,7 @@ class FTShareActionViewController: UIViewController {
                 task.resume()
             } else if attachmentsInfo.hasPublicFiles() {
                 self.updateImagesForPublicUrls()
-                let count = attachmentsInfo.publicURLs.count + attachmentsInfo.imageItems.count
+                let count = attachmentsInfo.publicURLs.count + attachmentsInfo.publicImageURLs.count
                 self.updateCountLabel(count: count)
             }
         }
@@ -132,6 +132,8 @@ class FTShareActionViewController: UIViewController {
     private func updateImagesForPublicUrls() {
         var pdfImage: UIImage?
         var publicImage: UIImage?
+        var noteshelfImage: UIImage?
+        var audioImage: UIImage?
         if let attachmentsInfo {
             let audioFiles = attachmentsInfo.publicURLs.filter { eachUrl in
                 return eachUrl.isAudioType
@@ -140,6 +142,7 @@ class FTShareActionViewController: UIViewController {
                 self.imageView1HeightConstraint.constant = 240
                 self.imageView1WidthConstraint.constant = 240
                 self.imageView1.image = UIImage(named: "audio")
+                audioImage = UIImage(named: "audio")
             }
             for eachUrl in attachmentsInfo.publicURLs {
                 if eachUrl.isPDFType, let pdf = PDFDocument(url: eachUrl), let page = pdf.page(at: 0) {
@@ -148,17 +151,27 @@ class FTShareActionViewController: UIViewController {
                 }
             }
             if let publicImageUrl = attachmentsInfo.publicImageURLs.first {
-                publicImage = UIImage(contentsOfFile: publicImageUrl.path)
+                publicImage = UIImage(contentsOfFile: publicImageUrl.path)?.resizedImageWithinRect(CGSize(width: 240, height: 300))
             }
-            if audioFiles.isEmpty {
-                self.imageView1.image = pdfImage ?? UIImage(named: "website")
-                self.imageView2.isHidden = false
-                self.imageView2.image = publicImage
-            } else {
-                self.imageView2.isHidden = false
-                self.imageView3.isHidden = false
-                self.imageView2.image = pdfImage
-                self.imageView3.image = publicImage
+            if attachmentsInfo.hasAnyNoteShelfFiles() {
+                noteshelfImage = UIImage(named: "nsbook")
+            }
+            var images = [audioImage, pdfImage,publicImage, noteshelfImage]
+            images = images.filter { $0 != nil }
+            for (index, image) in images.enumerated() {
+                switch index {
+                case 0:
+                    imageView1.image = image
+                    self.imageView1.isHidden = false
+                case 1:
+                    imageView2.image = image
+                    self.imageView2.isHidden = false
+                case 2:
+                    imageView3.image = image
+                    self.imageView3.isHidden = false
+                default:
+                    break
+                }
             }
         }
     }
@@ -209,7 +222,7 @@ class FTShareActionViewController: UIViewController {
     @IBAction func didTapImport(_ sender: Any) {
         if let attachmentsInfo {
             if attachmentsInfo.hasOnlyImageFiles() {
-                self.handleImageItems(attachmentsInfo.publicImageURLs)
+                self.handleImageItems(attachmentsInfo.imageItems)
             } else if attachmentsInfo.hasOnlyWebsiteLinks() {
                 self.handleWebsiteLinks()
             } else if attachmentsInfo.hasOnlyPublicImageURLs() {

@@ -65,7 +65,8 @@ class FTExtensionAtttachmentsHelper: NSObject {
                 provider.loadImage { (object) in
                     if let image = object {
                         objc_sync_enter(attachmentsInfo);
-                        attachmentsInfo.imageItems.append(image);
+                         let url = self.addImageTotempDirectory(image: image)
+                         attachmentsInfo.imageItems.append(url)
                         objc_sync_exit(attachmentsInfo);
                     }
                     group.leave()
@@ -81,6 +82,18 @@ class FTExtensionAtttachmentsHelper: NSObject {
         group.notify(queue: DispatchQueue.main) {
             onCompletion(attachmentsInfo)
         }
+    }
+    
+    func addImageTotempDirectory(image: UIImage) -> URL {
+        let uuid = UUID().uuidString
+        let destPath = (NSTemporaryDirectory() as NSString).appendingPathComponent("\(uuid).png");
+        let fileURL = URL(fileURLWithPath: destPath)
+        if let imageData = image.jpegData(compressionQuality: 1.0) {
+            do {
+                try imageData.write(to: fileURL)
+            } catch {}
+        }
+        return fileURL
     }
     
     #if targetEnvironment(macCatalyst)
@@ -102,7 +115,7 @@ class FTExtensionAtttachmentsHelper: NSObject {
 class FTAttachmentsInfo: NSObject {
     var publicURLs = [URL]();
     var websiteURLs = [URL]();
-    var imageItems = [UIImage]();
+    var imageItems = [URL]();
     var audioUrls = [URL]();
     var publicImageURLs = [URL]();
     var unSupportedItems = [Any]();
