@@ -16,6 +16,8 @@ struct FTPinnedNotebookOptionsWidgetView: View {
     @State var color: UIColor = .black
     @State var image = UIImage(named: "noCover")!
 
+    private let type: FTWidgetType = .medium
+
     var body: some View {
         GeometryReader { geometry in
             HStack(spacing: 0) {
@@ -24,7 +26,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                         ZStack {
                             Color(uiColor: color)
                             RoundedRectangle(cornerRadius: 10)
-                                .frame(width: self.getWidthPercentFactor(using: geometry, for: 150), height: self.getHeightPercentFactor(using: geometry, for: 120))
+                                .frame(width: self.getWidthPercentFactor(using: geometry, for: 150, for: type), height: self.getHeightPercentFactor(using: geometry, for: 120, for: type))
                                 .foregroundColor(Color(uiColor: UIColor(hexString: "FFFFFF",alpha: 0.1)))
                             Text("widget.nonotes".localized)
                                 .font(.appFont(for: .medium, with: 13))
@@ -53,7 +55,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                                                 .frame(width: imageSize(for: entry, geometry: geometry).width,height: imageSize(for: entry, geometry: geometry).height)
                                                 .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
                                                 .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .bottomRight]))
-                                                .padding(.top, image.size.width > image.size.height ?  self.getHeightPercentFactor(using: geometry, for: 30) : self.getHeightPercentFactor(using: geometry, for: 20))
+                                                .padding(.top, image.size.width > image.size.height ?  self.getHeightPercentFactor(using: geometry, for: 30, for: type) : self.getHeightPercentFactor(using: geometry, for: 20, for: type))
                                                 .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 3)
                                             Spacer()
                                         }
@@ -62,7 +64,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                                                 .lineLimit(1)
                                                 .frame(maxWidth: .infinity, alignment: .leading)
                                                 .foregroundColor(color.isLightColor() ? Color.black : Color.white)
-                                                .padding(.top, self.getHeightPercentFactor(using: geometry, for: 13))
+                                                .padding(.top, self.getHeightPercentFactor(using: geometry, for: 13, for: type))
                                                 .font(.appFont(for: .medium, with: 16))
                                             Spacer(minLength: 14)
                                         }
@@ -76,7 +78,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                                             Spacer(minLength: 14)
                                         }
                                         Spacer()
-                                    }.padding(.leading, self.getWidthPercentFactor(using: geometry, for: 20))
+                                    }.padding(.leading, self.getWidthPercentFactor(using: geometry, for: 20, for: type))
                                     Spacer()
                                 }
 
@@ -101,8 +103,8 @@ struct FTPinnedNotebookOptionsWidgetView: View {
     }
     
     private func imageSize(for entry: FTPinnedBookEntry, geometry: GeometryProxy) -> CGSize {
-        let portraitDimension = self.getWidthPercentFactor(using: geometry, for: 49)
-        let landscapeDimension = self.getHeightPercentFactor(using: geometry, for: 68)
+        let portraitDimension = self.getWidthPercentFactor(using: geometry, for: 49, for: type)
+        let landscapeDimension = self.getHeightPercentFactor(using: geometry, for: 68, for: type)
         var size = CGSize(width: portraitDimension, height: landscapeDimension)
         if image.size.width > image.size.height {
             size = CGSize(width: landscapeDimension, height: portraitDimension)
@@ -119,7 +121,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
     }
 
     private func optionsView(geometry: GeometryProxy) -> some View {
-        Grid(alignment: .center, horizontalSpacing: self.getHeightPercentFactor(using: geometry, for: 8), verticalSpacing: self.getHeightPercentFactor(using: geometry, for: 8)) {
+        Grid(alignment: .center, horizontalSpacing: self.getHeightPercentFactor(using: geometry, for: 8, for: type), verticalSpacing: self.getHeightPercentFactor(using: geometry, for: 8, for: type)) {
             GridRow {
                 optionViewForType(.pen(entry.relativePath), intent: entry.penIntent, geometry: geometry)
                 optionViewForType(.audio(entry.relativePath), intent: entry.audioIntent, geometry: geometry)
@@ -132,11 +134,11 @@ struct FTPinnedNotebookOptionsWidgetView: View {
         }
     }
 
-    private func optionViewForType(_ type : FTPinndedWidgetActionType, intent: any AppIntent, geometry: GeometryProxy) -> some View {
+    private func optionViewForType(_ type : FTPinndedWidgetActionType, intent: any AppIntent, geometry: GeometryProxy, widgetType: FTWidgetType = .medium) -> some View {
         Button(intent: intent) {
             HStack {
                 Image("\(type.iconName)")
-                    .frame(height: self.getHeightPercentFactor(using: geometry, for: 54))
+                    .frame(height: self.getHeightPercentFactor(using: geometry, for: 54, for: widgetType))
                     .aspectRatio(1, contentMode: .fit)
                     .scaledToFit()
                     .foregroundStyle(Color(type.docId.isEmpty ? "imageDisabledTintColor" : "creationWidgetButtonTint"))

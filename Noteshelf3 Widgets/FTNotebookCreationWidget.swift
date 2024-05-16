@@ -12,20 +12,22 @@ import FTCommon
 import AppIntents
 
 struct NotebookCreation_WidgetsEntryView : View {
+    private let type: FTWidgetType = .medium
+
     var body: some View {
         GeometryReader { geometry in
-            VStack(spacing: self.getHeightPercentFactor(using: geometry, for: 16)) {
+            VStack(spacing: self.getHeightPercentFactor(using: geometry, for: 16, for: type)) {
                 headerView(geometry: geometry)
-                    .frame(height: self.getHeightPercentFactor(using: geometry, for: 24),alignment: .center)
+                    .frame(height: self.getHeightPercentFactor(using: geometry, for: 24, for: type),alignment: .center)
                 optionsView(geometry: geometry)
             }
             .frame(maxHeight: .infinity, alignment: .top)
-            .padding(.horizontal,self.getWidthPercentFactor(using: geometry, for: 16))
-            .padding(.vertical,self.getHeightPercentFactor(using: geometry, for: 16))
+            .padding(.horizontal,self.getWidthPercentFactor(using: geometry, for: 16, for: type))
+            .padding(.vertical,self.getHeightPercentFactor(using: geometry, for: 16, for: type))
         }
     }
     private func optionsView(geometry: GeometryProxy) -> some View {
-        Grid(alignment: .center, horizontalSpacing: self.getHeightPercentFactor(using: geometry, for: 4),verticalSpacing: self.getHeightPercentFactor(using: geometry, for: 4)) {
+        Grid(alignment: .center, horizontalSpacing: self.getHeightPercentFactor(using: geometry, for: 4, for: type),verticalSpacing: self.getHeightPercentFactor(using: geometry, for: 4, for: type)) {
             GridRow {
                 optionViewForType(.quickNote, intent: QuickNoteIntent(), geometry: geometry)
                 optionViewForType(.newNotebook, intent: NewNotebookIntent(), geometry: geometry)
@@ -44,40 +46,40 @@ struct NotebookCreation_WidgetsEntryView : View {
     }
 
     private func headerView(geometry: GeometryProxy) -> some View {
-        HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, spacing: self.getWidthPercentFactor(using: geometry, for: 10)) {
+        HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, spacing: self.getWidthPercentFactor(using: geometry, for: 10, for: type)) {
             Image("appIconSmall")
-                .frame(height: self.getWidthPercentFactor(using: geometry, for: 22))
+                .frame(height: self.getWidthPercentFactor(using: geometry, for: 22, for: type))
                 .aspectRatio(1, contentMode: .fit)
-                .padding(.leading,self.getWidthPercentFactor(using: geometry, for: 8))
+                .padding(.leading,self.getWidthPercentFactor(using: geometry, for: 8, for: type))
             Text("Noteshelf")
-                .frame(height: self.getWidthPercentFactor(using: geometry, for: 24))
+                .frame(height: self.getWidthPercentFactor(using: geometry, for: 24, for: type))
                 .font(.clearFaceFont(for: .bold, with: 17))
             Spacer()
             Button(intent: SearchIntent()) {
                 Image("searchIcon")
-                    .frame(height: self.getHeightPercentFactor(using: geometry, for: 24))
+                    .frame(height: self.getHeightPercentFactor(using: geometry, for: 24, for: type))
             }
-            .frame(height: self.getHeightPercentFactor(using: geometry, for: 24))
+            .frame(height: self.getHeightPercentFactor(using: geometry, for: 24, for: type))
             .aspectRatio(1, contentMode: .fit)
             .border(.clear, width: 0)
             .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
             .buttonStyle(.plain)
         }
     }
-    private func actionViewForType(_ type : FTNotebookCreateWidgetActionType, geometry: GeometryProxy) -> some View {
-        return HStack(alignment: .center, spacing:self.getWidthPercentFactor(using: geometry, for: 10)) {
+    private func actionViewForType(_ type : FTNotebookCreateWidgetActionType, geometry: GeometryProxy, widgetType: FTWidgetType = .medium) -> some View {
+        return HStack(alignment: .center, spacing:self.getWidthPercentFactor(using: geometry, for: 10, for: widgetType)) {
             if type.hasASystemIcon {
                 Image(systemName: type.iconName)
-                    .frame(height: self.getHeightPercentFactor(using: geometry, for: 24))
+                    .frame(height: self.getHeightPercentFactor(using: geometry, for: 24, for: widgetType))
                     .aspectRatio(1, contentMode: .fit)
-                    .padding(.leading,self.getWidthPercentFactor(using: geometry, for: 12))
+                    .padding(.leading,self.getWidthPercentFactor(using: geometry, for: 12, for: widgetType))
                     .foregroundStyle(Color("creationWidgetButtonTint"))
                     .font(.appFont(for: .medium, with: 16))
             } else {
                 Image("\(type.iconName)")
-                    .frame(height: self.getHeightPercentFactor(using: geometry, for: 24))
+                    .frame(height: self.getHeightPercentFactor(using: geometry, for: 24, for: widgetType))
                     .aspectRatio(1, contentMode: .fit)
-                    .padding(.leading,self.getWidthPercentFactor(using: geometry, for: 12))
+                    .padding(.leading,self.getWidthPercentFactor(using: geometry, for: 12, for: widgetType))
                     .scaledToFit()
                     .foregroundStyle(Color("creationWidgetButtonTint"))
             }
@@ -105,13 +107,15 @@ struct CustomButtonStyle: ButtonStyle {
 }
 
 extension View {
-     func getWidthPercentFactor(using geometry: GeometryProxy, for value: CGFloat) -> CGFloat {
-        let reqValue = (value/geometry.size.width) *  geometry.size.width
+    func getWidthPercentFactor(using geometry: GeometryProxy, for value: CGFloat, for type: FTWidgetType) -> CGFloat {
+        let baseWidth = type.size.width
+        let reqValue = (value/baseWidth) *  geometry.size.width
         return reqValue
     }
 
-     func getHeightPercentFactor(using geometry: GeometryProxy, for value: CGFloat) -> CGFloat {
-        let reqValue = (value/geometry.size.height) *  geometry.size.height
+    func getHeightPercentFactor(using geometry: GeometryProxy, for value: CGFloat, for type: FTWidgetType) -> CGFloat {
+         let baseHeight = type.size.height
+         let reqValue = (value/baseHeight) *  geometry.size.height
         return reqValue
     }
 }

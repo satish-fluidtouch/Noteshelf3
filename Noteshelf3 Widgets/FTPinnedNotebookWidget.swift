@@ -14,6 +14,8 @@ struct FTPinnedWidgetView : View {
     @State var image = UIImage(named: "noCover")!
     @Environment(\.widgetContentMargins) var margins
 
+    private let type: FTWidgetType = .small
+
     var body: some View {
         GeometryReader { geometry in
             VStack {
@@ -36,7 +38,7 @@ struct FTPinnedWidgetView : View {
                                     .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 3)
                                 Spacer()
                             }
-                        }.padding(.leading, self.getWidthPercentFactor(using: geometry, for: 20))
+                        }.padding(.leading, self.getWidthPercentFactor(using: geometry, for: 20, for: type))
                         Spacer()
                     }
                 }
@@ -53,8 +55,8 @@ struct FTPinnedWidgetView : View {
     }
     
     private func imageSize(for entry: FTPinnedBookEntry, geometry: GeometryProxy) -> CGSize {
-        let portraitDimension = self.getWidthPercentFactor(using: geometry, for: 49)
-        let landscapeDimension = self.getHeightPercentFactor(using: geometry, for: 68)
+        let portraitDimension = self.getWidthPercentFactor(using: geometry, for: 49, for: type)
+        let landscapeDimension = self.getHeightPercentFactor(using: geometry, for: 68, for: type)
         var size = CGSize(width: portraitDimension, height: landscapeDimension)
         if image.size.width > image.size.height {
             size = CGSize(width: landscapeDimension, height: portraitDimension)
@@ -115,11 +117,13 @@ struct bottomView: View {
 
 struct EmptyNotesView: View {
     var geometry: GeometryProxy
+    private let type: FTWidgetType = .small
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 10)                
-                .frame(width:self.getWidthPercentFactor(using: geometry, for: 119), height: self.getHeightPercentFactor(using: geometry, for: 64))
+            RoundedRectangle(cornerRadius: 10)    
+                .padding(.horizontal, self.getWidthPercentFactor(using: geometry, for: 18, for: type))
+                .padding(.vertical, self.getHeightPercentFactor(using: geometry, for: 18, for: type))
             .foregroundColor(Color("EmptyNotesBG"))
             Text("widget.nonotes".localized)
                 .font(.appFont(for: .medium, with: 13))
@@ -132,6 +136,8 @@ struct NoteBookInfoView: View {
     let entry: FTPinnedBookEntry
     var geometry: GeometryProxy
 
+    private let type: FTWidgetType = .small
+
     var body: some View {
         HStack {
             VStack(spacing: 3) {
@@ -141,7 +147,7 @@ struct NoteBookInfoView: View {
                         .lineLimit(1)
                         .foregroundColor(Color.label)
                         .font(.appFont(for: .medium, with: 16))
-                    Spacer(minLength: self.getWidthPercentFactor(using: geometry, for: 16))
+                    Spacer(minLength: self.getWidthPercentFactor(using: geometry, for: 16, for: type))
                 }
                 HStack {
                     Text(entry.time)
@@ -149,10 +155,10 @@ struct NoteBookInfoView: View {
                         .font(.appFont(for: .medium, with: 12))
                         .foregroundColor(Color("black50"))
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    Spacer(minLength: self.getWidthPercentFactor(using: geometry, for: 16))
+                    Spacer(minLength: self.getWidthPercentFactor(using: geometry, for: 16, for: type))
                 }
-            }.padding(.leading, self.getWidthPercentFactor(using: geometry, for: 18))
-                .padding(.bottom, self.getWidthPercentFactor(using: geometry, for: 18))
+            }.padding(.leading, self.getWidthPercentFactor(using: geometry, for: 18, for: type))
+                .padding(.bottom, self.getWidthPercentFactor(using: geometry, for: 18, for: type))
             Spacer()
         }
     }
