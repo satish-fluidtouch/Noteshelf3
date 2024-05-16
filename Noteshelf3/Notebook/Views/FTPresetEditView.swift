@@ -95,7 +95,6 @@ struct FTPresetEditView: View {
     private func checkIfContentSizeIsBigger(_ geometry: GeometryProxy) -> Bool {
         let visibleSize = geometry.size
         let isBigger = visibleSize.height < self.editSegment.contentSize.height
-        print("zzzz - visible rect: \(visibleSize.height), editSegment: \(editSegment.contentSize.height)")
         return isBigger
     }
 
