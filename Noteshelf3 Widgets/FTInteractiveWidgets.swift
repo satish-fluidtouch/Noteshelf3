@@ -174,6 +174,7 @@ struct FTPinnedWidget: Widget {
                     .containerBackground(.fill.tertiary, for: .widget)
                     .widgetURL(URLComponents(type: "pinnedWidget", entry: entry)?.url)
         }
+        .contentMarginsDisabled()
         .supportedFamilies([.systemSmall])
         .configurationDisplayName("widget.notebook".localized)
         .description("widget.pinned.description".localized)
@@ -190,6 +191,7 @@ struct FTPinnedNotebookOptionsWidget: Widget {
                     Rectangle().fill(LinearGradient(colors: [Color("widgetBG1"),Color("widgetBG2")], startPoint: .top, endPoint: .bottom))
                 })
         }
+        .contentMarginsDisabled()
         .supportedFamilies([.systemMedium])
         .configurationDisplayName("widget.notebook".localized)
         .description("widget.pinned.description".localized)
