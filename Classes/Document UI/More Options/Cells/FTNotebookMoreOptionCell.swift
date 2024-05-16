@@ -60,7 +60,6 @@ class FTNotebookMoreOptionsCell: UITableViewCell {
         super.awakeFromNib()
         self.layoutIfNeeded();
         imgViewIcon?.tintColor = .appColor(.accent)
-        scrollingValueLbl?.isHidden = true
     }
     
     func setValueForScrollDirection() {

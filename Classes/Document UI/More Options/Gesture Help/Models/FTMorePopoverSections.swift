@@ -31,9 +31,9 @@ struct FTMorePopoverSections {
 #if !targetEnvironment(macCatalyst)
         if !UIDevice.current.isIphone() {
             section.append(FTNotebookStatusBarSetting(isEnabled: FTUserDefaults.defaults().showStatusBar))
+            section.append(FTNotebookAddToStylus())
         }
 #endif
-        section.append(FTNotebookAddToStylus())
         section.append(FTNotebookOptionSettings())
         return section
     }
@@ -41,8 +41,10 @@ struct FTMorePopoverSections {
     func noteBookProperties() -> [FTNotebookMoreOption] {
         var section = [FTNotebookMoreOption]()
         section.append(FTNotebookPassword())
+#if !targetEnvironment(macCatalyst)
         section.append(FTNotebookAddToSiri())
         section.append(FTNotebookEverNoteSetting(isEnabled: false))
+#endif
         section.append(FTNotebookOptionGetInfo())
         return section
     }

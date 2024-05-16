@@ -280,13 +280,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Horizontal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xKL-Vq-f32">
-                                                    <rect key="frame" x="60.000000000000007" y="16.666666666666668" width="72.666666666666686" height="19.000000000000004"/>
+                                                    <rect key="frame" x="56.000000000000007" y="16.666666666666668" width="72.666666666666686" height="19.000000000000004"/>
                                                     <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h6S-za-UuB">
-                                                    <rect key="frame" x="68" y="37.666666666666664" width="0.0" height="0.0"/>
+                                                    <rect key="frame" x="64" y="37.666666666666664" width="0.0" height="0.0"/>
                                                     <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
                                                     <color key="textColor" name="lightTitleColor_60"/>
                                                     <nil key="highlightedColor"/>
@@ -299,12 +299,8 @@
                                                     </constraints>
                                                 </view>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="verticalScrollingIcon" translatesAutoresizingMaskIntoConstraints="NO" id="a4K-qy-36r">
-                                                    <rect key="frame" x="16" y="13" width="28" height="28"/>
+                                                    <rect key="frame" x="16" y="15" width="24" height="24"/>
                                                     <color key="tintColor" name="accent"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" secondItem="a4K-qy-36r" secondAttribute="height" multiplier="1:1" id="Hkt-xL-olZ"/>
-                                                        <constraint firstAttribute="width" constant="28" id="eLG-6f-kEp"/>
-                                                    </constraints>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

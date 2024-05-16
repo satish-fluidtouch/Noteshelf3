@@ -116,9 +116,9 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
                 content.secondaryAttributedText = NSAttributedString(string: phrase, attributes: [.font: UIFont.appFont(for: .regular, with: 15), .foregroundColor: UIColor.appColor(.black50)])
             }
             if eachSetting == .noteShelfHelp {
-                content.image = UIImage(systemName:"questionmark.circle")
+                content.image = UIImage(named:"questionmark.circle")
             } else if eachSetting == .gestures {
-                content.image = UIImage(systemName:"hand.tap")
+                content.image = UIImage(named:"hand.tap")
             }
                 let attributes = [NSAttributedString.Key.font: UIFont.appFont(for: .regular, with: 17.0)]
                 content.attributedText = NSAttributedString(string: eachSetting.title(), attributes: attributes)

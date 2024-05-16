@@ -64,4 +64,8 @@ extension FTScrollingDirectionViewController : UITableViewDataSource,UITableView
         UserDefaults.standard.pageLayoutType = layout
         FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.nbk_moresettings_scrolling_tap, params: ["segment": (layout == .horizontal) ? "horizontal" : "vertical"])
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 44.0
+    }
 }

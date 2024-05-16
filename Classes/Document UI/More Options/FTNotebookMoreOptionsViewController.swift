@@ -68,7 +68,7 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tblSettings?.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        self.tblSettings?.reloadData()
+        self.tblSettings?.reloadSections(IndexSet(integer: 0), with: .none)
         self.navigationController?.navigationBar.isHidden = false
         self.preferredContentSize = self.fetchSize()
     }
@@ -225,6 +225,10 @@ extension FTNotebookMoreOptionsViewController: UITableViewDelegate, UITableViewD
                 settingCell.scrollingValueLbl?.isHidden = false
                 settingCell.setValueForScrollDirection()
             case is FTNotebookStatusBarSetting :
+                settingCell.scrollingValueLbl?.isHidden = true
+            case is FTNotebookOptionGetInfo :
+                settingCell.scrollingValueLbl?.isHidden = true
+            case is FTNotebookOptionSettings:
                 settingCell.scrollingValueLbl?.isHidden = true
             default:
                 break
