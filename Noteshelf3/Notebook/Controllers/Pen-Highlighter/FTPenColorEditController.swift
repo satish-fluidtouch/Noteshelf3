@@ -40,10 +40,6 @@ protocol FTPenColorEditDelegate: AnyObject {
 
 class FTPenColorEditController: UIHostingController<FTPenColorEditView>, FTPopoverPresentable {
     var ftPresentationDelegate = FTPopoverPresentation()
-
-    static let presetViewSize = CGSize(width: 320.0, height: 293.0)
-    static let gridViewSize = CGSize(width: 320.0, height: 402.0)
-
     private let viewModel: FTPenShortcutViewModel
     private weak var delegate: FTFavoriteColorNotifier?
 
@@ -118,13 +114,10 @@ extension FTPenColorEditController: FTPenColorEditDelegate {
         self.view.setNeedsLayout()
         self.view.layoutSubviews()
         self.view.layoutIfNeeded()
-        if self.viewModel.colorEditSegment == .presets && !isPresetEdit {
-            self.navigationController?.preferredContentSize = FTPenColorEditController.presetViewSize
+        if isPresetEdit {
+            self.navigationController?.preferredContentSize = FTPenColorSegment.grid.contentSize
         } else {
-            self.navigationController?.preferredContentSize = FTPenColorEditController.gridViewSize
-            if isPresetEdit {
-                self.navigationController?.preferredContentSize.height -= 30.0
-            }
+            self.navigationController?.preferredContentSize = viewModel.colorSelectSegment.contentSize
         }
     }
 

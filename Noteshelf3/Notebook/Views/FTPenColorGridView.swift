@@ -1,32 +1,36 @@
 //
-//  FTFavoriteColorGridView.swift
+//  FTColorGridView.swift
 //  Noteshelf3
 //
-//  Created by Narayana on 09/11/23.
-//  Copyright © 2023 Fluid Touch Pte Ltd. All rights reserved.
+//  Created by Narayana on 20/07/22.
+//  Copyright © 2022 Fluid Touch Pte Ltd. All rights reserved.
 //
 
 import SwiftUI
 import FTStyles
+import Combine
 
-struct FTFavoriteColorGridView: View {
+struct FTColorGridView: View {
     @StateObject var gridVm = FTColorGridModel()
     @StateObject var hexInputVm = FTColorHexInputViewModel()
 
     @State private var colorSelectModeImage = FTPenColorSelectModeImage.add
     @State private var touchLocation: CGPoint?
 
-    @EnvironmentObject var viewModel: FTFavoritePresetsViewModel
+    @EnvironmentObject var viewModel: FTPenShortcutViewModel
+
+    var colorMode: FTPenColorMode
 
     var body: some View {
         ZStack {
             VStack(spacing: FTSpacing.small) {
                 self.colorsGridView
-                FTFavHexFieldFooterView(colorSelectModeImage: $colorSelectModeImage)
+                FTHexFieldFooterView(colorSelectModeImage: $colorSelectModeImage, colorMode: colorMode)
                     .environmentObject(self.hexInputVm)
                     .environmentObject(self.viewModel)
             }
         }
+        .frame(width: 288.0)
         .coordinateSpace(name: "screen")
         .onAppear {
             self.hexInputVm.text = self.viewModel.currentSelectedColor
@@ -39,7 +43,7 @@ struct FTFavoriteColorGridView: View {
                 let gridColor = self.gridVm.gridColors[index]
                 let color = gridColor.color
                 HStack {
-                }.frame(width: 25.6,height: 25.6)
+                }.frame(width: 24.0,height: 24.0)
                     .zIndex(self.isSelectedColor(colorModel: gridColor) ? 1 : 0)
                     .background(
                         GeometryReader { geometry in
@@ -48,8 +52,8 @@ struct FTFavoriteColorGridView: View {
                                     gridColor.location = geometry.frame(in: CoordinateSpace.named("screen"))
                                 })
                         })
-                    .overlay(self.isSelectedColor(colorModel: gridColor) ? Image("selectedGrid").resizable().frame(width: 27.0, height: 27.0).shadow(color: Color.appColor(.black20), radius: 2.0, x: 0.0, y: 0.0) : nil)
-                    .onTapGesture {
+                    .overlay(self.isSelectedColor(colorModel: gridColor) ? Image("selectedGrid").resizable().frame(width: 25.0, height: 25.0).shadow(color: Color.appColor(.black20), radius: 2.0, x: 0.0, y: 0.0) : nil)
+                        .onTapGesture {
                         colorSelectModeImage = .add
                         self.hexInputVm.text = color
                         self.viewModel.updateCurrentSelection(colorHex: color)
@@ -73,13 +77,13 @@ struct FTFavoriteColorGridView: View {
     }
 
     private var gridItemLayout: [GridItem] {
-        return [GridItem(.adaptive(minimum: 25.6, maximum: 25.6), spacing: FTSpacing.zero)]
+        return [GridItem(.adaptive(minimum: 24.0, maximum: 24.0), spacing: FTSpacing.zero)]
     }
 }
 
-struct FTFavoriteColorGridView_Previews: PreviewProvider {
+struct FTColorGridView_Previews: PreviewProvider {
     static var previews: some View {
-        FTFavoriteColorGridView()
-            .environmentObject(FTFavoritePresetsViewModel(segment: .pen, currentSelectedColor: "000000", userActivity: nil))
+        FTColorGridView(colorMode: .presetEdit)
+            .environmentObject(FTPenShortcutViewModel(rackData: FTRackData(type: .pen, userActivity: nil)))
     }
 }
