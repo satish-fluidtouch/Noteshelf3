@@ -191,8 +191,8 @@ extension FTShelfSplitViewController {
             if !importInfo.notebook.isEmpty {
                 var subProgress1 = Progress()
                 // Fetch the document and open and insert image as annotation
-                subProgress1 = self.insertFileInsideNotebook(item, shouldAddNewPage: true) { sucess, error in
-                    onCompletion?(nil, error)
+                subProgress1 = self.insertFileInsideNotebook(item, shouldAddNewPage: true) { shelfItem, error in
+                    onCompletion?(shelfItem, error)
                 }
                 progress.addChild(subProgress1, withPendingUnitCount: 1);
             } else {
@@ -207,7 +207,7 @@ extension FTShelfSplitViewController {
                                 let importItemInfo = FTImportItemInfo(collection: item.imporItemInfo?.collection ?? "", group: "", notebook: shelfItem.URL.relativePathWRTCollection())
                                 _importItem.imporItemInfo = importItemInfo
                                 var subProgress1 = Progress()
-                                subProgress1 = self.insertFileInsideNotebook(_importItem, shelfItemProtocol: shelfItem) { sucess, error in
+                                subProgress1 = self.insertFileInsideNotebook(_importItem, shelfItemProtocol: shelfItem) { item, error in
                                     onCompletion?(shelfItem, error)
                                 }
                                 progress.addChild(subProgress1, withPendingUnitCount: 1);
@@ -229,8 +229,8 @@ extension FTShelfSplitViewController {
                     if let importInfo = item.imporItemInfo {
                         if !importInfo.notebook.isEmpty {
                             // Fetch the document and open and insert new page
-                            subProgress1 = self.insertFileInsideNotebook(item) { sucess, error in
-                                onCompletion?(nil, error)
+                            subProgress1 = self.insertFileInsideNotebook(item) { shelfItem, error in
+                                onCompletion?(shelfItem, error)
                             }
                             progress.addChild(subProgress1, withPendingUnitCount: 1);
                         } else {
@@ -290,82 +290,80 @@ extension FTShelfSplitViewController {
                 shelfItem = _shelfItem
             }
             if let shelfItem {
-                if let fileURL = item.importItem as? URL, isImageFile(fileURL.path) {
-                    var imageData : Data?
-                    do {
-                        imageData = try Data(contentsOf: fileURL)
-                    } catch {
-                        print(error.localizedDescription)
+                FTDocumentValidator.openNoteshelfDocument(for: shelfItem, pin: nil, onViewController: self) { ftDocument, error, docToken in
+                    guard let ftDocument, let docToken else {
+                        progress.completedUnitCount += 1;
+                        onCompletion?(nil, nil)
+                        return
                     }
-                    if let dataOfImage = imageData, let img = UIImage(data: dataOfImage) {
-                        let notebookUrl = shelfItem.URL
-                        self.insertImageInDocument(img: img, with: notebookUrl, shouldAddNewPage: shouldAddNewPage) { success, error in
-                            onCompletion?(shelfItem, error)
-                        }
-                        progress.completedUnitCount += 1;
-                    } else {
-                        progress.completedUnitCount += 1;
-                        onCompletion?(shelfItem, nil)
-                    }
-                } else if let fileURL = item.importItem as? URL, isAudioFile(fileURL.path) {
-                    if isSupportedAudioFile(fileURL.path) {
-                        let item = FTAudioFileToImport.init(withURL: fileURL)
-                        item.fileName = fileURL.deletingPathExtension().lastPathComponent
-                        item.isWatchRecording = false
-                        let notebookUrl = shelfItem.URL
-                        self.insertAudioInDocument(audioUrl: item, with: notebookUrl, shouldAddNewPage: shouldAddNewPage){ success, error in
-                            onCompletion?(shelfItem, error)
-                        }
-                        progress.completedUnitCount += 1;
-                    } else {
-                        progress.completedUnitCount += 1;
-                        onCompletion?(shelfItem, nil)
-                        let alertController = UIAlertController(title: "",
-                                                                message: NSLocalizedString("NotSupportedFormat", comment: "Note supported format"),
-                                                                preferredStyle: .alert);
-                        let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Ok"), style: .cancel, handler: nil);
-                        alertController.addAction(cancelAction);
-                        self.present(alertController, animated: true, completion: nil);
-                    }
-                } else {
-                    let subProgress = importer.pdfFileFrom(item) { (filePath, error, _) in
-                        progress.localizedDescription = NSLocalizedString("Importing", comment: "Importing...");
-                        if(nil != error) {
-                            //                progress.completedUnitCount += 1;
-                            FTLogError("Insertion: Download Error", attributes: error?.userInfo);
-                            onCompletion?(shelfItem,error);
-                        }
-                        else {
-                            if((filePath == nil) || (nil == weakSelf)) {
-                                //                    progress.completedUnitCount += 1;
-                                onCompletion?(shelfItem,NSError.init(domain: "NSImportError", code: 1001, userInfo: nil));
-                                return;
-                            }
-                            let info = FTDocumentInputInfo();
-                            info.rootViewController = self;
-                            info.inputFileURL = URL.init(fileURLWithPath: filePath!);
-                            info.isTemplate = false;
-                            FTCLSLog("Inserting PDF File");
+                    if let fileURL = item.importItem as? URL, isImageFile(fileURL.path) {
+                        var imageData : Data?
+                        do {
+                            imageData = try Data(contentsOf: fileURL)
+                        } catch {}
+                        if let dataOfImage = imageData, let img = UIImage(data: dataOfImage) {
                             let notebookUrl = shelfItem.URL
-                            let docrequest = FTDocumentOpenRequest(url: notebookUrl, purpose: .write)
-                            FTNoteshelfDocumentManager.shared.openDocument(request: docrequest) { docToken, ftDocument, error in
-                                if let ftDocument, error == nil {
-                                    info.insertAt = ftDocument.pages().count
-                                    ftDocument.insertFile(info, onCompletion: { error, success in
-                                        FTNoteshelfDocumentManager.shared.saveAndClose(document: ftDocument, token: docToken) { _ in
-                                            progress.completedUnitCount += 1;
-                                            onCompletion?(shelfItem,error);
-                                        }
-                                    })
-                                } else {
+                            self.insertImageInDocument(ftDocument: ftDocument, img: img, shouldAddNewPage: shouldAddNewPage)
+                        }
+                        FTNoteshelfDocumentManager.shared.saveAndClose(document: ftDocument, token: docToken) { _ in
+                            progress.completedUnitCount += 1;
+                            onCompletion?(shelfItem, nil)
+                        }
+                    } else if let fileURL = item.importItem as? URL, isAudioFile(fileURL.path) {
+                        if isSupportedAudioFile(fileURL.path) {
+                            let item = FTAudioFileToImport.init(withURL: fileURL)
+                            item.fileName = fileURL.deletingPathExtension().lastPathComponent
+                            item.isWatchRecording = false
+                            let notebookUrl = shelfItem.URL
+                            self.insertAudioInDocument(ftDocument: ftDocument, audioUrl: item, shouldAddNewPage: shouldAddNewPage){ success, error in
+                                FTNoteshelfDocumentManager.shared.saveAndClose(document: ftDocument, token: docToken) { _ in
                                     progress.completedUnitCount += 1;
                                     onCompletion?(shelfItem, nil)
                                 }
                             }
-                            
+                        } else {
+                            FTNoteshelfDocumentManager.shared.saveAndClose(document: ftDocument, token: docToken) { _ in
+                                progress.completedUnitCount += 1;
+                                onCompletion?(shelfItem, nil)
+                            }
+                            let alertController = UIAlertController(title: "",
+                                                                    message: NSLocalizedString("NotSupportedFormat", comment: "Note supported format"),
+                                                                    preferredStyle: .alert);
+                            let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Ok"), style: .cancel, handler: nil);
+                            alertController.addAction(cancelAction);
+                            self.present(alertController, animated: true, completion: nil);
                         }
-                    };
-                    progress.addChild(subProgress, withPendingUnitCount: 1);
+                    } else {
+                        let subProgress = importer.pdfFileFrom(item) { (filePath, error, _) in
+                            progress.localizedDescription = NSLocalizedString("Importing", comment: "Importing...");
+                            if(nil != error) {
+                                //                progress.completedUnitCount += 1;
+                                FTLogError("Insertion: Download Error", attributes: error?.userInfo);
+                                onCompletion?(shelfItem,error);
+                            }
+                            else {
+                                if((filePath == nil) || (nil == weakSelf)) {
+                                    //                    progress.completedUnitCount += 1;
+                                    onCompletion?(shelfItem,NSError.init(domain: "NSImportError", code: 1001, userInfo: nil));
+                                    return;
+                                }
+                                let info = FTDocumentInputInfo();
+                                info.rootViewController = self;
+                                info.inputFileURL = URL.init(fileURLWithPath: filePath!);
+                                info.isTemplate = false;
+                                FTCLSLog("Inserting PDF File");
+                                let notebookUrl = shelfItem.URL
+                                info.insertAt = ftDocument.pages().count
+                                ftDocument.insertFile(info, onCompletion: { error, success in
+                                    FTNoteshelfDocumentManager.shared.saveAndClose(document: ftDocument, token: docToken) { _ in
+                                        progress.completedUnitCount += 1;
+                                        onCompletion?(shelfItem,error);
+                                    }
+                                })
+                            }
+                        };
+                        progress.addChild(subProgress, withPendingUnitCount: 1);
+                    }
                 }
             } else {
                 progress.completedUnitCount += 1;
@@ -375,56 +373,37 @@ extension FTShelfSplitViewController {
         return progress;
     }
     
-    private func insertImageInDocument(img: UIImage, with notebookUrl: URL, shouldAddNewPage: Bool = false, onCompletion : @escaping ((Bool,NSError?) -> Void)) {
-        let docrequest = FTDocumentOpenRequest(url: notebookUrl, purpose: .write)
-        FTNoteshelfDocumentManager.shared.openDocument(request: docrequest) { docToken, ftDocument, error in
-            if let ftDocument, error == nil, let page = ftDocument.pages().last as? FTNoteshelfPage {
-                var pageToInsert = page
-                if shouldAddNewPage, let newPage = ftDocument.insertPageBelow(page: page) as? FTNoteshelfPage {
-                    pageToInsert = newPage
+    private func insertImageInDocument(ftDocument: FTDocumentProtocol, img: UIImage, shouldAddNewPage: Bool = false) {
+        if let page = ftDocument.pages().last as? FTNoteshelfPage {
+            var pageToInsert = page
+            if shouldAddNewPage, let newPage = ftDocument.insertPageBelow(page: page) as? FTNoteshelfPage {
+                pageToInsert = newPage
+            }
+            if let image = img.scaleAndRotateImageFor1x() {
+                let pageRect = pageToInsert.pdfPageRect
+                let startingFrame = image.aspectFrame(withinScreenArea: pageRect, zoomScale: 1)
+                let imageInfo = FTImageAnnotationInfo(image: image)
+                imageInfo.boundingRect = startingFrame
+                imageInfo.scale = 1
+                if let imageAnn = imageInfo.annotation() {
+                    imageAnn.associatedPage = pageToInsert
+                    pageToInsert.addAnnotations([imageAnn], indices: nil)
                 }
-                if let image = img.scaleAndRotateImageFor1x() {
-                    let pageRect = pageToInsert.pdfPageRect
-                    let startingFrame = image.aspectFrame(withinScreenArea: pageRect, zoomScale: 1)
-                    let imageInfo = FTImageAnnotationInfo(image: image)
-                    imageInfo.boundingRect = startingFrame
-                    imageInfo.scale = 1
-                    if let imageAnn = imageInfo.annotation() {
-                        imageAnn.associatedPage = pageToInsert
-                        pageToInsert.addAnnotations([imageAnn], indices: nil)
-                    }
-                    FTNoteshelfDocumentManager.shared.saveAndClose(document: ftDocument, token: docToken) { _ in
-                        onCompletion(true,nil);
-                    }
-                } else {
-                    onCompletion(false, nil)
-                }
-            } else {
-                onCompletion(false, nil)
             }
         }
     }
     
-    private func insertAudioInDocument(audioUrl: FTAudioFileToImport, with notebookUrl: URL, shouldAddNewPage: Bool = false, onCompletion : @escaping ((Bool,NSError?) -> Void)) {
-        let docrequest = FTDocumentOpenRequest(url: notebookUrl, purpose: .write)
-        FTNoteshelfDocumentManager.shared.openDocument(request: docrequest) { docToken, ftDocument, error in
-            if let ftDocument, error == nil {
-                if let page = ftDocument.pages().last as? FTNoteshelfPage {
-                    var pageToInsert = page
-                    if shouldAddNewPage, let newPage = ftDocument.insertPageBelow(page: page) as? FTNoteshelfPage {
-                        pageToInsert = newPage
-                    }
-                    (ftDocument as? FTDocumentCreateWatchExtension)?.addAudioAnnotations(urls: [audioUrl], toPage: pageToInsert, onCompletion: { (annotations) in
-                        FTNoteshelfDocumentManager.shared.saveAndClose(document: ftDocument, token: docToken) { _ in
-                            onCompletion(true, nil)
-                        }
-                    })
-                } else {
-                    onCompletion(false, nil)
-                }
-            } else {
-                onCompletion(false, nil)
+    private func insertAudioInDocument(ftDocument: FTDocumentProtocol, audioUrl: FTAudioFileToImport, shouldAddNewPage: Bool = false, onCompletion : @escaping ((Bool,NSError?) -> Void)) {
+        if let page = ftDocument.pages().last as? FTNoteshelfPage {
+            var pageToInsert = page
+            if shouldAddNewPage, let newPage = ftDocument.insertPageBelow(page: page) as? FTNoteshelfPage {
+                pageToInsert = newPage
             }
+            (ftDocument as? FTDocumentCreateWatchExtension)?.addAudioAnnotations(urls: [audioUrl], toPage: pageToInsert, onCompletion: { (annotations) in
+                onCompletion(true, nil)
+            })
+        } else {
+            onCompletion(false, nil)
         }
     }
     
