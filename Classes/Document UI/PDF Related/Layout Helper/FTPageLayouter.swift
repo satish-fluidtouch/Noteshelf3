@@ -24,6 +24,43 @@ extension Notification.Name {
             return NSLocalizedString("PageScrollVertical", comment: "Vertical");
         }
     }
+
+    var oppositeLayout: FTPageLayout {
+        let layout: FTPageLayout
+        if self == .vertical {
+            layout = .horizontal
+        } else {
+            layout = .vertical
+        }
+        return layout
+    }
+    
+    var toolIconName: String {
+        let imgName: String
+        switch self {
+        case .vertical:
+            imgName = "desk_tool_horizontal_scrolling"
+        case .horizontal:
+            imgName = "desk_tool_vertical_scrolling"
+        }
+        return imgName
+    }
+    
+    var toastTitle: String {
+        let title: String
+        switch self {
+        case .vertical:
+            title = "customizeToolbar.horizontalScrollingEnabled"
+        case .horizontal:
+            title = "customizeToolbar.verticalScrollingEnabled"
+        }
+        return title
+    }
+    
+    func trackLayout() {
+        let param = (self == .vertical) ? "vertical" : "horizontal"
+        track("toolbar_switchscrolling_tap", params: ["scrolling": param], screenName: FTScreenNames.notebook)
+    }
 }
 
 protocol FTLayouterInternal: FTPageLayouter {

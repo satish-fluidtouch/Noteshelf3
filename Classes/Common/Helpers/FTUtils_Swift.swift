@@ -67,11 +67,8 @@ extension FTUtils {
     class func isAppInstalledFor(days: Double) -> Bool {
         let currentTimeInterval = Date().timeIntervalSinceReferenceDate
         let Interval = currentTimeInterval - (days * 24 * 60 * 60)
-        if  FTUserDefaults.appInstalledDate < Interval {
-            return true
-        }else {
-            return false
-        }
+        let status = FTUserDefaults.appInstalledDate < Interval
+        return status
     }
     #endif
 }
