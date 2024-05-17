@@ -63,15 +63,16 @@ struct FTPresetEditView: View {
         }
 
         ToolbarItem(placement: .navigationBarTrailing) {
-            Image(systemName: "trash")
-                .foregroundColor(.red)
-                .font(.appFont(for: .medium, with: 16.0))
-                .onTapGesture {
-                    self.viewModel.deleteColorAction()
-                    self.viewModel.updateCurrentColors()
-                    self.viewModel.updateColorEditViewSizeIfNeeded(isPresetEdit: false)
-                    self.presentationMode.wrappedValue.dismiss()
-                }
+            Button {
+                self.viewModel.deleteColorAction()
+                self.viewModel.updateCurrentColors()
+                self.viewModel.updateColorEditViewSizeIfNeeded(isPresetEdit: false)
+                self.presentationMode.wrappedValue.dismiss()
+            } label: {
+                Image(systemName: "trash")
+                    .foregroundColor(.red)
+                    .font(.appFont(for: .medium, with: 16.0))
+            }
         }
     }
 
