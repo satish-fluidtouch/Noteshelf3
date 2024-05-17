@@ -323,7 +323,7 @@
 "EvernotePDFSizeError" = "Upload failed. PDF too big for Evernote.";
 "EvernotePublishOnWifiOnly" = "Publish on WiFi only";
 "EvernoteRetieveNotebookFailed" = "Unable to retrieve Evernote notebook";
-"EvernoteSync" = "Evernote Sync";
+"EvernoteSync" = "Sync to Evernote";
 "EvernoteUploadFailed" = "Unexpected error. Upload to Evernote failed";
 "ExitPresentationMode" = "Exit Presentation Mode";
 "Export" = "Export";
@@ -985,6 +985,7 @@
 "color.resetToDefault" = "Reset to Default";
 "color.restoreAll" = "Restore All";
 "color.restorePresetColors.message" = "Are you sure you want to restore to all default colors?";
+"colors.presets.spectrum" = "Spectrum";
 "continue" = "Continue";
 "convertToText.copiedToClipBoard" = "Copied to clipboard";
 "convertToText.customDictionary" = "Custom Dictionary";
@@ -1193,6 +1194,7 @@
 "more.globalsettings.caps" = "GLOBAL SETTINGS";
 "more.settings.footer" = "These settings are applied globally to all your notebooks.";
 "moreInfo" = "More info...";
+"more_global" = "GLOBAL";
 "move" = "Move";
 "newnotebook" = "NEW NOTEBOOK";
 "newnotebook.create" = "Create";
@@ -1283,6 +1285,7 @@
 "reset" = "Reset";
 "retry" = "Retry";
 "save" = "Save";
+"saveAsTemplate_message" = "Template will be saved inside Custom section in Templates.";
 "school" = "School";
 "search.tryNewSearch" = "Try a new search";
 "seeAll" = "See All";
@@ -1673,4 +1676,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
+// Last Synced by Narayana on 17 May 2024 at 4:53 PM

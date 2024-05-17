@@ -80,7 +80,7 @@ struct FTFavoritePenColorEditView: View {
             Text("shelf.notebook.textstyle.grid".localized)
                 .tag(FTPenColorSegment.grid)
                 .font(.appFont(for: .medium, with: 13.0))
-            Text("Spectrum")
+            Text("colors.presets.spectrum".localized)
                 .tag(FTPenColorSegment.spectrum)
                 .font(.appFont(for: .medium, with: 13.0))
         }

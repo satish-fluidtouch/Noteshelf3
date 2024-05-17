@@ -985,6 +985,7 @@
 "color.resetToDefault" = "デフォルトにリセット";
 "color.restoreAll" = "リセットする";
 "color.restorePresetColors.message" = "すべてをデフォルトの色にリセットしてもよろしいですか？";
+"colors.presets.spectrum" = "スペクトル";
 "continue" = "続ける";
 "convertToText.copiedToClipBoard" = "クリップボードにコピーしました。";
 "convertToText.customDictionary" = "カスタム辞書";
@@ -1193,6 +1194,7 @@
 "more.globalsettings.caps" = "グローバル設定";
 "more.settings.footer" = "これらの設定は、すべてのノートブックに対してグローバルに適用されます。";
 "moreInfo" = "詳細情報";
+"more_global" = "グローバル設定";
 "move" = "移動";
 "newnotebook" = "新しいノートブック";
 "newnotebook.create" = "作成";
@@ -1283,6 +1285,7 @@
 "reset" = "リセット";
 "retry" = "リトライ";
 "save" = "保存";
+"saveAsTemplate_message" = "テンプレートはテンプレートのカスタムセクション内に保存されます。";
 "school" = "学校";
 "search.tryNewSearch" = "新しい検索を試してください";
 "seeAll" = "すべて見る";
@@ -1673,4 +1676,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
+// Last Synced by Narayana on 17 May 2024 at 4:53 PM

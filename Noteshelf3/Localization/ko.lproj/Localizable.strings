@@ -985,6 +985,7 @@
 "color.resetToDefault" = "기본값으로 재설정";
 "color.restoreAll" = "모두 복원";
 "color.restorePresetColors.message" = "기본 색상으로 모두 복원하시겠습니까?";
+"colors.presets.spectrum" = "스펙트럼";
 "continue" = "계속";
 "convertToText.copiedToClipBoard" = "클립보드에 복사되었습니다.";
 "convertToText.customDictionary" = "사용자 정의 사전";
@@ -1193,6 +1194,7 @@
 "more.globalsettings.caps" = "전역 설정";
 "more.settings.footer" = "이 설정은 모든 노트북에 전역으로 적용됩니다.";
 "moreInfo" = "더 많은 정보...";
+"more_global" = "전역 설정";
 "move" = "이동";
 "newnotebook" = "새로운 노트북";
 "newnotebook.create" = "만들다";
@@ -1283,6 +1285,7 @@
 "reset" = "리셋";
 "retry" = "재시도";
 "save" = "저장";
+"saveAsTemplate_message" = "템플릿은 템플릿의 사용자 정의 섹션에 저장됩니다.";
 "school" = "학교";
 "search.tryNewSearch" = "새로 검색해 보세요";
 "seeAll" = "재응시";
@@ -1673,4 +1676,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
+// Last Synced by Narayana on 17 May 2024 at 4:53 PM
