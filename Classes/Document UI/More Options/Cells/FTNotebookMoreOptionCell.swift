@@ -16,6 +16,8 @@ class FTNotebookMoreOptionsCell: UITableViewCell {
     @IBOutlet fileprivate var lblText: UILabel?
     @IBOutlet fileprivate var lblDetails: UILabel?
     @IBOutlet fileprivate var lblSelectedValue: UILabel?
+    @IBOutlet fileprivate(set) var scrollingValueLbl: UILabel?
+    @IBOutlet fileprivate(set) var siriSubLbl: UILabel?
 
     @IBOutlet weak var onboardingDotView: UIView?
     var toggleTapped: ((_ currentValue: Bool, _ setting: FTNotebookMoreOption) -> Void)?
@@ -59,6 +61,11 @@ class FTNotebookMoreOptionsCell: UITableViewCell {
         super.awakeFromNib()
         self.layoutIfNeeded();
         imgViewIcon?.tintColor = .appColor(.accent)
+    }
+    
+    func setValueForScrollDirection() {
+        let value = UserDefaults.standard.pageLayoutType.localizedTitle
+        scrollingValueLbl?.text = value
     }
 
     func applySelectionStyleGray() {

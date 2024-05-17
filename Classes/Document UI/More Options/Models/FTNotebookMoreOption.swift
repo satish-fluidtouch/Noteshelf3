@@ -127,7 +127,7 @@ class FTNotebookOptionRotate: FTNotebookMoreOption {
     }
     
     var imageIcon: FTIcon {
-        return .rotateRight
+        return .rotateLeft
     }
     
     var identifier: String {
@@ -473,4 +473,131 @@ class FTCustomizeToolbarSetting: FTNotebookMoreOption {
             UserDefaults.standard.set(newValue, forKey: "\(identifier)_viewed")
         }
     }
+}
+
+class FTNotebookPassword: FTNotebookMoreOption {
+    var imageIcon: FTIcon {
+        return .passwordIcon
+    }
+    
+    var eventName: String {
+        return FTNotebookEventTracker.nbk_moresettings_password_tap
+    }
+    
+    var type: FTNotebookMoreOptionType {
+        return .disclosure
+    }
+    
+    var localizedTitle: String {
+        return "notebookSettings.password".localized
+    }
+    
+    var identifier: String {
+        return "Password"
+    }
+}
+
+
+class FTNotebookAddToSiri: FTNotebookMoreOption {
+    var imageIcon: FTIcon {
+        return .siriIcon
+    }
+    
+    var eventName: String {
+        return FTNotebookEventTracker.nbk_moresettings_addtisiri_tap
+    }
+    
+    var type: FTNotebookMoreOptionType {
+        return .disclosure
+    }
+    
+    var localizedTitle: String {
+        return "notebookSettings.addToSiri".localized
+    }
+    
+    var identifier: String {
+        return "Add to Siri"
+    }
+}
+
+class FTNotebookEverNoteSetting: FTNotebookOptionToggle {
+    
+    var eventName: String {
+        return FTNotebookEventTracker.nbk_moresettings_synctoevernote_tap
+    }
+
+    var type: FTNotebookMoreOptionType {
+        return .toggleAccessory
+    }
+    var imageIcon: FTIcon {
+        return .everNoteSyncIcon
+    }
+    
+    var localizedTitle: String {
+        return "EvernoteSync".localized
+    }
+    
+    var identifier: String {
+        return "Statusbar"
+    }
+    
+    var isToggleTurnedOn: Bool {
+        return isSwitchOn
+    }
+
+    func updateToggleStatus(with isOn: Bool) {
+        self.isSwitchOn = !isOn
+    }
+
+    fileprivate var isSwitchOn: Bool
+    
+    init(isEnabled: Bool) {
+        self.isSwitchOn = isEnabled
+    }
+}
+
+
+class FTNotebookAddToStylus: FTNotebookMoreOption {
+    var imageIcon: FTIcon {
+        return .stylusIcon
+    }
+    
+    var eventName: String {
+        return FTNotebookEventTracker.nbk_moresettings_stylus_tap
+    }
+    
+    var type: FTNotebookMoreOptionType {
+        return .disclosure
+    }
+    
+    var localizedTitle: String {
+        return "notebookSettings.stylus".localized
+    }
+    
+    var identifier: String {
+        return "Stylus"
+    }
+}
+
+class FTNotebookAddScrollingDirection: FTNotebookMoreOption {
+    var imageIcon: FTIcon {
+        FTIcon(bundleName: UserDefaults.standard.pageLayoutType.toolIconName)
+    }
+    
+    var eventName: String {
+        return FTNotebookEventTracker.nbk_moresettings_scrolling_tap
+    }
+    
+    var type: FTNotebookMoreOptionType {
+        return .disclosure
+    }
+    
+    var localizedTitle: String {
+        return "notebookSettings.scrolling".localized
+    }
+    
+    var identifier: String {
+        return "Scrolling"
+    }
+    
 }

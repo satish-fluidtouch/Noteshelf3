@@ -45,7 +45,7 @@ class FTRotatePageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.preferredContentSize = CGSize(width: defaultPopoverWidth, height: 192)
+        self.navigationController?.preferredContentSize = CGSize(width: defaultPopoverWidth, height: 170)
     }
 }
 
