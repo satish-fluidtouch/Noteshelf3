@@ -985,6 +985,7 @@
 "color.resetToDefault" = "Restablecer a predeterminado.";
 "color.restoreAll" = "Restaurar todo.";
 "color.restorePresetColors.message" = "¿Estás seguro de que quieres restaurar todos los colores predeterminados?";
+"colors.presets.spectrum" = "Espectro";
 "continue" = "Continuar";
 "convertToText.copiedToClipBoard" = "Copiado al portapapeles";
 "convertToText.customDictionary" = "Diccionario personalizado";
@@ -1675,4 +1676,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 17 May 2024 at 4:34 PM
+// Last Synced by Narayana on 17 May 2024 at 4:53 PM

@@ -985,6 +985,7 @@
 "color.resetToDefault" = "重置为默认";
 "color.restoreAll" = "恢复全部";
 "color.restorePresetColors.message" = "您确定要恢复为所有默认颜色吗？";
+"colors.presets.spectrum" = "光谱";
 "continue" = "继续";
 "convertToText.copiedToClipBoard" = "已复制到剪贴板";
 "convertToText.customDictionary" = "自定义词典";
@@ -1675,4 +1676,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 17 May 2024 at 4:34 PM
+// Last Synced by Narayana on 17 May 2024 at 4:53 PM
