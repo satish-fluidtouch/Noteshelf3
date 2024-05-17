@@ -145,9 +145,7 @@ extension FTShelfSplitViewController {
                     if !importInfo.notebook.isEmpty {
                         var subProgress1 = Progress()
                         // Fetch the document and open and insert image as annotation
-                        subProgress1 = self.insertFileInsideNotebook(item, shouldAddNewPage: true) { sucess, error in
-                            onCompletion?(nil, error)
-                        }
+                        subProgress1 = self.insertFileInsideNotebook(item, shouldAddNewPage: true, onCompletion: onCompletion)
                         progress.addChild(subProgress1, withPendingUnitCount: 1);
                     } else {
                         self.fetchCollectionDetails(with: importInfo) { _shelfItemColleciton, _groupItem, _shelfItem in
@@ -191,28 +189,14 @@ extension FTShelfSplitViewController {
             if !importInfo.notebook.isEmpty {
                 var subProgress1 = Progress()
                 // Fetch the document and open and insert image as annotation
-                subProgress1 = self.insertFileInsideNotebook(item, shouldAddNewPage: true) { shelfItem, error in
-                    onCompletion?(shelfItem, error)
-                }
+                subProgress1 = self.insertFileInsideNotebook(item, shouldAddNewPage: true, onCompletion: onCompletion)
                 progress.addChild(subProgress1, withPendingUnitCount: 1);
             } else {
                 //Create new document and insert image as annotation
                 let filePath = FTPDFFileGenerator().generateBlankPDFFile(UIDevice.isLandscapeOrientation)
                 if !filePath.isEmpty {
                     self.fetchCollectionDetails(with: importInfo) { _shelfItemColleciton, _groupItem, _shelfItem in
-                        _ = self.startImporting(filePath, title: filePath.lastPathComponent.deletingPathExtension,isImageSource: false, collection: _shelfItemColleciton, groupItem: _groupItem) {
-                            shelfItem, error in
-                            if let shelfItem {
-                                let _importItem = FTImportItem(item: item.importItem)
-                                let importItemInfo = FTImportItemInfo(collection: item.imporItemInfo?.collection ?? "", group: "", notebook: shelfItem.URL.relativePathWRTCollection())
-                                _importItem.imporItemInfo = importItemInfo
-                                var subProgress1 = Progress()
-                                subProgress1 = self.insertFileInsideNotebook(_importItem, shelfItemProtocol: shelfItem) { item, error in
-                                    onCompletion?(shelfItem, error)
-                                }
-                                progress.addChild(subProgress1, withPendingUnitCount: 1);
-                            }
-                        }
+                        _ = self.createDocumentAndInsertImage(filePath,imageUrl: importItem, title: filePath.lastPathComponent.deletingPathExtension, collection: _shelfItemColleciton, groupItem: _groupItem, onCompletion: onCompletion)
                     }
                 } else {
                     progress.completedUnitCount += 1;
@@ -222,16 +206,14 @@ extension FTShelfSplitViewController {
         } else {
             progress.totalUnitCount += 1;
             let importer = FTFileImporter();
-            let subProgress = importer.pdfFileFrom(item) { (filePath, error, isImageSource) in
-                if(nil != filePath) {
+            let subProgress = importer.pdfFileFrom(item) {[weak self] (filePath, error, isImageSource) in
+                if let self, (nil != filePath) {
                     let fileName = filePath!.lastPathComponent.deletingPathExtension;
                     var subProgress1 = Progress()
                     if let importInfo = item.imporItemInfo {
                         if !importInfo.notebook.isEmpty {
                             // Fetch the document and open and insert new page
-                            subProgress1 = self.insertFileInsideNotebook(item) { shelfItem, error in
-                                onCompletion?(shelfItem, error)
-                            }
+                            subProgress1 = self.insertFileInsideNotebook(item, onCompletion: onCompletion)
                             progress.addChild(subProgress1, withPendingUnitCount: 1);
                         } else {
                             self.fetchCollectionDetails(with: importInfo) { _shelfItemColleciton, _groupItem, _shelfItem in
@@ -302,7 +284,6 @@ extension FTShelfSplitViewController {
                             imageData = try Data(contentsOf: fileURL)
                         } catch {}
                         if let dataOfImage = imageData, let img = UIImage(data: dataOfImage) {
-                            let notebookUrl = shelfItem.URL
                             self.insertImageInDocument(ftDocument: ftDocument, img: img, shouldAddNewPage: shouldAddNewPage)
                         }
                         FTNoteshelfDocumentManager.shared.saveAndClose(document: ftDocument, token: docToken) { _ in
@@ -314,7 +295,6 @@ extension FTShelfSplitViewController {
                             let item = FTAudioFileToImport.init(withURL: fileURL)
                             item.fileName = fileURL.deletingPathExtension().lastPathComponent
                             item.isWatchRecording = false
-                            let notebookUrl = shelfItem.URL
                             self.insertAudioInDocument(ftDocument: ftDocument, audioUrl: item, shouldAddNewPage: shouldAddNewPage){ success, error in
                                 FTNoteshelfDocumentManager.shared.saveAndClose(document: ftDocument, token: docToken) { _ in
                                     progress.completedUnitCount += 1;
@@ -352,7 +332,6 @@ extension FTShelfSplitViewController {
                                 info.inputFileURL = URL.init(fileURLWithPath: filePath!);
                                 info.isTemplate = false;
                                 FTCLSLog("Inserting PDF File");
-                                let notebookUrl = shelfItem.URL
                                 info.insertAt = ftDocument.pages().count
                                 ftDocument.insertFile(info, onCompletion: { error, success in
                                     FTNoteshelfDocumentManager.shared.saveAndClose(document: ftDocument, token: docToken) { _ in
@@ -536,9 +515,68 @@ extension FTShelfSplitViewController {
                 });
             }
             else {
-                    if(onCompletion != nil) {
-                        onCompletion!(nil,error);
+                if(onCompletion != nil) {
+                    onCompletion!(nil,error);
+                }
+            }
+        };
+        return progress;
+    }
+    
+    private func createDocumentAndInsertImage( _ filePath : String,
+                                      imageUrl: URL,
+                                      title : String,
+                                      isTemplate: Bool = false,
+                                      collection:FTShelfItemCollection?,
+                                      groupItem:FTGroupItemProtocol?,
+                                      onCompletion : ((FTShelfItemProtocol?,Error?) -> Void)?) -> Progress {
+        let progress = Progress();
+        progress.totalUnitCount = 1;
+        progress.localizedDescription = NSLocalizedString("Saving", comment: "Saving...");
+        
+        let tempDocURL = FTDocumentFactory.tempDocumentPath(FTUtils.getUUID());
+        let ftdocument = FTDocumentFactory.documentForItemAtURL(tempDocURL);
+        
+        let defaultCover = FTThemesLibrary(libraryType: .covers).getDefaultTheme(defaultMode: .quickCreate)
+        
+        let info = FTDocumentInputInfo();
+        /*var controller : UIViewController? = self;
+         if let cont = self.rootViewController?.presentedViewController, !cont.isBeingDismissed {
+         controller = cont;
+         }*/
+        info.isTemplate = isTemplate
+        info.rootViewController = self
+        info.inputFileURL = URL.init(fileURLWithPath: filePath);
+        info.overlayStyle = .clearWhite
+        info.coverTemplateImage = defaultCover.themeThumbnail()
+        info.isNewBook = true;
+        ftdocument.createDocument(info) { (error, _) in
+            progress.completedUnitCount += 1;
+            (ftdocument as? FTNoteshelfDocument)?.openDocument(purpose: .write) { success, error in
+                var imageData : Data?
+                do {
+                    imageData = try Data(contentsOf: imageUrl)
+                } catch {}
+                if let dataOfImage = imageData, let img = UIImage(data: dataOfImage) {
+                    self.insertImageInDocument(ftDocument: ftdocument, img: img)
+                }
+                if let nsDoc = ftdocument as? FTNoteshelfDocument {
+                    nsDoc.shelfImage = nsDoc.transparentThumbnail(isEncrypted: nsDoc.isPinEnabled())
+                }
+                (ftdocument as? FTNoteshelfDocument)?.saveAndCloseWithCompletionHandler({ sucess in
+                    if(error == nil) {
+                        collection!.addShelfItemForDocument(ftdocument.URL, toTitle: title, toGroup: groupItem, onCompletion: { (inerror, item) in
+                            if(onCompletion != nil) {
+                                onCompletion!(item,inerror);
+                            }
+                        });
                     }
+                    else {
+                        if(onCompletion != nil) {
+                            onCompletion!(nil,error);
+                        }
+                    }
+                })
             }
         };
         return progress;
