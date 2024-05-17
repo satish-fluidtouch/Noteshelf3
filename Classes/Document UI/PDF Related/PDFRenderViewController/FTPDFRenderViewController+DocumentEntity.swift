@@ -120,7 +120,9 @@ extension FTPDFRenderViewController: FTAddDocumentEntitiesViewControllerDelegate
                                                                         lineHeights: dataSource.lineHeightsModel,
                                                                         sizes: dataSource.sizeModel)
         let selPaperTheme = FTThemesLibrary(libraryType: .papers).getDefaultTheme(defaultMode: .template)
-         let variants = basicTemplatesDataSource.variantsForMode(.template)
+        var variants = basicTemplatesDataSource.variantsForMode(.template)
+        self.updateVariants(&variants)
+
         let selectedPaperVariantsAndTheme =
          FTSelectedPaperVariantsAndTheme(templateColorModel: variants.color,
                                          lineHeight: variants.lineHeight,
@@ -415,6 +417,65 @@ extension FTPDFRenderViewController : FTImportFileHandlerDelegate
 }
 
 extension FTPDFRenderViewController {
+    fileprivate func updateVariants(_ variants: inout FTBasicPaperVariants) {
+        let basicTemplatesDataSource = FTBasicTemplatesDataSource.shared
+        if let page = self.currentlyVisiblePage() as? FTNoteshelfPage {
+            // Lineheight automation
+            let lineHeight = page.lineHeight
+            if let type = basicTemplatesDataSource.getLIneTypes().first(where: { lineType in
+                Int(lineType.horizontalLineSpacing) == lineHeight && Int(lineType.verticalLineSpacing) == lineHeight
+            }) {
+                variants.lineHeight = type.lineType
+            }
+
+            // Color automation
+            var bgColor = page.pageBackgroundColor
+            if nil == bgColor {
+                bgColor = page.pdfPageRef?.getBackgroundColor()
+            }
+            if let reqColor = bgColor {
+                if let model = basicTemplatesDataSource.getTemplateColorsDataForMode(.template).first(where: { colorModel in
+                    colorModel.hex.isEqualToHexColor(reqColor.hexString)
+                }) {
+                    variants.color = model
+                } else {
+                    variants.color = FTTemplateColorModel(color: .custom, hex: reqColor.hexString)
+                }
+            }
+
+            // Orientation automation
+            var pageSize = page.pdfPageRect.size
+            let roundedWidth = pageSize.width.rounded()
+            let roundedHeight = pageSize.height.rounded()
+            pageSize = CGSize(width: roundedWidth, height: roundedHeight)
+
+            variants.orientaion = FTTemplateOrientation.orientation(for: pageSize)
+
+            // Size automation
+            var isBasicFound = false
+            let sizeModels = basicTemplatesDataSource.getTemplateSizeData()
+
+            for sizeModel in sizeModels {
+                let size = sizeModel.requiredSize(with: variants.orientaion)
+                if size.equalTo(pageSize) {
+                    variants.templateSize = sizeModel.size
+                    isBasicFound = true
+                    break
+                }
+            }
+
+            if !isBasicFound {
+                for sizeModel in sizeModels {
+                    let size = sizeModel.requiredSize(with: variants.orientaion)
+                    if size.validate(with: pageSize, by: 0.2) {
+                        variants.templateSize = sizeModel.size
+                        break
+                    }
+                }
+            }
+        }
+    }
+
     @objc func undo(_ sender:Any) {
         let undoMethod = self as FTDeskToolbarDelegate;
         undoMethod.undo?();
@@ -632,4 +693,14 @@ extension FTPDFRenderViewController: FTPaperTemplateDelegate {
        }
    }
 
+}
+
+private extension CGSize {
+    func validate(with size: CGSize, by diff: CGFloat = 0.1) -> Bool {
+        let widthDifference = max(width, size.width) * diff
+        let heightDifference = max(height, size.height) * diff
+        let widthInRange = abs(width - size.width) <= widthDifference
+        let heightInRange = abs(height - size.height) <= heightDifference
+        return widthInRange && heightInRange
+    }
 }

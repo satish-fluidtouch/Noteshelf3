@@ -23,7 +23,7 @@ enum FTTemplateType : Int {
 
 protocol FTAutoTemplateGeneratorProtocol {
     init(withTheme: FTTheme)
-    func generate() async throws -> FTDocumentInputInfo
+    func generate() -> FTDocumentInputInfo
 }
 
 class FTAutoTemplateGenerator: NSObject {
@@ -58,7 +58,7 @@ private class FStandardTemplateDiaryGenerator : NSObject,FTAutoTemplateGenerator
         theme = inTheme as! FTPaperTheme
     }
 
-    func generate() async throws -> FTDocumentInputInfo {
+    func generate() -> FTDocumentInputInfo {
         let docInfo = FTDocumentInputInfo()
         docInfo.inputFileURL = theme.themeTemplateURL()
         docInfo.isTemplate = true
@@ -82,7 +82,7 @@ private class FTAutoTemplateDiaryGenerator: NSObject,FTAutoTemplateGeneratorProt
         theme = inTheme as! FTAutoTemlpateDiaryTheme
     }
 
-    func generate() async throws -> FTDocumentInputInfo {
+    func generate() -> FTDocumentInputInfo {
         var startDate = theme.startDate
         var endDate = theme.endDate
 
@@ -150,20 +150,14 @@ private class FTAutoDynamicTemplateGenerator: NSObject, FTAutoTemplateGeneratorP
         self.theme = withTheme as! FTDynamicTemplateTheme
     }
 
-    func generate() async throws -> FTDocumentInputInfo {
-        do {
-            let safeAreaInsets = try await FTSafeAreaInsetsController.safeAreaInset(isLandscape: theme.customvariants?.isLandscape ?? false)
-            let generator = FTDynamicTemplateGenerator.init(safeAreaInsets: safeAreaInsets, self.theme, self.generationType)
-            let docInfo = FTDocumentInputInfo()
-            docInfo.inputFileURL = generator.generate()
-            docInfo.isTemplate = true
-            docInfo.footerOption = self.theme.footerOption
-            docInfo.pageProperties = generator.pageProperties;
-            return docInfo
-        }
-        catch {
-            throw NSError(domain: "com.fluidtouch.tempaltes", code:-100,userInfo: [NSLocalizedDescriptionKey : "error in generation logic FTAutoDynamicTemplateGenerator"])
-        }
+    func generate() -> FTDocumentInputInfo {
+        let generator = FTDynamicTemplateGenerator(self.theme, self.generationType)
+        let docInfo = FTDocumentInputInfo()
+        docInfo.inputFileURL = generator.generate()
+        docInfo.isTemplate = true
+        docInfo.footerOption = self.theme.footerOption
+        docInfo.pageProperties = generator.pageProperties;
+        return docInfo
     }
 }
 
@@ -174,22 +168,15 @@ private class FTAutoStoreTemplateGenerator: NSObject, FTAutoTemplateGeneratorPro
         self.theme = withTheme as! FTStoreTemplatePaperTheme
     }
 
-    func generate() async throws -> FTDocumentInputInfo {
-        do {
-            let safeAreaInsets = try await FTSafeAreaInsetsController.safeAreaInset(isLandscape: theme.customvariants!.isLandscape)
-            let generator = FTStoreTemplateGenerator.init(safeAreaInsets: safeAreaInsets, theme: theme)
-            let docInfo = FTDocumentInputInfo()
-            docInfo.inputFileURL = theme.themeTemplateURL()
-            docInfo.isTemplate = true
-            docInfo.footerOption = self.theme.footerOption
-            if let lineHeight = self.theme.lineHeight {
-                docInfo.pageProperties.lineHeight = lineHeight
-            }
-            return docInfo
+    func generate() -> FTDocumentInputInfo {
+        let docInfo = FTDocumentInputInfo()
+        docInfo.inputFileURL = theme.themeTemplateURL()
+        docInfo.isTemplate = true
+        docInfo.footerOption = self.theme.footerOption
+        if let lineHeight = self.theme.lineHeight {
+            docInfo.pageProperties.lineHeight = lineHeight
         }
-        catch {
-            throw NSError(domain: "com.fluidtouch.tempaltes", code:-100,userInfo: [NSLocalizedDescriptionKey : "error in generation logic FTAutoStoreTemplateGenerator"])
-        }
+        return docInfo
     }
 }
 
@@ -204,69 +191,4 @@ private extension UIEdgeInsets {
     init(string: String) {
         self = NSCoder.uiEdgeInsets(for: string)
     }
-}
-
- class FTSafeAreaInsetsController: UIViewController {
-    #if NS2_SIRI_APP || NOTESHELF_ACTION
-     static func safeAreaInset(isLandscape: Bool) async throws -> UIEdgeInsets {
-       return UIEdgeInsets.zero
-     }
-    #else
-    static func safeAreaInset(isLandscape: Bool) async throws -> UIEdgeInsets {
-        guard let window = UIApplication.shared.connectedScenes
-            .filter({$0.activationState == .foregroundActive})
-            .compactMap({$0 as? UIWindowScene})
-            .first?.windows
-            .filter({$0.isKeyWindow}).first else {
-            return .zero
-        }
-
-        var safeAreaInsets: UIEdgeInsets = window.safeAreaInsets
-
-        guard let rootController = window.rootViewController else {
-            return safeAreaInsets
-        }
-
-        let curValue: UIInterfaceOrientation = window.windowScene?.interfaceOrientation ?? .portrait
-        var keyToFetch: String = !isLandscape ? UIEdgeInsets.SafeAreaPortraitKey : UIEdgeInsets.SafeAreaLandscapeKey
-
-        if nil == UserDefaults.standard.value(forKey: keyToFetch) {
-            UserDefaults.standard.set(safeAreaInsets.stringValue, forKey: keyToFetch)
-            UserDefaults.standard.synchronize()
-        }
-
-        if(isLandscape && curValue.isPortrait) {
-            keyToFetch = UIEdgeInsets.SafeAreaLandscapeKey
-        }
-        else if(!isLandscape && curValue.isLandscape) {
-            keyToFetch = UIEdgeInsets.SafeAreaPortraitKey
-        }
-
-        if let val = UserDefaults.standard.value(forKey: keyToFetch) as? String {
-            safeAreaInsets = UIEdgeInsets(string: val)
-            return safeAreaInsets
-        }
-
-        let controller = FTSafeAreaInsetsController()
-        controller.currentOrientation = curValue
-        controller.modalPresentationStyle = .overFullScreen
-        controller.view.backgroundColor = .clear
-
-        return try await withCheckedThrowingContinuation({ continuation in
-            rootController.present(controller, animated: false) {
-                safeAreaInsets = rootController.view.safeAreaInsets
-                UserDefaults.standard.set(safeAreaInsets.stringValue, forKey: keyToFetch)
-                UserDefaults.standard.synchronize()
-                controller.dismiss(animated: false, completion: nil)
-                continuation.resume(returning: safeAreaInsets)
-            }
-        })
-    }
-
-    private var currentOrientation : UIInterfaceOrientation = .unknown
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return currentOrientation.isLandscape ? .portrait : .landscape
-    }
-#endif
 }
