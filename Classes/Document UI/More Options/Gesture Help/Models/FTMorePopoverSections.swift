@@ -34,7 +34,6 @@ struct FTMorePopoverSections {
             section.append(FTNotebookAddToStylus())
         }
 #endif
-        section.append(FTNotebookOptionSettings())
         return section
     }
         
@@ -47,6 +46,10 @@ struct FTMorePopoverSections {
 #endif
         section.append(FTNotebookOptionGetInfo())
         return section
+    }
+    
+    func  moreSettings() -> [FTNotebookMoreOption] {
+        return  [FTNotebookOptionSettings()]
     }
     
     func moreSections(_ page: FTPageProtocol) -> [[FTNotebookMoreOption]] {
@@ -64,8 +67,12 @@ struct FTMorePopoverSections {
         // Second Section
         let thirdSection = otherProperties()
         settings.append(thirdSection)
-        
+     
         // Third Section
+        let moreSettingsSection = moreSettings()
+        settings.append(moreSettingsSection)
+        
+        // Fourth Section
     #if !targetEnvironment(macCatalyst)
         let fourthSection = customToolbar()
         settings.append(fourthSection)

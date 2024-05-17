@@ -1193,6 +1193,7 @@
 "more.globalsettings.caps" = "IMPOSTAZIONI GLOBALI";
 "more.settings.footer" = "Queste impostazioni vengono applicate globalmente a tutti i tuoi notebook.";
 "moreInfo" = "Ulteriori informazioni...";
+"more_global" = "IMPOSTAZIONI GLOBALI";
 "move" = "Sposta";
 "newnotebook" = "NUOVO NOTEBOOK";
 "newnotebook.create" = "Creare";
@@ -1674,4 +1675,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 10 May 2024 at 3:52 PM
+// Last Synced by Sameer Hussain on 17 May 2024 at 4:34 PM

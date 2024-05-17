@@ -127,7 +127,7 @@ class FTNotebookOptionRotate: FTNotebookMoreOption {
     }
     
     var imageIcon: FTIcon {
-        return .rotateRight
+        return .rotateLeft
     }
     
     var identifier: String {

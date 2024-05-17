@@ -50,13 +50,14 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
     fileprivate var settings:[[FTNotebookMoreOption]] = [[FTNotebookMoreOption]]()
     var pinController: FTPasswordViewController?
     var siriShortcut: INVoiceShortcut?
+    var isSiriTextAdded : Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         guard notebookShelfItem != nil, page != nil, notebookDocument != nil else {
             fatalError("Settings must be presented with FTDocumentProtocol object")
         }
         self.normalDeskToolBarSettingsOptions()
-        self.navigationItem.title = "more".localized
+       // self.navigationItem.title = "more".localized
         self.tblSettings?.tableFooterView = UIView(frame: .zero)
         self.addTableHeaderview()
         isSiriShortcutAvailable(for: self.notebookShelfItem) {[weak self] shortCut in
@@ -68,13 +69,15 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tblSettings?.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        self.tblSettings?.reloadSections(IndexSet(integer: 0), with: .none)
-        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.isHidden = true
         self.preferredContentSize = self.fetchSize()
     }
     
     private func fetchSize() -> CGSize {
         var height: CGFloat = 652.0
+        if !UIDevice.isLandscapeOrientation {
+            height = 820
+        }
 #if targetEnvironment(macCatalyst)
         height -= 170.0
 #endif
@@ -164,9 +167,9 @@ extension FTNotebookMoreOptionsViewController: UITableViewDelegate, UITableViewD
         if section == 0 {
             return "Page".localized.uppercased()
         } else if section == 1 {
-            return "notebook".localized.uppercased()
+            return "Notebook".localized
         }else if section == 2 {
-            return "Global".localized.uppercased()
+            return "more_global".localized
         }
         return ""
     }
@@ -188,8 +191,12 @@ extension FTNotebookMoreOptionsViewController: UITableViewDelegate, UITableViewD
         let setting = settings[indexPath.section][indexPath.row]
         if setting is FTCustomizeToolbarSetting {
             return 48
+        } else if setting is FTNotebookAddToSiri {
+            if isSiriTextAdded{
+                return 56
+            }
         }
-        return 44.0
+        return 47.0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -207,9 +214,13 @@ extension FTNotebookMoreOptionsViewController: UITableViewDelegate, UITableViewD
                 settingCell.toggleTapped = nil
             }
             if setting is FTCustomizeToolbarSetting {
-                settingCell.backgroundColor = .appColor(.black5)
+                settingCell.backgroundColor = .clear
+                settingCell.contentView.layer.cornerRadius = 16
+                settingCell.contentView.backgroundColor = .appColor(.black5)
             } else {
                 settingCell.backgroundColor = .appColor(.white60)
+                settingCell.contentView.layer.cornerRadius = 0
+                settingCell.contentView.backgroundColor = .clear
             }
             switch setting {
             case is FTNotebookEverNoteSetting:
@@ -230,7 +241,18 @@ extension FTNotebookMoreOptionsViewController: UITableViewDelegate, UITableViewD
                 settingCell.scrollingValueLbl?.isHidden = true
             case is FTNotebookOptionSettings:
                 settingCell.scrollingValueLbl?.isHidden = true
+            case is FTNotebookAddToSiri:
+                if let siriShortcut = siriShortcut {
+                    let phrase = "\(siriShortcut.invocationPhrase)"
+                    settingCell.siriSubLbl?.attributedText = NSAttributedString(string: phrase, attributes: [.font: UIFont.appFont(for: .regular, with: 15), .foregroundColor: UIColor.appColor(.black50)])
+                    settingCell.siriSubLbl?.isHidden = false
+                    if phrase != "" {
+                        self.isSiriTextAdded = true
+                    }
+                }
             default:
+                settingCell.siriSubLbl?.isHidden = true
+                settingCell.scrollingValueLbl?.isHidden = true
                 break
             }
         }
@@ -293,6 +315,7 @@ extension FTNotebookMoreOptionsViewController: UITableViewDelegate, UITableViewD
         case is FTNotebookPassword :
             self.delegate?.presentPasswordScreen(settingsController: self)
         case is FTNotebookAddToSiri:
+            tblSettings?.reloadData()
             self.handleSiriSetting()
         case is FTNotebookAddToStylus:
             self.navigateToStylus()
@@ -486,7 +509,7 @@ extension FTNotebookMoreOptionsViewController {
     func navigateToScrollingPage(){
         let storyboard = UIStoryboard(name: "FTNotebookMoreOptions", bundle: nil)
         if let scrollingController = storyboard.instantiateViewController(withIdentifier: "FTScrollingDirectionViewController") as? FTScrollingDirectionViewController {
-            scrollingController.contentSize = CGSize(width: defaultPopoverWidth, height: 150)
+            scrollingController.contentSize = CGSize(width: defaultPopoverWidth, height: 120)
             self.navigationController?.pushViewController(scrollingController, animated: true)
         }
     }

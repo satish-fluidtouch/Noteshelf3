@@ -323,7 +323,7 @@
 "EvernotePDFSizeError" = "Upload failed. PDF too big for Evernote.";
 "EvernotePublishOnWifiOnly" = "Publish on WiFi only";
 "EvernoteRetieveNotebookFailed" = "Unable to retrieve Evernote notebook";
-"EvernoteSync" = "Evernote Sync";
+"EvernoteSync" = "Sync to Evernote";
 "EvernoteUploadFailed" = "Unexpected error. Upload to Evernote failed";
 "ExitPresentationMode" = "Exit Presentation Mode";
 "Export" = "Export";
@@ -1193,6 +1193,7 @@
 "more.globalsettings.caps" = "GLOBAL SETTINGS";
 "more.settings.footer" = "These settings are applied globally to all your notebooks.";
 "moreInfo" = "More info...";
+"more_global" = "GLOBAL";
 "move" = "Move";
 "newnotebook" = "NEW NOTEBOOK";
 "newnotebook.create" = "Create";
@@ -1674,4 +1675,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 10 May 2024 at 3:52 PM
+// Last Synced by Sameer Hussain on 17 May 2024 at 4:34 PM

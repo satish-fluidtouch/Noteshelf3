@@ -12,6 +12,7 @@ class FTScrollingDirectionCell: UITableViewCell {
     
     @IBOutlet weak var titleLBl: UILabel!
     @IBOutlet weak var iconImg: UIImageView!
+    @IBOutlet weak var tickImg: UIImageView!
 
     override func awakeFromNib() {
         super.awakeFromNib()

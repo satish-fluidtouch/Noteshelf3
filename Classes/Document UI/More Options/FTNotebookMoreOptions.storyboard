@@ -37,11 +37,22 @@
                                             <rect key="frame" x="0.0" y="0.0" width="355.66666666666669" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Added to Siri" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9yo-PK-BtQ">
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="yPI-Bg-AwF">
                                                     <rect key="frame" x="58.666666666666664" y="12" width="99.333333333333343" height="20"/>
-                                                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Added to Siri" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9yo-PK-BtQ">
+                                                            <rect key="frame" x="0.0" y="0.0" width="99.333333333333329" height="20"/>
+                                                            <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rTz-g4-BqH">
+                                                            <rect key="frame" x="0.0" y="0.0" width="99.333333333333329" height="0.0"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W1Q-8C-XGl" userLabel="seperator">
                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="0.66666666666666663"/>
                                                     <color key="backgroundColor" name="black20"/>
@@ -58,30 +69,32 @@
                                                     </constraints>
                                                 </view>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tag" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="UxK-Hw-1wl">
-                                                    <rect key="frame" x="16" y="10.333333333333337" width="26.666666666666671" height="24.999999999999986"/>
+                                                    <rect key="frame" x="16" y="10.333333333333337" width="26.666666666666671" height="24.666666666666664"/>
                                                     <color key="tintColor" name="accent"/>
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     </preferredSymbolConfiguration>
                                                 </imageView>
                                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vertical" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rfZ-so-9gy">
-                                                    <rect key="frame" x="288.33333333333331" y="11.666666666666664" width="57.333333333333314" height="21"/>
+                                                    <rect key="frame" x="288.33333333333331" y="11.666666666666666" width="57.333333333333314" height="20.666666666666671"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" name="black30"/>
+                                                    <color key="textColor" name="black50"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
+                                                <constraint firstItem="yPI-Bg-AwF" firstAttribute="centerY" secondItem="UxK-Hw-1wl" secondAttribute="centerY" id="0g7-K7-p0D"/>
+                                                <constraint firstItem="UxK-Hw-1wl" firstAttribute="top" secondItem="fAQ-jE-Gpx" secondAttribute="topMargin" constant="-0.66666666666666785" id="5Sa-HF-LfY"/>
                                                 <constraint firstItem="d6T-W1-NkZ" firstAttribute="leading" secondItem="UxK-Hw-1wl" secondAttribute="leading" constant="-8" id="7Ks-Ia-sqk"/>
-                                                <constraint firstItem="rfZ-so-9gy" firstAttribute="centerY" secondItem="9yo-PK-BtQ" secondAttribute="centerY" id="86h-Ag-ith"/>
+                                                <constraint firstItem="rfZ-so-9gy" firstAttribute="top" secondItem="fAQ-jE-Gpx" secondAttribute="topMargin" constant="0.6666666666666643" id="HBk-28-xTb"/>
                                                 <constraint firstItem="UxK-Hw-1wl" firstAttribute="centerY" secondItem="fAQ-jE-Gpx" secondAttribute="centerY" id="LWg-70-Qak"/>
                                                 <constraint firstItem="W1Q-8C-XGl" firstAttribute="leading" secondItem="fAQ-jE-Gpx" secondAttribute="leading" id="Lle-iS-DQ7"/>
-                                                <constraint firstItem="9yo-PK-BtQ" firstAttribute="centerY" secondItem="fAQ-jE-Gpx" secondAttribute="centerY" id="SJQ-H6-JsB"/>
+                                                <constraint firstItem="rfZ-so-9gy" firstAttribute="centerY" secondItem="yPI-Bg-AwF" secondAttribute="centerY" id="Vil-5T-fha"/>
                                                 <constraint firstItem="d6T-W1-NkZ" firstAttribute="centerY" secondItem="fAQ-jE-Gpx" secondAttribute="centerY" id="kBs-xC-Zko"/>
-                                                <constraint firstItem="9yo-PK-BtQ" firstAttribute="leading" secondItem="UxK-Hw-1wl" secondAttribute="trailing" constant="16" id="ks6-cp-TOL"/>
                                                 <constraint firstItem="UxK-Hw-1wl" firstAttribute="leading" secondItem="fAQ-jE-Gpx" secondAttribute="leading" constant="16" id="lhI-kv-8dX"/>
                                                 <constraint firstAttribute="trailing" secondItem="rfZ-so-9gy" secondAttribute="trailing" constant="10" id="nOs-JT-VmC"/>
+                                                <constraint firstItem="yPI-Bg-AwF" firstAttribute="leading" secondItem="UxK-Hw-1wl" secondAttribute="trailing" constant="16" id="sGF-mj-So7"/>
                                                 <constraint firstItem="W1Q-8C-XGl" firstAttribute="top" secondItem="fAQ-jE-Gpx" secondAttribute="top" id="yNx-bX-MMg"/>
                                             </constraints>
                                             <variation key="default">
@@ -97,10 +110,10 @@
                                         <connections>
                                             <outlet property="cellSeperatorView" destination="W1Q-8C-XGl" id="Fed-qT-gVI"/>
                                             <outlet property="imgViewIcon" destination="UxK-Hw-1wl" id="FMv-V6-ONb"/>
-                                            <outlet property="lblCenterYConstraint" destination="SJQ-H6-JsB" id="ywB-cc-ALf"/>
                                             <outlet property="lblText" destination="9yo-PK-BtQ" id="AMO-61-odA"/>
                                             <outlet property="onboardingDotView" destination="d6T-W1-NkZ" id="YGQ-gU-yip"/>
                                             <outlet property="scrollingValueLbl" destination="rfZ-so-9gy" id="SCo-q3-uir"/>
+                                            <outlet property="siriSubLbl" destination="rTz-g4-BqH" id="Go8-4F-tK5"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -272,11 +285,11 @@
                                 <color key="separatorColor" name="black10"/>
                                 <inset key="separatorInset" minX="24" minY="0.0" maxX="24" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="FTScrollingDirectionCell" rowHeight="52" id="cwO-Iu-beU" customClass="FTScrollingDirectionCell" customModule="NS3_Beta" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FTScrollingDirectionCell" rowHeight="52" id="cwO-Iu-beU" customClass="FTScrollingDirectionCell" customModule="NS3_Beta" customModuleProvider="target">
                                         <rect key="frame" x="16" y="55.333332061767578" width="382" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cwO-Iu-beU" id="5q5-9I-Ykg">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="52"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="382" height="52"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Horizontal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xKL-Vq-f32">
@@ -302,12 +315,22 @@
                                                     <rect key="frame" x="16" y="15" width="24" height="24"/>
                                                     <color key="tintColor" name="accent"/>
                                                 </imageView>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="scroll_tickMark" translatesAutoresizingMaskIntoConstraints="NO" id="tXX-ZD-Jeo">
+                                                    <rect key="frame" x="350" y="18" width="16" height="16"/>
+                                                    <color key="tintColor" name="Black&amp;white"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="16" id="TLV-KL-b13"/>
+                                                        <constraint firstAttribute="width" constant="16" id="rK5-M1-nXV"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="xKL-Vq-f32" firstAttribute="leading" secondItem="a4K-qy-36r" secondAttribute="trailing" constant="16" id="1Ul-ZY-ZZR"/>
                                                 <constraint firstItem="a4K-qy-36r" firstAttribute="leading" secondItem="5q5-9I-Ykg" secondAttribute="leading" constant="16" id="Frz-GA-eIM"/>
                                                 <constraint firstItem="h6S-za-UuB" firstAttribute="top" secondItem="xKL-Vq-f32" secondAttribute="bottom" constant="2" id="Jbr-ZF-1zU"/>
+                                                <constraint firstItem="tXX-ZD-Jeo" firstAttribute="centerY" secondItem="xKL-Vq-f32" secondAttribute="centerY" id="RCX-BQ-l0P"/>
+                                                <constraint firstAttribute="trailing" secondItem="tXX-ZD-Jeo" secondAttribute="trailing" constant="16" id="Ysd-95-Dpf"/>
                                                 <constraint firstItem="h6S-za-UuB" firstAttribute="leading" secondItem="xKL-Vq-f32" secondAttribute="leading" constant="8" id="e8b-oL-KEb"/>
                                                 <constraint firstAttribute="bottom" secondItem="OLl-8j-coY" secondAttribute="bottom" id="emM-ey-v4P"/>
                                                 <constraint firstItem="xKL-Vq-f32" firstAttribute="centerY" secondItem="5q5-9I-Ykg" secondAttribute="centerY" id="fhN-kE-kWW"/>
@@ -327,6 +350,7 @@
                                         </constraints>
                                         <connections>
                                             <outlet property="iconImg" destination="a4K-qy-36r" id="5Q3-qG-Px6"/>
+                                            <outlet property="tickImg" destination="tXX-ZD-Jeo" id="I2F-Ow-nWd"/>
                                             <outlet property="titleLBl" destination="xKL-Vq-f32" id="6g0-9C-XEm"/>
                                         </connections>
                                     </tableViewCell>
@@ -544,6 +568,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="insetGrouped" rowHeight="56" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="IvL-It-B7F">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <color key="backgroundColor" name="formSheetBgColor"/>
                                 <color key="separatorColor" name="black10"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FTGestureHelpCell" rowHeight="70" id="Lqa-cX-j2N" userLabel="FTGestureTableViewCell" customClass="FTGestureHelpTableViewCell" customModule="NS3_Beta" customModuleProvider="target">
@@ -928,8 +953,12 @@
     </scenes>
     <resources>
         <image name="arrow.clockwise" catalog="system" width="113" height="128"/>
+        <image name="scroll_tickMark" width="16" height="16"/>
         <image name="tag" catalog="system" width="128" height="118"/>
         <image name="verticalScrollingIcon" width="24" height="24"/>
+        <namedColor name="Black&amp;white">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="accent">
             <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -944,9 +973,6 @@
         </namedColor>
         <namedColor name="black20">
             <color red="0.0" green="0.0" blue="0.0" alpha="0.20000000298023224" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="black30">
-            <color red="0.0" green="0.0" blue="0.0" alpha="0.30000001192092896" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="black50">
             <color red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>

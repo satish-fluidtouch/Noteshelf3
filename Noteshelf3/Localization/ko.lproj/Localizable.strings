@@ -1193,6 +1193,7 @@
 "more.globalsettings.caps" = "전역 설정";
 "more.settings.footer" = "이 설정은 모든 노트북에 전역으로 적용됩니다.";
 "moreInfo" = "더 많은 정보...";
+"more_global" = "전역 설정";
 "move" = "이동";
 "newnotebook" = "새로운 노트북";
 "newnotebook.create" = "만들다";
@@ -1674,4 +1675,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 10 May 2024 at 3:52 PM
+// Last Synced by Sameer Hussain on 17 May 2024 at 4:34 PM

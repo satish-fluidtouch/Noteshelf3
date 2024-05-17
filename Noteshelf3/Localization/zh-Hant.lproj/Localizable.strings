@@ -1193,6 +1193,7 @@
 "more.globalsettings.caps" = "全域設定";
 "more.settings.footer" = "這些設定將全域應用於您的所有筆記本。";
 "moreInfo" = "更多資訊";
+"more_global" = "全域";
 "move" = "移動";
 "newnotebook" = "新筆記本";
 "newnotebook.create" = "創建";
@@ -1674,4 +1675,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 10 May 2024 at 3:52 PM
+// Last Synced by Sameer Hussain on 17 May 2024 at 4:34 PM

@@ -22,7 +22,7 @@ class FTPenShortcutViewModel: ObservableObject {
     @Published var isDragging = false
     @Published var currentDraggedItem: FTPenColorModel?
     @Published var presetColors: [FTPenColorModel] = []
-    @Published var colorEditSegment: FTPenColorSegment = .presets
+    @Published var colorSelectSegment: FTPenColorSegment = .presets
     @Published private(set) var currentSelectedColor: String = blackColorHex
 
     private weak var editDelegate: FTPenColorEditDelegate?

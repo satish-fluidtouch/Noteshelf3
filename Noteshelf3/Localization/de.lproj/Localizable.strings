@@ -1193,6 +1193,7 @@
 "more.globalsettings.caps" = "GLOBALE EINSTELLUNGEN";
 "more.settings.footer" = "Diese Einstellungen werden global auf alle Ihre Notizbücher angewendet.";
 "moreInfo" = "Weitere Informationen...";
+"more_global" = "GLOBALE EINSTELLUNGEN";
 "move" = "Bewegen";
 "newnotebook" = "NEUES NOTIZBUCH";
 "newnotebook.create" = "Erstellen";
@@ -1674,4 +1675,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 10 May 2024 at 3:52 PM
+// Last Synced by Sameer Hussain on 17 May 2024 at 4:34 PM

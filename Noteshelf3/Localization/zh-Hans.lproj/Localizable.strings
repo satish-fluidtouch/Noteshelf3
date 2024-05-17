@@ -1061,7 +1061,7 @@
 "finder.bookmark.description" = "收藏页面并保持对庞大的笔记本和PDF的概览。";
 "finder.bookmarks" = "书签";
 "finder.clear.recents" = "你想要清除最近的内容吗？";
-"finder.documentonly" = "只有笔记本";
+"finder.documentonly" = "";
 "finder.downloadPermissionText" = "选定的笔记本尚未下载。您是否希望下载笔记本并移动页面？";
 "finder.duplicate" = "复制";
 "finder.fullscreen" = "全屏";
@@ -1193,6 +1193,7 @@
 "more.globalsettings.caps" = "全局设置";
 "more.settings.footer" = "这些设置将全局应用于您的所有笔记本。";
 "moreInfo" = "更多信息";
+"more_global" = "全局";
 "move" = "移动";
 "newnotebook" = "新笔记本";
 "newnotebook.create" = "创建";
@@ -1674,4 +1675,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 10 May 2024 at 3:52 PM
+// Last Synced by Sameer Hussain on 17 May 2024 at 4:34 PM

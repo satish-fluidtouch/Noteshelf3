@@ -31,15 +31,16 @@ class FTScrollingDirectionViewController: UIViewController {
 extension FTScrollingDirectionViewController : UITableViewDataSource,UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier:"FTScrollingDirectionCell", for: indexPath) as? FTScrollingDirectionCell else { return UITableViewCell()}
+        cell.selectionStyle = .none
         cell.titleLBl.text = dataModel[indexPath.row].localizedTitle
         let img = UIImage(named:dataModel[indexPath.row].toolIconName)
         cell.iconImg.image = img
         let layout = UserDefaults.standard.pageLayoutType
         if dataModel[indexPath.row] == layout {
-            cell.accessoryType = .checkmark
+            cell.tickImg.isHidden = false
             self.currentIndexPath = indexPath
         } else {
-            cell.accessoryType = .none
+            cell.tickImg.isHidden = true
         }
         return cell
     }
@@ -54,10 +55,10 @@ extension FTScrollingDirectionViewController : UITableViewDataSource,UITableView
             return
         }
         if let curIndexPath = self.currentIndexPath, let cell = tableView.cellForRow(at: curIndexPath) as? FTScrollingDirectionCell {
-            cell.accessoryType = .none
+            cell.tickImg.isHidden = true
         }
         if let cell = tableView.cellForRow(at: indexPath) as? FTScrollingDirectionCell {
-            cell.accessoryType = .checkmark
+            cell.tickImg.isHidden = false
             self.currentIndexPath = indexPath
         }
         let layout = dataModel[indexPath.row]
@@ -68,4 +69,6 @@ extension FTScrollingDirectionViewController : UITableViewDataSource,UITableView
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 44.0
     }
+    
+   
 }

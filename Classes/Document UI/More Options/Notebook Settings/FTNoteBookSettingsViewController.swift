@@ -27,9 +27,9 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        var height: CGFloat = 360
+        var height: CGFloat = 342
 #if targetEnvironment(macCatalyst)
-        height -= 44.0
+        height -= 100.0
 #endif
         self.navigationController?.preferredContentSize = CGSize(width: defaultPopoverWidth, height: height)
     }
@@ -46,7 +46,11 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
         //        }
         //   settings.append(firstSection)
         
-        var thirdSection : [FTNoteBookSettings] = [.gestures,.noteShelfHelp]
+        var thirdSection : [FTNoteBookSettings] = []
+#if !targetEnvironment(macCatalyst)
+        thirdSection.append(.gestures)
+#endif
+        thirdSection.append(.noteShelfHelp)
         
         settings.append(secondSection)
         settings.append(thirdSection)
@@ -60,9 +64,10 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
         //            self?.siriShortcut = shortCut
         //            self?.tableView?.reloadData()
         //        }
+        self.navigationController?.navigationBar.isHidden = false
         self.configureCustomNavigation(title: "notebook.settings.moresettings".localized)
-        
     }
+    
     private func configureFooter() {
         let footer = UILabel(frame: CGRect(origin: CGPoint(x: 32.0, y: 0.0), size: CGSize(width: 280, height: 50.0)))
         footer.text = "more.settings.footer".localized

@@ -47,6 +47,7 @@ extension FTNotebookMoreOptionsViewController: INUIAddVoiceShortcutViewControlle
                 }
             }
         })
+         tblSettings?.reloadData()
 
     }
 
