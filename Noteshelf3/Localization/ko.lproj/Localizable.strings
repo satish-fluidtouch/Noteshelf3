@@ -985,6 +985,7 @@
 "color.resetToDefault" = "기본값으로 재설정";
 "color.restoreAll" = "모두 복원";
 "color.restorePresetColors.message" = "기본 색상으로 모두 복원하시겠습니까?";
+"colors.presets.spectrum" = "스펙트럼";
 "continue" = "계속";
 "convertToText.copiedToClipBoard" = "클립보드에 복사되었습니다.";
 "convertToText.customDictionary" = "사용자 정의 사전";
@@ -1675,4 +1676,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 17 May 2024 at 4:34 PM
+// Last Synced by Narayana on 17 May 2024 at 4:53 PM
