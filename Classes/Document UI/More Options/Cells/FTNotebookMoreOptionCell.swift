@@ -13,11 +13,12 @@ class FTNotebookMoreOptionsCell: UITableViewCell {
     @IBOutlet weak var cellSeperatorView: UIView?
     @IBOutlet fileprivate var lblCenterYConstraint: NSLayoutConstraint?
     @IBOutlet fileprivate var imgViewIcon: UIImageView?
-    @IBOutlet fileprivate var lblText: UILabel?
+    @IBOutlet fileprivate(set) var lblText: UILabel?
     @IBOutlet fileprivate var lblDetails: UILabel?
     @IBOutlet fileprivate var lblSelectedValue: UILabel?
+    @IBOutlet fileprivate(set) var siriLbl: UILabel?
     @IBOutlet fileprivate(set) var scrollingValueLbl: UILabel?
-    @IBOutlet fileprivate(set) var siriSubLbl: UILabel?
+    @IBOutlet fileprivate(set) var scrollLblWidth: NSLayoutConstraint?
 
     @IBOutlet weak var onboardingDotView: UIView?
     var toggleTapped: ((_ currentValue: Bool, _ setting: FTNotebookMoreOption) -> Void)?

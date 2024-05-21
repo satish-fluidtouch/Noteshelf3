@@ -187,17 +187,19 @@ extension FTNotebookMoreOptionsViewController: UITableViewDelegate, UITableViewD
         return settings[section].count
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let setting = settings[indexPath.section][indexPath.row]
-        if setting is FTCustomizeToolbarSetting {
-            return 48
-        } else if setting is FTNotebookAddToSiri {
-            if isSiriTextAdded{
-                return 56
-            }
-        }
-        return 47.0
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        let setting = settings[indexPath.section][indexPath.row]
+//        if setting is FTCustomizeToolbarSetting {
+//            return 48
+//        } else if setting is FTNotebookAddToSiri,isSiriTextAdded {
+//                return 56
+//        }else if setting is FTNotebookEverNoteSetting {
+//            let verticalSpace: CGFloat = 2 * 12.0
+//            let textSize = setting.localizedTitle.sizeWithFont(.systemFont(ofSize: 17), constrainedToSize: CGSize(width: tableView.frame.width - 80.0, height: 32), lineBreakMode: .byTruncatingTail)
+//                return textSize.height + verticalSpace
+//        }
+//        return 47.0
+//    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
@@ -234,25 +236,24 @@ extension FTNotebookMoreOptionsViewController: UITableViewDelegate, UITableViewD
                 cell.accessoryView = toggleSwitch
             case is FTNotebookAddScrollingDirection :
                 settingCell.scrollingValueLbl?.isHidden = false
+                settingCell.scrollLblWidth?.constant = 80
                 settingCell.setValueForScrollDirection()
-            case is FTNotebookStatusBarSetting :
-                settingCell.scrollingValueLbl?.isHidden = true
-            case is FTNotebookOptionGetInfo :
-                settingCell.scrollingValueLbl?.isHidden = true
-            case is FTNotebookOptionSettings:
-                settingCell.scrollingValueLbl?.isHidden = true
             case is FTNotebookAddToSiri:
                 if let siriShortcut = siriShortcut {
                     let phrase = "\(siriShortcut.invocationPhrase)"
-                    settingCell.siriSubLbl?.attributedText = NSAttributedString(string: phrase, attributes: [.font: UIFont.appFont(for: .regular, with: 15), .foregroundColor: UIColor.appColor(.black50)])
-                    settingCell.siriSubLbl?.isHidden = false
+                    //let attributedText = NSMutableAttributedString(string: "\(settingCell.lblText?.text ?? "")\n")
+                    let   attributedText = NSAttributedString(string: phrase, attributes: [.font: UIFont.appFont(for: .regular, with: 15), .foregroundColor: UIColor.appColor(.black50)])
+                    settingCell.siriLbl?.attributedText = attributedText
                     if phrase != "" {
                         self.isSiriTextAdded = true
+                        settingCell.siriLbl?.isHidden = false
+                        settingCell.siriLbl?.layoutIfNeeded()
                     }
                 }
             default:
-                settingCell.siriSubLbl?.isHidden = true
                 settingCell.scrollingValueLbl?.isHidden = true
+                settingCell.scrollLblWidth?.constant = 0
+                settingCell.siriLbl?.isHidden = true
                 break
             }
         }
@@ -315,7 +316,6 @@ extension FTNotebookMoreOptionsViewController: UITableViewDelegate, UITableViewD
         case is FTNotebookPassword :
             self.delegate?.presentPasswordScreen(settingsController: self)
         case is FTNotebookAddToSiri:
-            tblSettings?.reloadData()
             self.handleSiriSetting()
         case is FTNotebookAddToStylus:
             self.navigateToStylus()
