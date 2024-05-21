@@ -2414,6 +2414,7 @@
     FTImportItem *item = [[FTImportItem alloc] initWithItem:url];
     [self insertFileItem:item
                  atIndex:index
+              actionType: FTAudioActionTypeAddToCurrentPage
             onCompletion:^(BOOL success, NSError * _Nullable error)
      {
         [loading hide:nil];

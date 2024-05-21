@@ -32,6 +32,7 @@ let textContainerTag: Int = 9001
                             audio: FTAudioFileToImport,
                             onCompletion : ((Bool,NSError?) -> Void)?);
     func navigateToPage(with pageId: String)
+    func insertFileItemIntoNotebook(item: FTImportItem, onCompletion : @escaping ((Bool,NSError?) -> Void))
 }
 
 protocol FTToolbarElements : NSObjectProtocol {
@@ -397,6 +398,11 @@ extension FTDocumentRenderViewController: FTDocumentViewPresenter {
     
     func insertNewPage(fromItem url:URL, onCompletion:((_ completed:Bool) -> Void)?) {
         documentViewController.insertNewPage(fromItem: url, onCompletion: onCompletion);
+    }
+    
+    func insertFileItemIntoNotebook(item: FTImportItem, onCompletion : @escaping ((Bool,NSError?) -> Void)) {
+        let index = self.documentViewController.firstPageController()?.pdfPage?.pageIndex() ?? 0
+        documentViewController.insertFileItem(item, atIndex: index, actionType: .addToNewPage, onCompletion: onCompletion)
     }
     
     func insertNewPageWith(type: FTPinndedWidgetActionType) {

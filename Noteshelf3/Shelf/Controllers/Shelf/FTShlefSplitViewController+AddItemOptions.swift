@@ -285,7 +285,7 @@ extension FTShelfSplitViewController {
                             imageData = try Data(contentsOf: fileURL)
                         } catch {}
                         if let dataOfImage = imageData, let img = UIImage(data: dataOfImage) {
-                            self.insertImageInDocument(ftDocument: ftDocument, img: img, shouldAddNewPage: shouldAddNewPage)
+                            (ftDocument as? FTNoteshelfDocument)?.insertImageInDocument(img, shouldAddNewPage: shouldAddNewPage, currentPage: ftDocument.pages().last)
                         }
                         FTNoteshelfDocumentManager.shared.saveAndClose(document: ftDocument, token: docToken) { _ in
                             progress.completedUnitCount += 1;
@@ -351,26 +351,6 @@ extension FTShelfSplitViewController {
             }
         }
         return progress;
-    }
-    
-    private func insertImageInDocument(ftDocument: FTDocumentProtocol, img: UIImage, shouldAddNewPage: Bool = false) {
-        if let page = ftDocument.pages().last as? FTNoteshelfPage {
-            var pageToInsert = page
-            if shouldAddNewPage, let newPage = ftDocument.insertPageBelow(page: page) as? FTNoteshelfPage {
-                pageToInsert = newPage
-            }
-            if let image = img.scaleAndRotateImageFor1x() {
-                let pageRect = pageToInsert.pdfPageRect
-                let startingFrame = image.aspectFrame(withinScreenArea: pageRect, zoomScale: 1)
-                let imageInfo = FTImageAnnotationInfo(image: image)
-                imageInfo.boundingRect = startingFrame
-                imageInfo.scale = 1
-                if let imageAnn = imageInfo.annotation() {
-                    imageAnn.associatedPage = pageToInsert
-                    pageToInsert.addAnnotations([imageAnn], indices: nil)
-                }
-            }
-        }
     }
     
     private func insertAudioInDocument(ftDocument: FTDocumentProtocol, audioUrl: FTAudioFileToImport, shouldAddNewPage: Bool = false, onCompletion : @escaping ((Bool,NSError?) -> Void)) {
@@ -558,7 +538,7 @@ extension FTShelfSplitViewController {
                     imageData = try Data(contentsOf: imageUrl)
                 } catch {}
                 if let dataOfImage = imageData, let img = UIImage(data: dataOfImage) {
-                    self.insertImageInDocument(ftDocument: ftdocument, img: img)
+                    (ftdocument as? FTNoteshelfDocument)?.insertImageInDocument(img, currentPage: ftdocument.pages().last)
                 }
                 if let nsDoc = ftdocument as? FTNoteshelfDocument {
                     nsDoc.shelfImage = nsDoc.transparentThumbnail(isEncrypted: nsDoc.isPinEnabled())

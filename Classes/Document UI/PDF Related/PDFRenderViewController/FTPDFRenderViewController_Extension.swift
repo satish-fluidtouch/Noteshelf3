@@ -61,6 +61,7 @@ extension FTPDFRenderViewController {
     //MARK:- Custom
     @objc @discardableResult func insertFileItem(_ item : FTImportItem,
                                                  atIndex : Int,
+                                                 actionType: FTAudioActionType = .addToCurrentPage,
                                                  onCompletion : @escaping ((Bool,NSError?) -> Void)) -> Progress
     {
         let importer = FTFileImporter();
@@ -75,7 +76,15 @@ extension FTPDFRenderViewController {
                 print(error.localizedDescription)
             }
             if let dataOfImage = imageData, let image = UIImage(data: dataOfImage) {
-                self.insert([image], center: CGPoint.zero, droppedPoint: .zero, source: FTInsertImageSourceInsertFrom)
+                if actionType == .addToNewPage {
+                    let pageIndex = self.currentlyVisiblePage()?.pageIndex() ?? 0;
+                    self.insertImageIntoNewPage(img: image)
+                    let newPageCount = self.pdfDocument.pages().count;
+                    let pagesAdded = newPageCount - self.numberOfPages();
+                    self.refreshUIforInsertedPages(at: UInt(pageIndex + 1), count: UInt(pagesAdded), forceReLayout: true)
+                } else {
+                    self.insert([image], center: CGPoint.zero, droppedPoint: .zero, source: FTInsertImageSourceInsertFrom)
+                }
             }
             self.pdfDocument.isDirty = true
             progress.completedUnitCount += 1;
@@ -84,7 +93,7 @@ extension FTPDFRenderViewController {
                 if isSupportedAudioFile(fileURL.path) {
                     let item = FTAudioFileToImport.init(withURL: fileURL)
                     item.fileName = fileURL.deletingPathExtension().lastPathComponent
-                    if let subProgress = self.addRecordingToPage(actionType: .addToCurrentPage,
+                    if let subProgress = self.addRecordingToPage(actionType: actionType,
                                                                  audio: item,
                                                                  onCompletion: onCompletion) {
                         progress.addChild(subProgress, withPendingUnitCount: 1);
@@ -138,6 +147,13 @@ extension FTPDFRenderViewController {
             progress.addChild(subProgress, withPendingUnitCount: 1);
         }
         return progress;
+    }
+    
+    func insertImageIntoNewPage(img: UIImage) {
+        if let document = self.pdfDocument as? FTNoteshelfDocument ,
+            let currentPage = self.firstPageController()?.pdfPage {
+            document.insertImageInDocument(img,shouldAddNewPage: true, currentPage: currentPage)
+        }
     }
 
     @objc func openSettingsPage()

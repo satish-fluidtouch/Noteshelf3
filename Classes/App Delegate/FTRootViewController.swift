@@ -1032,9 +1032,9 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         if isAudioFile(url.path) {
             if isSupportedAudioFile(url.path) {
                 track("import_document", params: ["type" : url.lastPathComponent])
-                importAudioFile(fromURL: url) { (compltd) in
-                    completion?(nil,compltd)
-                }
+                docController?.insertFileItemIntoNotebook(item: item, onCompletion: { sucess, error in
+                    completion?(nil,false)
+                })
             } else {
                 let alertController = UIAlertController(title: "",
                                                         message: NSLocalizedString("NotSupportedFormat", comment: "Note supported format"),
@@ -1045,6 +1045,10 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                 alertController.addAction(cancelAction);
                 self.present(alertController, animated: true, completion: nil);
             }
+        } else if isImageFile(url.path) {
+            docController?.insertFileItemIntoNotebook(item: item, onCompletion: { sucess, error in
+                completion?(nil,false)
+            })
         }
         else {
             let message = url.lastPathComponent + "\n" + NSLocalizedString("InsertDocumentCurrentOrNew", comment: "Insert into...")
@@ -1386,7 +1390,7 @@ extension FTRootViewController {
                 return;
             }
             let importItem = self.importItemsQueue.removeFirst()
-            if let docController = self.docuemntViewController {
+            if let docController = self.docuemntViewController, let notebookUrl = self.docuemntViewController?.documentItemObject.URL.relativePathWRTCollection(), notebookUrl == importItem.imporItemInfo?.notebook  {
                 if !docController.canContinueToImportFiles() {
                     docController.showAlertAskingToEnterPwdToContinueOperation();
                     blockToComplete(nil)

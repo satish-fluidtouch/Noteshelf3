@@ -57,17 +57,10 @@ extension FTRootViewController {
     }
     @objc
     private func handleImportedDocumentsIfExist(_ notification : Notification) {
-        guard let importAction = notification.object as? FTSharedAction else {
+        guard let importAction = notification.object as? FTSharedAction, importScreenViewController == nil else {
+            dismissProgressView()
             return
         }
-        
-        if(
-            (nil != importScreenViewController)
-            || (nil != self.docuemntViewController)
-            ) {
-            return;
-        }
-
         if (importAction.importStatus == .downloadFailed)
             || (importAction.importStatus == .importSuccess)
             || (importAction.importStatus == .importFailed) {
@@ -81,15 +74,19 @@ extension FTRootViewController {
                 updateProgress()
                 importProgress?.completedUnitCount += 1
             } else {
-                importSmartProgressView?.hideProgressIndicator()
-                importSmartProgressView = nil
-                importProgress = nil
+                dismissProgressView()
                 _presentImportsControllerifNeeded()
             }
         } else {
-            importSmartProgressView?.hideProgressIndicator()
+            dismissProgressView()           
             _presentImportsControllerifNeeded()
         }
+    }
+    
+    private func dismissProgressView() {
+        importSmartProgressView?.hideProgressIndicator()
+        importSmartProgressView = nil
+        importProgress = nil
     }
     
     @objc private func _presentImportsControllerifNeeded() {
