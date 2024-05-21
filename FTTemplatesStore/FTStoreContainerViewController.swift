@@ -95,7 +95,8 @@ private extension FTStoreContainerViewController {
      func updateView() {
          removeChilderns()
         if segmentControl.selectedIndex == 0 {
-            let viewController = FTStoreViewController.controller(with: actionManager)
+//            let viewController = FTStoreViewController.controller(with: actionManager)
+            let viewController = FTTemplateStoriesViewController.storiesController()
             self.add(viewController)
             viewController.view.frame = view.bounds
          } else if segmentControl.selectedIndex == 1 {

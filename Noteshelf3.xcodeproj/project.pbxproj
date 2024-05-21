@@ -2065,6 +2065,11 @@
 		E772BBB12BE4CDF9007D787A /* ReplaceMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E772BBA72BE4CDF9007D787A /* ReplaceMe.swift */; };
 		E772BBB22BE4CDF9007D787A /* CGContextExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E772BBA82BE4CDF9007D787A /* CGContextExtension.swift */; };
 		E772BBB32BE4CDF9007D787A /* AlphaPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E772BBA92BE4CDF9007D787A /* AlphaPickerView.swift */; };
+		E77458932BFC756D00B94BE2 /* FTTemplateWebViewScollController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77458922BFC756D00B94BE2 /* FTTemplateWebViewScollController.swift */; };
+		E77458952BFC75E900B94BE2 /* FTCustomFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77458942BFC75E900B94BE2 /* FTCustomFlowLayout.swift */; };
+		E77458972BFC764D00B94BE2 /* FTTemplateStoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77458962BFC764D00B94BE2 /* FTTemplateStoriesViewController.swift */; };
+		E77458992BFC7BE900B94BE2 /* NSLayoutConstraint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77458982BFC7BE900B94BE2 /* NSLayoutConstraint+Extension.swift */; };
+		E774589B2BFCC7AC00B94BE2 /* FTTemplateStoryDisplayType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E774589A2BFCC7AC00B94BE2 /* FTTemplateStoryDisplayType.swift */; };
 		E776FB582A54531D00AFA38E /* FTGlobalSearchController_MacExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E776FB572A54531D00AFA38E /* FTGlobalSearchController_MacExtension.swift */; };
 		E7780F212B96F38100DD134D /* FTFileItemPDFTemp.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E41AB21F9712CB00A591F1 /* FTFileItemPDFTemp.m */; };
 		E779DE3B2B5143B1007FBFE1 /* FTLinkPageThumbnailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E779DE3A2B5143B1007FBFE1 /* FTLinkPageThumbnailCell.swift */; };
@@ -4508,6 +4513,11 @@
 		E772BBA82BE4CDF9007D787A /* CGContextExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGContextExtension.swift; sourceTree = "<group>"; };
 		E772BBA92BE4CDF9007D787A /* AlphaPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlphaPickerView.swift; sourceTree = "<group>"; };
 		E7733993251A11A200940601 /* FTShapeDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShapeDetector.swift; sourceTree = "<group>"; };
+		E77458922BFC756D00B94BE2 /* FTTemplateWebViewScollController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTTemplateWebViewScollController.swift; sourceTree = "<group>"; };
+		E77458942BFC75E900B94BE2 /* FTCustomFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCustomFlowLayout.swift; sourceTree = "<group>"; };
+		E77458962BFC764D00B94BE2 /* FTTemplateStoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTemplateStoriesViewController.swift; sourceTree = "<group>"; };
+		E77458982BFC7BE900B94BE2 /* NSLayoutConstraint+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extension.swift"; sourceTree = "<group>"; };
+		E774589A2BFCC7AC00B94BE2 /* FTTemplateStoryDisplayType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTemplateStoryDisplayType.swift; sourceTree = "<group>"; };
 		E774D2CF2705848B00008B07 /* FTModernDiaryMonthTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTModernDiaryMonthTemplate.swift; sourceTree = "<group>"; };
 		E7752E6A270B005E00BD95A9 /* FTModernDiaryDayTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTModernDiaryDayTemplate.swift; sourceTree = "<group>"; };
 		E77651C8274E041900B29C4D /* FTPasswordPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPasswordPolicy.swift; sourceTree = "<group>"; };
@@ -8498,6 +8508,9 @@
 				52550EF02A70FCC000E7A1E7 /* FTStoreContainerViewController.swift */,
 				52550EF12A70FCC000E7A1E7 /* FTStoreloadingIndicatorView.swift */,
 				52550F0D2A70FCC100E7A1E7 /* FTStoreTemplateContextPreview.swift */,
+				E77458962BFC764D00B94BE2 /* FTTemplateStoriesViewController.swift */,
+				E77458922BFC756D00B94BE2 /* FTTemplateWebViewScollController.swift */,
+				E77458942BFC75E900B94BE2 /* FTCustomFlowLayout.swift */,
 				4766F6A92A8DFB6E00F8FA27 /* FTNetwork.swift */,
 				52550ECA2A70FCC000E7A1E7 /* FTTemplatesStore.storyboard */,
 				473DB6142AA1F025006DBBA6 /* FTTemplatesAnalytics.swift */,
@@ -8518,6 +8531,7 @@
 				478142B32A85F33A0029378B /* Templates_Localization */,
 				52550EE32A70FCC000E7A1E7 /* Main.storyboard */,
 				52550F122A70FCC100E7A1E7 /* FTTemplatesStore.h */,
+				E774589A2BFCC7AC00B94BE2 /* FTTemplateStoryDisplayType.swift */,
 			);
 			path = FTTemplatesStore;
 			sourceTree = SOURCE_ROOT;
@@ -11421,6 +11435,7 @@
 				E760233A2A4EFBA100B16084 /* UIApplication+Extension.swift */,
 				E7B77CEE29B06A960013E794 /* UIAlertController+Extension.swift */,
 				E7C2490D29B71750007A54E2 /* UIViewController+Extension.swift */,
+				E77458982BFC7BE900B94BE2 /* NSLayoutConstraint+Extension.swift */,
 				BAA84E5E2873108700DE801B /* UIColor+Extension.swift */,
 				E7B77CF029B06C1A0013E794 /* UIWindow+Extension.swift */,
 				BAA84E5B2873108600DE801B /* UIDevice+Extension.swift */,
@@ -13199,6 +13214,7 @@
 				47CE07992A0A248D00E15028 /* FTPrintPageRenderer.swift in Sources */,
 				BAA84E662873108800DE801B /* FTCommonUtils.swift in Sources */,
 				47CE07982A0A244B00E15028 /* FTPDFConverter.swift in Sources */,
+				E77458992BFC7BE900B94BE2 /* NSLayoutConstraint+Extension.swift in Sources */,
 				BAA84E6E2873108800DE801B /* NSCalendar+Extension.swift in Sources */,
 				BAA84E622873108800DE801B /* Color+Extensions.swift in Sources */,
 			);
@@ -13294,6 +13310,7 @@
 				52550F3B2A70FCC100E7A1E7 /* FTStoreJournalsCollectionCell.swift in Sources */,
 				52550F1B2A70FCC100E7A1E7 /* FTStoreCustomTemplatesModel.swift in Sources */,
 				52550F552A70FCC100E7A1E7 /* FTStoreTemplateContextPreview.swift in Sources */,
+				E77458972BFC764D00B94BE2 /* FTTemplateStoriesViewController.swift in Sources */,
 				52550F452A70FCC100E7A1E7 /* FTStoreConstants.swift in Sources */,
 				52550F522A70FCC100E7A1E7 /* URL+Addition.swift in Sources */,
 				52550F4C2A70FCC100E7A1E7 /* FTStoreCategoryTableCell.swift in Sources */,
@@ -13302,6 +13319,7 @@
 				52550F4F2A70FCC100E7A1E7 /* UIViewController+Additions.swift in Sources */,
 				52550F492A70FCC100E7A1E7 /* FTStorePlannerTableCell.swift in Sources */,
 				52550F152A70FCC100E7A1E7 /* FTCustomTemplateImportActions.swift in Sources */,
+				E774589B2BFCC7AC00B94BE2 /* FTTemplateStoryDisplayType.swift in Sources */,
 				52550F542A70FCC100E7A1E7 /* FTStoreTemplatesViewController.swift in Sources */,
 				52550F132A70FCC100E7A1E7 /* FTStoreCustomPreviewViewController.swift in Sources */,
 				52550F322A70FCC100E7A1E7 /* FTStoreViewModel.swift in Sources */,
@@ -13315,7 +13333,9 @@
 				52550F502A70FCC100E7A1E7 /* Filemanager+Addition.swift in Sources */,
 				52550F4D2A70FCC100E7A1E7 /* Date+Addition.swift in Sources */,
 				52550F572A70FCC100E7A1E7 /* FTCategoryTempaltesViewController.swift in Sources */,
+				E77458932BFC756D00B94BE2 /* FTTemplateWebViewScollController.swift in Sources */,
 				52550F2A2A70FCC100E7A1E7 /* FTStoreLibraryViewController.swift in Sources */,
+				E77458952BFC75E900B94BE2 /* FTCustomFlowLayout.swift in Sources */,
 				52550F442A70FCC100E7A1E7 /* FTTemplatesPageViewController.swift in Sources */,
 				52550F262A70FCC100E7A1E7 /* FTLibraryHeaderView.swift in Sources */,
 				52550F2B2A70FCC100E7A1E7 /* FTStoreLibraryCollectionCell.swift in Sources */,
