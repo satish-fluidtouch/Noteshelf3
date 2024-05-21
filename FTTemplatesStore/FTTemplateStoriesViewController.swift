@@ -60,8 +60,10 @@ extension FTTemplateStoriesViewController: UICollectionViewDataSource, UICollect
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? FTTemplateCollectionViewCell, let img = UIImage(named: imgNames[indexPath.row], in: storeBundle, with: nil) {
-            let cellFrameInSuperview = cell.convert(cell.imageView.frame, to: self.view)
-            FTTemplateWebViewScollController.showFromViewController(self, with: img, initialFrame: cellFrameInSuperview)
+            if let splitVc = self.splitViewController {
+                let cellFrameInSuperview = cell.convert(cell.imageView.frame, to: splitVc.view)
+                FTTemplateWebViewScollController.showFromViewController(splitVc, with: img, initialFrame: cellFrameInSuperview)
+            }
         }
     }
 }

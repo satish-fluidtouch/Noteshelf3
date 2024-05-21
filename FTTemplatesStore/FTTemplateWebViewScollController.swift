@@ -24,8 +24,8 @@ class FTTemplateWebViewScollController: UIViewController {
     var headerImage: UIImage = UIImage(named: "story1_big", in: storeBundle, compatibleWith: nil)!
     var initialFrame: CGRect!
    
-    private let animDuration: CGFloat = 5
-    
+    private let animDuration: CGFloat = 0.4
+
     // constarints
     @IBOutlet private weak var contentTopConstraint: NSLayoutConstraint!
     @IBOutlet private weak var imgViewHeightConstraint: NSLayoutConstraint!
@@ -105,7 +105,11 @@ private extension FTTemplateWebViewScollController {
             self.visualEffectView?.alpha = 1.0
             self.contentCenterXConstraint.constant = 0
             self.contentTopConstraint.constant = 100
-            self.contentEqualWidthConstraint = self.contentEqualWidthConstraint.getUpdatedConstraint(byApplying: 0.6)
+            var multiplier: CGFloat = 0.7
+            if !(self.parent?.isRegularClass() ?? true) {
+                multiplier = 1.0
+            }
+            self.contentEqualWidthConstraint = self.contentEqualWidthConstraint.getUpdatedConstraint(byApplying: multiplier)
             self.imgView?.layer.contentsRect = CGRect(x: 0, y: 0, width: 1, height: 1)
             self.imgViewHeightConstraint?.constant = 300.0
             self.webViewHeightConstraint?.constant = self.view.frame.height - 100
