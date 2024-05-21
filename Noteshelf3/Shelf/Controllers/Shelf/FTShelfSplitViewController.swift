@@ -325,7 +325,8 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
 
     func importItemAndAutoScroll(_ item: FTImportItem, shouldOpen: Bool, completionHandler: ((FTShelfItemProtocol?, Bool) -> Void)?) {
         self.currentShelfViewModel?.removeObserversForShelfItems()
-        self.beginImporting(items: [item]) { [weak self] status, shelfItemsList in
+        (self.parent as? FTRootViewController)?.showImportProgressIfNeeded()
+        self.beginImporting(items: [item], showProgress: false) { [weak self] status, shelfItemsList in
             if let item = shelfItemsList.first {
                 if status && shouldOpen {
                     if let shelfItemProtocol = shelfItemsList.first {

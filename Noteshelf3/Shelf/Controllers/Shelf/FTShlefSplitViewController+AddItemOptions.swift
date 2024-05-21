@@ -26,7 +26,7 @@ extension FTShelfSplitViewController {
         self.beginImporting(items: items,
                             completionHandler: nil);
     }
-    func beginImporting(items : [FTImportItem],
+    func beginImporting(items : [FTImportItem], showProgress: Bool = true,
                                 completionHandler: ((Bool,[FTShelfItemProtocol]) -> Void)?)
     {
         guard FTIAPManager.shared.premiumUser.canAddFewMoreBooks(count: items.count) else {
@@ -34,16 +34,17 @@ extension FTShelfSplitViewController {
             completionHandler?(false, [])
             return
         }
+        var ftsmartMessage : FTSmartProgressView?
         let progress = Progress();
-        progress.totalUnitCount = Int64(items.count);
-        progress.localizedDescription = NSLocalizedString("Importing", comment: "Importing...");
-
-        let ftsmartMessage = FTSmartProgressView.init(progress: progress);
-        ftsmartMessage.showProgressIndicator(NSLocalizedString("Importing", comment: "Importing..."),
-                                             onViewController: self);
-
+        if showProgress {
+            progress.totalUnitCount = Int64(items.count);
+            progress.localizedDescription = NSLocalizedString("Importing", comment: "Importing...");
+            ftsmartMessage = FTSmartProgressView.init(progress: progress);
+            ftsmartMessage?.showProgressIndicator(NSLocalizedString("Importing", comment: "Importing..."),
+                                                 onViewController: self);
+        }
         self.importItems(items,progress: progress) {[weak self] (error, shelfItemsList) in
-            ftsmartMessage.hideProgressIndicator();
+            ftsmartMessage?.hideProgressIndicator();
             if let error, error is FTPremiumUserError {
                 guard let self = self else { return }
                 FTIAPurchaseHelper.shared.showIAPAlert(on: self);
@@ -187,16 +188,16 @@ extension FTShelfSplitViewController {
             }
         } else if let importItem = item.importItem as? URL, isImageFile(importItem.path(percentEncoded: false)), let importInfo = item.imporItemInfo {
             if !importInfo.notebook.isEmpty {
-                var subProgress1 = Progress()
                 // Fetch the document and open and insert image as annotation
-                subProgress1 = self.insertFileInsideNotebook(item, shouldAddNewPage: true, onCompletion: onCompletion)
-                progress.addChild(subProgress1, withPendingUnitCount: 1);
+                let subProgress = self.insertFileInsideNotebook(item, shouldAddNewPage: true, onCompletion: onCompletion)
+                progress.addChild(subProgress, withPendingUnitCount: 1);
             } else {
                 //Create new document and insert image as annotation
                 let filePath = FTPDFFileGenerator().generateBlankPDFFile(UIDevice.isLandscapeOrientation)
                 if !filePath.isEmpty {
                     self.fetchCollectionDetails(with: importInfo) { _shelfItemColleciton, _groupItem, _shelfItem in
-                        _ = self.createDocumentAndInsertImage(filePath,imageUrl: importItem, title: filePath.lastPathComponent.deletingPathExtension, collection: _shelfItemColleciton, groupItem: _groupItem, onCompletion: onCompletion)
+                        let subProgress = self.createDocumentAndInsertImage(filePath,imageUrl: importItem, title: filePath.lastPathComponent.deletingPathExtension, collection: _shelfItemColleciton, groupItem: _groupItem, onCompletion: onCompletion)
+                        progress.addChild(subProgress, withPendingUnitCount: 1);
                     }
                 } else {
                     progress.completedUnitCount += 1;
@@ -551,7 +552,6 @@ extension FTShelfSplitViewController {
         info.coverTemplateImage = defaultCover.themeThumbnail()
         info.isNewBook = true;
         ftdocument.createDocument(info) { (error, _) in
-            progress.completedUnitCount += 1;
             (ftdocument as? FTNoteshelfDocument)?.openDocument(purpose: .write) { success, error in
                 var imageData : Data?
                 do {
@@ -564,17 +564,14 @@ extension FTShelfSplitViewController {
                     nsDoc.shelfImage = nsDoc.transparentThumbnail(isEncrypted: nsDoc.isPinEnabled())
                 }
                 (ftdocument as? FTNoteshelfDocument)?.saveAndCloseWithCompletionHandler({ sucess in
+                    progress.completedUnitCount += 1;
                     if(error == nil) {
                         collection!.addShelfItemForDocument(ftdocument.URL, toTitle: title, toGroup: groupItem, onCompletion: { (inerror, item) in
-                            if(onCompletion != nil) {
-                                onCompletion!(item,inerror);
-                            }
+                            onCompletion?(item,inerror);
                         });
                     }
                     else {
-                        if(onCompletion != nil) {
-                            onCompletion!(nil,error);
-                        }
+                        onCompletion?(nil,error);
                     }
                 })
             }

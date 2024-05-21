@@ -21,10 +21,39 @@ extension FTRootViewController {
         FTImportActionManager.sharedInstance.startProcessingAllActions()
     }
     
+    func showImportProgressIfNeeded() {
+        if importSmartProgressView == nil {
+            let count = FTImportStorageManager.getReadyToImportActions().count
+            importProgress = Progress();
+            importProgress?.totalUnitCount = Int64(count);
+            importProgress?.localizedDescription = NSLocalizedString("Importing", comment: "Importing...");
+
+            importSmartProgressView = FTSmartProgressView.init(progress: importProgress!);
+            importSmartProgressView?.showProgressIndicator(NSLocalizedString("Importing", comment: "Importing..."),
+                                                 onViewController: self);
+        }
+    }
+    
+    fileprivate func updateProgress()
+    {
+        if let importProgress {
+            let totalCount = importProgress.totalUnitCount;
+            let completedCount = importProgress.completedUnitCount + 1;
+
+            var progressInfo = NSLocalizedString("Importing", comment: "Importing...");
+            if(totalCount > 1) {
+                let str = String.init(format: NSLocalizedString("NofNAlt", comment: "%d of %d"), completedCount,totalCount);
+
+                progressInfo = progressInfo.appending("\n").appending(str);
+            }
+            importProgress.localizedDescription = progressInfo;
+        }
+      
+    }
+    
     func presentImportsControllerifNeeded()
     {
         FTImportActionManager.sharedInstance.startProcessingAllActions()
-        self.perform(#selector(_presentImportsControllerifNeeded), with: nil, afterDelay: 0.5)
     }
     @objc
     private func handleImportedDocumentsIfExist(_ notification : Notification) {
@@ -47,6 +76,18 @@ extension FTRootViewController {
             // 5- ImportStatus.ImportFailed
             shouldDisplayImportScreen = true;
             FTImportActionManager.sharedInstance.startProcessingAllActions()
+            let count = FTImportStorageManager.getReadyToImportActions().count
+            if count != 0 {
+                updateProgress()
+                importProgress?.completedUnitCount += 1
+            } else {
+                importSmartProgressView?.hideProgressIndicator()
+                importSmartProgressView = nil
+                importProgress = nil
+                _presentImportsControllerifNeeded()
+            }
+        } else {
+            importSmartProgressView?.hideProgressIndicator()
             _presentImportsControllerifNeeded()
         }
     }

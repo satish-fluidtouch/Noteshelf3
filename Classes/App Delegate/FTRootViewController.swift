@@ -31,6 +31,8 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     internal var rootContentViewController: FTShelfPresentable?;
     fileprivate var isFirstTime = true;
     fileprivate var isOpeningDocument = false;
+    internal var importSmartProgressView: FTSmartProgressView?
+    internal var importProgress: Progress?
 
     fileprivate var isImportInProgress = false
     fileprivate lazy var importItemsQueue = [FTImportItem]()
