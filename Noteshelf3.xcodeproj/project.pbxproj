@@ -2014,6 +2014,8 @@
 		E75062882BEA11E800D0A8E4 /* FTPresetEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75062872BEA11E800D0A8E4 /* FTPresetEditView.swift */; };
 		E75329C72B99968D00C22267 /* FTWatchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75329C62B99968D00C22267 /* FTWatchUtils.swift */; };
 		E75329C92B999E8F00C22267 /* FTWatchLandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75329C82B999E8F00C22267 /* FTWatchLandView.swift */; };
+		E753BFD72BFE07E400082090 /* templateStories_en.plist in Resources */ = {isa = PBXBuildFile; fileRef = E753BFD62BFE07E400082090 /* templateStories_en.plist */; };
+		E753BFD92BFE116300082090 /* FTTemplateStoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E753BFD82BFE116300082090 /* FTTemplateStoryManager.swift */; };
 		E755B7592B7B7D15007DDC30 /* FTTextView_MenuHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E755B7582B7B7D15007DDC30 /* FTTextView_MenuHandler.swift */; };
 		E75705D92AF5104900699764 /* FTFavoriteShortcutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75705D82AF5104900699764 /* FTFavoriteShortcutController.swift */; };
 		E75705DB2AF51E8F00699764 /* FTFavoriteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75705DA2AF51E8F00699764 /* FTFavoriteEditViewController.swift */; };
@@ -4449,6 +4451,8 @@
 		E75062872BEA11E800D0A8E4 /* FTPresetEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPresetEditView.swift; sourceTree = "<group>"; };
 		E75329C62B99968D00C22267 /* FTWatchUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWatchUtils.swift; sourceTree = "<group>"; };
 		E75329C82B999E8F00C22267 /* FTWatchLandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWatchLandView.swift; sourceTree = "<group>"; };
+		E753BFD62BFE07E400082090 /* templateStories_en.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = templateStories_en.plist; sourceTree = "<group>"; };
+		E753BFD82BFE116300082090 /* FTTemplateStoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTemplateStoryManager.swift; sourceTree = "<group>"; };
 		E75516D9274F8F9800401F45 /* FTExportDataInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTExportDataInfoCell.swift; sourceTree = "<group>"; };
 		E75516DA274F8F9800401F45 /* FTExportDataInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTExportDataInfoCell.xib; sourceTree = "<group>"; };
 		E75516E1274F90B600401F45 /* FTExportDataFailedItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTExportDataFailedItemCell.swift; sourceTree = "<group>"; };
@@ -8510,6 +8514,8 @@
 				52550F0D2A70FCC100E7A1E7 /* FTStoreTemplateContextPreview.swift */,
 				E77458962BFC764D00B94BE2 /* FTTemplateStoriesViewController.swift */,
 				E77458922BFC756D00B94BE2 /* FTTemplateWebViewScollController.swift */,
+				E753BFD82BFE116300082090 /* FTTemplateStoryManager.swift */,
+				E774589A2BFCC7AC00B94BE2 /* FTTemplateStoryDisplayType.swift */,
 				E77458942BFC75E900B94BE2 /* FTCustomFlowLayout.swift */,
 				4766F6A92A8DFB6E00F8FA27 /* FTNetwork.swift */,
 				52550ECA2A70FCC000E7A1E7 /* FTTemplatesStore.storyboard */,
@@ -8528,10 +8534,10 @@
 				52550ECC2A70FCC000E7A1E7 /* StickersViews */,
 				52550F032A70FCC100E7A1E7 /* Extentions */,
 				52550F112A70FCC100E7A1E7 /* templates.plist */,
+				E753BFD62BFE07E400082090 /* templateStories_en.plist */,
 				478142B32A85F33A0029378B /* Templates_Localization */,
 				52550EE32A70FCC000E7A1E7 /* Main.storyboard */,
 				52550F122A70FCC100E7A1E7 /* FTTemplatesStore.h */,
-				E774589A2BFCC7AC00B94BE2 /* FTTemplateStoryDisplayType.swift */,
 			);
 			path = FTTemplatesStore;
 			sourceTree = SOURCE_ROOT;
@@ -12612,6 +12618,7 @@
 				52550F232A70FCC100E7A1E7 /* Assets.xcassets in Resources */,
 				52550F382A70FCC100E7A1E7 /* FTStoreJournalsCollectionCell.xib in Resources */,
 				52550F472A70FCC100E7A1E7 /* FTStorePlannerTableCell.xib in Resources */,
+				E753BFD72BFE07E400082090 /* templateStories_en.plist in Resources */,
 				478142C22A85F33A0029378B /* templates_de.plist in Resources */,
 				52550F462A70FCC100E7A1E7 /* FTStorePlannerCollectionCell.xib in Resources */,
 				52550F212A70FCC100E7A1E7 /* FTStoreStickersTableCell.xib in Resources */,
@@ -13299,6 +13306,7 @@
 				52550F3E2A70FCC100E7A1E7 /* FTStoreloadingIndicatorView.swift in Sources */,
 				52550F432A70FCC100E7A1E7 /* FTTemplateStyleCell.swift in Sources */,
 				52550F2F2A70FCC100E7A1E7 /* FTStoreActionManager.swift in Sources */,
+				E753BFD92BFE116300082090 /* FTTemplateStoryManager.swift in Sources */,
 				099C91F62A8A1B3900C1FD07 /* FTdairyDatePickerViewController_Mac.swift in Sources */,
 				52550F4B2A70FCC100E7A1E7 /* FTStoreCategoryView.swift in Sources */,
 				52550F2D2A70FCC100E7A1E7 /* FTStoreViewController.swift in Sources */,

@@ -11,10 +11,9 @@ import UIKit
 class FTTemplateStoriesViewController: UIViewController {
     @IBOutlet private weak var collectionView: UICollectionView!
 
-    private var imgNames: [String] = ["story1_big", "Image1", "Image2", "Image3", "Image4", "Image5", "Image6", "story1_big", "Image2", "Image3", "Image4", "Image5", "Image6", "story1_big", "Image2", "Image3"]
-
-    private var layout = FTCustomFlowLayout()
     private var size: CGSize = .zero
+    private var stories: [FTTemplateStory] = []
+    private var layout = FTCustomFlowLayout()
 
     class func storiesController() -> FTTemplateStoriesViewController {
         let storyboard = UIStoryboard(name: "FTTemplatesStore", bundle: storeBundle)
@@ -26,6 +25,7 @@ class FTTemplateStoriesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.stories = FTTemplateStoryManager.loadStories()
         self.configureCollectionView()
     }
 
@@ -47,31 +47,42 @@ class FTTemplateStoriesViewController: UIViewController {
 
 extension FTTemplateStoriesViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imgNames.count
+        return self.stories.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FTTemplateCollectionViewCell", for: indexPath) as? FTTemplateCollectionViewCell else {
             fatalError("No such cell")
         }
-        cell.configCell(with: imgNames[indexPath.row])
+        cell.configCell(with: self.stories[indexPath.row])
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let cell = collectionView.cellForItem(at: indexPath) as? FTTemplateCollectionViewCell, let img = UIImage(named: imgNames[indexPath.row], in: storeBundle, with: nil) {
-            if let splitVc = self.splitViewController {
-                let cellFrameInSuperview = cell.convert(cell.imageView.frame, to: splitVc.view)
-                FTTemplateWebViewScollController.showFromViewController(splitVc, with: img, initialFrame: cellFrameInSuperview)
-            }
+        if let splitVc = self.splitViewController {
+            let story = self.stories[indexPath.row]
+            FTTemplateWebViewScollController.showFromViewController(splitVc, with: story, delegate: self)
         }
+    }
+}
+
+extension FTTemplateStoriesViewController: FTTemplateStoryDelegate {
+    func getStoryFrameWrtoSplitController(_ story: FTTemplateStory) -> CGRect? {
+        var rect: CGRect?
+        if let splitVc = self.splitViewController,
+            let index = self.stories.firstIndex(where: { $0.title == story.title }),
+           let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? FTTemplateCollectionViewCell {
+            rect = cell.convert(cell.imageView.frame, to: splitVc.view)
+        }
+        return rect
     }
 }
 
 extension FTTemplateStoriesViewController: FTTemplateLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForImageAtIndexPath indexPath: IndexPath, cellWidth: CGFloat) -> CGFloat {
         var imgHeight: CGFloat = 100
-        if let img = UIImage(named: imgNames[indexPath.row], in: storeBundle, compatibleWith: nil) {
+        let story = self.stories[indexPath.row]
+        if let img = UIImage(named: story.largeImageName, in: storeBundle, compatibleWith: nil) {
             imgHeight = calculateImageHeight(sourceImage: img, scaledToWidth: cellWidth)
         }
         return imgHeight
@@ -89,7 +100,7 @@ private extension FTTemplateStoriesViewController {
     func configureCollectionView() {
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
-        layout.delegate = self
-        self.collectionView.collectionViewLayout = layout
+        self.layout.delegate = self
+        self.collectionView.collectionViewLayout = self.layout
     }
 }

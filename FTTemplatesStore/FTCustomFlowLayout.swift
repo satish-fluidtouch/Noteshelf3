@@ -20,10 +20,10 @@ class FTTemplateCollectionViewCell: UICollectionViewCell {
         // Configure cell appearance
     }
 
-    func configCell(with imgName: String) {
-        self.imageView?.image = UIImage(named: imgName, in: storeBundle, with: nil)
-        self.imageView?.contentMode = .scaleAspectFill
-        imageView?.layer.contentsRect = CGRect(x: 0.2, y: 0.45, width: 0.37, height: 0.43)
+    func configCell(with story: FTTemplateStory) {
+        self.imageView?.image = UIImage(named: story.largeImageName, in: storeBundle, with: nil)
+//        self.imageView?.contentMode = .scaleAspectFill
+        self.imageView?.layer.contentsRect = CGRect(x: story.thumbnailRectXPercent, y: story.thumbnailRectYPercent, width: story.thumbnailRectWidthPercent, height: story.thumbnailRectHeightPercent)
     }
 }
 

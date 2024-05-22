@@ -10,7 +10,6 @@ import UIKit
 
 enum FTTemplateStoryDisplayType {
     case iPhone
-    case xtraLarge
     case large
     case medium
     case small
@@ -20,8 +19,6 @@ enum FTTemplateStoryDisplayType {
         switch self {
         case .iPhone, .medium:
             count = 2
-        case .xtraLarge:
-            count = 4
         case .large:
             count = 3
         case .small:
@@ -35,8 +32,6 @@ enum FTTemplateStoryDisplayType {
         switch self {
         case .iPhone, .small:
             spacing = 8
-        case .xtraLarge:
-            spacing = 16
         case .large:
             spacing = 12
         case .medium:
@@ -50,8 +45,6 @@ enum FTTemplateStoryDisplayType {
         switch self {
         case .iPhone, .small:
             insets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
-        case .xtraLarge:
-            insets = UIEdgeInsets(top: 20, left: 48, bottom: 20, right: 48)
         case .large:
             insets = UIEdgeInsets(top: 16, left: 32, bottom: 16, right: 32)
         case .medium:
@@ -62,16 +55,25 @@ enum FTTemplateStoryDisplayType {
 
     static func currentType(for size: CGSize) -> FTTemplateStoryDisplayType {
         let type: FTTemplateStoryDisplayType
+        let orientation = UIDevice.current.orientation
         if UIDevice.current.isIphone() {
             type = .iPhone
-        } else if size.width >= 900 {
-            type = .xtraLarge
-        } else if size.width >= 600 {
-            type = .large
-        } else if size.width > 375 {
-            type = .medium
         } else {
-            type = .small
+            if orientation == .portrait {
+                if size.width > 375 {
+                    type = .medium
+                } else {
+                    type = .small
+                }
+            } else {
+                if size.width >= 900 {
+                    type = .large
+                } else if size.width > 375 {
+                    type = .medium
+                } else {
+                    type = .small
+                }
+            }
         }
         return type
     }

@@ -1201,7 +1201,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ppe-HR-epz" userLabel="From Stack View">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="512"/>
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="196"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mkq-b1-Ufk">
                                         <rect key="frame" x="0.0" y="0.0" width="768" height="36"/>
@@ -1212,7 +1212,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RDP-ro-H0A">
-                                        <rect key="frame" x="0.0" y="36" width="768" height="476"/>
+                                        <rect key="frame" x="0.0" y="36" width="768" height="160"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="160" id="bTx-Th-r4z"/>
@@ -1230,7 +1230,7 @@
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qbj-y0-Q1g" userLabel="Horizontal Seperator">
-                                <rect key="frame" x="0.0" y="511.5" width="768" height="0.5"/>
+                                <rect key="frame" x="0.0" y="195.5" width="768" height="0.5"/>
                                 <color key="backgroundColor" name="cellSeparatorColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="1ot-9n-x7l"/>
@@ -1244,7 +1244,7 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="a3o-66-4jz" userLabel="To Stack View">
-                                <rect key="frame" x="0.0" y="512" width="768" height="512"/>
+                                <rect key="frame" x="0.0" y="196" width="768" height="196"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="End Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jVk-fB-K7y">
                                         <rect key="frame" x="0.0" y="0.0" width="768" height="36"/>
@@ -1255,7 +1255,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3JF-cQ-dwS">
-                                        <rect key="frame" x="0.0" y="36" width="768" height="476"/>
+                                        <rect key="frame" x="0.0" y="36" width="768" height="160"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="160" id="Dcs-VD-xrX"/>
@@ -1545,24 +1545,11 @@
         <!--Template Web View Scoll Controller-->
         <scene sceneID="zNq-C8-1LI">
             <objects>
-                <viewController storyboardIdentifier="FTTemplateWebViewScollController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="58W-Vb-OzT" customClass="FTTemplateWebViewScollController" customModule="FTTemplatesNewUI" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FTTemplateWebViewScollController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="58W-Vb-OzT" customClass="FTTemplateWebViewScollController" customModule="FTTemplatesStore" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EXI-o6-Jjp">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v5k-g6-Ewz">
-                                <rect key="frame" x="684" y="44" width="60" height="60"/>
-                                <color key="backgroundColor" systemColor="systemRedColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="v5k-g6-Ewz" secondAttribute="height" multiplier="1:1" id="P9h-oJ-Q0E"/>
-                                    <constraint firstAttribute="height" constant="60" id="mj5-hl-kRk"/>
-                                </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="xmark.circle.fill" catalog="system"/>
-                                <connections>
-                                    <action selector="closeBtnTapped:" destination="58W-Vb-OzT" eventType="touchUpInside" id="wpK-xz-d7Q"/>
-                                </connections>
-                            </button>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wSz-X2-ZWw">
                                 <rect key="frame" x="115" y="100" width="538" height="924"/>
                                 <subviews>
@@ -1607,7 +1594,7 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="10"/>
+                                        <integer key="value" value="18"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </scrollView>
@@ -1618,13 +1605,10 @@
                             <constraint firstItem="Acg-bu-XbM" firstAttribute="centerY" secondItem="3BY-Ey-C7D" secondAttribute="centerY" priority="999" id="Frs-yx-A6r"/>
                             <constraint firstAttribute="bottom" secondItem="wSz-X2-ZWw" secondAttribute="bottom" id="SSC-43-p8M"/>
                             <constraint firstItem="wSz-X2-ZWw" firstAttribute="centerX" secondItem="EXI-o6-Jjp" secondAttribute="centerX" id="YB1-Fe-Fyu"/>
-                            <constraint firstItem="3BY-Ey-C7D" firstAttribute="trailing" secondItem="v5k-g6-Ewz" secondAttribute="trailing" constant="24" id="b76-aG-Quf"/>
                             <constraint firstItem="wSz-X2-ZWw" firstAttribute="width" secondItem="EXI-o6-Jjp" secondAttribute="width" multiplier="0.7" id="jCT-q4-hk3"/>
-                            <constraint firstItem="v5k-g6-Ewz" firstAttribute="top" secondItem="3BY-Ey-C7D" secondAttribute="top" constant="24" id="w6U-R1-8Hv"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="closeBtn" destination="v5k-g6-Ewz" id="ZjN-yr-wJh"/>
                         <outlet property="contentCenterXConstraint" destination="YB1-Fe-Fyu" id="Exr-hT-KiP"/>
                         <outlet property="contentEqualWidthConstraint" destination="jCT-q4-hk3" id="PdC-uh-zYb"/>
                         <outlet property="contentTopConstraint" destination="9b6-2s-EH2" id="nc7-Wu-6SE"/>
@@ -1651,21 +1635,21 @@
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                                 <color key="backgroundColor" systemColor="tintColor"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="GC4-Zu-MmW" customClass="CustomFlowLayout" customModule="FTTemplatesNewUI" customModuleProvider="target">
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="GC4-Zu-MmW" customClass="CustomFlowLayout" customModule="FTTemplatesStore" customModuleProvider="target">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FTTemplateCollectionViewCell" id="Ncw-hF-2Lg" customClass="FTTemplateCollectionViewCell" customModule="FTTemplatesNewUI" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FTTemplateCollectionViewCell" id="Ncw-hF-2Lg" customClass="FTTemplateCollectionViewCell" customModule="FTTemplatesStore" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="kEj-ZL-wp8">
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YTP-lT-Kn1">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YTP-lT-Kn1">
                                                     <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -1723,7 +1707,6 @@
         <image name="rectangle" catalog="system" width="128" height="93"/>
         <image name="rectangle.portrait" catalog="system" width="115" height="128"/>
         <image name="sticker_b" width="680" height="342"/>
-        <image name="xmark.circle.fill" catalog="system" width="128" height="123"/>
         <namedColor name="accent">
             <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

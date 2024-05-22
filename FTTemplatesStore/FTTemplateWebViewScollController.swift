@@ -8,23 +8,27 @@
 import WebKit
 import FTCommon
 
+protocol FTTemplateStoryDelegate: AnyObject {
+    func getStoryFrameWrtoSplitController(_ story: FTTemplateStory) -> CGRect?
+}
+
 class FTTemplateWebViewScollController: UIViewController {
     @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var imgView: UIImageView!
     @IBOutlet private weak var webView: WKWebView!
-    @IBOutlet private weak var closeBtn: UIButton!
 
+    private weak var closeBtn: UIButton?
     private var visualEffectView: UIVisualEffectView?
+
     private let disableBounceScriptString = "var meta = document.createElement('meta');" +
     "meta.name = 'viewport';" +
     "meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';" +
     "var head = document.getElementsByTagName('head')[0];" +
     "head.appendChild(meta);"
 
-    var headerImage: UIImage = UIImage(named: "story1_big", in: storeBundle, compatibleWith: nil)!
-    var initialFrame: CGRect!
-   
-    private let animDuration: CGFloat = 0.4
+    private var story: FTTemplateStory?
+    private let animDuration: CGFloat = 0.3
+    private var delegate: FTTemplateStoryDelegate?
 
     // constarints
     @IBOutlet private weak var contentTopConstraint: NSLayoutConstraint!
@@ -38,26 +42,24 @@ class FTTemplateWebViewScollController: UIViewController {
         self.scrollView.contentInsetAdjustmentBehavior = .never
         self.visualEffectView = self.view.addVisualEffectBlur(style: .light, cornerRadius: 0.0)
         self.visualEffectView?.alpha = 0.0
-        self.closeBtn.isHidden = true
         self.loadWebUrl()
         self.configWebView()
     }
 
-    @IBAction func closeBtnTapped(_ sender: Any) {
+    @objc func closeBtnTapped() {
         self.animateWebClosePreview()
     }
     
-    public static func showFromViewController(_ viewController: UIViewController, with image: UIImage, initialFrame: CGRect){
+    public static func showFromViewController(_ viewController: UIViewController, with story: FTTemplateStory, delegate: FTTemplateStoryDelegate){
         if let templateWebController = UIStoryboard.init(name: "FTTemplatesStore", bundle: storeBundle).instantiateViewController(withIdentifier: "FTTemplateWebViewScollController") as? FTTemplateWebViewScollController {
-            // templateWebController.headerImage = image
-            templateWebController.initialFrame = initialFrame
+             templateWebController.story = story
+            templateWebController.delegate = delegate
             templateWebController.view.frame = viewController.view.bounds
             viewController.add(templateWebController);
             viewController.view.addSubview(templateWebController.view)
             templateWebController.animateWebOpenPreview()
         }
     }
-
 }
 
 extension FTTemplateWebViewScollController: WKNavigationDelegate {
@@ -89,18 +91,23 @@ private extension FTTemplateWebViewScollController {
     }
 
     func animateWebOpenPreview() {
-        self.contentCenterXConstraint.constant = 0.0  - self.view.frame.size.width/2 + self.initialFrame.origin.x + self.initialFrame.width/2
-        self.contentTopConstraint.constant = self.initialFrame.origin.y
-        self.imgViewHeightConstraint?.constant = self.initialFrame.height
-        let widthMultiplier = self.initialFrame.width/self.view.frame.width
+        guard let templateStory = self.story, let initialFrame = self.delegate?.getStoryFrameWrtoSplitController(templateStory) else {
+            return
+        }
+        self.contentCenterXConstraint.constant = 0.0  - self.view.frame.size.width/2 + initialFrame.origin.x + initialFrame.width/2
+        self.contentTopConstraint.constant = initialFrame.origin.y
+        self.imgViewHeightConstraint?.constant = initialFrame.height
+        let widthMultiplier = initialFrame.width/self.view.frame.width
         self.contentEqualWidthConstraint = self.contentEqualWidthConstraint.getUpdatedConstraint(byApplying: widthMultiplier)
         self.webViewHeightConstraint?.constant = 0.0
 
         self.view.layoutIfNeeded()
 
-        self.imgView.image = headerImage
-        self.imgView?.layer.contentsRect = CGRect(x: 0.2, y: 0.45, width: 0.37, height: 0.43)
-        
+        self.imgView.image = UIImage(named: templateStory.largeImageName, in: storeBundle, with: nil)
+        self.imgView?.layer.contentsRect = CGRect(x: templateStory.thumbnailRectXPercent, y: templateStory.thumbnailRectYPercent, width: templateStory.thumbnailRectWidthPercent, height: templateStory.thumbnailRectHeightPercent)
+        self.setupCloseButton()
+        self.closeBtn?.isHidden = true
+
         UIView.animate(withDuration: animDuration) {
             self.visualEffectView?.alpha = 1.0
             self.contentCenterXConstraint.constant = 0
@@ -116,23 +123,42 @@ private extension FTTemplateWebViewScollController {
 
             self.view.layoutIfNeeded()
         } completion: { _  in
-            self.closeBtn.isHidden = false
+            self.closeBtn?.isHidden = false
         }
     }
 
+    private func setupCloseButton() {
+        let closeButton = UIButton()
+        closeButton.setImage(UIImage(named: "close", in: storeBundle, with: nil), for: .normal)
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        closeButton.addTarget(self, action: #selector(closeBtnTapped), for: .touchUpInside)
+        self.view.addSubview(closeButton)
+        NSLayoutConstraint.activate([
+            closeButton.widthAnchor.constraint(equalToConstant: 44),
+            closeButton.heightAnchor.constraint(equalToConstant: 44),
+            closeButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -24),
+            closeButton.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 24)
+        ])
+        self.closeBtn = closeButton
+    }
+
     func animateWebClosePreview() {
+        guard let templateStory = self.story, let initialFrame = self.delegate?.getStoryFrameWrtoSplitController(templateStory) else {
+            return
+        }
         UIView.animate(withDuration: animDuration) {
             self.visualEffectView?.alpha = 0.0
-            self.closeBtn.isHidden = true
-            self.contentCenterXConstraint.constant = 0.0  - self.view.frame.size.width/2 + self.initialFrame.origin.x + self.initialFrame.width/2
-            self.contentTopConstraint.constant = self.initialFrame.origin.y
-            let widthMultiplier = self.initialFrame.width/self.view.frame.width
+            self.closeBtn?.isHidden = true
+            self.contentCenterXConstraint.constant = 0.0  - self.view.frame.size.width/2 + initialFrame.origin.x + initialFrame.width/2
+            self.contentTopConstraint.constant = initialFrame.origin.y
+            let widthMultiplier = initialFrame.width/self.view.frame.width
             self.contentEqualWidthConstraint = self.contentEqualWidthConstraint.getUpdatedConstraint(byApplying: widthMultiplier)
             self.webViewHeightConstraint?.constant = 0.0
-            self.imgViewHeightConstraint?.constant = self.initialFrame.height
-            self.imgView?.layer.contentsRect = CGRect(x: 0.2, y: 0.45, width: 0.37, height: 0.43)
+            self.imgViewHeightConstraint?.constant = initialFrame.height
+            self.imgView?.layer.contentsRect = CGRect(x: templateStory.thumbnailRectXPercent, y: templateStory.thumbnailRectYPercent, width: templateStory.thumbnailRectWidthPercent, height: templateStory.thumbnailRectHeightPercent)
             self.view.layoutIfNeeded()
         } completion: { _  in
+            self.closeBtn?.removeFromSuperview()
             self.view.removeFromSuperview()
             self.removeFromParent()
         }
