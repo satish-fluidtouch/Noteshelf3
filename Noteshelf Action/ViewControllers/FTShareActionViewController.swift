@@ -194,6 +194,10 @@ class FTShareActionViewController: UIViewController {
         return self.attachmentsInfo?.hasAnyNoteShelfFiles() ?? false
     }
     
+    func currentSelectedItem() -> FTShareItemsFetchModel? {
+        return self.selectedItem
+    }
+    
     private func configureNavigationBar() {
         self.navigationItem.backButtonTitle = "Back".localized
         let leftBarButton = UIBarButtonItem(title: "Cancel".localized, style: .plain, target: self, action: #selector(didTapCancel))

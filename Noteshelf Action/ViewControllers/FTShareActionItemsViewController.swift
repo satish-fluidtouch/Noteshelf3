@@ -133,6 +133,10 @@ extension FTShareActionItemsViewController: UITableViewDelegate, UITableViewData
             if let shareItemCell = tableView.dequeueReusableCell(withIdentifier: "FTShareItemTableViewCell", for: indexPath) as? FTShareItemTableViewCell {
                 shareItemCell.selectionStyle = .none
                 shareItemCell.configureCell(item: item, indexPath: indexPath, shouldDisable: hasAnyNoteshelfFiles())
+                if let cuurrentItem = self.currentSelectedItem(), let shelfItem = item.shelfItem,  shelfItem.URL == cuurrentItem.noteBook?.URL {
+                    shareItemCell.tintColor = UIColor.appColor(.accent)
+                    shareItemCell.accessoryType = .checkmark
+                }
                 return shareItemCell
             }
         }
@@ -144,6 +148,13 @@ extension FTShareActionItemsViewController: UITableViewDelegate, UITableViewData
             return firstVc.hasAnyNoteshelfFiles()
         }
         return false
+    }
+    
+    func currentSelectedItem() -> FTShareItemsFetchModel? {
+        if let vcs = self.navigationController?.viewControllers, let firstVc = vcs.first as? FTShareActionViewController {
+            return firstVc.currentSelectedItem()
+        }
+        return nil
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
