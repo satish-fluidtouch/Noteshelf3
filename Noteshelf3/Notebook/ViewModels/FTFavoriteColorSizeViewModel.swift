@@ -203,7 +203,6 @@ extension FTFavoriteSizeViewModel {
             }
             self.currentPenset.preciseSize = formattedSize
             self.rackData.currentPenset = self.currentPenset
-            self.rackData.saveFavoriteSizes(self.favoritePenSizes, type: self.currentPenset.type)
             self.delegate?.didChangeCurrentPenset(self.currentPenset, dismissSizeEditView: sizeMode == .sizeSelect)
         }
     }
@@ -213,6 +212,7 @@ extension FTFavoriteSizeViewModel {
         if let index = self.sizeEditPostion?.rawValue, index < self.favoritePenSizes.count  {
             let sizeModel = FTPenSizeModel(size: formattedSize, isSelected: true)
             self.favoritePenSizes[index] = sizeModel
+            self.rackData.saveFavoriteSizes(self.favoritePenSizes, type: self.currentPenset.type)
         }
     }
 
@@ -237,11 +237,10 @@ extension FTFavoriteSizeViewModel {
 
 extension FTPenType {
     func getIndicatorSize(using sizeValue: CGFloat) -> CGSize {
-        let floatSize = Float(sizeValue)
         var reqSize: CGSize = .zero
         if let penSize = FTPenSize(rawValue: Int(sizeValue)) {
             if self.isHighlighterPenType() {
-                var width = penSize.maxDisplaySize(penType: self)
+                let width = penSize.maxDisplaySize(penType: self)
                 var scale = penSize.scaleToApply(penType: self, preciseSize: sizeValue)
                 scale = scale*0.8
                 reqSize = CGSize(width: width*scale, height: width*scale)
