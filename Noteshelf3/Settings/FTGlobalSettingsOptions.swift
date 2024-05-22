@@ -17,7 +17,7 @@ enum FTNewSettingsOptions: String {
     case aboutNoteshelf = "AboutNoteshelf"
     case settingsGeneral = "SettingsGeneral"
     case settingsAppearance = "SettingOptionTheme"
-    case applePencil  = "SettingsApplePencil"
+    case applePencil  = "Stylus"
     case rateOnTheAppstore = "SettingsRateOnTheAppstore"
     case noteShelfHelp = "SettingsNoteShelfHelp"
     case developerOptions = "🛠 Developer Options"

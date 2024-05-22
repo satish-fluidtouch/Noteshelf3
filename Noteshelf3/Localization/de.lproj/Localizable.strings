@@ -985,6 +985,7 @@
 "color.resetToDefault" = "Auf Standard zurücksetzen";
 "color.restoreAll" = "Wiederherstellen Alles";
 "color.restorePresetColors.message" = "Bist du sicher, dass du alle Standardfarben wiederherstellen möchtest?";
+"colors.presets.spectrum" = "Spektrum";
 "continue" = "Weitermachen";
 "convertToText.copiedToClipBoard" = "In die Zwischenablage kopiert";
 "convertToText.customDictionary" = "Benutzerdefiniertes Wörterbuch";
@@ -1193,6 +1194,7 @@
 "more.globalsettings.caps" = "GLOBALE EINSTELLUNGEN";
 "more.settings.footer" = "Diese Einstellungen werden global auf alle Ihre Notizbücher angewendet.";
 "moreInfo" = "Weitere Informationen...";
+"more_global" = "GLOBALE EINSTELLUNGEN";
 "move" = "Bewegen";
 "newnotebook" = "NEUES NOTIZBUCH";
 "newnotebook.create" = "Erstellen";
@@ -1283,6 +1285,7 @@
 "reset" = "Zurücksetzen";
 "retry" = "Erneut versuchen";
 "save" = "Speichern";
+"saveAsTemplate_message" = "Die Vorlage wird im Abschnitt „Benutzerdefiniert“ unter „Vorlagen“ gespeichert.";
 "school" = "Schule";
 "search.tryNewSearch" = "Versuchen Sie es mit einer neuen Suche";
 "seeAll" = "Wiederholen";
@@ -1673,6 +1676,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-
-// Last Synced by Sameer Hussain on 3 May 2024 at 3:18 PM
-// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
+// Last Synced by Narayana on 17 May 2024 at 4:53 PM

@@ -116,13 +116,14 @@ public extension UIAlertController {
 
     static func showTextFieldAlertOn(viewController: UIViewController,
                                       title: String,
+                                      message: String = "",
                                       textfieldPlaceHolder: String,
                                       textfieldText: String = "",
                                       submitButtonTitle : String,
                                       cancelButtonTitle: String,
                                       submitAction: @escaping (_ title:String?) -> (),
                                       cancelAction: @escaping () -> ()){
-        let alertController = UIAlertController(title: title, message: nil, preferredStyle: UIAlertController.Style.alert)
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         alertController.addTextField { (textField) in
             textField.placeholder = textfieldPlaceHolder
             textField.text = textfieldText

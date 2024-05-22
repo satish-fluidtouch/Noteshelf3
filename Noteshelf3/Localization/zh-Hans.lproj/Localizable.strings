@@ -985,6 +985,7 @@
 "color.resetToDefault" = "重置为默认";
 "color.restoreAll" = "恢复全部";
 "color.restorePresetColors.message" = "您确定要恢复为所有默认颜色吗？";
+"colors.presets.spectrum" = "光谱";
 "continue" = "继续";
 "convertToText.copiedToClipBoard" = "已复制到剪贴板";
 "convertToText.customDictionary" = "自定义词典";
@@ -1061,7 +1062,7 @@
 "finder.bookmark.description" = "收藏页面并保持对庞大的笔记本和PDF的概览。";
 "finder.bookmarks" = "书签";
 "finder.clear.recents" = "你想要清除最近的内容吗？";
-"finder.documentonly" = "只有笔记本";
+"finder.documentonly" = "";
 "finder.downloadPermissionText" = "选定的笔记本尚未下载。您是否希望下载笔记本并移动页面？";
 "finder.duplicate" = "复制";
 "finder.fullscreen" = "全屏";
@@ -1193,6 +1194,7 @@
 "more.globalsettings.caps" = "全局设置";
 "more.settings.footer" = "这些设置将全局应用于您的所有笔记本。";
 "moreInfo" = "更多信息";
+"more_global" = "全局";
 "move" = "移动";
 "newnotebook" = "新笔记本";
 "newnotebook.create" = "创建";
@@ -1283,6 +1285,7 @@
 "reset" = "重置";
 "retry" = "重试";
 "save" = "保存";
+"saveAsTemplate_message" = "模板将保存在模板中的自定义部分内。";
 "school" = "学校";
 "search.tryNewSearch" = "尝试新的搜索";
 "seeAll" = "查看全部";
@@ -1673,4 +1676,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
+// Last Synced by Narayana on 17 May 2024 at 4:53 PM

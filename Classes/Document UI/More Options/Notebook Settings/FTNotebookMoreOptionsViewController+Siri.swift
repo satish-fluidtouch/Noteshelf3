@@ -1,5 +1,5 @@
 //
-//  FTNotebookSettingViewController+Siri.swift
+//  FTNotebookMoreOptionsViewController+Siri.swift
 //  Noteshelf3
 //
 //  Created by Sameer Hussain on 31/05/23.
@@ -10,11 +10,11 @@ import Foundation
 import IntentsUI
 import FTCommon
 
-extension FTNoteBookSettingsViewController: INUIAddVoiceShortcutViewControllerDelegate, INUIEditVoiceShortcutViewControllerDelegate {
+extension FTNotebookMoreOptionsViewController: INUIAddVoiceShortcutViewControllerDelegate, INUIEditVoiceShortcutViewControllerDelegate {
 
      func updateSiriShortcutSetting(with shortcut: INVoiceShortcut?) {
         self.siriShortcut = shortcut
-        tableView?.reloadData()
+         tblSettings?.reloadData()
     }
 
      func handleSiriSetting() {
@@ -47,6 +47,7 @@ extension FTNoteBookSettingsViewController: INUIAddVoiceShortcutViewControllerDe
                 }
             }
         })
+         tblSettings?.reloadData()
 
     }
 

@@ -53,6 +53,7 @@ extension UIViewController {
     }
     
     func configureCustomNavigation(hideBackButton: Bool = false, title: String) {
+        self.navigationController?.navigationBar.isHidden = false
         self.navigationItem.hidesBackButton = true
         if !hideBackButton {
             let leftItem = UIBarButtonItem(image: UIImage.image(for: "chevron.backward", font: UIFont.appFont(for: .medium, with: 18)), style: .plain, target: self, action: #selector(leftNavBtnTapped(_ :)))

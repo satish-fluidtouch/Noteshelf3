@@ -446,9 +446,9 @@ extension FTPDFRenderViewController: FTNotebookMoreOptionsDelegate {
             if let thumbnailable = page as? FTThumbnailable {
                 self.bookMarkAction(page:thumbnailable)
             }
-        case .saveAsTemplate:
+        case .saveAsTemplate(let fileName):
             controller.dismiss(animated: true) {[weak self] in
-                self?.savePageAsTemplate(with: page)
+                self?.savePageAsTemplate(with: page, fileName: fileName)
             }
         case .present:
             self.switchToPresentMode(settingsController: controller)
@@ -470,10 +470,11 @@ extension FTPDFRenderViewController: FTNotebookMoreOptionsDelegate {
         self.prepareShareInfo(completion: completion)
     }
     
-    func savePageAsTemplate(with page: FTPageProtocol) {
+    func savePageAsTemplate(with page: FTPageProtocol, fileName: String) {
         let target = FTExportTarget()
         let reqItem = self.shelfItemManagedObject.documentItemProtocol
         let item = FTItemToExport(shelfItem: reqItem)
+        item.filename = fileName
         target.itemsToExport = [item]
         target.notebook = page.parentDocument
         target.pages = [page]

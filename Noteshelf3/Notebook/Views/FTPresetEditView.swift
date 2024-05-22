@@ -63,15 +63,16 @@ struct FTPresetEditView: View {
         }
 
         ToolbarItem(placement: .navigationBarTrailing) {
-            Image(systemName: "trash")
-                .foregroundColor(.red)
-                .font(.appFont(for: .medium, with: 16.0))
-                .onTapGesture {
-                    self.viewModel.deleteColorAction()
-                    self.viewModel.updateCurrentColors()
-                    self.viewModel.updateColorEditViewSizeIfNeeded(isPresetEdit: false)
-                    self.presentationMode.wrappedValue.dismiss()
-                }
+            Button {
+                self.viewModel.deleteColorAction()
+                self.viewModel.updateCurrentColors()
+                self.viewModel.updateColorEditViewSizeIfNeeded(isPresetEdit: false)
+                self.presentationMode.wrappedValue.dismiss()
+            } label: {
+                Image(systemName: "trash")
+                    .foregroundColor(.red)
+                    .font(.appFont(for: .medium, with: 16.0))
+            }
         }
     }
 
@@ -80,7 +81,7 @@ struct FTPresetEditView: View {
             Text("shelf.notebook.textstyle.grid".localized)
                 .tag(FTPenColorSegment.grid)
                 .font(.appFont(for: .medium, with: 13.0))
-            Text("Spectrum")
+            Text("colors.presets.spectrum".localized)
                 .tag(FTPenColorSegment.spectrum)
                 .font(.appFont(for: .medium, with: 13.0))
         }

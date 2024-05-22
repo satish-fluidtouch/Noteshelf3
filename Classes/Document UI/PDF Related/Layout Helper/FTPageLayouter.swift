@@ -39,6 +39,17 @@ extension Notification.Name {
         let imgName: String
         switch self {
         case .vertical:
+            imgName = "desk_tool_vertical_scrolling"
+        case .horizontal:
+            imgName = "desk_tool_horizontal_scrolling"
+        }
+        return imgName
+    }
+    
+    var oppositeToolIconName: String {
+        let imgName: String
+        switch self {
+        case .vertical:
             imgName = "desk_tool_horizontal_scrolling"
         case .horizontal:
             imgName = "desk_tool_vertical_scrolling"
