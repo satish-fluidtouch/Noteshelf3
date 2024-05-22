@@ -21,7 +21,7 @@ extension FTRootViewController {
         FTImportActionManager.sharedInstance.startProcessingAllActions()
     }
     
-    func showImportProgressIfNeeded() {
+    func showCompleteImportProgressIfNeeded() {
         if importSmartProgressView == nil {
             let count = FTImportStorageManager.getReadyToImportActions().count
             importProgress = Progress();
@@ -34,7 +34,7 @@ extension FTRootViewController {
         }
     }
     
-    fileprivate func updateProgress()
+    fileprivate func updateProgressCount()
     {
         if let importProgress {
             let totalCount = importProgress.totalUnitCount;
@@ -58,7 +58,6 @@ extension FTRootViewController {
     @objc
     private func handleImportedDocumentsIfExist(_ notification : Notification) {
         guard let importAction = notification.object as? FTSharedAction, importScreenViewController == nil else {
-            dismissProgressView()
             return
         }
         if (importAction.importStatus == .downloadFailed)
@@ -67,23 +66,29 @@ extension FTRootViewController {
             // 2- ImportStatus.DownloadFailed
             // 4- ImportStatus.ImportSuccess
             // 5- ImportStatus.ImportFailed
-            shouldDisplayImportScreen = true;
             FTImportActionManager.sharedInstance.startProcessingAllActions()
-            let count = FTImportStorageManager.getReadyToImportActions().count
-            if count != 0 {
-                updateProgress()
-                importProgress?.completedUnitCount += 1
-            } else {
-                dismissProgressView()
-                _presentImportsControllerifNeeded()
-            }
-        } else {
-            dismissProgressView()           
-            _presentImportsControllerifNeeded()
         }
     }
     
-    private func dismissProgressView() {
+    func updateSmartProgressStatus(openDoc: Bool) {
+        if openDoc {
+            dismissProgressView()
+        } else {
+            updateProgressCount()
+            importProgress?.completedUnitCount += 1
+            if let importProgress {
+                if importProgress.completedUnitCount == importProgress.totalUnitCount {
+                    dismissProgressView()
+                    shouldDisplayImportScreen = true;
+                    _presentImportsControllerifNeeded()
+                }
+            } else {
+                dismissProgressView()
+            }
+        }
+    }
+    
+    internal func dismissProgressView() {
         importSmartProgressView?.hideProgressIndicator()
         importSmartProgressView = nil
         importProgress = nil

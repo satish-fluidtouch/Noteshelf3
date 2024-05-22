@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,13 +11,50 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="tfm-Ub-jee" customClass="FTShareActionAlertView" customModule="Noteshelf_Action" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="tfm-Ub-jee" customClass="FTShareActionAlertView" customModule="Noteshelf3_Action" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CBP-ju-JpM">
                     <rect key="frame" x="61.666666666666657" y="310.33333333333337" width="270" height="256.33333333333337"/>
                     <subviews>
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vpw-5m-AuG">
+                            <rect key="frame" x="0.0" y="0.0" width="270" height="256.33333333333331"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="File is not supported" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="URc-GT-5h8">
+                                    <rect key="frame" x="8" y="88" width="254" height="20.333333333333329"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YEv-sH-UbH">
+                                    <rect key="frame" x="24" y="118.33333333333337" width="223" height="44"/>
+                                    <color key="backgroundColor" name="accent"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="44" id="aqS-FA-Wfd"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="Import"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="Done">
+                                        <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="15"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="onDoneTapped:" destination="tfm-Ub-jee" eventType="touchUpInside" id="E12-io-Gff"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="URc-GT-5h8" firstAttribute="centerY" secondItem="vpw-5m-AuG" secondAttribute="centerY" constant="-30" id="0uI-sZ-FkQ"/>
+                                <constraint firstItem="YEv-sH-UbH" firstAttribute="leading" secondItem="vpw-5m-AuG" secondAttribute="leading" constant="24" id="3eu-rG-QLW"/>
+                                <constraint firstAttribute="trailing" secondItem="YEv-sH-UbH" secondAttribute="trailing" constant="23" id="fkB-LO-jRD"/>
+                                <constraint firstAttribute="trailing" secondItem="URc-GT-5h8" secondAttribute="trailing" constant="8" id="fkm-Ym-P6k"/>
+                                <constraint firstItem="URc-GT-5h8" firstAttribute="leading" secondItem="vpw-5m-AuG" secondAttribute="leading" constant="8" id="kRe-99-Qhh"/>
+                                <constraint firstItem="YEv-sH-UbH" firstAttribute="top" secondItem="URc-GT-5h8" secondAttribute="bottom" constant="10" id="p4x-yU-3A1"/>
+                            </constraints>
+                        </view>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="0U2-le-cHl">
                             <rect key="frame" x="0.0" y="24.000000000000014" width="270" height="208.33333333333337"/>
                             <subviews>
@@ -49,6 +86,9 @@
                                             <buttonConfiguration key="configuration" style="plain" title="Done">
                                                 <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="15"/>
                                             </buttonConfiguration>
+                                            <connections>
+                                                <action selector="onDoneTapped:" destination="tfm-Ub-jee" eventType="touchUpInside" id="4Gh-vB-iI0"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -70,8 +110,12 @@
                     </subviews>
                     <color key="backgroundColor" name="alert_default"/>
                     <constraints>
+                        <constraint firstAttribute="bottom" secondItem="vpw-5m-AuG" secondAttribute="bottom" id="2xH-Ct-Yf2"/>
                         <constraint firstAttribute="bottom" secondItem="0U2-le-cHl" secondAttribute="bottom" constant="24" id="D2s-5V-Nny"/>
+                        <constraint firstItem="vpw-5m-AuG" firstAttribute="top" secondItem="CBP-ju-JpM" secondAttribute="top" id="EgF-b4-FUe"/>
+                        <constraint firstAttribute="trailing" secondItem="vpw-5m-AuG" secondAttribute="trailing" id="WgJ-YN-wUX"/>
                         <constraint firstItem="0U2-le-cHl" firstAttribute="top" secondItem="CBP-ju-JpM" secondAttribute="top" constant="24" id="aZo-ib-gxi"/>
+                        <constraint firstItem="vpw-5m-AuG" firstAttribute="leading" secondItem="CBP-ju-JpM" secondAttribute="leading" id="cQB-ja-qgv"/>
                         <constraint firstItem="0U2-le-cHl" firstAttribute="centerX" secondItem="CBP-ju-JpM" secondAttribute="centerX" id="oD8-jv-cfS"/>
                         <constraint firstAttribute="width" secondItem="0U2-le-cHl" secondAttribute="width" id="xPu-0I-vhY"/>
                     </constraints>
@@ -89,6 +133,9 @@
                 <outlet property="animationImageView" destination="xZ5-XD-mq2" id="Cea-tV-XMt"/>
                 <outlet property="contentView" destination="CBP-ju-JpM" id="If7-lF-gVp"/>
                 <outlet property="doneButton" destination="s58-ev-Vlc" id="b5D-N4-MWo"/>
+                <outlet property="unSupportedTiitleLabel" destination="URc-GT-5h8" id="B4g-Js-PvW"/>
+                <outlet property="unspportedFileView" destination="vpw-5m-AuG" id="rd8-pi-tYE"/>
+                <outlet property="unsupportedDoneButton" destination="YEv-sH-UbH" id="6fE-2h-rEI"/>
             </connections>
             <point key="canvasLocation" x="-59" y="-420"/>
         </view>

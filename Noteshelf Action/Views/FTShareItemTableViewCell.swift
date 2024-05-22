@@ -30,6 +30,9 @@ class FTShareItemTableViewCell: UITableViewCell {
     func configureCell(item: FTShareItem?, indexPath: IndexPath, shouldDisable: Bool = false) {
         if let item = item {
             titleLabel?.text = item.title
+            self.isUserInteractionEnabled = true
+            self.titleLabel?.textColor = UIColor.label
+            self.subTitleLabel?.textColor = UIColor.appColor(.black50)
             if let groupItem = item.shelfItem as? FTGroupItem, groupItem.shelfCollection != nil {
                 accessoryImageView.isHidden = false
                 var countString = String(format: NSLocalizedString("NItems", comment: "%d Items"), groupItem.childrens.count)
@@ -51,10 +54,6 @@ class FTShareItemTableViewCell: UITableViewCell {
                     self.isUserInteractionEnabled = false
                     self.titleLabel?.textColor = UIColor.appColor(.black50)
                     self.subTitleLabel?.textColor = UIColor.appColor(.black20)
-                } else {
-                    self.isUserInteractionEnabled = true
-                    self.titleLabel?.textColor = UIColor.label
-                    self.subTitleLabel?.textColor = UIColor.appColor(.black50)
                 }
             }
         }

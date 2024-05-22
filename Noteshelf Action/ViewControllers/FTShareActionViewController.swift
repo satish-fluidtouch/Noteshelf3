@@ -16,7 +16,7 @@ enum FTAnimationState {
     case ended
 }
 
-class FTShareActionViewController: UIViewController {
+class FTShareActionViewController: UIViewController, FTShareAlertDelegate {
     @IBOutlet var bottomView: UIView?
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var importButton: UIButton!
@@ -72,14 +72,17 @@ class FTShareActionViewController: UIViewController {
         guard let extContext = self.extensionContext else {
             return
         }
-        
+        self.loadAlertView()
         let helper = FTExtensionAtttachmentsHelper()
         helper.loadInputAttachments(extContext) { [weak self] (attachmentsInfo) in
             guard let self = self else {
+                self?.showUnspportedFileAlert()
                 return
             }
             self.attachmentsInfo = attachmentsInfo
-            if attachmentsInfo.hasOnlyImageFiles(), !attachmentsInfo.imageItems.isEmpty {
+            if attachmentsInfo.hasOnlyUnSupportedFiles() {
+                self.showUnspportedFileAlert()
+            } else if attachmentsInfo.hasOnlyImageFiles(), !attachmentsInfo.imageItems.isEmpty {
                 for (index, _image) in attachmentsInfo.imageItems.enumerated() {
                     let image = UIImage(contentsOfFile: _image.path(percentEncoded: false))
                     if index > 2 {
@@ -108,6 +111,7 @@ class FTShareActionViewController: UIViewController {
                 let imageURL = attachmentsInfo.publicImageURLs[0]
                 let task = URLSession.shared.dataTask(with: imageURL) {[weak self] (data, _, error) in
                     guard let imageData = data, error == nil else {
+                        self?.showUnspportedFileAlert()
                         return
                     }
                     DispatchQueue.main.async() {
@@ -115,6 +119,8 @@ class FTShareActionViewController: UIViewController {
                             self?.imageView1.image = image
                             self?.imagesToImport.append(image)
                             self?.updateCountLabel(count: attachmentsInfo.publicImageURLs.count)
+                        } else {
+                            self?.showUnspportedFileAlert()
                         }
                     }
                 }
@@ -123,10 +129,11 @@ class FTShareActionViewController: UIViewController {
                 self.updateImagesForPublicUrls()
                 let count = attachmentsInfo.publicURLs.count + attachmentsInfo.publicImageURLs.count
                 self.updateCountLabel(count: count)
+            } else {
+                self.showUnspportedFileAlert()
             }
         }
         self.configureNavigationBar()
-        self.loadAlertView()
     }
     
     private func updateImagesForPublicUrls() {
@@ -186,7 +193,7 @@ class FTShareActionViewController: UIViewController {
         countLabel.text = count == 1 ? "\(count) Page" : "\(count) Pages"
     }
     
-    @objc func doneTapped() {
+     func doneButtonAction() {
         self.extensionContext?.completeRequest(returningItems: self.extensionContext?.inputItems, completionHandler: nil)
     }
     
@@ -249,7 +256,13 @@ class FTShareActionViewController: UIViewController {
         self.shareActionAlertView?.widthAnchor.constraint(equalToConstant: 270).isActive = true
         self.shareActionAlertView?.heightAnchor.constraint(equalToConstant: 240).isActive = true
         self.shareActionAlertView?.animationState = .none
-        self.shareActionAlertView?.doneButton.addTarget(self, action: #selector(doneTapped), for: .touchUpInside)
+        self.shareActionAlertView?.del = self
+    }
+    
+    func showUnspportedFileAlert() {
+        bottomView?.isUserInteractionEnabled = false
+        importButton.isUserInteractionEnabled = false
+        self.shareActionAlertView?.showUnsupportedAlert()
     }
     
     private func handleImageItems(_ urls: [URL]) {

@@ -8,11 +8,19 @@
 
 import Foundation
 
+protocol FTShareAlertDelegate: AnyObject {
+    func doneButtonAction()
+}
+
 class FTShareActionAlertView: UIView {
     @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var unsupportedDoneButton: UIButton!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var alertTitle: UILabel!
+    @IBOutlet weak var unSupportedTiitleLabel: UILabel!
+    weak var del: FTShareAlertDelegate?
     @IBOutlet weak var animationImageView: UIImageView!
+    @IBOutlet weak var unspportedFileView: UIView!
     @IBOutlet weak var alertStackView: UIStackView!
     var numberOfSharedItems = 0
     var animationState = FTAnimationState.none {
@@ -29,6 +37,19 @@ class FTShareActionAlertView: UIView {
         self.doneButton.layer.cornerRadius = 10
         self.animationState = .none
         self.isHidden = true
+        self.contentView.addShadow(color: .black.withAlphaComponent(0.2), offset: CGSize(width: 0, height: 10), opacity: 1, shadowRadius: 20)
+    }
+    
+    @IBAction func onDoneTapped(_ sender: Any) {
+        del?.doneButtonAction()
+    }
+    
+    func showUnsupportedAlert() {
+        self.isHidden = false
+        unSupportedTiitleLabel.text = "NotSupportedFormat".localized
+        unsupportedDoneButton.layer.cornerRadius = 10
+        self.alertStackView.isHidden = true
+        self.unspportedFileView.isHidden = false
     }
 
     func updateAlert() {
