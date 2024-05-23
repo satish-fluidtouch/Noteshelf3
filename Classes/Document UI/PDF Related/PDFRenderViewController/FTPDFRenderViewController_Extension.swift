@@ -77,11 +77,7 @@ extension FTPDFRenderViewController {
             }
             if let dataOfImage = imageData, let image = UIImage(data: dataOfImage) {
                 if actionType == .addToNewPage {
-                    let pageIndex = self.currentlyVisiblePage()?.pageIndex() ?? 0;
                     self.insertImageIntoNewPage(img: image)
-                    let newPageCount = self.pdfDocument.pages().count;
-                    let pagesAdded = newPageCount - self.numberOfPages();
-                    self.refreshUIforInsertedPages(at: UInt(pageIndex + 1), count: UInt(pagesAdded), forceReLayout: true)
                 } else {
                     self.insert([image], center: CGPoint.zero, droppedPoint: .zero, source: FTInsertImageSourceInsertFrom)
                 }

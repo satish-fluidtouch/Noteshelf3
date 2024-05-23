@@ -1029,31 +1029,22 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             completion?(nil,false)
             return;
         }
-        if isAudioFile(url.path) {
-            if isSupportedAudioFile(url.path) {
-                track("import_document", params: ["type" : url.lastPathComponent])
-                docController?.insertFileItemIntoNotebook(item: item, onCompletion: { sucess, error in
-                    completion?(nil,false)
-                })
-            } else {
-                let alertController = UIAlertController(title: "",
-                                                        message: NSLocalizedString("NotSupportedFormat", comment: "Note supported format"),
-                                                        preferredStyle: .alert);
-                let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Ok"), style: .cancel, handler: { _ in
-                    completion?(nil,false)
-                });
-                alertController.addAction(cancelAction);
-                self.present(alertController, animated: true, completion: nil);
-            }
-        } else if isImageFile(url.path) {
-            docController?.insertFileItemIntoNotebook(item: item, onCompletion: { sucess, error in
+        if isAudioFile(url.path), !isSupportedAudioFile(url.path) {
+            let alertController = UIAlertController(title: "",
+                                                    message: NSLocalizedString("NotSupportedFormat", comment: "Note supported format"),
+                                                    preferredStyle: .alert);
+            let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Ok"), style: .cancel, handler: { _ in
                 completion?(nil,false)
-            })
-        } else  {
-            docController?.insertNewPage(fromItem: url, onCompletion: { (complted) in
-                completion?(nil,complted)
-            })
+            });
+            alertController.addAction(cancelAction);
+            docController?.present(alertController, animated: true, completion: nil);
+            return
         }
+        self.showCompleteImportProgressIfNeeded()
+        docController?.insertNewPage(fromItem: url, onCompletion: { (complted) in
+            self.updateSmartProgressStatus(openDoc: item.openOnImport)
+            completion?(nil,complted)
+        })
     }
 
     fileprivate func importAudioFile(fromURL url: URL,
