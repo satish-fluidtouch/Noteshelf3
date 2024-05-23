@@ -8,6 +8,12 @@
 
 import UIKit
 
+enum FTImportProgressStatus {
+    case started
+    case inprogress
+    case completed
+}
+
 private var shouldDisplayImportScreen = false;
 private weak var importScreenViewController : FTImportedDocViewController?;
 
@@ -70,22 +76,29 @@ extension FTRootViewController {
         }
     }
     
-    func updateSmartProgressStatus(openDoc: Bool) {
+    @discardableResult  func updateSmartProgressStatus(openDoc: Bool) -> FTImportProgressStatus {
+        let status: FTImportProgressStatus
         if openDoc {
+            status = .completed
             dismissProgressView()
         } else {
             updateProgressCount()
             importProgress?.completedUnitCount += 1
             if let importProgress {
                 if importProgress.completedUnitCount == importProgress.totalUnitCount {
+                    status = .completed
                     dismissProgressView()
                     shouldDisplayImportScreen = true;
                     _presentImportsControllerifNeeded()
+                } else {
+                    status = .inprogress
                 }
             } else {
+                status = .completed
                 dismissProgressView()
             }
         }
+        return status
     }
     
     internal func dismissProgressView() {

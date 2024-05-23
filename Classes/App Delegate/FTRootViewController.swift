@@ -1042,8 +1042,11 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         }
         self.showCompleteImportProgressIfNeeded()
         docController?.insertNewPage(fromItem: url, onCompletion: { (complted) in
-            self.updateSmartProgressStatus(openDoc: item.openOnImport)
-            completion?(nil,complted)
+            let status = self.updateSmartProgressStatus(openDoc: item.openOnImport)
+            if status == .completed {
+                NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
+            }
+            completion?(docController?.documentItemObject.shelfItemProtocol,complted)
         })
     }
 
