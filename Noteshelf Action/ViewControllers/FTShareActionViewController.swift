@@ -29,6 +29,7 @@ class FTShareActionViewController: UIViewController, FTShareAlertDelegate {
     @IBOutlet weak var imageView3: UIImageView!
     @IBOutlet weak var noteBookNameLabel: UILabel!
     private var shareActionAlertView: FTShareActionAlertView?
+    private var showUnsupportedAlert = false
     private var attachmentsInfo : FTAttachmentsInfo?
     var selectedItem: FTShareItemsFetchModel?
     private var animationState: FTAnimationState = .none {
@@ -52,6 +53,14 @@ class FTShareActionViewController: UIViewController, FTShareAlertDelegate {
         }
         noteBookNameLabel.text = title
 
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if showUnsupportedAlert {
+            showUnsupportedAlert = false
+            self.showUnspportedFileAlert()
+        }
     }
     
     override func viewDidLoad() {
@@ -78,12 +87,12 @@ class FTShareActionViewController: UIViewController, FTShareAlertDelegate {
         let helper = FTExtensionAtttachmentsHelper()
         helper.loadInputAttachments(extContext) { [weak self] (attachmentsInfo) in
             guard let self = self else {
-                self?.showUnspportedFileAlert()
+                self?.showUnsupportedAlert = true
                 return
             }
             self.attachmentsInfo = attachmentsInfo
             if attachmentsInfo.hasOnlyUnSupportedFiles() {
-                self.showUnspportedFileAlert()
+                self.showUnsupportedAlert = true
             } else if attachmentsInfo.hasOnlyImageFiles(), !attachmentsInfo.imageItems.isEmpty {
                 for (index, _image) in attachmentsInfo.imageItems.enumerated() {
                     let image = UIImage(contentsOfFile: _image.path(percentEncoded: false))
@@ -113,7 +122,7 @@ class FTShareActionViewController: UIViewController, FTShareAlertDelegate {
                 let imageURL = attachmentsInfo.publicImageURLs[0]
                 let task = URLSession.shared.dataTask(with: imageURL) {[weak self] (data, _, error) in
                     guard let imageData = data, error == nil else {
-                        self?.showUnspportedFileAlert()
+                        self?.showUnsupportedAlert = true
                         return
                     }
                     DispatchQueue.main.async() {
@@ -122,7 +131,7 @@ class FTShareActionViewController: UIViewController, FTShareAlertDelegate {
                             self?.imagesToImport.append(image)
                             self?.updateCountLabel(count: attachmentsInfo.publicImageURLs.count)
                         } else {
-                            self?.showUnspportedFileAlert()
+                            self?.showUnsupportedAlert = true
                         }
                     }
                 }
@@ -132,7 +141,7 @@ class FTShareActionViewController: UIViewController, FTShareAlertDelegate {
                 let count = attachmentsInfo.publicURLs.count + attachmentsInfo.publicImageURLs.count
                 self.updateCountLabel(count: count)
             } else {
-                self.showUnspportedFileAlert()
+                self.showUnsupportedAlert = true
             }
         }
         self.configureNavigationBar()

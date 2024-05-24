@@ -52,6 +52,10 @@ class FTShareActionAlertView: UIView {
         unsupportedDoneButton.layer.cornerRadius = 10
         self.alertStackView.isHidden = true
         self.unspportedFileView.isHidden = false
+        self.unspportedFileView.alpha = 0.0
+        UIView.animate(withDuration: 0.1, animations: {
+            self.unspportedFileView.alpha = 1.0
+        });
     }
 
     func updateAlert() {
