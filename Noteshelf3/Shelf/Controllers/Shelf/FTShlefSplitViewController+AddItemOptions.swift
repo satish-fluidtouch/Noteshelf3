@@ -267,13 +267,14 @@ extension FTShelfSplitViewController {
             onCompletion?(nil,nil);
             return progress;
         }
+        let controller = (self.parent as? FTRootViewController)?.docuemntViewController ?? self
         FTNoteshelfDocumentProvider.shared.getShelfItemDetails(relativePath: importItemInfo.notebook, igrnoreIfNotDownloaded: true) { shelfItemColleciton, groupItem, _shelfItem in
             var shelfItem = shelfItemProtocol
             if shelfItem == nil {
                 shelfItem = _shelfItem
             }
             if let shelfItem {
-                FTDocumentValidator.openNoteshelfDocument(for: shelfItem, pin: nil, onViewController: self) { ftDocument, error, docToken in
+                FTDocumentValidator.openNoteshelfDocument(for: shelfItem, pin: nil, onViewController: controller) { ftDocument, error, docToken in
                     guard let ftDocument, let docToken else {
                         progress.completedUnitCount += 1;
                         onCompletion?(nil, nil)

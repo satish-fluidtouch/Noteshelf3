@@ -1160,6 +1160,8 @@
 "icloud.sync.issue.message" = "Impossible d'accéder à iCloud. Veuillez vous assurer qu'iCloud est activé dans les paramètres.";
 "iconlabels" = "Étiquettes d'icônes";
 "import" = "Importer";
+"import.notsupported.desc" = "Ce type de fichier n'est pas pris en charge pour le moment.";
+"import.notsupported.title" = "Incapable d'importer le fichier";
 "importedFiles" = "Fichiers importés";
 "importedTo" = "Importé à";
 "insidenotebook.share.pageno" = "page %@";
@@ -1676,4 +1678,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 17 May 2024 at 4:53 PM
+// Last Synced by Fluid Touch on 24 May 2024 at 4:34 PM

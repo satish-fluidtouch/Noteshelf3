@@ -1160,6 +1160,8 @@
 "icloud.sync.issue.message" = "无法连接到 iCloud。请确保 iCloud 在设置中已打开。";
 "iconlabels" = "图标标签";
 "import" = "导入";
+"import.notsupported.desc" = "此文件类型目前不受支持。";
+"import.notsupported.title" = "无法导入文件";
 "importedFiles" = "导入的文件";
 "importedTo" = "导入至";
 "insidenotebook.share.pageno" = "页面 %@";
@@ -1676,4 +1678,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 17 May 2024 at 4:53 PM
+// Last Synced by Fluid Touch on 24 May 2024 at 4:34 PM

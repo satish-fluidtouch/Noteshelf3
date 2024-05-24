@@ -108,9 +108,8 @@ extension FTRootViewController {
     }
     
     @objc private func _presentImportsControllerifNeeded() {
-        if (nil != self.docuemntViewController)
-            || !shouldDisplayImportScreen
-            || self.applicationState() == .background {
+        if (!shouldDisplayImportScreen
+            || self.applicationState() == .background) {
             return
         }
         DispatchQueue.main.async {
@@ -121,10 +120,12 @@ extension FTRootViewController {
     // MARK:- Show Import List View
     private func showImportedList() {
         shouldDisplayImportScreen = false;
+        var vcToPresent : UIViewController?
+        vcToPresent = (docuemntViewController != nil) ? docuemntViewController : self
         if(nil == importScreenViewController) {
             let importControllerList = FTImportedDocViewController.init(nibName: FTImportedDocViewController.className, bundle: nil)
             importControllerList.delegate = self;
-            self.ftPresentModally(importControllerList, animated: true, completion: nil)
+            vcToPresent?.ftPresentModally(importControllerList, animated: true, completion: nil)
         }
     }
 }
