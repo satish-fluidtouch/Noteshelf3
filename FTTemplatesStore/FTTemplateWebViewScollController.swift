@@ -42,6 +42,8 @@ class FTTemplateWebViewScollController: UIViewController {
         self.scrollView.contentInsetAdjustmentBehavior = .never
         self.visualEffectView = self.view.addVisualEffectBlur(style: .light, cornerRadius: 0.0)
         self.visualEffectView?.alpha = 0.0
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
+        self.view.addGestureRecognizer(tapGesture)
         self.loadWebUrl()
         self.configWebView()
     }
@@ -50,6 +52,12 @@ class FTTemplateWebViewScollController: UIViewController {
         self.animateWebClosePreview()
     }
     
+    @objc func handleTapGesture(_ sender: Any) {
+        if let point = (sender as? UITapGestureRecognizer)?.location(in: self.view), !self.scrollView.frame.contains(point) {
+            self.animateWebClosePreview()
+        }
+    }
+
     public static func showFromViewController(_ viewController: UIViewController, with story: FTTemplateStory, delegate: FTTemplateStoryDelegate){
         if let templateWebController = UIStoryboard.init(name: "FTTemplatesStore", bundle: storeBundle).instantiateViewController(withIdentifier: "FTTemplateWebViewScollController") as? FTTemplateWebViewScollController {
              templateWebController.story = story

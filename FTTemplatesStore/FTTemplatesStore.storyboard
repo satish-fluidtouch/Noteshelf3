@@ -1620,6 +1620,12 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dM1-Lu-HRd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="down" id="gRx-ZM-k9n">
+                    <connections>
+                        <action selector="handleSwipeDownGesture:" destination="58W-Vb-OzT" id="8MP-4Q-uFs"/>
+                        <outlet property="delegate" destination="Acg-bu-XbM" id="xJa-4C-AlU"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-285" y="-672"/>
         </scene>
@@ -1635,46 +1641,80 @@
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                                 <color key="backgroundColor" systemColor="tintColor"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="GC4-Zu-MmW" customClass="CustomFlowLayout" customModule="FTTemplatesStore" customModuleProvider="target">
-                                    <size key="itemSize" width="128" height="128"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="GC4-Zu-MmW" customClass="FTCustomFlowLayout" customModule="FTTemplatesStore" customModuleProvider="target">
+                                    <size key="itemSize" width="200" height="200"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FTTemplateCollectionViewCell" id="Ncw-hF-2Lg" customClass="FTTemplateCollectionViewCell" customModule="FTTemplatesStore" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="187.5" height="189.5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="kEj-ZL-wp8">
-                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="187.5" height="189.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YTP-lT-Kn1">
-                                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                            <integer key="value" value="18"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
+                                                    <rect key="frame" x="0.0" y="0.0" width="187.5" height="128"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="128" id="Eaa-2X-EaM"/>
+                                                    </constraints>
                                                 </imageView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yjw-sC-GxC">
+                                                    <rect key="frame" x="0.0" y="128" width="187.5" height="61.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="                                       " lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L9q-9J-jiI" customClass="FTTopLeftAlignedLabel" customModule="FTTemplatesStore" customModuleProvider="target">
+                                                            <rect key="frame" x="12" y="12" width="163.5" height="19.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="                                  " lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hP1-0w-XWX" customClass="FTTopLeftAlignedLabel" customModule="FTTemplatesStore" customModuleProvider="target">
+                                                            <rect key="frame" x="12" y="33.5" width="163.5" height="16"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="hP1-0w-XWX" firstAttribute="trailing" secondItem="L9q-9J-jiI" secondAttribute="trailing" id="0Z1-cZ-pxU"/>
+                                                        <constraint firstItem="L9q-9J-jiI" firstAttribute="leading" secondItem="yjw-sC-GxC" secondAttribute="leading" constant="12" id="EwC-v6-uVe"/>
+                                                        <constraint firstItem="hP1-0w-XWX" firstAttribute="leading" secondItem="L9q-9J-jiI" secondAttribute="leading" id="LrB-QU-lWu"/>
+                                                        <constraint firstAttribute="trailing" secondItem="L9q-9J-jiI" secondAttribute="trailing" constant="12" id="RUM-Lw-yhx"/>
+                                                        <constraint firstItem="hP1-0w-XWX" firstAttribute="top" secondItem="L9q-9J-jiI" secondAttribute="bottom" constant="2" id="bwR-Jx-hKY"/>
+                                                        <constraint firstItem="L9q-9J-jiI" firstAttribute="top" secondItem="yjw-sC-GxC" secondAttribute="top" constant="12" id="gLw-Mo-bmx"/>
+                                                        <constraint firstAttribute="bottom" secondItem="hP1-0w-XWX" secondAttribute="bottom" constant="12" id="kw5-Tx-28l"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="YTP-lT-Kn1" firstAttribute="leading" secondItem="kEj-ZL-wp8" secondAttribute="leading" id="3qx-4o-DJj"/>
+                                                <constraint firstAttribute="trailing" secondItem="yjw-sC-GxC" secondAttribute="trailing" id="46N-jn-dvJ"/>
                                                 <constraint firstItem="YTP-lT-Kn1" firstAttribute="top" secondItem="kEj-ZL-wp8" secondAttribute="top" id="lQM-Hf-1re"/>
-                                                <constraint firstAttribute="bottom" secondItem="YTP-lT-Kn1" secondAttribute="bottom" id="lUa-VH-d0y"/>
+                                                <constraint firstItem="yjw-sC-GxC" firstAttribute="leading" secondItem="kEj-ZL-wp8" secondAttribute="leading" id="nsc-wg-Zl9"/>
+                                                <constraint firstAttribute="bottom" secondItem="yjw-sC-GxC" secondAttribute="bottom" id="rSe-ax-2x8"/>
+                                                <constraint firstItem="yjw-sC-GxC" firstAttribute="top" secondItem="YTP-lT-Kn1" secondAttribute="bottom" id="sKf-dy-NOe"/>
                                                 <constraint firstAttribute="trailing" secondItem="YTP-lT-Kn1" secondAttribute="trailing" id="yiR-q9-Ra3"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <color key="backgroundColor" systemColor="systemRedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="18"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
+                                            <outlet property="descriptionLabel" destination="hP1-0w-XWX" id="NPm-o7-RCF"/>
                                             <outlet property="imageView" destination="YTP-lT-Kn1" id="b9c-Sx-g3X"/>
+                                            <outlet property="imgViewHeightConstraint" destination="Eaa-2X-EaM" id="5QM-AB-oCB"/>
+                                            <outlet property="titleLabel" destination="L9q-9J-jiI" id="F8Y-tv-j8J"/>
+                                            <outlet property="titleView" destination="yjw-sC-GxC" id="L6c-VX-K9h"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Zgt-Ug-sEk"/>
-                        <color key="backgroundColor" systemColor="systemGreenColor"/>
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="sro-Q0-Pvh" secondAttribute="bottom" id="QeE-ku-SFW"/>
@@ -1742,12 +1782,6 @@
         </systemColor>
         <systemColor name="systemGray2Color">
             <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tintColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

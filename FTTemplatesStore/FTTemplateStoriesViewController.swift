@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FTCommon
 
 class FTTemplateStoriesViewController: UIViewController {
     @IBOutlet private weak var collectionView: UICollectionView!
@@ -39,9 +40,16 @@ class FTTemplateStoriesViewController: UIViewController {
             self.collectionView.contentInset = displayType.contentInset
             self.layout.clearCache()
             self.collectionView.collectionViewLayout.invalidateLayout()
-            self.collectionView.layoutIfNeeded()
-            self.collectionView.reloadData()
         }
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: {[weak self](_) in
+            guard let self = self else { return }
+            self.collectionView?.reloadData()
+        }, completion: { (_) in
+        })
     }
 }
 
@@ -54,7 +62,8 @@ extension FTTemplateStoriesViewController: UICollectionViewDataSource, UICollect
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FTTemplateCollectionViewCell", for: indexPath) as? FTTemplateCollectionViewCell else {
             fatalError("No such cell")
         }
-        cell.configCell(with: self.stories[indexPath.row])
+        let imgHeight = self.layout.getImageHeight(with: indexPath)
+        cell.configCell(with: self.stories[indexPath.row], imgHeight: imgHeight)
         return cell
     }
 
@@ -79,20 +88,18 @@ extension FTTemplateStoriesViewController: FTTemplateStoryDelegate {
 }
 
 extension FTTemplateStoriesViewController: FTTemplateLayoutDelegate {
-    func collectionView(_ collectionView: UICollectionView, heightForImageAtIndexPath indexPath: IndexPath, cellWidth: CGFloat) -> CGFloat {
-        var imgHeight: CGFloat = 100
+    func collectionView(_ collectionView: UICollectionView, heightForCellAtIndexPath indexPath: IndexPath, columnWidth: CGFloat) -> CGFloat {
+        var cellHeight: CGFloat = 0
+        let imgHeight = self.layout.getImageHeight(with: indexPath)
+        cellHeight += imgHeight
         let story = self.stories[indexPath.row]
-        if let img = UIImage(named: story.largeImageName, in: storeBundle, compatibleWith: nil) {
-            imgHeight = calculateImageHeight(sourceImage: img, scaledToWidth: cellWidth)
-        }
-        return imgHeight
-    }
-
-    func calculateImageHeight (sourceImage: UIImage, scaledToWidth: CGFloat) -> CGFloat {
-        let oldWidth = CGFloat(sourceImage.size.width)
-        let scaleFactor = scaledToWidth / oldWidth
-        let newHeight = CGFloat(sourceImage.size.height) * scaleFactor
-        return newHeight
+        let labelWidth = columnWidth - (2 * layout.cellPadding) - 24.0 // 2*12.0 h-paddings
+        let titleHeight = story.title.sizeWithFont(.systemFont(ofSize: 16), constrainedToSize: CGSize(width: labelWidth, height: 0), lineBreakMode: .byWordWrapping).height
+        cellHeight += titleHeight
+        let subTitleHeight = story.subtitle.sizeWithFont(.systemFont(ofSize: 13), constrainedToSize: CGSize(width: labelWidth, height: 0), lineBreakMode: .byWordWrapping).height
+        cellHeight += subTitleHeight
+        cellHeight += 28 // v-paddings + offset
+        return cellHeight
     }
 }
 

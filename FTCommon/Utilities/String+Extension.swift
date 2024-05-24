@@ -78,12 +78,6 @@ public extension String {
         return docName
     }
 
-    func widthOfString(usingFont font: Font) -> CGFloat {
-        let fontAttributes = [NSAttributedString.Key.font: font]
-        let size = self.size(withAttributes: fontAttributes)
-        return size.width
-    }
-
     mutating func add(prefix: String) {
         self = prefix + self
     }
@@ -141,5 +135,58 @@ public extension String {
         let color2 = UIColor(hexString: cleanedOtherColor)
         return color1.isEqualTo(color2)
     }
+
+    func widthOfString(usingFont font: UIFont) -> CGFloat {
+        let fontAttributes = [NSAttributedString.Key.font: font]
+        let size = self.size(withAttributes: fontAttributes)
+        return size.width
+    }
+
+    func heightOfString(usingFont font: UIFont) -> CGFloat {
+        let fontAttributes = [NSAttributedString.Key.font: font]
+        let size = self.size(withAttributes: fontAttributes)
+        return size.height
+    }
+
+    func getHeight(using font: UIFont, width: CGFloat) -> CGFloat {
+        let textStorage = NSTextStorage(string: self)
+        let textContainter = NSTextContainer(size: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
+        let layoutManager = NSLayoutManager()
+        layoutManager.addTextContainer(textContainter)
+        textStorage.addLayoutManager(layoutManager)
+        textStorage.addAttribute(NSAttributedString.Key.font, value: font, range: NSMakeRange(0, textStorage.length))
+        textContainter.lineFragmentPadding = 0.0
+        layoutManager.glyphRange(for: textContainter)
+        return layoutManager.usedRect(for: textContainter).size.height
+    }
+
+    func sizeWithFont(_ font:UIFont) -> CGSize {
+        return self.size(withAttributes: [NSAttributedString.Key.font: font])
+    }
+
+    func sizeWithFont(_ font:UIFont, constrainedToSize size:CGSize) -> CGSize {
+        let boundingRect = self.boundingRect(with: size, options:.usesLineFragmentOrigin, attributes:[NSAttributedString.Key.font: font], context:nil)
+        return boundingRect.size
+    }
+
+    func sizeWithFont(_ font:UIFont, constrainedToSize size:CGSize, lineBreakMode:NSLineBreakMode) -> CGSize {
+        let style = NSMutableParagraphStyle()
+        style.lineBreakMode = lineBreakMode
+        let boundingRect = self.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes:[NSAttributedString.Key.font: font,NSAttributedString.Key.paragraphStyle:style], context:nil)
+        return boundingRect.size
+    }
 }
 
+public extension NSAttributedString {
+    func getHeight(using font: UIFont, width: CGFloat) -> CGFloat {
+        let textStorage = NSTextStorage(attributedString: self)
+        let textContainter = NSTextContainer(size: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
+        let layoutManager = NSLayoutManager()
+        layoutManager.addTextContainer(textContainter)
+        textStorage.addLayoutManager(layoutManager)
+        textStorage.addAttribute(NSAttributedString.Key.font, value: font, range: NSMakeRange(0, textStorage.length))
+        textContainter.lineFragmentPadding = 0.0
+        layoutManager.glyphRange(for: textContainter)
+        return layoutManager.usedRect(for: textContainter).size.height
+    }
+}

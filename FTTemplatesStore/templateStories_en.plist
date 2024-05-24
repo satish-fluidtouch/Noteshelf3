@@ -32,11 +32,11 @@
 		<key>thumbnailRectXPercent</key>
 		<real>0.2</real>
 		<key>thumbnailRectYPercent</key>
-		<real>0.3</real>
+		<real>0.45</real>
 		<key>thumbnailRectWidthPercent</key>
-		<real>0.4</real>
+		<real>0.37</real>
 		<key>thumbnailRectHeightPercent</key>
-		<real>0.5</real>
+		<real>0.43</real>
 	</dict>
 	<dict>
 		<key>title</key>
@@ -50,11 +50,11 @@
 		<key>thumbnailRectXPercent</key>
 		<real>0.2</real>
 		<key>thumbnailRectYPercent</key>
-		<real>0.3</real>
+		<real>0.45</real>
 		<key>thumbnailRectWidthPercent</key>
-		<real>0.4</real>
+		<real>0.37</real>
 		<key>thumbnailRectHeightPercent</key>
-		<real>0.5</real>
+		<real>0.43</real>
 	</dict>
 	<dict>
 		<key>title</key>
@@ -68,11 +68,11 @@
 		<key>thumbnailRectXPercent</key>
 		<real>0.2</real>
 		<key>thumbnailRectYPercent</key>
-		<real>0.3</real>
+		<real>0.45</real>
 		<key>thumbnailRectWidthPercent</key>
-		<real>0.4</real>
+		<real>0.37</real>
 		<key>thumbnailRectHeightPercent</key>
-		<real>0.5</real>
+		<real>0.43</real>
 	</dict>
 </array>
 </plist>

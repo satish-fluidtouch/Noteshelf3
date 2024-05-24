@@ -1,6 +1,7 @@
 
 import SwiftUI
 import FTStyles
+import FTCommon
 
 struct FTToastView:  View {
     @ObservedObject var toastConfig: FTToastConfiguration
@@ -111,45 +112,4 @@ class FTToastConfiguration: ObservableObject {
         }
         return (width, height)
     }
-}
-
-extension String {
-    func widthOfString(usingFont font: UIFont) -> CGFloat {
-        let fontAttributes = [NSAttributedString.Key.font: font]
-        let size = self.size(withAttributes: fontAttributes)
-        return size.width
-    }
-
-    func heightOfString(usingFont font: UIFont) -> CGFloat {
-        let fontAttributes = [NSAttributedString.Key.font: font]
-        let size = self.size(withAttributes: fontAttributes)
-        return size.height
-    }
-
-    func getHeight(using font: UIFont, width: CGFloat) -> CGFloat {
-        let textStorage = NSTextStorage(string: self)
-        let textContainter = NSTextContainer(size: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
-        let layoutManager = NSLayoutManager()
-        layoutManager.addTextContainer(textContainter)
-        textStorage.addLayoutManager(layoutManager)
-        textStorage.addAttribute(NSAttributedString.Key.font, value: font, range: NSMakeRange(0, textStorage.length))
-        textContainter.lineFragmentPadding = 0.0
-        layoutManager.glyphRange(for: textContainter)
-        return layoutManager.usedRect(for: textContainter).size.height
-    }
-}
-
-extension NSAttributedString {
-    func getHeight(using font: UIFont, width: CGFloat) -> CGFloat {
-        let textStorage = NSTextStorage(attributedString: self)
-        let textContainter = NSTextContainer(size: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
-        let layoutManager = NSLayoutManager()
-        layoutManager.addTextContainer(textContainter)
-        textStorage.addLayoutManager(layoutManager)
-        textStorage.addAttribute(NSAttributedString.Key.font, value: font, range: NSMakeRange(0, textStorage.length))
-        textContainter.lineFragmentPadding = 0.0
-        layoutManager.glyphRange(for: textContainter)
-        return layoutManager.usedRect(for: textContainter).size.height
-    }
-
 }

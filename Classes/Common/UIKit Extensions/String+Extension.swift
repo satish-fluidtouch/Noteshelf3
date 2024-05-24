@@ -85,22 +85,6 @@ extension String {
         return String(format:"%@@2x.%@", filenameWithoutExtension, fileExtension)
     }
 
-    func sizeWithFont(_ font:UIFont) -> CGSize {
-        return self.size(withAttributes: [NSAttributedString.Key.font: font])
-    }
-
-    func sizeWithFont(_ font:UIFont, constrainedToSize size:CGSize) -> CGSize {
-        let boundingRect = self.boundingRect(with: size, options:.usesLineFragmentOrigin, attributes:[NSAttributedString.Key.font: font], context:nil)
-        return boundingRect.size
-    }
-
-    func sizeWithFont(_ font:UIFont, constrainedToSize size:CGSize, lineBreakMode:NSLineBreakMode) -> CGSize {
-        let style = NSMutableParagraphStyle()
-        style.lineBreakMode = lineBreakMode
-        let boundingRect = self.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes:[NSAttributedString.Key.font: font,NSAttributedString.Key.paragraphStyle:style], context:nil)
-        return boundingRect.size
-    }
-
     func drawStringInRect(_ rect:CGRect, withFont font:UIFont, lineBreakMode:NSLineBreakMode, alignment:NSTextAlignment) {
         let style = NSMutableParagraphStyle()
         style.lineBreakMode = lineBreakMode

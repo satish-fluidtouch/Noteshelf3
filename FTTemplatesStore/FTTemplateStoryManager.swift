@@ -19,6 +19,13 @@ class FTTemplateStoryManager {
         let decoder = PropertyListDecoder()
         do {
             stories = try decoder.decode([FTTemplateStory].self, from: data)
+            stories = stories.map { story in
+                var trimmedStory = story
+                trimmedStory.title = story.title.trimmingCharacters(in: .whitespacesAndNewlines)
+                trimmedStory.subtitle = story.subtitle.trimmingCharacters(in: .whitespacesAndNewlines)
+                trimmedStory.titleViewBgColor = story.titleViewBgColor.trimmingCharacters(in: .whitespacesAndNewlines)
+                return trimmedStory
+            }
         } catch {
             NSLog("Not able to load stories: \(error.localizedDescription)")
         }
@@ -32,7 +39,7 @@ struct FTTemplateStory: Codable {
     let thumbnailRectYPercent: Double
     let thumbnailRectWidthPercent: Double
     let thumbnailRectHeightPercent: Double
-    let title: String
-    let subtitle: String
-    let titleViewBgColor: String
+    var title: String
+    var subtitle: String
+    var titleViewBgColor: String
 }

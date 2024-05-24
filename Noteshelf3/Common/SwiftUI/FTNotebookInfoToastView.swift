@@ -8,6 +8,7 @@
 
 import SwiftUI
 import FTStyles
+import FTCommon
 
 class FTNotebookToastInfo {
     let title: String
