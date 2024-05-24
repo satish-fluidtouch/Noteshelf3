@@ -19,6 +19,7 @@ enum FTAnimationState {
 class FTShareActionViewController: UIViewController, FTShareAlertDelegate {
     @IBOutlet var bottomView: UIView?
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var importButton: UIButton!
     @IBOutlet weak var imageView1: UIImageView!
     @IBOutlet weak var imageView1WidthConstraint: NSLayoutConstraint!
@@ -63,6 +64,7 @@ class FTShareActionViewController: UIViewController, FTShareAlertDelegate {
         imageView1.layer.cornerRadius = 10
         imageView2.layer.cornerRadius = 10
         imageView3.layer.cornerRadius = 10
+        containerView.addShadow(color: .black.withAlphaComponent(0.2), offset: CGSize(width: 0, height: 10), opacity: 1, shadowRadius: 20)
         imageView2.isHidden = true
         imageView3.isHidden = true
         titleLabel.text = "Notebook".localized

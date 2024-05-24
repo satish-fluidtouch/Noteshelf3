@@ -14,6 +14,7 @@ protocol FTShareAlertDelegate: AnyObject {
 
 class FTShareActionAlertView: UIView {
     @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var unsupportedDescLabel: UILabel!
     @IBOutlet weak var unsupportedDoneButton: UIButton!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var alertTitle: UILabel!
@@ -46,7 +47,8 @@ class FTShareActionAlertView: UIView {
     
     func showUnsupportedAlert() {
         self.isHidden = false
-        unSupportedTiitleLabel.text = "NotSupportedFormat".localized
+        unSupportedTiitleLabel.text = "import.notsupported.title".localized
+        unsupportedDescLabel.text = "import.notsupported.desc".localized
         unsupportedDoneButton.layer.cornerRadius = 10
         self.alertStackView.isHidden = true
         self.unspportedFileView.isHidden = false
