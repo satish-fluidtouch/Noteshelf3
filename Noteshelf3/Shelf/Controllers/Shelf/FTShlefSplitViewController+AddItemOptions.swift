@@ -322,7 +322,7 @@ extension FTShelfSplitViewController {
                                 return;
                             }
                             let info = FTDocumentInputInfo();
-                            info.rootViewController = self;
+                            info.rootViewController = self.rootViewcontroller?.docuemntViewController ?? self;
                             info.inputFileURL = URL.init(fileURLWithPath: filePath!);
                             info.isTemplate = false;
                             FTCLSLog("Inserting PDF File");
@@ -471,7 +471,7 @@ extension FTShelfSplitViewController {
             controller = cont;
         }*/
         info.isTemplate = isTemplate
-        info.rootViewController = self
+        info.rootViewController = self.rootViewcontroller?.docuemntViewController ?? self
         info.inputFileURL = URL.init(fileURLWithPath: filePath);
         info.overlayStyle = .clearWhite
         info.coverTemplateImage = defaultCover.themeThumbnail()
