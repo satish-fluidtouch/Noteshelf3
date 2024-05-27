@@ -45,7 +45,8 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
     var selectedTagItems = Dictionary<String, FTShelfTagsItem>();
 
     let shelfMenuDisplayInfo = FTShelfMenuOverlayInfo();
-    private var currentDocument: FTDocumentProtocol?
+    private var currentOpenedDocument: FTDocumentProtocol?
+    private var currentDocumentToken: FTDocumentOpenToken?
     internal var shelfItemCollection: FTShelfItemCollection? {
         didSet {
             if let shelfItemCollection {
@@ -337,13 +338,14 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
                     completionHandler?(nil, false)
                     return
                 }
-                if self.currentDocument == nil {
-                    self.currentDocument = FTDocumentFactory.documentForItemAtURL(_shelfItem.URL)
+                if self.currentOpenedDocument == nil {
+                    self.currentOpenedDocument = FTDocumentFactory.documentForItemAtURL(_shelfItem.URL)
                 }
                 let controller = self.rootViewcontroller?.docuemntViewController
-                if self.currentDocument?.documentState == .closed {
-                    FTDocumentValidator.openNoteshelfDocument(for: _shelfItem, pin: nil, onViewController: controller ?? self) {[weak self] document, error, token in
-                        self?.currentDocument = document
+                if self.currentOpenedDocument?.documentState == .closed {
+                    FTDocumentValidator.openNoteshelfDocument(for: _shelfItem, pin: nil, onViewController: controller ?? self) {[weak self] ftdocument, error, token in
+                        self?.currentOpenedDocument = ftdocument
+                        self?.currentDocumentToken = token
                         startProcess()
                     }
                 } else {
@@ -351,18 +353,19 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
                 }
                 func startProcess() {
                     self.rootViewcontroller?.showCompleteImportProgressIfNeeded()
-                    _ =  self.startImportOfItem(item, document: currentDocument) { shelfItem, error in
+                    _ =  self.startImportOfItem(item, document: currentOpenedDocument) { shelfItem, error in
                         let status = self.rootViewcontroller?.updateSmartProgressStatus(openDoc: item.openOnImport) ?? .completed
                         saveAndCloseDocumentIfNeeded(importStatus: status, shelfItem: shelfItem, success: error == nil)
                      }
                 }
                 
                 func saveAndCloseDocumentIfNeeded(importStatus : FTImportProgressStatus, shelfItem: FTShelfItemProtocol?, success: Bool) {
-                    if importStatus == .completed {
-                        (currentDocument as? FTNoteshelfDocument)?.saveAndCloseWithCompletionHandler({ sucess in
-                            self.currentDocument = nil
+                    if importStatus == .completed, let currentOpenedDocument, let currentDocumentToken {
+                        FTNoteshelfDocumentManager.shared.saveAndClose(document: currentOpenedDocument, token: currentDocumentToken) { success in
+                            self.currentOpenedDocument = nil
+                            self.currentDocumentToken = nil
                             completionHandler?(shelfItem, success)
-                        })
+                        }
                     } else {
                         completionHandler?(shelfItem, success)
                     }
