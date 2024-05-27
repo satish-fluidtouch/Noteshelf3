@@ -73,6 +73,10 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
         self.preferredContentSize = self.fetchSize()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.post(name: Notification.Name("rightPanelPopupDismiss"), object: nil)
+    }
+    
     private func fetchSize() -> CGSize {
         var height: CGFloat = 652.0
         if !UIDevice.isLandscapeOrientation {

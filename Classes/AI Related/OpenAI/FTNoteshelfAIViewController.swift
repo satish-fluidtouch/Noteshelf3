@@ -222,6 +222,11 @@ class FTNoteshelfAIViewController: UIViewController {
             self.addCredtisFooter();
         }
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+
+        NotificationCenter.default.post(name: Notification.Name("centralPanelPopUpDismiss"), object: FTToolbarPopoverScreen.openAi)
+    }
 
     deinit{
         FTOpenAI.shared.cancelCurrentExecution();

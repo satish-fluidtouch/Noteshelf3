@@ -20,6 +20,8 @@ protocol FTDeskPanelActionDelegate: AnyObject {
     func lastSelectedPenMode() -> RKDeskMode
     func shapesToolEnabled() -> Bool
     func zoomModeEnabled() -> Bool
+    func isBookMarkAdded() -> Bool
+    func isTagAdded() -> Bool
 
     @objc optional func canUndo() -> Bool
     @objc optional func undo()
@@ -37,10 +39,10 @@ protocol FTDeskPanelActionDelegate: AnyObject {
     //Left Panel
     @IBOutlet private weak var leftPanelBlurView: FTToolbarVisualEffectView?
     @IBOutlet private weak var leftPanel: UIStackView?
-    @IBOutlet weak var backButton: UIButton?
-    @IBOutlet weak var finderButton: FTFinderButton?
-    @IBOutlet weak var undoButton : UIButton?
-    @IBOutlet weak var redoButton: UIButton?
+    @IBOutlet weak var backButton: FTToolBarButton?
+    @IBOutlet weak var finderButton: FTToolBarButton?
+    @IBOutlet weak var undoButton : FTToolBarButton?
+    @IBOutlet weak var redoButton: FTToolBarButton?
 
     //Center Panel
     @IBOutlet private weak var centerPanelContainer: UIView?
@@ -50,10 +52,10 @@ protocol FTDeskPanelActionDelegate: AnyObject {
     //Right Panel
     @IBOutlet private weak var rightPanelBlurView: FTToolbarVisualEffectView?
     @IBOutlet private weak var rightPanel: UIStackView?
-    @IBOutlet weak var addButton: UIButton?
+    @IBOutlet weak var addButton: FTToolBarButton?
     @IBOutlet weak var shareButton: UIButton?
     @IBOutlet weak var fullScreenModeButton: UIButton!
-    @IBOutlet weak var moreButton: UIButton?
+    @IBOutlet weak var moreButton: FTToolBarButton?
     @IBOutlet weak var dividerLine: UIView?
 
     private var currentSize = CGSize.zero
@@ -74,6 +76,7 @@ protocol FTDeskPanelActionDelegate: AnyObject {
         self.view.isHidden = true
 #endif
         self.handleObservers()
+        self.popupDismissStatus()
     }
 
     override func viewDidLayoutSubviews() {
@@ -117,6 +120,14 @@ protocol FTDeskPanelActionDelegate: AnyObject {
         return viewController
     }
 
+    func updatePageBookmarkStatus(_ status: Bool) {
+        self.centerPanelVc?.updatePageBookmarkStatusIfNeeded(status)
+    }
+    
+    func updateTagStatus(_ status: Bool) {
+        self.centerPanelVc?.updateTagStatusIfNeeded(status)
+    }
+    
     func updateDeskToolbarDelegate(_ delegate:FTDeskToolbarDelegate, actionDelegate: FTDeskPanelActionDelegate) {
         self.delegate = delegate
         self.actionDelegate = actionDelegate
@@ -253,9 +264,9 @@ protocol FTDeskPanelActionDelegate: AnyObject {
     private func validateFinderButton() {
         if let splitViewController = self.noteBookSplitViewController() {
             if splitViewController.isFinderVisible() {
-                self.finderButton?.showFinderBg()
+                self.finderButton?.showBg()
             } else {
-                self.finderButton?.hideFinderBg()
+                self.finderButton?.hideBg()
             }
         }
     }
@@ -300,20 +311,36 @@ protocol FTDeskPanelActionDelegate: AnyObject {
             }
         }
     }
+    
 }
 
 private extension FTiOSDeskToolbarController {
     //MARK:- Actions -
     @IBAction private func leftPanelButtonTapped(_ sender : UIButton) {
         if(sender == self.undoButton) {
-            self.performUndoIfNeeded()
+            self.undoButton?.showBg()
+            runInMainThread(0.1) {
+                self.performUndoIfNeeded()
+                self.undoButton?.hideBg()
+            }
             FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_undo_tap)
         } else if (sender == self.redoButton) {
-            self.performRedoIfNeeded()
+            self.redoButton?.showBg()
+            runInMainThread(0.1) {
+                self.performRedoIfNeeded()
+                self.redoButton?.hideBg()
+            }
             FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_redo_tap)
         } else {
-            if let button = FTDeskLeftPanelTool.init(rawValue: sender.tag) {
-                self.actionDelegate?.didTapLeftPanelTool(button, source: sender)
+            if let button = FTDeskLeftPanelTool(rawValue: sender.tag) {
+                if button == .back {
+                    self.backButton?.showBg(isInstanse:true)
+                    runInMainThread(0.1) {
+                        self.actionDelegate?.didTapLeftPanelTool(button, source: sender)
+                    }
+                }else {
+                    self.actionDelegate?.didTapLeftPanelTool(button, source: sender)
+                }
             }
         }
     }
@@ -328,8 +355,22 @@ private extension FTiOSDeskToolbarController {
         } else {
             if let button = FTDeskRightPanelTool.init(rawValue: sender.tag) {
                 self.actionDelegate?.didTapRightPanelTool(button, source: sender, mode: .normal)
+                if button == .add {
+                    self.addButton?.showBg()
+                } else if button == .more {
+                    self.moreButton?.showBg()
+                }
             }
+            
         }
+    }
+    
+    func addBgView(button: UIButton) {
+        let view =  UIView()
+        view.addFullConstraints(button,top:6.0,bottom: 6.0, left:2.0,right: 2.0)
+        view.backgroundColor = UIColor.appColor(.accentBg)
+        view.layer.cornerRadius = 7.0
+        button.addSubview(view)
     }
 }
 
@@ -374,6 +415,14 @@ extension FTiOSDeskToolbarController {
 }
 
 extension FTiOSDeskToolbarController: FTToolbarCenterPanelDelegate {
+    func isTagAdded() -> Bool {
+        return self.delegate?.isTagAdded() ?? false
+    }
+    
+    func isPageBookMarked() -> Bool {
+        return self.delegate?.isBookMarkAdded() ?? false
+    }
+    
     func didTapCenterPanelButton(type: FTDeskCenterPanelTool, sender: UIView) {
         self.actionDelegate?.didTapCenterPanelTool(type, source: sender)
     }
@@ -408,38 +457,61 @@ extension FTiOSDeskToolbarController: FTToolbarCenterPanelDelegate {
         return itemCount
     }
 }
-
-final class FTFinderButton: FTBaseButton {
+@IBDesignable
+final class FTToolBarButton: FTBaseButton {
+    
+    @IBInspectable var selectedBg : UIColor = UIColor.appColor(.white100)
+    
     override func awakeFromNib() {
         self.removeFinderBg()
         self.addFinderBg()
-        hideFinderBg()
+        hideBg()
     }
 
-    func hideFinderBg() {
-        let bgBtn = self.subviews.first { $0 is FTToolBgButton }
+    func hideBg() {
+        let bgBtn = self.viewWithTag(1)
         bgBtn?.isHidden = true
     }
 
-    func showFinderBg() {
-        let bgBtn = self.subviews.first { $0 is FTToolBgButton }
+    func showBg(isInstanse : Bool = false) {
+        let bgBtn = self.viewWithTag(1)
         bgBtn?.isHidden = false
     }
 
     private func addFinderBg() {
         let finderBgBtn = FTToolBgButton()
+        finderBgBtn.tag = 1
         finderBgBtn.layer.zPosition = -1
         finderBgBtn.isUserInteractionEnabled = false
         finderBgBtn.addFullConstraints(self, top: 6.0, bottom: 6.0, left: 2.0, right: 2.0)
         finderBgBtn.layoutIfNeeded()
-        finderBgBtn.backgroundColor = .appColor(.white100)
+        finderBgBtn.backgroundColor = selectedBg
         finderBgBtn.addRequiredShadow()
         self.sendSubviewToBack(finderBgBtn)
-        self.hideFinderBg()
+        self.hideBg()
     }
 
     private func removeFinderBg() {
         let subviewsToRemove = self.subviews.filter { $0 is FTToolBgButton }
         subviewsToRemove.forEach { $0.removeFromSuperview() }
     }
+    
+   
 }
+
+extension FTiOSDeskToolbarController  {
+    func popupDismissStatus(){
+        NotificationCenter.default.addObserver(self, selector: #selector(self.rightPanelPopupDismissStatus(notification:)), name: Notification.Name("rightPanelPopupDismiss"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.leftPanelPopupDismissStatus(notification:)), name: Notification.Name("leftPanelPopupDismiss"), object: nil)
+    }
+    
+    @objc func rightPanelPopupDismissStatus(notification: Notification) {
+        moreButton?.hideBg()
+        addButton?.hideBg()
+    }
+    
+    @objc func leftPanelPopupDismissStatus(notification: Notification) {
+        backButton?.hideBg()
+    }
+}
+

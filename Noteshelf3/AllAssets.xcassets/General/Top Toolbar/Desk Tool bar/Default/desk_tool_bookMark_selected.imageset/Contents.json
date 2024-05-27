@@ -1,15 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "􀆊.pdf",
+      "filename" : "sidebar-and-popover-icons-11.pdf",
       "idiom" : "universal"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "template-rendering-intent" : "template"
   }
 }

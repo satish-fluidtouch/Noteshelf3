@@ -1156,6 +1156,7 @@
         [self handlePageChange];
     }
     [self scrollViewScrollComplete];
+    
 }
 
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
@@ -2977,6 +2978,14 @@
 -(BOOL)zoomModeEnabled
 {
     return self.isInZoomMode;
+}
+
+-(BOOL)isBookMarkAdded {
+    return self.currentlyVisiblePage.isBookmarked;
+}
+
+-(BOOL)isTagAdded {
+    return self.tagStatus;
 }
 
 #pragma mark - Audio -

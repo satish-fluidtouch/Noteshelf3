@@ -776,6 +776,7 @@ extension FTPDFRenderViewController {
             if let quickNoteSaveController = UIStoryboard(name: "FTNotebookMoreOptions", bundle: nil).instantiateViewController(withIdentifier: "FTQuickNoteSaveViewController") as? FTQuickNoteSaveViewController {
                 quickNoteSaveController.delegate = self
                 quickNoteSaveController.quickNoteTitle = self.shelfItemManagedObject.title
+                quickNoteSaveController.isFromCentralPanel = true
                 quickNoteSaveController.popoverPresentationController?.backgroundColor = UIColor.appColor(.popoverBgColor)
                 #if targetEnvironment(macCatalyst)
                 quickNoteSaveController.preferredContentSize = CGSize(width: 300, height: 240);
@@ -1130,5 +1131,16 @@ extension FTPDFRenderViewController: UIGestureRecognizerDelegate {
 @objc extension FTPDFRenderViewController {
     var bookScaleAnim: Bool {
         return FTDeveloperOption.bookScaleAnim
+    }
+}
+
+
+extension FTPDFRenderViewController {
+  @objc func tagStatus() -> Bool {
+        var value = false
+        if let status = self.currentlyVisiblePage() as? FTThumbnailable {
+            value = status.tags().isEmpty ? false : true
+         }
+        return value
     }
 }

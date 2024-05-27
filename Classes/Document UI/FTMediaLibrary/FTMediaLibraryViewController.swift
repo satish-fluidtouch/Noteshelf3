@@ -60,6 +60,7 @@ class FTMediaLibraryViewController: UIViewController, FTPopoverPresentable {
     
     var recentMediaArray: [FTMediaLibraryModel]?
     var isUnSplashItemsSorted = false
+    var isFromCentralPanel : Bool = false
     var mediaSource: MediaSource = .pixabay {
         didSet {
             localProvider.mediaType = mediaSource
@@ -97,6 +98,14 @@ class FTMediaLibraryViewController: UIViewController, FTPopoverPresentable {
                 segmentedControl?.scrollView.frame = frame
                 }
         }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if isFromCentralPanel {
+            let source: FTToolbarPopoverScreen = mediaSource == .pixabay ? .pixabay : .unsplash
+            NotificationCenter.default.post(name: Notification.Name("centralPanelPopUpDismiss"), object: source)
+        }
+    }
+    
     deinit {
            #if DEBUG
                debugPrint("deinit \(self.classForCoder)");
@@ -534,6 +543,7 @@ extension FTMediaLibraryViewController {
         mediaLibraryVc.delegate = controller as? FTMediaLibrarySelectionDelegate
         mediaLibraryVc.mediaSource = mediaType
         mediaLibraryVc.shouldHideBackButton = true
+        mediaLibraryVc.isFromCentralPanel = true
         mediaLibraryVc.ftPresentationDelegate.source = source as AnyObject
         controller.ftPresentPopover(vcToPresent: mediaLibraryVc, contentSize: AddMenuType.media.contentSize, hideNavBar: true)
     }

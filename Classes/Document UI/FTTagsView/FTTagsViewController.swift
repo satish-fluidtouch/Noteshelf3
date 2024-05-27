@@ -38,6 +38,7 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
     var sourceViewController: UIViewController?
     var tagsType: FTTagsType = .page
     var lastUsedTag = ""
+    var isFromCentralPanel : Bool = false
     deinit {
            #if DEBUG
                debugPrint("deinit \(self.classForCoder)");
@@ -80,6 +81,9 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBar.isHidden = false
+        if isFromCentralPanel {
+            NotificationCenter.default.post(name: Notification.Name("centralPanelPopUpDismiss"), object: FTToolbarPopoverScreen.tag)
+        }
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -114,6 +118,7 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
         if let tagsController: FTTagsViewController = storyBoard.instantiateViewController(withIdentifier: "FTTagsViewController") as? FTTagsViewController {
             tagsController.tagsList = tags
             tagsController.isPresenting = true
+            tagsController.isFromCentralPanel = true
             tagsController.sourceViewController = controller
             tagsController.delegate = controller as? FTTagsViewControllerDelegate
             tagsController.contextMenuTagDelegate = controller as? FTFinderContextMenuTagDelegate

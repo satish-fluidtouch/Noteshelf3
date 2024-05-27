@@ -67,6 +67,10 @@ class FTAddDocumentEntitiesViewController: UIViewController, FTPopoverPresentabl
         self.addRequiredViewController()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.post(name: Notification.Name("rightPanelPopupDismiss"), object: nil)
+    }
+    
     private func addRequiredViewController() {
         if let menuType = AddMenuType(rawValue: segmentIndex) {
             switch menuType {

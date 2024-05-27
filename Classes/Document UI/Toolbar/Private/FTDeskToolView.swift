@@ -8,6 +8,7 @@
 
 import UIKit
 import FTCommon
+import Foundation
 
 class FTDeskToolView: UIView {
     @IBOutlet private weak var contentView: UIView!
@@ -55,11 +56,12 @@ class FTDeskToolView: UIView {
         } else {
             self.toolButton.setImage(named: toolType.iconName(), for: .normal);
         }
-    }
+       
+}
 
     private func showBgIfNeeded() {
         if isSelected {
-            self.bgButton.backgroundColor = UIColor.appColor(.white100)
+            self.bgButton.backgroundColor = self.toolType.displayBgColorStyle()
             self.bgButton.addRequiredShadow()
             if let selImgName = self.toolType.selectedIconName() {
                 self.toolButton.setImage(named: selImgName, for: .normal, renderMode: .alwaysOriginal);
@@ -133,21 +135,41 @@ class FTDeskShortcutView: FTDeskToolView {
             self.isSelected = false
         }
     }
-
+    
     override var isSelected: Bool {
         didSet {
             if isSelected {
-                UIView.animate(withDuration: 0.3, animations: {
-                    super.isSelected = true
-                }) { _ in
-                    if self.toolType != .zoomBox {
+                if self.toolType.isInstantActionTool() {
+                    UIView.animate(withDuration: 0.3, animations: {
+                            super.isSelected = true
+                    }) { _ in
                         runInMainThread(0.5) {
-                            super.isSelected = false
+                            if self.toolType != .tag {
+                                self.isSelected = false
+                            }
+                            if self.toolType == .bookmark {
+                                self.isHighlighted = true
+                            }
                         }
                     }
+                } else {
+                    super.isSelected = true
                 }
             } else {
                 super.isSelected = false
+            }
+        }
+    }
+    
+    var isHighlighted: Bool = false {
+        didSet {
+            if self.toolType == .bookmark || self.toolType == .tag {
+                if isHighlighted {
+                    let image = self.toolType.selectedIconName()
+                    self.toolButton.setImage(named:image, for: .normal, renderMode: .alwaysOriginal);
+                } else {
+                    super.isSelected = false
+                }
             }
         }
     }

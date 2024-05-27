@@ -181,6 +181,8 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             name = "desk_tool_emojisSelected"
         case .tag:
             name = "desk_tool_tagSelected"
+        case .bookmark :
+            name = "desk_tool_bookMark_selected"
 
         default:
             break
@@ -388,6 +390,32 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             }
         }
         return img
+    }
+    
+    func displayBgColorStyle() -> UIColor{
+        switch self {
+        case .pen,.highlighter,.eraser,.shapes,.textMode,.lasso,.favorites,.zoomBox,.presenter,.stickers,.savedClips,.pixabay,.unsplash,.recentNotes,.emojis,.tag,.hand :
+            return UIColor.appColor(.white100)
+        case .page,.duplicatePage,.deletePage,.rotatePage,.scrolling,.openAI,.photo,.audio,.bookmark,.savePageAsPhoto,.sharePageAsPng,.shareNotebookAsPDF,.camera,.share :
+            return UIColor.appColor(.accentBg)
+        }
+    }
+    
+    func isInstantActionTool() -> Bool {
+        var value = false
+        if self == .page || self == .rotatePage  || self == .duplicatePage || self == .deletePage || self == .scrolling || self == .savePageAsPhoto || self == .bookmark || self == .photo{
+            value = true
+        }
+        
+        return value
+    }
+    
+    var isInstantStatusUpdateTool: Bool {
+        var status = false
+        if self == .tag || self == .bookmark {
+            status = true
+        }
+        return status
     }
 }
 

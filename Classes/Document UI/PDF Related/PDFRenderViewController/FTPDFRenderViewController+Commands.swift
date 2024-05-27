@@ -248,6 +248,7 @@ extension FTPDFRenderViewController: FTShortcutActions {
               if let shelfItemsViewController = storyboard.instantiateViewController(withIdentifier: "FTSidePanelItemsViewController") as? FTSidePanelItemsViewController {
                 shelfItemsViewController.sidePanelDelegate = self
                   shelfItemsViewController.collection = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection;
+                  shelfItemsViewController.isFromCentralPanel = true
                   shelfItemsViewController.ftPresentationDelegate.source = source as AnyObject
                   shelfItemsViewController.mode = .recentNotes
                   self.ftPresentPopover(vcToPresent: shelfItemsViewController, contentSize: CGSize(width: 375, height:470), hideNavBar: true)
@@ -285,6 +286,7 @@ extension FTPDFRenderViewController: FTShortcutActions {
         var view = FTStickerCategoriesView(model: model, downloadedViewModel: FTDownloadedStickerViewModel())
         view.toHideBackButton = true
         let stickerVc = FTStickersViewController(rootView: view)
+        stickerVc.isFromCentralPanel = true
         stickerVc.view.backgroundColor = UIColor.appColor(.popoverBgColor)
         let navVc = UINavigationController(rootViewController: stickerVc)
         navVc.isNavigationBarHidden = true

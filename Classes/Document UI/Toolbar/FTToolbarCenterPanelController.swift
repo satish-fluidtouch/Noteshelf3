@@ -12,9 +12,45 @@ import TipKit
 
 protocol FTToolbarCenterPanelDelegate: AnyObject {
     func isZoomModeEnabled() -> Bool
+    func isPageBookMarked() -> Bool
+    func isTagAdded() -> Bool
     func currentDeskMode() -> RKDeskMode?
     func maxCenterPanelItemsToShow() -> Int
     func didTapCenterPanelButton(type: FTDeskCenterPanelTool, sender: UIView)
+}
+
+enum FTToolbarPopoverScreen {
+    case stickers
+    case savedClips
+    case pixabay
+    case unsplash
+    case recents
+    case openAi
+    case tag
+    case emoji
+    
+    var centerPanelTool: FTDeskCenterPanelTool {
+        let tool: FTDeskCenterPanelTool
+        switch self {
+        case .stickers:
+            tool = .stickers
+        case .savedClips:
+            tool = .savedClips
+        case .pixabay:
+            tool = .pixabay
+        case .unsplash:
+            tool = .unsplash
+        case .recents:
+            tool = .recentNotes
+        case .openAi:
+            tool = .openAI
+        case .tag:
+            tool = .tag
+        case .emoji:
+            tool = .emojis
+        }
+        return tool
+    }
 }
 
 @available (iOS 17.0, *)
@@ -70,8 +106,6 @@ struct CustomTiPView : TipViewStyle {
 }
     
 class FTToolbarCenterPanelController: UIViewController {
-    private weak var customToolbarObserver: NSObjectProtocol?;
-
     @IBOutlet private weak var containerView: FTToolbarVisualEffectView?
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var leftNavBtn: UIButton?
@@ -110,7 +144,6 @@ class FTToolbarCenterPanelController: UIViewController {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         longPressGesture.minimumPressDuration = 0.6
         self.view.addGestureRecognizer(longPressGesture)
-        addObserverForScrollDirection()
         
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -135,9 +168,6 @@ class FTToolbarCenterPanelController: UIViewController {
     }
 
     deinit {
-        if let observer = self.customToolbarObserver {
-            NotificationCenter.default.removeObserver(observer);
-        }
         NotificationCenter.default.removeObserver(self)
     }
 
@@ -194,15 +224,22 @@ private extension FTToolbarCenterPanelController {
             self.rightSpacer?.isHidden = !show
         }
     }
-
+    
     private func updateNavButtons(show: Bool) {
         self.leftNavBtn?.isHidden = !show
         self.rightNavBtn?.isHidden = !show
     }
     
     private func addObservers() {
-        self.customToolbarObserver = NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: notifyToolbarCustomization)
-                                               , object: nil, queue: nil) { [weak self] (_) in
+        NotificationCenter.default.addObserver(forName: .pageLayoutWillChange,
+                                                 object: nil,
+                                                 queue: nil)
+          { [weak self] (_) in
+              self?.collectionView.reloadData()
+         }
+
+         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: notifyToolbarCustomization)
+                                                                            , object: nil, queue: nil) { [weak self] (_) in
             runInMainThread {
                 guard let strongSelf = self else {
                     return
@@ -215,8 +252,39 @@ private extension FTToolbarCenterPanelController {
                 }
             }
         }
+        
+         NotificationCenter.default.addObserver(forName: .didChangeCurrentPageNotification
+                                                                         , object: nil, queue: nil) { [weak self] (_) in
+            runInMainThread {
+                guard let strongSelf = self  else {
+                    return
+                }
+                let bookmarkStatus = strongSelf.delegate?.isPageBookMarked() ?? false
+                strongSelf.updatePageBookmarkStatusIfNeeded(bookmarkStatus)
+                
+                let tagStatus = strongSelf.delegate?.isTagAdded() ?? false
+                strongSelf.updateTagStatusIfNeeded(tagStatus)
+            }
+        }
+        NotificationCenter.default.addObserver(self, selector: #selector(self.centralPanelPopupDismissStatus(notification:)), name: Notification.Name("centralPanelPopUpDismiss"), object: nil)
     }
 
+    @objc func centralPanelPopupDismissStatus(notification: Notification) {
+        if let object = notification.object as? FTToolbarPopoverScreen {
+            let tool = object.centerPanelTool
+            if let index = self.dataSourceItems.firstIndex(where: { $0 == tool }) {
+                runInMainThread {
+                    if let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? FTDeskShortcutCell {
+                        cell.isShortcutSelected = false
+                        if tool == .tag {
+                            let tagStatus = self.delegate?.isTagAdded() ?? false
+                            cell.isShortcutHighlighted = tagStatus
+                        }
+                    }
+                }
+            }
+        }
+    }
     @IBAction func leftBtnTapped(_ sender: Any) {
         if self.collectionView.contentOffset.x > 0.0 {
             self.disableNavButtons()
@@ -294,13 +362,25 @@ extension FTToolbarCenterPanelController: UICollectionViewDataSource, UICollecti
             if let isEnabled = self.delegate?.isZoomModeEnabled(), btnType == .zoomBox {
                 isSelected = isEnabled
             }
+            if let isEnabled = self.delegate?.isPageBookMarked(), btnType == .bookmark {
+                isSelected = isEnabled
+            }
+            if let isEnabled = self.delegate?.isTagAdded(), btnType == .tag {
+                isSelected = isEnabled
+            }
             (cell as? FTDeskShortcutCell)?.configureCell(type: btnType, isSelected: isSelected)
 
             // Selection handle closure
             (cell as? FTDeskShortcutCell)?.deskShortcutTapHandler = {[weak self, weak cell] in
                 guard let self = self else { return }
                 if let _cell = cell as? FTDeskShortcutCell {
-                    _cell.isShortcutSelected = true;
+                    if btnType == .bookmark {
+                        let status = self.delegate?.isPageBookMarked() ?? false
+                        _cell.isShortcutSelected = !status
+                        _cell.isShortcutHighlighted = !status
+                    } else {
+                        _cell.isShortcutSelected = true
+                    }
                     self.delegate?.didTapCenterPanelButton(type: btnType, sender: _cell);
                     track(EventName.toolbar_tool_tap, params: [EventParameterKey.tool: btnType.localizedEnglish(), EventParameterKey.slot: indexPath.row + 1])
                 }
@@ -426,15 +506,6 @@ extension FTToolbarCenterPanelController: FTDeskToolCellDelegate {
 }
 
 extension FTToolbarCenterPanelController {
-    func addObserverForScrollDirection() {
-        NotificationCenter.default.addObserver(forName: .pageLayoutWillChange,
-                                                 object: nil,
-                                                 queue: nil)
-          { [weak self] (_) in
-              self?.collectionView.reloadData()
-         }
-    }
-    
     func setUpTipForNewFeatures() {
         if #available(iOS 17.0, *) {
             let newFeautres = NewFeatures()
@@ -456,4 +527,22 @@ extension FTToolbarCenterPanelController {
         
     }
     
+}
+
+extension FTToolbarCenterPanelController  {
+    func updatePageBookmarkStatusIfNeeded(_ status: Bool) {
+        if let index = self.dataSourceItems.firstIndex(where: { $0 == .bookmark }) {
+            if let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? FTDeskShortcutCell {
+                cell.isShortcutHighlighted = status
+            }
+        }
+    }
+    
+    func updateTagStatusIfNeeded(_ status: Bool) {
+        if let index = self.dataSourceItems.firstIndex(where: { $0 == .tag }) {
+            if let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? FTDeskShortcutCell {
+                cell.isShortcutHighlighted = status
+            }
+        }
+    }
 }

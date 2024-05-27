@@ -85,7 +85,7 @@ class FTDeskToolCell: UICollectionViewCell {
 }
 
 class FTDeskShortcutCell: UICollectionViewCell {
-    private weak var deskShortcutView: FTDeskShortcutView?
+    weak var deskShortcutView: FTDeskShortcutView?
     var deskShortcutTapHandler: (() -> Void)?
 
     override func awakeFromNib() {
@@ -102,9 +102,18 @@ class FTDeskShortcutCell: UICollectionViewCell {
 
     func configureCell(type: FTDeskCenterPanelTool, isSelected: Bool) {
         self.deskShortcutView?.toolType = type
-        self.deskShortcutView?.isSelected = isSelected
+        if type != .bookmark && type != .tag {
+            self.deskShortcutView?.isSelected = isSelected
+        } else {
+            self.deskShortcutView?.isHighlighted = isSelected
+        }
     }
-
+    
+    var isShortcutHighlighted: Bool = false {
+        didSet {
+            self.deskShortcutView?.isHighlighted = isShortcutHighlighted
+        }
+    }
     var isShortcutSelected: Bool = false {
         didSet {
             self.deskShortcutView?.isSelected = isShortcutSelected

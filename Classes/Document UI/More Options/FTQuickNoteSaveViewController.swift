@@ -26,10 +26,18 @@ class FTQuickNoteSaveViewController: UIViewController, FTCustomPresentable {
     weak var delegate: FTQuickNoteSaveDelegate!
     
     var customTransitioningDelegate: FTCustomTransitionDelegate = FTCustomTransitionDelegate(with: .interaction, supportsFullScreen: false)
+    
+    var isFromCentralPanel : Bool  = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureUIComponents()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if isFromCentralPanel {
+            NotificationCenter.default.post(name: Notification.Name("leftPanelPopupDismiss"), object: nil)
+        }
     }
     
     private func configureUIComponents() {

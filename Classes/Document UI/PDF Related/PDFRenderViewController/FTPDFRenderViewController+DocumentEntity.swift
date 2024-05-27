@@ -373,6 +373,8 @@ extension FTPDFRenderViewController: FTTagsViewControllerDelegate {
                         selectedShelfTagItems[page.uuid] = item;
                         NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
                     }
+                    let status = self.tagStatus()
+                    self.bookmarkInformer?.updateTagStatus(status)
                 }
             }
         }
