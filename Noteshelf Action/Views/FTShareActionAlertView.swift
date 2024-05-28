@@ -70,7 +70,9 @@ class FTShareActionAlertView: UIView {
         case .ended:
             self.isHidden = false
             self.animationImageView.image = UIImage(named: "animation_end")
-            self.alertTitle.text = "\(numberOfSharedItems) files sent to Noteshelf"
+            let text = (numberOfSharedItems > 1) ? "import.multiple.files" : "import.single.files"
+            let count = "\(numberOfSharedItems)"
+            self.alertTitle.text = (String(format: text.localized, count))
             self.doneButton.isHidden = false
             break
         }

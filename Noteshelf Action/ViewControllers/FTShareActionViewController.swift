@@ -24,6 +24,11 @@ class FTShareActionViewController: UIViewController, FTShareAlertDelegate {
     @IBOutlet weak var imageView1: UIImageView!
     @IBOutlet weak var imageView1WidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var imageView1HeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageView2WidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageView2HeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageView3WidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageView3HeightConstraint: NSLayoutConstraint!
+
     @IBOutlet weak var countLabel: UILabel!
     @IBOutlet weak var imageView2: UIImageView!
     @IBOutlet weak var imageView3: UIImageView!
@@ -32,6 +37,7 @@ class FTShareActionViewController: UIViewController, FTShareAlertDelegate {
     private var showUnsupportedAlert = false
     private var attachmentsInfo : FTAttachmentsInfo?
     var selectedItem: FTShareItemsFetchModel?
+    private let imageMaxSize = CGSize(width: 240, height: 300)
     private var animationState: FTAnimationState = .none {
         didSet {
             self.shareActionAlertView?.animationState = animationState
@@ -41,8 +47,6 @@ class FTShareActionViewController: UIViewController, FTShareAlertDelegate {
             }
         }
     }
-    private var imagesToImport = [UIImage]()
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let folder = selectedItem?.collection?.title ?? "Unfiled"
@@ -70,9 +74,6 @@ class FTShareActionViewController: UIViewController, FTShareAlertDelegate {
         self.preferredContentSize = CGSize(width: 540, height: 620)
         bottomView?.layer.cornerRadius = 12
         importButton.layer.cornerRadius = 12
-        imageView1.layer.cornerRadius = 10
-        imageView2.layer.cornerRadius = 10
-        imageView3.layer.cornerRadius = 10
         containerView.addShadow(color: .black.withAlphaComponent(0.2), offset: CGSize(width: 0, height: 10), opacity: 1, shadowRadius: 20)
         imageView2.isHidden = true
         imageView3.isHidden = true
@@ -94,44 +95,35 @@ class FTShareActionViewController: UIViewController, FTShareAlertDelegate {
             if attachmentsInfo.hasOnlyUnSupportedFiles() {
                 self.showUnsupportedAlert = true
             } else if attachmentsInfo.hasOnlyImageFiles(), !attachmentsInfo.imageItems.isEmpty {
+                var images = [UIImage]()
                 for (index, _image) in attachmentsInfo.imageItems.enumerated() {
-                    let image = UIImage(contentsOfFile: _image.path(percentEncoded: false))
+                    if let image = UIImage(contentsOfFile: _image.path(percentEncoded: false)) {
+                        images.append(image)
+                    }
                     if index > 2 {
                         break
                     }
-                    switch index {
-                    case 0:
-                        imageView1.image = image
-                        self.imageView1.isHidden = false
-                    case 1:
-                        imageView2.image = image
-                        self.imageView2.isHidden = false
-                    case 2:
-                        imageView3.image = image
-                        self.imageView3.isHidden = false
-                    default:
-                        break
-                    }
                 }
+                self.updateImages(images: images)
                 self.updateCountLabel(count: attachmentsInfo.imageItems.count)
             } else if attachmentsInfo.hasOnlyWebsiteLinks() {
                 //TODO - Find a way to show website image
                 self.imageView1.image = UIImage(named: "website")
+                self.imageView1.layer.cornerRadius = 10
                 self.updateCountLabel(count: 1)
             } else if attachmentsInfo.hasOnlyPublicImageURLs() {
                 let imageURL = attachmentsInfo.publicImageURLs[0]
                 let task = URLSession.shared.dataTask(with: imageURL) {[weak self] (data, _, error) in
-                    guard let imageData = data, error == nil else {
+                    guard let self = self, let imageData = data, error == nil else {
                         self?.showUnsupportedAlert = true
                         return
                     }
                     DispatchQueue.main.async() {
                         if let image = UIImage(data: imageData) {
-                            self?.imageView1.image = image
-                            self?.imagesToImport.append(image)
-                            self?.updateCountLabel(count: attachmentsInfo.publicImageURLs.count)
+                            self.updateImages(images: [image])
+                            self.updateCountLabel(count: attachmentsInfo.publicImageURLs.count)
                         } else {
-                            self?.showUnsupportedAlert = true
+                            self.showUnsupportedAlert = true
                         }
                     }
                 }
@@ -145,6 +137,42 @@ class FTShareActionViewController: UIViewController, FTShareAlertDelegate {
             }
         }
         self.configureNavigationBar()
+    }
+    
+    private func updateImages(images: [UIImage?]) {
+        for (index, image) in images.enumerated() {
+            switch index {
+            case 0:
+                imageView1.image = image
+                self.imageView1.isHidden = false
+                let aspectFitSize = image?.aspectFittedSize(maxSize: imageMaxSize) ?? imageMaxSize
+                imageView1WidthConstraint.constant = aspectFitSize.width
+                imageView1HeightConstraint.constant = aspectFitSize.height
+                addRoundedCorners(imageView: self.imageView1)
+            case 1:
+                imageView2.image = image
+                self.imageView2.isHidden = false
+                let aspectFitSize = image?.aspectFittedSize(maxSize: imageMaxSize) ?? imageMaxSize
+                imageView2WidthConstraint.constant = aspectFitSize.width
+                imageView2HeightConstraint.constant = aspectFitSize.height
+                addRoundedCorners(imageView: self.imageView2)
+            case 2:
+                imageView3.image = image
+                self.imageView3.isHidden = false
+                let aspectFitSize = image?.aspectFittedSize(maxSize: imageMaxSize) ?? imageMaxSize
+                imageView3WidthConstraint.constant = aspectFitSize.width
+                imageView3HeightConstraint.constant = aspectFitSize.height
+                addRoundedCorners(imageView: self.imageView3)
+            default:
+                break
+            }
+        }
+    }
+    
+    private func addRoundedCorners(imageView: UIImageView) {
+        imageView.layoutIfNeeded()
+        imageView.layer.cornerRadius = 10
+        imageView.layer.masksToBounds = true
     }
     
     private func updateImagesForPublicUrls() {
@@ -164,33 +192,19 @@ class FTShareActionViewController: UIViewController, FTShareAlertDelegate {
             }
             for eachUrl in attachmentsInfo.publicURLs {
                 if eachUrl.isPDFType, let pdf = PDFDocument(url: eachUrl), let page = pdf.page(at: 0) {
-                    pdfImage = page.thumbnail(of: CGSize(width: 240, height: 300), for: .mediaBox)
+                    pdfImage = page.thumbnail(of: CGSize(width: 240, height: 300), for: .mediaBox).resizedImage(imageMaxSize)
                     break
                 }
             }
             if let publicImageUrl = attachmentsInfo.publicImageURLs.first {
-                publicImage = UIImage(contentsOfFile: publicImageUrl.path)?.resizedImageWithinRect(CGSize(width: 240, height: 300))
+                publicImage = UIImage(contentsOfFile: publicImageUrl.path)
             }
             if attachmentsInfo.hasAnyNoteShelfFiles() {
                 noteshelfImage = UIImage(named: "nsbook")
             }
             var images = [audioImage, pdfImage,publicImage, noteshelfImage]
             images = images.filter { $0 != nil }
-            for (index, image) in images.enumerated() {
-                switch index {
-                case 0:
-                    imageView1.image = image
-                    self.imageView1.isHidden = false
-                case 1:
-                    imageView2.image = image
-                    self.imageView2.isHidden = false
-                case 2:
-                    imageView3.image = image
-                    self.imageView3.isHidden = false
-                default:
-                    break
-                }
-            }
+            self.updateImages(images: images)
         }
     }
     
@@ -201,7 +215,9 @@ class FTShareActionViewController: UIViewController, FTShareAlertDelegate {
     }
     
     private func updateCountLabel(count: Int) {
-        countLabel.text = count == 1 ? "\(count) Page" : "\(count) Pages"
+        let text = (count > 1) ? "multiple.files": "single.file"
+        let count = "\(count)"
+        countLabel.text = (String(format: text.localized, count))
     }
     
      func doneButtonAction() {
@@ -337,5 +353,11 @@ extension URL {
     
     var isImageType : Bool {
         return FTExtensionAtttachmentsHelper.supportedImagePathExtensions.contains(self.pathExtension.lowercased())
+    }
+}
+
+extension UIImage {
+    func aspectFittedSize(maxSize: CGSize) -> CGSize {
+        return CGSize.aspectFittedSize(self.size, max: maxSize)
     }
 }
