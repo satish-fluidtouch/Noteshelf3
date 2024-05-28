@@ -61,9 +61,9 @@ extension Notification.Name {
         let title: String
         switch self {
         case .vertical:
-            title = "customizeToolbar.horizontalScrollingEnabled"
-        case .horizontal:
             title = "customizeToolbar.verticalScrollingEnabled"
+        case .horizontal:
+            title = "customizeToolbar.horizontalScrollingEnabled"
         }
         return title
     }
