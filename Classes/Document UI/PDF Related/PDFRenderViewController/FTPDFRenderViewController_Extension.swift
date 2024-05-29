@@ -1143,4 +1143,17 @@ extension FTPDFRenderViewController {
          }
         return value
     }
+    
+    @objc func emojiStatus() -> Bool {
+        var value = false
+        value = self.activeStickyIndicatorView == nil ? false : true
+        return value
+    }
+    
+    @objc func audioRecordedViewStatus() -> Bool {
+        var value = false
+        value = self.playerController == nil ? false : true
+        return value
+    }
 }
+    

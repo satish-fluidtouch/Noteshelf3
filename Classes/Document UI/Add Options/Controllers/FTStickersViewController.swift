@@ -12,7 +12,7 @@ import FTCommon
 
 class FTStickersViewController: UIHostingController<FTStickerCategoriesView>, FTPopoverPresentable {
     var ftPresentationDelegate = FTPopoverPresentation()
-    var isFromCentralPanel : Bool = false
+    var isFromCentralPanel : FTSourceScreenType = .Others
     override init(rootView: FTStickerCategoriesView) {
         super.init(rootView: rootView)
     }
@@ -31,8 +31,10 @@ class FTStickersViewController: UIHostingController<FTStickerCategoriesView>, FT
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        if isFromCentralPanel {
-            NotificationCenter.default.post(name: Notification.Name("centralPanelPopUpDismiss"), object: FTToolbarPopoverScreen.stickers)
+        if isFromCentralPanel == .centerPanel{
+            if let window = self.view.window {
+                NotificationCenter.default.post(name: .centralPanelPopUpDismiss, object: ["sourceType":FTToolbarPopoverScreen.stickers,"window":window])
+            }
         }
     }
     

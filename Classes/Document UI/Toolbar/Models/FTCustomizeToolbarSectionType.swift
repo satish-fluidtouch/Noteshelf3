@@ -52,7 +52,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
     case hand
     case openAI
     case favorites
-
+    
     // Add Menu
     case photo
     case audio
@@ -61,7 +61,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
     case emojis
     case stickers
     case savedClips
-
+    
     // Shortcuts
     case page
     case bookmark
@@ -72,12 +72,12 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
     case scrolling
     case camera
     case recentNotes
-
+    
     // Share and Save
     case savePageAsPhoto
     case sharePageAsPng
     case shareNotebookAsPDF
-
+    
     func iconName() -> String {
         var name: String = ""
         switch self {
@@ -105,7 +105,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             name = "desk_tool_openAI"
         case .favorites:
             name = "desk_tool_favorites"
-
+            
         case .photo:
             name = "desk_tool_photo"
         case .audio:
@@ -120,7 +120,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             name = "desk_tool_emojis"
         case .savedClips:
             name = "desk_tool_savedClips"
-
+            
         case .page:
             name = "desk_tool_page"
         case .bookmark:
@@ -146,11 +146,11 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             name = "desk_tool_shareAsPNG"
         case .shareNotebookAsPDF:
             name = "desk_tool_shareAsPDF"
-        
+            
         }
         return name
     }
-
+    
     func selectedIconName() -> String? {
         var name: String?
         switch self {
@@ -183,13 +183,13 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             name = "desk_tool_tagSelected"
         case .bookmark :
             name = "desk_tool_bookMark_selected"
-
+            
         default:
             break
         }
         return name
     }
-
+    
     func localizedString() -> String {
         var str: String = ""
         switch self {
@@ -218,7 +218,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             str = "customizeToolbar.share".localized
         case .favorites:
             str = "Favorites".localized
-
+            
             // Media
         case .photo:
             str = "customizeToolbar.photo".localized
@@ -234,7 +234,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             str = "customizeToolbar.emojis".localized
         case .savedClips:
             str = "clip.savedClips".localized
-
+            
             // Shortcuts
         case .page:
             str = "customizeToolbar.page".localized
@@ -264,7 +264,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
         }
         return str
     }
-
+    
     func localizedEnglish() -> String {
         var str: String = ""
         switch self {
@@ -293,7 +293,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             str = "customizeToolbar.share".localizedEnglish
         case .favorites:
             str = "Favorites".localizedEnglish
-
+            
             // Media
         case .photo:
             str = "customizeToolbar.photo".localizedEnglish
@@ -309,7 +309,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             str = "customizeToolbar.emojis".localizedEnglish
         case .savedClips:
             str = "clip.savedClips".localizedEnglish
-
+            
             // Shortcuts
         case .page:
             str = "customizeToolbar.page".localizedEnglish
@@ -329,7 +329,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             str = "customizeToolbar.switchScrollingDirection".localizedEnglish
         case .recentNotes:
             str = "customizeToolbar.recent.notes".localizedEnglish
-
+            
         case .savePageAsPhoto:
             str = "customizeToolbar.savePageAsPhoto".localizedEnglish
         case .sharePageAsPng:
@@ -339,7 +339,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
         }
         return str
     }
-
+    
     var toolMode: FTDeskCenterPanelToolMode {
         var mode: FTDeskCenterPanelToolMode = .shortcut
         if self == .pen || self == .highlighter || self == .eraser || self == .shapes || self == .textMode || self == .presenter || self == .lasso || self == .hand || self == .favorites {
@@ -355,7 +355,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
         }
         return status
     }
-
+    
     func isColorEditTool() -> Bool {
         var isColorEditTool: Bool = false
         if self == .pen || self == .highlighter || self == .shapes {
@@ -363,7 +363,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
         }
         return isColorEditTool
     }
-
+    
     func tintImage() -> UIImage? {
         var img: UIImage? = nil
         if self.isColorEditTool() {
@@ -377,7 +377,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
         }
         return img
     }
-
+    
     func backGroundImage() -> UIImage? {
         var img: UIImage? = nil
         if self.isColorEditTool() {
@@ -394,29 +394,22 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
     
     func displayBgColorStyle() -> UIColor{
         switch self {
-        case .pen,.highlighter,.eraser,.shapes,.textMode,.lasso,.favorites,.zoomBox,.presenter,.stickers,.savedClips,.pixabay,.unsplash,.recentNotes,.emojis,.tag,.hand :
+        case .pen,.highlighter,.eraser,.shapes,.textMode,.lasso,.favorites,.zoomBox,.presenter,.tag,.hand :
             return UIColor.appColor(.white100)
-        case .page,.duplicatePage,.deletePage,.rotatePage,.scrolling,.openAI,.photo,.audio,.bookmark,.savePageAsPhoto,.sharePageAsPng,.shareNotebookAsPDF,.camera,.share :
+        case .page,.duplicatePage,.deletePage,.rotatePage,.scrolling,.openAI,.photo,.audio,.bookmark,.savePageAsPhoto,.sharePageAsPng,.shareNotebookAsPDF,.camera,.share,.stickers,.savedClips,.pixabay,.unsplash,.recentNotes,.emojis :
             return UIColor.appColor(.accentBg)
         }
     }
     
     func isInstantActionTool() -> Bool {
         var value = false
-        if self == .page || self == .rotatePage  || self == .duplicatePage || self == .deletePage || self == .scrolling || self == .savePageAsPhoto || self == .bookmark || self == .photo{
+        if self == .page || self == .rotatePage  || self == .duplicatePage || self == .deletePage || self == .scrolling || self == .savePageAsPhoto || self == .bookmark || self == .photo || self == .audio || self == .scrolling || self == .shareNotebookAsPDF || self == .camera || self == .sharePageAsPng  || self == .openAI {
             value = true
         }
         
         return value
     }
     
-    var isInstantStatusUpdateTool: Bool {
-        var status = false
-        if self == .tag || self == .bookmark {
-            status = true
-        }
-        return status
-    }
 }
 
 extension Array<FTDeskCenterPanelTool> {

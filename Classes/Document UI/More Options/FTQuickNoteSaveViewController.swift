@@ -36,7 +36,9 @@ class FTQuickNoteSaveViewController: UIViewController, FTCustomPresentable {
     
     override func viewWillDisappear(_ animated: Bool) {
         if isFromCentralPanel {
-            NotificationCenter.default.post(name: Notification.Name("leftPanelPopupDismiss"), object: nil)
+            if let window = self.view.window {
+                NotificationCenter.default.post(name: .leftPanelPopupDismiss, object:window)
+            }
         }
     }
     

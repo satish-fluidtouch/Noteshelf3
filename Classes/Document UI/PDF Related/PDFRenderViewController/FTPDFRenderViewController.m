@@ -300,6 +300,8 @@
 {
     [super viewDidLoad];
     
+    [self emojiStatus];
+    
     self.laserStrokeStorage = [[FTLaserStrokeStorage alloc] initWithParentView:self.view];
     
     self.contentScaleInNormalMode = 1.0f;
@@ -2986,6 +2988,14 @@
 
 -(BOOL)isTagAdded {
     return self.tagStatus;
+}
+
+-(BOOL)isEmojiSelected {
+    return self.emojiStatus;
+}
+
+-(BOOL) isAudioRecordedViewPresented {
+    return self.audioRecordedViewStatus;
 }
 
 #pragma mark - Audio -

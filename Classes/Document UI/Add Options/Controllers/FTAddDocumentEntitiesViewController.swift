@@ -68,7 +68,9 @@ class FTAddDocumentEntitiesViewController: UIViewController, FTPopoverPresentabl
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        NotificationCenter.default.post(name: Notification.Name("rightPanelPopupDismiss"), object: nil)
+        if let window = self.view.window {
+            NotificationCenter.default.post(name: Notification.Name.rightPanelPopupDismiss, object:window)
+        }
     }
     
     private func addRequiredViewController() {

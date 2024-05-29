@@ -140,14 +140,14 @@ class FTDeskShortcutView: FTDeskToolView {
         didSet {
             if isSelected {
                 if self.toolType.isInstantActionTool() {
-                    UIView.animate(withDuration: 0.3, animations: {
+                    UIView.animate(withDuration: 0.2, animations: {
                             super.isSelected = true
                     }) { _ in
-                        runInMainThread(0.5) {
+                        runInMainThread(0.2) {
                             if self.toolType != .tag {
                                 self.isSelected = false
                             }
-                            if self.toolType == .bookmark {
+                            if self.toolType == .bookmark || self.toolType == .audio {
                                 self.isHighlighted = true
                             }
                         }
@@ -163,7 +163,7 @@ class FTDeskShortcutView: FTDeskToolView {
     
     var isHighlighted: Bool = false {
         didSet {
-            if self.toolType == .bookmark || self.toolType == .tag {
+            if self.toolType == .bookmark || self.toolType == .tag || self.toolType == .emojis || self.toolType == .audio {
                 if isHighlighted {
                     let image = self.toolType.selectedIconName()
                     self.toolButton.setImage(named:image, for: .normal, renderMode: .alwaysOriginal);

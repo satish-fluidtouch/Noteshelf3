@@ -15,11 +15,7 @@ protocol FTExportActivityDelegate: AnyObject {
     func exportActivity(_ manager : FTExportActivityManager, didFailWith error : Error, mode : RKExportMode)
     func exportActivity(_ manager : FTExportActivityManager, didCancelWith mode: RKExportMode)
 }
-class FTActivityController : UIActivityViewController{
-    override func viewWillDisappear(_ animated: Bool) {
-        NotificationCenter.default.post(name: Notification.Name("centralPanelPopUpDismiss"), object: nil)
-    }
-}
+
 class FTExportActivityManager: NSObject {
 
     var exportFormat : RKExportFormat = kExportFormatNBK;
@@ -27,7 +23,7 @@ class FTExportActivityManager: NSObject {
     var baseViewController : UIViewController?
     var targetShareButton: Any?
     weak var delegate : FTExportActivityDelegate?
-    private var activityViewController : FTActivityController!
+    private var activityViewController : UIActivityViewController!
     
 #if targetEnvironment(macCatalyst)
     private var onCompletion: ((Error?,RKExportMode)->())?;
@@ -144,7 +140,7 @@ class FTExportActivityManager: NSObject {
                     });
                 }
             }
-            let actController = FTActivityController(activityItems: items, applicationActivities: customActivities);
+            let actController = UIActivityViewController(activityItems: items, applicationActivities: customActivities);
             self.activityViewController = actController
             self.activityViewController.completionWithItemsHandler = { [weak self] (activityType, completed, returnedItems, error) in
 #if targetEnvironment(macCatalyst)

@@ -66,6 +66,11 @@
                                                             <accessibility key="accessibilityConfiguration" label="Lasso"/>
                                                             <color key="tintColor" systemColor="labelColor"/>
                                                             <state key="normal" image="desk_tool_finder"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="color" keyPath="selectedBg">
+                                                                    <color key="value" name="accentBg"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
                                                             <connections>
                                                                 <action selector="leftPanelButtonTapped:" destination="Eag-wL-CjB" eventType="touchUpInside" id="cdA-3H-rhf"/>
                                                             </connections>

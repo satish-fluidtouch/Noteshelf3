@@ -14,6 +14,8 @@ protocol FTToolbarCenterPanelDelegate: AnyObject {
     func isZoomModeEnabled() -> Bool
     func isPageBookMarked() -> Bool
     func isTagAdded() -> Bool
+    func isEmojiSelected() -> Bool
+    func isAudioRecordedViewPresented() -> Bool
     func currentDeskMode() -> RKDeskMode?
     func maxCenterPanelItemsToShow() -> Int
     func didTapCenterPanelButton(type: FTDeskCenterPanelTool, sender: UIView)
@@ -28,6 +30,7 @@ enum FTToolbarPopoverScreen {
     case openAi
     case tag
     case emoji
+    case sharePageAsPng
     
     var centerPanelTool: FTDeskCenterPanelTool {
         let tool: FTDeskCenterPanelTool
@@ -48,66 +51,21 @@ enum FTToolbarPopoverScreen {
             tool = .tag
         case .emoji:
             tool = .emojis
+        case .sharePageAsPng:
+            tool = .sharePageAsPng
         }
         return tool
     }
 }
 
-@available (iOS 17.0, *)
-struct NewFeatures: Tip{
-    var title : Text {
-        Text("tipeview.shortcut.title".localized)
-            .foregroundStyle(.white)
-            
-    }
-    var message: Text?{
-        Text("tipeview.shortcut.message".localized)
-            .foregroundStyle(Color(uiColor: UIColor.white.withAlphaComponent(0.7) ))
-    }
-    
-    var image : Image? {
-        Image(uiImage: UIImage(named: "desk_tool_bulb") ?? UIImage())
-    }
-    
+enum FTSourceScreenType {
+ case centerPanel
+ case Others
 }
-@available (iOS 17.0, *)
-struct CustomTiPView : TipViewStyle {
-  @State var size: CGSize = .zero
-  func makeBody(configuration: Configuration) -> some View {
-    HStack(alignment: .top, spacing: 12) {
-      VStack {
-        configuration.image?
-          .resizable()
-          .frame(width: 32, height: 32)
-          .aspectRatio(contentMode: .fit)
-          .padding(.top,2)
-        Spacer()
-          .frame(maxHeight: self.size.height)
-      }
-      VStack(alignment: .leading) {
-        configuration.title
-              .font(.system(size:17,weight: .bold))
-          .fixedSize(horizontal: false, vertical: true)
-        configuration.message?
-          .font(.subheadline)
-          .fixedSize(horizontal: false, vertical: true)
-      }
-    }
-    .padding(.horizontal, 16)
-    .padding(.vertical, 12)
-    .background(
-      GeometryReader { geometry in
-        Color.clear
-          .onAppear {
-            self.size = geometry.size
-          }
-      })
-  }
-}
-    
+
 class FTToolbarCenterPanelController: UIViewController {
     @IBOutlet private weak var containerView: FTToolbarVisualEffectView?
-    @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet private weak var leftNavBtn: UIButton?
     @IBOutlet private weak var rightNavBtn: UIButton?
     @IBOutlet private weak var leftSpacer: UIView?
@@ -218,6 +176,14 @@ class FTToolbarCenterPanelController: UIViewController {
 }
 
 private extension FTToolbarCenterPanelController {
+    private func fetchCell(for tool: FTDeskCenterPanelTool) -> UICollectionViewCell? {
+        var cell: UICollectionViewCell?
+        if let index = self.dataSourceItems.firstIndex(where: { $0 == tool }) {
+            cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? FTDeskShortcutCell
+        }
+        return cell
+    }
+    
     private func updateSpacersIfNeeded(show: Bool) {
         if self.screenMode != .shortCompact {
             self.leftSpacer?.isHidden = !show
@@ -266,25 +232,72 @@ private extension FTToolbarCenterPanelController {
                 strongSelf.updateTagStatusIfNeeded(tagStatus)
             }
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(self.centralPanelPopupDismissStatus(notification:)), name: Notification.Name("centralPanelPopUpDismiss"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.centralPanelPopupDismissStatus(notification:)), name: .centralPanelPopUpDismiss, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(validateToolbar), name: NSNotification.Name(rawValue: FTValidateToolBarNotificationName), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(addRecordedAudio), name: NSNotification.Name("FTAudioSessionAskedToAddPlayerNotification"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(removeRecordedAudio), name: NSNotification.Name("FTAudioSessionAskedToRemovePlayerNotification"), object: nil)
+    
     }
+    
+    @objc func addRecordedAudio(_ notification: Notification?) {
+        runInMainThread {
+            if let cell = self.fetchCell(for: .audio) as? FTDeskShortcutCell {
+                cell.isShortcutSelected = true
+            }
+        }
+    }
+    
+    @objc func removeRecordedAudio(_ notification: Notification?) {
+        runInMainThread {
+            if let cell = self.fetchCell(for: .audio) as? FTDeskShortcutCell {
+                cell.isShortcutSelected = false
+            }
+        }
+    }
+    
+    @objc func validateToolbar(_ notification: Notification?) {
+        if self.view.window == notification?.object as? UIWindow {
+            
+          if let index = self.dataSourceItems.firstIndex(where: { $0 == .emojis }) {
+            runInMainThread {
+              if let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? FTDeskShortcutCell {
+                if let status = self.delegate?.isEmojiSelected() {
+                  cell.isShortcutHighlighted = status
+                }
+              }
+            }
+          }
+        }
+      }
 
     @objc func centralPanelPopupDismissStatus(notification: Notification) {
-        if let object = notification.object as? FTToolbarPopoverScreen {
-            let tool = object.centerPanelTool
-            if let index = self.dataSourceItems.firstIndex(where: { $0 == tool }) {
-                runInMainThread {
-                    if let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? FTDeskShortcutCell {
-                        cell.isShortcutSelected = false
-                        if tool == .tag {
-                            let tagStatus = self.delegate?.isTagAdded() ?? false
-                            cell.isShortcutHighlighted = tagStatus
+        if let object = notification.object as? [String:Any] {
+            if let window = self.view.window,
+                let sourceWindow = object["window"] as? UIWindow,
+               window == sourceWindow,
+               let source = object["sourceType"] as? FTToolbarPopoverScreen {
+                let tool = source.centerPanelTool
+                if let index = self.dataSourceItems.firstIndex(where: { $0 == tool }) {
+                    runInMainThread {
+                        if let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? FTDeskShortcutCell {
+                            cell.isShortcutSelected = false
+                            if tool == .tag {
+                                let tagStatus = self.delegate?.isTagAdded() ?? false
+                                cell.isShortcutHighlighted = tagStatus
+                            } else if tool == .emojis {
+                                let emojiStatus = self.delegate?.isEmojiSelected() ?? false
+                                cell.isShortcutHighlighted = emojiStatus
+                            }
                         }
                     }
                 }
             }
         }
     }
+    
     @IBAction func leftBtnTapped(_ sender: Any) {
         if self.collectionView.contentOffset.x > 0.0 {
             self.disableNavButtons()
@@ -368,6 +381,12 @@ extension FTToolbarCenterPanelController: UICollectionViewDataSource, UICollecti
             if let isEnabled = self.delegate?.isTagAdded(), btnType == .tag {
                 isSelected = isEnabled
             }
+            if let isEnabled = self.delegate?.isEmojiSelected(), btnType == .emojis {
+                isSelected = isEnabled
+            }
+            if let isEnabled = self.delegate?.isAudioRecordedViewPresented(), btnType == .audio {
+                isSelected = isEnabled
+            }
             (cell as? FTDeskShortcutCell)?.configureCell(type: btnType, isSelected: isSelected)
 
             // Selection handle closure
@@ -377,8 +396,16 @@ extension FTToolbarCenterPanelController: UICollectionViewDataSource, UICollecti
                     if btnType == .bookmark {
                         let status = self.delegate?.isPageBookMarked() ?? false
                         _cell.isShortcutSelected = !status
-                        _cell.isShortcutHighlighted = !status
-                    } else {
+                    } else if btnType == .audio {
+                        if let status = self.delegate?.isAudioRecordedViewPresented() {
+                            _cell.isShortcutHighlighted = status
+                        }
+                    } else if btnType == .emojis {
+                        if let status = self.delegate?.isEmojiSelected() {
+                            _cell.isShortcutHighlighted = status
+                        }
+                    }
+                    else {
                         _cell.isShortcutSelected = true
                     }
                     self.delegate?.didTapCenterPanelButton(type: btnType, sender: _cell);
@@ -503,30 +530,6 @@ extension FTToolbarCenterPanelController: FTDeskToolCellDelegate {
         let color = FTDeskModeHelper.getCurrentToolColor(toolType: toolType, userActivity: userActivity)
         return color
     }
-}
-
-extension FTToolbarCenterPanelController {
-    func setUpTipForNewFeatures() {
-        if #available(iOS 17.0, *) {
-            let newFeautres = NewFeatures()
-            Task { @MainActor in
-                for await shouldDisplay in newFeautres.shouldDisplayUpdates {
-                    if shouldDisplay {
-                        let controller = TipUIPopoverViewController(newFeautres, sourceItem: self.collectionView)
-                        controller.view.backgroundColor = UIColor.init(hexString: "#474747")
-                        controller.viewStyle = CustomTiPView()
-                        present(controller, animated: true)
-                    } else if presentedViewController is TipUIPopoverViewController {
-                        dismiss(animated: true)
-                    }
-                }
-            }
-        } else {
-            debugPrint("Using Lower versions then Ios 17")
-        }
-        
-    }
-    
 }
 
 extension FTToolbarCenterPanelController  {

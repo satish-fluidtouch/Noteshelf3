@@ -15,6 +15,7 @@ let textContainerTag: Int = 9001
     func isCurrentPageBookmarked() -> Bool
     func updateBookmarkStatus(_ status: Bool)
     func updateTagStatus(_ status: Bool)
+    func updateEmojiStatus(_ Status: Bool)
 }
 
 @objc protocol FTDocumentViewPresenter : NSObjectProtocol {
@@ -307,6 +308,10 @@ private extension FTDocumentRenderViewController {
 }
 
 extension FTDocumentRenderViewController: FTPageBookmarkInformer {
+    func updateEmojiStatus(_ Status: Bool) {
+        print("")
+    }
+    
     func updateTagStatus(_ status: Bool) {
         self.deskToolbarController?.updateTagStatus(status)
     }
@@ -512,6 +517,14 @@ extension FTDocumentRenderViewController: FTOpenCloseDocumentProtocol {
 }
 
 extension FTDocumentRenderViewController: FTDeskToolbarDelegate, FTDeskPanelActionDelegate {
+    func isAudioRecordedViewPresented() -> Bool {
+        return self.deskBarDelegate?.isAudioRecordedViewPresented() ?? false
+    }
+    
+    func isEmojiSelected() -> Bool {
+        return self.deskBarDelegate?.isEmojiSelected() ?? false
+    }
+    
     func isTagAdded() -> Bool {
         return self.deskBarDelegate?.isTagAdded() ?? false
     }

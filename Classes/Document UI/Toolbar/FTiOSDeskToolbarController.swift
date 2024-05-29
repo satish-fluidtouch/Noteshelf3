@@ -9,6 +9,12 @@
 import UIKit
 import FTCommon
 
+extension Notification.Name {
+    static let rightPanelPopupDismiss = Notification.Name("rightPanelPopupDismiss")
+    static let leftPanelPopupDismiss = Notification.Name(rawValue: "leftPanelPopupDismiss")
+    static let centralPanelPopUpDismiss = Notification.Name(rawValue: "centralPanelPopUpDismiss")
+}
+
 protocol FTDeskPanelActionDelegate: AnyObject {
     func didTapLeftPanelTool(_ buttonType: FTDeskLeftPanelTool, source:UIView)
     func didTapCenterPanelTool(_ buttonType: FTDeskCenterPanelTool, source:UIView)
@@ -22,6 +28,8 @@ protocol FTDeskPanelActionDelegate: AnyObject {
     func zoomModeEnabled() -> Bool
     func isBookMarkAdded() -> Bool
     func isTagAdded() -> Bool
+    func isEmojiSelected() -> Bool
+    func isAudioRecordedViewPresented() -> Bool
 
     @objc optional func canUndo() -> Bool
     @objc optional func undo()
@@ -320,16 +328,16 @@ private extension FTiOSDeskToolbarController {
         if(sender == self.undoButton) {
             self.undoButton?.showBg()
             runInMainThread(0.1) {
-                self.performUndoIfNeeded()
                 self.undoButton?.hideBg()
             }
+            self.performUndoIfNeeded()
             FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_undo_tap)
         } else if (sender == self.redoButton) {
             self.redoButton?.showBg()
             runInMainThread(0.1) {
-                self.performRedoIfNeeded()
                 self.redoButton?.hideBg()
             }
+            self.performRedoIfNeeded()
             FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_redo_tap)
         } else {
             if let button = FTDeskLeftPanelTool(rawValue: sender.tag) {
@@ -415,6 +423,14 @@ extension FTiOSDeskToolbarController {
 }
 
 extension FTiOSDeskToolbarController: FTToolbarCenterPanelDelegate {
+    func isAudioRecordedViewPresented() -> Bool {
+        return self.delegate?.isAudioRecordedViewPresented() ?? false
+    }
+    
+    func isEmojiSelected() -> Bool {
+        return self.delegate?.isEmojiSelected() ?? false
+    }
+    
     func isTagAdded() -> Bool {
         return self.delegate?.isTagAdded() ?? false
     }
@@ -501,17 +517,26 @@ final class FTToolBarButton: FTBaseButton {
 
 extension FTiOSDeskToolbarController  {
     func popupDismissStatus(){
-        NotificationCenter.default.addObserver(self, selector: #selector(self.rightPanelPopupDismissStatus(notification:)), name: Notification.Name("rightPanelPopupDismiss"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.leftPanelPopupDismissStatus(notification:)), name: Notification.Name("leftPanelPopupDismiss"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.rightPanelPopupDismissStatus(notification:)), name:.rightPanelPopupDismiss, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.leftPanelPopupDismissStatus(notification:)), name: .leftPanelPopupDismiss, object: nil)
     }
     
     @objc func rightPanelPopupDismissStatus(notification: Notification) {
-        moreButton?.hideBg()
-        addButton?.hideBg()
+        if let window = self.view.window,
+           let sourceWindow = notification.object as? UIWindow,
+           window == sourceWindow{
+            moreButton?.hideBg()
+            addButton?.hideBg()
+        }
+       
     }
     
     @objc func leftPanelPopupDismissStatus(notification: Notification) {
-        backButton?.hideBg()
+        if let window = self.view.window,
+           let sourceWindow = notification.object as? UIWindow,
+           window == sourceWindow{
+            backButton?.hideBg()
+        }
     }
 }
 
