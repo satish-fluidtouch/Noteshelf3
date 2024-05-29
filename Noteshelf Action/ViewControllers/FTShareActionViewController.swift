@@ -280,8 +280,8 @@ class FTShareActionViewController: UIViewController, FTShareAlertDelegate {
         self.view.addSubview(view)
         self.shareActionAlertView?.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         self.shareActionAlertView?.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
-        self.shareActionAlertView?.widthAnchor.constraint(equalToConstant: 270).isActive = true
-        self.shareActionAlertView?.heightAnchor.constraint(equalToConstant: 240).isActive = true
+        self.shareActionAlertView?.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
+        self.shareActionAlertView?.heightAnchor.constraint(equalTo: self.view.heightAnchor).isActive = true
         self.shareActionAlertView?.animationState = .none
         self.shareActionAlertView?.del = self
     }

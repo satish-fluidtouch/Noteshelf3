@@ -38,7 +38,10 @@ class FTShareActionAlertView: UIView {
         self.doneButton.layer.cornerRadius = 10
         self.animationState = .none
         self.isHidden = true
-        self.contentView.addShadow(color: .black.withAlphaComponent(0.2), offset: CGSize(width: 0, height: 10), opacity: 1, shadowRadius: 20)
+        doneButton.layer.borderWidth = 1
+        doneButton.layer.borderColor = UIColor.appColor(.accent).cgColor
+        unsupportedDoneButton.layer.borderWidth = 1
+        unsupportedDoneButton.layer.borderColor = UIColor.appColor(.accent).cgColor
     }
     
     @IBAction func onDoneTapped(_ sender: Any) {
