@@ -73,7 +73,7 @@ class FTToolbarCenterPanelController: UIViewController {
     private weak var customToolbarObserver: NSObjectProtocol?;
 
     @IBOutlet private weak var containerView: FTToolbarVisualEffectView?
-    @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet private weak var collectionView: FTCenterPanelCollectionView!
     @IBOutlet private weak var leftNavBtn: UIButton?
     @IBOutlet private weak var rightNavBtn: UIButton?
     @IBOutlet private weak var leftSpacer: UIView?
@@ -89,11 +89,7 @@ class FTToolbarCenterPanelController: UIViewController {
     weak var delegate: FTToolbarCenterPanelDelegate?
 
     private var deskToolWidth: CGFloat {
-        var reqWidth = FTToolbarConfig.CenterPanel.DeskToolSize.regular.width
-        if self.screenMode == .shortCompact {
-            reqWidth = FTToolbarConfig.CenterPanel.DeskToolSize.compact.width
-        }
-        return reqWidth
+        return self.collectionView?.deskToolWidth ?? 40
     }
 
     private var navButtonWidth: CGFloat {
@@ -106,6 +102,7 @@ class FTToolbarCenterPanelController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.collectionView.centerPanelDelegate = self
         self.addObservers()
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         longPressGesture.minimumPressDuration = 0.6
@@ -279,89 +276,49 @@ extension FTToolbarCenterPanelController {
     }
 }
 
-extension FTToolbarCenterPanelController: UICollectionViewDataSource, UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.dataSourceItems.count
+extension FTToolbarCenterPanelController: FTCenterPanelCollectionViewDelegate {
+    func getScreenMode() -> FTScreenMode {
+        return self.screenMode
     }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let btnType = self.dataSourceItems[indexPath.row]
-        let cell: UICollectionViewCell
-
-        if btnType.toolMode == .shortcut {
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FTDeskShortcutCell", for: indexPath) as UICollectionViewCell
-            var isSelected = false
-            if let isEnabled = self.delegate?.isZoomModeEnabled(), btnType == .zoomBox {
-                isSelected = isEnabled
-            }
-            (cell as? FTDeskShortcutCell)?.configureCell(type: btnType, isSelected: isSelected)
-
-            // Selection handle closure
-            (cell as? FTDeskShortcutCell)?.deskShortcutTapHandler = {[weak self, weak cell] in
-                guard let self = self else { return }
-                if let _cell = cell as? FTDeskShortcutCell {
-                    _cell.isShortcutSelected = true;
-                    self.delegate?.didTapCenterPanelButton(type: btnType, sender: _cell);
-                    track(EventName.toolbar_tool_tap, params: [EventParameterKey.tool: btnType.localizedEnglish(), EventParameterKey.slot: indexPath.row + 1])
-                }
-            }
-        } else {
-              cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FTDeskToolCell", for: indexPath) as UICollectionViewCell
-            if let mode = self.delegate?.currentDeskMode() {
-                let selected = FTDeskModeHelper.isToSelectDeskTool(mode: mode, toolType: btnType)
-                (cell as? FTDeskToolCell)?.configureCell(type: btnType, isSelected: selected)
-                (cell as? FTDeskToolCell)?.delegate = self
-
-                // Selection handle closure
-                (cell as? FTDeskToolCell)?.deskToolBtnTapHandler = {[weak self, weak cell] in
-                    guard let self = self else { return }
-                    self.resetSelection()
-                    if let _cell = cell as? FTDeskToolCell {
-                        _cell.isToolSelected = true
-                        self.delegate?.didTapCenterPanelButton(type: btnType, sender: _cell)
-                        track(EventName.toolbar_tool_tap, params: [EventParameterKey.tool: btnType.localizedEnglish(), EventParameterKey.slot: indexPath.row + 1])
-                    }
-                }
-            }
-        }
-        return cell
+    
+    func currentDeskMode() -> RKDeskMode? {
+        return self.delegate?.currentDeskMode()
     }
-
-    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return false
+    
+    func isZoomModeEnabled() -> Bool {
+        return self.delegate?.isZoomModeEnabled() ?? false
     }
-
-    private func resetSelection() {
-        for row in 0..<self.collectionView.numberOfItems(inSection: 0) {
-            let indexPath = IndexPath(item: row, section: 0)
-            if let cell = collectionView.cellForItem(at: indexPath) as? FTDeskToolCell, cell.isToolSelected {
-                cell.isToolSelected = false
-            }
-        }
+    
+    func maxCenterPanelItemsToShow() -> Int {
+        return self.delegate?.maxCenterPanelItemsToShow() ?? 0
     }
-
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+    
+    func didTapCenterPanelButton(type: FTDeskCenterPanelTool, sender: UIView) {
+        self.delegate?.didTapCenterPanelButton(type: type, sender: sender)
+    }
+    
+    func collectionViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         self.updateCurrentStatusOfNavButtons()
     }
 
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    func collectionViewDidEndDecelerating(_ scrollView: UIScrollView) {
         self.updateCurrentStatusOfNavButtons()
         FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_tools_swipe)
 
     }
 
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    func collectionViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {
             self.updateCurrentStatusOfNavButtons()
             FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_tools_swipe)
         }
     }
 
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func collectionViewDidScroll(_ scrollView: UIScrollView) {
         self.disableNavButtons()
     }
 
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    func collectionViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let currentOffsetX = scrollView.contentOffset.x + (velocity.x * 300.0)
         var nearstOffsetX: CGFloat = 0.0
         if currentOffsetX <= 0.0 {
@@ -382,46 +339,6 @@ extension FTToolbarCenterPanelController: UICollectionViewDataSource, UICollecti
             multiplier += 1
         }
         return divisor * multiplier
-    }
-}
-
-extension FTToolbarCenterPanelController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if self.screenMode == .shortCompact {
-            return FTToolbarConfig.CenterPanel.DeskToolSize.compact
-        }
-        return FTToolbarConfig.CenterPanel.DeskToolSize.regular
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        var edgeSet: UIEdgeInsets = .zero
-        if self.screenMode == .shortCompact {
-            guard var reqToShow = self.delegate?.maxCenterPanelItemsToShow() else {
-                return edgeSet
-            }
-            if reqToShow > self.dataSourceItems.count {
-                reqToShow = self.dataSourceItems.count
-            }
-            let avaSpace = self.collectionView.frame.width - (CGFloat(reqToShow) * deskToolWidth)
-            edgeSet = UIEdgeInsets(top: 0.0, left: avaSpace/2, bottom: 0.0, right: avaSpace/2.0)
-        }
-        return edgeSet
-    }
-}
-
-extension FTToolbarCenterPanelController: FTDeskToolCellDelegate {
-    func currentDeskMode() -> RKDeskMode? {
-        return self.delegate?.currentDeskMode()
-    }
-
-    func currentScreenMode() -> FTScreenMode {
-        return self.screenMode
-    }
-
-    func getCurrentToolColor(toolType: FTDeskCenterPanelTool) -> UIColor {
-        let userActivity = self.view.window?.windowScene?.userActivity
-        let color = FTDeskModeHelper.getCurrentToolColor(toolType: toolType, userActivity: userActivity)
-        return color
     }
 }
 
