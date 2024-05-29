@@ -134,7 +134,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
         case .deletePage:
             name = "desk_tool_deletePage"
         case .scrolling:
-            name = UserDefaults.standard.pageLayoutType.toolIconName
+            name = UserDefaults.standard.pageLayoutType.oppositeToolIconName
         case .camera:
             name = "desk_tool_camera"
         case .recentNotes:

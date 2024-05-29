@@ -25,18 +25,33 @@ struct FTMorePopoverSections {
 
     private func otherProperties() -> [FTNotebookMoreOption] {
         var section = [FTNotebookMoreOption]()
-        section.append(FTNotebookOptionGetInfo())
-        section.append(FTNotebookOptionGesture())
-        section.append(FTNotebookOptionHelp())
+     //   section.append(FTNotebookOptionGesture())
+     //   section.append(FTNotebookOptionHelp())
+        section.append(FTNotebookAddScrollingDirection())
 #if !targetEnvironment(macCatalyst)
         if !UIDevice.current.isIphone() {
             section.append(FTNotebookStatusBarSetting(isEnabled: FTUserDefaults.defaults().showStatusBar))
+            section.append(FTNotebookAddToStylus())
         }
 #endif
-        section.append(FTNotebookOptionSettings())
         return section
     }
         
+    func noteBookProperties() -> [FTNotebookMoreOption] {
+        var section = [FTNotebookMoreOption]()
+        section.append(FTNotebookPassword())
+#if !targetEnvironment(macCatalyst)
+        section.append(FTNotebookAddToSiri())
+        section.append(FTNotebookEverNoteSetting(isEnabled: false))
+#endif
+        section.append(FTNotebookOptionGetInfo())
+        return section
+    }
+    
+    func  moreSettings() -> [FTNotebookMoreOption] {
+        return  [FTNotebookOptionSettings()]
+    }
+    
     func moreSections(_ page: FTPageProtocol) -> [[FTNotebookMoreOption]] {
         var settings:[[FTNotebookMoreOption]] = [[FTNotebookMoreOption]]()
         // First section
@@ -45,11 +60,19 @@ struct FTMorePopoverSections {
             settings.append(secondSection)
         }
         
+        let noteBooksection = noteBookProperties()
+            settings.append(noteBooksection)
+        
+        
         // Second Section
         let thirdSection = otherProperties()
         settings.append(thirdSection)
-        
+     
         // Third Section
+        let moreSettingsSection = moreSettings()
+        settings.append(moreSettingsSection)
+        
+        // Fourth Section
     #if !targetEnvironment(macCatalyst)
         let fourthSection = customToolbar()
         settings.append(fourthSection)

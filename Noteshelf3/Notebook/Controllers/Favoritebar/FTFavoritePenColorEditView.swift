@@ -63,14 +63,15 @@ struct FTFavoritePenColorEditView: View {
         }
 
         ToolbarItem(placement: .navigationBarTrailing) {
-            Image(systemName: "trash")
-                .foregroundColor(.red)
-                .font(.appFont(for: .medium, with: 16.0))
-                .onTapGesture {
-                    self.viewModel.deleteColorAction()
-                    self.viewModel.updateCurrentColors()
-                    self.presentationMode.wrappedValue.dismiss()
-                }
+            Button {
+                self.viewModel.deleteColorAction()
+                self.viewModel.updateCurrentColors()
+                self.presentationMode.wrappedValue.dismiss()
+            } label: {
+                Image(systemName: "trash")
+                    .foregroundColor(.red)
+                    .font(.appFont(for: .medium, with: 16.0))
+            }
         }
     }
 
@@ -79,7 +80,7 @@ struct FTFavoritePenColorEditView: View {
             Text("shelf.notebook.textstyle.grid".localized)
                 .tag(FTPenColorSegment.grid)
                 .font(.appFont(for: .medium, with: 13.0))
-            Text("Spectrum")
+            Text("colors.presets.spectrum".localized)
                 .tag(FTPenColorSegment.spectrum)
                 .font(.appFont(for: .medium, with: 13.0))
         }
@@ -184,12 +185,14 @@ struct FTFavHexFieldFooterView: View {
             .shadow(color: Color.appColor(.black3), radius: 1, x: 0.0, y: 3.0)
             .padding(.trailing, FTSpacing.small)
 
-            Image(systemName: "eyedropper")
-                .foregroundColor(Color.appColor(.accent))
-                .font(Font.appFont(for: .regular, with: 16.0))
-                .onTapGesture {
-                    self.viewModel.didTapOnColorEyeDropper()
-                }
+            Button {
+                self.viewModel.didTapOnColorEyeDropper()
+            } label: {
+                Image(systemName: "eyedropper")
+                    .foregroundColor(Color.appColor(.accent))
+                    .font(Font.appFont(for: .regular, with: 16.0))
+            }
+
             Spacer()
                 .frame(width: 8.0)
         }

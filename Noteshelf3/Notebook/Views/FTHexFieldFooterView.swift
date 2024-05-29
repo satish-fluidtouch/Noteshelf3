@@ -52,22 +52,24 @@ struct FTHexFieldFooterView: View {
             .padding(.trailing, FTSpacing.small)
 
             if colorMode == .select {
-                Image(systemName: colorSelectModeImage.rawValue)
-                    .foregroundColor(Color.appColor(.accent))
-                    .onTapGesture {
-                        if colorSelectModeImage == .add {
-                            self.viewModel.addSelectedColorToPresets()
-                            self.viewModel.updateCurrentColors()
-                            colorSelectModeImage = .done
-                        }
+                Button {
+                    if colorSelectModeImage == .add {
+                        self.viewModel.addSelectedColorToPresets()
+                        self.viewModel.updateCurrentColors()
+                        colorSelectModeImage = .done
                     }
+                } label: {
+                    Image(systemName: colorSelectModeImage.rawValue)
+                        .foregroundColor(Color.appColor(.accent))
+                }
             } else {
-                Image(systemName: "eyedropper")
-                    .foregroundColor(Color.appColor(.accent))
-                    .font(Font.appFont(for: .regular, with: 16.0))
-                    .onTapGesture {
-                        self.viewModel.didTapOnColorEyeDropper()
-                    }
+                Button {
+                    self.viewModel.didTapOnColorEyeDropper()
+                } label: {
+                    Image(systemName: "eyedropper")
+                        .foregroundColor(Color.appColor(.accent))
+                        .font(Font.appFont(for: .regular, with: 16.0))
+                }
             }
             Spacer()
                 .frame(width: 8.0)

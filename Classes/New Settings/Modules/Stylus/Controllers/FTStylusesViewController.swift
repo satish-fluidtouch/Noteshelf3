@@ -81,9 +81,11 @@ class FTStylusesViewController: UIViewController, UITableViewDataSource, UITable
         self.tableView?.estimatedRowHeight = UITableView.automaticDimension
         if self.hideNavButtons {
             self.view.backgroundColor = UIColor.appColor(.popoverBgColor)
+            self.navigationController?.navigationBar.isHidden = false
             self.configureCustomNavigation(title: FTNewSettingsOptions.applePencil.rawValue.localized)
         } else {
             self.view.backgroundColor = UIColor.appColor(.formSheetBgColor)
+            self.navigationController?.navigationBar.isHidden = false
             self.configureNewNavigationBar(hideDoneButton: false, title:  FTNewSettingsOptions.applePencil.rawValue.localized)
         }
     }
