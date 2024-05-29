@@ -20,14 +20,18 @@ extension FTShelfSplitViewController {
         self.detailNavigationController?.pushViewController(globalSearchController, animated: false)
     }
 
-    func exitFromGlobalSearch() {
+    func exitFromGlobalSearch(onCompletion: (() -> Void)? = nil) {
         self.sideMenuController?.removeBlurView()
         if let searchVc = self.globalSearchController, let navVc = searchVc.navigationController {
-            navVc.popViewController(animated: false)
+            navVc.popViewController(animated: false, completion: {
+                onCompletion?()
+            })
             self.globalSearchController = nil
 #if targetEnvironment(macCatalyst)
             (self.view.toolbar as? FTShelfToolbar)?.resignSearchToolbar()
 #endif
+        } else {
+            onCompletion?()
         }
     }
 

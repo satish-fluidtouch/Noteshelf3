@@ -16,6 +16,8 @@ struct FTPinnedNotebookOptionsWidgetView: View {
     @State var color: UIColor = .black
     @State var image = UIImage(named: "noCover")!
 
+    private let type: FTWidgetType = .medium
+
     var body: some View {
         GeometryReader { geometry in
             HStack(spacing: 0) {
@@ -24,17 +26,17 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                         ZStack {
                             Color(uiColor: color)
                             RoundedRectangle(cornerRadius: 10)
-                                .frame(width: geometry.size.width * 0.43, height: geometry.size.height * 0.77)
+                                .frame(width: self.getWidthPercentFactor(using: geometry, for: 150, for: type), height: self.getHeightPercentFactor(using: geometry, for: 120, for: type))
                                 .foregroundColor(Color(uiColor: UIColor(hexString: "FFFFFF",alpha: 0.1)))
                             Text("widget.nonotes".localized)
                                 .font(.appFont(for: .medium, with: 13))
                                 .foregroundColor(Color(uiColor: UIColor(hexString: "FFFFFF")))
                         }
-                        .frame(width: geometry.size.width * 0.54, height: geometry.size.height)
+                        .frame(width: 0.55*geometry.size.width, height: geometry.size.height)
                     } else {
                         VStack {
                         }
-                        .frame(width: geometry.size.width * 0.54, height: geometry.size.height)
+                        .frame(width: 0.55*geometry.size.width, height: geometry.size.height)
                         .background(Color(uiColor: color))
                         .overlay() {
                             ZStack(alignment: .top) {
@@ -50,10 +52,10 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                                         HStack {
                                             Image(uiImage: image)
                                                 .resizable()
-                                                .frame(width: imageSize(for: entry).width,height: imageSize(for: entry).height)
+                                                .frame(width: imageSize(for: entry, geometry: geometry).width,height: imageSize(for: entry, geometry: geometry).height)
                                                 .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
                                                 .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .bottomRight]))
-                                                .padding(.top, image.size.width > image.size.height ? geometry.size.height * 0.19 : geometry.size.height * 0.13)
+                                                .padding(.top, image.size.width > image.size.height ?  self.getHeightPercentFactor(using: geometry, for: 30, for: type) : self.getHeightPercentFactor(using: geometry, for: 20, for: type))
                                                 .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 3)
                                             Spacer()
                                         }
@@ -62,7 +64,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                                                 .lineLimit(1)
                                                 .frame(maxWidth: .infinity, alignment: .leading)
                                                 .foregroundColor(color.isLightColor() ? Color.black : Color.white)
-                                                .padding(.top, 13)
+                                                .padding(.top, self.getHeightPercentFactor(using: geometry, for: 13, for: type))
                                                 .font(.appFont(for: .medium, with: 16))
                                             Spacer(minLength: 14)
                                         }
@@ -76,7 +78,7 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                                             Spacer(minLength: 14)
                                         }
                                         Spacer()
-                                    }.padding(.leading, 20)
+                                    }.padding(.leading, self.getWidthPercentFactor(using: geometry, for: 20, for: type))
                                     Spacer()
                                 }
 
@@ -85,9 +87,9 @@ struct FTPinnedNotebookOptionsWidgetView: View {
                     }
                 }.buttonStyle(.plain)
                 VStack {
-                    optionsView
+                    optionsView(geometry: geometry)
                 }
-                .frame(width: geometry.size.width * 0.46)
+                .frame(width: 0.45*geometry.size.width)
             }
         }
         .onAppear {
@@ -100,10 +102,12 @@ struct FTPinnedNotebookOptionsWidgetView: View {
         return UIImage(contentsOfFile: entry.coverImage) ?? UIImage(named: "noCover")!
     }
     
-    private func imageSize(for entry: FTPinnedBookEntry) -> CGSize {
-        var size = CGSize(width: 49, height: 68)
+    private func imageSize(for entry: FTPinnedBookEntry, geometry: GeometryProxy) -> CGSize {
+        let portraitDimension = self.getWidthPercentFactor(using: geometry, for: 49, for: type)
+        let landscapeDimension = self.getHeightPercentFactor(using: geometry, for: 68, for: type)
+        var size = CGSize(width: portraitDimension, height: landscapeDimension)
         if image.size.width > image.size.height {
-            size = CGSize(width: 68, height: 49)
+            size = CGSize(width: landscapeDimension, height: portraitDimension)
         }
         return size
     }
@@ -116,44 +120,47 @@ struct FTPinnedNotebookOptionsWidgetView: View {
         return uiColor
     }
 
-    private var optionsView : some View {
-        Grid(alignment: .center, horizontalSpacing: 8, verticalSpacing: 8) {
+    private func optionsView(geometry: GeometryProxy) -> some View {
+        Grid(alignment: .center, horizontalSpacing: self.getHeightPercentFactor(using: geometry, for: 8, for: type), verticalSpacing: self.getHeightPercentFactor(using: geometry, for: 8, for: type)) {
             GridRow {
-                optionViewForType(.pen(entry.relativePath), intent: entry.penIntent)
-                optionViewForType(.audio(entry.relativePath), intent: entry.audioIntent)
+                optionViewForType(.pen(entry.relativePath), intent: entry.penIntent, geometry: geometry)
+                optionViewForType(.audio(entry.relativePath), intent: entry.audioIntent, geometry: geometry)
             }
 
             GridRow {
-                optionViewForType(.openAI(entry.relativePath), intent: entry.aiIntent)
-                optionViewForType(.text(entry.relativePath), intent: entry.textIntent)
+                optionViewForType(.openAI(entry.relativePath), intent: entry.aiIntent, geometry: geometry)
+                optionViewForType(.text(entry.relativePath), intent: entry.textIntent, geometry: geometry)
             }
         }
     }
 
-    private func optionViewForType(_ type : FTPinndedWidgetActionType, intent: any AppIntent) -> some View {
+    private func optionViewForType(_ type : FTPinndedWidgetActionType, intent: any AppIntent, geometry: GeometryProxy, widgetType: FTWidgetType = .medium) -> some View {
         Button(intent: intent) {
             HStack {
                 Image("\(type.iconName)")
-                    .frame(width: 18,height: 18,alignment: .center)
+                    .frame(height: self.getHeightPercentFactor(using: geometry, for: 54, for: widgetType))
+                    .aspectRatio(1, contentMode: .fit)
                     .scaledToFit()
                     .foregroundStyle(Color(type.docId.isEmpty ? "imageDisabledTintColor" : "creationWidgetButtonTint"))
             }
         }
-        .buttonStyle(FTPinnedBookOptionButtonStyle(color: Color(type.docId.isEmpty ? "pinnedBookEmptyBgColor" : "pinnedBookOptionBgColor")))
+        .buttonStyle(FTPinnedBookOptionButtonStyle(color: Color(type.docId.isEmpty ? "pinnedBookEmptyBgColor" : "pinnedBookOptionBgColor"), geometry: geometry))
         .disabled(type.docId.isEmpty)
     }
 }
 
 struct FTPinnedBookOptionButtonStyle: ButtonStyle {
     let bgColor: Color
+    let geometry: GeometryProxy
 
-    public init(color: Color) {
+    public init(color: Color, geometry: GeometryProxy) {
         self.bgColor = color
+        self.geometry = geometry
     }
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .frame(width: 54, height: 54)
+            .frame(width: geometry.size.height*54/155, height: geometry.size.height*54/155)
             .background(bgColor)
             .clipShape(RoundedRectangle(cornerRadius: 12))
     }
