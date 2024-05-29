@@ -9,7 +9,7 @@
 import Foundation
 
 protocol FTMenuLayerPathConfig: AnyObject {
-    func createPath(with center: CGPoint, radius: CGFloat, startAngle: CGFloat, endAngle: CGFloat)
+    func setPath(with center: CGPoint, radius: CGFloat, startAngle: CGFloat, endAngle: CGFloat)
 }
 
 class FTPencilProLayer: CAShapeLayer, FTMenuLayerPathConfig {
@@ -25,7 +25,7 @@ class FTPencilProLayer: CAShapeLayer, FTMenuLayerPathConfig {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func createPath(with center: CGPoint, radius: CGFloat, startAngle: CGFloat, endAngle: CGFloat) {
+    func setPath(with center: CGPoint, radius: CGFloat, startAngle: CGFloat, endAngle: CGFloat) {
         let path = UIBezierPath()
         path.addArc(withCenter: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
         self.path = path.cgPath
@@ -33,8 +33,8 @@ class FTPencilProLayer: CAShapeLayer, FTMenuLayerPathConfig {
 }
 
 class FTPencilProMenuLayer: FTPencilProLayer {
-    override init(strokeColor: UIColor, lineWidth: CGFloat) {
-        super.init(strokeColor: .red, lineWidth: 50.0)
+    override init(strokeColor: UIColor = .red, lineWidth: CGFloat = 50.0) {
+        super.init(strokeColor: strokeColor, lineWidth: lineWidth)
     }
     
     required init?(coder: NSCoder) {
@@ -43,8 +43,8 @@ class FTPencilProMenuLayer: FTPencilProLayer {
 }
 
 class FTPencilProBorderLayer: FTPencilProLayer {
-    override init(strokeColor: UIColor, lineWidth: CGFloat) {
-        super.init(strokeColor: .green, lineWidth: 52.0)
+    override init(strokeColor: UIColor = .green, lineWidth: CGFloat = 52.0) {
+        super.init(strokeColor: strokeColor, lineWidth: lineWidth)
     }
     
     required init?(coder: NSCoder) {

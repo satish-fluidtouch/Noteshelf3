@@ -82,7 +82,6 @@ class FTToolbarCenterPanelController: UIViewController {
     @IBOutlet private weak var navBtnWidthConstraint: NSLayoutConstraint?
     @IBOutlet private weak var collectionViewWidthConstraint: NSLayoutConstraint?
 
-    private var dataSourceItems: [FTDeskCenterPanelTool] = []
     private(set) var screenMode = FTScreenMode.normal
     private var showTipView :  Bool = false
 
@@ -90,6 +89,9 @@ class FTToolbarCenterPanelController: UIViewController {
 
     private var deskToolWidth: CGFloat {
         return self.collectionView?.deskToolWidth ?? 40
+    }
+    private var dataSourceItems: [FTDeskCenterPanelTool] {
+        return self.collectionView?.dataSourceItems ?? []
     }
 
     private var navButtonWidth: CGFloat {
@@ -102,6 +104,7 @@ class FTToolbarCenterPanelController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.collectionView.delegate = self
         self.collectionView.centerPanelDelegate = self
         self.addObservers()
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
@@ -152,7 +155,7 @@ class FTToolbarCenterPanelController: UIViewController {
     }
 
      func updateCenterPanel() {
-        self.dataSourceItems = FTCurrentToolbarSection().displayTools
+         self.collectionView?.dataSourceItems = FTCurrentToolbarSection().displayTools
         guard let maxToShow = self.delegate?.maxCenterPanelItemsToShow() else {
             return
         }
@@ -181,6 +184,64 @@ class FTToolbarCenterPanelController: UIViewController {
         runInMainThread(0.1) {
             self.updateCurrentStatusOfNavButtons()
         }
+    }
+}
+
+extension FTToolbarCenterPanelController: UICollectionViewDelegateFlowLayout {
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        self.updateCurrentStatusOfNavButtons()
+    }
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        self.updateCurrentStatusOfNavButtons()
+        FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_tools_swipe)
+    }
+
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            self.updateCurrentStatusOfNavButtons()
+            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_tools_swipe)
+        }
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.disableNavButtons()
+    }
+
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let currentOffsetX = scrollView.contentOffset.x + (velocity.x * 300.0)
+        var nearstOffsetX: CGFloat = 0.0
+        if currentOffsetX <= 0.0 {
+
+        } else if currentOffsetX >= scrollView.contentSize.width - scrollView.bounds.width {
+            nearstOffsetX = scrollView.contentSize.width - scrollView.bounds.width
+        } else {
+            let cellWidth = Int(deskToolWidth)
+            nearstOffsetX = CGFloat(self.roundUp(value: Int(currentOffsetX), divisor: cellWidth))
+        }
+        targetContentOffset.pointee.x = CGFloat(nearstOffsetX)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if self.screenMode == .shortCompact {
+            return FTToolbarConfig.CenterPanel.DeskToolSize.compact
+        }
+        return FTToolbarConfig.CenterPanel.DeskToolSize.regular
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        var edgeSet: UIEdgeInsets = .zero
+        if self.screenMode == .shortCompact {
+            guard var reqToShow = self.delegate?.maxCenterPanelItemsToShow() else {
+                return edgeSet
+            }
+            if reqToShow > self.dataSourceItems.count {
+                reqToShow = self.dataSourceItems.count
+            }
+            let avaSpace = self.view.frame.width - (CGFloat(reqToShow) * deskToolWidth)
+            edgeSet = UIEdgeInsets(top: 0.0, left: avaSpace/2, bottom: 0.0, right: avaSpace/2.0)
+        }
+        return edgeSet
     }
 }
 
@@ -297,41 +358,6 @@ extension FTToolbarCenterPanelController: FTCenterPanelCollectionViewDelegate {
         self.delegate?.didTapCenterPanelButton(type: type, sender: sender)
     }
     
-    func collectionViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        self.updateCurrentStatusOfNavButtons()
-    }
-
-    func collectionViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        self.updateCurrentStatusOfNavButtons()
-        FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_tools_swipe)
-
-    }
-
-    func collectionViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if !decelerate {
-            self.updateCurrentStatusOfNavButtons()
-            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_tools_swipe)
-        }
-    }
-
-    func collectionViewDidScroll(_ scrollView: UIScrollView) {
-        self.disableNavButtons()
-    }
-
-    func collectionViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let currentOffsetX = scrollView.contentOffset.x + (velocity.x * 300.0)
-        var nearstOffsetX: CGFloat = 0.0
-        if currentOffsetX <= 0.0 {
-
-        } else if currentOffsetX >= scrollView.contentSize.width - scrollView.bounds.width {
-            nearstOffsetX = scrollView.contentSize.width - scrollView.bounds.width
-        } else {
-            let cellWidth = Int(deskToolWidth)
-            nearstOffsetX = CGFloat(self.roundUp(value: Int(currentOffsetX), divisor: cellWidth))
-        }
-        targetContentOffset.pointee.x = CGFloat(nearstOffsetX)
-    }
-
     private func roundUp(value: Int, divisor: Int) -> Int {
         let modulo = value % divisor
         var multiplier = value / divisor

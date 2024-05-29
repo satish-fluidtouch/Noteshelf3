@@ -2264,6 +2264,8 @@
 		E7F094492BCF990000177BC5 /* FTCustomToolbarFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F094452BCF990000177BC5 /* FTCustomToolbarFooterView.swift */; };
 		E7F0944A2BCF990000177BC5 /* FTCustomizeToolbarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7F094462BCF990000177BC5 /* FTCustomizeToolbarCell.xib */; };
 		E7F0944B2BCF990000177BC5 /* FTCustomToolbarFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7F094472BCF990000177BC5 /* FTCustomToolbarFooterView.xib */; };
+		E7F248652C074C0300D93D19 /* FTPencilProMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F248642C074C0300D93D19 /* FTPencilProMenuController.swift */; };
+		E7F248672C074D4000D93D19 /* FTCircularFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F248662C074D4000D93D19 /* FTCircularFlowLayout.swift */; };
 		E7F479D328857FBD00577D1E /* FTRackData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F479D228857FBD00577D1E /* FTRackData.swift */; };
 		E7F479D9288589D700577D1E /* FTRackDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F479D8288589D700577D1E /* FTRackDataManager.swift */; };
 		E7F479DA28858AC200577D1E /* FTRackDataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFDC54124F4F50E00D8025D /* FTRackDataModels.swift */; };
@@ -4706,6 +4708,8 @@
 		E7F094452BCF990000177BC5 /* FTCustomToolbarFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTCustomToolbarFooterView.swift; sourceTree = "<group>"; };
 		E7F094462BCF990000177BC5 /* FTCustomizeToolbarCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FTCustomizeToolbarCell.xib; sourceTree = "<group>"; };
 		E7F094472BCF990000177BC5 /* FTCustomToolbarFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FTCustomToolbarFooterView.xib; sourceTree = "<group>"; };
+		E7F248642C074C0300D93D19 /* FTPencilProMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPencilProMenuController.swift; sourceTree = "<group>"; };
+		E7F248662C074D4000D93D19 /* FTCircularFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCircularFlowLayout.swift; sourceTree = "<group>"; };
 		E7F479D228857FBD00577D1E /* FTRackData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTRackData.swift; sourceTree = "<group>"; };
 		E7F479D8288589D700577D1E /* FTRackDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTRackDataManager.swift; sourceTree = "<group>"; };
 		E7F479DB288591C800577D1E /* FTPersistanceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPersistanceData.swift; sourceTree = "<group>"; };
@@ -7396,6 +7400,7 @@
 				E7B423F728DD9872008415D2 /* FTCustomizeToolbarController.swift */,
 				09F81DC3291544ED0040E023 /* FTToolbarView.swift */,
 				E783B37B2C06FE8E006B40A6 /* FTCenterPanelCollectionView.swift */,
+				E7F248642C074C0300D93D19 /* FTPencilProMenuController.swift */,
 			);
 			path = Toolbar;
 			sourceTree = "<group>";
@@ -11344,6 +11349,7 @@
 				E7CCA90C29DC007B0010D619 /* FTToolbarConfig.swift */,
 				E767180D2C072A0C00F452A2 /* FTPencilProMenuHandler.swift */,
 				E767180F2C072AFE00F452A2 /* FTPencilProMenuLayer.swift */,
+				E7F248662C074D4000D93D19 /* FTCircularFlowLayout.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -13801,6 +13807,7 @@
 				BAF391C62859ADF00067CA9F /* FTCloudDocumentConflictScreen.swift in Sources */,
 				BAF391C72859ADF00067CA9F /* FTImageAnnotation_SQLiteHelper.swift in Sources */,
 				477862FD2A612DA800202D00 /* FTShelfTagsBooksCell+ContextMenu.swift in Sources */,
+				E7F248652C074C0300D93D19 /* FTPencilProMenuController.swift in Sources */,
 				BAF391C82859ADF00067CA9F /* FTTextLayouter.swift in Sources */,
 				BAF391C92859ADF00067CA9F /* FTCustomTextRange.swift in Sources */,
 				BAF391CA2859ADF00067CA9F /* FTSettingsLabel.swift in Sources */,
@@ -14922,6 +14929,7 @@
 				BAF395572859ADF10067CA9F /* FTDropboxError.swift in Sources */,
 				E713D9B0299CF399008FDC77 /* FTSpellCheckManager.swift in Sources */,
 				BAF395582859ADF10067CA9F /* FTShelfCategoryCollectionRecent.swift in Sources */,
+				E7F248672C074D4000D93D19 /* FTCircularFlowLayout.swift in Sources */,
 				BAF395592859ADF10067CA9F /* FTThemeCategoryTableViewCell.swift in Sources */,
 				3DAC23B6290FCE0B0084E626 /* FTAddNewTextStyleCell.swift in Sources */,
 				BAF3955A2859ADF10067CA9F /* FTStroke.swift in Sources */,
