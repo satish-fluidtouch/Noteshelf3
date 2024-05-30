@@ -400,11 +400,7 @@ extension FTToolbarCenterPanelController: UICollectionViewDataSource, UICollecti
                         if let status = self.delegate?.isAudioRecordedViewPresented() {
                             _cell.isShortcutHighlighted = status
                         }
-                    } else if btnType == .emojis {
-                        if let status = self.delegate?.isEmojiSelected() {
-                            _cell.isShortcutHighlighted = status
-                        }
-                    }
+                    } 
                     else {
                         _cell.isShortcutSelected = true
                     }
