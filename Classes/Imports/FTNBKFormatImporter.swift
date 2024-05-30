@@ -14,14 +14,16 @@ class FTNBKFormatImporter: NSObject,SSZipArchiveDelegate {
     fileprivate var importURL : URL!;
     fileprivate weak var collection : FTShelfItemCollection!;
     fileprivate weak var group : FTGroupItemProtocol?;
-    
+    fileprivate weak var shelfItem : FTShelfItemProtocol?;
+
     var deleteSourceFileOnCompletion = true;
     
-    convenience init(url : URL, collection : FTShelfItemCollection, group: FTGroupItemProtocol?) {
+    convenience init(url : URL, collection : FTShelfItemCollection, group: FTGroupItemProtocol?, shelfItem: FTShelfItemProtocol?) {
         self.init();
         self.importURL = url;
         self.collection = collection;
         self.group = group;
+        self.shelfItem = shelfItem;
     }
     
     func startImporting(onUpdate : ((CGFloat) -> Void)?,
@@ -54,12 +56,12 @@ class FTNBKFormatImporter: NSObject,SSZipArchiveDelegate {
                                                                 toTitle: title,
                                                                 toGroup: self.group,
                                                                 onCompletion: { (error, item) in
-                                                                    if(self.deleteSourceFileOnCompletion) {
-                                                                        try? FileManager().removeItem(at: self.importURL);
-                                                                    }
-                                                                    endBackgroundTask(task);
-                                                                    onCompletion(error,item);
-                                                                    FTCLSLog("Book Imported");
+                            if(self.deleteSourceFileOnCompletion) {
+                                try? FileManager().removeItem(at: self.importURL);
+                            }
+                            endBackgroundTask(task);
+                            onCompletion(error,item);
+                            FTCLSLog("Book Imported");
                         });
                     }
                     else {

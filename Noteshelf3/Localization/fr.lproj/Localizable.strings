@@ -1160,6 +1160,10 @@
 "icloud.sync.issue.message" = "Impossible d'accéder à iCloud. Veuillez vous assurer qu'iCloud est activé dans les paramètres.";
 "iconlabels" = "Étiquettes d'icônes";
 "import" = "Importer";
+"import.multiple.files" = "%@ fichiers envoyés à Noteshelf";
+"import.notsupported.desc" = "Ce type de fichier n'est pas pris en charge pour le moment.";
+"import.notsupported.title" = "Incapable d'importer le fichier";
+"import.single.files" = "%@ fichier envoyé à Noteshelf";
 "importedFiles" = "Fichiers importés";
 "importedTo" = "Importé à";
 "insidenotebook.share.pageno" = "page %@";
@@ -1196,6 +1200,7 @@
 "moreInfo" = "Plus d'infos...";
 "more_global" = "PARAMÈTRES GLOBAUX";
 "move" = "Déplacer";
+"multiple.files" = "%@f ichiers";
 "newnotebook" = "NOUVEAU CAHIER";
 "newnotebook.create" = "Créer";
 "newnotebook.exitalert.message" = "Voulez-vous continuer ?";
@@ -1498,6 +1503,7 @@
 "sidebar.topSection.home" = "Accueil";
 "sidebar.topSection.starred" = "Favoris";
 "sidebar.topSection.unfiled" = "Non classé";
+"single.file" = "%@ fichier";
 "snippets.addtopage" = "Ajouter à la page";
 "speechbubbles" = "Bulles de dialogue";
 "status_bar_info_footer" = "Appréciez-vous Noteshelf 3 ? %@ pour nous évaluer sur l'App Store. Cela nous aidera plus que vous ne l’imaginez.";
@@ -1676,4 +1682,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 17 May 2024 at 4:53 PM
+// Last Synced by Fluid Touch on 28 May 2024 at 7:20 PM

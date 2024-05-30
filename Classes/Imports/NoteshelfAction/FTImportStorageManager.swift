@@ -45,12 +45,12 @@ class FTImportStorageManager: NSObject {
         }
     }
     
-    static func addNewImportAction(_ importedURL:URL, group: String?, collection: String?) {
+    static func addNewImportAction(_ importedURL:URL, group: String?, collection: String?, notebook: String?) {
         let newAction:FTSharedAction = FTSharedAction()
         newAction.collectionName = collection
         newAction.groupName = group
         newAction.sourceURL = importedURL.absoluteString;
-
+        newAction.notebook = notebook
         let sharedDirectory = FTImportStorageManager.storageDirectoryURL()
         let uniqueFileName = FileManager.uniqueFileName(importedURL.lastPathComponent,
                                                         inFolder: sharedDirectory,
