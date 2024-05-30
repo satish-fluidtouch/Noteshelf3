@@ -62,64 +62,53 @@ extension FTNoteshelfDocument : FTDocumentCreateWatchExtension {
             paperTheme.setPaperVariants(FTBasicTemplatesDataSource.shared.getDefaultVariants())
         }
         if let theme = paperTheme as? FTTheme {
-            Task {
-                let generator = FTAutoTemplateGenerator.autoTemplateGenerator(theme: theme, generationType: .template)
-                do {
-                    let documentInfo = try await generator.generate()
-                    documentInfo.footerOption = theme.footerOption
-                    documentInfo.isNewBook = true
-                    documentInfo.coverTemplateImage = info.coverTemplateImage
-                    documentInfo.insertAt = 0
-                    documentInfo.annotationInfo = theme.annotationInfo
-                    
-                    self.createDocument(documentInfo) { (error, success) in
-                        if(nil != error) {
+            let generator = FTAutoTemplateGenerator.autoTemplateGenerator(theme: theme, generationType: .template)
+            let documentInfo =  generator.generate()
+            documentInfo.footerOption = theme.footerOption
+            documentInfo.isNewBook = true
+            documentInfo.coverTemplateImage = info.coverTemplateImage
+            documentInfo.insertAt = 0
+            documentInfo.annotationInfo = theme.annotationInfo
+
+            self.createDocument(documentInfo) { (error, success) in
+                if(nil != error) {
+                    onCompletion(error,success)
+                }
+                else {
+                    guard let _audioURLs = audioURLS else {
+                        onCompletion(nil,true);
+                        return
+                    }
+
+                    self.openDocument(purpose: .write,completionHandler: { (openSuccess,_) in
+                        if(!openSuccess) {
                             DispatchQueue.main.async {
-                                onCompletion(error,success);
+                                onCompletion(FTDocumentCreateErrorCode.error(.openFailed),openSuccess);
                             }
                         }
                         else {
-                            guard let _audioURLs = audioURLS else {
-                                DispatchQueue.main.async {
-                                    onCompletion(nil,true);
-                                }
-                                return
-                            }
-                            
-                            self.openDocument(purpose: .write,completionHandler: { (openSuccess,_) in
-                                if(!openSuccess) {
-                                    DispatchQueue.main.async {
-                                        onCompletion(FTDocumentCreateErrorCode.error(.openFailed),openSuccess);
-                                    }
-                                }
-                                else {
-                                    let page = self.pages().first;
-                                    if(nil != page) {
-                                        let annotations = [FTAnnotation]();
-                                        self.addAudioAnnotations(urls: _audioURLs,
-                                                                 info: documentInfo,
-                                                                 index : Int(0),
-                                                                 toPage: page!,
-                                                                 annotations: annotations,
-                                                                 onCompletion:
-                                                                    { (annotations) in
-                                            self.saveDocument(completionHandler: { (saveSuccess) in
-                                                self.closeDocument(completionHandler: { (success) in
-                                                    DispatchQueue.main.async {
-                                                        onCompletion(nil,saveSuccess);
-                                                    }
-                                                })
-                                            })
-                                            
+                            let page = self.pages().first;
+                            if(nil != page) {
+                                let annotations = [FTAnnotation]();
+                                self.addAudioAnnotations(urls: _audioURLs,
+                                                         info: documentInfo,
+                                                         index : Int(0),
+                                                         toPage: page!,
+                                                         annotations: annotations,
+                                                         onCompletion:
+                                                            { (annotations) in
+                                    self.saveDocument(completionHandler: { (saveSuccess) in
+                                        self.closeDocument(completionHandler: { (success) in
+                                            DispatchQueue.main.async {
+                                                onCompletion(nil,saveSuccess);
+                                            }
                                         })
-                                    }
-                                }
-                            })
+                                    })
+
+                                })
+                            }
                         }
-                    }
-                }
-                catch {
-                    onCompletion(nil,false)
+                    })
                 }
             }
         }

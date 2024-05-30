@@ -12,21 +12,24 @@ import WidgetKit
 import AppIntents
 
 struct FTQuickNoteCreateView: View {
+    private let type: FTWidgetType = .small
+
     var body: some View {
-        VStack {
-            Image("createQuickNote")
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding([.top, .leading], 16.0)
-            Spacer()
-            Text(quickNoteTitle)
-                .lineSpacing(6)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .font(.clearFaceFont(for: .bold, with: 20))
-                .foregroundColor(Color.white)
-                .padding([.bottom, .leading], 20.0)
+        GeometryReader { geometry in
+            VStack {
+                Image("createQuickNote")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding([.top, .leading], self.getWidthPercentFactor(using: geometry, for: 16, for: type))
+                Spacer()
+                Text(quickNoteTitle)
+                    .lineSpacing(6)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.clearFaceFont(for: .bold, with: 20))
+                    .foregroundColor(Color.white)
+                    .padding([.bottom, .leading], self.getWidthPercentFactor(using: geometry, for: 20, for: type))
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 24.0))
         }
-        .frame(width: 155, height: 155)
-        .clipShape(RoundedRectangle(cornerRadius: 24.0))
     }
     
     private var quickNoteTitle : String {
