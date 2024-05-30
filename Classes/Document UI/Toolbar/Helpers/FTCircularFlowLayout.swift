@@ -8,30 +8,33 @@
 
 import UIKit
 
-class FTCircularFlowLayout: UICollectionViewLayout {
-    private var centre: CGPoint = .zero
-    private var radius: CGFloat = 0
-    private var itemSize: CGSize = .zero
-    private var angularSpacing: CGFloat = 0
-    var scrollDirection: UICollectionView.ScrollDirection = .horizontal
-    private var mirrorX: Bool = false
-    private var mirrorY: Bool = false
-    private var rotateItems: Bool = false
+struct FTCircularLayoutConfig {
+    var maxVisibleItemsCount: Int
+    var angleOfEachItem: CGFloat
+    var radius: CGFloat
+    var itemSize: CGSize
 
-    private var angleOfEachItem: CGFloat = 0
-    private var angleForSpacing: CGFloat = 0
-    private var circumference: CGFloat = 0
-    private var cellCount: Int = 0
-    private var maxNoOfCellsInCircle: CGFloat = 0
-    private var _startAngle: CGFloat = CGFloat.pi
-    private var _endAngle: CGFloat = 0
-
-    init(withCentre centre: CGPoint, radius: CGFloat, itemSize: CGSize, angularSpacing: CGFloat) {
-        super.init()
-        self.centre = centre
+    init(maxVisibleItemsCount: Int = 7, angleOfEachItem: CGFloat = 14.degreesToRadians, radius: CGFloat = 200, itemSize: CGSize = CGSize(width: 40, height: 40)) {
+        self.maxVisibleItemsCount = maxVisibleItemsCount
+        self.angleOfEachItem = angleOfEachItem
         self.radius = radius
         self.itemSize = itemSize
-        self.angularSpacing = angularSpacing
+    }
+}
+
+class FTCircularFlowLayout: UICollectionViewLayout {
+    private var cellCount: Int = 0
+    private var startAngle: CGFloat = .pi
+    private var endAngle: CGFloat = 0
+    private var circumference: CGFloat = 0
+
+    private let centre: CGPoint
+    private let config: FTCircularLayoutConfig
+
+    init(withCentre centre: CGPoint, config: FTCircularLayoutConfig) {
+        self.centre = centre
+        self.config = config
+        super.init()
     }
 
     required init?(coder: NSCoder) {
@@ -39,138 +42,78 @@ class FTCircularFlowLayout: UICollectionViewLayout {
     }
 
     func set(startAngle: CGFloat, endAngle: CGFloat) {
-        self._startAngle = startAngle
-        self._endAngle = endAngle
-        if _startAngle == 2.0 * CGFloat.pi {
-            _startAngle = 2.0 * CGFloat.pi - CGFloat.pi / 180.0
-        }
-
-        if _endAngle == 2.0 * CGFloat.pi {
-            _endAngle = 2.0 * CGFloat.pi - CGFloat.pi / 180.0
-        }
+        self.startAngle = startAngle
+        self.endAngle = endAngle
     }
 
     override func prepare() {
         super.prepare()
-        cellCount = self.collectionView?.numberOfItems(inSection: 0) ?? 0
-        circumference = abs(_startAngle - _endAngle) * radius
-        maxNoOfCellsInCircle = circumference / (max(itemSize.width, itemSize.height) + angularSpacing / 2.0)
-        angleOfEachItem = abs(_startAngle - _endAngle) / maxNoOfCellsInCircle
+        guard let collectionView = self.collectionView else {
+            return
+        }
+        self.cellCount = collectionView.numberOfItems(inSection: 0)
+        self.circumference = abs(startAngle - endAngle) * self.config.radius
     }
 
     override var collectionViewContentSize: CGSize {
-        let visibleAngle = abs(_startAngle - _endAngle)
-        let remainingItemsCount = cellCount > Int(maxNoOfCellsInCircle) ? cellCount - Int(maxNoOfCellsInCircle) : 0
-        let scrollableContentWidth = CGFloat(remainingItemsCount) * angleOfEachItem * radius / (2.0 * CGFloat.pi / visibleAngle)
-        let height = radius + (max(itemSize.width, itemSize.height) / 2)
-        if scrollDirection == .vertical {
-            return CGSize(width: height, height: scrollableContentWidth + (self.collectionView?.bounds.size.height ?? 0.0));
+        guard let collectionView = self.collectionView else {
+            return .zero
         }
-        return CGSize(width: scrollableContentWidth + (self.collectionView?.bounds.size.width ?? 0.0), height: height);
+        let visibleAngle = abs(startAngle - endAngle)
+        var contentWidth: CGFloat = collectionView.bounds.size.width
+        if cellCount > self.config.maxVisibleItemsCount {
+            let remainingItemsCount = cellCount - self.config.maxVisibleItemsCount
+            contentWidth += CGFloat(remainingItemsCount) * self.config.angleOfEachItem * self.config.radius / (2.0 * CGFloat.pi / visibleAngle)
+        }
+        let height = self.config.radius + (max(self.config.itemSize.width, self.config.itemSize.height) / 2)
+        return CGSize(width: contentWidth, height: height)
     }
 
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        if scrollDirection == .vertical {
-            return self.layoutAttributesForVerticalScrollForItem(at: indexPath)
+        guard let collectionView = self.collectionView else {
+            return nil
         }
-        return self.layoutAttributesForHorozontalScrollForItem(at: indexPath)
-    }
-
-    private func layoutAttributesForHorozontalScrollForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
 
-        var offset = self.collectionView?.contentOffset.x ?? 0
-        offset = offset == 0 ? 1 : offset
+        let offset = collectionView.contentOffset.x
         let offsetPartInMPI = offset/circumference
         let angle = 2.0 * CGFloat.pi * offsetPartInMPI
         let offsetAngle = angle
+        attributes.size = self.config.itemSize
 
-        attributes.size = itemSize
-        let _mirrorX: CGFloat = mirrorX ? -1 : 1
-        let _mirrorY: CGFloat = mirrorY ? -1 : 1
+        let beta = Float(CGFloat(indexPath.item) * self.config.angleOfEachItem - offsetAngle + self.config.angleOfEachItem / 2.0 - startAngle)
+        let x = centre.x + offset +  self.config.radius * CGFloat(cosf(beta))
+        let y = centre.y +  self.config.radius * CGFloat(sinf(beta))
 
-        let beta = Float(CGFloat(indexPath.item) * angleOfEachItem - offsetAngle + angleOfEachItem / 2.0 - _startAngle)
-        let x = centre.x + offset + _mirrorX * radius * CGFloat(cosf(beta))
-        let y = centre.y + _mirrorY * radius * CGFloat(sinf(beta))
-
-        let cellCurrentAngle = (CGFloat(indexPath.item) * angleOfEachItem + angleOfEachItem / 2 - offsetAngle)
-        if (cellCurrentAngle >= angleOfEachItem / 4 && cellCurrentAngle <= abs(_startAngle - _endAngle) - angleOfEachItem / 4) {
+        let cellCurrentAngle = (CGFloat(indexPath.item) * self.config.angleOfEachItem + self.config.angleOfEachItem / 2 - offsetAngle)
+        if (cellCurrentAngle >= self.config.angleOfEachItem / 4 && cellCurrentAngle <= abs(startAngle - endAngle) - self.config.angleOfEachItem / 4) {
             attributes.alpha = 1
         } else {
             attributes.alpha = 0
         }
-
         attributes.center = CGPoint(x: x, y: y)
         attributes.zIndex = cellCount - indexPath.item
-        if rotateItems {
-            if mirrorY {
-                attributes.transform = CGAffineTransform(rotationAngle: CGFloat.pi - cellCurrentAngle - CGFloat.pi / 2)
-            } else {
-                attributes.transform = CGAffineTransform(rotationAngle: cellCurrentAngle - CGFloat.pi / 2)
-            }
-        }
-        return attributes
-    }
-
-    private func layoutAttributesForVerticalScrollForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
-
-        var offset = self.collectionView?.contentOffset.y ?? 0
-        offset = offset == 0 ? 1 : offset
-        let offsetPartInMPI = offset/circumference
-        let angle = 2 * CGFloat.pi * offsetPartInMPI
-        let offsetAngle = angle
-
-        attributes.size = itemSize
-        let _mirrorX: CGFloat = mirrorX ? -1 : 1
-        let _mirrorY: CGFloat = mirrorY ? -1 : 1
-
-        let beta = Float(CGFloat(indexPath.item) * angleOfEachItem - offsetAngle + angleOfEachItem / 2 - _startAngle)
-        let x = centre.x + _mirrorX * radius * CGFloat(cosf(beta))
-        let y = centre.y + offset + _mirrorY * radius * CGFloat(sinf(beta))
-
-        let cellCurrentAngle = CGFloat(indexPath.item) * angleOfEachItem + angleOfEachItem / 2 - offsetAngle;
-
-        if (cellCurrentAngle >= -angleOfEachItem / 2 && cellCurrentAngle <= abs(_startAngle - _endAngle) + angleOfEachItem / 2) {
-            attributes.alpha = 1
-        } else {
-            attributes.alpha = 0
-        }
-
-        attributes.center = CGPoint(x: x, y: y)
-        attributes.zIndex = cellCount - indexPath.item
-        if rotateItems {
-            if mirrorX {
-                attributes.transform = CGAffineTransform(rotationAngle: 2 * CGFloat.pi - cellCurrentAngle)
-            } else {
-                attributes.transform = CGAffineTransform(rotationAngle: cellCurrentAngle)
-            }
-        }
-
         return attributes
     }
 
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var attributes: [UICollectionViewLayoutAttributes] = []
-
         for i in 0..<cellCount {
             let indexPath = IndexPath(row: i, section: 0)
             guard let cellAttributes = self.layoutAttributesForItem(at: indexPath) else {
                 continue
             }
-
             if (rect.intersects(cellAttributes.frame) && cellAttributes.alpha != 0) {
                 attributes.append(cellAttributes)
             }
         }
-        return attributes;
+        return attributes
     }
 
     override func initialLayoutAttributesForAppearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         guard let contentOffset = self.collectionView?.contentOffset else {
             return nil
         }
-
         let attributes = super.initialLayoutAttributesForAppearingItem(at: itemIndexPath)
         attributes?.center = CGPoint(x: centre.x + contentOffset.x,
                                      y: centre.y + contentOffset.y)
@@ -183,7 +126,6 @@ class FTCircularFlowLayout: UICollectionViewLayout {
         guard let contentOffset = self.collectionView?.contentOffset else {
             return nil
         }
-
         let attributes = super.finalLayoutAttributesForDisappearingItem(at: itemIndexPath)
         attributes?.center = CGPoint(x: centre.x,
                                      y: centre.y + contentOffset.y)

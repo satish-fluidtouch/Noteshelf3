@@ -12,13 +12,18 @@ class FTPencilProMenuController: UIViewController {
     @IBOutlet private weak var collectionView: FTCenterPanelCollectionView!
     private var size = CGSize.zero
 
+    private let center = CGPoint(x: 250, y: 250)
+    private let config = FTCircularLayoutConfig()
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.collectionView.mode = .circular
         self.collectionView.centerPanelDelegate = self
         self.collectionView.dataSourceItems = FTCurrentToolbarSection().displayTools
-        let circularLayout = FTCircularFlowLayout(withCentre: CGPoint(x: 160, y: 160), radius: 120, itemSize: CGSize(width: 50, height: 50), angularSpacing: 10)
-        circularLayout.set(startAngle: .pi, endAngle: .pi/4)
-        circularLayout.scrollDirection = .horizontal
+        let circularLayout = FTCircularFlowLayout(withCentre: center, config: config)
+        let startAngle: CGFloat = .pi - .pi/30
+        let endAngle = self.getEndAngle(with: startAngle)
+        circularLayout.set(startAngle: startAngle, endAngle: endAngle)
         self.collectionView.collectionViewLayout = circularLayout
     }
 
@@ -38,18 +43,23 @@ class FTPencilProMenuController: UIViewController {
 }
 
 private extension FTPencilProMenuController {
-     func drawCollectionViewBackground() {
-        let center = CGPoint(x: 160.0, y: 160.0)
-        let radius: CGFloat = 120.0
+    func getEndAngle(with startAngle: CGFloat) -> CGFloat {
+        var itemsToShow = self.config.maxVisibleItemsCount
+        if self.collectionView.dataSourceItems.count < self.config.maxVisibleItemsCount {
+            itemsToShow = self.collectionView.dataSourceItems.count
+        }
+        let endAngle = startAngle - (CGFloat(itemsToShow) * self.config.angleOfEachItem)
+        return endAngle
+    }
+
+    func drawCollectionViewBackground() {
         self.view.layoutIfNeeded()
-
-        let startAngle: CGFloat = .pi
-        let endAngle: CGFloat = -.pi / 4
         let menuLayer = FTPencilProMenuLayer()
-        menuLayer.setPath(with: center, radius: radius, startAngle: startAngle, endAngle: endAngle)
+        let startAngle: CGFloat = .pi + .pi/30
+        let endAngle = self.getEndAngle(with: .pi - .pi/30)
+        menuLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
         let borderLayer = FTPencilProBorderLayer()
-        borderLayer.setPath(with: center, radius: radius, startAngle: startAngle, endAngle: endAngle)
-
+        borderLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
         self.view.layer.insertSublayer(borderLayer, at: 0)
         self.view.layer.insertSublayer(menuLayer, at: 1)
     }

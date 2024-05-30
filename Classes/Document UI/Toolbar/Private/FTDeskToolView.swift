@@ -17,6 +17,7 @@ class FTDeskToolView: UIView {
 
     var toolType: FTDeskCenterPanelTool = .pen
     var deskToolBtnTapHandler: (() -> Void)?
+    var mode: FTCenterPanelMode = .toolbar
 
     var isSelected: Bool {
         didSet {
@@ -60,7 +61,7 @@ class FTDeskToolView: UIView {
     private func showBgIfNeeded() {
         if isSelected {
             self.bgButton.backgroundColor = UIColor.appColor(.white100)
-            self.bgButton.addRequiredShadow()
+            self.bgButton.addRequiredShadow(mode: self.mode)
             if let selImgName = self.toolType.selectedIconName() {
                 self.toolButton.setImage(named: selImgName, for: .normal, renderMode: .alwaysOriginal);
             }
@@ -154,15 +155,21 @@ class FTDeskShortcutView: FTDeskToolView {
 }
 
 final class FTToolBgButton: UIButton {
-    func addRequiredShadow() {
+    func addRequiredShadow(mode: FTCenterPanelMode = .toolbar) {
         self.layer.masksToBounds = false
         self.layer.shadowOpacity = 0.0
-        self.layer.cornerRadius = 7.0
         self.layer.shadowColor = UIColor.label.withAlphaComponent(0.12).cgColor
         self.layer.shadowOffset = CGSize(width: 0, height: 4.0)
         self.layer.shadowOpacity = 1.0
         self.layer.shadowRadius = 8.0
-        let reqBounds = self.bounds.insetBy(dx: 4.0, dy: 8.0)
+        let reqBounds: CGRect
+        if mode == .toolbar {
+            self.layer.cornerRadius = 7.0
+            reqBounds = self.bounds.insetBy(dx: 4.0, dy: 8.0)
+        } else {
+            reqBounds = self.bounds.insetBy(dx: 4.0, dy: 4.0)
+            self.layer.cornerRadius = reqBounds.height/2
+        }
         self.layer.shadowPath = UIBezierPath(roundedRect: reqBounds, cornerRadius: 7).cgPath
     }
 }
