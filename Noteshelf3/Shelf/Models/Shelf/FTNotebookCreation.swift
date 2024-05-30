@@ -30,81 +30,83 @@ class FTNotebookCreation: NSObject {
             //Create a file named FTAuoTemplateGenerator.
             //on FTAuoTemplateGenerator have a factory method to retun particular operation class.
             //on the object call generate(onCompletion : (FTDocumentInfo?,Error?) -> ()) -> Progress
-            var title = notebookDetails.title
-            title = title.trimmingCharacters(in: .whitespacesAndNewlines)
-            if title.isEmpty {
-                title = NSLocalizedString("Untitled", comment: "Untitled")
-            }
-            let generator = FTAutoTemplateGenerator.autoTemplateGenerator(theme: theme , generationType: .template)
-            let docInfo =  generator.generate()
-            var shelfItemImage: UIImage!
-            if let image = UIImage(contentsOfFile: cover.themeTemplateURL().path){
-                shelfItemImage = image
-            }
-            else {
-                shelfItemImage = cover.themeThumbnail()
-            }
-
-            //docInfo.rootViewController = self.presentingViewController
-            docInfo.overlayStyle = .clearWhite
-            docInfo.coverTemplateImage = shelfItemImage
-            docInfo.pinModel = notebookDetails.documentPin
-            docInfo.isCover = cover.hasCover
-            docInfo.isNewBook = true
-            docInfo.isTemplate = true
-            docInfo.coverTemplateUrl = cover.themeFileURL.appendingPathComponent("template.pdf")
-            let tempDocURL = FTDocumentFactory.tempDocumentPath(FTUtils.getUUID())
-            let ftdocument = FTDocumentFactory.documentForItemAtURL(tempDocURL)
-            ftdocument.createDocument(docInfo){ (error, success) in
-                if(error == nil) {
-                    let shelfImageURL = ftdocument.URL.appending(path:"cover-shelf-image.png");
-                    let shelfImage = UIImage(contentsOfFile: shelfImageURL.path(percentEncoded:false));
-
-                    let createBlock: ()->() = {
-                        collection.addShelfItemForDocument(ftdocument.URL, toTitle: title, toGroup: group, onCompletion: { (error, item) in
-                            if(nil != error) {
-                                completion(error,item)
-                                return
-                            }
-
-                            FTCLSLog("Import: document created:\(item!.URL.lastPathComponent)")
-                            if let documentPin = notebookDetails.documentPin {
-                                FTBiometricManager.keychainSetIsTouchIDEnabled(documentPin.isTouchIDEnabled, withPin: documentPin.pin, forKey: ftdocument.documentUUID)
-                            }
-
-                            item?.documentUUID = ftdocument.documentUUID
-                            FTURLReadThumbnailManager.sharedInstance.addImageToCache(image: shelfImage, url: item!.URL)
-                            if let coverTheme = cover as? FTCoverTheme,mode == .basic {
-                                let coverLibrary =  FTThemesLibrary(libraryType: FTNThemeLibraryType.covers)
-                                coverLibrary.setDefaultTheme(coverTheme,defaultMode: .basic, withVariants: nil)
-                            }
-
-                            let paperLibrary = FTThemesLibrary(libraryType: FTNThemeLibraryType.papers)
-                            if let paperTheme = theme as? FTPaperTheme,mode == .basic {
-                                if let variants = paperTheme.customvariants {
-                                    paperLibrary.setDefaultTheme(paperTheme,defaultMode: .basic, withVariants:variants)
-                                } else {
-                                    paperLibrary.setDefaultTheme(paperTheme,defaultMode: .basic, withVariants: nil)
-                                }
-                            }
-
-                            if nil == error && self.isEvernoteSyncEnabled {
-                                runInMainThread {
-                                    FTENPublishManager.recordSyncLog("User enabled Sync on notebook: \(item!.title)")
-
-                                    let evernotePublishManager = FTENPublishManager.shared
-                                    evernotePublishManager.enableSync(for: item!)
-                                    evernotePublishManager.updateSyncRecord(forShelfItem: item!, withDocumentUUID: ftdocument.documentUUID)
-                                    evernotePublishManager.updateSyncRecord(forShelfItemAtURL: item!.URL, withDeleteOption: true, andAccountType: (self.isENBusiness ? EvernoteAccountType.evernoteAccountBusiness : EvernoteAccountType.evernoteAccountPersonal))
-                                }
-                            }
-                            completion(error,item)
-                        })
-                    }
-                    createBlock()
+            Task {
+                var title = notebookDetails.title
+                title = title.trimmingCharacters(in: .whitespacesAndNewlines)
+                if title.isEmpty {
+                    title = NSLocalizedString("Untitled", comment: "Untitled")
+                }
+                let generator = FTAutoTemplateGenerator.autoTemplateGenerator(theme: theme , generationType: .template)
+                let docInfo =  generator.generate()
+                var shelfItemImage: UIImage!
+                if let image = UIImage(contentsOfFile: cover.themeTemplateURL().path){
+                    shelfItemImage = image
                 }
                 else {
-                    completion(error,nil)
+                    shelfItemImage = cover.themeThumbnail()
+                }
+                
+                //docInfo.rootViewController = self.presentingViewController
+                docInfo.overlayStyle = .clearWhite
+                docInfo.coverTemplateImage = shelfItemImage
+                docInfo.pinModel = notebookDetails.documentPin
+                docInfo.isCover = cover.hasCover
+                docInfo.isNewBook = true
+                docInfo.isTemplate = true
+                docInfo.coverTemplateUrl = cover.themeFileURL.appendingPathComponent("template.pdf")
+                let tempDocURL = FTDocumentFactory.tempDocumentPath(FTUtils.getUUID())
+                let ftdocument = FTDocumentFactory.documentForItemAtURL(tempDocURL)
+                ftdocument.createDocument(docInfo){ (error, success) in
+                    if(error == nil) {
+                        let shelfImageURL = ftdocument.URL.appending(path:"cover-shelf-image.png");
+                        let shelfImage = UIImage(contentsOfFile: shelfImageURL.path(percentEncoded:false));
+                        
+                        let createBlock: ()->() = {
+                            collection.addShelfItemForDocument(ftdocument.URL, toTitle: title, toGroup: group, onCompletion: { (error, item) in
+                                if(nil != error) {
+                                    completion(error,item)
+                                    return
+                                }
+                                
+                                FTCLSLog("Import: document created:\(item!.URL.lastPathComponent)")
+                                if let documentPin = notebookDetails.documentPin {
+                                    FTBiometricManager.keychainSetIsTouchIDEnabled(documentPin.isTouchIDEnabled, withPin: documentPin.pin, forKey: ftdocument.documentUUID)
+                                }
+                                
+                                item?.documentUUID = ftdocument.documentUUID
+                                FTURLReadThumbnailManager.sharedInstance.addImageToCache(image: shelfImage, url: item!.URL)
+                                if let coverTheme = cover as? FTCoverTheme,mode == .basic {
+                                    let coverLibrary =  FTThemesLibrary(libraryType: FTNThemeLibraryType.covers)
+                                    coverLibrary.setDefaultTheme(coverTheme,defaultMode: .basic, withVariants: nil)
+                                }
+                                
+                                let paperLibrary = FTThemesLibrary(libraryType: FTNThemeLibraryType.papers)
+                                if let paperTheme = theme as? FTPaperTheme,mode == .basic {
+                                    if let variants = paperTheme.customvariants {
+                                        paperLibrary.setDefaultTheme(paperTheme,defaultMode: .basic, withVariants:variants)
+                                    } else {
+                                        paperLibrary.setDefaultTheme(paperTheme,defaultMode: .basic, withVariants: nil)
+                                    }
+                                }
+                                
+                                if nil == error && self.isEvernoteSyncEnabled {
+                                    runInMainThread {
+                                        FTENPublishManager.recordSyncLog("User enabled Sync on notebook: \(item!.title)")
+                                        
+                                        let evernotePublishManager = FTENPublishManager.shared
+                                        evernotePublishManager.enableSync(for: item!)
+                                        evernotePublishManager.updateSyncRecord(forShelfItem: item!, withDocumentUUID: ftdocument.documentUUID)
+                                        evernotePublishManager.updateSyncRecord(forShelfItemAtURL: item!.URL, withDeleteOption: true, andAccountType: (self.isENBusiness ? EvernoteAccountType.evernoteAccountBusiness : EvernoteAccountType.evernoteAccountPersonal))
+                                    }
+                                }
+                                completion(error,item)
+                            })
+                        }
+                        createBlock()
+                    }
+                    else {
+                        completion(error,nil)
+                    }
                 }
             }
         }

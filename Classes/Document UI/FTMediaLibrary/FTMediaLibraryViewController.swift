@@ -100,6 +100,7 @@ class FTMediaLibraryViewController: UIViewController, FTPopoverPresentable {
         }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         if isFromCentralPanel == .centerPanel {
             let source: FTToolbarPopoverScreen = mediaSource == .pixabay ? .pixabay : .unsplash
             if let window = self.view.window {

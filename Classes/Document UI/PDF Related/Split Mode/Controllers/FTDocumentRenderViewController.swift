@@ -11,11 +11,11 @@ import UIKit
 typealias FTDocumentViewController = UIViewController & FTDocumentViewPresenter;
 let textContainerTag: Int = 9001
 
-@objc protocol FTPageBookmarkInformer: NSObjectProtocol {
+@objc protocol FTPageStatusInformer: NSObjectProtocol {
     func isCurrentPageBookmarked() -> Bool
     func updateBookmarkStatus(_ status: Bool)
     func updateTagStatus(_ status: Bool)
-    func updateEmojiStatus(_ Status: Bool)
+   // func updateEmojiStatus(_ Status: Bool)
 }
 
 @objc protocol FTDocumentViewPresenter : NSObjectProtocol {
@@ -266,7 +266,7 @@ class FTDocumentRenderViewController: UIViewController {
         documentViewController.shelfItemManagedObject = FTDocumentItemWrapperObject(documentItem:info.shelfItem)
         documentViewController.openCloseDocumentDelegate = self
         documentViewController.textToolbarDelegate = self
-        documentViewController.bookmarkInformer = self
+        documentViewController.statusInformer = self
         self.addChild(documentViewController)
         documentViewController.view.frame = _contentView.bounds;
         _contentView.addSubview(documentViewController.view);
@@ -307,10 +307,7 @@ private extension FTDocumentRenderViewController {
     }
 }
 
-extension FTDocumentRenderViewController: FTPageBookmarkInformer {
-    func updateEmojiStatus(_ Status: Bool) {
-        print("")
-    }
+extension FTDocumentRenderViewController: FTPageStatusInformer {
     
     func updateTagStatus(_ status: Bool) {
         self.deskToolbarController?.updateTagStatus(status)
@@ -525,12 +522,12 @@ extension FTDocumentRenderViewController: FTDeskToolbarDelegate, FTDeskPanelActi
         return self.deskBarDelegate?.isEmojiSelected() ?? false
     }
     
-    func isTagAdded() -> Bool {
-        return self.deskBarDelegate?.isTagAdded() ?? false
+    func isCurrentPageTagged() -> Bool {
+        return self.deskBarDelegate?.isCurrentPageTagged() ?? false
     }
     
-    func isBookMarkAdded() -> Bool {
-        return self.deskBarDelegate?.isBookMarkAdded() ?? false
+    func isBookmarkAddedForCurrentPage() -> Bool {
+        return self.deskBarDelegate?.isBookmarkAddedForCurrentPage() ?? false
     }
     
     func currentDeskMode() -> RKDeskMode {

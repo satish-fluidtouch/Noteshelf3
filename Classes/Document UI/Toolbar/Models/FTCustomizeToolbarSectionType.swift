@@ -394,9 +394,9 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
     
     func displayBgColorStyle() -> UIColor{
         switch self {
-        case .pen,.highlighter,.eraser,.shapes,.textMode,.lasso,.favorites,.zoomBox,.presenter,.tag,.hand :
+        case .pen,.highlighter,.eraser,.shapes,.textMode,.lasso,.favorites,.zoomBox,.presenter,.hand :
             return UIColor.appColor(.white100)
-        case .page,.duplicatePage,.deletePage,.rotatePage,.scrolling,.openAI,.photo,.audio,.bookmark,.savePageAsPhoto,.sharePageAsPng,.shareNotebookAsPDF,.camera,.share,.stickers,.savedClips,.pixabay,.unsplash,.recentNotes,.emojis :
+        case .page,.duplicatePage,.deletePage,.rotatePage,.scrolling,.openAI,.photo,.audio,.bookmark,.savePageAsPhoto,.sharePageAsPng,.shareNotebookAsPDF,.camera,.share,.stickers,.savedClips,.pixabay,.unsplash,.recentNotes,.emojis,.tag :
             return UIColor.appColor(.accentBg)
         }
     }

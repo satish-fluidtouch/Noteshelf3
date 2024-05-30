@@ -2982,11 +2982,11 @@
     return self.isInZoomMode;
 }
 
--(BOOL)isBookMarkAdded {
+-(BOOL)isBookmarkAddedForCurrentPage {
     return self.currentlyVisiblePage.isBookmarked;
 }
 
--(BOOL)isTagAdded {
+-(BOOL)isCurrentPageTagged {
     return self.tagStatus;
 }
 

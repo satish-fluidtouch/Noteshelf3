@@ -224,7 +224,7 @@ class FTNoteshelfAIViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-
+        super.viewWillDisappear(animated)
         if let window = self.view.window {
             NotificationCenter.default.post(name:.centralPanelPopUpDismiss, object: ["sourceType":FTToolbarPopoverScreen.openAi,"window":window])
         }

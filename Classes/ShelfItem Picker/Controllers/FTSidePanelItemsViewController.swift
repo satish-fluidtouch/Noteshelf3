@@ -90,6 +90,7 @@ extension FTSidePanelShelfItemPickerDelegate {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         if isFromCentralPanel == .centerPanel {
             if let window = self.view.window {
                 NotificationCenter.default.post(name: .centralPanelPopUpDismiss, object: ["sourceType":FTToolbarPopoverScreen.recents,"window":window])

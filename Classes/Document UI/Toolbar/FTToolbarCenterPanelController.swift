@@ -530,18 +530,15 @@ extension FTToolbarCenterPanelController: FTDeskToolCellDelegate {
 
 extension FTToolbarCenterPanelController  {
     func updatePageBookmarkStatusIfNeeded(_ status: Bool) {
-        if let index = self.dataSourceItems.firstIndex(where: { $0 == .bookmark }) {
-            if let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? FTDeskShortcutCell {
-                cell.isShortcutHighlighted = status
-            }
+        if let cell = self.fetchCell(for: .bookmark) as? FTDeskShortcutCell {
+            cell.isShortcutHighlighted = status
         }
     }
     
     func updateTagStatusIfNeeded(_ status: Bool) {
-        if let index = self.dataSourceItems.firstIndex(where: { $0 == .tag }) {
-            if let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? FTDeskShortcutCell {
-                cell.isShortcutHighlighted = status
-            }
+        if let cell = self.fetchCell(for: .tag) as? FTDeskShortcutCell {
+            cell.isShortcutHighlighted = status
         }
     }
 }
+

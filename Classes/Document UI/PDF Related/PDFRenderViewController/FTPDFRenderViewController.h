@@ -58,7 +58,7 @@ typedef enum: NSInteger  {
 @class FTLaserStrokeStorage;
 @class FTShortcutExecuter;
 @protocol FTFinderNotifier;
-@protocol FTPageBookmarkInformer;
+@protocol FTPageStatusInformer;
 @protocol FTUndoRedoDelegate;
 @class FTAudioPlayerController;
 
@@ -146,7 +146,7 @@ FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {}
 @property (nonatomic,weak) id<FTFinderNotifier> finderNotifier;
 @property (strong) NSMutableArray *eachPageViewArray;
 
-@property (nonatomic,weak) id<FTPageBookmarkInformer> bookmarkInformer;
+@property (nonatomic,weak) id<FTPageStatusInformer> statusInformer;
 
 
 -(id)initWithDocumentInfo:(FTDocumentOpenInfo*)documentInfo;

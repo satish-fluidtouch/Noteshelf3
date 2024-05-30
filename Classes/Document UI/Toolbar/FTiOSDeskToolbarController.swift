@@ -26,8 +26,8 @@ protocol FTDeskPanelActionDelegate: AnyObject {
     func lastSelectedPenMode() -> RKDeskMode
     func shapesToolEnabled() -> Bool
     func zoomModeEnabled() -> Bool
-    func isBookMarkAdded() -> Bool
-    func isTagAdded() -> Bool
+    func isBookmarkAddedForCurrentPage() -> Bool
+    func isCurrentPageTagged() -> Bool
     func isEmojiSelected() -> Bool
     func isAudioRecordedViewPresented() -> Bool
 
@@ -432,11 +432,11 @@ extension FTiOSDeskToolbarController: FTToolbarCenterPanelDelegate {
     }
     
     func isTagAdded() -> Bool {
-        return self.delegate?.isTagAdded() ?? false
+        return self.delegate?.isCurrentPageTagged() ?? false
     }
     
     func isPageBookMarked() -> Bool {
-        return self.delegate?.isBookMarkAdded() ?? false
+        return self.delegate?.isBookmarkAddedForCurrentPage() ?? false
     }
     
     func didTapCenterPanelButton(type: FTDeskCenterPanelTool, sender: UIView) {
