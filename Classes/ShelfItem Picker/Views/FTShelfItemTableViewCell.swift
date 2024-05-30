@@ -119,8 +119,8 @@ class FTShelfItemTableViewCell: UITableViewCell,FTShelfItemCellProgressUpdate {
         self.selectionBackgroundView?.isHidden = true
     }
     
-    func setSelectedBgView(value: Bool){
-        if value {
+    func setSelectedBgView(isFromRecents: Bool){
+        if isFromRecents {
             self.selectionBackgroundView?.backgroundColor = .clear
         }else {
              self.selectionBackgroundView?.layer.cornerRadius = 10

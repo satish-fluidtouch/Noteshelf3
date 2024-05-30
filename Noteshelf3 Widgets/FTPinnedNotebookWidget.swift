@@ -12,31 +12,37 @@ import FTCommon
 struct FTPinnedWidgetView : View {
     let entry: FTPinnedBookEntry
     @State var image = UIImage(named: "noCover")!
+    @Environment(\.widgetContentMargins) var margins
+
     var body: some View {
-        VStack {
-            VStack(spacing: 0) {
-                topView(entry: entry)
-                bottomView(entry: entry)
-            }
-        }.overlay(alignment: .topLeading) {
-            if !entry.relativePath.isEmpty {
-                HStack {
-                    VStack(spacing:0) {
-                        HStack {
-                            Image(uiImage: image)
-                                .resizable()
-                                .frame(width: imageSize(for: entry).width,height: imageSize(for: entry).height)
-                                .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
-                                .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .bottomRight]))
-                                .padding(.top, image.size.width > image.size.height ? 34 : 22)
-                                .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 3)
-                            Spacer()
-                        }
-                    }.padding(.leading, 20)
-                    Spacer()
+        GeometryReader { geometry in
+            VStack {
+                VStack(spacing: 0) {
+                    topView(entry: entry, height: geometry.size.height/3)
+                    bottomView(entry: entry, height: geometry.size.height * 2/3)
                 }
             }
-        }.onAppear {
+            .overlay(alignment: .topLeading) {
+                if !entry.relativePath.isEmpty {
+                    HStack {
+                        VStack(spacing:0) {
+                            HStack {
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .frame(width: imageSize(for: entry).width,height: imageSize(for: entry).height)
+                                    .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
+                                    .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .bottomRight]))
+                                    .padding(.top, image.size.width > image.size.height ? geometry.size.height * 0.19 : geometry.size.height * 0.13)
+                                    .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 3)
+                                Spacer()
+                            }
+                        }.padding(.leading, 20)
+                        Spacer()
+                    }
+                }
+            }
+        }
+        .onAppear {
             image = imageFrom(entry : entry)
         }
     }
@@ -57,11 +63,12 @@ struct FTPinnedWidgetView : View {
 struct topView: View {
     let entry: FTPinnedBookEntry
     @State var color: UIColor = .black
-    
+    @State var height: CGFloat = 55
+
     var body: some View {
         ZStack {
             Color(uiColor: color)
-        }.frame(width: 160, height: 55)
+        }.frame(height: height)
             .onAppear {
                 color = entry.hasCover ? adaptiveColorFromImage() : UIColor(hexString: "#E06E51")
             }
@@ -87,15 +94,20 @@ struct topView: View {
 
 struct bottomView: View {
     let entry: FTPinnedBookEntry
+    @State var height: CGFloat = 110
+
     var body: some View {
-        HStack {
-            if entry.relativePath.isEmpty {
-                EmptyNotesView()
-            } else {
-                NoteBookInfoView(entry: entry)
+        ZStack {
+            Rectangle().fill(LinearGradient(colors: [Color("widgetBG1"),Color("widgetBG2")], startPoint: .top, endPoint: .bottom))
+            HStack {
+                if entry.relativePath.isEmpty {
+                    EmptyNotesView()
+                } else {
+                    NoteBookInfoView(entry: entry, height: height)
+                }
             }
-        }.frame(width: 160, height: 110)
-            .background(Rectangle().fill(LinearGradient(colors: [Color("widgetBG1"),Color("widgetBG2")], startPoint: .top, endPoint: .bottom)))
+        }
+        .frame(height: height)
     }
 }
 
@@ -114,6 +126,8 @@ struct EmptyNotesView: View {
 
 struct NoteBookInfoView: View {
     let entry: FTPinnedBookEntry
+    @State var height: CGFloat = 110
+
     var body: some View {
         HStack {
             VStack(spacing: 3) {
@@ -133,8 +147,8 @@ struct NoteBookInfoView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                     Spacer(minLength: 16)
                 }
-            }.padding(.leading, 20)
-                .padding(.bottom, 22)
+            }.padding(.leading, 18)
+                .padding(.bottom, 18)
             Spacer()
         }
     }

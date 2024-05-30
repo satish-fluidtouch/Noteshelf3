@@ -60,10 +60,7 @@ let AppDelegate = UIApplication.shared.delegate as! NoteshelfAppDelegate
         FTStoreLibraryHandler.shared.start()
         FTStoreCustomTemplatesHandler.shared.start()
         FTSavedClipsProvider.shared.start()
-        if #available(iOS 17.0, *) {
-            try? Tips.resetDatastore()
-            try? Tips.configure([.displayFrequency(.daily)])
-        }
+        self.configTipsIfNeeded()
         return true
     }
 
@@ -250,6 +247,15 @@ private extension NoteshelfAppDelegate {
         DispatchQueue.global().async {
             let tempLocation = URL(fileURLWithPath: (FTUtils.applicationCacheDirectory() as NSString).appendingPathComponent("TempZip"))
             try? FileManager().removeItem(at: tempLocation)
+        }
+    }
+}
+
+private extension NoteshelfAppDelegate {
+    func configTipsIfNeeded() {
+        if #available(iOS 17.0, *) {
+            try? Tips.resetDatastore()
+            try? Tips.configure([.displayFrequency(.daily)])
         }
     }
 }

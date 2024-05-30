@@ -49,20 +49,22 @@ struct FTShareView: View {
     private func shareItemView(option : FTShareOption) -> some View{
         HStack(spacing: FTSpacing.large) {
             let thumbImage = viewModel.getthumbnailImage(option: option)
-            Image(uiImage: thumbImage)
-                .resizable()
-                .scaledToFit()
-                .frame(width: thumbnailSizeForImage(thumbImage).width, height: thumbnailSizeForImage(thumbImage).height)
-                .cornerRadius(leftCornerRadiusForOption(option), corners: [.topLeft, .bottomLeft])
-                .cornerRadius(rightCornerRadius, corners: [.topRight, .bottomRight])
-                .if(option == .currentPage || (option == .allPages && !viewModel.info.bookHasStandardCover)) { view in
-                    view.shadow(color: Color.appColor(.black8), radius: 1.40,x: 0,y: 0.56)
-                        .shadow(color: Color.appColor(.black8), radius: 5.6,x: 0,y: 3.3)
-                }
-                .if((option == .allPages && viewModel.info.bookHasStandardCover)) { view in
-                    view.shadow(color: Color.appColor(.black8), radius: 1.21,x: 0,y: 0.48)
-                        .shadow(color: Color.appColor(.black8), radius: 4.85,x: 0,y: 2.91)
-                }
+            if option != .selectPages {
+                Image(uiImage: thumbImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: thumbnailSizeForImage(thumbImage).width, height: thumbnailSizeForImage(thumbImage).height)
+                    .cornerRadius(leftCornerRadiusForOption(option), corners: [.topLeft, .bottomLeft])
+                    .cornerRadius(rightCornerRadius, corners: [.topRight, .bottomRight])
+                    .if(option == .currentPage || (option == .allPages && !viewModel.info.bookHasStandardCover)) { view in
+                        view.shadow(color: Color.appColor(.black8), radius: 1.40,x: 0,y: 0.56)
+                            .shadow(color: Color.appColor(.black8), radius: 5.6,x: 0,y: 3.3)
+                    }
+                    .if((option == .allPages && viewModel.info.bookHasStandardCover)) { view in
+                        view.shadow(color: Color.appColor(.black8), radius: 1.21,x: 0,y: 0.48)
+                            .shadow(color: Color.appColor(.black8), radius: 4.85,x: 0,y: 2.91)
+                    }
+            }
             VStack(alignment: .leading){
                 Text(option.displayTitle)
                     .appFont(for: .regular, with: 17)

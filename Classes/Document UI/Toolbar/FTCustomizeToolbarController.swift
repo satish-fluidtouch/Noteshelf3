@@ -24,6 +24,7 @@ class FTCustomizeToolbarController: UITableViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         self.setUpFooterViewtoTableView()
 
     }
@@ -155,12 +156,8 @@ class FTCustomizeToolbarController: UITableViewController {
         }
         cell.newLbl.text = "New".localized
         cell.newBgView.backgroundColor = UIColor.appColor(.homeSelectedBG)
-        cell.newViewWidth.constant = 0
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            if self.view.frame.width > 380 {
-                cell.newBgView.isHidden = tool.toShowNewBadge
-                cell.setNewBgWidth(value:Double(cell.newLbl.text?.count ?? 0))
-            }
+        if UIDevice.current.userInterfaceIdiom == .pad && self.view.frame.width > 380 {
+            cell.newBgView.isHidden = !tool.toShowNewBadge
         }
         cell.iconImg.image = UIImage(named: tool.iconName())
         config.imageProperties.reservedLayoutSize = CGSize(width: 24.0, height: 24.0)

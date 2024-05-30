@@ -33,10 +33,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hmj-Ko-AEe">
-                        <rect key="frame" x="103.33333333333333" y="26" width="43.333333333333329" height="20"/>
+                        <rect key="frame" x="103.33333333333331" y="26" width="647.66666666666674" height="20"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BZd-6z-CAB">
-                                <rect key="frame" x="5" y="5" width="33.333333333333336" height="10"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  New New NEw New New NEw New New NEw New New  New New NEw New New NEw New New NEw New New " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BZd-6z-CAB">
+                                <rect key="frame" x="5" y="5" width="637.66666666666663" height="10"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -49,7 +49,6 @@
                             <constraint firstAttribute="height" constant="20" id="VAC-Zm-8qj"/>
                             <constraint firstItem="BZd-6z-CAB" firstAttribute="leading" secondItem="Hmj-Ko-AEe" secondAttribute="leading" constant="5" id="YcV-I1-6U4"/>
                             <constraint firstAttribute="trailing" secondItem="BZd-6z-CAB" secondAttribute="trailing" constant="5" id="ZXp-LF-dAh"/>
-                            <constraint firstAttribute="width" constant="43.329999999999998" id="hhq-8u-3As"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -59,7 +58,6 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Hmj-Ko-AEe" secondAttribute="trailing" constant="10" id="0LQ-oD-BXo"/>
                     <constraint firstItem="c5c-f3-DFw" firstAttribute="leading" secondItem="QG4-aj-Kjm" secondAttribute="trailing" constant="15" id="HAw-ak-boV"/>
                     <constraint firstItem="Hmj-Ko-AEe" firstAttribute="leading" secondItem="c5c-f3-DFw" secondAttribute="trailing" constant="15" id="Hjj-yC-RJe"/>
                     <constraint firstItem="c5c-f3-DFw" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="PW4-Rc-cwz"/>
@@ -75,7 +73,6 @@
                 <outlet property="iconImg" destination="QG4-aj-Kjm" id="IuI-3j-Xyh"/>
                 <outlet property="newBgView" destination="Hmj-Ko-AEe" id="Fme-ZF-KIJ"/>
                 <outlet property="newLbl" destination="BZd-6z-CAB" id="mbM-1j-TF5"/>
-                <outlet property="newViewWidth" destination="hhq-8u-3As" id="Ls4-v7-C5e"/>
                 <outlet property="titleLbl" destination="c5c-f3-DFw" id="u58-tQ-meg"/>
             </connections>
             <point key="canvasLocation" x="200.76335877862596" y="30.281690140845072"/>

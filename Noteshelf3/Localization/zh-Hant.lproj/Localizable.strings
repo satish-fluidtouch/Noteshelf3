@@ -985,6 +985,7 @@
 "color.resetToDefault" = "重置為默認";
 "color.restoreAll" = "恢復全部";
 "color.restorePresetColors.message" = "您確定要恢復為所有默認顏色嗎？";
+"colors.presets.spectrum" = "光譜";
 "continue" = "繼續";
 "convertToText.copiedToClipBoard" = "已複製到剪貼板";
 "convertToText.customDictionary" = "自定義詞典";
@@ -1193,6 +1194,7 @@
 "more.globalsettings.caps" = "全域設定";
 "more.settings.footer" = "這些設定將全域應用於您的所有筆記本。";
 "moreInfo" = "更多資訊";
+"more_global" = "全域";
 "move" = "移動";
 "newnotebook" = "新筆記本";
 "newnotebook.create" = "創建";
@@ -1283,6 +1285,7 @@
 "reset" = "重置";
 "retry" = "重試";
 "save" = "儲存";
+"saveAsTemplate_message" = "模板將保存在模板的自訂部分中。";
 "school" = "學校";
 "search.tryNewSearch" = "嘗試新的搜索";
 "seeAll" = "看全部";
@@ -1673,4 +1676,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
+// Last Synced by Narayana on 17 May 2024 at 4:53 PM

@@ -18,7 +18,7 @@ protocol FTShortcutActions: AnyObject {
     func duplicateAction(pages: [FTThumbnailable], onCompletion: (()->())?)
     func handleTagPage(source: Any, controller: UIViewController, pages: NSSet)
     func cameraAction()
-    func scrollingAction(direction: Int)
+    func scrollingAction(source: FTPageLayout)
     func recentNotesAction(source:Any)
 
     // Media
@@ -54,7 +54,7 @@ enum FTCommand: Equatable {
     case duplicatePage(pages: [FTThumbnailable])
     case tag(source: Any, controller: UIViewController, pages: NSSet)
     case camera
-    case scrolling(direction: Int)
+    case scrolling(source: FTPageLayout)
     case recentNotes(source: Any)
 
     // Share
@@ -102,7 +102,7 @@ class FTShortcutExecuter: FTShortcutCommand {
             self.receiver?.cameraAction()
             
         case .scrolling(let source):
-            self.receiver?.scrollingAction(direction: source)
+            self.receiver?.scrollingAction(source: source)
             
         case .recentNotes(let source):
             self.receiver?.recentNotesAction(source:source)
@@ -239,10 +239,8 @@ extension FTPDFRenderViewController: FTShortcutActions {
         FTImagePicker.shared.showImagePickerController(from: self)
     }
     
-    func scrollingAction(direction: Int) {
-        if let directionFlow = FTPageLayout(rawValue:direction) {
-            UserDefaults.standard.pageLayoutType = directionFlow
-        }
+    func scrollingAction(source: FTPageLayout) {
+        UserDefaults.standard.pageLayoutType = source
     }
     
     func recentNotesAction(source:Any) {

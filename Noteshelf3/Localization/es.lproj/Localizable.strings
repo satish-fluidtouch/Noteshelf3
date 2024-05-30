@@ -985,6 +985,7 @@
 "color.resetToDefault" = "Restablecer a predeterminado.";
 "color.restoreAll" = "Restaurar todo.";
 "color.restorePresetColors.message" = "¿Estás seguro de que quieres restaurar todos los colores predeterminados?";
+"colors.presets.spectrum" = "Espectro";
 "continue" = "Continuar";
 "convertToText.copiedToClipBoard" = "Copiado al portapapeles";
 "convertToText.customDictionary" = "Diccionario personalizado";
@@ -1193,6 +1194,7 @@
 "more.globalsettings.caps" = "CONFIGURACIÓN GLOBAL";
 "more.settings.footer" = "Estas configuraciones se aplican globalmente a todas tus notas.";
 "moreInfo" = "Más información...";
+"more_global" = "CONFIGURACIÓN GLOBAL";
 "move" = "Mover";
 "newnotebook" = "NUEVO CUADERNO";
 "newnotebook.create" = "Crear";
@@ -1283,6 +1285,7 @@
 "reset" = "Restablecer";
 "retry" = "Reintentar";
 "save" = "Guardar";
+"saveAsTemplate_message" = "La plantilla se guardará dentro de la sección Personalizada en Plantillas.";
 "school" = "Escuela";
 "search.tryNewSearch" = "Prueba una nueva búsqueda";
 "seeAll" = "Repetir.";
@@ -1673,4 +1676,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
+// Last Synced by Narayana on 17 May 2024 at 4:53 PM
