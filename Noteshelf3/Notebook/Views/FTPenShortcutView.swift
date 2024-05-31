@@ -9,6 +9,16 @@
 import SwiftUI
 import FTStyles
 
+struct FTPenSliderConstants {
+    static var sliderRadius : CGFloat = 220
+    static var spacingAngle : Int = 14
+    static var penShortCutItems : Int = 7
+    static var highlighterShortCutItems : Int = 7
+    static var penShortcutColorItems : Int = 4
+    static var highlighterShortcutColorItems : Int = 4
+    static var rotationAngle : Int = 180 - spacingAngle
+}
+
 struct FTPenShortcutView: View {
     @StateObject var colorModel: FTFavoriteColorViewModel
     @StateObject var sizeModel: FTFavoriteSizeViewModel
@@ -37,5 +47,39 @@ struct FTPenShortcutView_Previews: PreviewProvider {
         ZStack {
             // test preview here
         }
+    }
+}
+
+struct FTPenSliderShortcutView: View {
+    @StateObject var colorModel: FTFavoriteColorViewModel
+    @StateObject var sizeModel: FTFavoriteSizeViewModel
+    let startAngle : Angle = .degrees(4)
+    var body: some View {
+        ZStack {
+            CircularBorderShape(startAngle: startAngle, endAngle: startAngle + Angle(degrees: Double(FTPenSliderConstants.spacingAngle * (FTPenSliderConstants.penShortCutItems - 1))), radius: FTPenSliderConstants.sliderRadius)
+                .stroke(.black, style: StrokeStyle(lineWidth: 52, lineCap: .round, lineJoin: .round))
+                .rotationEffect(.degrees(-170))
+            CircularBorderShape(startAngle: startAngle, endAngle: startAngle + Angle(degrees: Double(FTPenSliderConstants.spacingAngle * (FTPenSliderConstants.penShortCutItems - 1))), radius: FTPenSliderConstants.sliderRadius)
+                .stroke(Color.appColor(.finderBgColor), style: StrokeStyle(lineWidth: 50, lineCap: .round, lineJoin: .round))
+                .rotationEffect(.degrees(-170))
+            FTPenSliderColorShortcutView()
+                .environmentObject(colorModel)
+            FTPenSliderSizeShortcutView()
+                .environmentObject(sizeModel)
+        }
+    }
+}
+
+struct CircularBorderShape: Shape {
+    let startAngle: Angle
+    let endAngle: Angle
+    let radius: CGFloat
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        
+        path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: false)
+        
+        return path
     }
 }

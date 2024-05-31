@@ -24,3 +24,21 @@ class FTPenShortcutHostingController: UIHostingController<FTPenShortcutView> {
         self.view.backgroundColor = .clear
     }
 }
+
+class FTPenSliderShortcutHostingController: UIHostingController<FTPenSliderShortcutView> {
+
+    override init(rootView: FTPenSliderShortcutView) {
+        super.init(rootView: rootView)
+        self.disableSafeArea()
+    }
+
+    @MainActor
+    dynamic required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = .gray
+    }
+}
