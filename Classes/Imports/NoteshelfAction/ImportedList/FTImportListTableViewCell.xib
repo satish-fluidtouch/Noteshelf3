@@ -19,10 +19,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="yzD-fA-MdC">
-                        <rect key="frame" x="48" y="10" width="283" height="45"/>
+                        <rect key="frame" x="64" y="10" width="251" height="45"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="pOE-rU-mjs">
-                                <rect key="frame" x="0.0" y="0.0" width="283" height="20.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="251" height="20.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20.5" id="Uo8-wD-BCG"/>
                                 </constraints>
@@ -31,7 +31,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="kQA-fD-kDC">
-                                <rect key="frame" x="0.0" y="20.5" width="283" height="24.5"/>
+                                <rect key="frame" x="0.0" y="20.5" width="251" height="24.5"/>
                                 <attributedString key="attributedText"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -41,14 +41,14 @@
                         </constraints>
                     </stackView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Hvv-yX-WIJ">
-                        <rect key="frame" x="0.0" y="16.5" width="32" height="32"/>
+                        <rect key="frame" x="16" y="16.5" width="32" height="32"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="32" id="SIc-b1-fAK"/>
                             <constraint firstAttribute="height" constant="32" id="z7S-su-JkU"/>
                         </constraints>
                     </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconImported" translatesAutoresizingMaskIntoConstraints="NO" id="Zsr-uE-dR9" customClass="FTSpinnerView">
-                        <rect key="frame" x="331" y="16.5" width="32" height="32"/>
+                        <rect key="frame" x="315" y="16.5" width="32" height="32"/>
                         <color key="tintColor" name="accent"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="32" id="gTE-uf-vv5"/>
@@ -59,13 +59,13 @@
                 <color key="backgroundColor" name="cellBackgroundColor"/>
                 <constraints>
                     <constraint firstItem="yzD-fA-MdC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="AvX-D7-GHy"/>
-                    <constraint firstAttribute="trailing" secondItem="Zsr-uE-dR9" secondAttribute="trailing" id="CbK-nR-v7j">
+                    <constraint firstAttribute="trailing" secondItem="Zsr-uE-dR9" secondAttribute="trailing" constant="16" id="CbK-nR-v7j">
                         <variation key="heightClass=regular-widthClass=regular" constant="28"/>
                     </constraint>
                     <constraint firstAttribute="bottom" secondItem="yzD-fA-MdC" secondAttribute="bottom" constant="10" id="Huo-0x-NgE"/>
                     <constraint firstItem="Hvv-yX-WIJ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="LbL-I8-i3I"/>
                     <constraint firstItem="yzD-fA-MdC" firstAttribute="leading" secondItem="Hvv-yX-WIJ" secondAttribute="trailing" constant="16" id="MQO-py-I3F"/>
-                    <constraint firstItem="Hvv-yX-WIJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="NMl-oJ-Ffu">
+                    <constraint firstItem="Hvv-yX-WIJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="NMl-oJ-Ffu">
                         <variation key="heightClass=regular-widthClass=regular" constant="28"/>
                     </constraint>
                     <constraint firstItem="Zsr-uE-dR9" firstAttribute="leading" secondItem="yzD-fA-MdC" secondAttribute="trailing" id="OQp-SN-evi"/>
