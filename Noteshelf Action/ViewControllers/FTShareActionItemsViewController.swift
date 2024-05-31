@@ -132,7 +132,8 @@ extension FTShareActionItemsViewController: UITableViewDelegate, UITableViewData
         } else {
             if let shareItemCell = tableView.dequeueReusableCell(withIdentifier: "FTShareItemTableViewCell", for: indexPath) as? FTShareItemTableViewCell {
                 shareItemCell.selectionStyle = .none
-                shareItemCell.configureCell(item: item, indexPath: indexPath, shouldDisable: hasAnyNoteshelfFiles())
+                let isDownloaded = (item.shelfItem as? FTDocumentItem)?.isDownloaded ?? true
+                shareItemCell.configureCell(item: item, indexPath: indexPath, shouldDisable: (hasAnyNoteshelfFiles()))
                 if let cuurrentItem = self.currentSelectedItem(), let shelfItem = item.shelfItem,  shelfItem.URL == cuurrentItem.noteBook?.URL {
                     shareItemCell.tintColor = UIColor.appColor(.accent)
                     shareItemCell.accessoryType = .checkmark
