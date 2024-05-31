@@ -2253,6 +2253,8 @@
 		E7CD243D2AF8EA7100BB8AE5 /* FTFavoriteSizeEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CD243C2AF8EA7100BB8AE5 /* FTFavoriteSizeEditController.swift */; };
 		E7CD243F2AF8F37500BB8AE5 /* FTFavoriteColorEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CD243E2AF8F37500BB8AE5 /* FTFavoriteColorEditController.swift */; };
 		E7D4AC0C2A1259BC0083F4D9 /* FTNavBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D4AC0B2A1259BC0083F4D9 /* FTNavBarButtonItem.swift */; };
+		E7D769A42C09B3CD006589F4 /* FTPenSliderColorShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D769A32C09B3CD006589F4 /* FTPenSliderColorShortcutView.swift */; };
+		E7D769A62C09B68A006589F4 /* FTPenSliderSizeShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D769A52C09B68A006589F4 /* FTPenSliderSizeShortcutView.swift */; };
 		E7D87C9B29CEF59A00E1FD1E /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D87C9A29CEF59A00E1FD1E /* UIFont+Extension.swift */; };
 		E7E3EC3B29A4882F004372B6 /* FTAddMenuItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E3EC3929A4882E004372B6 /* FTAddMenuItemCell.swift */; };
 		E7E3EC3C29A4882F004372B6 /* FTAddMenuItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7E3EC3A29A4882E004372B6 /* FTAddMenuItemCell.xib */; };
@@ -4698,6 +4700,8 @@
 		E7CD243C2AF8EA7100BB8AE5 /* FTFavoriteSizeEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoriteSizeEditController.swift; sourceTree = "<group>"; };
 		E7CD243E2AF8F37500BB8AE5 /* FTFavoriteColorEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoriteColorEditController.swift; sourceTree = "<group>"; };
 		E7D4AC0B2A1259BC0083F4D9 /* FTNavBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNavBarButtonItem.swift; sourceTree = "<group>"; };
+		E7D769A32C09B3CD006589F4 /* FTPenSliderColorShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPenSliderColorShortcutView.swift; sourceTree = "<group>"; };
+		E7D769A52C09B68A006589F4 /* FTPenSliderSizeShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPenSliderSizeShortcutView.swift; sourceTree = "<group>"; };
 		E7D87C9A29CEF59A00E1FD1E /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		E7E3EC3929A4882E004372B6 /* FTAddMenuItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTAddMenuItemCell.swift; sourceTree = "<group>"; };
 		E7E3EC3A29A4882E004372B6 /* FTAddMenuItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FTAddMenuItemCell.xib; sourceTree = "<group>"; };
@@ -11549,7 +11553,9 @@
 				E7C71A40288E78C300AF2598 /* CustomSlider */,
 				E7B8DA94287FF62600F0AE78 /* FTPenShortcutView.swift */,
 				E7ADB525288172C3005E03B7 /* FTPenColorShortcutView.swift */,
+				E7D769A32C09B3CD006589F4 /* FTPenSliderColorShortcutView.swift */,
 				E7B3DFA22889205C0045019F /* FTPenSizeShortcutView.swift */,
+				E7D769A52C09B68A006589F4 /* FTPenSliderSizeShortcutView.swift */,
 				E7ADB527288173BB005E03B7 /* FTPenColorEditView.swift */,
 				E7A41D7A28AB92F80078C5FC /* FTPresetColorsView.swift */,
 				E75062872BEA11E800D0A8E4 /* FTPresetEditView.swift */,
@@ -13638,6 +13644,7 @@
 				BAF3913D2859ADF00067CA9F /* FTRemoteAlertAction.swift in Sources */,
 				E7C71A67288E795A00AF2598 /* ValueSliderStyle.swift in Sources */,
 				091482BA2A7257EF009E49C2 /* FTCharWrapStrokeRender.swift in Sources */,
+				E7D769A42C09B3CD006589F4 /* FTPenSliderColorShortcutView.swift in Sources */,
 				BAF3913E2859ADF00067CA9F /* FTMidnightDiaryiPadFormat.swift in Sources */,
 				BAF3913F2859ADF00067CA9F /* FTTexturePool.swift in Sources */,
 				BAF391402859ADF00067CA9F /* FTLaserPenPointerBrushBuilder_v5.swift in Sources */,
@@ -13737,6 +13744,7 @@
 				BAF3918B2859ADF00067CA9F /* FTTextAnnotationViewController.swift in Sources */,
 				BAF3918C2859ADF00067CA9F /* FTLaserPresentationViewController.swift in Sources */,
 				E7151FBF2BD0F3B9004AAD38 /* FTIAPOfferCampaignViewController.swift in Sources */,
+				E7D769A62C09B68A006589F4 /* FTPenSliderSizeShortcutView.swift in Sources */,
 				E7E3EC3B29A4882F004372B6 /* FTAddMenuItemCell.swift in Sources */,
 				BAF3918E2859ADF00067CA9F /* FTCustomTextSelectionRect.swift in Sources */,
 				E76718102C072AFE00F452A2 /* FTPencilProMenuLayer.swift in Sources */,

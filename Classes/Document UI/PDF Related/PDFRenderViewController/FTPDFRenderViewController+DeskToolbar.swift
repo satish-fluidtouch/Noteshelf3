@@ -225,16 +225,31 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
             FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_more_tap)
             break
         case .focus:
-            UIView.animate(withDuration: 0.3) {
-                if nil != self.zoomOverlayController {
-                    self.delayedZoomButtonAction()
-                }
-            } completion: { _  in
-                self.showOrHideShortcutViewIfNeeded(mode)
-                self.performLayout()
-            }
-            self.updatePageNumberLabelFrame()
+            self.addPensliderContoller()
+//            UIView.animate(withDuration: 0.3) {
+//                if nil != self.zoomOverlayController {
+//                    self.delayedZoomButtonAction()
+//                }
+//            } completion: { _  in
+//                self.showOrHideShortcutViewIfNeeded(mode)
+//                self.performLayout()
+//            }
+//            self.updatePageNumberLabelFrame()
         }
+    }
+    
+    @objc func addPensliderContoller() {
+        let activity = self.view.window?.windowScene?.userActivity
+        let rack = FTRackData(type: FTRackType.pen, userActivity: activity)
+        let _colorModel =
+        FTFavoriteColorViewModel(rackData: rack, delegate: self, scene: self.view?.window?.windowScene)
+        let sizeModel =
+        FTFavoriteSizeViewModel(rackData: rack, delegate: self, scene: self.view?.window?.windowScene)
+        let shortcutView = FTPenSliderShortcutView(colorModel: _colorModel, sizeModel: sizeModel)
+        let hostingVc = FTPenSliderShortcutHostingController(rootView: shortcutView)
+        let origin = self.parent?.view.center ?? .zero
+        let frame = CGRect(x: 160, y: 160, width: 500, height: 500)
+        self.parent?.add(hostingVc, frame: frame)
     }
     
     @objc func deskToolBarFrame() -> CGRect {
@@ -314,5 +329,28 @@ extension FTPDFRenderViewController {
             offset = FTToolBarConstants.yOffset + FTToolBarConstants.statusBarOffset;
         }
         return offset
+    }
+}
+
+extension FTPDFRenderViewController: FTFavoriteSizeEditDelegate, FTFavoriteColorEditDelegate {
+    func showSizeEditScreen(position: FavoriteSizePosition, viewModel: FTFavoriteSizeViewModel) {
+        
+    }
+    
+    func showEditColorScreen(using rack: FTRackData, position: FavoriteColorPosition) {
+        
+    }
+    
+    func didChangeCurrentPenset(_ penset: FTPenSetProtocol, dismissSizeEditView: Bool) {
+        var rackType = FTRackType.pen
+        if self.currentDeskMode == .deskModeMarker {
+            rackType = .highlighter
+        }
+        let rackData = FTRackData(type: rackType, userActivity: self.view.window?.windowScene?.userActivity)
+            rackData.currentPenset.color = penset.color
+            rackData.currentPenset.size = penset.size
+            rackData.currentPenset.preciseSize = penset.preciseSize
+            rackData.saveCurrentSelection()
+            self.validateMenuItems()
     }
 }
