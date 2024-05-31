@@ -91,11 +91,9 @@ struct FTPenColorShortcutView: View {
     }
 
     private func handleColorSelection(colorModel: FTPenColorModel) {
-        if !colorModel.isSelected {
-            self.viewModel.resetFavoriteColorSelection()
-            colorModel.isSelected = true
-            self.viewModel.updateCurrentSelection(colorHex: colorModel.hex)
-        }
+        self.viewModel.resetFavoriteColorSelection()
+        colorModel.isSelected = true
+        self.viewModel.updateCurrentSelection(colorHex: colorModel.hex)
     }
 }
 
