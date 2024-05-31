@@ -83,17 +83,17 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
         
         switch buttonType {
         case .pen:
-            self.penButtonAction()
+            self.penButtonAction(source)
             
         case .highlighter:
-            self.markerButtonAction()
-            
+            self.markerButtonAction(source)
+
         case .eraser:
-            self.eraserButtonAction()
-            
+            self.eraserButtonAction(source)
+
         case .shapes:
-            self.shapesButtonAction()
-            
+            self.shapesButtonAction(source)
+
         case .textMode:
             self.textButtonAction()
             
@@ -102,10 +102,10 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
             self.presenterButtonAction()
             
         case .lasso:
-            self.lassoButtonAction()
+            self.lassoButtonAction(source)
 
         case .favorites:
-            self.favoritesButtonAction()
+            self.favoritesButtonAction(source)
             
         case .photo:
             self.executer?.execute(type: .photo)

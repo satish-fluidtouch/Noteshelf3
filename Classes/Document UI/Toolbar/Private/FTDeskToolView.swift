@@ -60,14 +60,13 @@ class FTDeskToolView: UIView {
 
     private func showBgIfNeeded() {
         if isSelected {
-            self.bgButton.backgroundColor = UIColor.appColor(.white100)
-            self.bgButton.addRequiredShadow(mode: self.mode)
+            self.bgButton.setBackground(for: self.mode)
             if let selImgName = self.toolType.selectedIconName() {
                 self.toolButton.setImage(named: selImgName, for: .normal, renderMode: .alwaysOriginal);
             }
         } else {
             self.bgButton.backgroundColor = .clear
-            self.bgButton?.removeShadow()
+            self.bgButton?.removeBackground()
             self.bgButton.layer.cornerRadius = 0.0
             if nil != self.toolType.selectedIconName() {
                 self.toolButton.setImage(named: self.toolType.iconName(), for: .normal);
@@ -155,22 +154,30 @@ class FTDeskShortcutView: FTDeskToolView {
 }
 
 final class FTToolBgButton: UIButton {
-    func addRequiredShadow(mode: FTCenterPanelMode = .toolbar) {
-        self.layer.masksToBounds = false
-        self.layer.shadowOpacity = 0.0
-        self.layer.shadowColor = UIColor.label.withAlphaComponent(0.12).cgColor
-        self.layer.shadowOffset = CGSize(width: 0, height: 4.0)
-        self.layer.shadowOpacity = 1.0
-        self.layer.shadowRadius = 8.0
-        let reqBounds: CGRect
-        if mode == .toolbar {
-            self.layer.cornerRadius = 7.0
-            reqBounds = self.bounds.insetBy(dx: 4.0, dy: 8.0)
+    private let backgroundLayer = CALayer()
+
+    func setBackground(for mode: FTCenterPanelMode = .toolbar) {
+        self.backgroundLayer.backgroundColor = UIColor.appColor(.white100).cgColor
+        self.backgroundLayer.shadowOpacity = 0.0
+        self.backgroundLayer.shadowColor = UIColor.label.withAlphaComponent(0.12).cgColor
+        self.backgroundLayer.shadowOpacity = 1.0
+        self.backgroundLayer.shadowOffset = CGSize(width: 0, height: 4.0)
+        self.backgroundLayer.shadowRadius = 8
+        if mode == .circular {
+            let bgBounds = self.bounds.insetBy(dx: 2.0, dy: 2.0)
+            self.backgroundLayer.frame = bgBounds
+            self.backgroundLayer.cornerRadius = bgBounds.height/2
+            self.backgroundLayer.shadowPath = UIBezierPath(ovalIn: self.backgroundLayer.bounds).cgPath
         } else {
-            reqBounds = self.bounds.insetBy(dx: 4.0, dy: 4.0)
-            self.layer.cornerRadius = reqBounds.height/2
+            self.backgroundLayer.frame = self.bounds
+            self.backgroundLayer.cornerRadius = 7.0
+            self.backgroundLayer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: 7).cgPath
         }
-        self.layer.shadowPath = UIBezierPath(roundedRect: reqBounds, cornerRadius: 7).cgPath
+        self.layer.insertSublayer(self.backgroundLayer, below: imageView?.layer)
+    }
+
+     func removeBackground() {
+         self.backgroundLayer.removeFromSuperlayer()
     }
 }
 

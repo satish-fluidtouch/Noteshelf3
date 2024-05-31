@@ -138,9 +138,6 @@ class FTShortcutExecuter: FTShortcutCommand {
 
         case .savePageAsPhoto:
             self.receiver?.savePageAsPhoto()
-
-        default:
-            break
         }
     }
 }

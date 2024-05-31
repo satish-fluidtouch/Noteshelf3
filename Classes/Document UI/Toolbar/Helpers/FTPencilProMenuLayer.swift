@@ -33,7 +33,7 @@ class FTPencilProLayer: CAShapeLayer, FTMenuLayerPathConfig {
 }
 
 class FTPencilProMenuLayer: FTPencilProLayer {
-    override init(strokeColor: UIColor = .red, lineWidth: CGFloat = 50.0) {
+    override init(strokeColor: UIColor = .red, lineWidth: CGFloat = 40.0) {
         super.init(strokeColor: strokeColor, lineWidth: lineWidth)
     }
     
@@ -43,7 +43,7 @@ class FTPencilProMenuLayer: FTPencilProLayer {
 }
 
 class FTPencilProBorderLayer: FTPencilProLayer {
-    override init(strokeColor: UIColor = .green, lineWidth: CGFloat = 52.0) {
+    override init(strokeColor: UIColor = .green, lineWidth: CGFloat = 42.0) {
         super.init(strokeColor: strokeColor, lineWidth: lineWidth)
     }
     

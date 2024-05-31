@@ -41,12 +41,12 @@ class FTDeskToolCell: UICollectionViewCell {
         }
     }
 
-    func configureCell(type: FTDeskCenterPanelTool, isSelected: Bool) {
+    func configureCell(type: FTDeskCenterPanelTool, isSelected: Bool, mode: FTCenterPanelMode) {
         self.toolType = type
         self.deskToolView?.toolType = type
         self.isToolSelected = isSelected
         self.handleObservers()
-        self.deskToolView?.mode = self.delegate?.getCenterPanelMode() ?? .toolbar
+        self.deskToolView?.mode = mode
     }
 
     private func handleObservers() {
@@ -90,6 +90,8 @@ class FTDeskShortcutCell: UICollectionViewCell {
     private weak var deskShortcutView: FTDeskShortcutView?
     var deskShortcutTapHandler: (() -> Void)?
 
+    weak var delegate: FTDeskToolCellDelegate?
+
     override func awakeFromNib() {
         super.awakeFromNib()
         guard let toolView = self.contentView as? FTDeskShortcutView else {
@@ -102,9 +104,10 @@ class FTDeskShortcutCell: UICollectionViewCell {
         }
     }
 
-    func configureCell(type: FTDeskCenterPanelTool, isSelected: Bool) {
+    func configureCell(type: FTDeskCenterPanelTool, isSelected: Bool, mode: FTCenterPanelMode) {
         self.deskShortcutView?.toolType = type
         self.deskShortcutView?.isSelected = isSelected
+        self.deskShortcutView?.mode = mode
     }
 
     var isShortcutSelected: Bool = false {

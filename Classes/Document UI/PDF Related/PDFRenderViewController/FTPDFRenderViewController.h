@@ -161,14 +161,14 @@ FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {}
 
 -(void)invalidateReadingTimer;
 -(void)showZoomPanelIfNeeded;
--(void)penButtonAction;
--(void)markerButtonAction;
--(void)eraserButtonAction;
--(void)shapesButtonAction;
+-(void)penButtonAction:(nullable UIView *)source;
+-(void)markerButtonAction:(nullable UIView *)source;
+-(void)eraserButtonAction:(nullable UIView *)source;
+-(void)shapesButtonAction:(nullable UIView *)source;
 -(void)textButtonAction;
 -(void)presenterButtonAction;
--(void)lassoButtonAction;
--(void)favoritesButtonAction;
+-(void)lassoButtonAction:(nullable UIView *)source;
+-(void)favoritesButtonAction:(nullable UIView *)source;
 -(void)delayedZoomButtonAction;
 -(void)settingsButtonAction;
 -(void)finderButtonAction:(BOOL)animated;
@@ -193,7 +193,6 @@ FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {}
 
 // eraser option action
 -(void)setToPreviousTool;
--(void)switchMode:(RKDeskMode)mode;
 -(void)updateToolBarWith:(RKDeskMode)mode;
 
 -(void)minimizeFavToolBarIfNeeded;

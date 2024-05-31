@@ -17,7 +17,7 @@
 #import "iRate.h"
 #import "FTAudioUtils.h"
 #import "FTAudioPlayerController.h"
-
+#import "FTBaseRenderViewController.h"
 @import FTRenderKit;
 
 #define ASSIGNMENTS_PLIST @"Assignments.plist"
@@ -338,6 +338,11 @@
 #endif
 }
 
+-(void)viewIsAppearing:(BOOL)animated {
+    [super viewIsAppearing:animated];
+    [self showPencilProMenuUsing:CGPointMake(160, 160)];
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self removeNotebookInfoToast];
@@ -589,7 +594,7 @@
         self.currentWindow = self.view.window;
         self.mainScrollView.scrollViewDelegate = self;
     }
-    [self switchMode:[[self.pdfDocument localMetadataCache] currentDeskMode]];
+    [self switchMode:[[self.pdfDocument localMetadataCache] currentDeskMode] sourceView: nil];
     [self configureSceneNotifications];
     [self checkForExternalScreens];
     [self validateMenuItems];
@@ -1521,48 +1526,42 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:FTWillPerformUndoRedoActionNotification object:self.undoManager];
     [self.undoManager redo];
 }
--(void)shapesButtonAction
-{
+-(void)shapesButtonAction:(UIView *)source {
     if (!self.shapesToolEnabled) {
         [[self.pdfDocument localMetadataCache] setShapeDetectionEnabled:![[self.pdfDocument localMetadataCache] shapeDetectionEnabled]];
     }
-    [self switchMode:kDeskModeShape];
+    [self switchMode:kDeskModeShape sourceView: source];
 }
--(void)penButtonAction
-{
-    [self switchMode:kDeskModePen];
-}
-
--(void)laserButtonAction {
-    [self switchMode:kDeskModeLaser];
+-(void)penButtonAction:(UIView *)source {
+    [self switchMode:kDeskModePen sourceView: source];
 }
 
--(void)markerButtonAction
-{
-    [self switchMode:kDeskModeMarker];
+-(void)laserButtonAction:(UIView *)source {
+    [self switchMode:kDeskModeLaser sourceView: source];
 }
 
--(void)eraserButtonAction
-{
-    [self switchMode:kDeskModeEraser];
+-(void)markerButtonAction:(UIView *)source {
+    [self switchMode:kDeskModeMarker sourceView: source];
 }
 
--(void)lassoButtonAction
-{
-    //    [self trackEraserToolSelectionEventIfNeeded];
-    [self switchMode:kDeskModeClipboard];
+-(void)eraserButtonAction:(UIView *)source {
+    [self switchMode:kDeskModeEraser sourceView: source];
 }
 
--(void)favoritesButtonAction {
-    [self switchMode:kDeskModeFavorites];
+-(void)lassoButtonAction:(UIView *)source {
+    [self switchMode:kDeskModeClipboard sourceView: source];
+}
+
+-(void)favoritesButtonAction:(UIView *)source {
+    [self switchMode:kDeskModeFavorites sourceView: source];
 }
 
 -(void)iconsButtonAction
 {
-    [self switchMode:kDeskModeStickers];
+    [self switchMode:kDeskModeStickers sourceView: nil];
 }
 -(void)presenterButtonAction{
-    [self switchMode:kDeskModeLaser];
+    [self switchMode:kDeskModeLaser sourceView: nil];
 }
 
 -(void)audioButtonAction
@@ -1584,16 +1583,15 @@
         return;
     }
     track(@"toolbar_textmode_tapped", nil,  [NSString stringWithFormat:@"%@",[FTScreenNames textbox]]);
-    [self switchMode:kDeskModeText];
+    [self switchMode:kDeskModeText sourceView: nil];
 }
 
 -(void)readOnlyButtonAction{
     self.readOnlyModeisOn = YES;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"FTPDFReadOnlyMode" object:self.view.window userInfo:@{@"isOn" : @TRUE}];
     [(FTDocumentScrollView*)self.mainScrollView disableNewPageCreationOptions];
-    [self switchMode:kDeskModeReadOnly];
+    [self switchMode:kDeskModeReadOnly sourceView: nil];
 }
-
 
 -(void)settingsButtonAction
 {
@@ -1653,34 +1651,33 @@
     }
 }
 
-#pragma mark - Mode change -
--(void)switchMode:(RKDeskMode)mode
-{
-    UIView *sourceView = nil;
-    switch (mode) {
-        case kDeskModePen:
-            sourceView = [self centerPanelToolbarSourceFor:FTDeskCenterPanelToolPen];
-            break;
-        case kDeskModeMarker:
-            sourceView = [self centerPanelToolbarSourceFor:FTDeskCenterPanelToolHighlighter];
-            break;
-        case kDeskModeEraser:
-            sourceView = [self centerPanelToolbarSourceFor:FTDeskCenterPanelToolEraser];
-            break;
-        case kDeskModeClipboard: // lasso
-            sourceView = [self centerPanelToolbarSourceFor:FTDeskCenterPanelToolLasso];
-            break;
-        case kDeskModeShape:
-            sourceView = [self centerPanelToolbarSourceFor:FTDeskCenterPanelToolShapes];
-            break;
-        case kDeskModeLaser:
-            sourceView = [self centerPanelToolbarSourceFor:FTDeskCenterPanelToolPresenter];
-            break;
-        default:
-            break;
+-(void)switchMode:(RKDeskMode)mode sourceView:(UIView *)sourceView {
+    UIView *source = sourceView;
+    if(nil == source) {
+        switch (mode) {
+            case kDeskModePen:
+                source = [self centerPanelToolbarSourceFor:FTDeskCenterPanelToolPen];
+                break;
+            case kDeskModeMarker:
+                source = [self centerPanelToolbarSourceFor:FTDeskCenterPanelToolHighlighter];
+                break;
+            case kDeskModeEraser:
+                source = [self centerPanelToolbarSourceFor:FTDeskCenterPanelToolEraser];
+                break;
+            case kDeskModeClipboard: // lasso
+                source = [self centerPanelToolbarSourceFor:FTDeskCenterPanelToolLasso];
+                break;
+            case kDeskModeShape:
+                source = [self centerPanelToolbarSourceFor:FTDeskCenterPanelToolShapes];
+                break;
+            case kDeskModeLaser:
+                source = [self centerPanelToolbarSourceFor:FTDeskCenterPanelToolPresenter];
+                break;
+            default:
+                break;
+        }
     }
-
-    [super switchMode:mode sourceView:sourceView];
+    [super switchMode:mode sourceView:source];
     [self updateMigrationInfoView];
 }
 
@@ -1869,7 +1866,7 @@
 {
     BOOL autoSelectPreviousTool = [FTUserDefaults shouldAutoSelectPreviousTool];
     if(autoSelectPreviousTool) {
-        [self switchMode:(self.lastSelectedMode == kDeskModeEraser) ? kDeskModePen : self.lastSelectedMode];
+        [self switchMode:(self.lastSelectedMode == kDeskModeEraser) ? kDeskModePen : self.lastSelectedMode sourceView: nil];
     }
 }
 
@@ -2046,9 +2043,9 @@
         //Initiate zoom mode
         if(!([self isZoomSupportedDeskMode: self.currentDeskMode])) {
             if((self.currentDeskMode == kDeskModeClipboard) && ([self isZoomSupportedDeskMode: self.previousDeskMode])) {
-                [self switchMode:self.previousDeskMode];
+                [self switchMode:self.previousDeskMode sourceView: nil];
             } else {
-                [self switchMode:kDeskModePen];
+                [self switchMode:kDeskModePen sourceView: nil];
             }
         }
 
@@ -2122,7 +2119,7 @@
 -(void) stickerSelected:(UIImage *)stickerImage emojiID:(NSUInteger)emojiID
 {
     [self dismissViewControllerAnimated:true completion:nil];
-    [self switchMode:kDeskModeStickers];
+    [self switchMode:kDeskModeStickers sourceView: nil];
 
     [self.activeStickyIndicatorView setCurrentSelectedImage:stickerImage];
 }
@@ -2130,7 +2127,7 @@
 -(void)insertClip:(UIImage *)clipImage webClipUrlString:(NSString*)clipUrlString {
     
     if (self.currentDeskMode == kDeskModeView) {
-        [self penButtonAction];
+        [self penButtonAction: nil];
     }
     
     FTPageViewController *firstPageController = [self pageController: CGPointZero];
@@ -2179,7 +2176,7 @@
              source:(FTInsertImageSource)imageSource {
 
     if (self.currentDeskMode == kDeskModeView) {
-        [self penButtonAction];
+        [self penButtonAction: nil];
     }
 
     FTPageViewController *firstPageController = [self pageController:point];
@@ -2358,7 +2355,7 @@
     switch (self.currentDeskMode) {
         case kDeskModePhoto:
         {
-            [self switchMode:kDeskModePen];
+            [self switchMode:kDeskModePen sourceView: nil];
         }
             break;
             // ideally lasso should be removed for all kinds of lasso operations.
@@ -2658,35 +2655,6 @@
     }
 }
 
-// TODO: Need to confirm this for removal(Narayana)
-//-(void)incrementPenColor:(int)increment
-//{
-//    [self normalizeAndEndEditingAnnotation:YES];
-//
-//    if (self.currentDeskMode != kDeskModePen && self.currentDeskMode != kDeskModeMarker) {
-//        [self switchMode:kDeskModePen];
-//    }
-//    NSUserActivity *activity = self.view.window.windowScene.userActivity;
-//
-//    FTRackData *rack = [[FTRackData alloc] initWithType:FTRackTypePen userActivity:activity];
-//    if (self.currentDeskMode == kDeskModeMarker) {
-//        rack = [[FTRackData alloc] initWithType:FTRackTypeHighlighter userActivity:activity];
-//    }
-//
-//    if(increment == -1)
-//    {
-//        //previous pen
-//        [rack selectPreviousColor];
-//    }
-//    else
-//    {
-//        //next Pen
-//        [rack selectNextColor];
-//    }
-//
-//    [self validateMenuItems];
-//}
-
 -(void)pressurePenButtonAction:(RKAccessoryButtonAction)actionToPerform
 {
     NSString *buttonAction = nil;
@@ -2856,18 +2824,18 @@
                             [self copyPasteButtonAction:lasso];
                         }
                         else {
-                            [self switchMode:self.lastSelectedMode];
+                            [self switchMode:self.lastSelectedMode sourceView: nil];
                         }
                     }
                     else {
-                        [self penButtonAction];
+                        [self penButtonAction: nil];
                     }
                     [self validateMenuItems];
                 }
             }
             else {
                 [self normalizeAnyPresentedViewController:YES onCompletion:nil];
-                [self eraserButtonAction];
+                [self eraserButtonAction: nil];
             }
             break;
         case FTApplePencilInteractionTypePreviousTool:
@@ -2877,11 +2845,11 @@
                     UIView *lasso = [self centerPanelToolbarSourceFor: FTDeskCenterPanelToolLasso];
                     [self copyPasteButtonAction:lasso];
                 }else {
-                    [self switchMode:self.lastSelectedMode];
+                    [self switchMode:self.lastSelectedMode sourceView: nil];
                 }
             }
             else if(self.currentDeskMode != kDeskModePen) {
-                [self penButtonAction];
+                [self penButtonAction: nil];
             }
             [self validateMenuItems];
             break;
@@ -2891,8 +2859,8 @@
                self.currentDeskMode != kDeskModeShape &&
                self.currentDeskMode != kDeskModeLaser) {
                 [self normalizeAnyPresentedViewController:YES onCompletion:nil];
-                [self penButtonAction];
-                [self penButtonAction]; // It is needed to call this method twice to display color palette
+                [self penButtonAction: nil];
+                [self penButtonAction: nil]; // It is needed to call this method twice to display color palette
             }
             else {
                 if(rackType == FTRackTypePen ||
@@ -2904,13 +2872,13 @@
                 else {
                     [self normalizeAnyPresentedViewController:YES onCompletion:nil];
                     if (self.currentDeskMode == kDeskModeMarker){
-                        [self markerButtonAction];
+                        [self markerButtonAction: nil];
                     }
                     else if (self.currentDeskMode == kDeskModePen) {
-                        [self penButtonAction];
+                        [self penButtonAction: nil];
                     }
                     else if (self.currentDeskMode == kDeskModeShape) {
-                        [self shapesButtonAction];
+                        [self shapesButtonAction: nil];
                     }
                     else if (self.currentDeskMode == kDeskModeLaser) {
                         [self presenterButtonAction];
@@ -3327,7 +3295,7 @@
 #pragma mark - FTActiveStickerIndicatorView -
 - (void)activeStickyIndicatorViewDidTapCloseWithIndicatorView:(FTActiveStickyIndicatorViewController * _Nonnull)indicatorView
 {
-    [self switchMode:self.previousDeskMode];
+    [self switchMode:self.previousDeskMode sourceView: nil];
     [self.activeStickyIndicatorView.view removeFromSuperview];
     self.activeStickyIndicatorView = nil;
 }
@@ -3368,16 +3336,16 @@
         [self clearPageButtonAction];
         switch (self.pdfDocument.localMetadataCache.lastPenMode) {
             case kDeskModePen:
-                [self penButtonAction];
+                [self penButtonAction: nil];
                 break;
             case kDeskModeMarker:
-                [self markerButtonAction];
+                [self markerButtonAction: nil];
                 break;
             case kDeskModeShape:
-                [self shapesButtonAction];
+                [self shapesButtonAction: nil];
                 break;
             case kDeskModeFavorites:
-                [self favoritesButtonAction];
+                [self favoritesButtonAction: nil];
                 break;
             default:
                 break;
@@ -3802,31 +3770,31 @@
     switch (deskMode) {
         case kDeskModePen:
             if(self.currentDeskMode != kDeskModePen) {
-                [self penButtonAction];
+                [self penButtonAction: nil];
                 shouldValidate = false;
             }
             break;
         case kDeskModeMarker:
             if(self.currentDeskMode != kDeskModeMarker) {
-                [self markerButtonAction];
+                [self markerButtonAction: nil];
                 shouldValidate = false;
             }
             break;
         case kDeskModeEraser:
             if(self.currentDeskMode != kDeskModeEraser) {
-                [self eraserButtonAction];
+                [self eraserButtonAction: nil];
                 shouldValidate = false;
             }
             break;
         case kDeskModeShape:
             if(self.currentDeskMode != kDeskModeShape) {
-                [self shapesButtonAction];
+                [self shapesButtonAction: nil];
                 shouldValidate = false;
             }
             break;
         case kDeskModeFavorites:
             if(self.currentDeskMode != kDeskModeFavorites) {
-                [self favoritesButtonAction];
+                [self favoritesButtonAction: nil];
                 shouldValidate = false;
             }
             break;

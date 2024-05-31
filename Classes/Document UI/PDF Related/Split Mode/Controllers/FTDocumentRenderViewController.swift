@@ -124,9 +124,6 @@ class FTDocumentRenderViewController: UIViewController {
             loadingIndicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: NSLocalizedString("Loading", comment: "Loading..."), andDelay: 0.5);
         }
         showWhatsnewForStatusBar()
-        if let proMenu = UIStoryboard(name: "FTDocumentView", bundle: nil).instantiateViewController(withIdentifier: "FTPencilProMenuController") as? FTPencilProMenuController {
-            self.add(proMenu, frame: CGRect(origin: CGPoint(x: 160, y: 160), size: CGSize(width: 320, height: 400)))
-        }
     }
     
     private func showWhatsnewForStatusBar() {

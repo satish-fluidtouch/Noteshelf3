@@ -104,6 +104,7 @@ class FTToolbarCenterPanelController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.collectionView.mode = .toolbar
         self.collectionView.delegate = self
         self.collectionView.centerPanelDelegate = self
         self.addObservers()

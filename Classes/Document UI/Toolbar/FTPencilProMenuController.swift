@@ -14,6 +14,7 @@ class FTPencilProMenuController: UIViewController {
 
     private let center = CGPoint(x: 250, y: 250)
     private let config = FTCircularLayoutConfig()
+    weak var delegate: FTCenterPanelActionDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +55,7 @@ private extension FTPencilProMenuController {
 
     func drawCollectionViewBackground() {
         self.view.layoutIfNeeded()
-        let menuLayer = FTPencilProMenuLayer()
+        let menuLayer = FTPencilProMenuLayer(strokeColor: .red.withAlphaComponent(0.7))
         let startAngle: CGFloat = .pi + .pi/30
         let endAngle = self.getEndAngle(with: .pi - .pi/30)
         menuLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
@@ -75,11 +76,15 @@ extension FTPencilProMenuController: FTCenterPanelCollectionViewDelegate {
     }
     
     func didTapCenterPanelButton(type: FTDeskCenterPanelTool, sender: UIView) {
-        // To post notification center panel or to create delegate communication if possible
+        self.delegate?.didTapCenterPanelTool(type, source: sender)
     }
     
     func currentDeskMode() -> RKDeskMode? {
-        return RKDeskMode.deskModePen
+        var deskMode = RKDeskMode.deskModePen
+        if let parent = self.parent as? FTPDFRenderViewController {
+            deskMode = parent.currentDeskMode
+        }
+        return deskMode
     }
 
     func getScreenMode() -> FTScreenMode {

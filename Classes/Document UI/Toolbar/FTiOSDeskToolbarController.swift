@@ -9,9 +9,12 @@
 import UIKit
 import FTCommon
 
-protocol FTDeskPanelActionDelegate: AnyObject {
-    func didTapLeftPanelTool(_ buttonType: FTDeskLeftPanelTool, source:UIView)
+protocol FTCenterPanelActionDelegate: AnyObject {
     func didTapCenterPanelTool(_ buttonType: FTDeskCenterPanelTool, source:UIView)
+}
+
+protocol FTDeskPanelActionDelegate: FTCenterPanelActionDelegate {
+    func didTapLeftPanelTool(_ buttonType: FTDeskLeftPanelTool, source:UIView)
     func didTapRightPanelTool(_ buttonType: FTDeskRightPanelTool, source:UIView, mode: FTScreenMode)
 }
 
@@ -432,8 +435,7 @@ final class FTFinderButton: FTBaseButton {
         finderBgBtn.isUserInteractionEnabled = false
         finderBgBtn.addFullConstraints(self, top: 6.0, bottom: 6.0, left: 2.0, right: 2.0)
         finderBgBtn.layoutIfNeeded()
-        finderBgBtn.backgroundColor = .appColor(.white100)
-        finderBgBtn.addRequiredShadow()
+        finderBgBtn.setBackground()
         self.sendSubviewToBack(finderBgBtn)
         self.hideFinderBg()
     }

@@ -22,7 +22,7 @@ class FTCenterPanelCollectionView: UICollectionView {
     var dataSourceItems: [FTDeskCenterPanelTool] = []
    
     var mode: FTCenterPanelMode = .toolbar
-
+    
     private var screenMode: FTScreenMode {
         return self.centerPanelDelegate?.getScreenMode() ?? .normal
     }
@@ -61,7 +61,7 @@ extension FTCenterPanelCollectionView: UICollectionViewDataSource, UICollectionV
             if let isEnabled = self.centerPanelDelegate?.isZoomModeEnabled(), btnType == .zoomBox {
                 isSelected = isEnabled
             }
-            (cell as? FTDeskShortcutCell)?.configureCell(type: btnType, isSelected: isSelected)
+            (cell as? FTDeskShortcutCell)?.configureCell(type: btnType, isSelected: isSelected, mode: self.mode)
 
             // Selection handle closure
             (cell as? FTDeskShortcutCell)?.deskShortcutTapHandler = {[weak self, weak cell] in
@@ -76,7 +76,7 @@ extension FTCenterPanelCollectionView: UICollectionViewDataSource, UICollectionV
               cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FTDeskToolCell", for: indexPath) as UICollectionViewCell
             if let mode = self.centerPanelDelegate?.currentDeskMode() {
                 let selected = FTDeskModeHelper.isToSelectDeskTool(mode: mode, toolType: btnType)
-                (cell as? FTDeskToolCell)?.configureCell(type: btnType, isSelected: selected)
+                (cell as? FTDeskToolCell)?.configureCell(type: btnType, isSelected: selected, mode: self.mode)
                 (cell as? FTDeskToolCell)?.delegate = self
 
                 // Selection handle closure
