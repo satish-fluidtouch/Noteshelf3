@@ -10,8 +10,8 @@ import SwiftUI
 import FTStyles
 
 struct FTPenSliderConstants {
-    static var sliderRadius : CGFloat = 220
-    static var spacingAngle : Int = 14
+    static var sliderRadius : CGFloat = 260
+    static var spacingAngle : Int = 10
     static var penShortCutItems : Int = 7
     static var highlighterShortCutItems : Int = 7
     static var penShortcutColorItems : Int = 4
@@ -53,7 +53,7 @@ struct FTPenShortcutView_Previews: PreviewProvider {
 struct FTPenSliderShortcutView: View {
     @StateObject var colorModel: FTFavoriteColorViewModel
     @StateObject var sizeModel: FTFavoriteSizeViewModel
-    let startAngle : Angle = .degrees(4)
+    let startAngle : Angle = .degrees(0)
     var body: some View {
         ZStack {
             CircularBorderShape(startAngle: startAngle, endAngle: startAngle + Angle(degrees: Double(FTPenSliderConstants.spacingAngle * (FTPenSliderConstants.penShortCutItems - 1))), radius: FTPenSliderConstants.sliderRadius)

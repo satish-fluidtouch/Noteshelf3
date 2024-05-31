@@ -39,6 +39,6 @@ class FTPenSliderShortcutHostingController: UIHostingController<FTPenSliderShort
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .gray
+        self.view.backgroundColor = .clear
     }
 }

@@ -320,22 +320,11 @@ private extension FTiOSDeskToolbarController {
 
     @IBAction private func rightPanelButtonTapped(_ sender: UIButton) {
         if sender == self.fullScreenModeButton {
-            let activity = self.view.window?.windowScene?.userActivity
-            let rack = FTRackData(type: FTRackType.pen, userActivity: activity)
-            let _colorModel =
-            FTFavoriteColorViewModel(rackData: rack, delegate: nil, scene: self.view?.window?.windowScene)
-            let sizeModel =
-            FTFavoriteSizeViewModel(rackData: rack, delegate: nil, scene: self.view?.window?.windowScene)
-            let shortcutView = FTPenSliderShortcutView(colorModel: _colorModel, sizeModel: sizeModel)
-            let hostingVc = FTPenSliderShortcutHostingController(rootView: shortcutView)
-            let origin = self.parent?.view.center ?? .zero
-            let frame = CGRect(x: 500, y: 200, width: 500, height: 500)
-            self.parent?.add(hostingVc, frame: frame)
-            //            self.updateScreenModeIfNeeded(.focus)
-//            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_focusmode_toggle, params: ["toggle": "on"])
-//            if let button = FTDeskRightPanelTool(rawValue: sender.tag) {
-//                self.actionDelegate?.didTapRightPanelTool(button, source: sender, mode: .focus)
-//            }
+            self.updateScreenModeIfNeeded(.focus)
+            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_focusmode_toggle, params: ["toggle": "on"])
+            if let button = FTDeskRightPanelTool(rawValue: sender.tag) {
+                self.actionDelegate?.didTapRightPanelTool(button, source: sender, mode: .focus)
+            }
         } else {
             if let button = FTDeskRightPanelTool.init(rawValue: sender.tag) {
                 self.actionDelegate?.didTapRightPanelTool(button, source: sender, mode: .normal)
