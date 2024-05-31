@@ -601,7 +601,7 @@
 
     [self becomeFirstResponder];
     [[FTLanguageResourceManager shared] warnLanguageSelectionIfNeededOnController:self];
-    [self addPensliderContoller];
+//    [self addPensliderContoller];
 }
 
 -(void)viewDidLayoutSubviews

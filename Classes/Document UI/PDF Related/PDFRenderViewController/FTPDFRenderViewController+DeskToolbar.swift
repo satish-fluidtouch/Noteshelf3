@@ -225,15 +225,16 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
             FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_more_tap)
             break
         case .focus:
-            UIView.animate(withDuration: 0.3) {
-                if nil != self.zoomOverlayController {
-                    self.delayedZoomButtonAction()
-                }
-            } completion: { _  in
-                self.showOrHideShortcutViewIfNeeded(mode)
-                self.performLayout()
-            }
-            self.updatePageNumberLabelFrame()
+            self.addPensliderContoller()
+//            UIView.animate(withDuration: 0.3) {
+//                if nil != self.zoomOverlayController {
+//                    self.delayedZoomButtonAction()
+//                }
+//            } completion: { _  in
+//                self.showOrHideShortcutViewIfNeeded(mode)
+//                self.performLayout()
+//            }
+//            self.updatePageNumberLabelFrame()
         }
     }
     
