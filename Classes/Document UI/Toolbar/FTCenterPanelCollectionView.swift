@@ -109,10 +109,6 @@ extension FTCenterPanelCollectionView: UICollectionViewDataSource, UICollectionV
 }
 
 extension FTCenterPanelCollectionView: FTDeskToolCellDelegate {
-    func getCenterPanelMode() -> FTCenterPanelMode {
-        return self.mode
-    }
-    
     func currentDeskMode() -> RKDeskMode? {
         return self.centerPanelDelegate?.currentDeskMode()
     }

@@ -11,7 +11,6 @@ import UIKit
 protocol FTDeskToolCellDelegate: AnyObject {
     func currentDeskMode() -> RKDeskMode?
     func currentScreenMode() -> FTScreenMode
-    func getCenterPanelMode() -> FTCenterPanelMode
     func getCurrentToolColor(toolType: FTDeskCenterPanelTool) -> UIColor
 }
 
