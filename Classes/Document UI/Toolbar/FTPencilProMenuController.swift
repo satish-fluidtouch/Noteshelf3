@@ -8,13 +8,20 @@
 
 import Foundation
 
+protocol FTPencilProMenuDelegate: FTCenterPanelActionDelegate {
+    func canPerformUndo() -> Bool
+    func performUndo()
+    func canPerformRedo() -> Bool
+    func performRedo()
+}
+
 class FTPencilProMenuController: UIViewController {
     @IBOutlet private weak var collectionView: FTCenterPanelCollectionView!
     private var size = CGSize.zero
 
     private let center = CGPoint(x: 250, y: 250)
     private let config = FTCircularLayoutConfig()
-    weak var delegate: FTCenterPanelActionDelegate?
+    weak var delegate: FTPencilProMenuDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +39,7 @@ class FTPencilProMenuController: UIViewController {
     override func viewIsAppearing(_ animated: Bool) {
         super.viewIsAppearing(animated)
         self.drawCollectionViewBackground()
+        self.addUndoRedoViewsIfNeeded()
     }
 
     override func viewDidLayoutSubviews() {
@@ -45,6 +53,50 @@ class FTPencilProMenuController: UIViewController {
 }
 
 private extension FTPencilProMenuController {
+    func addUndoRedoViewsIfNeeded() {
+        let centerPoint = self.center
+        var radius: CGFloat = self.config.radius
+        let angle: CGFloat = .pi - .pi/90
+//        if self.delegate?.canPerformUndo() ?? false {
+            addButton(isUndo: true)
+//        }
+//        if self.delegate?.canPerformRedo() ?? false {
+            addButton(isUndo: false)
+//        }
+
+        func addButton(isUndo: Bool) {
+            let button = UIButton(type: .system)
+            button.tintColor = UIColor.label
+            button.backgroundColor = UIColor.appColor(.finderBgColor)
+            button.layer.borderColor = UIColor.black.cgColor
+            button.layer.borderWidth = 1.0
+            
+            let buttonSize = CGSize(width: 40, height: 40)
+            var imgName = "desk_tool_undo"
+            var selector = #selector(undo(_ :))
+            if !isUndo {
+                radius += 45.0
+                imgName = "desk_tool_redo"
+                selector = #selector(redo(_ :))
+            }
+            let xPosition = self.view.frame.origin.x + centerPoint.x + radius * cos(angle)
+            let yPosition = self.view.frame.origin.y + centerPoint.y + radius * sin(angle)
+            button.setImage(UIImage(named: imgName), for: .normal)
+            button.frame = CGRect(x: xPosition - buttonSize.width/2, y: yPosition - buttonSize.height/2, width: buttonSize.width, height: buttonSize.height)
+            button.layer.cornerRadius = button.frame.height/2
+            button.addTarget(self, action: selector, for: .touchUpInside)
+            self.parent?.view.addSubview(button)
+        }
+    }
+
+    @objc func undo(_ sender: Any) {
+        self.delegate?.performUndo()
+    }
+
+    @objc func redo(_ sender: Any) {
+        self.delegate?.performRedo()
+    }
+
     func getEndAngle(with startAngle: CGFloat) -> CGFloat {
         var itemsToShow = self.config.maxVisibleItemsCount
         if self.collectionView.dataSourceItems.count < self.config.maxVisibleItemsCount {
@@ -57,8 +109,8 @@ private extension FTPencilProMenuController {
     func drawCollectionViewBackground() {
         self.view.layoutIfNeeded()
         let menuLayer = FTPencilProMenuLayer(strokeColor: UIColor.appColor(.finderBgColor))
-        let startAngle: CGFloat = .pi + .pi/30
-        let endAngle = self.getEndAngle(with: .pi - .pi/30)
+        let startAngle: CGFloat = .pi + .pi/15
+        let endAngle = self.getEndAngle(with: .pi)
         menuLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
         let borderLayer = FTPencilProBorderLayer(strokeColor: .black)
         borderLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)

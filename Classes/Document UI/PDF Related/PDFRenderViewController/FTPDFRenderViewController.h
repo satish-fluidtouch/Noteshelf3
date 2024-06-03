@@ -197,6 +197,9 @@ FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {}
 -(void)updateToolBarWith:(RKDeskMode)mode;
 
 -(void)minimizeFavToolBarIfNeeded;
+-(BOOL)canUndo;
+-(BOOL)canRedo;
+
 
 //FTPDFRenderViewController_Extension
 -(void) backToShelfButtonAction: (FTNotebookBackAction)backAction with: (NSString*)title;
@@ -236,8 +239,6 @@ FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {}
 -(void)setNeedsLayoutForcibly;
 -(void)updateContentSize;
 
-#if TARGET_OS_MACCATALYST
 -(void)undoButtonAction;
 -(void)redoButtonAction;
-#endif
 @end

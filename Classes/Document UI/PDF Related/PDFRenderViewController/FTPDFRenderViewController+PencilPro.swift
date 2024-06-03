@@ -16,3 +16,21 @@ extension FTPDFRenderViewController {
         }
     }
 }
+
+extension FTPDFRenderViewController: FTPencilProMenuDelegate {
+    func canPerformUndo() -> Bool {
+        return self.canUndo()
+    }
+    
+    func performUndo() {
+        self.undoButtonAction()
+    }
+    
+    func canPerformRedo() -> Bool {
+        return self.canRedo()
+    }
+    
+    func performRedo() {
+        self.redoButtonAction()
+    }
+}
