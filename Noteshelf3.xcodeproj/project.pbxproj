@@ -617,6 +617,7 @@
 		52B34DFF29E5684400360F10 /* Montserrat-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52B34DF929E5684300360F10 /* Montserrat-SemiBold.otf */; };
 		52B34E0029E5684400360F10 /* Montserrat-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52B34DFA29E5684300360F10 /* Montserrat-ExtraBold.ttf */; };
 		52B34E0129E5684400360F10 /* Montserrat-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52B34DFB29E5684300360F10 /* Montserrat-ExtraLight.otf */; };
+		52B3F92C2C0D7F1200EF3BBB /* FTAiPrivacyConsetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B3F92B2C0D7F1200EF3BBB /* FTAiPrivacyConsetViewController.swift */; };
 		52BBD4DF29E951D1003088AE /* Baskerville.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 52BBD4D529E951CD003088AE /* Baskerville.ttc */; };
 		52BBD4E129E951D1003088AE /* Abel-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52BBD4D729E951CE003088AE /* Abel-Regular.ttf */; };
 		52BBD4E429E951D1003088AE /* Coming Soon Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52BBD4DA29E951CF003088AE /* Coming Soon Regular.ttf */; };
@@ -3567,6 +3568,7 @@
 		52B34DF929E5684300360F10 /* Montserrat-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.otf"; sourceTree = "<group>"; };
 		52B34DFA29E5684300360F10 /* Montserrat-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ExtraBold.ttf"; sourceTree = "<group>"; };
 		52B34DFB29E5684300360F10 /* Montserrat-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ExtraLight.otf"; sourceTree = "<group>"; };
+		52B3F92B2C0D7F1200EF3BBB /* FTAiPrivacyConsetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAiPrivacyConsetViewController.swift; sourceTree = "<group>"; };
 		52BBD4D529E951CD003088AE /* Baskerville.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = Baskerville.ttc; sourceTree = "<group>"; };
 		52BBD4D729E951CE003088AE /* Abel-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Abel-Regular.ttf"; sourceTree = "<group>"; };
 		52BBD4DA29E951CF003088AE /* Coming Soon Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Coming Soon Regular.ttf"; sourceTree = "<group>"; };
@@ -5814,6 +5816,7 @@
 				09ABDCA32A790F93008F144D /* FTNoteshelfAIViewController.swift */,
 				09DBD5292A7D255B00987ED1 /* FTFormSheetTransitionDelegate.swift */,
 				0951BA9B2AD01D3D00E9E02C /* FTNoteshelfAITokenManager.swift */,
+				52B3F92B2C0D7F1200EF3BBB /* FTAiPrivacyConsetViewController.swift */,
 			);
 			path = OpenAI;
 			sourceTree = "<group>";
@@ -14705,6 +14708,7 @@
 				97B411A629E804E900ADFE1F /* FTSidebarTopSectionView.swift in Sources */,
 				BAF3949D2859ADF10067CA9F /* iRate.m in Sources */,
 				BAF3949E2859ADF10067CA9F /* FTFiveMinJournalYearTemplate.swift in Sources */,
+				52B3F92C2C0D7F1200EF3BBB /* FTAiPrivacyConsetViewController.swift in Sources */,
 				BA2D9121285CAFCC001BB495 /* FTTabViewController.swift in Sources */,
 				BAF394A02859ADF10067CA9F /* FTDeviceAutoLockHelper.swift in Sources */,
 				BAF394A12859ADF10067CA9F /* FTShapeEditController.swift in Sources */,

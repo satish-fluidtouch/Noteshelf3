@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad11_0rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -589,6 +589,39 @@
             </objects>
             <point key="canvasLocation" x="-1722" y="-745"/>
         </scene>
+        <!--Ai Privacy Conset View Controller-->
+        <scene sceneID="AjS-lj-ivj">
+            <objects>
+                <viewController storyboardIdentifier="FTAiPrivacyConsetViewController" id="ieK-jl-NZ5" customClass="FTAiPrivacyConsetViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3za-Ba-O8P">
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n5x-QJ-gHF">
+                                <rect key="frame" x="30" y="337" width="774" height="520"/>
+                                <color key="backgroundColor" red="0.92156862745098034" green="0.90980392156862744" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="520" id="LRc-5p-59f"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="TU6-XN-BYd"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="TU6-XN-BYd" firstAttribute="trailing" secondItem="n5x-QJ-gHF" secondAttribute="trailing" constant="30" id="E1V-lq-G2V"/>
+                            <constraint firstItem="n5x-QJ-gHF" firstAttribute="centerY" secondItem="3za-Ba-O8P" secondAttribute="centerY" id="Gcp-4c-Jce"/>
+                            <constraint firstItem="n5x-QJ-gHF" firstAttribute="leading" secondItem="TU6-XN-BYd" secondAttribute="leading" constant="30" id="bfc-uT-LjT"/>
+                            <constraint firstItem="n5x-QJ-gHF" firstAttribute="centerX" secondItem="3za-Ba-O8P" secondAttribute="centerX" id="dKa-Mu-Kvr"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="bgView" destination="n5x-QJ-gHF" id="ZZN-An-G7Z"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zBe-at-tOl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1054" y="-2"/>
+        </scene>
     </scenes>
     <resources>
         <image name="chevron.down" catalog="system" width="128" height="70"/>
@@ -625,7 +658,7 @@
             <color red="0.92156862745098034" green="0.90980392156862744" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="premium_bg">
-            <color red="0.9100000262260437" green="0.70999997854232788" blue="0.27000001072883606" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.90980392156862744" green="0.70980392156862748" blue="0.26666666666666666" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="white60">
             <color red="1" green="1" blue="1" alpha="0.60000002384185791" colorSpace="custom" customColorSpace="sRGB"/>
