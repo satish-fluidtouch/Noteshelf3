@@ -422,7 +422,7 @@
         <scene sceneID="szc-hy-W7t">
             <objects>
                 <viewController storyboardIdentifier="FTPencilProMenuController" id="iNE-pq-TZh" userLabel="FTPencilProMenuController" customClass="FTPencilProMenuController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Xra-gZ-wWK">
+                    <view key="view" contentMode="scaleToFill" id="Xra-gZ-wWK" customClass="FTPencilProMenuContainerView" customModule="NS3_Beta" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
