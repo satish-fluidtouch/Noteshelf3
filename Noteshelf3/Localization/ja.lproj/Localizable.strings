@@ -1160,6 +1160,10 @@
 "icloud.sync.issue.message" = "iCloud に接続できません。 設定でiCloudがオンになっていることをご確認ください。";
 "iconlabels" = "アイコンラベル";
 "import" = "インポート";
+"import.multiple.files" = "%@ つのファイルが Noteshelf に送信されました";
+"import.notsupported.desc" = "このファイルタイプは現在サポートされていません。";
+"import.notsupported.title" = "ファイルをインポートできません";
+"import.single.files" = "%@ ファイルが Noteshelf に送信されました";
 "importedFiles" = "インポートされたファイル";
 "importedTo" = "インポートされました";
 "insidenotebook.share.pageno" = "ページ %@";
@@ -1196,6 +1200,7 @@
 "moreInfo" = "詳細情報";
 "more_global" = "グローバル設定";
 "move" = "移動";
+"multiple.files" = "%@ ファイル";
 "newnotebook" = "新しいノートブック";
 "newnotebook.create" = "作成";
 "newnotebook.exitalert.message" = "続けますか？";
@@ -1498,6 +1503,7 @@
 "sidebar.topSection.home" = "ホーム";
 "sidebar.topSection.starred" = "お気に入り";
 "sidebar.topSection.unfiled" = "未整理";
+"single.file" = "%@ ファイル";
 "snippets.addtopage" = "ページに追加する";
 "speechbubbles" = "吹き出し";
 "status_bar_info_footer" = "Noteshelf を楽しんでいますか? App Store で評価するには %@ してください。 それはあなたが想像している以上に私たちを助けてくれるでしょう。";
@@ -1676,4 +1682,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 17 May 2024 at 4:53 PM
+// Last Synced by Fluid Touch on 28 May 2024 at 7:20 PM

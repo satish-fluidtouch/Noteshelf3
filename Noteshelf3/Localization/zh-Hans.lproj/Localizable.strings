@@ -1160,6 +1160,10 @@
 "icloud.sync.issue.message" = "无法连接到 iCloud。请确保 iCloud 在设置中已打开。";
 "iconlabels" = "图标标签";
 "import" = "导入";
+"import.multiple.files" = "@% 个文件发送到Noteshelf";
+"import.notsupported.desc" = "此文件类型目前不受支持。";
+"import.notsupported.title" = "无法导入文件";
+"import.single.files" = "@% 个文件发送到Noteshelf ";
 "importedFiles" = "导入的文件";
 "importedTo" = "导入至";
 "insidenotebook.share.pageno" = "页面 %@";
@@ -1196,6 +1200,7 @@
 "moreInfo" = "更多信息";
 "more_global" = "全局";
 "move" = "移动";
+"multiple.files" = "@% 个文件";
 "newnotebook" = "新笔记本";
 "newnotebook.create" = "创建";
 "newnotebook.exitalert.message" = "你想继续吗？";
@@ -1498,6 +1503,7 @@
 "sidebar.topSection.home" = "主页";
 "sidebar.topSection.starred" = "标记";
 "sidebar.topSection.unfiled" = "未归档";
+"single.file" = "@% 个文件";
 "snippets.addtopage" = "添加到页面";
 "speechbubbles" = "对话框";
 "status_bar_info_footer" = "喜欢 Noteshelf 吗？%@ 在 App Store 上对我们进行评分。 它对我们的帮助将超出您的想象。";
@@ -1676,4 +1682,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 17 May 2024 at 4:53 PM
+// Last Synced by Fluid Touch on 28 May 2024 at 7:20 PM

@@ -2405,21 +2405,14 @@
                 onCompletion:(void (^ _Nullable)(BOOL))completion
 {
     NSInteger index = [self getNewPageInsertIndex];
-    FTLoadingIndicatorViewController *loading = [FTLoadingIndicatorViewController showOnMode:FTLoadingIndicatorStyleActivityIndicator
-                                                                                        from:self
-                                                                                    withText:NSLocalizedString(@"Importing", @"Importing")
-                                                                                    andDelay:0];
     FTImportItem *item = [[FTImportItem alloc] initWithItem:url];
     [self insertFileItem:item
                  atIndex:index
+              actionType: FTAudioActionTypeAddToNewPage
             onCompletion:^(BOOL success, NSError * _Nullable error)
      {
-        [loading hide:nil];
         if (!success) {
             [error showAlertFrom:self];
-        }
-        else {
-            [self showPageAtIndex:index forceReLayout:true];
         }
         if(completion) {
             completion(success);

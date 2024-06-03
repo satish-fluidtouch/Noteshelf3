@@ -137,7 +137,7 @@ extension FTNoteshelfDocument : FTDocumentCreateWatchExtension {
             Task {
                 let generator = FTAutoTemplateGenerator.autoTemplateGenerator(theme: theme, generationType: .template)
                 do {
-                    let documentInfo = try await generator.generate()
+                    let documentInfo = generator.generate()
                     documentInfo.footerOption = theme.footerOption
                     documentInfo.annotationInfo = theme.annotationInfo
                     documentInfo.isNewBook = true
@@ -284,5 +284,27 @@ extension FTNoteshelfDocument : FTDocumentCreateWatchExtension {
         var url = Bundle.main.url(forResource: templateName, withExtension: "nsp", subdirectory: "StockPapers_Watch.bundle");
         let theme = FTTheme.theme(url: url!, themeType: FTSelectedThemeType.papers);
         return theme!;
+    }
+}
+
+extension FTNoteshelfDocument {
+     func insertImageInDocument(_ img: UIImage, shouldAddNewPage: Bool = false, currentPage: FTPageProtocol?) {
+        if let page = currentPage as? FTNoteshelfPage {
+            var pageToInsert = page
+            if shouldAddNewPage, let newPage = self.insertPageBelow(page: page) as? FTNoteshelfPage {
+                pageToInsert = newPage
+            }
+            if let image = img.scaleAndRotateImageFor1x() {
+                let pageRect = pageToInsert.pdfPageRect
+                let startingFrame = image.aspectFrame(withinScreenArea: pageRect, zoomScale: 1)
+                let imageInfo = FTImageAnnotationInfo(image: image)
+                imageInfo.boundingRect = startingFrame
+                imageInfo.scale = 1
+                if let imageAnn = imageInfo.annotation() {
+                    imageAnn.associatedPage = pageToInsert
+                    pageToInsert.addAnnotations([imageAnn], indices: nil)
+                }
+            }
+        }
     }
 }
