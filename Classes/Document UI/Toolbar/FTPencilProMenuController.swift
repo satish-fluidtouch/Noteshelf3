@@ -18,6 +18,7 @@ class FTPencilProMenuController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        (self.view as? FTPencilProMenuContainerView)?.collectionView = collectionView
         self.collectionView.mode = .circular
         self.collectionView.centerPanelDelegate = self
         self.collectionView.dataSourceItems = FTCurrentToolbarSection().displayTools
@@ -55,14 +56,16 @@ private extension FTPencilProMenuController {
 
     func drawCollectionViewBackground() {
         self.view.layoutIfNeeded()
-        let menuLayer = FTPencilProMenuLayer(strokeColor: .red.withAlphaComponent(0.7))
+        let menuLayer = FTPencilProMenuLayer(strokeColor: UIColor.appColor(.finderBgColor))
         let startAngle: CGFloat = .pi + .pi/30
         let endAngle = self.getEndAngle(with: .pi - .pi/30)
         menuLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
-        let borderLayer = FTPencilProBorderLayer()
+        let borderLayer = FTPencilProBorderLayer(strokeColor: .black)
         borderLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
         self.view.layer.insertSublayer(borderLayer, at: 0)
         self.view.layer.insertSublayer(menuLayer, at: 1)
+        (self.view as? FTPencilProMenuContainerView)?.menuLayer = menuLayer
+        (self.view as? FTPencilProMenuContainerView)?.borderLayer = borderLayer
     }
 }
 
@@ -89,5 +92,32 @@ extension FTPencilProMenuController: FTCenterPanelCollectionViewDelegate {
 
     func getScreenMode() -> FTScreenMode {
         return .normal
+    }
+}
+
+final class FTPencilProMenuContainerView: UIView {
+    weak var collectionView: UICollectionView?
+    weak var menuLayer: CALayer?
+    weak var borderLayer: CALayer?
+
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        guard let collectionView else {
+            return super.hitTest(point, with: event)
+        }
+        let collectionViewPoint = self.convert(point, to: collectionView)
+        collectionView.layoutIfNeeded()
+        for cell in collectionView.visibleCells {
+            if cell.frame.contains(collectionViewPoint) {
+                let cellPoint = collectionView.convert(collectionViewPoint, to: cell)
+                return cell.hitTest(cellPoint, with: event)
+            }
+        }
+        if let firstLayer = menuLayer, firstLayer.frame.contains(point) {
+            return collectionView
+        }
+        if let secondLayer = borderLayer, secondLayer.frame.contains(point) {
+            return collectionView
+        }
+        return nil
     }
 }

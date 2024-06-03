@@ -18,10 +18,10 @@ struct FTShapeCurvedShortcutView: View {
     var body: some View {
         ZStack {
             CircularBorderShape(startAngle: FTPenSliderConstants.startAngle, endAngle: FTPenSliderConstants.startAngle + Angle(degrees: Double(FTPenSliderConstants.spacingAngle * (FTPenSliderConstants.shapeShortcutItems - 1))), radius: FTPenSliderConstants.sliderRadius)
-                .stroke(.black, style: StrokeStyle(lineWidth: 52, lineCap: .round, lineJoin: .round))
+                .stroke(.black, style: StrokeStyle(lineWidth: 42, lineCap: .round, lineJoin: .round))
                 .rotationEffect(.degrees(-170))
             CircularBorderShape(startAngle: FTPenSliderConstants.startAngle, endAngle: FTPenSliderConstants.startAngle + Angle(degrees: Double(FTPenSliderConstants.spacingAngle * (FTPenSliderConstants.shapeShortcutItems - 1))), radius: FTPenSliderConstants.sliderRadius)
-                .stroke(Color.appColor(.finderBgColor), style: StrokeStyle(lineWidth: 50, lineCap: .round, lineJoin: .round))
+                .stroke(Color.appColor(.finderBgColor), style: StrokeStyle(lineWidth: 40, lineCap: .round, lineJoin: .round))
                 .rotationEffect(.degrees(-170))
             FTCurvedFavoriteShapesView(startAngle: FTPenSliderConstants.startAngle)
                 .environmentObject(shapeModel)
