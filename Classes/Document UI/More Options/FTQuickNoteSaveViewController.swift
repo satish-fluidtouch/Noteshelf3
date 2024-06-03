@@ -27,8 +27,6 @@ class FTQuickNoteSaveViewController: UIViewController, FTCustomPresentable {
     
     var customTransitioningDelegate: FTCustomTransitionDelegate = FTCustomTransitionDelegate(with: .interaction, supportsFullScreen: false)
     
-    var sourceType : Bool  = false
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureUIComponents()
@@ -36,10 +34,8 @@ class FTQuickNoteSaveViewController: UIViewController, FTCustomPresentable {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if sourceType {
-            if let window = self.view.window {
-                NotificationCenter.default.post(name: .leftPanelPopupDismiss, object:window)
-            }
+        if let window = self.view.window {
+            NotificationCenter.default.post(name: .leftPanelPopupDismiss, object:window)
         }
     }
     

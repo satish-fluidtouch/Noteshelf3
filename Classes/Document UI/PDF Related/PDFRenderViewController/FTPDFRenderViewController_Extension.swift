@@ -788,7 +788,6 @@ extension FTPDFRenderViewController {
             if let quickNoteSaveController = UIStoryboard(name: "FTNotebookMoreOptions", bundle: nil).instantiateViewController(withIdentifier: "FTQuickNoteSaveViewController") as? FTQuickNoteSaveViewController {
                 quickNoteSaveController.delegate = self
                 quickNoteSaveController.quickNoteTitle = self.shelfItemManagedObject.title
-                quickNoteSaveController.sourceType = true
                 quickNoteSaveController.popoverPresentationController?.backgroundColor = UIColor.appColor(.popoverBgColor)
                 #if targetEnvironment(macCatalyst)
                 quickNoteSaveController.preferredContentSize = CGSize(width: 300, height: 240);

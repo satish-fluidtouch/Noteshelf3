@@ -300,7 +300,6 @@
 {
     [super viewDidLoad];
     
-    [self emojiStatus];
     
     self.laserStrokeStorage = [[FTLaserStrokeStorage alloc] initWithParentView:self.view];
     
