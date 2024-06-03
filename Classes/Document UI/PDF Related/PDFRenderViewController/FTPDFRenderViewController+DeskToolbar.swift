@@ -225,7 +225,7 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
             FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_more_tap)
             break
         case .focus:
-            self.addPensliderContoller()
+            self.addCurvedShortcutContoller(with: self.currentDeskMode)
 //            UIView.animate(withDuration: 0.3) {
 //                if nil != self.zoomOverlayController {
 //                    self.delayedZoomButtonAction()
@@ -238,18 +238,35 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
         }
     }
     
-    @objc func addPensliderContoller() {
+    @objc func addCurvedShortcutContoller(with mode: RKDeskMode) {
+        var rackType = FTRackType.pen
+        if mode == .deskModeMarker {
+            rackType = .highlighter
+        } else if mode == .deskModeShape {
+            rackType = .shape
+        }
         let activity = self.view.window?.windowScene?.userActivity
-        let rack = FTRackData(type: FTRackType.pen, userActivity: activity)
+        let rack = FTRackData(type: rackType, userActivity: activity)
         let _colorModel =
         FTFavoriteColorViewModel(rackData: rack, delegate: self, scene: self.view?.window?.windowScene)
         let sizeModel =
         FTFavoriteSizeViewModel(rackData: rack, delegate: self, scene: self.view?.window?.windowScene)
-        let shortcutView = FTPenSliderShortcutView(colorModel: _colorModel, sizeModel: sizeModel)
-        let hostingVc = FTPenSliderShortcutHostingController(rootView: shortcutView)
-        let origin = self.parent?.view.center ?? .zero
-        let frame = CGRect(x: 160, y: 160, width: 500, height: 500)
-        self.parent?.add(hostingVc, frame: frame)
+        if rack.type == .pen || rack.type == .highlighter {
+            let shortcutView = FTPenSliderShortcutView(colorModel: _colorModel, sizeModel: sizeModel)
+            let hostingVc = FTPenSliderShortcutHostingController(rootView: shortcutView)
+            self.penSliderViewcontroller = hostingVc
+            let origin = self.parent?.view.center ?? .zero
+            let frame = CGRect(x: 160, y: 160, width: 500, height: 500)
+            self.parent?.add(hostingVc, frame: frame)
+        } else if rack.type == .shape {
+            let _shapeModel = FTFavoriteShapeViewModel(rackData: rack, delegate: self)
+            let shortcutView = FTShapeCurvedShortcutView(shapeModel: _shapeModel, colorModel: _colorModel, sizeModel: sizeModel)
+            let hostingVc = FTShapeCurvedShortcutHostingController(rootView: shortcutView)
+            self.penSliderViewcontroller = hostingVc
+            let origin = self.parent?.view.center ?? .zero
+            let frame = CGRect(x: 160, y: 160, width: 500, height: 500)
+            self.parent?.add(hostingVc, frame: frame)
+        }
     }
     
     @objc func deskToolBarFrame() -> CGRect {
@@ -332,19 +349,38 @@ extension FTPDFRenderViewController {
     }
 }
 
-extension FTPDFRenderViewController: FTFavoriteSizeEditDelegate, FTFavoriteColorEditDelegate {
+extension FTPDFRenderViewController: FTFavoriteSizeEditDelegate, FTFavoriteColorEditDelegate, FTShapeShortcutEditDelegate, FTFavoriteColorNotifier {
+    func showShapeEditScreen(position: FavoriteShapePosition) {
+        
+    }
+    
+    func didSelectFavoriteShape(_ shape: FTShapeType) {
+        
+    }
+    
     func showSizeEditScreen(position: FavoriteSizePosition, viewModel: FTFavoriteSizeViewModel) {
         
     }
     
     func showEditColorScreen(using rack: FTRackData, position: FavoriteColorPosition) {
-        
+        let viewModel = FTPenShortcutViewModel(rackData: rack)
+        let hostingVc = FTPenColorEditController(viewModel: viewModel, delegate: self)
+//        self.penShortcutViewModel = viewModel
+        let flow = FTColorsFlowType.penType(rack.currentPenset.type)
+        let editMode = FTPenColorSegment.savedSegment(for: flow)
+        let contentSize = editMode.contentSize
+        hostingVc.ftPresentationDelegate.source = self.view
+        hostingVc.ftPresentationDelegate.sourceRect = CGRect(origin: CGPoint(x: 160, y: 160), size: CGSize(width: 300, height: 300))
+        hostingVc.ftPresentationDelegate.permittedArrowDirections = .any
+//        self.ftPresentPopover(vcToPresent: hostingVc, contentSize: contentSize, hideNavBar: true)
     }
     
     func didChangeCurrentPenset(_ penset: FTPenSetProtocol, dismissSizeEditView: Bool) {
         var rackType = FTRackType.pen
         if self.currentDeskMode == .deskModeMarker {
             rackType = .highlighter
+        } else if  self.currentDeskMode == .deskModeShape {
+            rackType = .shape
         }
         let rackData = FTRackData(type: rackType, userActivity: self.view.window?.windowScene?.userActivity)
             rackData.currentPenset.color = penset.color
@@ -352,5 +388,10 @@ extension FTPDFRenderViewController: FTFavoriteSizeEditDelegate, FTFavoriteColor
             rackData.currentPenset.preciseSize = penset.preciseSize
             rackData.saveCurrentSelection()
             self.validateMenuItems()
+    }
+    
+    func didSelectColorFromEditScreen(_ penset: FTPenSetProtocol) {
+//        self.colorModel?.updateFavoriteColor(with: penset.color)
+        self.didChangeCurrentPenset(penset, dismissSizeEditView: false)
     }
 }

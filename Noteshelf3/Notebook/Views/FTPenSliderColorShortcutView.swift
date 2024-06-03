@@ -14,7 +14,7 @@ struct FTPenSliderColorShortcutView: View {
     @EnvironmentObject var viewModel: FTFavoriteColorViewModel
     @State private var showMoreColorsView: Bool = false
     @State private var isContextMenuVisible = false
-    let startAngle: Angle = .degrees(0)
+    let startAngle: Angle
 
     var body: some View {
         GeometryReader {geometry in

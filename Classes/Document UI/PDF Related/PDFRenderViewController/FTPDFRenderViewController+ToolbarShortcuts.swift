@@ -25,6 +25,7 @@ extension FTPDFRenderViewController {
         toolbarContainer.delegate = self
         self.toolTypeContainerVc = toolbarContainer
         toolbarContainer.showToolbar(on: self, for: mode)
+        addCurvedShortcutContoller(with: mode)
     }
 
     func showOrHideShortcutViewIfNeeded(_ mode: FTScreenMode) {
@@ -40,6 +41,12 @@ extension FTPDFRenderViewController {
        if let controller = self.toolTypeContainerVc {
            controller.removeFromParent()
            self.toolTypeContainerVc = nil
+       }
+       
+       if self.penSliderViewcontroller != nil {
+           self.penSliderViewcontroller.view.removeFromSuperview()
+           self.penSliderViewcontroller.removeFromParent()
+           self.penSliderViewcontroller = nil
        }
     }
 }

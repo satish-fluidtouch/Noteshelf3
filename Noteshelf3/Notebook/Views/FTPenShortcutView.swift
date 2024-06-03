@@ -10,12 +10,16 @@ import SwiftUI
 import FTStyles
 
 struct FTPenSliderConstants {
+    static var startAngle: Angle = .degrees(0)
     static var sliderRadius : CGFloat = 260
     static var spacingAngle : Int = 10
     static var penShortCutItems : Int = 7
     static var highlighterShortCutItems : Int = 7
     static var penShortcutColorItems : Int = 4
+    static var shapeTypeShortcutItems : Int = 3
+    static var shapeShortcutItems : Int = 8
     static var highlighterShortcutColorItems : Int = 4
+    static var shapeShortcutColorItems : Int = 4
     static var rotationAngle : Int = 180 - spacingAngle
 }
 
@@ -53,18 +57,17 @@ struct FTPenShortcutView_Previews: PreviewProvider {
 struct FTPenSliderShortcutView: View {
     @StateObject var colorModel: FTFavoriteColorViewModel
     @StateObject var sizeModel: FTFavoriteSizeViewModel
-    let startAngle : Angle = .degrees(0)
     var body: some View {
         ZStack {
-            CircularBorderShape(startAngle: startAngle, endAngle: startAngle + Angle(degrees: Double(FTPenSliderConstants.spacingAngle * (FTPenSliderConstants.penShortCutItems - 1))), radius: FTPenSliderConstants.sliderRadius)
+            CircularBorderShape(startAngle:FTPenSliderConstants.startAngle, endAngle: FTPenSliderConstants.startAngle + Angle(degrees: Double(FTPenSliderConstants.spacingAngle * (FTPenSliderConstants.penShortCutItems - 1))), radius: FTPenSliderConstants.sliderRadius)
                 .stroke(.black, style: StrokeStyle(lineWidth: 52, lineCap: .round, lineJoin: .round))
                 .rotationEffect(.degrees(-170))
-            CircularBorderShape(startAngle: startAngle, endAngle: startAngle + Angle(degrees: Double(FTPenSliderConstants.spacingAngle * (FTPenSliderConstants.penShortCutItems - 1))), radius: FTPenSliderConstants.sliderRadius)
+            CircularBorderShape(startAngle: FTPenSliderConstants.startAngle, endAngle: FTPenSliderConstants.startAngle + Angle(degrees: Double(FTPenSliderConstants.spacingAngle * (FTPenSliderConstants.penShortCutItems - 1))), radius: FTPenSliderConstants.sliderRadius)
                 .stroke(Color.appColor(.finderBgColor), style: StrokeStyle(lineWidth: 50, lineCap: .round, lineJoin: .round))
                 .rotationEffect(.degrees(-170))
-            FTPenSliderColorShortcutView()
+            FTPenSliderColorShortcutView(startAngle: FTPenSliderConstants.startAngle)
                 .environmentObject(colorModel)
-            FTPenSliderSizeShortcutView()
+            FTPenSliderSizeShortcutView(startAngle: .degrees(Double(FTPenSliderConstants.penShortcutColorItems * FTPenSliderConstants.spacingAngle)))
                 .environmentObject(sizeModel)
         }
     }

@@ -316,6 +316,7 @@
 		4213C351288958C900A7A6F3 /* FTMediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4213C350288958C900A7A6F3 /* FTMediaViewController.swift */; };
 		4213C35528895F1500A7A6F3 /* FTStoryBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4213C35428895F1500A7A6F3 /* FTStoryBoard.swift */; };
 		4213C3572889605300A7A6F3 /* FTNoteBookSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4213C3562889605300A7A6F3 /* FTNoteBookSplitViewController.swift */; };
+		422BD2DB2C0AF81D00D219A9 /* FTShapeCurvedShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422BD2DA2C0AF81D00D219A9 /* FTShapeCurvedShortcutView.swift */; };
 		423E8793295EF2DD002C082F /* cover_template.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 423E8792295EF2DC002C082F /* cover_template.pdf */; };
 		423EE1E0253491AF007967F9 /* NSData256+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423EE1DD25348A31007967F9 /* NSData256+Extension.swift */; };
 		4248395529C03C0D0037229E /* FTRotateTapGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4248395429C03C0D0037229E /* FTRotateTapGesture.swift */; };
@@ -3228,6 +3229,7 @@
 		4221A9DC27EB391800B91890 /* FTShapeArrowResizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShapeArrowResizing.swift; sourceTree = "<group>"; };
 		4221A9DE27EDB73900B91890 /* FTSnappingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSnappingView.swift; sourceTree = "<group>"; };
 		422211BC2539A79C00136166 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		422BD2DA2C0AF81D00D219A9 /* FTShapeCurvedShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShapeCurvedShortcutView.swift; sourceTree = "<group>"; };
 		423E8792295EF2DC002C082F /* cover_template.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = cover_template.pdf; sourceTree = "<group>"; };
 		423EE1D925344893007967F9 /* FTZenDeskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTZenDeskManager.swift; sourceTree = "<group>"; };
 		423EE1DB253489DE007967F9 /* CocoaCryptoHashing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaCryptoHashing.swift; sourceTree = "<group>"; };
@@ -11281,6 +11283,7 @@
 			isa = PBXGroup;
 			children = (
 				E7AE4D9E2899480A004CF608 /* FTShapeShortcutView.swift */,
+				422BD2DA2C0AF81D00D219A9 /* FTShapeCurvedShortcutView.swift */,
 				E7AE4DA628995093004CF608 /* FTFavoriteShapeView.swift */,
 			);
 			path = Shapes;
@@ -14597,6 +14600,7 @@
 				E7A9767D28C0AF2D009B43DC /* FTShapeShortcutHostingController.swift in Sources */,
 				BAF394342859ADF00067CA9F /* FTHeaderView.swift in Sources */,
 				3DAA689E2911041900848434 /* FTTextColorCollectionView.swift in Sources */,
+				422BD2DB2C0AF81D00D219A9 /* FTShapeCurvedShortcutView.swift in Sources */,
 				BAF394352859ADF00067CA9F /* FTGoogleDriveBackupPublisher.swift in Sources */,
 				E772BBAF2BE4CDF9007D787A /* ColorValues.swift in Sources */,
 				4728E0542AEF7DB0002DBB5C /* FTBookmarksProvider.swift in Sources */,

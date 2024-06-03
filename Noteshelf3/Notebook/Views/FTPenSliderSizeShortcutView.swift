@@ -11,7 +11,7 @@ import SwiftUI
 import FTStyles
 
 struct FTPenSliderSizeShortcutView: View {
-    let startAngle: Angle = .degrees(Double(FTPenSliderConstants.penShortcutColorItems * FTPenSliderConstants.spacingAngle))
+    let startAngle: Angle //= .degrees(Double(FTPenSliderConstants.penShortcutColorItems * FTPenSliderConstants.spacingAngle))
     @EnvironmentObject var viewModel: FTFavoriteSizeViewModel
 
     var body: some View {
