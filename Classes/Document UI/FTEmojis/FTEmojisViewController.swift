@@ -43,7 +43,7 @@ class FTEmojisViewController: UIViewController,  FTPopoverPresentable {
     private var didSearchStarted: Bool = false
     private var contentSize = CGSize(width: 320.0, height: 544.0)
     
-    var isFromCentralPanel : FTSourceScreenType = .Others
+    var sourceType : FTSourceScreenType = .Others
 
     private var selectedSegmentIndex: Int {
         get {
@@ -66,7 +66,7 @@ class FTEmojisViewController: UIViewController,  FTPopoverPresentable {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if isFromCentralPanel == .centerPanel {
+        if sourceType == .centerPanel {
             if let window = self.view.window {
                 NotificationCenter.default.post(name: .centralPanelPopUpDismiss, object: ["sourceType":FTToolbarPopoverScreen.emoji,"window":window])
             }
@@ -106,7 +106,7 @@ class FTEmojisViewController: UIViewController,  FTPopoverPresentable {
             fatalError("Programmer error, Couldnot find FTEmojisViewController")
         }
         stickerSelectionViewController.delegate = delegate
-        stickerSelectionViewController.isFromCentralPanel = .centerPanel
+        stickerSelectionViewController.sourceType = .centerPanel
         stickerSelectionViewController.toHideBackBtn = toHideBackBtn
         stickerSelectionViewController.ftPresentationDelegate.source = sourceView as AnyObject
         viewController.ftPresentPopover(vcToPresent: stickerSelectionViewController, contentSize: stickerSelectionViewController.contentSize, hideNavBar: true)

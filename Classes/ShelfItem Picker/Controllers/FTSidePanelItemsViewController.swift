@@ -69,7 +69,7 @@ extension FTSidePanelShelfItemPickerDelegate {
     @IBOutlet weak private var tvLeading : NSLayoutConstraint!
     @IBOutlet weak private var tvTrailing : NSLayoutConstraint!
     var currentIndex = 0
-    var isFromCentralPanel : FTSourceScreenType = .Others
+    var sourceType : FTSourceScreenType = .Others
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -91,7 +91,7 @@ extension FTSidePanelShelfItemPickerDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if isFromCentralPanel == .centerPanel {
+        if sourceType == .centerPanel {
             if let window = self.view.window {
                 NotificationCenter.default.post(name: .centralPanelPopUpDismiss, object: ["sourceType":FTToolbarPopoverScreen.recents,"window":window])
             }

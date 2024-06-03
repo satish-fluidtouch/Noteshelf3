@@ -21,7 +21,7 @@ protocol FTSavedClipdelegate : NSObjectProtocol {
 class FTSavedClipsViewController: UIViewController, FTPopoverPresentable {
     weak var delegate: FTSavedClipdelegate?
     var ftPresentationDelegate = FTPopoverPresentation()
-    var isFromCentralPanel : FTSourceScreenType = .Others
+    var sourceType : FTSourceScreenType = .Others
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet private weak var backButton: UIButton!
@@ -58,7 +58,7 @@ class FTSavedClipsViewController: UIViewController, FTPopoverPresentable {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if isFromCentralPanel == .centerPanel{
+        if sourceType == .centerPanel{
             if let window = self.view.window {
                 NotificationCenter.default.post(name:.centralPanelPopUpDismiss, object: ["sourceType":FTToolbarPopoverScreen.savedClips,"window":window])
             }
@@ -352,7 +352,7 @@ extension FTSavedClipsViewController {
         guard let savedClipsVc = storyboard.instantiateViewController(withIdentifier: "FTSavedClipsViewController") as? FTSavedClipsViewController else {
             fatalError("FTEmojisViewController not found")
         }
-        savedClipsVc.isFromCentralPanel = .centerPanel
+        savedClipsVc.sourceType = .centerPanel
         savedClipsVc.delegate = delegate
         savedClipsVc.toHideBackBtn = toHideBackBtn
         savedClipsVc.view.backgroundColor = UIColor.appColor(.popoverBgColor)
