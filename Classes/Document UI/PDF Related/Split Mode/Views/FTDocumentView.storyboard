@@ -427,11 +427,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="k8b-F3-O8l" customClass="FTCenterPanelCollectionView" customModule="NS3_Beta" customModuleProvider="target">
-                                <rect key="frame" x="352" y="20" width="320" height="1346"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="320" id="pSR-EP-BFv"/>
-                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="B0C-wt-MvV">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -448,7 +445,7 @@
                                         </collectionViewCellContentView>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="FTDeskShortcutCell" id="CSt-b0-36x" customClass="FTDeskShortcutCell" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="192" y="0.0" width="128" height="128"/>
+                                        <rect key="frame" x="149.5" y="0.0" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="mle-7z-hMh" customClass="FTDeskShortcutView" customModule="NS3_Beta" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
@@ -461,9 +458,10 @@
                         <viewLayoutGuide key="safeArea" id="jYq-mr-QlZ"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="k8b-F3-O8l" firstAttribute="top" secondItem="jYq-mr-QlZ" secondAttribute="top" id="bKc-aP-D6G"/>
-                            <constraint firstItem="jYq-mr-QlZ" firstAttribute="bottom" secondItem="k8b-F3-O8l" secondAttribute="bottom" id="oXd-bJ-yps"/>
-                            <constraint firstItem="k8b-F3-O8l" firstAttribute="centerX" secondItem="Xra-gZ-wWK" secondAttribute="centerX" id="y2o-WM-Ssb"/>
+                            <constraint firstItem="k8b-F3-O8l" firstAttribute="bottom" secondItem="Xra-gZ-wWK" secondAttribute="bottom" id="Lxr-hD-K1s"/>
+                            <constraint firstItem="k8b-F3-O8l" firstAttribute="leading" secondItem="Xra-gZ-wWK" secondAttribute="leading" id="Qg6-Jt-KWu"/>
+                            <constraint firstAttribute="trailing" secondItem="k8b-F3-O8l" secondAttribute="trailing" id="apc-Lz-p1p"/>
+                            <constraint firstItem="k8b-F3-O8l" firstAttribute="top" secondItem="Xra-gZ-wWK" secondAttribute="top" id="obp-7D-e4x"/>
                         </constraints>
                     </view>
                     <connections>

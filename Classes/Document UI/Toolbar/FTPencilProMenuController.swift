@@ -18,10 +18,15 @@ protocol FTPencilProMenuDelegate: FTCenterPanelActionDelegate {
 class FTPencilProMenuController: UIViewController {
     @IBOutlet private weak var collectionView: FTCenterPanelCollectionView!
     private var size = CGSize.zero
+    private weak var validateToolbarObserver: NSObjectProtocol?
 
     private let center = CGPoint(x: 250, y: 250)
     private let config = FTCircularLayoutConfig()
-    weak var delegate: FTPencilProMenuDelegate?
+    weak var delegate: FTPencilProMenuDelegate? {
+        didSet {
+            self.handleUndoRedo()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,12 +39,26 @@ class FTPencilProMenuController: UIViewController {
         let endAngle = self.getEndAngle(with: startAngle)
         circularLayout.set(startAngle: startAngle, endAngle: endAngle)
         self.collectionView.collectionViewLayout = circularLayout
+
+        self.validateToolbarObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: FTValidateToolBarNotificationName), object: nil, queue: .main) { [weak self] notification in
+            guard let strongSelf = self else {
+                return
+            }
+            if strongSelf.view.window == notification.object as? UIWindow {
+                strongSelf.handleUndoRedo()
+            }
+        }
+    }
+
+    deinit {
+        if let observer = self.validateToolbarObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
     }
 
     override func viewIsAppearing(_ animated: Bool) {
         super.viewIsAppearing(animated)
         self.drawCollectionViewBackground()
-        self.addUndoRedoViewsIfNeeded()
     }
 
     override func viewDidLayoutSubviews() {
@@ -47,45 +66,46 @@ class FTPencilProMenuController: UIViewController {
         if self.size != self.view.frame.size {
             self.size = self.view.frame.size
             self.collectionView.collectionViewLayout.invalidateLayout()
-            self.drawCollectionViewBackground()
+            self.view.layoutSubviews()
+            self.view.layoutIfNeeded()
         }
     }
 }
 
 private extension FTPencilProMenuController {
-    func addUndoRedoViewsIfNeeded() {
-        let centerPoint = self.center
-        var radius: CGFloat = self.config.radius
-        let angle: CGFloat = .pi - .pi/90
-//        if self.delegate?.canPerformUndo() ?? false {
-            addButton(isUndo: true)
-//        }
-//        if self.delegate?.canPerformRedo() ?? false {
-            addButton(isUndo: false)
-//        }
+    func handleUndoRedo() {
+        self.handleUndoView()
+        self.handleRedoView()
+    }
 
-        func addButton(isUndo: Bool) {
-            let button = UIButton(type: .system)
-            button.tintColor = UIColor.label
-            button.backgroundColor = UIColor.appColor(.finderBgColor)
-            button.layer.borderColor = UIColor.black.cgColor
-            button.layer.borderWidth = 1.0
-            
+    func handleUndoView() {
+        self.parent?.view.subviews.compactMap { $0 as? FTPencilProUndoButton }.forEach { $0.removeFromSuperview() }
+        if self.delegate?.canPerformUndo() ?? false {
+            let radius: CGFloat = self.config.radius
+            let angle: CGFloat = .pi - .pi/90
+            let xPosition = self.view.frame.origin.x + center.x + radius * cos(angle)
+            let yPosition = self.view.frame.origin.y + center.y + radius * sin(angle)
             let buttonSize = CGSize(width: 40, height: 40)
-            var imgName = "desk_tool_undo"
-            var selector = #selector(undo(_ :))
-            if !isUndo {
-                radius += 45.0
-                imgName = "desk_tool_redo"
-                selector = #selector(redo(_ :))
+            let undoBtn = FTPencilProUndoButton(frame: CGRect(x: xPosition - buttonSize.width/2, y: yPosition - buttonSize.height/2, width: buttonSize.width, height: buttonSize.height))
+            undoBtn.addTarget(self, action:  #selector(undo(_ :)), for: .touchUpInside)
+            self.parent?.view.addSubview(undoBtn)
+        }
+    }
+
+    func handleRedoView() {
+        self.parent?.view.subviews.compactMap { $0 as? FTPencilProRedoButton }.forEach { $0.removeFromSuperview() }
+        if self.delegate?.canPerformRedo() ?? false {
+            let radius: CGFloat = self.config.radius
+            var angle: CGFloat = .pi - .pi/90
+            if self.delegate?.canPerformUndo() ?? false {
+                angle -= self.config.angleOfEachItem
             }
-            let xPosition = self.view.frame.origin.x + centerPoint.x + radius * cos(angle)
-            let yPosition = self.view.frame.origin.y + centerPoint.y + radius * sin(angle)
-            button.setImage(UIImage(named: imgName), for: .normal)
-            button.frame = CGRect(x: xPosition - buttonSize.width/2, y: yPosition - buttonSize.height/2, width: buttonSize.width, height: buttonSize.height)
-            button.layer.cornerRadius = button.frame.height/2
-            button.addTarget(self, action: selector, for: .touchUpInside)
-            self.parent?.view.addSubview(button)
+            let xPosition = self.view.frame.origin.x + center.x + radius * cos(angle)
+            let yPosition = self.view.frame.origin.y + center.y + radius * sin(angle)
+            let buttonSize = CGSize(width: 40, height: 40)
+            let undoBtn = FTPencilProRedoButton(frame: CGRect(x: xPosition - buttonSize.width/2, y: yPosition - buttonSize.height/2, width: buttonSize.width, height: buttonSize.height))
+            undoBtn.addTarget(self, action:  #selector(redo(_ :)), for: .touchUpInside)
+            self.parent?.view.addSubview(undoBtn)
         }
     }
 
@@ -171,5 +191,37 @@ final class FTPencilProMenuContainerView: UIView {
             return collectionView
         }
         return nil
+    }
+}
+
+final class FTPencilProUndoButton: UIButton {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.setImage(UIImage(named: "desk_tool_undo"), for: .normal)
+        self.tintColor = UIColor.label
+        self.backgroundColor = UIColor.appColor(.finderBgColor)
+        self.layer.borderColor = UIColor.black.cgColor
+        self.layer.borderWidth = 1.0
+        self.layer.cornerRadius = self.frame.height/2
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+final class FTPencilProRedoButton: UIButton {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.setImage(UIImage(named: "desk_tool_redo"), for: .normal)
+        self.tintColor = UIColor.label
+        self.backgroundColor = UIColor.appColor(.finderBgColor)
+        self.layer.borderColor = UIColor.black.cgColor
+        self.layer.borderWidth = 1.0
+        self.layer.cornerRadius = self.frame.height/2
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
