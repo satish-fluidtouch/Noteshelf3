@@ -133,9 +133,19 @@ extension FTPageViewController {
     }
     
     private func showNoteshelfAIController(_ content:FTPageContent) {
-        FTNoteshelfAIViewController.showNoteshelfAI(from: self
-                                                    , content: content
-                                                    , delegate: self);
+        let status = UserDefaults.standard.bool(forKey: "isAiPrivacyPolicyAccepted")
+        if status {
+            FTNoteshelfAIViewController.showNoteshelfAI(from: self
+                                                        , content: content
+                                                        , delegate: self);
+        } else {
+            guard let privacyController = UIStoryboard.instantiateAIViewController(withIdentifier: "FTAiPrivacyConsetViewController") as? FTAiPrivacyConsetViewController else {
+                fatalError("ERROR!!!!");
+            }
+            privacyController.delegate = self
+            let navVc = UINavigationController(rootViewController: privacyController);
+            self.ftPresentFormsheet(vcToPresent: navVc, contentSize: CGSize(width: 540, height: 620), hideNavBar: false)
+        }
     }
     
     private func recognizedString() -> String? {
@@ -405,5 +415,12 @@ extension FTPageProtocol {
             return txtAnnotation;
         }
         return nil;
+    }
+}
+
+extension FTPageViewController : FTAiPrivacyConsetViewControllerProtocal {
+    func showAiScreen() {
+        self.startOpenAiForPage()
+//        FTNoteshelfAIViewController.showNoteshelfAI(from: self, content: <#T##FTPageContent#>, delegate: <#T##FTNoteshelfAIDelegate?#>, animated: <#T##Bool#>)
     }
 }

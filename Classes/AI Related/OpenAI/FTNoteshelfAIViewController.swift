@@ -184,16 +184,16 @@ class FTNoteshelfAIViewController: UIViewController {
     }
     static func showNoteshelfAI(from presentingController:UIViewController
                                 , content:FTPageContent
-                                ,delegate: FTNoteshelfAIDelegate?) {        
+                                ,delegate: FTNoteshelfAIDelegate?, animated: Bool = true) {
         guard let controller = UIStoryboard.instantiateAIViewController(withIdentifier: "FTNoteshelfAIViewController") as? FTNoteshelfAIViewController else {
             fatalError("ERROR!!!!");
         }
         controller.content = content;
         controller.delegate = delegate;
         let navController = UINavigationController(rootViewController: controller);
-        presentingController.ftPresentFormsheet(vcToPresent: navController, contentSize: CGSize(width: 500, height: 508), hideNavBar: false)
-      }
-
+        presentingController.ftPresentFormsheet(vcToPresent: navController, contentSize: CGSize(width: 500, height: 508),animated: animated, hideNavBar: false)
+    }
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         FTNoteshelfAITokenManager.shared.refreshTokenInfo();
