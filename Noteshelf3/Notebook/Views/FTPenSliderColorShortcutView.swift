@@ -17,7 +17,7 @@ struct FTPenSliderColorShortcutView: View {
     let startAngle: Angle
 
     var body: some View {
-        GeometryReader {geometry in
+        GeometryReader { geometry in
             ZStack {
                 ForEach(0..<viewModel.favoriteColors.count, id: \.self) { index in
                     let angle = Angle(degrees: startAngle.degrees + (Double(FTPenSliderConstants.spacingAngle) * Double(index)) - Double(FTPenSliderConstants.rotationAngle))
@@ -28,6 +28,9 @@ struct FTPenSliderColorShortcutView: View {
                         .buttonStyle(.plain)
                         .position(x: x, y: y)
                 }
+            }
+            .onAppear {
+                self.viewModel.updateGeometrySize(geometry.size)
             }
         }
         .onAppear {

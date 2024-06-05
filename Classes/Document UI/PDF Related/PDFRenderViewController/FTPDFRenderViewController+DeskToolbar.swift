@@ -6,7 +6,7 @@
 //  Copyright © 2022 Fluid Touch Pte Ltd. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 
 @objc protocol FTFinderNotifier: AnyObject {
     func didAddPage()
@@ -251,24 +251,51 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
         FTFavoriteColorViewModel(rackData: rack, delegate: self, scene: self.view?.window?.windowScene)
         let sizeModel =
         FTFavoriteSizeViewModel(rackData: rack, delegate: self, scene: self.view?.window?.windowScene)
+        let frame = CGRect(x: 160, y: 160, width: 500, height: 500)
+        let transparentTouchView = TransparentTouchView(frame: frame)
+        transparentTouchView.backgroundColor = .clear
+        self.view.addSubview(transparentTouchView)
+        var items = FTPenSliderConstants.penShortCutItems
         if rack.type == .pen || rack.type == .highlighter {
             let shortcutView = FTPenSliderShortcutView(colorModel: _colorModel, sizeModel: sizeModel)
             let hostingVc = FTPenSliderShortcutHostingController(rootView: shortcutView)
             self.penSliderViewcontroller = hostingVc
-            let origin = self.parent?.view.center ?? .zero
-            let frame = CGRect(x: 160, y: 160, width: 500, height: 500)
-            self.parent?.add(hostingVc, frame: frame)
+            self.add(hostingVc, frame: transparentTouchView.bounds)
+            transparentTouchView.addSubview(hostingVc.view)
         } else if rack.type == .shape {
             let _shapeModel = FTFavoriteShapeViewModel(rackData: rack, delegate: self)
             let shortcutView = FTShapeCurvedShortcutView(shapeModel: _shapeModel, colorModel: _colorModel, sizeModel: sizeModel)
             let hostingVc = FTShapeCurvedShortcutHostingController(rootView: shortcutView)
             self.penSliderViewcontroller = hostingVc
-            let origin = self.parent?.view.center ?? .zero
-            let frame = CGRect(x: 160, y: 160, width: 500, height: 500)
-            self.parent?.add(hostingVc, frame: frame)
+            self.add(hostingVc, frame: transparentTouchView.bounds)
+            transparentTouchView.addSubview(hostingVc.view)
+            items = FTPenSliderConstants.shapeShortcutItems
         }
+        drawCurvedBackground( transparentView: transparentTouchView, items: items)
     }
-    
+
+    func getEndAngle(with startAngle: CGFloat, with items: Int) -> CGFloat {
+        let endAngle = startAngle - (CGFloat(items) * FTPenSliderConstants.spacingAngle.degreesToRadians)
+        return endAngle
+    }
+
+    func drawCurvedBackground(transparentView: UIView, items: Int) {
+        let menuLayer = FTPencilProMenuLayer(strokeColor: UIColor.appColor(.finderBgColor))
+        let startAngle: CGFloat =  .pi + .pi/20
+        let endAngle = self.getEndAngle(with: .pi, with: items)
+        let rect = transparentView.bounds
+        let center = CGPoint(x: rect.midX, y: rect.midY)
+        menuLayer.setPath(with: center, radius: FTPenSliderConstants.sliderRadius, startAngle: startAngle, endAngle: -endAngle)
+        let borderLayer = FTPencilProBorderLayer(strokeColor: .black)
+        borderLayer.setPath(with: center, radius: FTPenSliderConstants.sliderRadius, startAngle: startAngle, endAngle: -endAngle)
+
+        let hitTestLayer = FTPencilProMenuLayer(strokeColor: .red, lineWidth: 50)
+        hitTestLayer.setPath(with: center, radius: FTPenSliderConstants.sliderRadius, startAngle: startAngle, endAngle: -endAngle)
+        transparentView.layer.insertSublayer(hitTestLayer, at: 0)
+        transparentView.layer.insertSublayer(borderLayer, at: 1)
+        transparentView.layer.insertSublayer(menuLayer, at: 2)
+    }
+
     @objc func deskToolBarFrame() -> CGRect {
 #if !targetEnvironment(macCatalyst)
         if let documentController = self.parent as? FTDocumentRenderViewController {
@@ -362,7 +389,7 @@ extension FTPDFRenderViewController: FTFavoriteSizeEditDelegate, FTFavoriteColor
         
     }
     
-    func showEditColorScreen(using rack: FTRackData, position: FavoriteColorPosition) {
+    func showEditColorScreen(using rack: FTRackData, position: FavoriteColorPosition, rect: CGRect) {
         let viewModel = FTPenShortcutViewModel(rackData: rack)
         let hostingVc = FTPenColorEditController(viewModel: viewModel, delegate: self)
 //        self.penShortcutViewModel = viewModel
@@ -370,9 +397,9 @@ extension FTPDFRenderViewController: FTFavoriteSizeEditDelegate, FTFavoriteColor
         let editMode = FTPenColorSegment.savedSegment(for: flow)
         let contentSize = editMode.contentSize
         hostingVc.ftPresentationDelegate.source = self.view
-        hostingVc.ftPresentationDelegate.sourceRect = CGRect(origin: CGPoint(x: 160, y: 160), size: CGSize(width: 300, height: 300))
+        hostingVc.ftPresentationDelegate.sourceRect = rect
         hostingVc.ftPresentationDelegate.permittedArrowDirections = .any
-//        self.ftPresentPopover(vcToPresent: hostingVc, contentSize: contentSize, hideNavBar: true)
+        self.ftPresentPopover(vcToPresent: hostingVc, contentSize: contentSize, hideNavBar: true)
     }
     
     func didChangeCurrentPenset(_ penset: FTPenSetProtocol, dismissSizeEditView: Bool) {
@@ -393,5 +420,25 @@ extension FTPDFRenderViewController: FTFavoriteSizeEditDelegate, FTFavoriteColor
     func didSelectColorFromEditScreen(_ penset: FTPenSetProtocol) {
 //        self.colorModel?.updateFavoriteColor(with: penset.color)
         self.didChangeCurrentPenset(penset, dismissSizeEditView: false)
+    }
+}
+
+class TransparentTouchView: UIView {
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let hitView = super.hitTest(point, with: event)
+        print("&&& ", self.layer.sublayers?.first as? CAShapeLayer)
+        if let layer = self.layer.sublayers?.first as? CAShapeLayer , let path = layer.path, path.contains(point) {
+            print("&&& Contains point")
+            return hitView
+        }
+        print("&&& Nil")
+        return nil
+    }
+}
+
+
+extension CGPath {
+    func contains(_ point: CGPoint) -> Bool {
+        return self.contains(point, using: .evenOdd, transform: .identity)
     }
 }

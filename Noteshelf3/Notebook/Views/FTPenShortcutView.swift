@@ -59,12 +59,6 @@ struct FTPenSliderShortcutView: View {
     @StateObject var sizeModel: FTFavoriteSizeViewModel
     var body: some View {
         ZStack {
-            CircularBorderShape(startAngle:FTPenSliderConstants.startAngle, endAngle: FTPenSliderConstants.startAngle + Angle(degrees: Double(FTPenSliderConstants.spacingAngle * (FTPenSliderConstants.penShortCutItems - 1))), radius: FTPenSliderConstants.sliderRadius)
-                .stroke(.black, style: StrokeStyle(lineWidth: 42, lineCap: .round, lineJoin: .round))
-                .rotationEffect(.degrees(-170))
-            CircularBorderShape(startAngle: FTPenSliderConstants.startAngle, endAngle: FTPenSliderConstants.startAngle + Angle(degrees: Double(FTPenSliderConstants.spacingAngle * (FTPenSliderConstants.penShortCutItems - 1))), radius: FTPenSliderConstants.sliderRadius)
-                .stroke(Color.appColor(.finderBgColor), style: StrokeStyle(lineWidth: 40, lineCap: .round, lineJoin: .round))
-                .rotationEffect(.degrees(-170))
             FTPenSliderColorShortcutView(startAngle: FTPenSliderConstants.startAngle)
                 .environmentObject(colorModel)
             FTPenSliderSizeShortcutView(startAngle: .degrees(Double(FTPenSliderConstants.penShortcutColorItems * FTPenSliderConstants.spacingAngle)))

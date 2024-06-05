@@ -47,6 +47,10 @@ extension FTPDFRenderViewController {
            self.penSliderViewcontroller.view.removeFromSuperview()
            self.penSliderViewcontroller.removeFromParent()
            self.penSliderViewcontroller = nil
+           let views = self.view.subviews.filter {$0 is TransparentTouchView}
+           views.forEach { eachView in
+               eachView.removeFromSuperview()
+           }
        }
     }
 }

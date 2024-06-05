@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum FTFavoriteSizeMode: String {
     case sizeSelect
@@ -19,6 +20,16 @@ protocol FTFavoriteSelectDelegate: AnyObject {
 
 protocol FTFavoriteColorEditDelegate: FTFavoriteSelectDelegate {
     func showEditColorScreen(using rack: FTRackData, position: FavoriteColorPosition)
+    func showEditColorScreen(using rack: FTRackData, position: FavoriteColorPosition, rect: CGRect)
+}
+
+extension FTFavoriteColorEditDelegate {
+    func showEditColorScreen(using rack: FTRackData, position: FavoriteColorPosition) {
+
+    }
+    func showEditColorScreen(using rack: FTRackData, position: FavoriteColorPosition, rect: CGRect) {
+
+    }
 }
 
 extension Notification.Name {
@@ -36,6 +47,8 @@ class FTFavoriteColorViewModel: ObservableObject {
     private(set) var colorEditPostion: FavoriteColorPosition?
     private weak var scene: UIWindowScene?
 
+    private var geometrySize: CGSize = .zero
+
     // MARK: Initialization
     init(rackData: FTRackData, delegate: FTFavoriteColorEditDelegate?, scene: UIWindowScene?) {
         self.rackData = rackData
@@ -44,6 +57,17 @@ class FTFavoriteColorViewModel: ObservableObject {
         self.scene = scene
 
         NotificationCenter.default.addObserver(self, selector: #selector(handlePenTypeVariantChange(_:)), name: .penTypeDisplayChange, object: scene)
+    }
+
+    func updateGeometrySize(_ size: CGSize) {
+        self.geometrySize = size
+    }
+
+    func rectForColor(at index: Int, startAngle: Angle) -> CGRect {
+        let angle = Angle(degrees: startAngle.degrees + (Double(FTPenSliderConstants.spacingAngle) * Double(index)) - Double(FTPenSliderConstants.rotationAngle))
+        let x = FTPenSliderConstants.sliderRadius * cos(angle.radians) + geometrySize.width / 2 + 160
+        let y = FTPenSliderConstants.sliderRadius * sin(angle.radians) + geometrySize.height / 2 + 160
+        return CGRect(x: x - 40/2, y: y - 40/2, width: 40, height: 40)
     }
 
     // This is to show different display size for pencil and other pen types
@@ -59,7 +83,12 @@ class FTFavoriteColorViewModel: ObservableObject {
     }
 
     func showEditColorScreen(at position: FavoriteColorPosition) {
-        self.delegate?.showEditColorScreen(using: self.rackData, position: position)
+        var startAngle = FTPenSliderConstants.startAngle
+        if self.getRackType() == .shape {
+            startAngle = .degrees(Double(FTPenSliderConstants.shapeTypeShortcutItems * FTPenSliderConstants.spacingAngle))
+        }
+        let rect = self.rectForColor(at: position.rawValue, startAngle: startAngle)
+        self.delegate?.showEditColorScreen(using: self.rackData, position: position, rect: rect)
         self.colorEditPostion = position
     }
 
