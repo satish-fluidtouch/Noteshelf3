@@ -8,22 +8,22 @@
 
 import UIKit
 import SafariServices
-protocol FTAiPrivacyConsetViewControllerProtocal {
+protocol FTAiPrivacyConsetViewControllerProtocal: AnyObject {
     func showAiScreen()
 }
 
 class FTAiPrivacyConsetViewController: UIViewController {
 
-    @IBOutlet weak var bgView: UIView!
-    @IBOutlet weak var titleLbl: UILabel!
-    @IBOutlet weak var descriptionLbl: UILabel!
-    @IBOutlet weak var tickBtn: UIButton!
-    @IBOutlet weak var privacyPolicy: UILabel!
-    @IBOutlet weak var cancelBtn: UIButton!
-    @IBOutlet weak var saveBtn: UIButton!
-    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak private var bgView: UIView!
+    @IBOutlet weak private var titleLbl: UILabel!
+    @IBOutlet weak private var descriptionLbl: UILabel!
+    @IBOutlet weak private var tickBtn: UIButton!
+    @IBOutlet weak private var privacyPolicy: UILabel!
+    @IBOutlet weak private var cancelBtn: UIButton!
+    @IBOutlet weak private var saveBtn: UIButton!
+    @IBOutlet weak private var scrollView: UIScrollView!
     
-     var delegate : FTAiPrivacyConsetViewControllerProtocal?
+    weak var delegate : FTAiPrivacyConsetViewControllerProtocal?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +67,9 @@ class FTAiPrivacyConsetViewController: UIViewController {
         self.bgView.layer.cornerRadius = 16
         self.cancelBtn.layer.borderColor  = UIColor.appColor(.accent).cgColor
         self.cancelBtn.layer.borderWidth = 1
+        self.titleLbl.text = "noteshelf.ai.privacy.title".localized
+        self.cancelBtn.setTitle("Cancel".localized, for: .normal)
+        self.saveBtn.setTitle("SaveKey".localized, for: .normal)
         setUptickBtn(status:true)
         setUpParagraphText()
         setUpPrivacyPolicyText()
@@ -74,10 +77,7 @@ class FTAiPrivacyConsetViewController: UIViewController {
     }
     
     func setUpParagraphText() {
-        let text = """
-To invoke any of the Noteshelf AI functions, we need to send the contents of the current page to our AI partner’s server for processing.
-Please rest assured that we respect your privacy and will not use this data for anything else. You can learn more about how we handle your data in our Privacy Policy.
-"""
+        let text = "noteshelf.ai.privacy.description".localized
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 5
@@ -93,9 +93,11 @@ Please rest assured that we respect your privacy and will not use this data for 
     }
     
     func setUpPrivacyPolicyText(){
-        let text = "I have read and agree with the Privacy Policy."
-        let attrbutedText = NSMutableAttributedString(string:text)
-        let clickableRange = (text as NSString).range(of: "Privacy Policy.")
+        let text = "noteshelf.ai.privacy.terms.acceptnace".localized
+        let privacyPolicyText = "iap.privacy".localized
+        let title = String(format: text, privacyPolicyText)
+        let attrbutedText = NSMutableAttributedString(string: title)
+        let clickableRange = (text as NSString).range(of: privacyPolicyText)
         attrbutedText.addAttribute(.foregroundColor, value: UIColor.init(hexString: "0455CF"), range: clickableRange)
         privacyPolicy.attributedText = attrbutedText
         privacyPolicy.isUserInteractionEnabled = true
@@ -105,16 +107,15 @@ Please rest assured that we respect your privacy and will not use this data for 
     }
     
     @objc func labelTapped(_ recognizer: UITapGestureRecognizer) {
-        guard let label = recognizer.view as? UILabel else { return }
-        let text = (label.attributedText?.string ?? "") as NSString
+        let text = (privacyPolicy.attributedText?.string ?? "") as NSString
+        let privacyPolicyText = "iap.privacy".localized
+        let clickableRange = text.range(of: privacyPolicyText)
         
-        let clickableRange = text.range(of: "Privacy Policy.")
+        let tapLocation = recognizer.location(in: privacyPolicy)
         
-        let tapLocation = recognizer.location(in: label)
-        
-        let textStorage = NSTextStorage(attributedString: label.attributedText!)
+        let textStorage = NSTextStorage(attributedString: privacyPolicy.attributedText!)
         let layoutManager = NSLayoutManager()
-        let textContainer = NSTextContainer(size: label.bounds.size)
+        let textContainer = NSTextContainer(size: privacyPolicy.bounds.size)
         textContainer.lineFragmentPadding = 0
         
         layoutManager.addTextContainer(textContainer)

@@ -421,6 +421,5 @@ extension FTPageProtocol {
 extension FTPageViewController : FTAiPrivacyConsetViewControllerProtocal {
     func showAiScreen() {
         self.startOpenAiForPage()
-//        FTNoteshelfAIViewController.showNoteshelfAI(from: self, content: <#T##FTPageContent#>, delegate: <#T##FTNoteshelfAIDelegate?#>, animated: <#T##Bool#>)
     }
 }

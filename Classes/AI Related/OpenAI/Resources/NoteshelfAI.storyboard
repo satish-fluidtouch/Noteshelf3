@@ -682,8 +682,8 @@
                                         <constraints>
                                             <constraint firstItem="Ogn-Os-ZrC" firstAttribute="top" secondItem="xg7-iV-itR" secondAttribute="top" id="2Jq-hn-dQD"/>
                                             <constraint firstAttribute="trailing" secondItem="Ogn-Os-ZrC" secondAttribute="trailing" id="GI0-6H-Exd"/>
-                                            <constraint firstAttribute="height" constant="300" id="LhZ-fh-YxT"/>
                                             <constraint firstItem="Ogn-Os-ZrC" firstAttribute="leading" secondItem="xg7-iV-itR" secondAttribute="leading" id="Npl-4i-oGl"/>
+                                            <constraint firstAttribute="height" constant="300" id="iv2-7Q-FB8"/>
                                             <constraint firstAttribute="bottom" secondItem="Ogn-Os-ZrC" secondAttribute="bottom" id="wAc-Gn-eMK"/>
                                         </constraints>
                                     </scrollView>
@@ -753,6 +753,7 @@
                                     <constraint firstItem="pLb-DN-Hyo" firstAttribute="leading" secondItem="n5x-QJ-gHF" secondAttribute="leading" constant="24" id="aEH-ZP-4uq"/>
                                     <constraint firstItem="JJd-xW-Vdb" firstAttribute="leading" secondItem="n5x-QJ-gHF" secondAttribute="leading" id="mpm-e4-9xE"/>
                                     <constraint firstItem="pLb-DN-Hyo" firstAttribute="top" secondItem="n5x-QJ-gHF" secondAttribute="top" constant="94" id="ni6-W3-Uxa"/>
+                                    <constraint firstItem="JJd-xW-Vdb" firstAttribute="top" relation="greaterThanOrEqual" secondItem="xg7-iV-itR" secondAttribute="bottom" constant="16" id="vwd-G0-pvv"/>
                                     <constraint firstAttribute="trailing" secondItem="JJd-xW-Vdb" secondAttribute="trailing" id="wcm-dX-E87"/>
                                 </constraints>
                             </view>
