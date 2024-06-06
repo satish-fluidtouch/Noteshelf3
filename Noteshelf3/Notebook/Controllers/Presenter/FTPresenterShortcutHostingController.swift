@@ -29,3 +29,20 @@ class FTPresenterShortcutHostingController: UIHostingController<FTPresenterShort
         self.view.backgroundColor = .clear
     }
 }
+
+class FTPresenterSliderShortcutHostingController: UIHostingController<FTPresenterSliderShortcutView> {
+    override init(rootView: FTPresenterSliderShortcutView) {
+        super.init(rootView: rootView)
+        self.disableSafeArea()
+    }
+
+    @MainActor
+    dynamic required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = .clear
+    }
+}

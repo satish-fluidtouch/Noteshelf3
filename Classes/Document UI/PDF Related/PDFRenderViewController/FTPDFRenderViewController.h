@@ -60,6 +60,7 @@ typedef enum: NSInteger  {
 @protocol FTFinderNotifier;
 @protocol FTUndoRedoDelegate;
 @class FTAudioPlayerController;
+@class FTFavoriteColorViewModel;
 
 #if !TARGET_OS_MACCATALYST
 @interface FTPDFRenderViewController : FTBaseRenderViewController <UIPopoverPresentationControllerDelegate,UINavigationControllerDelegate,PressurePenEngineDelegate,FTDeskToolbarDelegate,FTAudioListViewControllerDelegtes,FTApplePencilInteractionProtocol, FTPenRackSelectDelegate, FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {
@@ -86,6 +87,7 @@ FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {}
 
 @property (nullable, strong) NSString *currentSceneID;
 @property (strong) FTDocumentOpenToken *openDocToken;
+@property (nonatomic, weak) FTFavoriteColorViewModel *colorModel;
 
 @property (assign,readonly) CGFloat contentScaleInNormalMode;
 @property (assign) BOOL insertingPhotoAsPage;

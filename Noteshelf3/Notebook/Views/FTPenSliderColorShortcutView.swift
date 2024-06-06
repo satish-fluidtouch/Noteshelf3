@@ -45,7 +45,7 @@ struct FTPenSliderColorShortcutView: View {
             self.customColorView(for: favColor)
                 .onTapGesture {
                     self.handleColorSelection(colorModel: favColor)
-                    self.viewModel.showEditColorScreen(at: colorPosition)
+                    self.viewModel.showEditColorScreen(at: colorPosition, mode: .arc)
                 }
         } else {
             Button {
@@ -58,7 +58,7 @@ struct FTPenSliderColorShortcutView: View {
                     .contextMenu {
                         Button(action: {
                             self.handleColorSelection(colorModel: favColor)
-                            self.viewModel.showEditColorScreen(at: colorPosition)
+                            self.viewModel.showEditColorScreen(at: colorPosition, mode: .arc)
                         }) {
                             Label("color.editColor".localized, systemImage: "pencil")
                         }

@@ -244,6 +244,8 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
             rackType = .highlighter
         } else if mode == .deskModeShape {
             rackType = .shape
+        } else if mode == .deskModeLaser {
+            rackType = .presenter
         }
         let activity = self.view.window?.windowScene?.userActivity
         let rack = FTRackData(type: rackType, userActivity: activity)
@@ -270,7 +272,15 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
             self.add(hostingVc, frame: transparentTouchView.bounds)
             transparentTouchView.addSubview(hostingVc.view)
             items = FTPenSliderConstants.shapeShortcutItems
+        } else if rack.type == .presenter {
+            let shortcutView = FTPresenterSliderShortcutView(viewModel: FTPresenterShortcutViewModel(rackData: rack, delegate: self))
+            let hostingVc = FTPresenterSliderShortcutHostingController(rootView: shortcutView)
+            self.penSliderViewcontroller = hostingVc
+            self.add(hostingVc, frame: transparentTouchView.bounds)
+            transparentTouchView.addSubview(hostingVc.view)
+            items = FTPenSliderConstants.presenterShortcutItems
         }
+        self.colorModel = _colorModel
         drawCurvedBackground( transparentView: transparentTouchView, items: items)
     }
 
@@ -376,7 +386,7 @@ extension FTPDFRenderViewController {
     }
 }
 
-extension FTPDFRenderViewController: FTFavoriteSizeEditDelegate, FTFavoriteColorEditDelegate, FTShapeShortcutEditDelegate, FTFavoriteColorNotifier {
+extension FTPDFRenderViewController: FTFavoriteSizeEditDelegate, FTFavoriteColorEditDelegate, FTShapeShortcutEditDelegate, FTFavoriteColorNotifier, FTPresenterShortcutDelegate {
     func showShapeEditScreen(position: FavoriteShapePosition) {
         
     }
@@ -402,6 +412,10 @@ extension FTPDFRenderViewController: FTFavoriteSizeEditDelegate, FTFavoriteColor
         self.ftPresentPopover(vcToPresent: hostingVc, contentSize: contentSize, hideNavBar: true)
     }
     
+    func saveFavoriteColorsIfNeeded() {
+        self.colorModel?.updateCurrentFavoriteColors()
+    }
+    
     func didChangeCurrentPenset(_ penset: FTPenSetProtocol, dismissSizeEditView: Bool) {
         var rackType = FTRackType.pen
         if self.currentDeskMode == .deskModeMarker {
@@ -418,8 +432,12 @@ extension FTPDFRenderViewController: FTFavoriteSizeEditDelegate, FTFavoriteColor
     }
     
     func didSelectColorFromEditScreen(_ penset: FTPenSetProtocol) {
-//        self.colorModel?.updateFavoriteColor(with: penset.color)
+        self.colorModel?.updateFavoriteColor(with: penset.color)
         self.didChangeCurrentPenset(penset, dismissSizeEditView: false)
+    }
+
+    func didChangeCurrentPresenterSet(_ presenterSet: FTPresenterSetProtocol) {
+
     }
 }
 

@@ -82,13 +82,17 @@ class FTFavoriteColorViewModel: ObservableObject {
         return self.rackData.type
     }
 
-    func showEditColorScreen(at position: FavoriteColorPosition) {
-        var startAngle = FTPenSliderConstants.startAngle
-        if self.getRackType() == .shape {
-            startAngle = .degrees(Double(FTPenSliderConstants.shapeTypeShortcutItems * FTPenSliderConstants.spacingAngle))
+    func showEditColorScreen(at position: FavoriteColorPosition, mode: FTShortcutbarMode = .rectangle) {
+        if mode == .arc {
+            var startAngle = FTPenSliderConstants.startAngle
+            if self.getRackType() == .shape {
+                startAngle = .degrees(Double(FTPenSliderConstants.shapeTypeShortcutItems * FTPenSliderConstants.spacingAngle))
+            }
+            let rect = self.rectForColor(at: position.rawValue, startAngle: startAngle)
+            self.delegate?.showEditColorScreen(using: self.rackData, position: position, rect: rect)
+        } else {
+            self.delegate?.showEditColorScreen(using: self.rackData, position: position)
         }
-        let rect = self.rectForColor(at: position.rawValue, startAngle: startAngle)
-        self.delegate?.showEditColorScreen(using: self.rackData, position: position, rect: rect)
         self.colorEditPostion = position
     }
 

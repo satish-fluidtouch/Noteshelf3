@@ -18,9 +18,15 @@ struct FTPenSliderConstants {
     static var penShortcutColorItems : Int = 4
     static var shapeTypeShortcutItems : Int = 3
     static var shapeShortcutItems : Int = 8
+    static var presenterShortcutItems : Int = 5
     static var highlighterShortcutColorItems : Int = 4
     static var shapeShortcutColorItems : Int = 4
     static var rotationAngle : Int = 180 - spacingAngle
+}
+
+enum FTShortcutbarMode {
+    case rectangle
+    case arc
 }
 
 struct FTPenShortcutView: View {
