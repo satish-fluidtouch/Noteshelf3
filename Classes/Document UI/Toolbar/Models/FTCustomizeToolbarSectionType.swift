@@ -138,7 +138,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
         case .camera:
             name = "desk_tool_camera"
         case .recentNotes:
-            name = "desk_tool_recentNotes"
+            name = "desk_tool_recentSelected"
             
         case .savePageAsPhoto:
             name = "desk_tool_saveAsPhoto"
@@ -163,7 +163,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
         case .hand:
             name = "desk_tool_viewModeSelected"
         case .openAI:
-            name = "desk_tool_openAISelected"
+            name = "desk_tool_openAI"
         case .presenter:
             name = "desk_tool_presenterSelected"
         case .favorites:
@@ -182,7 +182,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
         case .tag:
             name = "desk_tool_tagSelected"
         case .bookmark :
-            name = "desk_tool_bookMark_selected"
+            name = "desk_tool_bookmarkselected"
             
         default:
             break
@@ -403,7 +403,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
     
     func isInstantActionTool() -> Bool {
         var value = false
-        if self == .page || self == .rotatePage  || self == .duplicatePage || self == .deletePage || self == .scrolling || self == .savePageAsPhoto || self == .bookmark || self == .photo || self == .audio || self == .scrolling || self == .shareNotebookAsPDF || self == .camera || self == .sharePageAsPng  || self == .openAI {
+        if self == .page || self == .rotatePage  || self == .duplicatePage || self == .deletePage || self == .savePageAsPhoto || self == .bookmark || self == .photo || self == .audio || self == .scrolling || self == .shareNotebookAsPDF || self == .camera || self == .sharePageAsPng  || self == .openAI {
             value = true
         }
         

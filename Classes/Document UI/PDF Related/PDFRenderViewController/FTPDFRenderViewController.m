@@ -299,7 +299,7 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    
+   
     
     self.laserStrokeStorage = [[FTLaserStrokeStorage alloc] initWithParentView:self.view];
     
@@ -2988,6 +2988,10 @@
 
 -(BOOL) isAudioRecordedViewPresented {
     return self.audioRecordedViewStatus;
+}
+
+-(CGFloat) getDeskToolBarHeight {
+    return self.deskToolBarHeight;
 }
 
 #pragma mark - Audio -

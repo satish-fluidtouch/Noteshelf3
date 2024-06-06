@@ -17,6 +17,8 @@ class FTStickersViewController: UIHostingController<FTStickerCategoriesView>, FT
         super.init(rootView: rootView)
     }
     
+    private var window: UIWindow?
+    
     @MainActor
     dynamic required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -30,15 +32,18 @@ class FTStickersViewController: UIHostingController<FTStickerCategoriesView>, FT
         self.view.addInteraction(dropInteraction)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.window = self.view.window
+    }
+    
+    deinit {
         if sourceType == .centerPanel{
-            if let window = self.view.window {
+            if let window = self.window {
                 NotificationCenter.default.post(name: .centralPanelPopUpDismiss, object: ["sourceType":FTToolbarPopoverScreen.stickers,"window":window])
             }
         }
     }
-    
 }
 
 extension FTStickersViewController: UIDropInteractionDelegate {

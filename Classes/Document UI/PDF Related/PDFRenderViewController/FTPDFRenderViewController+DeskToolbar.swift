@@ -165,7 +165,7 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
             self.executer?.execute(type: .scrolling(source: oppLayout))
             let layout = UserDefaults.standard.pageLayoutType
             let config = FTToastConfiguration(title: layout.toastTitle.localized)
-            FTToastHostController.showToast(from: self, toastConfig: config)
+            FTToastHostController.showToast(from: self, toastConfig: config,centerY: self.deskToolBarHeight())
             layout.trackLayout()
         case .recentNotes:
             self.executer.execute(type: .recentNotes(source: source))
@@ -187,7 +187,7 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
             
         case .hand:
             let config = FTToastConfiguration(title: "customizeToolbar.readOnlyMode".localized)
-            FTToastHostController.showToast(from: self, toastConfig: config)
+            FTToastHostController.showToast(from: self, toastConfig: config,centerY: self.deskToolBarHeight())
             self.readOnlyButtonAction()
             
         case .share:

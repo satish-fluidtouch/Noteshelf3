@@ -514,6 +514,10 @@ extension FTDocumentRenderViewController: FTOpenCloseDocumentProtocol {
 }
 
 extension FTDocumentRenderViewController: FTDeskToolbarDelegate, FTDeskPanelActionDelegate {
+    func getDeskToolBarHeight() -> CGFloat {
+        return self.deskBarDelegate?.getDeskToolBarHeight() ?? 0.0
+    }
+    
     func isAudioRecordedViewPresented() -> Bool {
         return self.deskBarDelegate?.isAudioRecordedViewPresented() ?? false
     }

@@ -30,6 +30,7 @@ protocol FTDeskPanelActionDelegate: AnyObject {
     func isCurrentPageTagged() -> Bool
     func isEmojiSelected() -> Bool
     func isAudioRecordedViewPresented() -> Bool
+    func getDeskToolBarHeight() -> CGFloat
 
     @objc optional func canUndo() -> Bool
     @objc optional func undo()
@@ -423,6 +424,10 @@ extension FTiOSDeskToolbarController {
 }
 
 extension FTiOSDeskToolbarController: FTToolbarCenterPanelDelegate {
+    func getHeightforToolBar() -> CGFloat {
+        return self.delegate?.getDeskToolBarHeight() ?? 0.0
+    }
+    
     func isAudioRecordedViewPresented() -> Bool {
         return self.delegate?.isAudioRecordedViewPresented() ?? false
     }

@@ -51,6 +51,8 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
     var pinController: FTPasswordViewController?
     var siriShortcut: INVoiceShortcut?
     var isSiriTextAdded : Bool = false
+    private var window: UIWindow?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         guard notebookShelfItem != nil, page != nil, notebookDocument != nil else {
@@ -73,9 +75,12 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
         self.preferredContentSize = self.fetchSize()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        if let window = self.view.window {
+    override func viewDidAppear(_ animated: Bool) {
+        self.window = self.view.window
+    }
+    
+    deinit {
+        if let window = self.window {
             NotificationCenter.default.post(name: Notification.Name.rightPanelPopupDismiss, object:window)
         }
     }

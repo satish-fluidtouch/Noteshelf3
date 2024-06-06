@@ -19,6 +19,7 @@ protocol FTToolbarCenterPanelDelegate: AnyObject {
     func currentDeskMode() -> RKDeskMode?
     func maxCenterPanelItemsToShow() -> Int
     func didTapCenterPanelButton(type: FTDeskCenterPanelTool, sender: UIView)
+    func getHeightforToolBar() -> CGFloat
 }
 
 enum FTToolbarPopoverScreen {
@@ -388,7 +389,6 @@ extension FTToolbarCenterPanelController: UICollectionViewDataSource, UICollecti
                 isSelected = isEnabled
             }
             (cell as? FTDeskShortcutCell)?.configureCell(type: btnType, isSelected: isSelected)
-
             // Selection handle closure
             (cell as? FTDeskShortcutCell)?.deskShortcutTapHandler = {[weak self, weak cell] in
                 guard let self = self else { return }

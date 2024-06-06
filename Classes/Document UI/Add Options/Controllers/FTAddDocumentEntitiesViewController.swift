@@ -58,6 +58,8 @@ class FTAddDocumentEntitiesViewController: UIViewController, FTPopoverPresentabl
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet private weak var segmentedControl: UISegmentedControl!
     
+    private var window: UIWindow?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.titleLabel.text = "Add".localized
@@ -67,9 +69,12 @@ class FTAddDocumentEntitiesViewController: UIViewController, FTPopoverPresentabl
         self.addRequiredViewController()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        if let window = self.view.window {
+    override func viewDidAppear(_ animated: Bool) {
+        self.window = self.view.window
+    }
+    
+    deinit {
+        if let window = self.window {
             NotificationCenter.default.post(name: Notification.Name.rightPanelPopupDismiss, object:window)
         }
     }
