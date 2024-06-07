@@ -715,6 +715,7 @@
             [self performSelector:@selector(performUILayoutAfterOrientationChange) withObject:nil afterDelay:0.1];
         }
     }];
+    [self removePencilProMenuIfExist];
 }
 
 -(void)performUILayoutAfterOrientationChange

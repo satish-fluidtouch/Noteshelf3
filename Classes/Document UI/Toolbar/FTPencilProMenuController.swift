@@ -66,8 +66,6 @@ class FTPencilProMenuController: UIViewController {
         if self.size != self.view.frame.size {
             self.size = self.view.frame.size
             self.collectionView.collectionViewLayout.invalidateLayout()
-            self.view.layoutSubviews()
-            self.view.layoutIfNeeded()
         }
     }
 }
