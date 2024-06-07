@@ -157,6 +157,7 @@ final class FTToolBgButton: UIButton {
     private let backgroundLayer = CALayer()
 
     func setBackground(for mode: FTCenterPanelMode = .toolbar) {
+        self.backgroundLayer.removeFromSuperlayer()
         self.backgroundLayer.backgroundColor = UIColor.appColor(.white100).cgColor
         self.backgroundLayer.shadowOpacity = 0.0
         self.backgroundLayer.shadowColor = UIColor.label.withAlphaComponent(0.12).cgColor

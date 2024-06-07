@@ -41,11 +41,11 @@ class FTDeskToolCell: UICollectionViewCell {
     }
 
     func configureCell(type: FTDeskCenterPanelTool, isSelected: Bool, mode: FTCenterPanelMode) {
+        self.deskToolView?.mode = mode
         self.toolType = type
         self.deskToolView?.toolType = type
         self.isToolSelected = isSelected
         self.handleObservers()
-        self.deskToolView?.mode = mode
     }
 
     private func handleObservers() {
@@ -104,9 +104,9 @@ class FTDeskShortcutCell: UICollectionViewCell {
     }
 
     func configureCell(type: FTDeskCenterPanelTool, isSelected: Bool, mode: FTCenterPanelMode) {
+        self.deskShortcutView?.mode = mode
         self.deskShortcutView?.toolType = type
         self.deskShortcutView?.isSelected = isSelected
-        self.deskShortcutView?.mode = mode
     }
 
     var isShortcutSelected: Bool = false {

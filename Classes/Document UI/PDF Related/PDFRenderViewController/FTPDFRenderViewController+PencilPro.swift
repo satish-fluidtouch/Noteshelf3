@@ -25,9 +25,10 @@ extension FTPDFRenderViewController {
             if let proMenu = UIStoryboard(name: "FTDocumentView", bundle: nil).instantiateViewController(withIdentifier: "FTPencilProMenuController") as? FTPencilProMenuController {
                 proMenu.delegate = self
                 let point = self.getSuitableAnchorPointForPrimaryMenu(with: anchorPoint)
-                print("zzzz - \(point)")
                 self.add(proMenu, frame: CGRect(origin: point, size: size))
-                self.handleFocusModeAction(mode: .focus)
+                if let toolbar = self.parent as? FTToolbarElements,  !toolbar.isInFocusMode() {
+                    NotificationCenter.default.post(name: NSNotification.Name(FTToggleToolbarModeNotificationName), object: nil)
+                }
             }
         } else {
             self.removePrimaryMenuIfExist()

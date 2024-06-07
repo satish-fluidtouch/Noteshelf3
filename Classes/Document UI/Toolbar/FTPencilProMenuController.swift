@@ -48,8 +48,6 @@ class FTPencilProMenuController: UIViewController {
                 strongSelf.handleUndoRedo()
             }
         }
-        
-//        self.view.backgroundColor = .red
     }
 
     deinit {

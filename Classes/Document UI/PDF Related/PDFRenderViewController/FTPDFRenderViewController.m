@@ -1713,7 +1713,6 @@
     for(FTPageViewController *eachController in visibleControllers) {
         [eachController endEditingActiveAnnotation:nil refreshView:YES];
     }
-    [self removePencilProMenuIfExist];
 }
 
 -(BOOL)shouldRemoveShapeEditController
