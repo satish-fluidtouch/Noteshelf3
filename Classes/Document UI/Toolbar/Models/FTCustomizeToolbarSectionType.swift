@@ -138,7 +138,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
         case .camera:
             name = "desk_tool_camera"
         case .recentNotes:
-            name = "desk_tool_recentSelected"
+            name = "desk_tool_recent_unSelected"
             
         case .savePageAsPhoto:
             name = "desk_tool_saveAsPhoto"
@@ -168,6 +168,10 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             name = "desk_tool_presenterSelected"
         case .favorites:
             name = "desk_tool_favoritesSelected"
+        case .recentNotes:
+            name = "desk_tool_recentSelected"
+        case .savedClips:
+            name = "desk_tool_savedClipsSelected"
             
         case .photo:
             name = "desk_tool_photoSelected"
