@@ -8,6 +8,10 @@
 
 import Foundation
 
+extension Notification.Name {
+    static let stylusTouchesBegan = Notification.Name(rawValue: "stylusTouchesBegan")
+}
+
 extension FTPDFRenderViewController {
     @objc func configurePencilProInteractionIfAvailable() {
         if #available(iOS 17.5, *) {
@@ -28,6 +32,7 @@ extension FTPDFRenderViewController {
                 print("zzzz - \(point)")
                 self.add(proMenu, frame: CGRect(origin: point, size: size))
                 self.handleFocusModeAction(mode: .focus)
+                NotificationCenter.default.addObserver(self, selector: #selector(stylusTouchesBegan(_:)), name: .stylusTouchesBegan, object: nil)
             }
         } else {
             self.removePrimaryMenuIfExist()
@@ -42,6 +47,10 @@ extension FTPDFRenderViewController {
 //        } else {
 //            self.removeSecondaryMenuIfExist()
 //        }
+    }
+    
+    @objc private func stylusTouchesBegan(_ notification: Notification) {
+        self.removePrimaryMenuIfExist()
     }
     
     func getSuitableAnchorPointForPrimaryMenu(with anchorPoint: CGPoint) -> CGPoint {
@@ -133,6 +142,7 @@ extension FTPDFRenderViewController {
     }
 
     @objc func removePencilProMenuIfExist() {
+        NotificationCenter.default.removeObserver(self, name: .stylusTouchesBegan, object: nil)
         self.removePrimaryMenuIfExist()
         self.removeSecondaryMenuIfExist()
     }
