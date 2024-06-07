@@ -114,7 +114,7 @@ extension FTPDFRenderViewController {
         return endAngle
     }
 
-    func drawCurvedBackground(transparentView: UIView, items: Int) {
+    func drawCurvedBackground(transparentView: TransparentTouchView, items: Int) {
         let menuLayer = FTPencilProMenuLayer(strokeColor: UIColor.appColor(.finderBgColor))
         let startAngle: CGFloat =  .pi + .pi/20
         let endAngle = self.getEndAngle(with: .pi, with: items)
@@ -129,6 +129,7 @@ extension FTPDFRenderViewController {
         transparentView.layer.insertSublayer(hitTestLayer, at: 0)
         transparentView.layer.insertSublayer(borderLayer, at: 1)
         transparentView.layer.insertSublayer(menuLayer, at: 2)
+        transparentView.hitTestLayer = hitTestLayer
     }
 
     @objc func removePencilProMenuIfExist() {

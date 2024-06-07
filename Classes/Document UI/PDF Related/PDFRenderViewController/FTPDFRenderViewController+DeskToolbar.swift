@@ -377,16 +377,32 @@ extension FTPDFRenderViewController: FTFavoriteSizeEditDelegate, FTFavoriteColor
 }
 
 class TransparentTouchView: UIView {
+    var hitTestLayer: CAShapeLayer?
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         let hitView = super.hitTest(point, with: event)
-        print("&&& ", self.layer.sublayers?.first as? CAShapeLayer)
-        if let layer = self.layer.sublayers?.first as? CAShapeLayer , let path = layer.path, path.contains(point) {
-            print("&&& Contains point")
+        if let layer = hitTestLayer, self.isPointInside(point, lineWidth: layer.lineWidth) {
             return hitView
         }
-        print("&&& Nil")
         return nil
     }
+    
+    func isPointInside(_ point: CGPoint, lineWidth: CGFloat) -> Bool {
+          // Calculate the center point and radius
+          let center = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
+          let radius = min(bounds.width, bounds.height) / 2
+          
+          // Calculate the distance from the center
+          let distanceFromCenter = point.distance(to: center)
+          
+          // Calculate the angle of the point relative to the center
+          let angle = atan2(point.y - center.y, point.x - center.x)
+          
+          // Check if the point is within the stroke width range
+          let isInRadiusRange = (distanceFromCenter >= radius - lineWidth / 2 && distanceFromCenter <= radius + lineWidth / 2)
+          let isInAngleRange = (angle >= -CGFloat.pi && angle <= 0)
+          
+          return isInRadiusRange && isInAngleRange
+      }
 }
 
 
