@@ -47,6 +47,7 @@ import UIKit
     
     func addAnnotation(info : FTAnnotationInfo)
     {
+        self.delegate?.removePencilProMenuIfExist()
         self.endEditingActiveAnnotation(nil, refreshView: true);
         if let annotation = info.annotation() {
             annotation.associatedPage = self.pdfPage;

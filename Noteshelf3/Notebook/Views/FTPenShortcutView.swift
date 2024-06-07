@@ -10,7 +10,7 @@ import SwiftUI
 import FTStyles
 
 struct FTPenSliderConstants {
-    static var startAngle: Angle = .degrees(0)
+    static var startAngle: Angle = .degrees(6)
     static var sliderRadius : CGFloat = 250
     static var spacingAngle : Int = 10
     static var penShortCutItems : Int = 7
@@ -69,7 +69,7 @@ struct FTPenSliderShortcutView: View {
         ZStack {
             FTPenSliderColorShortcutView(startAngle: FTPenSliderConstants.startAngle)
                 .environmentObject(colorModel)
-            FTPenSliderSizeShortcutView(startAngle: .degrees(Double(FTPenSliderConstants.penShortcutColorItems * FTPenSliderConstants.spacingAngle)))
+            FTPenSliderSizeShortcutView(startAngle: .degrees(Double(FTPenSliderConstants.penShortcutColorItems * FTPenSliderConstants.spacingAngle)) + FTPenSliderConstants.startAngle)
                 .environmentObject(sizeModel)
         }
     }

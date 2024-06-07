@@ -226,6 +226,7 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
             break
         case .focus:
             self.handleFocusModeAction(mode: mode)
+            removePencilProMenuIfExist()
         }
     }
 
