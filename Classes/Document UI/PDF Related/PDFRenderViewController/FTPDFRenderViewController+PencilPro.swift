@@ -27,12 +27,12 @@ extension FTPDFRenderViewController {
         var convertedAnchorPoint = anchorPoint
         if !isPencilProMenuExist {
             if let proMenu = UIStoryboard(name: "FTDocumentView", bundle: nil).instantiateViewController(withIdentifier: "FTPencilProMenuController") as? FTPencilProMenuController {
-                proMenu.delegate = self
                 convertedAnchorPoint = self.getSuitableAnchorPointForPrimaryMenu(with: anchorPoint)
                 if let toolbar = self.parent as? FTToolbarElements,  !toolbar.isInFocusMode() {
                     NotificationCenter.default.post(name: NSNotification.Name(FTToggleToolbarModeNotificationName), object: nil)
                 }
                 self.add(proMenu, frame: CGRect(origin: convertedAnchorPoint, size: FTPenSliderConstants.primaryMenuSize))
+                proMenu.delegate = self
                 NotificationCenter.default.addObserver(self, selector: #selector(stylusTouchesBegan(_:)), name: .stylusTouchesBegan, object: nil)
             }
         } else {

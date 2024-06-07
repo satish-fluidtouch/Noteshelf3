@@ -24,10 +24,12 @@ class FTPencilProMenuController: UIViewController {
     private let config = FTCircularLayoutConfig()
     weak var delegate: FTPencilProMenuDelegate? {
         didSet {
-            self.handleUndoRedo()
+            self.initiateUndoRedoIfNeeded()
         }
     }
-
+    private var undoBtn: FTPencilProUndoButton?
+    private var redoBtn: FTPencilProRedoButton?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         (self.view as? FTPencilProMenuContainerView)?.collectionView = collectionView
@@ -45,7 +47,16 @@ class FTPencilProMenuController: UIViewController {
                 return
             }
             if strongSelf.view.window == notification.object as? UIWindow {
-                strongSelf.handleUndoRedo()
+                let undoStatus = strongSelf.delegate?.canPerformUndo() ?? false
+                if undoStatus && nil == strongSelf.undoBtn {
+                    strongSelf.addUndoButton()
+                }
+                strongSelf.undoBtn?.isEnabled = undoStatus
+                let redoStatus = strongSelf.delegate?.canPerformRedo() ?? false
+                if redoStatus && nil == strongSelf.redoBtn {
+                    strongSelf.addRedoButton()
+                }
+                strongSelf.redoBtn?.isEnabled = redoStatus
             }
         }
     }
@@ -71,42 +82,52 @@ class FTPencilProMenuController: UIViewController {
 }
 
 private extension FTPencilProMenuController {
-    func handleUndoRedo() {
-        self.handleUndoView()
-        self.handleRedoView()
-    }
-
-    func handleUndoView() {
-        self.parent?.view.subviews.compactMap { $0 as? FTPencilProUndoButton }.forEach { $0.removeFromSuperview() }
-        if self.delegate?.canPerformUndo() ?? false {
-            let radius: CGFloat = self.config.radius
-            let angle: CGFloat = .pi - .pi/90
-            let xPosition = self.view.frame.origin.x + center.x + radius * cos(angle)
-            let yPosition = self.view.frame.origin.y + center.y + radius * sin(angle)
-            let buttonSize = CGSize(width: 40, height: 40)
-            let undoBtn = FTPencilProUndoButton(frame: CGRect(x: xPosition - buttonSize.width/2, y: yPosition - buttonSize.height/2, width: buttonSize.width, height: buttonSize.height))
-            undoBtn.addTarget(self, action:  #selector(undo(_ :)), for: .touchUpInside)
-            self.parent?.view.addSubview(undoBtn)
+    func initiateUndoRedoIfNeeded() {
+        var toShow = false
+        if let canUndo = self.delegate?.canPerformUndo(), let canRedo = self.delegate?.canPerformRedo() {
+             toShow = canUndo || canRedo
         }
-    }
-
-    func handleRedoView() {
-        self.parent?.view.subviews.compactMap { $0 as? FTPencilProRedoButton }.forEach { $0.removeFromSuperview() }
+        if toShow {
+            self.undoBtn?.removeFromSuperview()
+            self.addUndoButton()
+            let undoStatus = self.delegate?.canPerformUndo() ?? false
+            self.undoBtn?.isEnabled = undoStatus
+        }
         if self.delegate?.canPerformRedo() ?? false {
-            let radius: CGFloat = self.config.radius
-            var angle: CGFloat = .pi - .pi/90
-            if self.delegate?.canPerformUndo() ?? false {
-                angle -= self.config.angleOfEachItem
-            }
-            let xPosition = self.view.frame.origin.x + center.x + radius * cos(angle)
-            let yPosition = self.view.frame.origin.y + center.y + radius * sin(angle)
-            let buttonSize = CGSize(width: 40, height: 40)
-            let undoBtn = FTPencilProRedoButton(frame: CGRect(x: xPosition - buttonSize.width/2, y: yPosition - buttonSize.height/2, width: buttonSize.width, height: buttonSize.height))
-            undoBtn.addTarget(self, action:  #selector(redo(_ :)), for: .touchUpInside)
-            self.parent?.view.addSubview(undoBtn)
+            self.redoBtn?.removeFromSuperview()
+            self.addRedoButton()
+            let redoStatus = self.delegate?.canPerformRedo() ?? false
+            self.redoBtn?.isEnabled = redoStatus
         }
     }
 
+    func addUndoButton() {
+        let radius: CGFloat = self.config.radius
+        let angle: CGFloat = .pi - .pi/90
+        let xPosition = self.view.frame.origin.x + center.x + radius * cos(angle)
+        let yPosition = self.view.frame.origin.y + center.y + radius * sin(angle)
+        let buttonSize = CGSize(width: 40, height: 40)
+        let undoBtn = FTPencilProUndoButton(frame: CGRect(x: xPosition - buttonSize.width/2, y: yPosition - buttonSize.height/2, width: buttonSize.width, height: buttonSize.height))
+        undoBtn.addTarget(self, action:  #selector(undo(_ :)), for: .touchUpInside)
+        self.parent?.view.addSubview(undoBtn)
+        self.undoBtn = undoBtn
+    }
+    
+    func addRedoButton() {
+        let radius: CGFloat = self.config.radius
+        var angle: CGFloat = .pi - .pi/90
+        if self.delegate?.canPerformUndo() ?? false {
+            angle -= self.config.angleOfEachItem
+        }
+        let xPosition = self.view.frame.origin.x + center.x + radius * cos(angle)
+        let yPosition = self.view.frame.origin.y + center.y + radius * sin(angle)
+        let buttonSize = CGSize(width: 40, height: 40)
+        let redoBtn = FTPencilProRedoButton(frame: CGRect(x: xPosition - buttonSize.width/2, y: yPosition - buttonSize.height/2, width: buttonSize.width, height: buttonSize.height))
+        redoBtn.addTarget(self, action:  #selector(redo(_ :)), for: .touchUpInside)
+        self.parent?.view.addSubview(redoBtn)
+        self.redoBtn = redoBtn
+    }
+    
     @objc func undo(_ sender: Any) {
         self.delegate?.performUndo()
     }
