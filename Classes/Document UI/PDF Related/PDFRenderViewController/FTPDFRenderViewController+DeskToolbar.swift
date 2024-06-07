@@ -225,87 +225,22 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
             FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_more_tap)
             break
         case .focus:
-            self.addCurvedShortcutContoller(with: self.currentDeskMode)
-//            UIView.animate(withDuration: 0.3) {
-//                if nil != self.zoomOverlayController {
-//                    self.delayedZoomButtonAction()
-//                }
-//            } completion: { _  in
-//                self.showOrHideShortcutViewIfNeeded(mode)
-//                self.performLayout()
-//            }
-//            self.updatePageNumberLabelFrame()
+            self.handleFocusModeAction(mode: mode)
         }
+    }
+
+    func handleFocusModeAction(mode: FTScreenMode) {
+        UIView.animate(withDuration: 0.3) {
+            if nil != self.zoomOverlayController {
+                self.delayedZoomButtonAction()
+            }
+        } completion: { _  in
+            self.showOrHideShortcutViewIfNeeded(mode)
+            self.performLayout()
+        }
+        self.updatePageNumberLabelFrame()
     }
     
-    @objc func addCurvedShortcutContoller(with mode: RKDeskMode) {
-        var rackType = FTRackType.pen
-        if mode == .deskModeMarker {
-            rackType = .highlighter
-        } else if mode == .deskModeShape {
-            rackType = .shape
-        } else if mode == .deskModeLaser {
-            rackType = .presenter
-        }
-        let activity = self.view.window?.windowScene?.userActivity
-        let rack = FTRackData(type: rackType, userActivity: activity)
-        let _colorModel =
-        FTFavoriteColorViewModel(rackData: rack, delegate: self, scene: self.view?.window?.windowScene)
-        let sizeModel =
-        FTFavoriteSizeViewModel(rackData: rack, delegate: self, scene: self.view?.window?.windowScene)
-        let frame = CGRect(x: 160, y: 160, width: 500, height: 500)
-        let transparentTouchView = TransparentTouchView(frame: frame)
-        transparentTouchView.backgroundColor = .clear
-        self.view.addSubview(transparentTouchView)
-        var items = FTPenSliderConstants.penShortCutItems
-        if rack.type == .pen || rack.type == .highlighter {
-            let shortcutView = FTPenSliderShortcutView(colorModel: _colorModel, sizeModel: sizeModel)
-            let hostingVc = FTPenSliderShortcutHostingController(rootView: shortcutView)
-            self.penSliderViewcontroller = hostingVc
-            self.add(hostingVc, frame: transparentTouchView.bounds)
-            transparentTouchView.addSubview(hostingVc.view)
-        } else if rack.type == .shape {
-            let _shapeModel = FTFavoriteShapeViewModel(rackData: rack, delegate: self)
-            let shortcutView = FTShapeCurvedShortcutView(shapeModel: _shapeModel, colorModel: _colorModel, sizeModel: sizeModel)
-            let hostingVc = FTShapeCurvedShortcutHostingController(rootView: shortcutView)
-            self.penSliderViewcontroller = hostingVc
-            self.add(hostingVc, frame: transparentTouchView.bounds)
-            transparentTouchView.addSubview(hostingVc.view)
-            items = FTPenSliderConstants.shapeShortcutItems
-        } else if rack.type == .presenter {
-            let shortcutView = FTPresenterSliderShortcutView(viewModel: FTPresenterShortcutViewModel(rackData: rack, delegate: self))
-            let hostingVc = FTPresenterSliderShortcutHostingController(rootView: shortcutView)
-            self.penSliderViewcontroller = hostingVc
-            self.add(hostingVc, frame: transparentTouchView.bounds)
-            transparentTouchView.addSubview(hostingVc.view)
-            items = FTPenSliderConstants.presenterShortcutItems
-        }
-        self.colorModel = _colorModel
-        drawCurvedBackground( transparentView: transparentTouchView, items: items)
-    }
-
-    func getEndAngle(with startAngle: CGFloat, with items: Int) -> CGFloat {
-        let endAngle = startAngle - (CGFloat(items) * FTPenSliderConstants.spacingAngle.degreesToRadians)
-        return endAngle
-    }
-
-    func drawCurvedBackground(transparentView: UIView, items: Int) {
-        let menuLayer = FTPencilProMenuLayer(strokeColor: UIColor.appColor(.finderBgColor))
-        let startAngle: CGFloat =  .pi + .pi/20
-        let endAngle = self.getEndAngle(with: .pi, with: items)
-        let rect = transparentView.bounds
-        let center = CGPoint(x: rect.midX, y: rect.midY)
-        menuLayer.setPath(with: center, radius: FTPenSliderConstants.sliderRadius, startAngle: startAngle, endAngle: -endAngle)
-        let borderLayer = FTPencilProBorderLayer(strokeColor: .black)
-        borderLayer.setPath(with: center, radius: FTPenSliderConstants.sliderRadius, startAngle: startAngle, endAngle: -endAngle)
-
-        let hitTestLayer = FTPencilProMenuLayer(strokeColor: .red, lineWidth: 50)
-        hitTestLayer.setPath(with: center, radius: FTPenSliderConstants.sliderRadius, startAngle: startAngle, endAngle: -endAngle)
-        transparentView.layer.insertSublayer(hitTestLayer, at: 0)
-        transparentView.layer.insertSublayer(borderLayer, at: 1)
-        transparentView.layer.insertSublayer(menuLayer, at: 2)
-    }
-
     @objc func deskToolBarFrame() -> CGRect {
 #if !targetEnvironment(macCatalyst)
         if let documentController = self.parent as? FTDocumentRenderViewController {

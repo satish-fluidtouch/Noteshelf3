@@ -321,6 +321,7 @@
     [self configureShortcutActions];
     [self showToolbarShortcutControllerIfNeededWithMode:self.currentDeskMode];
     [self enableOrDisableNewPageCreationOptionsInsideDocument];
+    [self configurePencilProInteractionIfAvailable];
 #if TARGET_OS_MACCATALYST
     // Fix for book opening glitch
     [self prepareViewToShow:false];
@@ -340,7 +341,6 @@
 
 -(void)viewIsAppearing:(BOOL)animated {
     [super viewIsAppearing:animated];
-    [self showPencilProMenuUsing:CGPointMake(160, 160)];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -1713,6 +1713,7 @@
     for(FTPageViewController *eachController in visibleControllers) {
         [eachController endEditingActiveAnnotation:nil refreshView:YES];
     }
+    [self removePencilProMenuIfExist];
 }
 
 -(BOOL)shouldRemoveShapeEditController
