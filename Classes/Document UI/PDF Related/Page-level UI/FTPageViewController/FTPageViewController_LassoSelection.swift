@@ -184,6 +184,7 @@ extension FTPageViewController: FTLassoSelectionViewDelegate {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "FTDidReceiveLassoTouch"),
                                         object: self.view.window,
                                         userInfo: ["PageVC" : self]);
+        self.delegate?.removePencilProMenuIfExist()
     }
     
     func lassoSelectionView(_ lassoSelectionView: FTLassoSelectionView, selectionAreaMovedByOffset offset: CGPoint) {

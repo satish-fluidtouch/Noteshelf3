@@ -45,7 +45,7 @@ extension FTPDFRenderViewController {
         let isSecondaryMenuExist = self.children.contains { child in
             return child is FTSliderHostingControllerProtocol
         }
-        if !isSecondaryMenuExist {
+        if !isSecondaryMenuExist && shouldShowSecondaryMenu(for: mode){
             let rect = CGRect(origin: anchorPoint, size: FTPenSliderConstants.secondaryMenuSize)
             self.addSecondaryMenu(with: mode, rect: rect)
         } else {
@@ -123,15 +123,22 @@ extension FTPDFRenderViewController {
         self.drawCurvedBackground(transparentView: transparentTouchView, items: items)
     }
     
+    func shouldShowSecondaryMenu(for mode: RKDeskMode) -> Bool {
+        if mode == .deskModePen || mode == .deskModeMarker || mode == .deskModeShape || mode == .deskModeLaser {
+            return true
+        }
+        return false
+    }
+    
     func getEndAngle(with startAngle: CGFloat, with items: Int) -> CGFloat {
-        let endAngle = startAngle - (CGFloat(items) * FTPenSliderConstants.spacingAngle.degreesToRadians)
+        let endAngle = 2 * .pi - (startAngle + (CGFloat(items - 1) * FTPenSliderConstants.spacingAngle.degreesToRadians) + 3.degreesToRadians)
         return endAngle
     }
 
     func drawCurvedBackground(transparentView: TransparentTouchView, items: Int) {
         let menuLayer = FTPencilProMenuLayer(strokeColor: UIColor.init(hexString: "#F2F2F2"))
-        let startAngle: CGFloat =  .pi + .pi/20
-        let endAngle = self.getEndAngle(with: .pi, with: items)
+        let startAngle: CGFloat =  .pi + .pi/12
+        let endAngle = self.getEndAngle(with: startAngle, with: items)
         let rect = transparentView.bounds
         let center = CGPoint(x: rect.midX, y: rect.midY)
         menuLayer.setPath(with: center, radius: FTPenSliderConstants.sliderRadius, startAngle: startAngle, endAngle: -endAngle)

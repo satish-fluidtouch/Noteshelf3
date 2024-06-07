@@ -19,9 +19,9 @@ struct FTShapeCurvedShortcutView: View {
         ZStack {
             FTCurvedFavoriteShapesView(startAngle: FTPenSliderConstants.startAngle)
                 .environmentObject(shapeModel)
-            FTPenSliderColorShortcutView(startAngle: .degrees(Double(FTPenSliderConstants.shapeTypeShortcutItems * FTPenSliderConstants.spacingAngle)))
+            FTPenSliderColorShortcutView(startAngle: .degrees(Double(FTPenSliderConstants.shapeTypeShortcutItems * FTPenSliderConstants.spacingAngle)) + FTPenSliderConstants.startAngle)
                 .environmentObject(colorModel)
-            FTPenSliderSizeShortcutView(startAngle: .degrees(Double((FTPenSliderConstants.shapeTypeShortcutItems + FTPenSliderConstants.shapeShortcutColorItems) * FTPenSliderConstants.spacingAngle)))
+            FTPenSliderSizeShortcutView(startAngle: .degrees(Double((FTPenSliderConstants.shapeTypeShortcutItems + FTPenSliderConstants.shapeShortcutColorItems) * FTPenSliderConstants.spacingAngle)) + FTPenSliderConstants.startAngle)
                 .environmentObject(sizeModel)
         }
     }
