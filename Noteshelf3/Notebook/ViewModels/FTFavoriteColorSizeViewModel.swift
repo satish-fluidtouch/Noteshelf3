@@ -46,7 +46,7 @@ class FTFavoriteColorViewModel: ObservableObject {
     private var currentPenset: FTPenSetProtocol!
     private(set) var colorEditPostion: FavoriteColorPosition?
     private weak var scene: UIWindowScene?
-
+    var colorSourceOrigin = CGPoint.zero
     private var geometrySize: CGSize = .zero
 
     // MARK: Initialization
@@ -65,8 +65,8 @@ class FTFavoriteColorViewModel: ObservableObject {
 
     func rectForColor(at index: Int, startAngle: Angle) -> CGRect {
         let angle = Angle(degrees: startAngle.degrees + (Double(FTPenSliderConstants.spacingAngle) * Double(index)) - Double(FTPenSliderConstants.rotationAngle))
-        let x = FTPenSliderConstants.sliderRadius * cos(angle.radians) + geometrySize.width / 2 + 160
-        let y = FTPenSliderConstants.sliderRadius * sin(angle.radians) + geometrySize.height / 2 + 160
+        let x = FTPenSliderConstants.sliderRadius * cos(angle.radians) + geometrySize.width / 2 + colorSourceOrigin.x
+        let y = FTPenSliderConstants.sliderRadius * sin(angle.radians) + geometrySize.height / 2 + colorSourceOrigin.y
         return CGRect(x: x - 40/2, y: y - 40/2, width: 40, height: 40)
     }
 

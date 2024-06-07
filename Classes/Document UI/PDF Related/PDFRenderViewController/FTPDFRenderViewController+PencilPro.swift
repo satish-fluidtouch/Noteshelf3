@@ -24,34 +24,37 @@ extension FTPDFRenderViewController {
         let isPencilProMenuExist = self.children.contains { child in
             return child is FTPencilProMenuController
         }
-        let size = CGSize(width: 600, height: 600)
+        var convertedAnchorPoint = anchorPoint
         if !isPencilProMenuExist {
             if let proMenu = UIStoryboard(name: "FTDocumentView", bundle: nil).instantiateViewController(withIdentifier: "FTPencilProMenuController") as? FTPencilProMenuController {
                 proMenu.delegate = self
-                let point = self.getSuitableAnchorPointForPrimaryMenu(with: anchorPoint)
+                convertedAnchorPoint = self.getSuitableAnchorPointForPrimaryMenu(with: anchorPoint)
                 if let toolbar = self.parent as? FTToolbarElements,  !toolbar.isInFocusMode() {
                     NotificationCenter.default.post(name: NSNotification.Name(FTToggleToolbarModeNotificationName), object: nil)
                 }
-                self.add(proMenu, frame: CGRect(origin: point, size: size))
+                self.add(proMenu, frame: CGRect(origin: convertedAnchorPoint, size: FTPenSliderConstants.primaryMenuSize))
                 NotificationCenter.default.addObserver(self, selector: #selector(stylusTouchesBegan(_:)), name: .stylusTouchesBegan, object: nil)
             }
         } else {
             self.removePrimaryMenuIfExist()
         }
-        
-//        let isSecondaryMenuExist = self.children.contains { child in
-//            return child is FTSliderHostingControllerProtocol
-//        }
-//        if !isSecondaryMenuExist {
-//            let rect = CGRect(origin: anchorPoint, size: size)
-//            self.addSecondaryMenu(with: self.currentDeskMode, rect: rect)
-//        } else {
-//            self.removeSecondaryMenuIfExist()
-//        }
+        showSecondaryMenuIfneeded(with: convertedAnchorPoint, mode: self.currentDeskMode)
+    }
+    
+    func showSecondaryMenuIfneeded(with anchorPoint: CGPoint, mode: RKDeskMode) {
+        let isSecondaryMenuExist = self.children.contains { child in
+            return child is FTSliderHostingControllerProtocol
+        }
+        if !isSecondaryMenuExist {
+            let rect = CGRect(origin: anchorPoint, size: FTPenSliderConstants.secondaryMenuSize)
+            self.addSecondaryMenu(with: mode, rect: rect)
+        } else {
+            self.removeSecondaryMenuIfExist()
+        }
     }
     
     @objc private func stylusTouchesBegan(_ notification: Notification) {
-        self.removePrimaryMenuIfExist()
+        self.removePencilProMenuIfExist()
     }
     
     func getSuitableAnchorPointForPrimaryMenu(with anchorPoint: CGPoint) -> CGPoint {
@@ -87,6 +90,7 @@ extension FTPDFRenderViewController {
         let rack = FTRackData(type: rackType, userActivity: activity)
         let _colorModel =
         FTFavoriteColorViewModel(rackData: rack, delegate: self, scene: self.view?.window?.windowScene)
+        _colorModel.colorSourceOrigin = rect.origin
         let sizeModel =
         FTFavoriteSizeViewModel(rackData: rack, delegate: self, scene: self.view?.window?.windowScene)
         let transparentTouchView = TransparentTouchView(frame: rect)
@@ -125,16 +129,16 @@ extension FTPDFRenderViewController {
     }
 
     func drawCurvedBackground(transparentView: TransparentTouchView, items: Int) {
-        let menuLayer = FTPencilProMenuLayer(strokeColor: UIColor.appColor(.finderBgColor))
+        let menuLayer = FTPencilProMenuLayer(strokeColor: UIColor.init(hexString: "#F2F2F2"))
         let startAngle: CGFloat =  .pi + .pi/20
         let endAngle = self.getEndAngle(with: .pi, with: items)
         let rect = transparentView.bounds
         let center = CGPoint(x: rect.midX, y: rect.midY)
         menuLayer.setPath(with: center, radius: FTPenSliderConstants.sliderRadius, startAngle: startAngle, endAngle: -endAngle)
-        let borderLayer = FTPencilProBorderLayer(strokeColor: .black)
+        let borderLayer = FTPencilProBorderLayer(strokeColor: UIColor.init(hexString: "#E5E5E5"))
         borderLayer.setPath(with: center, radius: FTPenSliderConstants.sliderRadius, startAngle: startAngle, endAngle: -endAngle)
 
-        let hitTestLayer = FTPencilProMenuLayer(strokeColor: .red, lineWidth: 50)
+        let hitTestLayer = FTPencilProMenuLayer(strokeColor: .clear, lineWidth: 50)
         hitTestLayer.setPath(with: center, radius: FTPenSliderConstants.sliderRadius, startAngle: startAngle, endAngle: -endAngle)
         transparentView.layer.insertSublayer(hitTestLayer, at: 0)
         transparentView.layer.insertSublayer(borderLayer, at: 1)
@@ -158,7 +162,7 @@ extension FTPDFRenderViewController {
     }
     
     @objc func removeSecondaryMenuIfExist() {
-        self.children.compactMap { $0 as? FTSliderHostingControllerProtocol }.forEach { $0.removeHost() }
+        self.children.compactMap { $0 as? FTSliderHostingControllerProtocol}.forEach { $0.removeHost() }
         self.view.subviews.compactMap { $0 as? TransparentTouchView }.forEach { $0.removeFromSuperview() }
     }
 }

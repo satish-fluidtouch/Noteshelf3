@@ -30,7 +30,11 @@ class FTPresenterShortcutHostingController: UIHostingController<FTPresenterShort
     }
 }
 
-class FTPresenterSliderShortcutHostingController: FTSliderHostingController<FTPresenterSliderShortcutView> {
+class FTPresenterSliderShortcutHostingController: UIHostingController<FTPresenterSliderShortcutView>, FTSliderHostingControllerProtocol {
+    func removeHost() {
+        self.remove()
+    }
+    
     override init(rootView: FTPresenterSliderShortcutView) {
         super.init(rootView: rootView)
         self.disableSafeArea()

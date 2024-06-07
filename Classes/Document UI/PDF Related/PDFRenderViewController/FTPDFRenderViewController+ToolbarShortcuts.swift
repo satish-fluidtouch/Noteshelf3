@@ -25,6 +25,10 @@ extension FTPDFRenderViewController {
         toolbarContainer.delegate = self
         self.toolTypeContainerVc = toolbarContainer
         toolbarContainer.showToolbar(on: self, for: mode)
+        if let vc = self.children.compactMap({ $0 as? FTPencilProMenuController}).first {
+            let anchorPoint = vc.view.frame.origin
+            showSecondaryMenuIfneeded(with: anchorPoint, mode: mode)
+        }
     }
 
     func showOrHideShortcutViewIfNeeded(_ mode: FTScreenMode) {

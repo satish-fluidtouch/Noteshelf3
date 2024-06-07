@@ -126,11 +126,11 @@ private extension FTPencilProMenuController {
 
     func drawCollectionViewBackground() {
         self.view.layoutIfNeeded()
-        let menuLayer = FTPencilProMenuLayer(strokeColor: UIColor.appColor(.finderBgColor))
+        let menuLayer = FTPencilProMenuLayer(strokeColor: UIColor.init(hexString: "#E8E8E8"))
         let startAngle: CGFloat = .pi + .pi/15
         let endAngle = self.getEndAngle(with: .pi)
         menuLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
-        let borderLayer = FTPencilProBorderLayer(strokeColor: .black)
+        let borderLayer = FTPencilProBorderLayer(strokeColor: UIColor.init(hexString: "#CECECE"))
         borderLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
         self.view.layer.insertSublayer(borderLayer, at: 0)
         self.view.layer.insertSublayer(menuLayer, at: 1)

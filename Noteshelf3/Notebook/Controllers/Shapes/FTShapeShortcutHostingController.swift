@@ -25,7 +25,11 @@ class FTShapeShortcutHostingController: UIHostingController<FTShapeShortcutView>
     }
 }
 
-class FTShapeCurvedShortcutHostingController: FTSliderHostingController<FTShapeCurvedShortcutView> {
+class FTShapeCurvedShortcutHostingController: UIHostingController<FTShapeCurvedShortcutView>, FTSliderHostingControllerProtocol {
+    func removeHost() {
+        self.remove()
+    }
+    
     override init(rootView: FTShapeCurvedShortcutView) {
         super.init(rootView: rootView)
         self.disableSafeArea()

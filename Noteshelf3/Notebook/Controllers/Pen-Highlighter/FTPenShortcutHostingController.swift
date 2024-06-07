@@ -29,21 +29,7 @@ protocol FTSliderHostingControllerProtocol {
     func removeHost()
 }
 
-class FTSliderHostingController<Content: View>: UIHostingController<Content>, FTSliderHostingControllerProtocol {
-    override init(rootView: Content) {
-        super.init(rootView: rootView)
-    }
-    
-    @MainActor required dynamic init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func removeHost() {
-        self.remove()
-    }
-}
-
-class FTPenSliderShortcutHostingController: FTSliderHostingController<FTPenSliderShortcutView> {
+class FTPenSliderShortcutHostingController: UIHostingController<FTPenSliderShortcutView>, FTSliderHostingControllerProtocol {
 
     override init(rootView: FTPenSliderShortcutView) {
         super.init(rootView: rootView)
@@ -57,6 +43,10 @@ class FTPenSliderShortcutHostingController: FTSliderHostingController<FTPenSlide
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .green
+        self.view.backgroundColor = .clear
+    }
+    
+    func removeHost() {
+        self.remove()
     }
 }
