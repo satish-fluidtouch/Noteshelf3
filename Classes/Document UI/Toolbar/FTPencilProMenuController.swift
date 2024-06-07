@@ -147,11 +147,11 @@ private extension FTPencilProMenuController {
 
     func drawCollectionViewBackground() {
         self.view.layoutIfNeeded()
-        let menuLayer = FTPencilProMenuLayer(strokeColor: UIColor.init(hexString: "#E8E8E8"))
+        let menuLayer = FTPencilProMenuLayer(strokeColor: UIColor.appColor(.pencilProMenuBgColor))
         let startAngle: CGFloat = .pi + .pi/15
         let endAngle = self.getEndAngle(with: .pi)
         menuLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
-        let borderLayer = FTPencilProBorderLayer(strokeColor: UIColor.init(hexString: "#CECECE"))
+        let borderLayer = FTPencilProBorderLayer(strokeColor: UIColor.appColor(.pencilProMenuBorderColor))
         borderLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
         self.view.layer.insertSublayer(borderLayer, at: 0)
         self.view.layer.insertSublayer(menuLayer, at: 1)
@@ -213,13 +213,12 @@ final class FTPencilProMenuContainerView: UIView {
     }
 }
 
-final class FTPencilProUndoButton: UIButton {
+class FTPencilProButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setImage(UIImage(named: "desk_tool_undo"), for: .normal)
         self.tintColor = UIColor.label
-        self.backgroundColor = UIColor.appColor(.finderBgColor)
-        self.layer.borderColor = UIColor.black.cgColor
+        self.backgroundColor = UIColor.appColor(.pencilProMenuBgColor)
+        self.layer.borderColor = UIColor.appColor(.pencilProMenuBorderColor).cgColor
         self.layer.borderWidth = 1.0
         self.layer.cornerRadius = self.frame.height/2
     }
@@ -229,17 +228,23 @@ final class FTPencilProUndoButton: UIButton {
     }
 }
 
-final class FTPencilProRedoButton: UIButton {
+final class FTPencilProUndoButton: FTPencilProButton {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.setImage(UIImage(named: "desk_tool_undo"), for: .normal)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+final class FTPencilProRedoButton: FTPencilProButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setImage(UIImage(named: "desk_tool_redo"), for: .normal)
-        self.tintColor = UIColor.label
-        self.backgroundColor = UIColor.appColor(.finderBgColor)
-        self.layer.borderColor = UIColor.black.cgColor
-        self.layer.borderWidth = 1.0
-        self.layer.cornerRadius = self.frame.height/2
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

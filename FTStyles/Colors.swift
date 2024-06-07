@@ -77,7 +77,9 @@ public enum AssetsColor: String, CaseIterable {
     case templatesIconSelectedTint
     case templatesIconTint
     case templatesSelectedTitleTint
-
+    case pencilProMenuBgColor
+    case pencilProMenuBorderColor
+    
     //AccentNew
     case accentBg
     case accentBorder
