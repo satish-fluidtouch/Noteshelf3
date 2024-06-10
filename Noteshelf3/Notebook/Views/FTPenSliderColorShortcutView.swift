@@ -43,6 +43,7 @@ struct FTPenSliderColorShortcutView: View {
         let colorPosition = FavoriteColorPosition.getPosition(index: index)
         if colorPosition == .custom {
             self.customColorView(for: favColor)
+                .hoverEffect()
                 .onTapGesture {
                     self.handleColorSelection(colorModel: favColor)
                     self.viewModel.showEditColorScreen(at: colorPosition, mode: .arc)

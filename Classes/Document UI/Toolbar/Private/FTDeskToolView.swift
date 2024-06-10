@@ -167,7 +167,8 @@ final class FTToolBgButton: UIButton {
         if mode == .circular {
             let bgBounds = self.bounds.insetBy(dx: 2.0, dy: 2.0)
             self.backgroundLayer.frame = bgBounds
-            self.backgroundLayer.cornerRadius = bgBounds.height/2
+            let diameter = min(bgBounds.width, bgBounds.height)
+            self.backgroundLayer.cornerRadius = diameter/2
             self.backgroundLayer.shadowPath = UIBezierPath(ovalIn: self.backgroundLayer.bounds).cgPath
         } else {
             self.backgroundLayer.frame = self.bounds
@@ -184,13 +185,24 @@ final class FTToolBgButton: UIButton {
 
 extension FTDeskToolView: UIPointerInteractionDelegate {
     func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {
+        var pointerStyle: UIPointerStyle?
         if let superView = superview {
             let target = UIDragPreviewTarget(container: superView, center: center)
-            let targetedPreview = UITargetedPreview(view: self.toolButton, parameters: UIPreviewParameters(), target: target)
+            let targetedPreview: UITargetedPreview
+            if self.mode == .circular {
+                let diameter = min(self.toolButton.bounds.width, self.toolButton.bounds.height)
+                let previewView = UIView(frame: CGRect(x: 0, y: 0, width: diameter, height: diameter))
+                previewView.layer.cornerRadius = diameter/2
+                targetedPreview = UITargetedPreview(view: previewView, parameters: UIPreviewParameters(), target: target)
+            } else {
+                let previewView = UIView()
+                previewView.frame = self.toolButton?.bounds.insetBy(dx: 2, dy: 4) ?? .zero
+                targetedPreview = UITargetedPreview(view: previewView, parameters: UIPreviewParameters(), target: target)
+            }
             let pointerEffect = UIPointerEffect.highlight(targetedPreview)
-            return UIPointerStyle(effect: pointerEffect)
+            pointerStyle = UIPointerStyle(effect: pointerEffect)
         }
-        return nil
+        return pointerStyle
     }
 }
 
