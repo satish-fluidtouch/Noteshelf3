@@ -24,6 +24,7 @@ struct FTURLOptions {
 struct FTImportItemInfo {
     let collection: String
     let group: String
+    let notebook: String
 }
 
 @objcMembers class FTImportItem : NSObject

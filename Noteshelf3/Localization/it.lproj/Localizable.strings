@@ -985,6 +985,7 @@
 "color.resetToDefault" = "Ripristina predefiniti";
 "color.restoreAll" = "Ripristina tutto";
 "color.restorePresetColors.message" = "Sei sicuro di voler ripristinare tutti i colori predefiniti?";
+"colors.presets.spectrum" = "Spettro";
 "continue" = "Continua";
 "convertToText.copiedToClipBoard" = "Copiato negli appunti";
 "convertToText.customDictionary" = "Dizionario personalizzato";
@@ -1159,6 +1160,10 @@
 "icloud.sync.issue.message" = "Impossibile connettersi a iCloud. Assicurati che iCloud sia attivato nelle impostazioni.";
 "iconlabels" = "Etichette delle icone";
 "import" = "Importa";
+"import.multiple.files" = "%@ file inviati a Noteshelf";
+"import.notsupported.desc" = "Questo tipo di file non è supportato al momento.";
+"import.notsupported.title" = "Impossibile importare il file";
+"import.single.files" = "%@ file inviato a Noteshelf";
 "importedFiles" = "File importati";
 "importedTo" = "Importato a";
 "insidenotebook.share.pageno" = "pagina %@";
@@ -1193,7 +1198,9 @@
 "more.globalsettings.caps" = "IMPOSTAZIONI GLOBALI";
 "more.settings.footer" = "Queste impostazioni vengono applicate globalmente a tutti i tuoi notebook.";
 "moreInfo" = "Ulteriori informazioni...";
+"more_global" = "IMPOSTAZIONI GLOBALI";
 "move" = "Sposta";
+"multiple.files" = "%@file";
 "newnotebook" = "NUOVO NOTEBOOK";
 "newnotebook.create" = "Creare";
 "newnotebook.exitalert.message" = "Vuoi continuare?";
@@ -1283,6 +1290,7 @@
 "reset" = "Ripristina";
 "retry" = "Ritentare";
 "save" = "Salva";
+"saveAsTemplate_message" = "Il modello verrà salvato nella sezione Personalizzata in Modelli.";
 "school" = "Scuola";
 "search.tryNewSearch" = "Prova una nuova ricerca";
 "seeAll" = "Mostra tutto";
@@ -1495,6 +1503,7 @@
 "sidebar.topSection.home" = "Casa";
 "sidebar.topSection.starred" = "Marcato";
 "sidebar.topSection.unfiled" = "Non classificato";
+"single.file" = "%@file";
 "snippets.addtopage" = "Aggiungi alla pagina";
 "speechbubbles" = "Bolle di testo";
 "status_bar_info_footer" = "Ti piace Noteshelf? %@ per valutarci sull'App Store. Ci aiuterà più di quanto potresti immaginare.";
@@ -1673,4 +1682,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
+// Last Synced by Fluid Touch on 28 May 2024 at 7:20 PM

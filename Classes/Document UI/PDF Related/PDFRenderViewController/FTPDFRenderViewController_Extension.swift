@@ -61,6 +61,7 @@ extension FTPDFRenderViewController {
     //MARK:- Custom
     @objc @discardableResult func insertFileItem(_ item : FTImportItem,
                                                  atIndex : Int,
+                                                 actionType: FTAudioActionType = .addToCurrentPage,
                                                  onCompletion : @escaping ((Bool,NSError?) -> Void)) -> Progress
     {
         let importer = FTFileImporter();
@@ -75,7 +76,11 @@ extension FTPDFRenderViewController {
                 print(error.localizedDescription)
             }
             if let dataOfImage = imageData, let image = UIImage(data: dataOfImage) {
-                self.insert([image], center: CGPoint.zero, droppedPoint: .zero, source: FTInsertImageSourceInsertFrom)
+                if actionType == .addToNewPage {
+                    self.insertImageIntoNewPage(img: image)
+                } else {
+                    self.insert([image], center: CGPoint.zero, droppedPoint: .zero, source: FTInsertImageSourceInsertFrom)
+                }
             }
             self.pdfDocument.isDirty = true
             progress.completedUnitCount += 1;
@@ -84,7 +89,7 @@ extension FTPDFRenderViewController {
                 if isSupportedAudioFile(fileURL.path) {
                     let item = FTAudioFileToImport.init(withURL: fileURL)
                     item.fileName = fileURL.deletingPathExtension().lastPathComponent
-                    if let subProgress = self.addRecordingToPage(actionType: .addToCurrentPage,
+                    if let subProgress = self.addRecordingToPage(actionType: actionType,
                                                                  audio: item,
                                                                  onCompletion: onCompletion) {
                         progress.addChild(subProgress, withPendingUnitCount: 1);
@@ -138,6 +143,13 @@ extension FTPDFRenderViewController {
             progress.addChild(subProgress, withPendingUnitCount: 1);
         }
         return progress;
+    }
+    
+    func insertImageIntoNewPage(img: UIImage) {
+        if let document = self.pdfDocument as? FTNoteshelfDocument ,
+            let currentPage = self.firstPageController()?.pdfPage {
+            document.insertImageInDocument(img,shouldAddNewPage: true, currentPage: currentPage)
+        }
     }
 
     @objc func openSettingsPage()
@@ -430,9 +442,9 @@ extension FTPDFRenderViewController: FTNotebookMoreOptionsDelegate {
             if let thumbnailable = page as? FTThumbnailable {
                 self.bookMarkAction(page:thumbnailable)
             }
-        case .saveAsTemplate:
+        case .saveAsTemplate(let fileName):
             controller.dismiss(animated: true) {[weak self] in
-                self?.savePageAsTemplate(with: page)
+                self?.savePageAsTemplate(with: page, fileName: fileName)
             }
         case .present:
             self.switchToPresentMode(settingsController: controller)
@@ -454,10 +466,11 @@ extension FTPDFRenderViewController: FTNotebookMoreOptionsDelegate {
         self.prepareShareInfo(completion: completion)
     }
     
-    func savePageAsTemplate(with page: FTPageProtocol) {
+    func savePageAsTemplate(with page: FTPageProtocol, fileName: String) {
         let target = FTExportTarget()
         let reqItem = self.shelfItemManagedObject.documentItemProtocol
         let item = FTItemToExport(shelfItem: reqItem)
+        item.filename = fileName
         target.itemsToExport = [item]
         target.notebook = page.parentDocument
         target.pages = [page]

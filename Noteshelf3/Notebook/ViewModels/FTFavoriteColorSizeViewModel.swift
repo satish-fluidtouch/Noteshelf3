@@ -118,9 +118,9 @@ extension FTFavoriteColorViewModel {
     }
 
     func updateCurrentSelection(colorHex: String) {
+        self.currentSelectedColor = colorHex
         if self.currentPenset.color != colorHex {
             self.currentPenset.color = colorHex
-            self.currentSelectedColor = colorHex
             self.rackData.currentPenset = self.currentPenset
             self.rackData.saveFavoriteColors(self.favoriteColors, type: self.currentPenset.type)
             self.delegate?.didChangeCurrentPenset(self.currentPenset, dismissSizeEditView: true)
@@ -196,14 +196,13 @@ extension FTFavoriteSizeViewModel {
 
     func updateCurrentPenSize(size: CGFloat, sizeMode: FTFavoriteSizeMode) {
         let formattedSize = size.roundToDecimal(1)
-        if formattedSize != self.currentSelectedSize {
-            self.currentSelectedSize = formattedSize
+        self.currentSelectedSize = formattedSize
+        if formattedSize != self.currentPenset.preciseSize {
             if let penSize = FTPenSize(rawValue: formattedSize.rounded().toInt) {
                 self.currentPenset.size = penSize
             }
             self.currentPenset.preciseSize = formattedSize
             self.rackData.currentPenset = self.currentPenset
-            self.rackData.saveFavoriteSizes(self.favoritePenSizes, type: self.currentPenset.type)
             self.delegate?.didChangeCurrentPenset(self.currentPenset, dismissSizeEditView: sizeMode == .sizeSelect)
         }
     }
@@ -213,6 +212,7 @@ extension FTFavoriteSizeViewModel {
         if let index = self.sizeEditPostion?.rawValue, index < self.favoritePenSizes.count  {
             let sizeModel = FTPenSizeModel(size: formattedSize, isSelected: true)
             self.favoritePenSizes[index] = sizeModel
+            self.rackData.saveFavoriteSizes(self.favoritePenSizes, type: self.currentPenset.type)
         }
     }
 
@@ -237,11 +237,10 @@ extension FTFavoriteSizeViewModel {
 
 extension FTPenType {
     func getIndicatorSize(using sizeValue: CGFloat) -> CGSize {
-        let floatSize = Float(sizeValue)
         var reqSize: CGSize = .zero
         if let penSize = FTPenSize(rawValue: Int(sizeValue)) {
             if self.isHighlighterPenType() {
-                var width = penSize.maxDisplaySize(penType: self)
+                let width = penSize.maxDisplaySize(penType: self)
                 var scale = penSize.scaleToApply(penType: self, preciseSize: sizeValue)
                 scale = scale*0.8
                 reqSize = CGSize(width: width*scale, height: width*scale)

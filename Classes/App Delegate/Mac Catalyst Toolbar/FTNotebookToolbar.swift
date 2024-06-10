@@ -50,7 +50,7 @@ class FTNotebookToolbar: NSToolbar {
             
             if let item = self?.toolbarItem(FTDeskCenterPanelTool.scrolling.toolbarIdentifier) {
                 let layout = UserDefaults.standard.pageLayoutType
-                item.image = UIImage(named: layout.toolIconName)
+                item.image = UIImage(named: layout.oppositeToolIconName)
             }
         }
     }

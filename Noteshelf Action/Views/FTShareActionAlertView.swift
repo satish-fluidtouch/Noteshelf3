@@ -8,11 +8,20 @@
 
 import Foundation
 
+protocol FTShareAlertDelegate: AnyObject {
+    func doneButtonAction()
+}
+
 class FTShareActionAlertView: UIView {
     @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var unsupportedDescLabel: UILabel!
+    @IBOutlet weak var unsupportedDoneButton: UIButton!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var alertTitle: UILabel!
+    @IBOutlet weak var unSupportedTiitleLabel: UILabel!
+    weak var del: FTShareAlertDelegate?
     @IBOutlet weak var animationImageView: UIImageView!
+    @IBOutlet weak var unspportedFileView: UIView!
     @IBOutlet weak var alertStackView: UIStackView!
     var numberOfSharedItems = 0
     var animationState = FTAnimationState.none {
@@ -29,6 +38,27 @@ class FTShareActionAlertView: UIView {
         self.doneButton.layer.cornerRadius = 10
         self.animationState = .none
         self.isHidden = true
+        doneButton.layer.borderWidth = 1
+        doneButton.layer.borderColor = UIColor.appColor(.accent).cgColor
+        unsupportedDoneButton.layer.borderWidth = 1
+        unsupportedDoneButton.layer.borderColor = UIColor.appColor(.accent).cgColor
+    }
+    
+    @IBAction func onDoneTapped(_ sender: Any) {
+        del?.doneButtonAction()
+    }
+    
+    func showUnsupportedAlert() {
+        self.isHidden = false
+        unSupportedTiitleLabel.text = "import.notsupported.title".localized
+        unsupportedDescLabel.text = "import.notsupported.desc".localized
+        unsupportedDoneButton.layer.cornerRadius = 10
+        self.alertStackView.isHidden = true
+        self.unspportedFileView.isHidden = false
+        self.unspportedFileView.alpha = 0.0
+        UIView.animate(withDuration: 0.1, animations: {
+            self.unspportedFileView.alpha = 1.0
+        });
     }
 
     func updateAlert() {
@@ -43,7 +73,9 @@ class FTShareActionAlertView: UIView {
         case .ended:
             self.isHidden = false
             self.animationImageView.image = UIImage(named: "animation_end")
-            self.alertTitle.text = "\(numberOfSharedItems) files sent to Noteshelf"
+            let text = (numberOfSharedItems > 1) ? "import.multiple.files" : "import.single.files"
+            let count = "\(numberOfSharedItems)"
+            self.alertTitle.text = (String(format: text.localized, count))
             self.doneButton.isHidden = false
             break
         }

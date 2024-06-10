@@ -13,6 +13,7 @@ enum FTColorsFlowType {
     case lasso
     case shape
     case text
+    case favorites
 
     var typeKey: String {
         let key: String
@@ -25,6 +26,8 @@ enum FTColorsFlowType {
             key = "Shape"
         case .text:
             key = "Text"
+        case .favorites:
+            key = "favorites"
         }
         return key
     }
@@ -33,17 +36,43 @@ enum FTColorsFlowType {
 enum FTPenColorSegment: String {
     case presets
     case grid
+    case spectrum
+    
+    private var isEditSegment: Bool {
+        var status = true
+        if self == .presets {
+            status = false
+        }
+        return status
+    }
 
-    func saveSelection(for flow: FTColorsFlowType) {
-        let key = "SegmentType" + "_" + flow.typeKey
+    func saveSelection(for flow: FTColorsFlowType, colorMode: FTPenColorMode = .select) {
+        var key = "SegmentType" + "_" + flow.typeKey
+        if colorMode == .presetEdit {
+            key += "_Edit"
+        }
         UserDefaults.standard.set(self.rawValue, forKey: key)
     }
 
-    static func savedSegment(for flow: FTColorsFlowType) -> FTPenColorSegment {
+    var contentSize: CGSize {
+        var size = CGSize(width: 320.0, height: 390.0)
+        if self == .presets {
+            size = CGSize(width: 320.0, height: 281.0)
+        }
+        return size
+    }
+
+    static func savedSegment(for flow: FTColorsFlowType, colorMode: FTPenColorMode = .select) -> FTPenColorSegment {
         var mode: FTPenColorSegment = .presets
-        let key = "SegmentType" + "_" + flow.typeKey
+        var key = "SegmentType" + "_" + flow.typeKey
+        if colorMode == .presetEdit {
+            key += "_Edit"
+        }
         if let savedSegment = UserDefaults.standard.string(forKey: key), let colorEditSegment = FTPenColorSegment(rawValue: savedSegment) {
             mode = colorEditSegment
+        }
+        if colorMode == .presetEdit && !mode.isEditSegment {
+            mode = .grid
         }
         return mode
     }

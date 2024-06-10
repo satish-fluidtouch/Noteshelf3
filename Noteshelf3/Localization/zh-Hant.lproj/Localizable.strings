@@ -985,6 +985,7 @@
 "color.resetToDefault" = "重置為默認";
 "color.restoreAll" = "恢復全部";
 "color.restorePresetColors.message" = "您確定要恢復為所有默認顏色嗎？";
+"colors.presets.spectrum" = "光譜";
 "continue" = "繼續";
 "convertToText.copiedToClipBoard" = "已複製到剪貼板";
 "convertToText.customDictionary" = "自定義詞典";
@@ -1159,6 +1160,10 @@
 "icloud.sync.issue.message" = "無法連接到 iCloud。 請確保 iCloud 在設定中已開啟。";
 "iconlabels" = "圖標標籤";
 "import" = "導入";
+"import.multiple.files" = "@% 個文件發送到Noteshelf";
+"import.notsupported.desc" = "此檔案類型目前不受支援。";
+"import.notsupported.title" = "無法匯入檔案";
+"import.single.files" = "@% 個文件發送到Noteshelf";
 "importedFiles" = "導入的文件";
 "importedTo" = "導入至";
 "insidenotebook.share.pageno" = "頁面 %@";
@@ -1193,7 +1198,9 @@
 "more.globalsettings.caps" = "全域設定";
 "more.settings.footer" = "這些設定將全域應用於您的所有筆記本。";
 "moreInfo" = "更多資訊";
+"more_global" = "全域";
 "move" = "移動";
+"multiple.files" = "@% 個文件";
 "newnotebook" = "新筆記本";
 "newnotebook.create" = "創建";
 "newnotebook.exitalert.message" = "你想繼續嗎？";
@@ -1283,6 +1290,7 @@
 "reset" = "重置";
 "retry" = "重試";
 "save" = "儲存";
+"saveAsTemplate_message" = "模板將保存在模板的自訂部分中。";
 "school" = "學校";
 "search.tryNewSearch" = "嘗試新的搜索";
 "seeAll" = "看全部";
@@ -1495,6 +1503,7 @@
 "sidebar.topSection.home" = "主页";
 "sidebar.topSection.starred" = "標記";
 "sidebar.topSection.unfiled" = "未歸檔";
+"single.file" = "@% 個文件";
 "snippets.addtopage" = "添加到新頁面";
 "speechbubbles" = "對話框";
 "status_bar_info_footer" = "喜歡 Noteshelf 嗎？%@ 在 App Store 上為我們評分。 它對我們的幫助將超越您的想像。";
@@ -1673,4 +1682,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
+// Last Synced by Fluid Touch on 28 May 2024 at 7:20 PM

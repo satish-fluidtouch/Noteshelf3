@@ -1483,21 +1483,34 @@ extension FTShelfSplitViewController {
                                                                                        from: self,
                                                                                        withText: NSLocalizedString("Creating", comment: "Creating..."))
             self.currentShelfViewModel?.removeObserversForShelfItems()
-            self.createNotebookWithAudioItem(nil, isiWatchDocument: false,
-                                             collection: self.shelfItemCollection,
-                                             groupItem: self.currentShelfViewModel?.groupItem) { [weak self](shelfItem, error) in
-                guard let `self` = self,available else { return }
-                loadingIndicatorViewController.hide();
-                if error == nil, let shelfItem {
-                    self.currentShelfViewModel?.addObserversForShelfItems()
-                    self.currentShelfViewModel?.setcurrentActiveShelfItemUsing(shelfItem, isQuickCreated: true)
-                    self.showNotebookAskPasswordIfNeeded(shelfItem, animate: true, pin: nil, addToRecent: false, isQuickCreate: false, createWithAudio: true) { _, success in
-                        //For mac, audio note will be added at FTBookSessionRootViewController level.
-                        #if !targetEnvironment(macCatalyst)
-                        if success, let rootController = self.parent as? FTRootViewController {
-                            rootController.startRecordingOnAudioNotebook()
+
+            if nil == self.shelfItemCollection {
+                FTNoteshelfDocumentProvider.shared.uncategorizedNotesCollection { collection in
+                    if let collection {
+                        createNotebookWithAudio(collection: collection)
+                    }
+                }
+            } else {
+                createNotebookWithAudio(collection: shelfItemCollection)
+            }
+
+            func createNotebookWithAudio(collection: FTShelfItemCollection?) {
+                self.createNotebookWithAudioItem(nil, isiWatchDocument: false,
+                                                 collection: collection,
+                                                 groupItem: self.currentShelfViewModel?.groupItem) { [weak self](shelfItem, error) in
+                    guard let `self` = self,available else { return }
+                    loadingIndicatorViewController.hide();
+                    if error == nil, let shelfItem {
+                        self.currentShelfViewModel?.addObserversForShelfItems()
+                        self.currentShelfViewModel?.setcurrentActiveShelfItemUsing(shelfItem, isQuickCreated: true)
+                        self.showNotebookAskPasswordIfNeeded(shelfItem, animate: true, pin: nil, addToRecent: false, isQuickCreate: false, createWithAudio: true) { _, success in
+                            //For mac, audio note will be added at FTBookSessionRootViewController level.
+#if !targetEnvironment(macCatalyst)
+                            if success, let rootController = self.parent as? FTRootViewController {
+                                rootController.startRecordingOnAudioNotebook()
+                            }
+#endif
                         }
-                        #endif
                     }
                 }
             }

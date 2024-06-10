@@ -20,7 +20,7 @@ class FTImportListTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.spinnerImage?.image = UIImage.init(named: "spinner")
-        // Initialization code
+        iconImageView?.addShadow(color: .black.withAlphaComponent(0.2), offset: CGSize(width: 0, height: 4), opacity: 1, shadowRadius: 4)
     }
 
     func configureCell(_ actionModel: FTSharedAction) {
@@ -52,24 +52,15 @@ class FTImportListTableViewCell: UITableViewCell {
                                                     attributes: attrs);
         }
         categoryNameLbl?.attributedText = stringToSet;
-
-        let urlString = actionModel.fileURL
-        if !urlString.isEmpty {
-            let type = MIMETypeFileAtPath(urlString)
-            var image = UIImage(named: "doc-icon-unknown")
-            if (type?.contains("application/pdf"))! {
-                image = UIImage(named: "iconPdf")
-            } else if (type?.contains("audio"))! {
-                image = UIImage(named: "welcome_popoverAudio")
+        let relativePath = URL(fileURLWithPath: docHash).relativePathWRTCollection()
+        if let iconImageView {
+            FTNoteshelfDocumentProvider.shared.getShelfItemDetails(relativePath: relativePath, igrnoreIfNotDownloaded: true) { shelfItemColleciton, groupItem, shelfItem in
+                if let shelfItem {
+                    self.readThumbnailFor(item: shelfItem, imageView: iconImageView)
+                } else {
+                    iconImageView.image = UIImage(named: "doc-icon-unknown");
+                }
             }
-            else if (type?.contains("pdf"))! {
-                image = UIImage(named: "iconImage")
-            }
-            else if (type?.contains(UTI_TYPE_NOTESHELF_BOOK))! {
-                image = UIImage(named: "doc-icon-noteshelffile")
-            }
-            
-            iconImageView?.image = image
         }
         
         self.spinnerImage?.image = UIImage(named: actionModel.importStatus.statusImage());
@@ -82,5 +73,17 @@ class FTImportListTableViewCell: UITableViewCell {
         else {
             self.spinnerImage?.startAnimation()
         }
+    }
+    
+    fileprivate func readThumbnailFor(item : FTShelfItemProtocol,imageView : UIImageView) {
+        weak var weakimageView = imageView;
+        var token : String?;
+        token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(item, onCompletion: { (image, imageToken) in
+            if(image != nil && token == imageToken) {
+                weakimageView?.image = image;
+            } else {
+                weakimageView?.image = UIImage(named: "doc-icon-unknown");
+            }
+        });
     }
 }

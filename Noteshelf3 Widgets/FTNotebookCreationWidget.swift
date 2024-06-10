@@ -6,81 +6,80 @@
 //  Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.
 //
 
-import Foundation
 import WidgetKit
 import SwiftUI
 import FTCommon
 import AppIntents
 
 struct NotebookCreation_WidgetsEntryView : View {
+    private let type: FTWidgetType = .medium
+
     var body: some View {
-        VStack(spacing:16.0) {
-            headerView
-                .frame(height: 24,alignment: .center)
-            optionsView
-        }
-        .frame(maxHeight: .infinity, alignment: .top)
-        .padding(.horizontal,16)
-        .padding(.vertical,16)
-    }
-    private var optionsView : some View {
-        Grid(alignment: .center, horizontalSpacing: 4,verticalSpacing: 4 ) {
-            GridRow {
-                optionViewForType(.quickNote, intent: QuickNoteIntent())
-                optionViewForType(.newNotebook, intent: NewNotebookIntent())
+        GeometryReader { geometry in
+            VStack(spacing: self.getHeightPercentFactor(using: geometry, for: 16, for: type)) {
+                headerView(geometry: geometry)
+                    .frame(height: self.getHeightPercentFactor(using: geometry, for: 24, for: type),alignment: .center)
+                optionsView(geometry: geometry)
             }
-            GridRow {
-                optionViewForType(.audioNote, intent: AudioNoteIntent())
-                optionViewForType(.scan, intent: ScanIntent())
-            }
+            .frame(maxHeight: .infinity, alignment: .top)
+            .padding(.horizontal,self.getWidthPercentFactor(using: geometry, for: 16, for: type))
+            .padding(.vertical,self.getHeightPercentFactor(using: geometry, for: 16, for: type))
         }
     }
-    private func optionViewForType(_ type : FTNotebookCreateWidgetActionType, intent: any AppIntent) -> some View {
+    private func optionsView(geometry: GeometryProxy) -> some View {
+        Grid(alignment: .center, horizontalSpacing: self.getHeightPercentFactor(using: geometry, for: 4, for: type),verticalSpacing: self.getHeightPercentFactor(using: geometry, for: 4, for: type)) {
+            GridRow {
+                optionViewForType(.quickNote, intent: QuickNoteIntent(), geometry: geometry)
+                optionViewForType(.newNotebook, intent: NewNotebookIntent(), geometry: geometry)
+            }
+            GridRow {
+                optionViewForType(.audioNote, intent: AudioNoteIntent(), geometry: geometry)
+                optionViewForType(.scan, intent: ScanIntent(), geometry: geometry)
+            }
+        }
+    }
+    private func optionViewForType(_ type : FTNotebookCreateWidgetActionType, intent: any AppIntent, geometry: GeometryProxy) -> some View {
         Button(intent: intent) {
-            actionViewForType(type)
+            actionViewForType(type, geometry: geometry)
         }
         .buttonStyle(CustomButtonStyle())
     }
 
-    private var headerView : some View {
-        HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, spacing:10) {
+    private func headerView(geometry: GeometryProxy) -> some View {
+        HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, spacing: self.getWidthPercentFactor(using: geometry, for: 10, for: type)) {
             Image("appIconSmall")
-                .frame(width: 22,height: 22,alignment: .center)
-                .padding(.leading,8)
+                .frame(height: self.getWidthPercentFactor(using: geometry, for: 22, for: type))
+                .aspectRatio(1, contentMode: .fit)
+                .padding(.leading,self.getWidthPercentFactor(using: geometry, for: 8, for: type))
             Text("Noteshelf")
-                .frame(height: 24, alignment: .center)
+                .frame(height: self.getWidthPercentFactor(using: geometry, for: 24, for: type))
                 .font(.clearFaceFont(for: .bold, with: 17))
             Spacer()
-            if #available(iOS 17.0, *) {
-                Button(intent: SearchIntent()) {
-                    Image("searchIcon")
-                        .frame(width: 24,height: 24)
-                }
-                .frame(width: 24,height: 24,alignment: .center)
-                .border(.clear, width: 0)
-                .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
-                .buttonStyle(.plain)
-            } else {
-                Button(action: {
-
-                }, label: {
-                    Text("Button")
-                })
+            Button(intent: SearchIntent()) {
+                Image("searchIcon")
+                    .frame(height: self.getHeightPercentFactor(using: geometry, for: 24, for: type))
             }
+            .frame(height: self.getHeightPercentFactor(using: geometry, for: 24, for: type))
+            .aspectRatio(1, contentMode: .fit)
+            .border(.clear, width: 0)
+            .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
+            .buttonStyle(.plain)
         }
     }
-    private func actionViewForType(_ type : FTNotebookCreateWidgetActionType) -> some View {
-        return HStack(alignment: .center, spacing:10) {
+    private func actionViewForType(_ type : FTNotebookCreateWidgetActionType, geometry: GeometryProxy, widgetType: FTWidgetType = .medium) -> some View {
+        return HStack(alignment: .center, spacing:self.getWidthPercentFactor(using: geometry, for: 10, for: widgetType)) {
             if type.hasASystemIcon {
                 Image(systemName: type.iconName)
-                    .frame(width: 24,height: 24,alignment: .center)
-                    .padding(.leading,12)
+                    .frame(height: self.getHeightPercentFactor(using: geometry, for: 24, for: widgetType))
+                    .aspectRatio(1, contentMode: .fit)
+                    .padding(.leading,self.getWidthPercentFactor(using: geometry, for: 12, for: widgetType))
                     .foregroundStyle(Color("creationWidgetButtonTint"))
                     .font(.appFont(for: .medium, with: 16))
             } else {
                 Image("\(type.iconName)")
-                    .frame(width: 24,height: 24,alignment: .center)
-                    .padding(.leading,12)
+                    .frame(height: self.getHeightPercentFactor(using: geometry, for: 24, for: widgetType))
+                    .aspectRatio(1, contentMode: .fit)
+                    .padding(.leading,self.getWidthPercentFactor(using: geometry, for: 12, for: widgetType))
                     .scaledToFit()
                     .foregroundStyle(Color("creationWidgetButtonTint"))
             }
@@ -99,6 +98,7 @@ struct CustomButtonStyle: ButtonStyle {
 
     }
 }
+
 @available(iOS 17.0, *)
 #Preview(as: .systemMedium) {
     NotebookCreation_Widget()
@@ -106,4 +106,16 @@ struct CustomButtonStyle: ButtonStyle {
     SimpleEntry(date: .now, emoji: "😀")
 }
 
+extension View {
+    func getWidthPercentFactor(using geometry: GeometryProxy, for value: CGFloat, for type: FTWidgetType) -> CGFloat {
+        let baseWidth = type.size.width
+        let reqValue = (value/baseWidth) *  geometry.size.width
+        return reqValue
+    }
 
+    func getHeightPercentFactor(using geometry: GeometryProxy, for value: CGFloat, for type: FTWidgetType) -> CGFloat {
+         let baseHeight = type.size.height
+         let reqValue = (value/baseHeight) *  geometry.size.height
+        return reqValue
+    }
+}
