@@ -18,19 +18,24 @@ extension FTPDFRenderViewController {
     }
 
     private func addShortcutContainer(mode: RKDeskMode) {
-        let toolbarContainer = FTShortcutToolPresenter()
-        if let toolbar = self.parent as? FTToolbarElements {
-            toolbarContainer.screenMode =  toolbar.isInFocusMode() ? .focus : .normal
-        }
-        toolbarContainer.delegate = self
-        self.toolTypeContainerVc = toolbarContainer
-        toolbarContainer.showToolbar(on: self, for: mode)
         if let vc = self.children.compactMap({ $0 as? FTPencilProMenuController}).first {
             let anchorPoint = vc.view.frame.origin
             showSecondaryMenuIfneeded(with: anchorPoint, mode: mode)
+        } else {
+            let toolbarContainer = FTShortcutToolPresenter()
+            if let toolbar = self.parent as? FTToolbarElements {
+                toolbarContainer.screenMode =  toolbar.isInFocusMode() ? .focus : .normal
+            }
+            toolbarContainer.delegate = self
+            self.toolTypeContainerVc = toolbarContainer
+            toolbarContainer.showToolbar(on: self, for: mode)
         }
     }
 
+    func moveShortcutViewCenterAway() {
+        self.toolTypeContainerVc?.moveShortcutViewAway(using: &self.toolTypeContainerVc.shortcutView.center)
+    }
+    
     func showOrHideShortcutViewIfNeeded(_ mode: FTScreenMode) {
         if let container = self.toolTypeContainerVc {
             container.configureShortcutView(with: mode, animate: true)

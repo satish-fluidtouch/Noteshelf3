@@ -173,6 +173,12 @@ class FTDocumentRenderViewController: UIViewController {
         self.view.layoutIfNeeded()
     }
     
+    func removeAndReAddSecondaryToolbar() {
+        self.documentViewController.removePencilProMenuIfExist()
+        self.documentViewController.showToolbarShortcutControllerIfNeeded(mode: documentViewController.currentDeskMode)
+        self.documentViewController.moveShortcutViewCenterAway()
+    }
+    
     func updateScreenModeIfNeeded(_ mode: FTScreenMode) {
         self.toolBarView?.screenMode = mode
         self.updateUIWithMode(mode)
@@ -269,7 +275,7 @@ class FTDocumentRenderViewController: UIViewController {
         }
         self.deskBarDelegate = documentViewController
         self.deskPanelActionDelegate = documentViewController
-        self.deskToolbarController?.updateDeskToolbarDelegate(self, actionDelegate: self)
+//        self.deskToolbarController?.updateDeskToolbarDelegate(self, actionDelegate: self)
         (documentViewController.pdfDocument as? FTRecognitionHelper)?.recognitionHelper?.startPendingRecognition()
         if FTVisionNotebookRecognitionHelper.supportsImageToTextRecognition() {
             (documentViewController.pdfDocument as? FTRecognitionHelper)?.visionRecognitionHelper?.startImageTextRecognition()
@@ -295,6 +301,7 @@ private extension FTDocumentRenderViewController {
             }
             self.view.bringSubviewToFront(toolBarView)
             self.deskToolbarController = toolbarVc
+            self.deskToolbarController?.updateDeskToolbarDelegate(self, actionDelegate: self)
         }
     }
 }

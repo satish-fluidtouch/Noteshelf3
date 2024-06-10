@@ -622,7 +622,10 @@
         [self performSelector:@selector(performLayout) withObject:nil afterDelay:0.01];
     }
     [[self navigationController]setNavigationBarHidden:YES animated:NO];
-    [[self toolTypeContainerVc] updatePositionOnScreenSizeChangeWithForcibly:FALSE];
+    if (!CGSizeEqualToSize(self.size, self.view.frame.size)) {
+        self.size = self.view.frame.size;
+        [[self toolTypeContainerVc] updatePositionOnScreenSizeChangeWithForcibly:FALSE];
+    }
 }
 
 -(void)performLayout

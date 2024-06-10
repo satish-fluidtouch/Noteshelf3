@@ -160,20 +160,21 @@ final class FTToolBgButton: UIButton {
         self.backgroundLayer.removeFromSuperlayer()
         self.backgroundLayer.backgroundColor = UIColor.appColor(.white100).cgColor
         self.backgroundLayer.shadowOpacity = 0.0
-        self.backgroundLayer.shadowColor = UIColor.label.withAlphaComponent(0.12).cgColor
+        self.backgroundLayer.shadowColor = UIColor.black.withAlphaComponent(0.12).cgColor
         self.backgroundLayer.shadowOpacity = 1.0
-        self.backgroundLayer.shadowOffset = CGSize(width: 0, height: 4.0)
-        self.backgroundLayer.shadowRadius = 8
+        self.backgroundLayer.shadowOffset = CGSize(width: 0, height: 2.0)
+        self.backgroundLayer.shadowRadius = 4.0
         if mode == .circular {
-            let bgBounds = self.bounds.insetBy(dx: 2.0, dy: 2.0)
+            let bgBounds = self.bounds.insetBy(dx: 1.0, dy: 1.0)
             self.backgroundLayer.frame = bgBounds
             let diameter = min(bgBounds.width, bgBounds.height)
             self.backgroundLayer.cornerRadius = diameter/2
-            self.backgroundLayer.shadowPath = UIBezierPath(ovalIn: self.backgroundLayer.bounds).cgPath
+            self.backgroundLayer.shadowPath = UIBezierPath(roundedRect: bgBounds, cornerRadius: diameter/2).cgPath
         } else {
-            self.backgroundLayer.frame = self.bounds
+            let bounds = self.bounds.insetBy(dx: 2.0, dy: 2.0)
+            self.backgroundLayer.frame = bounds
             self.backgroundLayer.cornerRadius = 7.0
-            self.backgroundLayer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: 7).cgPath
+            self.backgroundLayer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: 7).cgPath
         }
         self.layer.insertSublayer(self.backgroundLayer, below: imageView?.layer)
     }

@@ -366,10 +366,13 @@ extension FTiOSDeskToolbarController {
 
     @objc private func focusViewTapped() {
         if let focusModeView = self.focusModeView {
+            if let parent = self.parent as? FTDocumentRenderViewController {
+                parent.removeAndReAddSecondaryToolbar()
+            }
             self.updateScreenModeIfNeeded(.normal)
             FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_focusmode_toggle, params: ["toggle": "off"])
+            self.actionDelegate?.didTapRightPanelTool(FTDeskRightPanelTool.focus, source: focusModeView, mode: .normal)
             UIView.animate(withDuration: 0.3) {
-                self.actionDelegate?.didTapRightPanelTool(FTDeskRightPanelTool.focus, source: focusModeView, mode: .normal)
                 focusModeView.removeFromSuperview()
             }
         }

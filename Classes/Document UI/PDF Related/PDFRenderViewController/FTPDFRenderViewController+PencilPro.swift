@@ -58,19 +58,16 @@ extension FTPDFRenderViewController {
     }
     
     func getSuitableAnchorPointForPrimaryMenu(with anchorPoint: CGPoint) -> CGPoint {
-        let offset: CGFloat = 125
         var point = anchorPoint
-        if anchorPoint.x < offset {
-            point.x = offset
+        point.x = max(200, anchorPoint.x)
+        point.y = max(240, anchorPoint.y)
+        
+        let offset: CGFloat = 175
+        if anchorPoint.x > self.view.frame.maxX - offset {
+            point.x = self.view.frame.maxX - offset
         }
-        if anchorPoint.y < offset {
-            point.y = offset
-        }
-        if anchorPoint.x > self.view.frame.maxX - offset - 50 {
-            point.x = self.view.frame.maxX - offset - 50
-        }
-        if anchorPoint.y > self.view.frame.maxY - offset - 50 {
-            point.y = self.view.frame.maxY - offset - 50
+        if anchorPoint.y > self.view.frame.maxY - offset {
+            point.y = self.view.frame.maxY - offset
         }
         point.x -= 150
         point.y -= 150

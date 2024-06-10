@@ -76,8 +76,8 @@ extension FTCenterPanelCollectionView: UICollectionViewDataSource, UICollectionV
               cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FTDeskToolCell", for: indexPath) as UICollectionViewCell
             if let mode = self.centerPanelDelegate?.currentDeskMode() {
                 let selected = FTDeskModeHelper.isToSelectDeskTool(mode: mode, toolType: btnType)
-                (cell as? FTDeskToolCell)?.configureCell(type: btnType, isSelected: selected, mode: self.mode)
                 (cell as? FTDeskToolCell)?.delegate = self
+                (cell as? FTDeskToolCell)?.configureCell(type: btnType, isSelected: selected, mode: self.mode)
 
                 // Selection handle closure
                 (cell as? FTDeskToolCell)?.deskToolBtnTapHandler = {[weak self, weak cell] in

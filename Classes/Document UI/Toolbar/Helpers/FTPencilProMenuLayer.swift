@@ -45,6 +45,11 @@ class FTPencilProMenuLayer: FTPencilProLayer {
 class FTPencilProBorderLayer: FTPencilProLayer {
     override init(strokeColor: UIColor = .green, lineWidth: CGFloat = 42.0) {
         super.init(strokeColor: strokeColor, lineWidth: lineWidth)
+        self.shadowColor = UIColor.black.withAlphaComponent(0.2).cgColor
+        self.shadowOpacity = 0.5
+        self.shadowOffset = CGSize(width: 0, height: 2)
+        self.shadowRadius = 4.0
+        self.masksToBounds = false
     }
     
     required init?(coder: NSCoder) {

@@ -115,6 +115,18 @@ private let offset: CGFloat = 8.0
         self.shortcutView.superview?.bringSubviewToFront(shortcutView)
     }
 
+    func moveShortcutViewAway(using  center: inout CGPoint) {
+        if self.shortcutViewPlacement.isLeftPlacement() {
+            center.x -= 60.0
+        } else if self.shortcutViewPlacement.isRightPlacement() {
+            center.x += 60.0
+        } else if self.shortcutViewPlacement == .top {
+            center.y -= 200.0
+        } else if self.shortcutViewPlacement == .bottom {
+            center.y += 200.0
+        }
+    }
+    
     func configureShortcutView(with mode: FTScreenMode, animate: Bool = false) {
         self.screenMode = mode
         var reqCenter = self.shortcutViewCenter(for: self.shortcutViewPlacement)
@@ -128,15 +140,7 @@ private let offset: CGFloat = 8.0
         }
 
         if mode == .focus {
-            if self.shortcutViewPlacement.isLeftPlacement() {
-                reqCenter.x -= 60.0
-            } else if self.shortcutViewPlacement.isRightPlacement() {
-                reqCenter.x += 60.0
-            } else if self.shortcutViewPlacement == .top {
-                reqCenter.y -= 200.0
-            } else if self.shortcutViewPlacement == .bottom {
-                reqCenter.y += 200.0
-            }
+            self.moveShortcutViewAway(using: &reqCenter)
             UIView.animate(withDuration: animate ? animDuration : 0.0, delay: 0.0, options: options) { [weak self] in
                 self?.updateShortcutViewCenter(CGPoint(x: reqCenter.x, y: reqCenter.y))
             }

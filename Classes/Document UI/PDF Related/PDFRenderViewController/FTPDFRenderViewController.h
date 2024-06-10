@@ -147,6 +147,7 @@ FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {}
 @property (strong) FTShortcutExecuter *executer;
 @property (nonatomic,weak) id<FTFinderNotifier> finderNotifier;
 @property (strong) NSMutableArray *eachPageViewArray;
+@property (nonatomic, assign) CGSize size;
 
 -(id)initWithDocumentInfo:(FTDocumentOpenInfo*)documentInfo;
 
