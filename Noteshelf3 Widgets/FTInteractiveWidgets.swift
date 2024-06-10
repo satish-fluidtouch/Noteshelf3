@@ -148,16 +148,10 @@ struct NotebookCreation_Widget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            if #available(iOS 17.0, *) {
-                NotebookCreation_WidgetsEntryView()
-                    .containerBackground(for: .widget, content: {
-                        Rectangle().fill(LinearGradient(colors: [Color("widgetBG1"),Color("widgetBG2")], startPoint: .top, endPoint: .bottom))
-                    })
-            } else {
-                NotebookCreation_WidgetsEntryView()
-                    .padding()
-                    .background()
-            }
+            NotebookCreation_WidgetsEntryView()
+                .containerBackground(for: .widget, content: {
+                    Rectangle().fill(LinearGradient(colors: [Color("widgetBG1"),Color("widgetBG2")], startPoint: .top, endPoint: .bottom))
+                })
         }.contentMarginsDisabled()
             .configurationDisplayName("widget.takenotes".localized)
         .description("widget.quickCreate.large.description".localized)
@@ -174,6 +168,7 @@ struct FTPinnedWidget: Widget {
                     .containerBackground(.fill.tertiary, for: .widget)
                     .widgetURL(URLComponents(type: "pinnedWidget", entry: entry)?.url)
         }
+        .contentMarginsDisabled()
         .supportedFamilies([.systemSmall])
         .configurationDisplayName("widget.notebook".localized)
         .description("widget.pinned.description".localized)
@@ -190,6 +185,7 @@ struct FTPinnedNotebookOptionsWidget: Widget {
                     Rectangle().fill(LinearGradient(colors: [Color("widgetBG1"),Color("widgetBG2")], startPoint: .top, endPoint: .bottom))
                 })
         }
+        .contentMarginsDisabled()
         .supportedFamilies([.systemMedium])
         .configurationDisplayName("widget.notebook".localized)
         .description("widget.pinned.description".localized)
@@ -201,16 +197,10 @@ struct FTQuickNoteCreateWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            if #available(iOS 17.0, *) {
-                FTQuickNoteCreateView()
-                    .containerBackground(for: .widget, content: {
-                        Rectangle().fill(LinearGradient(colors: [Color(hex: "E78971"), Color(hex: "E06E51")], startPoint: .top, endPoint: .bottom))
-                    }).widgetURL(URLComponents(type: "quickNote")?.url)
-            } else {
-                FTQuickNoteCreateView()
-                    .padding()
-                    .background()
-            }
+            FTQuickNoteCreateView()
+                .containerBackground(for: .widget, content: {
+                    Rectangle().fill(LinearGradient(colors: [Color(hex: "E78971"), Color(hex: "E06E51")], startPoint: .top, endPoint: .bottom))
+                }).widgetURL(URLComponents(type: "quickNote")?.url)
         }.contentMarginsDisabled()
             .configurationDisplayName("widget.quicknote".localized)
             .description("widget.quickCreate.small.description".localized)

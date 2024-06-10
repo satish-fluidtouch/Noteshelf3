@@ -116,7 +116,7 @@ extension FTShareActionItemsViewController: UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var item = self.arrayOfItems[indexPath.section][indexPath.row]
+        let item = self.arrayOfItems[indexPath.section][indexPath.row]
         if currentItemModel?.collection == nil {
             let cell = tableView.dequeueReusableCell(withIdentifier: "standardCell", for: indexPath) as UITableViewCell
             var config = cell.defaultContentConfiguration()
@@ -132,18 +132,45 @@ extension FTShareActionItemsViewController: UITableViewDelegate, UITableViewData
         } else {
             if let shareItemCell = tableView.dequeueReusableCell(withIdentifier: "FTShareItemTableViewCell", for: indexPath) as? FTShareItemTableViewCell {
                 shareItemCell.selectionStyle = .none
-                shareItemCell.configureCell(item: item, indexPath: indexPath)
+                let isDownloaded = (item.shelfItem as? FTDocumentItem)?.isDownloaded ?? true
+                shareItemCell.configureCell(item: item, indexPath: indexPath, shouldDisable: (hasAnyNoteshelfFiles()))
+                if let cuurrentItem = self.currentSelectedItem(), let shelfItem = item.shelfItem,  shelfItem.URL == cuurrentItem.noteBook?.URL {
+                    shareItemCell.tintColor = UIColor.appColor(.accent)
+                    shareItemCell.accessoryType = .checkmark
+                }
                 return shareItemCell
             }
         }
         return UITableViewCell()
     }
     
+    func hasAnyNoteshelfFiles() -> Bool {
+        if let vcs = self.navigationController?.viewControllers, let firstVc = vcs.first as? FTShareActionViewController {
+            return firstVc.hasAnyNoteshelfFiles()
+        }
+        return false
+    }
+    
+    func currentSelectedItem() -> FTShareItemsFetchModel? {
+        if let vcs = self.navigationController?.viewControllers, let firstVc = vcs.first as? FTShareActionViewController {
+            return firstVc.currentSelectedItem()
+        }
+        return nil
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var item = self.arrayOfItems[indexPath.section][indexPath.row]
+        let item = self.arrayOfItems[indexPath.section][indexPath.row]
         if item.itemType == .noteBook {
             // select notebook to import
             self.selectedShareItem = item
+            let model = FTShareItemsFetchModel()
+            model.collection = item.collection
+            model.noteBook = item.shelfItem
+            model.type = item.itemType
+            if let vcs = self.navigationController?.viewControllers, let firstVc = vcs.first as? FTShareActionViewController {
+                firstVc.selectedItem = model
+            }
+            self.navigationController?.popToRootViewController(animated: true)
         } else {
             self.navigate(with: item)
         }

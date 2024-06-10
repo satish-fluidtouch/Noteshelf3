@@ -8,6 +8,7 @@
 
 import UIKit
 import FTCommon
+import TipKit
 
 protocol FTToolbarCenterPanelDelegate: AnyObject {
     func isZoomModeEnabled() -> Bool
@@ -16,6 +17,58 @@ protocol FTToolbarCenterPanelDelegate: AnyObject {
     func didTapCenterPanelButton(type: FTDeskCenterPanelTool, sender: UIView)
 }
 
+@available (iOS 17.0, *)
+struct NewFeatures: Tip{
+    var title : Text {
+        Text("tipeview.shortcut.title".localized)
+            .foregroundStyle(.white)
+            
+    }
+    var message: Text?{
+        Text("tipeview.shortcut.message".localized)
+            .foregroundStyle(Color(uiColor: UIColor.white.withAlphaComponent(0.7) ))
+    }
+    
+    var image : Image? {
+        Image(uiImage: UIImage(named: "desk_tool_bulb") ?? UIImage())
+    }
+    
+}
+@available (iOS 17.0, *)
+struct CustomTiPView : TipViewStyle {
+  @State var size: CGSize = .zero
+  func makeBody(configuration: Configuration) -> some View {
+    HStack(alignment: .top, spacing: 12) {
+      VStack {
+        configuration.image?
+          .resizable()
+          .frame(width: 32, height: 32)
+          .aspectRatio(contentMode: .fit)
+          .padding(.top,2)
+        Spacer()
+          .frame(maxHeight: self.size.height)
+      }
+      VStack(alignment: .leading) {
+        configuration.title
+              .font(.system(size:17,weight: .bold))
+          .fixedSize(horizontal: false, vertical: true)
+        configuration.message?
+          .font(.subheadline)
+          .fixedSize(horizontal: false, vertical: true)
+      }
+    }
+    .padding(.horizontal, 16)
+    .padding(.vertical, 12)
+    .background(
+      GeometryReader { geometry in
+        Color.clear
+          .onAppear {
+            self.size = geometry.size
+          }
+      })
+  }
+}
+    
 class FTToolbarCenterPanelController: UIViewController {
     private weak var customToolbarObserver: NSObjectProtocol?;
 
@@ -31,6 +84,7 @@ class FTToolbarCenterPanelController: UIViewController {
 
     private var dataSourceItems: [FTDeskCenterPanelTool] = []
     private(set) var screenMode = FTScreenMode.normal
+    private var showTipView :  Bool = false
 
     weak var delegate: FTToolbarCenterPanelDelegate?
 
@@ -56,6 +110,20 @@ class FTToolbarCenterPanelController: UIViewController {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         longPressGesture.minimumPressDuration = 0.6
         self.view.addGestureRecognizer(longPressGesture)
+        addObserverForScrollDirection()
+        
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        self.showTipView = UserDefaults.standard.bool(forKey: "showTipView")
+        if FTUtils.isAppInstalledFor(days: 5) {
+            if self.showTipView == false {
+                if self.view.frame.width > 320 {
+                    setUpTipForNewFeatures()
+                }
+                UserDefaults.standard.set(true, forKey: "showTipView")
+            }
+        }
+       
     }
 
     @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
@@ -355,4 +423,37 @@ extension FTToolbarCenterPanelController: FTDeskToolCellDelegate {
         let color = FTDeskModeHelper.getCurrentToolColor(toolType: toolType, userActivity: userActivity)
         return color
     }
+}
+
+extension FTToolbarCenterPanelController {
+    func addObserverForScrollDirection() {
+        NotificationCenter.default.addObserver(forName: .pageLayoutWillChange,
+                                                 object: nil,
+                                                 queue: nil)
+          { [weak self] (_) in
+              self?.collectionView.reloadData()
+         }
+    }
+    
+    func setUpTipForNewFeatures() {
+        if #available(iOS 17.0, *) {
+            let newFeautres = NewFeatures()
+            Task { @MainActor in
+                for await shouldDisplay in newFeautres.shouldDisplayUpdates {
+                    if shouldDisplay {
+                        let controller = TipUIPopoverViewController(newFeautres, sourceItem: self.collectionView)
+                        controller.view.backgroundColor = UIColor.init(hexString: "#474747")
+                        controller.viewStyle = CustomTiPView()
+                        present(controller, animated: true)
+                    } else if presentedViewController is TipUIPopoverViewController {
+                        dismiss(animated: true)
+                    }
+                }
+            }
+        } else {
+            debugPrint("Using Lower versions then Ios 17")
+        }
+        
+    }
+    
 }

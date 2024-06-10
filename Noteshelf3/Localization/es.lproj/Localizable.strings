@@ -985,6 +985,7 @@
 "color.resetToDefault" = "Restablecer a predeterminado.";
 "color.restoreAll" = "Restaurar todo.";
 "color.restorePresetColors.message" = "¿Estás seguro de que quieres restaurar todos los colores predeterminados?";
+"colors.presets.spectrum" = "Espectro";
 "continue" = "Continuar";
 "convertToText.copiedToClipBoard" = "Copiado al portapapeles";
 "convertToText.customDictionary" = "Diccionario personalizado";
@@ -1159,6 +1160,10 @@
 "icloud.sync.issue.message" = "No se puede conectar con iCloud. Asegúrate de que iCloud esté activado en la configuración.";
 "iconlabels" = "Etiquetas de iconos";
 "import" = "Importar";
+"import.multiple.files" = "%@ archivos enviados a Noteshelf";
+"import.notsupported.desc" = "Este tipo de archivo no es compatible en este momento.";
+"import.notsupported.title" = "No se puede importar el archivo.";
+"import.single.files" = "%@ archivo enviado a Noteshelf";
 "importedFiles" = "Archivos importados";
 "importedTo" = "Importado a";
 "insidenotebook.share.pageno" = "página %@";
@@ -1193,7 +1198,9 @@
 "more.globalsettings.caps" = "CONFIGURACIÓN GLOBAL";
 "more.settings.footer" = "Estas configuraciones se aplican globalmente a todas tus notas.";
 "moreInfo" = "Más información...";
+"more_global" = "CONFIGURACIÓN GLOBAL";
 "move" = "Mover";
+"multiple.files" = "%@ archivos";
 "newnotebook" = "NUEVO CUADERNO";
 "newnotebook.create" = "Crear";
 "newnotebook.exitalert.message" = "¿Te gustaría continuar?";
@@ -1283,6 +1290,7 @@
 "reset" = "Restablecer";
 "retry" = "Reintentar";
 "save" = "Guardar";
+"saveAsTemplate_message" = "La plantilla se guardará dentro de la sección Personalizada en Plantillas.";
 "school" = "Escuela";
 "search.tryNewSearch" = "Prueba una nueva búsqueda";
 "seeAll" = "Repetir.";
@@ -1495,6 +1503,7 @@
 "sidebar.topSection.home" = "Casa";
 "sidebar.topSection.starred" = "Destacado";
 "sidebar.topSection.unfiled" = "Desordenado";
+"single.file" = "%@ archivo";
 "snippets.addtopage" = "Agregar a una nueva página";
 "speechbubbles" = "Burbujas de diálogo";
 "status_bar_info_footer" = "¿Disfrutando de Noteshelf? %@ para calificarnos en la App Store. Nos ayudará más de lo que imaginas.";
@@ -1673,4 +1682,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
+// Last Synced by Fluid Touch on 28 May 2024 at 7:20 PM

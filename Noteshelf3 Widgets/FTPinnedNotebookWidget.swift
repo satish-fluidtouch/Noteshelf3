@@ -12,31 +12,39 @@ import FTCommon
 struct FTPinnedWidgetView : View {
     let entry: FTPinnedBookEntry
     @State var image = UIImage(named: "noCover")!
+    @Environment(\.widgetContentMargins) var margins
+
+    private let type: FTWidgetType = .small
+
     var body: some View {
-        VStack {
-            VStack(spacing: 0) {
-                topView(entry: entry)
-                bottomView(entry: entry)
-            }
-        }.overlay(alignment: .topLeading) {
-            if !entry.relativePath.isEmpty {
-                HStack {
-                    VStack(spacing:0) {
-                        HStack {
-                            Image(uiImage: image)
-                                .resizable()
-                                .frame(width: imageSize(for: entry).width,height: imageSize(for: entry).height)
-                                .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
-                                .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .bottomRight]))
-                                .padding(.top, image.size.width > image.size.height ? 34 : 22)
-                                .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 3)
-                            Spacer()
-                        }
-                    }.padding(.leading, 20)
-                    Spacer()
+        GeometryReader { geometry in
+            VStack {
+                VStack(spacing: 0) {
+                    topView(entry: entry, geometry: geometry)
+                    bottomView(entry: entry, geometry: geometry)
                 }
             }
-        }.onAppear {
+            .overlay(alignment: .topLeading) {
+                if !entry.relativePath.isEmpty {
+                    HStack {
+                        VStack(spacing:0) {
+                            HStack {
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .frame(width: imageSize(for: entry, geometry: geometry).width,height: imageSize(for: entry, geometry: geometry).height)
+                                    .clipShape(RoundedCorner(radius: entry.hasCover ? 2 : 4, corners: [.topLeft, .bottomLeft]))
+                                    .clipShape( RoundedCorner(radius: 4, corners: [.topRight, .bottomRight]))
+                                    .padding(.top, image.size.width > image.size.height ? geometry.size.height * 0.19 : geometry.size.height * 0.13)
+                                    .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 3)
+                                Spacer()
+                            }
+                        }.padding(.leading, self.getWidthPercentFactor(using: geometry, for: 20, for: type))
+                        Spacer()
+                    }
+                }
+            }
+        }
+        .onAppear {
             image = imageFrom(entry : entry)
         }
     }
@@ -46,10 +54,12 @@ struct FTPinnedWidgetView : View {
         return image ?? UIImage(named: "noCover")!
     }
     
-    private func imageSize(for entry: FTPinnedBookEntry) -> CGSize {
-        var size = CGSize(width: 49, height: 68)
+    private func imageSize(for entry: FTPinnedBookEntry, geometry: GeometryProxy) -> CGSize {
+        let portraitDimension = self.getWidthPercentFactor(using: geometry, for: 49, for: type)
+        let landscapeDimension = self.getHeightPercentFactor(using: geometry, for: 68, for: type)
+        var size = CGSize(width: portraitDimension, height: landscapeDimension)
         if image.size.width > image.size.height {
-            size = CGSize(width: 68, height: 49)
+            size = CGSize(width: landscapeDimension, height: portraitDimension)
         }
         return size
     }
@@ -57,11 +67,12 @@ struct FTPinnedWidgetView : View {
 struct topView: View {
     let entry: FTPinnedBookEntry
     @State var color: UIColor = .black
-    
+    var geometry: GeometryProxy
+
     var body: some View {
         ZStack {
             Color(uiColor: color)
-        }.frame(width: 160, height: 55)
+        }.frame(height: geometry.size.height/3)
             .onAppear {
                 color = entry.hasCover ? adaptiveColorFromImage() : UIColor(hexString: "#E06E51")
             }
@@ -87,23 +98,32 @@ struct topView: View {
 
 struct bottomView: View {
     let entry: FTPinnedBookEntry
+    var geometry: GeometryProxy
+
     var body: some View {
-        HStack {
-            if entry.relativePath.isEmpty {
-                EmptyNotesView()
-            } else {
-                NoteBookInfoView(entry: entry)
+        ZStack {
+            Rectangle().fill(LinearGradient(colors: [Color("widgetBG1"),Color("widgetBG2")], startPoint: .top, endPoint: .bottom))
+            HStack {
+                if entry.relativePath.isEmpty {
+                    EmptyNotesView(geometry: geometry)
+                } else {
+                    NoteBookInfoView(entry: entry, geometry: geometry)
+                }
             }
-        }.frame(width: 160, height: 110)
-            .background(Rectangle().fill(LinearGradient(colors: [Color("widgetBG1"),Color("widgetBG2")], startPoint: .top, endPoint: .bottom)))
+        }
+        .frame(height: 2*geometry.size.height/3)
     }
 }
 
 struct EmptyNotesView: View {
+    var geometry: GeometryProxy
+    private let type: FTWidgetType = .small
+
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 10)                
-                .frame(width:119, height: 64)
+            RoundedRectangle(cornerRadius: 10)    
+                .padding(.horizontal, self.getWidthPercentFactor(using: geometry, for: 18, for: type))
+                .padding(.vertical, self.getHeightPercentFactor(using: geometry, for: 18, for: type))
             .foregroundColor(Color("EmptyNotesBG"))
             Text("widget.nonotes".localized)
                 .font(.appFont(for: .medium, with: 13))
@@ -114,6 +134,10 @@ struct EmptyNotesView: View {
 
 struct NoteBookInfoView: View {
     let entry: FTPinnedBookEntry
+    var geometry: GeometryProxy
+
+    private let type: FTWidgetType = .small
+
     var body: some View {
         HStack {
             VStack(spacing: 3) {
@@ -123,7 +147,7 @@ struct NoteBookInfoView: View {
                         .lineLimit(1)
                         .foregroundColor(Color.label)
                         .font(.appFont(for: .medium, with: 16))
-                    Spacer(minLength: 16)
+                    Spacer(minLength: self.getWidthPercentFactor(using: geometry, for: 16, for: type))
                 }
                 HStack {
                     Text(entry.time)
@@ -131,10 +155,10 @@ struct NoteBookInfoView: View {
                         .font(.appFont(for: .medium, with: 12))
                         .foregroundColor(Color("black50"))
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    Spacer(minLength: 16)
+                    Spacer(minLength: self.getWidthPercentFactor(using: geometry, for: 16, for: type))
                 }
-            }.padding(.leading, 20)
-                .padding(.bottom, 22)
+            }.padding(.leading, self.getWidthPercentFactor(using: geometry, for: 18, for: type))
+                .padding(.bottom, self.getWidthPercentFactor(using: geometry, for: 18, for: type))
             Spacer()
         }
     }

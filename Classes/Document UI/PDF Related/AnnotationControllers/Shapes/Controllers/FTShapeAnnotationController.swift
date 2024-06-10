@@ -720,10 +720,12 @@ private extension FTShapeAnnotationController {
             track("activeshape_rotated", screenName: FTScreenNames.shapes)
         }
         resetActions()
-        NSObject.cancelPreviousPerformRequests(withTarget: self,
-                                               selector: #selector(generateStrokeSegments),
-                                               object: nil)
-        self.perform(#selector(generateStrokeSegments), with: nil, afterDelay: 0.1);
+        if !shapeAnnotation.inLineEditing {
+            NSObject.cancelPreviousPerformRequests(withTarget: self,
+                                                   selector: #selector(generateStrokeSegments),
+                                                   object: nil)
+            self.perform(#selector(generateStrokeSegments), with: nil, afterDelay: 0.1);
+        }
         self.displayLink?.isPaused = true
         publishChanges(nil)
     }

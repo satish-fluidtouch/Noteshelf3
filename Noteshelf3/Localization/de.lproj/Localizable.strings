@@ -985,6 +985,7 @@
 "color.resetToDefault" = "Auf Standard zurücksetzen";
 "color.restoreAll" = "Wiederherstellen Alles";
 "color.restorePresetColors.message" = "Bist du sicher, dass du alle Standardfarben wiederherstellen möchtest?";
+"colors.presets.spectrum" = "Spektrum";
 "continue" = "Weitermachen";
 "convertToText.copiedToClipBoard" = "In die Zwischenablage kopiert";
 "convertToText.customDictionary" = "Benutzerdefiniertes Wörterbuch";
@@ -1159,6 +1160,10 @@
 "icloud.sync.issue.message" = "Verbindung zu iCloud nicht möglich. Stellen Sie sicher, dass iCloud in den Einstellungen eingeschaltet ist.";
 "iconlabels" = "Symbolbeschriftungen";
 "import" = "Import";
+"import.multiple.files" = "%@ Dateien an Noteshelf gesendet";
+"import.notsupported.desc" = "Dieser Dateityp wird derzeit nicht unterstützt.";
+"import.notsupported.title" = "Datei kann nicht importiert werden.";
+"import.single.files" = "%@ Datei an Noteshelf gesendet";
 "importedFiles" = "Importierte Dateien";
 "importedTo" = "Importiert zu";
 "insidenotebook.share.pageno" = "Seite %@";
@@ -1193,7 +1198,9 @@
 "more.globalsettings.caps" = "GLOBALE EINSTELLUNGEN";
 "more.settings.footer" = "Diese Einstellungen werden global auf alle Ihre Notizbücher angewendet.";
 "moreInfo" = "Weitere Informationen...";
+"more_global" = "GLOBALE EINSTELLUNGEN";
 "move" = "Bewegen";
+"multiple.files" = "%@ Dateien";
 "newnotebook" = "NEUES NOTIZBUCH";
 "newnotebook.create" = "Erstellen";
 "newnotebook.exitalert.message" = "Möchtest du fortfahren?";
@@ -1283,6 +1290,7 @@
 "reset" = "Zurücksetzen";
 "retry" = "Erneut versuchen";
 "save" = "Speichern";
+"saveAsTemplate_message" = "Die Vorlage wird im Abschnitt „Benutzerdefiniert“ unter „Vorlagen“ gespeichert.";
 "school" = "Schule";
 "search.tryNewSearch" = "Versuchen Sie es mit einer neuen Suche";
 "seeAll" = "Wiederholen";
@@ -1495,6 +1503,7 @@
 "sidebar.topSection.home" = "Zuhause";
 "sidebar.topSection.starred" = "Hervorgehoben";
 "sidebar.topSection.unfiled" = "Ungeordnet";
+"single.file" = "%@ Datei";
 "snippets.addtopage" = "Zur Seite hinzufügen";
 "speechbubbles" = "Sprechblasen";
 "status_bar_info_footer" = "Genießen Sie Noteshelf? %@, um uns im App Store zu bewerten. Es wird uns mehr helfen, als Sie sich vorstellen können.";
@@ -1673,4 +1682,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
+// Last Synced by Fluid Touch on 28 May 2024 at 7:20 PM

@@ -59,6 +59,12 @@ class FTPaperPickerViewController: UIViewController {
             }
         #endif
     }
+
+    private var varaintsVc: FTPaperTemplatesVariantsController? {
+        let choosePaperVc = (self.children.first as? UINavigationController)?.viewControllers.first
+        return choosePaperVc?.children.first { $0 is FTPaperTemplatesVariantsController } as? FTPaperTemplatesVariantsController
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.panelContainerView?.addShadow(color: UIColor.label.withAlphaComponent(0.2), offset: CGSize(width: 0, height: 8), opacity: 1.0, shadowRadius: 64.0)
@@ -94,7 +100,6 @@ class FTPaperPickerViewController: UIViewController {
         }
         setUpPreviewSize()
         setAttributedTextToTemplateSizeButton(self.selectedPaperVariantsAndTheme.size)
-        configureTemplateSizesMenu()
         setBottomPanelHeight()
         setShadowToPreview()
     }
@@ -103,14 +108,30 @@ class FTPaperPickerViewController: UIViewController {
     }
     //MARK: Template sizes menu
     private func configureTemplateSizesMenu() {
-        if self.traitCollection.isRegular {
-            self.templateSizeButton?.menu = templateSizeOptionsMenu
-        } else {
-            let menuElements: [UIMenuElement] = selectedPaperVariantsAndTheme.size == FTTemplateSize.mobile ? [templateSizeOptionsMenu] : [templateSizeOptionsMenu,orientaionOptionsMenu]
+        self.templateSizeButton?.menu = templateSizeOptionsMenu
+        if self.toShowOrientation {
+            let menuElements =  [templateSizeOptionsMenu,orientaionOptionsMenu]
             self.templateSizeButton?.menu = UIMenu(identifier: UIMenu.Identifier("SizesMenu") ,children:menuElements)
         }
         self.templateSizeButton?.showsMenuAsPrimaryAction = true
     }
+
+    private var toShowOrientationSegment: Bool {
+        var status = false
+        if self.view.frame.width > regularThreshold && self.selectedPaperVariantsAndTheme.size != .mobile {
+            status = true
+        }
+        return status
+    }
+
+    private var toShowOrientation: Bool {
+        var status = false
+        if self.view.frame.width < regularThreshold && self.selectedPaperVariantsAndTheme.size != .mobile {
+            status = true
+        }
+        return status
+    }
+
     private var templateSizeOptionsMenu: UIMenu {
         var sizeActions = [UIAction]()
         for templateSizeModel in paperVariantsDataModel.sizes.reversed() {
@@ -118,17 +139,21 @@ class FTPaperPickerViewController: UIViewController {
             let isSelected =  templateSizeModel.size == self.selectedPaperVariantsAndTheme.size
             let state: UIMenuElement.State = isSelected ? .on : .off
             let action = UIAction(title: displayTitle,state: state) { [weak self]action in
-                let resizeThumbnail = self?.selectedPaperVariantsAndTheme.size != templateSizeModel.size
-                self?.selectedPaperVariantsAndTheme.size = templateSizeModel.size
-                self?.setAttributedTextToTemplateSizeButton(templateSizeModel.size)
-                self?.setThumbnailToPreviewImageView(toResize: resizeThumbnail)
-                if let templateSizeMenu = self?.templateSizeButton?.menu {
-                    self?.templateSizeButton?.menu = self?.updateActionState(actionTitle: displayTitle, menu: templateSizeMenu)
+                guard let self else {
+                    return
+                }
+                let resizeThumbnail = self.selectedPaperVariantsAndTheme.size != templateSizeModel.size
+                self.selectedPaperVariantsAndTheme.size = templateSizeModel.size
+                self.setAttributedTextToTemplateSizeButton(templateSizeModel.size)
+                self.setThumbnailToPreviewImageView(toResize: resizeThumbnail)
+                if let templateSizeMenu = self.templateSizeButton?.menu {
+                    self.templateSizeButton?.menu = self.updateActionState(actionTitle: displayTitle, menu: templateSizeMenu)
                 }
                 if templateSizeModel.size == .mobile {
-                    self?.selectedPaperVariantsAndTheme.orientation = .portrait
+                    self.selectedPaperVariantsAndTheme.orientation = .portrait
                 }
-                self?.updateOrientationOptionVisibility(displayTitle == FTTemplateSize.mobile.displayTitle)
+                self.varaintsVc?.selectedPaperVariants.size = templateSizeModel.size
+                self.varaintsVc?.updateOrientationSegmentVisibility(!self.toShowOrientationSegment)
             }
             sizeActions.append(action)
         }
@@ -144,6 +169,7 @@ class FTPaperPickerViewController: UIViewController {
                 guard let self = self else { return }
                 let resizeThumbnail = self.selectedPaperVariantsAndTheme.orientation != .landscape
                 self.selectedPaperVariantsAndTheme.orientation = .landscape
+                self.varaintsVc?.selectedPaperVariants.orientation = .landscape
                 self.setAttributedTextToTemplateSizeButton(self.selectedPaperVariantsAndTheme.size)
                 self.setThumbnailToPreviewImageView(toResize: resizeThumbnail)
                 if let templateSizeMenu = self.templateSizeButton?.menu {
@@ -154,6 +180,7 @@ class FTPaperPickerViewController: UIViewController {
                 guard let self = self else { return }
                 let resizeThumbnail = self.selectedPaperVariantsAndTheme.orientation != .portrait
                 self.selectedPaperVariantsAndTheme.orientation = .portrait
+                self.varaintsVc?.selectedPaperVariants.orientation = .portrait
                 self.setThumbnailToPreviewImageView(toResize: resizeThumbnail)
                 self.setThumbnailToPreviewImageView(toResize: resizeThumbnail)
                 if let templateSizeMenu = self.templateSizeButton?.menu {
@@ -196,24 +223,21 @@ class FTPaperPickerViewController: UIViewController {
             }
             action.state = action.title == actionTitle ? .on : .off
         }
-        let menuChildren = menu.children
-        var filteredMenuChildren : [UIMenu] = [UIMenu]()
-        if self.traitCollection.isRegular {
-            filteredMenuChildren = [templateSizeOptionsMenu]
-        } else {
-            filteredMenuChildren = selectedPaperVariantsAndTheme.size == FTTemplateSize.mobile ? [templateSizeOptionsMenu] : [templateSizeOptionsMenu,orientaionOptionsMenu]
+        var filteredMenuChildren : [UIMenu] = [templateSizeOptionsMenu]
+        if self.toShowOrientation {
+            filteredMenuChildren = [templateSizeOptionsMenu,orientaionOptionsMenu]
         }
         if actionTitle != nil {
             filteredMenuChildren.forEach { child in
-                if self.traitCollection.isRegular {
-                    updateActionState(child)
-                }else {
+                if toShowOrientation {
                     guard child.title == "" else {
                         return
                     }
                     menu.children.forEach { child in
                         updateActionState(child)
                     }
+                } else {
+                    updateActionState(child)
                 }
             }
         } else {
@@ -233,10 +257,11 @@ class FTPaperPickerViewController: UIViewController {
         let chevronAttachment = NSTextAttachment()
         chevronAttachment.image = chevronImage
         let attributedString = NSMutableAttributedString(attachment: aspectRatioimageAttachment)
-        let orientation = templateSize == .mobile ? FTTemplateOrientation.portrait.title : self.selectedPaperVariantsAndTheme.orientation.title
-        let paperSizeWithOrientationTitle = sizeDisplayTitle + " (\(orientation))"
-        let title = (self.isRegularClass() && templateSize != .mobile) ? sizeDisplayTitle : paperSizeWithOrientationTitle
-        let titleAttributedString = NSAttributedString(string: "  " + title + "  ",attributes: [.font: UIFont.appFont(for: .medium, with: 13), .foregroundColor : FTNewNotebook.Constants.SelectedAccent.tint])
+        var paperSizeWithOrientationTitle = sizeDisplayTitle
+        if templateSize != .mobile {
+            paperSizeWithOrientationTitle += " (\(self.selectedPaperVariantsAndTheme.orientation.title))"
+        }
+        let titleAttributedString = NSAttributedString(string: "  " + paperSizeWithOrientationTitle + "  ",attributes: [.font: UIFont.appFont(for: .medium, with: 13), .foregroundColor : FTNewNotebook.Constants.SelectedAccent.tint])
         attributedString.append(titleAttributedString)
         let chevronString = NSAttributedString(attachment: chevronAttachment)
         attributedString.append(chevronString)
@@ -335,44 +360,39 @@ class FTPaperPickerViewController: UIViewController {
         let topRect = CGRect(x: 0, y: 0, width: self.view.frame.width, height: heightWthOutBtmPanel)
         self.previewViewVerticalAlignConstrnt?.constant = getCenterXandY(from: topRect).y
     }
-    private func fetchPaperPreview( completionhandler: @escaping (_ thumbImage : UIImage?)->()){
-        guard let paperTheme = (self.selectedPaperVariantsAndTheme.theme as? FTPaperThumbnailGenerator)    else {
+    private func fetchPaperPreview() -> UIImage? {
+        guard let paperTheme = (self.selectedPaperVariantsAndTheme.theme as? FTPaperThumbnailGenerator) else {
             fatalError("Type case error while trying to generate paper thumb")
         }
-        paperTheme.generateThumbnailFor(selectedVariantsAndTheme: self.selectedPaperVariantsAndTheme, forPreview: true, completionhandler: completionhandler)
+        let img = paperTheme.generateThumbnailFor(selectedVariantsAndTheme: self.selectedPaperVariantsAndTheme, forPreview: true)
+        return img
     }
+
     private func setThumbnailToPreviewImageView(toResize:Bool = false) {
         if toResize {
-            Task {
-                await self.resizePaperPreviewViewAndSetThumbnail()
-            }
-        }else {
-            self.fetchPaperPreview { thumbImage in
-                DispatchQueue.main.async {
-                    self.previewImageView?.image = thumbImage?.resizedImageWithinRect(self.sizeForPreviewView())
-                }
-            }
+              self.resizePaperPreviewViewAndSetThumbnail()
+        } else {
+            let thumbImage = self.fetchPaperPreview()
+            self.previewImageView?.image = thumbImage?.resizedImageWithinRect(self.sizeForPreviewView())
         }
     }
-    private func resizePaperPreviewViewAndSetThumbnail() async {
-        fetchPaperPreview { thumbImage in
-            DispatchQueue.main.async {
-                if !self.traitCollection.isRegular , self.view.frame.width < 420 {
-                        let maxPreviewImgSize = self.getCompactPreviewSize()
-                        if let image = thumbImage?.resizedImageWithinRect(maxPreviewImgSize) {
 
-                            self.updateConstraintOfPreviewToSize(image.size)
-                            self.previewImageView?.image = image
-                            self.setInitialPreviewImage(image)
-                        }
-                }else{
-                    let aspectSize = self.getPreviewViewSizeDynamicallyForImage(thumbImage!)
-                    self.previewImageView?.image = thumbImage?.resizedImage(aspectSize)
-                    if let previewImage = self.previewImageView?.image {
-                        self.updateConstraintOfPreviewToSize(previewImage.size)
-                        self.setInitialPreviewImage(previewImage)
-                    }
-                }
+    private func resizePaperPreviewViewAndSetThumbnail() {
+        let thumbImage = self.fetchPaperPreview()
+        if !self.traitCollection.isRegular , self.view.frame.width < 420 {
+            let maxPreviewImgSize = self.getCompactPreviewSize()
+            if let image = thumbImage?.resizedImageWithinRect(maxPreviewImgSize) {
+
+                self.updateConstraintOfPreviewToSize(image.size)
+                self.previewImageView?.image = image
+                self.setInitialPreviewImage(image)
+            }
+        }else{
+            let aspectSize = self.getPreviewViewSizeDynamicallyForImage(thumbImage!)
+            self.previewImageView?.image = thumbImage?.resizedImage(aspectSize)
+            if let previewImage = self.previewImageView?.image {
+                self.updateConstraintOfPreviewToSize(previewImage.size)
+                self.setInitialPreviewImage(previewImage)
             }
         }
     }
@@ -389,14 +409,6 @@ class FTPaperPickerViewController: UIViewController {
     private func setShadowToPreview(){
         self.previewImageView?.addShadow(color: UIColor.appColor(.black28), offset: CGSize(width: 0, height: 24), opacity: 1, shadowRadius: 40)
     }
-    private func updateOrientationOptionVisibility(_ shouldHide: Bool){
-        let choosePaperController = (self.children.first as? UINavigationController)?.viewControllers.first
-        if let children = choosePaperController?.children {
-            for childVC in children where childVC as? FTPaperTemplatesVariantsController != nil {
-                (childVC as? FTPaperTemplatesVariantsController)?.updateOrientationSegmentVisibility(shouldHide)
-            }
-        }
-    }
 
 //MARK: Animations Code
     func openPreview(from frame: CGRect, onCompletion: (() -> Void)?) {
@@ -409,39 +421,37 @@ class FTPaperPickerViewController: UIViewController {
         self.templateSizeButton?.alpha = 0.0
         self.previewView?.setNeedsLayout()
         self.view.layoutIfNeeded()
-        fetchPaperPreview { thumbImage in
-            DispatchQueue.main.async {
-                self.previewImageView?.image = thumbImage?.resizedImageWithinRect(frame.size)
-                let heightWthOutBtmPanel = self.view.frame.height - self.bottomPanelHeight
-                let topRect = CGRect(x: 0, y: 0, width: self.view.frame.width, height: heightWthOutBtmPanel)
-                if let thumbImage = thumbImage {
-                    let paperPreviewSize: CGSize = self.traitCollection.isRegular ? self.getPreviewViewSizeDynamicallyForImage(thumbImage) : self.getCompactPreviewSize()
-                    UIView.animate(withDuration: 0.2,
-                                   delay: 0,
-                                   options: .curveEaseOut,
-                                   animations: {
-                        self.paperPickerDelegate?.animateHideContentViewBasedOn(themeType: .paper)
-                        // Bottom Panel
-                        self.choosePaperContainerViewBottomConstraint?.constant = 0.0
-                        //
-                        // Paper Preview
-                        self.previewViewHorizontalAlignConstrnt?.constant = 0.0
-                        self.previewViewVerticalAlignConstrnt?.constant = self.getCenterXandY(from: topRect).y
+        let thumbImage = self.fetchPaperPreview()
+        self.previewImageView?.image = thumbImage?.resizedImageWithinRect(frame.size)
+        let heightWthOutBtmPanel = self.view.frame.height - self.bottomPanelHeight
+        let topRect = CGRect(x: 0, y: 0, width: self.view.frame.width, height: heightWthOutBtmPanel)
+        if let thumbImage = thumbImage {
+            let paperPreviewSize: CGSize = self.traitCollection.isRegular ? self.getPreviewViewSizeDynamicallyForImage(thumbImage) : self.getCompactPreviewSize()
+            UIView.animate(withDuration: 0.2,
+                           delay: 0,
+                           options: .curveEaseOut,
+                           animations: {
+                self.paperPickerDelegate?.animateHideContentViewBasedOn(themeType: .paper)
+                // Bottom Panel
+                self.choosePaperContainerViewBottomConstraint?.constant = 0.0
+                //
+                // Paper Preview
+                self.previewViewHorizontalAlignConstrnt?.constant = 0.0
+                self.previewViewVerticalAlignConstrnt?.constant = self.getCenterXandY(from: topRect).y
 
-                        self.previewImageView?.image = thumbImage.resizedImageWithinRect(paperPreviewSize)
-                        let aspectFittedImage = thumbImage.resizedImageWithinRect(paperPreviewSize)
-                        self.setInitialPreviewImage(aspectFittedImage)
-                        self.updateConstraintOfPreviewToSize(aspectFittedImage.size)
-                        self.previewView?.setNeedsLayout()
-                        self.view.layoutIfNeeded()
-                    }) { _ in
-                        self.templateSizeButton?.alpha = 1.0
-                        onCompletion?()
-                    }
-                }
+                self.previewImageView?.image = thumbImage.resizedImageWithinRect(paperPreviewSize)
+                let aspectFittedImage = thumbImage.resizedImageWithinRect(paperPreviewSize)
+                self.setInitialPreviewImage(aspectFittedImage)
+                self.updateConstraintOfPreviewToSize(aspectFittedImage.size)
+                self.previewView?.setNeedsLayout()
+                self.view.layoutIfNeeded()
+            }) { _ in
+                self.templateSizeButton?.alpha = 1.0
+                onCompletion?()
             }
         }
     }
+    
     func closePreview(to frame: CGRect,isCancelled: Bool = false, onCompletion: @escaping () -> Void) {
         self.view.layoutIfNeeded()
         if isCancelled, let previewImage = initialPreviewImage {
@@ -489,9 +499,10 @@ extension FTPaperPickerViewController: FTChoosePaperDelegate {
         self.selectedPaperVariantsAndTheme.templateColorModel = variants.templateColorModel
         self.selectedPaperVariantsAndTheme.lineHeight = variants.lineHeight
         let resizeThumbnail = self.selectedPaperVariantsAndTheme.orientation != variants.orientation
-        if self.traitCollection.isRegular {
+        if self.view.frame.width > regularThreshold {
             self.selectedPaperVariantsAndTheme.orientation = variants.orientation
         }
+        self.setAttributedTextToTemplateSizeButton(variants.size)
         self.setThumbnailToPreviewImageView(toResize: resizeThumbnail)
     }
     func didTapCancel() {

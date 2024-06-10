@@ -158,6 +158,17 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
                 let pagesSet = NSSet(array: [page])
                 self.executer.execute(type: .tag(source: source, controller: self, pages: pagesSet))
             }
+        case .camera :
+            self.executer?.execute(type: .camera)
+        case .scrolling :
+            let oppLayout = UserDefaults.standard.pageLayoutType.oppositeLayout
+            self.executer?.execute(type: .scrolling(source: oppLayout))
+            let layout = UserDefaults.standard.pageLayoutType
+            let config = FTToastConfiguration(title: layout.toastTitle.localized)
+            FTToastHostController.showToast(from: self, toastConfig: config)
+            layout.trackLayout()
+        case .recentNotes:
+            self.executer.execute(type: .recentNotes(source: source))
         case .unsplash:
             self.executer.execute(type: .unsplash(source: source))
             

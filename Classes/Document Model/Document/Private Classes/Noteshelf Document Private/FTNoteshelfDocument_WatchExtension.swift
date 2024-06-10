@@ -62,64 +62,53 @@ extension FTNoteshelfDocument : FTDocumentCreateWatchExtension {
             paperTheme.setPaperVariants(FTBasicTemplatesDataSource.shared.getDefaultVariants())
         }
         if let theme = paperTheme as? FTTheme {
-            Task {
-                let generator = FTAutoTemplateGenerator.autoTemplateGenerator(theme: theme, generationType: .template)
-                do {
-                    let documentInfo = try await generator.generate()
-                    documentInfo.footerOption = theme.footerOption
-                    documentInfo.isNewBook = true
-                    documentInfo.coverTemplateImage = info.coverTemplateImage
-                    documentInfo.insertAt = 0
-                    documentInfo.annotationInfo = theme.annotationInfo
-                    
-                    self.createDocument(documentInfo) { (error, success) in
-                        if(nil != error) {
+            let generator = FTAutoTemplateGenerator.autoTemplateGenerator(theme: theme, generationType: .template)
+            let documentInfo =  generator.generate()
+            documentInfo.footerOption = theme.footerOption
+            documentInfo.isNewBook = true
+            documentInfo.coverTemplateImage = info.coverTemplateImage
+            documentInfo.insertAt = 0
+            documentInfo.annotationInfo = theme.annotationInfo
+
+            self.createDocument(documentInfo) { (error, success) in
+                if(nil != error) {
+                    onCompletion(error,success)
+                }
+                else {
+                    guard let _audioURLs = audioURLS else {
+                        onCompletion(nil,true);
+                        return
+                    }
+
+                    self.openDocument(purpose: .write,completionHandler: { (openSuccess,_) in
+                        if(!openSuccess) {
                             DispatchQueue.main.async {
-                                onCompletion(error,success);
+                                onCompletion(FTDocumentCreateErrorCode.error(.openFailed),openSuccess);
                             }
                         }
                         else {
-                            guard let _audioURLs = audioURLS else {
-                                DispatchQueue.main.async {
-                                    onCompletion(nil,true);
-                                }
-                                return
-                            }
-                            
-                            self.openDocument(purpose: .write,completionHandler: { (openSuccess,_) in
-                                if(!openSuccess) {
-                                    DispatchQueue.main.async {
-                                        onCompletion(FTDocumentCreateErrorCode.error(.openFailed),openSuccess);
-                                    }
-                                }
-                                else {
-                                    let page = self.pages().first;
-                                    if(nil != page) {
-                                        let annotations = [FTAnnotation]();
-                                        self.addAudioAnnotations(urls: _audioURLs,
-                                                                 info: documentInfo,
-                                                                 index : Int(0),
-                                                                 toPage: page!,
-                                                                 annotations: annotations,
-                                                                 onCompletion:
-                                                                    { (annotations) in
-                                            self.saveDocument(completionHandler: { (saveSuccess) in
-                                                self.closeDocument(completionHandler: { (success) in
-                                                    DispatchQueue.main.async {
-                                                        onCompletion(nil,saveSuccess);
-                                                    }
-                                                })
-                                            })
-                                            
+                            let page = self.pages().first;
+                            if(nil != page) {
+                                let annotations = [FTAnnotation]();
+                                self.addAudioAnnotations(urls: _audioURLs,
+                                                         info: documentInfo,
+                                                         index : Int(0),
+                                                         toPage: page!,
+                                                         annotations: annotations,
+                                                         onCompletion:
+                                                            { (annotations) in
+                                    self.saveDocument(completionHandler: { (saveSuccess) in
+                                        self.closeDocument(completionHandler: { (success) in
+                                            DispatchQueue.main.async {
+                                                onCompletion(nil,saveSuccess);
+                                            }
                                         })
-                                    }
-                                }
-                            })
+                                    })
+
+                                })
+                            }
                         }
-                    }
-                }
-                catch {
-                    onCompletion(nil,false)
+                    })
                 }
             }
         }
@@ -148,7 +137,7 @@ extension FTNoteshelfDocument : FTDocumentCreateWatchExtension {
             Task {
                 let generator = FTAutoTemplateGenerator.autoTemplateGenerator(theme: theme, generationType: .template)
                 do {
-                    let documentInfo = try await generator.generate()
+                    let documentInfo = generator.generate()
                     documentInfo.footerOption = theme.footerOption
                     documentInfo.annotationInfo = theme.annotationInfo
                     documentInfo.isNewBook = true
@@ -295,5 +284,27 @@ extension FTNoteshelfDocument : FTDocumentCreateWatchExtension {
         var url = Bundle.main.url(forResource: templateName, withExtension: "nsp", subdirectory: "StockPapers_Watch.bundle");
         let theme = FTTheme.theme(url: url!, themeType: FTSelectedThemeType.papers);
         return theme!;
+    }
+}
+
+extension FTNoteshelfDocument {
+     func insertImageInDocument(_ img: UIImage, shouldAddNewPage: Bool = false, currentPage: FTPageProtocol?) {
+        if let page = currentPage as? FTNoteshelfPage {
+            var pageToInsert = page
+            if shouldAddNewPage, let newPage = self.insertPageBelow(page: page) as? FTNoteshelfPage {
+                pageToInsert = newPage
+            }
+            if let image = img.scaleAndRotateImageFor1x() {
+                let pageRect = pageToInsert.pdfPageRect
+                let startingFrame = image.aspectFrame(withinScreenArea: pageRect, zoomScale: 1)
+                let imageInfo = FTImageAnnotationInfo(image: image)
+                imageInfo.boundingRect = startingFrame
+                imageInfo.scale = 1
+                if let imageAnn = imageInfo.annotation() {
+                    imageAnn.associatedPage = pageToInsert
+                    pageToInsert.addAnnotations([imageAnn], indices: nil)
+                }
+            }
+        }
     }
 }

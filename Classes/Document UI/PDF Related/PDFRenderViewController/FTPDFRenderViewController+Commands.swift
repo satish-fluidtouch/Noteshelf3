@@ -17,6 +17,9 @@ protocol FTShortcutActions: AnyObject {
     func deletePageAction(page: FTThumbnailable)
     func duplicateAction(pages: [FTThumbnailable], onCompletion: (()->())?)
     func handleTagPage(source: Any, controller: UIViewController, pages: NSSet)
+    func cameraAction()
+    func scrollingAction(source: FTPageLayout)
+    func recentNotesAction(source:Any)
 
     // Media
     func photoAction()
@@ -50,6 +53,9 @@ enum FTCommand: Equatable {
     case deletePage(page: FTThumbnailable)
     case duplicatePage(pages: [FTThumbnailable])
     case tag(source: Any, controller: UIViewController, pages: NSSet)
+    case camera
+    case scrolling(source: FTPageLayout)
+    case recentNotes(source: Any)
 
     // Share
     case shareNoteBookAsPDF(source: Any)
@@ -91,7 +97,16 @@ class FTShortcutExecuter: FTShortcutCommand {
 
         case .tag(let source, let controller, let pages):
             self.receiver?.handleTagPage(source: source, controller: controller, pages: pages)
-
+            
+        case .camera:
+            self.receiver?.cameraAction()
+            
+        case .scrolling(let source):
+            self.receiver?.scrollingAction(source: source)
+            
+        case .recentNotes(let source):
+            self.receiver?.recentNotesAction(source:source)
+        
             // Media
         case .photo:
             self.receiver?.photoAction()
@@ -131,6 +146,7 @@ class FTShortcutExecuter: FTShortcutCommand {
 }
 
 extension FTPDFRenderViewController: FTShortcutActions {
+    
     @objc func configureShortcutActions() {
         self.executer = FTShortcutExecuter(receiver: self)
     }
@@ -225,6 +241,26 @@ extension FTPDFRenderViewController: FTShortcutActions {
             FTTagsViewController.showTagsController(fromSourceView: source, onController: controller, tags: allTagModels)
         }
     }
+    
+    func cameraAction() {
+        FTImagePicker.shared.showImagePickerController(from: self)
+    }
+    
+    func scrollingAction(source: FTPageLayout) {
+        UserDefaults.standard.pageLayoutType = source
+    }
+    
+    func recentNotesAction(source:Any) {
+        let storyboard = UIStoryboard(name: "FTShelfItems", bundle: nil)
+              if let shelfItemsViewController = storyboard.instantiateViewController(withIdentifier: "FTSidePanelItemsViewController") as? FTSidePanelItemsViewController {
+                shelfItemsViewController.sidePanelDelegate = self
+                  shelfItemsViewController.collection = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection;
+                  shelfItemsViewController.ftPresentationDelegate.source = source as AnyObject
+                  shelfItemsViewController.mode = .recentNotes
+                  self.ftPresentPopover(vcToPresent: shelfItemsViewController, contentSize: CGSize(width: 375, height:470), hideNavBar: true)
+        }
+    }
+    
 
     // Media
     func photoAction() {
@@ -234,8 +270,7 @@ extension FTPDFRenderViewController: FTShortcutActions {
 
     func audioAction() {
         self.audioButtonAction()
-    }
-
+    } 
     func unsplashAction(source: Any) {
         FTMediaLibraryViewController.showAddMenuPixaBayController(from: self, mediaType: .unSplash, source: source)
     }
