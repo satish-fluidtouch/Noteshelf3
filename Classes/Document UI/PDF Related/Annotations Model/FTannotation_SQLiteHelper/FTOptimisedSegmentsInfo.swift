@@ -65,7 +65,7 @@ extension FTStroke {
         let segments = data.toArray(type: FTSegmentStructOptimized.self, count: inSegmentCount);
         self.optimizedSegmentArray = segments;
         segmentCount = inSegmentCount - 1;
-        self.segmentsTransientArray = Array(repeating: FTSegmentTransient(), count: inSegmentCount);
+        self.segmentsTransientArray = Array(repeating: FTSegmentTransient(), count: segmentCount);
     }
     
     func optimizedSegmentsData() -> Data {
@@ -74,17 +74,19 @@ extension FTStroke {
         }
         
         var segments = [FTSegmentStructOptimized]();
-        self.segmentArray.enumerated().forEach { eachItem in
-            if eachItem.offset == 0 {
-                let segment = FTSegmentStructOptimized(segment: eachItem.element, referencePoint: _refPoint);
+        let segCount = self.segmentCount;
+        for i in 0..<segCount {
+            let curSegment = self.segment(at: i) as! FTSegmentStruct
+            if i == 0 {
+                let segment = FTSegmentStructOptimized(segment: curSegment, referencePoint: _refPoint);
                 segments.append(segment);
             }
             else {
-                let prevSegment = self.segmentArray[eachItem.offset - 1];
-                let segment = FTSegmentStructOptimized(segment: eachItem.element, referencePoint: prevSegment.startPoint);
+                let prevSegment = self.segment(at: i-1) as! FTSegmentStruct
+                let segment = FTSegmentStructOptimized(segment: curSegment, referencePoint: prevSegment.startPoint);
                 segments.append(segment);
-                if eachItem.offset == self.segmentArray.count {
-                    let segment = FTSegmentStructOptimized(segment: eachItem.element, referencePoint: eachItem.element.startPoint,isLastSeg: true);
+                if i == segCount {
+                    let segment = FTSegmentStructOptimized(segment: curSegment, referencePoint: curSegment.startPoint,isLastSeg: true);
                     segments.append(segment);
                 }
             }

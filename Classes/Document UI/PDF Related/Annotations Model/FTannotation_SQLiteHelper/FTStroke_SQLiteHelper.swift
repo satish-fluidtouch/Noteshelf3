@@ -22,7 +22,8 @@ extension FTStroke {
     }
     
     override func saveToDatabase(_ db : FMDatabase) -> Bool {
-        self.referencePoint = self.segmentArray.first?.startPoint;
+        self.referencePoint = self.segmentCount > 0 ? self.segment(at: 0).startPoint : nil;
+        
         return db.executeUpdate(strokeInsertQuery, withArgumentsIn: [
             NSNumber.init(value: FTAnnotationType.stroke.rawValue), //Changed to stroke, as we're subclssing this to FTShape and saving intermediately.
             NSNumber.init(value: Float(self.strokeWidth) as Float),
@@ -85,8 +86,15 @@ extension FTStroke {
     }
     
     override func finalizeToSaveToDB() -> [FTAnnotation] {
-        let count = self.segmentArray.filter{ $0.isErased }.count
-        if count == self.segmentArray.count {
+        let segCount = self.segmentCount
+        var erasedSegmentCount = 0;
+        for i in 0..<segCount {
+            let seg = self.segment(at: i);
+            if self.isErasedSegment(seg, index: i) {
+                erasedSegmentCount += 1
+            }
+        }
+        if erasedSegmentCount == segCount {
             return []
         } else {
             return [self]
