@@ -99,7 +99,6 @@ class FTDynamicTemplateTheme: FTPaperTheme,FTPaperThumbnailGenerator {
 
         if let cachedImage = getImageFromDirectory(key) {
             imageToReturn = cachedImage
-            print("zzzz - fateched from cache")
         } else if let theme = theme as? FTTheme {
             let generator = FTAutoTemplateGenerator.autoTemplateGenerator(theme: theme, generationType: .thumbnail)
             do {

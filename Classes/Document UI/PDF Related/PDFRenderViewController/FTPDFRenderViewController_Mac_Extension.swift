@@ -91,11 +91,12 @@ extension FTPDFRenderViewController {
         case .camera:
             self.executer?.execute(type: .camera)
         case .scrolling:
-            let value = (UserDefaults.standard.pageLayoutType == .vertical) ? 1 : 0
-            let title = (UserDefaults.standard.pageLayoutType == .vertical) ? "customizeToolbar.horizontalScrollingEnabled" : "customizeToolbar.verticalScrollingEnabled"
-            let config = FTToastConfiguration(title: title.localized)
+            let oppLayout = UserDefaults.standard.pageLayoutType.oppositeLayout
+            self.executer?.execute(type: .scrolling(source: oppLayout))
+            let layout = UserDefaults.standard.pageLayoutType
+            let config = FTToastConfiguration(title: layout.toastTitle.localized)
             FTToastHostController.showToast(from: self, toastConfig: config)
-            self.executer?.execute(type: .scrolling(direction: value))
+            layout.trackLayout()
         case .recentNotes:
             self.executer?.execute(type: .recentNotes(source: toolbarItem))
         case .tag:

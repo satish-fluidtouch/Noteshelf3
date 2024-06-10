@@ -93,10 +93,7 @@ extension FTToolTypeShortcutViewController: FTFavoriteColorEditDelegate {
         self.penShortcutViewModel = viewModel
         let flow = FTColorsFlowType.penType(rack.currentPenset.type)
         let editMode = FTPenColorSegment.savedSegment(for: flow)
-        var contentSize = FTPenColorEditController.presetViewSize
-        if editMode == .grid {
-            contentSize = FTPenColorEditController.gridViewSize
-        }
+        let contentSize = editMode.contentSize
         var arrowOffset: CGFloat = 0.0
         let step: CGFloat = 32.0
         self.view.transform = .identity

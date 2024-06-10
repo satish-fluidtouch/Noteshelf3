@@ -985,6 +985,7 @@
 "color.resetToDefault" = "デフォルトにリセット";
 "color.restoreAll" = "リセットする";
 "color.restorePresetColors.message" = "すべてをデフォルトの色にリセットしてもよろしいですか？";
+"colors.presets.spectrum" = "スペクトル";
 "continue" = "続ける";
 "convertToText.copiedToClipBoard" = "クリップボードにコピーしました。";
 "convertToText.customDictionary" = "カスタム辞書";
@@ -1159,6 +1160,10 @@
 "icloud.sync.issue.message" = "iCloud に接続できません。 設定でiCloudがオンになっていることをご確認ください。";
 "iconlabels" = "アイコンラベル";
 "import" = "インポート";
+"import.multiple.files" = "%@ つのファイルが Noteshelf に送信されました";
+"import.notsupported.desc" = "このファイルタイプは現在サポートされていません。";
+"import.notsupported.title" = "ファイルをインポートできません";
+"import.single.files" = "%@ ファイルが Noteshelf に送信されました";
 "importedFiles" = "インポートされたファイル";
 "importedTo" = "インポートされました";
 "insidenotebook.share.pageno" = "ページ %@";
@@ -1193,7 +1198,9 @@
 "more.globalsettings.caps" = "グローバル設定";
 "more.settings.footer" = "これらの設定は、すべてのノートブックに対してグローバルに適用されます。";
 "moreInfo" = "詳細情報";
+"more_global" = "グローバル設定";
 "move" = "移動";
+"multiple.files" = "%@ ファイル";
 "newnotebook" = "新しいノートブック";
 "newnotebook.create" = "作成";
 "newnotebook.exitalert.message" = "続けますか？";
@@ -1283,6 +1290,7 @@
 "reset" = "リセット";
 "retry" = "リトライ";
 "save" = "保存";
+"saveAsTemplate_message" = "テンプレートはテンプレートのカスタムセクション内に保存されます。";
 "school" = "学校";
 "search.tryNewSearch" = "新しい検索を試してください";
 "seeAll" = "すべて見る";
@@ -1495,6 +1503,7 @@
 "sidebar.topSection.home" = "ホーム";
 "sidebar.topSection.starred" = "お気に入り";
 "sidebar.topSection.unfiled" = "未整理";
+"single.file" = "%@ ファイル";
 "snippets.addtopage" = "ページに追加する";
 "speechbubbles" = "吹き出し";
 "status_bar_info_footer" = "Noteshelf を楽しんでいますか? App Store で評価するには %@ してください。 それはあなたが想像している以上に私たちを助けてくれるでしょう。";
@@ -1673,4 +1682,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 6 May 2024 at 3:30 PM
+// Last Synced by Fluid Touch on 28 May 2024 at 7:20 PM

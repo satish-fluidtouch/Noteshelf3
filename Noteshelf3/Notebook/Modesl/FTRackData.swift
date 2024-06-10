@@ -89,21 +89,24 @@ extension FTRackData {
     public func defaultColors(for type: FTPenType) -> [FTFavoriteColor] {
         let rackDict = FTRackDataManager.shared.getDefaultStockData()
         var colors: [FTFavoriteColor] = []
-        switch type {
-        case .caligraphy:
-            colors = rackDict.caligraphyPen.favouriteColors
-        case .pilotPen:
-            colors = rackDict.pilotPen.favouriteColors
-        case .pencil:
-            colors = rackDict.pencil.favouriteColors
-        case .pen:
-            colors = rackDict.pen.favouriteColors
-        case .highlighter:
-            colors = rackDict.highlighter.favouriteColors
-        case .flatHighlighter:
-            colors = rackDict.flatHighlighter.favouriteColors
-        default:
-            break
+        if self.type == .pen {
+            if type == .caligraphy {
+                colors = rackDict.caligraphyPen.favouriteColors
+            } else if type == .pilotPen {
+                colors = rackDict.pilotPen.favouriteColors
+            } else if type == .pencil {
+                colors = rackDict.pencil.favouriteColors
+            } else {
+                colors = rackDict.pen.favouriteColors
+            }
+        } else if self.type == .highlighter {
+            if type == .flatHighlighter {
+                colors = rackDict.flatHighlighter.favouriteColors
+            } else {
+                colors = rackDict.highlighter.favouriteColors
+            }
+        } else if self.type == .shape {
+            colors = rackDict.shapeInfo.favouriteColors
         }
         return colors
     }
