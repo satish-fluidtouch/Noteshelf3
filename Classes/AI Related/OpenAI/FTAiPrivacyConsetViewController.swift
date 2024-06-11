@@ -97,7 +97,7 @@ class FTAiPrivacyConsetViewController: UIViewController {
         let privacyPolicyText = "iap.privacy".localized
         let title = String(format: text, privacyPolicyText)
         let attrbutedText = NSMutableAttributedString(string: title)
-        let clickableRange = (text as NSString).range(of: privacyPolicyText)
+        let clickableRange = (title as NSString).range(of: privacyPolicyText)
         attrbutedText.addAttribute(.foregroundColor, value: UIColor.init(hexString: "0455CF"), range: clickableRange)
         privacyPolicy.attributedText = attrbutedText
         privacyPolicy.isUserInteractionEnabled = true
