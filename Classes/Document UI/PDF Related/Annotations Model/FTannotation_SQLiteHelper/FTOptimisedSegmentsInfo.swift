@@ -47,16 +47,15 @@ extension FTSegmentStruct {
         let pointX = referencePoint.x + (Float(segment.startPoint.x) * presValue);
         let pointy = referencePoint.y + (Float(segment.startPoint.y) * presValue);
         self.startPoint = FTPoint(x: pointX, y: pointy);
-//        self.startPoint = segment.startPoint;
 
         self.thickness = Float(segment.thickness) * 0.01
         self.opacity = Float(segment.opacity)  * 0.01
         self.isErased = segment.isErased;
 
-        let endpointX = referencePoint.x + (Float(nextSegment.startPoint.x) * presValue);
-        let endpointy = referencePoint.y + (Float(nextSegment.startPoint.y) * presValue);
+        let endPointRef = self.startPoint;
+        let endpointX = endPointRef.x + (Float(nextSegment.startPoint.x) * presValue);
+        let endpointy = endPointRef.y + (Float(nextSegment.startPoint.y) * presValue);
         self.endPoint = FTPoint(x: endpointX, y: endpointy);
-//        self.endPoint = nextSegment.startPoint
     }
 }
 
@@ -85,7 +84,7 @@ extension FTStroke {
                 let prevSegment = self.segment(at: i-1) as! FTSegmentStruct
                 let segment = FTSegmentStructOptimized(segment: curSegment, referencePoint: prevSegment.startPoint);
                 segments.append(segment);
-                if i == segCount {
+                if i == segCount-1 {
                     let segment = FTSegmentStructOptimized(segment: curSegment, referencePoint: curSegment.startPoint,isLastSeg: true);
                     segments.append(segment);
                 }

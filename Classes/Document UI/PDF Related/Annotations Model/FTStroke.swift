@@ -118,7 +118,9 @@ extension FTPenType {
                     if i > 0 {
                         reference = self.segmentArray[i-1].startPoint;
                     }
-                    let segment = FTSegmentStruct(segment: curSegment, nextSegment: nextSegment, referencePoint: reference);
+                    let segment = FTSegmentStruct(segment: curSegment
+                                                  , nextSegment: nextSegment
+                                                  , referencePoint: reference);
                     self.segmentArray.append(segment)
                 }
             }

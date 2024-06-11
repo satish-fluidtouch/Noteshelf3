@@ -22,7 +22,8 @@ extension FTStroke {
     }
     
     override func saveToDatabase(_ db : FMDatabase) -> Bool {
-        self.referencePoint = self.segmentCount > 0 ? self.segment(at: 0).startPoint : nil;
+        let segCount = self.segCount()
+        self.referencePoint = segCount > 0 ? self.segment(at: 0).startPoint : nil;
         
         return db.executeUpdate(strokeInsertQuery, withArgumentsIn: [
             NSNumber.init(value: FTAnnotationType.stroke.rawValue), //Changed to stroke, as we're subclssing this to FTShape and saving intermediately.
@@ -33,7 +34,7 @@ extension FTStroke {
             NSNumber.init(value: Float(self.boundingRect.origin.y) as Float),
             NSNumber.init(value: Float(self.boundingRect.size.width) as Float),
             NSNumber.init(value: Float(self.boundingRect.size.height) as Float),
-            NSNumber.init(value: Int32(self.segmentCount)),
+            NSNumber.init(value: Int32(segCount)),
             self.storableSegmentData(),
             NSNumber.init(value: self.createdTimeInterval as Double),
             NSNumber.init(value: self.modifiedTimeInterval as Double),
@@ -118,5 +119,13 @@ private extension FTStroke {
             return self.optimizedSegmentsData()
         }
         return self.segmentData();
+    }
+    
+    func segCount() -> Int {
+        if let nsdoc = self.associatedPage?.parentDocument as? FTNoteshelfDocument
+            , (nsdoc.openPurpose == .writeOptimize || !self.optimizedSegmentArray.isEmpty) {
+            return self.segmentCount + 1
+        }
+        return self.segmentCount;
     }
 }
