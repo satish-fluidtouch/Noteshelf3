@@ -134,7 +134,7 @@ extension FTPageViewController {
     
     private func showNoteshelfAIController(_ content:FTPageContent) {
         let status = UserDefaults.standard.bool(forKey: "isAiPrivacyPolicyAccepted")
-        if status {
+        if status  == false{
             FTNoteshelfAIViewController.showNoteshelfAI(from: self
                                                         , content: content
                                                         , delegate: self);

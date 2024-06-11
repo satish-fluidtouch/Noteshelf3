@@ -57,7 +57,7 @@ class FTAiPrivacyConsetViewController: UIViewController {
     }
     
     @IBAction func saveBtnAction(_ sender: UIButton){
-       UserDefaults.standard.set(true, forKey: "isAiPrivacyPolicyAccepted")
+       UserDefaults.standard.set(false, forKey: "isAiPrivacyPolicyAccepted")
        self.dismiss(animated:false)
        self.delegate?.showAiScreen()
     }
