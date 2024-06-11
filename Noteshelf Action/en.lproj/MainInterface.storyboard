@@ -188,7 +188,7 @@
                                                     <constraint firstAttribute="height" constant="300" id="zNR-M9-Vny"/>
                                                 </constraints>
                                             </imageView>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="website" translatesAutoresizingMaskIntoConstraints="NO" id="4At-qB-CcK">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="4At-qB-CcK">
                                                 <rect key="frame" x="0.0" y="0.0" width="240" height="300"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -196,16 +196,21 @@
                                                     <constraint firstAttribute="height" constant="300" id="t5w-dp-BYT"/>
                                                 </constraints>
                                             </imageView>
+                                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="B6w-6Q-sGG">
+                                                <rect key="frame" x="110" y="140" width="20" height="20"/>
+                                            </activityIndicatorView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="Q4J-L4-BfL" firstAttribute="centerY" secondItem="c9Z-on-2ld" secondAttribute="centerY" id="09N-s5-hnr"/>
                                             <constraint firstItem="ppA-tQ-9iu" firstAttribute="centerX" secondItem="c9Z-on-2ld" secondAttribute="centerX" id="2ac-2g-P91"/>
+                                            <constraint firstItem="B6w-6Q-sGG" firstAttribute="centerX" secondItem="c9Z-on-2ld" secondAttribute="centerX" id="Jzr-pP-j3w"/>
                                             <constraint firstItem="4At-qB-CcK" firstAttribute="centerY" secondItem="c9Z-on-2ld" secondAttribute="centerY" id="SKr-4B-z70"/>
                                             <constraint firstAttribute="height" constant="300" id="aZK-gZ-RVV"/>
                                             <constraint firstItem="4At-qB-CcK" firstAttribute="centerX" secondItem="c9Z-on-2ld" secondAttribute="centerX" id="hCM-Tm-THd"/>
                                             <constraint firstItem="ppA-tQ-9iu" firstAttribute="centerY" secondItem="c9Z-on-2ld" secondAttribute="centerY" id="lqK-Pq-6lM"/>
                                             <constraint firstItem="Q4J-L4-BfL" firstAttribute="centerX" secondItem="c9Z-on-2ld" secondAttribute="centerX" id="rjd-S7-C3m"/>
+                                            <constraint firstItem="B6w-6Q-sGG" firstAttribute="centerY" secondItem="c9Z-on-2ld" secondAttribute="centerY" id="tUC-Eo-L4Q"/>
                                             <constraint firstAttribute="width" constant="240" id="xl5-ff-Q44"/>
                                         </constraints>
                                     </view>
@@ -315,6 +320,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="6Dg-Mv-SUQ"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="B6w-6Q-sGG" id="lqu-8x-KTo"/>
                         <outlet property="bottomView" destination="efT-6t-19L" id="mb4-o6-07X"/>
                         <outlet property="containerView" destination="c9Z-on-2ld" id="dD1-xJ-sWH"/>
                         <outlet property="countLabel" destination="sl6-hU-xfh" id="jzI-A6-gDT"/>
@@ -376,13 +382,13 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="gyd-a1-Stp">
                                                     <rect key="frame" x="65" y="11.333333333333332" width="41.666666666666657" height="41.666666666666671"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="izA-ud-zta">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="izA-ud-zta">
                                                             <rect key="frame" x="0.0" y="0.0" width="41.666666666666664" height="20"/>
                                                             <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xx2-v6-Pij">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xx2-v6-Pij">
                                                             <rect key="frame" x="0.0" y="24" width="41.666666666666664" height="17.666666666666671"/>
                                                             <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                                             <color key="textColor" name="black50"/>
@@ -463,7 +469,7 @@
             <objects>
                 <navigationController id="fFd-7n-5Tv" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="1Ni-ds-ec5">
-                        <rect key="frame" x="0.0" y="20" width="414" height="50"/>
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -477,8 +483,8 @@
     </scenes>
     <resources>
         <image name="chevron.right" catalog="system" width="97" height="128"/>
+        <image name="default_placeholder" width="430" height="598"/>
         <image name="folder" catalog="system" width="128" height="96"/>
-        <image name="website" width="240" height="300"/>
         <namedColor name="accent">
             <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -510,10 +516,10 @@
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGroupedBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

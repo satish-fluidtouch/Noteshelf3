@@ -118,9 +118,9 @@ extension FTFavoriteColorViewModel {
     }
 
     func updateCurrentSelection(colorHex: String) {
+        self.currentSelectedColor = colorHex
         if self.currentPenset.color != colorHex {
             self.currentPenset.color = colorHex
-            self.currentSelectedColor = colorHex
             self.rackData.currentPenset = self.currentPenset
             self.rackData.saveFavoriteColors(self.favoriteColors, type: self.currentPenset.type)
             self.delegate?.didChangeCurrentPenset(self.currentPenset, dismissSizeEditView: true)
@@ -196,8 +196,8 @@ extension FTFavoriteSizeViewModel {
 
     func updateCurrentPenSize(size: CGFloat, sizeMode: FTFavoriteSizeMode) {
         let formattedSize = size.roundToDecimal(1)
-        if formattedSize != self.currentSelectedSize {
-            self.currentSelectedSize = formattedSize
+        self.currentSelectedSize = formattedSize
+        if formattedSize != self.currentPenset.preciseSize {
             if let penSize = FTPenSize(rawValue: formattedSize.rounded().toInt) {
                 self.currentPenset.size = penSize
             }

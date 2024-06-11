@@ -971,7 +971,6 @@
 		BAB2589E2959D32F0072AEBB /* FTUtils_Swift_Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB2589D2959D32F0072AEBB /* FTUtils_Swift_Common.swift */; };
 		BAB258A02959D32F0072AEBB /* FTUtils_Swift_Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB2589D2959D32F0072AEBB /* FTUtils_Swift_Common.swift */; };
 		BAB258B0295B19040072AEBB /* FTCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA84E442873105500DE801B /* FTCommon.framework */; };
-		BAB46652296FD98A004FCBDC /* OpenCV in Frameworks */ = {isa = PBXBuildFile; productRef = BAB46651296FD98A004FCBDC /* OpenCV */; };
 		BAB4D5052AFFF337009124EF /* FTMigrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB4D5042AFFF337009124EF /* FTMigrationViewController.swift */; };
 		BAB4D5072AFFF34D009124EF /* Migration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAB4D5062AFFF34D009124EF /* Migration.storyboard */; };
 		BAF0DCD02A6FE2A9006D293B /* FTNewNotebook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF0DCCA2A6FE2A9006D293B /* FTNewNotebook.framework */; };
@@ -3850,6 +3849,7 @@
 		979BC288289253B900208B21 /* FTShelfSplitViewController+ShelfOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTShelfSplitViewController+ShelfOptions.swift"; sourceTree = "<group>"; };
 		979BC28A2893E47200208B21 /* FTShelfTextfieldAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfTextfieldAlertView.swift; sourceTree = "<group>"; };
 		97A1A834269C882A00594BB6 /* FTFiveMinJournalMonthTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFiveMinJournalMonthTemplate.swift; sourceTree = "<group>"; };
+		97A4B3CA2C11CDEC00459172 /* OpenCV */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = OpenCV; sourceTree = "<group>"; };
 		97A606D529BB368A00B01E03 /* FTTemplateInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FTTemplateInfoModel.swift; path = papers/FTTemplateInfoModel.swift; sourceTree = "<group>"; };
 		97A606D729BB3D3500B01E03 /* FTCoverDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FTCoverDataSource.swift; path = Networking/FTCoverDataSource.swift; sourceTree = "<group>"; };
 		97A663C329966D08006F13C8 /* FTPreviewShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPreviewShape.swift; sourceTree = "<group>"; };
@@ -3950,6 +3950,7 @@
 		97D2A4FD2AC6F01000A0E509 /* FTFavoritePensetDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritePensetDataManager.swift; sourceTree = "<group>"; };
 		97D2A4FF2AC6F09900A0E509 /* FTFavoritePensetDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritePensetDataModel.swift; sourceTree = "<group>"; };
 		97D470092624852700D29C4E /* FTPresenterSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPresenterSet.swift; sourceTree = "<group>"; };
+		97DF2AE52C11D2A500FEDBD0 /* Read Me.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Read Me.rtf"; sourceTree = "<group>"; };
 		97E4006929139CAD00E0E0D7 /* FTDropOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDropOverlayView.swift; sourceTree = "<group>"; };
 		97E65E152ACBD9D000B33BC3 /* FTFavoritePenCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritePenCollectionViewCell.swift; sourceTree = "<group>"; };
 		97EC28F229A748FC008CBD7D /* FTShelfSplitController+CreateNotebookDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTShelfSplitController+CreateNotebookDelegates.swift"; sourceTree = "<group>"; };
@@ -4933,7 +4934,6 @@
 				BAF395752859ADF10067CA9F /* Webdav.xcframework in Frameworks */,
 				BA909A34298BE75B00260538 /* libiink.xcframework in Frameworks */,
 				BA3F7FB3299E2F51003964C6 /* libMyScriptGesture.xcframework in Frameworks */,
-				BAB46652296FD98A004FCBDC /* OpenCV in Frameworks */,
 				BAA84E1D28730F5800DE801B /* FTStyles.framework in Frameworks */,
 				BA8BA67329795F4A00946CFE /* GoogleAPIClientForREST_Drive in Frameworks */,
 				BA3F7FB8299E2F51003964C6 /* libMyScriptMath.xcframework in Frameworks */,
@@ -7684,6 +7684,7 @@
 		211E39121E028265007B5CAD /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
+				97A4B3CA2C11CDEC00459172 /* OpenCV */,
 				9715DF862AEA9D2C00EC48D4 /* EvernoteSDK */,
 				9787571625DBD46A00CB766F /* WebdavFramework */,
 				B86B7B2F24B6DB9100B57783 /* FTDocumentFramework */,
@@ -7726,6 +7727,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				97DF2AE52C11D2A500FEDBD0 /* Read Me.rtf */,
 				E7051CA72BBE83AC00C13427 /* Noteshelf3 Watch WidgetExtensionRelease Enterprise.entitlements */,
 				09DCDBA82BBAF070006055DB /* Noteshelf3 WatchApp */,
 				BA2D8EAC2859E4C8001BB495 /* Noteshelf3 */,
@@ -12358,7 +12360,6 @@
 			);
 			name = Noteshelf3;
 			packageProductDependencies = (
-				BAB46651296FD98A004FCBDC /* OpenCV */,
 				BA8BA65529766D2900946CFE /* SwiftyDropbox */,
 				BA8BA66C29794C6400946CFE /* GoogleSignIn */,
 				BA8BA67229795F4A00946CFE /* GoogleAPIClientForREST_Drive */,
@@ -12502,7 +12503,6 @@
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			packageReferences = (
-				BAB46650296FD98A004FCBDC /* XCRemoteSwiftPackageReference "OpenCV" */,
 				BA8BA65429766D2900946CFE /* XCRemoteSwiftPackageReference "SwiftyDropbox" */,
 				BA8BA66B29794C6400946CFE /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				BA8BA67129795F4A00946CFE /* XCRemoteSwiftPackageReference "google-api-objectivec-client-for-rest" */,
@@ -13030,6 +13030,7 @@
 				"${BUILT_PRODUCTS_DIR}/FirebaseCrashlytics/FirebaseCrashlytics.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseInstallations/FirebaseInstallations.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseRemoteConfig/FirebaseRemoteConfig.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseRemoteConfigInterop/FirebaseRemoteConfigInterop.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseSessions/FirebaseSessions.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseSharedSwift/FirebaseSharedSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
@@ -13063,6 +13064,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCrashlytics.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseInstallations.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseRemoteConfig.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseRemoteConfigInterop.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseSessions.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseSharedSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
@@ -13088,7 +13090,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ \"$PLATFORM_NAME\" = \"macosx\" ]]; then\n \"${SRCROOT}/MacCatalyst/Noteshelf-maccatalyst-frameworks.sh\"\nelse\n \"${PODS_ROOT}/Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3-frameworks.sh\"\nfi\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -15540,7 +15542,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0904BC622373F31400239DB8 /* Noteshelf-debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Dev";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = accent;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
@@ -15973,7 +15974,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0904BC632373F31400239DB8 /* Noteshelf-release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Prod";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = accent;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
@@ -17556,7 +17556,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0904BC622373F31400239DB8 /* Noteshelf-debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Dev";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = accent;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
@@ -17629,7 +17628,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0904BC632373F31400239DB8 /* Noteshelf-release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Prod";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = accent;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
@@ -17661,8 +17659,7 @@
 				ENABLE_MODULE_VERIFIER = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Third\\ Party",
-					"$(PROJECT_DIR)/Third\\ Party",
+					"$(PROJECT_DIR)/Third\\ Party/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/App Delegate/Noteshelf_Prefix.pch";
@@ -17718,7 +17715,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BA50E027295981E000CDC0FD /* Noteshelf-beta.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = accent;
@@ -17731,8 +17727,7 @@
 				ENABLE_MODULE_VERIFIER = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Third\\ Party",
-					"$(PROJECT_DIR)/Third\\ Party",
+					"$(PROJECT_DIR)/Third\\ Party/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/App Delegate/Noteshelf_Prefix.pch";
@@ -18783,14 +18778,6 @@
 				kind = branch;
 			};
 		};
-		BAB46650296FD98A004FCBDC /* XCRemoteSwiftPackageReference "OpenCV" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/AkshayFT/OpenCV";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		DDAD78EA2A08C550001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
@@ -18831,11 +18818,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BA8BA67129795F4A00946CFE /* XCRemoteSwiftPackageReference "google-api-objectivec-client-for-rest" */;
 			productName = GoogleAPIClientForREST_Drive;
-		};
-		BAB46651296FD98A004FCBDC /* OpenCV */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BAB46650296FD98A004FCBDC /* XCRemoteSwiftPackageReference "OpenCV" */;
-			productName = OpenCV;
 		};
 		BAF0DD532A6FE30D006D293B /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;

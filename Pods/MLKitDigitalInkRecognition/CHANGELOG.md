@@ -1,3 +1,8 @@
+# 2024-02-20 -- v4.0.0
+- Raised the minimum supported version of Xcode to 15.1.0.
+- Added privacy manifest.
+- Raised the minimum supported version of iOS from 11.0 to 12.0.
+- Upgraded the version range of SSZipArchive dependency from ":~> 2.1" to ">= 2.2.3, < 3.0" to be compatible with XCode 15.1.
 # 2023-03-21 -- v3.0.0
 - Raised the minimum supported version of Xcode to 14.2.0.
 - Removed support for bitcode.

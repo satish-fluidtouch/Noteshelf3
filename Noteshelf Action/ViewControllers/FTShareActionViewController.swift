@@ -29,6 +29,7 @@ class FTShareActionViewController: UIViewController, FTShareAlertDelegate {
     @IBOutlet weak var imageView3WidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var imageView3HeightConstraint: NSLayoutConstraint!
 
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var countLabel: UILabel!
     @IBOutlet weak var imageView2: UIImageView!
     @IBOutlet weak var imageView3: UIImageView!
@@ -107,10 +108,11 @@ class FTShareActionViewController: UIViewController, FTShareAlertDelegate {
                 self.updateImages(images: images)
                 self.updateCountLabel(count: attachmentsInfo.imageItems.count)
             } else if attachmentsInfo.hasOnlyWebsiteLinks() {
-                //TODO - Find a way to show website image
-                self.imageView1.image = UIImage(named: "website")
-                self.imageView1.layer.cornerRadius = 10
-                self.updateCountLabel(count: 1)
+                self.imageForSupportedFileType(url: attachmentsInfo.websiteURLs[0]) { image in
+                    self.imageView1.image = image
+                    self.imageView1.layer.cornerRadius = 10
+                    self.updateCountLabel(count: 1)
+                }
             } else if attachmentsInfo.hasOnlyPublicImageURLs() {
                 let imageURL = attachmentsInfo.publicImageURLs[0]
                 let task = URLSession.shared.dataTask(with: imageURL) {[weak self] (data, _, error) in
@@ -190,21 +192,30 @@ class FTShareActionViewController: UIViewController, FTShareAlertDelegate {
                 self.imageView1.image = UIImage(named: "audio")
                 audioImage = UIImage(named: "audio")
             }
-            for eachUrl in attachmentsInfo.publicURLs {
-                if eachUrl.isPDFType, let pdf = PDFDocument(url: eachUrl), let page = pdf.page(at: 0) {
-                    pdfImage = page.thumbnail(of: CGSize(width: 240, height: 300), for: .mediaBox).resizedImage(imageMaxSize)
-                    break
-                }
-            }
             if let publicImageUrl = attachmentsInfo.publicImageURLs.first {
                 publicImage = UIImage(contentsOfFile: publicImageUrl.path)
             }
             if attachmentsInfo.hasAnyNoteShelfFiles() {
                 noteshelfImage = UIImage(named: "nsbook")
             }
-            var images = [audioImage, pdfImage,publicImage, noteshelfImage]
-            images = images.filter { $0 != nil }
-            self.updateImages(images: images)
+            if let publicUrl = attachmentsInfo.publicURLs.first {
+                if publicUrl.isPDFType, let pdf = PDFDocument(url: publicUrl), let page = pdf.page(at: 0) {
+                    pdfImage = page.thumbnail(of: CGSize(width: 240, height: 300), for: .mediaBox).resizedImage(imageMaxSize)
+                    loadImages()
+                } else if publicUrl.isSupportedFileType {
+                    self.imageForSupportedFileType(url: publicUrl) { image in
+                        pdfImage = image
+                        loadImages()
+                    }
+                }
+            } else {
+                loadImages()
+            }
+            func loadImages() {
+                var images = [audioImage, pdfImage,publicImage, noteshelfImage]
+                images = images.filter { $0 != nil }
+                self.updateImages(images: images)
+            }
         }
     }
     
@@ -340,11 +351,46 @@ class FTShareActionViewController: UIViewController, FTShareAlertDelegate {
             })
         }
     }
+    
+    func imageForSupportedFileType(url: URL, onCompletion : @escaping (UIImage?)->()) {
+        if let window = self.view.window {
+            showActivityIndicator()
+            FTPDFConverter.shared.convertToPDF(url: url, view: window, onSuccess: {[weak self] filePath in
+                guard let self = self else {return}
+                if let pdf = PDFDocument(url: URL(fileURLWithPath: filePath)), let page = pdf.page(at: 0) {
+                    let pdfImage = page.thumbnail(of: CGSize(width: 240, height: 300), for: .mediaBox).resizedImage(imageMaxSize)
+                        onCompletion(pdfImage)
+                       hideActivityIndicator()
+                } else {
+                    hideActivityIndicator()
+                }
+            }, onFailure: {_  in
+                self.hideActivityIndicator()
+            }, progress: {_
+                in
+            })
+        }
+    }
+    
+    private func showActivityIndicator() {
+        activityIndicator.startAnimating()
+        activityIndicator.isHidden = false
+    }
+
+    private func hideActivityIndicator() {
+        activityIndicator.stopAnimating()
+        activityIndicator.isHidden = true
+    }
 }
 
 extension URL {
     var isPDFType : Bool {
         return self.pathExtension == "pdf"
+    }
+    
+    var isSupportedFileType : Bool {
+        let supportedFileDocsPathExtensions = ["doc","docx","ppt","pptx","xls","xlsx"];
+        return supportedFileDocsPathExtensions.contains(self.pathExtension)
     }
     
     var isAudioType : Bool {

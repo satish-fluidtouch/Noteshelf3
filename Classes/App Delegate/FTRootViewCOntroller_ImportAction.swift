@@ -30,7 +30,7 @@ extension FTRootViewController {
     func showCompleteImportProgressIfNeeded() {
         if importSmartProgressView == nil {
             let count = FTImportStorageManager.getReadyToImportActions().count
-            let controller = self.docuemntViewController ?? self
+            let controller = self.noteBookSplitController ?? self
             importProgress = Progress();
             importProgress?.totalUnitCount = Int64(count);
             importProgress?.localizedDescription = NSLocalizedString("Importing", comment: "Importing...");
