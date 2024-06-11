@@ -154,33 +154,28 @@ class FTDeskShortcutView: FTDeskToolView {
 }
 
 final class FTToolBgButton: UIButton {
-    private let backgroundLayer = CALayer()
-
     func setBackground(for mode: FTCenterPanelMode = .toolbar) {
-        self.backgroundLayer.removeFromSuperlayer()
-        self.backgroundLayer.backgroundColor = UIColor.appColor(.white100).cgColor
-        self.backgroundLayer.shadowOpacity = 0.0
-        self.backgroundLayer.shadowColor = UIColor.black.withAlphaComponent(0.12).cgColor
-        self.backgroundLayer.shadowOpacity = 1.0
-        self.backgroundLayer.shadowOffset = CGSize(width: 0, height: 2.0)
-        self.backgroundLayer.shadowRadius = 4.0
+        let bgBounds = self.bounds.insetBy(dx: 2.0, dy: 6.0)
+        self.layer.masksToBounds = false
+        self.layer.shadowOpacity = 0.0
+        self.layer.shadowColor = UIColor.label.withAlphaComponent(0.12).cgColor
+        self.layer.shadowOffset = CGSize(width: 0, height: 4.0)
+        self.layer.shadowOpacity = 1.0
+        self.layer.shadowRadius = 8.0
+        self.layer.backgroundColor = UIColor.appColor(.white100).cgColor
         if mode == .circular {
-            let bgBounds = self.bounds.insetBy(dx: 1.0, dy: 1.0)
-            self.backgroundLayer.frame = bgBounds
-            let diameter = min(bgBounds.width, bgBounds.height)
-            self.backgroundLayer.cornerRadius = diameter/2
-            self.backgroundLayer.shadowPath = UIBezierPath(roundedRect: bgBounds, cornerRadius: diameter/2).cgPath
+            let diameter = max(self.bounds.width, self.bounds.height)
+            self.layer.cornerRadius = diameter/2
+            self.layer.shadowPath = UIBezierPath(roundedRect: bgBounds, cornerRadius: diameter/2).cgPath
         } else {
-            let bounds = self.bounds.insetBy(dx: 2.0, dy: 2.0)
-            self.backgroundLayer.frame = bounds
-            self.backgroundLayer.cornerRadius = 7.0
-            self.backgroundLayer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: 7).cgPath
+            self.layer.cornerRadius = 7.0
+            self.layer.shadowPath = UIBezierPath(roundedRect: bgBounds, cornerRadius: 7).cgPath
         }
-        self.layer.insertSublayer(self.backgroundLayer, below: imageView?.layer)
     }
 
      func removeBackground() {
-         self.backgroundLayer.removeFromSuperlayer()
+         self.layer.backgroundColor = UIColor.clear.cgColor
+         self.layer.shadowOpacity = 0.0
     }
 }
 
@@ -190,14 +185,15 @@ extension FTDeskToolView: UIPointerInteractionDelegate {
         if let superView = superview {
             let target = UIDragPreviewTarget(container: superView, center: center)
             let targetedPreview: UITargetedPreview
+            let bounds = self.toolButton?.bounds.insetBy(dx: 2, dy: 6) ?? .zero
             if self.mode == .circular {
-                let diameter = min(self.toolButton.bounds.width, self.toolButton.bounds.height)
+                let diameter = min(bounds.width, bounds.height)
                 let previewView = UIView(frame: CGRect(x: 0, y: 0, width: diameter, height: diameter))
                 previewView.layer.cornerRadius = diameter/2
                 targetedPreview = UITargetedPreview(view: previewView, parameters: UIPreviewParameters(), target: target)
             } else {
                 let previewView = UIView()
-                previewView.frame = self.toolButton?.bounds.insetBy(dx: 2, dy: 4) ?? .zero
+                previewView.frame = bounds
                 targetedPreview = UITargetedPreview(view: previewView, parameters: UIPreviewParameters(), target: target)
             }
             let pointerEffect = UIPointerEffect.highlight(targetedPreview)
