@@ -57,14 +57,12 @@ class FTAiPrivacyConsetViewController: UIViewController {
     }
     
     @IBAction func saveBtnAction(_ sender: UIButton){
-       UserDefaults.standard.set(false, forKey: "isAiPrivacyPolicyAccepted")
+       UserDefaults.standard.set(false, forKey: "shouldAiPolicyAccepte")
        self.dismiss(animated:false)
        self.delegate?.showAiScreen()
     }
     
-    func setUpUi() {
-        self.bgView?.addShadow(CGSize(width: 0, height: 0), color: UIColor.appColor(.black20), opacity: 0.24 ,radius: 8.0)
-        self.bgView.layer.cornerRadius = 16
+    private func setUpUi() {
         self.cancelBtn.layer.borderColor  = UIColor.appColor(.accent).cgColor
         self.cancelBtn.layer.borderWidth = 1
         self.titleLbl.text = "noteshelf.ai.privacy.title".localized
@@ -73,10 +71,9 @@ class FTAiPrivacyConsetViewController: UIViewController {
         setUptickBtn(status:true)
         setUpParagraphText()
         setUpPrivacyPolicyText()
-       
     }
     
-    func setUpParagraphText() {
+    private func setUpParagraphText() {
         let text = "noteshelf.ai.privacy.description".localized
         
         let paragraphStyle = NSMutableParagraphStyle()
@@ -92,13 +89,13 @@ class FTAiPrivacyConsetViewController: UIViewController {
         self.descriptionLbl.attributedText = attributedString
     }
     
-    func setUpPrivacyPolicyText(){
+    private func setUpPrivacyPolicyText(){
         let text = "noteshelf.ai.privacy.terms.acceptnace".localized
         let privacyPolicyText = "iap.privacy".localized
         let title = String(format: text, privacyPolicyText)
         let attrbutedText = NSMutableAttributedString(string: title)
         let clickableRange = (title as NSString).range(of: privacyPolicyText)
-        attrbutedText.addAttribute(.foregroundColor, value: UIColor.init(hexString: "0455CF"), range: clickableRange)
+        attrbutedText.addAttribute(.foregroundColor, value: UIColor.appColor(.blueDodger), range: clickableRange)
         privacyPolicy.attributedText = attrbutedText
         privacyPolicy.isUserInteractionEnabled = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
@@ -122,7 +119,6 @@ class FTAiPrivacyConsetViewController: UIViewController {
         textStorage.addLayoutManager(layoutManager)
         
         let characterIndex = layoutManager.characterIndex(for: tapLocation, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
-        
         if NSLocationInRange(characterIndex, clickableRange) {
             if let privacyURL = URL(string: "https://www.noteshelf.net/privacy.html") {
                 let safariController = SFSafariViewController(url: privacyURL);
@@ -130,29 +126,17 @@ class FTAiPrivacyConsetViewController: UIViewController {
                 safariController.modalTransitionStyle = .coverVertical
                 self.present(safariController, animated: true);
             }
-            
         }
-        
     }
     
-    func setUptickBtn(status: Bool) {
-        if status {
-            self.tickBtn.setImage(nil, for: .normal)
-            self.tickBtn.backgroundColor = .clear
-            self.tickBtn.layer.cornerRadius = 11
-            self.tickBtn.layer.borderColor  = UIColor.appColor(.black20).cgColor
-            self.tickBtn.layer.borderWidth = 1.5
-            self.saveBtn.isEnabled = false
-            self.saveBtn.alpha = 0.5
-        }else {
-            let image = UIImage(named: "checkWhite")
-            self.tickBtn.setImage(image, for: .normal)
-            self.tickBtn.backgroundColor = UIColor.appColor(.accent)
-            self.tickBtn.layer.cornerRadius = 11
-            self.tickBtn.layer.borderColor  = UIColor.clear.cgColor
-            self.tickBtn.layer.borderWidth = 0
-            self.saveBtn.isEnabled = true
-            self.saveBtn.alpha = 1
-        }
+    private func setUptickBtn(status: Bool) {
+        let image : UIImage? = status ? nil : UIImage(named: "checkWhite")
+        self.tickBtn.setImage(image, for: .normal)
+        self.tickBtn.backgroundColor = status ? .clear : UIColor.appColor(.accent)
+        self.tickBtn.layer.cornerRadius = 11
+        self.tickBtn.layer.borderColor = status ? UIColor.appColor(.black20).cgColor : UIColor.clear.cgColor
+        self.tickBtn.layer.borderWidth = status ? 1.5 : 0
+        self.saveBtn.isEnabled =  status ? false : true
+        self.saveBtn.alpha = status ? 0.5 : 1
     }
 }

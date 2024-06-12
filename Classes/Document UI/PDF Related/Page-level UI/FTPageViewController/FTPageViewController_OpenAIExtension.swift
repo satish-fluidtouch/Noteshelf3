@@ -11,12 +11,16 @@ import Reachability
 
 extension FTPageViewController {
     
-    @objc func startOpenAiForPage() {
+    @objc func startOpenAiForPage(showPrivacyScreen: Bool = false) {
         guard let connection = Reachability.forInternetConnection(),connection.currentReachabilityStatus() != NetworkStatus.NotReachable  else {
             FTOPenAIError.noInternetConnection.showAlert(from: self);
             return;
         }
-        
+        let status = UserDefaults.standard.bool(forKey: "shouldAiPolicyAccepte")
+        if status || showPrivacyScreen{
+            showPrivacyConsent()
+            return
+        }
         guard let page = self.pdfPage else {
             return;
         }
@@ -49,12 +53,13 @@ extension FTPageViewController {
         }
         self.generateOpenAIContentFor(annotations: annotationsToConsider
                                       ,pdfContent: pdfContent
-                                      ,isFullPage: isFullPage);
+                                      ,isFullPage: isFullPage, showPrivacyScreen: showPrivacyScreen);
     }
     
     @objc private func generateOpenAIContentFor(annotations : [FTAnnotation]
                                                 ,pdfContent: String
-                                                ,isFullPage: Bool) {
+                                                ,isFullPage: Bool
+                                                ,showPrivacyScreen: Bool = false) {
         var annotationsToConsider = [FTAnnotation]();
         
         let pageContent = FTPageContent();
@@ -133,21 +138,21 @@ extension FTPageViewController {
     }
     
     private func showNoteshelfAIController(_ content:FTPageContent) {
-        let status = UserDefaults.standard.bool(forKey: "isAiPrivacyPolicyAccepted")
-        if status  == false{
-            FTNoteshelfAIViewController.showNoteshelfAI(from: self
-                                                        , content: content
-                                                        , delegate: self);
-        } else {
-            guard let privacyController = UIStoryboard.instantiateAIViewController(withIdentifier: "FTAiPrivacyConsetViewController") as? FTAiPrivacyConsetViewController else {
-                fatalError("ERROR!!!!");
-            }
-            privacyController.delegate = self
-            let navVc = UINavigationController(rootViewController: privacyController);
-            self.ftPresentFormsheet(vcToPresent: navVc, contentSize: CGSize(width: 540, height: 620), hideNavBar: false)
-        }
+        FTNoteshelfAIViewController.showNoteshelfAI(from: self
+                                                    , content: content
+                                                    , delegate: self);
     }
     
+    func showPrivacyConsent() {
+        guard let privacyController = UIStoryboard.instantiateAIViewController(withIdentifier: "FTAiPrivacyConsetViewController") as? FTAiPrivacyConsetViewController else {
+            fatalError("ERROR!!!!");
+        }
+        privacyController.delegate = self
+        privacyController.modalPresentationStyle = .formSheet
+        privacyController.preferredContentSize = CGSize(width: 540, height: 620)
+        self.present(privacyController, animated: true)
+    }
+
     private func recognizedString() -> String? {
         guard let recognitionInfo = self.pdfPage?.recognitionInfo
                 ,let lastUpdated = self.pdfPage?.lastUpdated else {

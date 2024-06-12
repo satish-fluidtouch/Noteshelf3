@@ -192,6 +192,7 @@ class FTNoteshelfAIViewController: UIViewController {
         controller.delegate = delegate;
         let navController = UINavigationController(rootViewController: controller);
         presentingController.ftPresentFormsheet(vcToPresent: navController, contentSize: CGSize(width: 500, height: 508),animated: animated, hideNavBar: false)
+        
     }
         
     override func viewDidLoad() {
