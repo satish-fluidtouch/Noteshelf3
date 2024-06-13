@@ -20,7 +20,7 @@ private extension Float {
         if fabsf(self*Float.precisionVal) > Float(Int16.max) {
             FTLogError("Stroke Float to int failed", attributes: ["value": self])
         }
-        return Int16(max(min(self*Float.precisionVal,Float(Int16.max)), Float(Int16.min)))
+        return Int16(max(min(self*Float.precisionVal,Float(Int16.max)), Float(Int16.min)).rounded())
     }
 }
 struct FTSegmentStructOptimized {
