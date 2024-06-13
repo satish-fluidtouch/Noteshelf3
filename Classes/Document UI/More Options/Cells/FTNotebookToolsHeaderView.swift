@@ -43,6 +43,9 @@ class FTNotebookToolsHeaderView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        if !FTFeatureConfigHelper.shared.isFeatureEnabled(.Share) {
+            topStackview?.isHidden = true
+        }
         topStackview?.subviews.forEach({ eachView in
             setUp(for: eachView)
         })

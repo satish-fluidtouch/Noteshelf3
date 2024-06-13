@@ -62,9 +62,11 @@ struct FTShelfSelectAndSettingsView: View {
     }
     private var menuView: some View {
         return VStack {
-            getMoreSectionitem(.selectNotes, viewmodel: viewModel)
-                .disabled(viewModel.shelfItems.isEmpty)
-            Divider()
+            if FTFeatureConfigHelper.shared.isFeatureEnabled(.Supports_NBEditing) {
+                getMoreSectionitem(.selectNotes, viewmodel: viewModel)
+                    .disabled(viewModel.shelfItems.isEmpty)
+                Divider()
+            }
             sortView
             Divider()
             FTShelfDisplayStyleView()

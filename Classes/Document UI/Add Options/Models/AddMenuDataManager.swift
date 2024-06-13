@@ -115,14 +115,19 @@ class AddMenuDataManager {
         var items = [[newPageItem], [choseTemplateItem]]
 
 #if !targetEnvironment(macCatalyst)
-        let scanItem = PageItem(image: UIImage(systemName: "viewfinder"), name: "Scan".localized, type: .scanDocument)
-        items.append([photoItem, scanItem, cameraItem])
+        if FTFeatureConfigHelper.shared.isFeatureEnabled(.ScanDocument) {
+            let scanItem = PageItem(image: UIImage(systemName: "viewfinder"), name: "Scan".localized, type: .scanDocument)
+            items.append([photoItem, scanItem, cameraItem])
+        } else {
+            items.append([photoItem])
+        }
 #else
         items.append([photoItem, cameraItem])
 #endif
-
-        let importDocItem = PageItem(image: UIImage(systemName: "square.and.arrow.down"), name: "ImportDocument".localized, type: .importDocument)
-        items.append([importDocItem])
+        if FTFeatureConfigHelper.shared.isFeatureEnabled(.ImportDocument) {
+            let importDocItem = PageItem(image: UIImage(systemName: "square.and.arrow.down"), name: "ImportDocument".localized, type: .importDocument)
+            items.append([importDocItem])
+        }
 
         if FTPasteBoardManager.shared.isUrlValid() {
             let insertFromClipboard = PageItem(image: UIImage(systemName: "clipboard"), name: "InsertFromClipboard".localized, type: .inserFromclipboard)
@@ -145,10 +150,12 @@ class AddMenuDataManager {
 
         let appleWatchMediaItem = MediaItem(image: UIImage(systemName: "applewatch"), name: "AppleWatchRecordings".localized,showDiscloser: true, type: .appleWatch)
         var itemsToReturn = [[photoItem, cameraItem], [audioItem, emojiItem, stickerItem, saveClipsItem]]
-        if (NSUbiquitousKeyValueStore.default.isWatchPaired() && NSUbiquitousKeyValueStore.default.isWatchAppInstalled()) {
-            itemsToReturn.append(contentsOf: [[importMediaItem, appleWatchMediaItem]])
-        } else {
-            itemsToReturn.append(contentsOf: [[importMediaItem]])
+        if FTFeatureConfigHelper.shared.isFeatureEnabled(.ImportDocument) {
+            if (NSUbiquitousKeyValueStore.default.isWatchPaired() && NSUbiquitousKeyValueStore.default.isWatchAppInstalled()) {
+                itemsToReturn.append(contentsOf: [[importMediaItem, appleWatchMediaItem]])
+            } else {
+                itemsToReturn.append(contentsOf: [[importMediaItem]])
+            }
         }
         return itemsToReturn
     }

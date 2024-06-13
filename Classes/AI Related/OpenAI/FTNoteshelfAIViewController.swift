@@ -11,6 +11,9 @@ import FTCommon
 
 class FTNoteshelfAI {
     static var supportsNoteshelfAI: Bool {
+        if !FTFeatureConfigHelper.shared.isFeatureEnabled(.Noteshelf_AI) {
+            return false
+        }
 #if targetEnvironment(macCatalyst)
         return !UIDevice.isChinaRegion
 #else

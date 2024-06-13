@@ -147,7 +147,7 @@ struct FTSidebarView: View {
                             .environmentObject(item)
                     }
                 }
-                if menuSection.type == .categories {
+                if menuSection.type == .categories && FTFeatureConfigHelper.shared.isFeatureEnabled(.CategoryCreation) {
                     getEditableViewForSideBarItem(viewModel.newItem,withPlaceHolder:"NewCategory".localized) { newTitle in
                         if !newTitle.isEmpty , !newTitle.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty {
                             viewModel.addNewCategoryWithTitle(newTitle)

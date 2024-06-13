@@ -25,8 +25,6 @@ struct FTMorePopoverSections {
 
     private func otherProperties() -> [FTNotebookMoreOption] {
         var section = [FTNotebookMoreOption]()
-     //   section.append(FTNotebookOptionGesture())
-     //   section.append(FTNotebookOptionHelp())
         section.append(FTNotebookAddScrollingDirection())
 #if !targetEnvironment(macCatalyst)
         if !UIDevice.current.isIphone() {
@@ -41,8 +39,12 @@ struct FTMorePopoverSections {
         var section = [FTNotebookMoreOption]()
         section.append(FTNotebookPassword())
 #if !targetEnvironment(macCatalyst)
-        section.append(FTNotebookAddToSiri())
-        section.append(FTNotebookEverNoteSetting(isEnabled: false))
+        if FTFeatureConfigHelper.shared.isFeatureEnabled(.AddSiri) {
+            section.append(FTNotebookAddToSiri())
+        }
+        if FTFeatureConfigHelper.shared.isFeatureEnabled(.EvernoteSync) {
+            section.append(FTNotebookEverNoteSetting(isEnabled: false))
+        }
 #endif
         section.append(FTNotebookOptionGetInfo())
         return section
@@ -59,11 +61,10 @@ struct FTMorePopoverSections {
         if !secondSection.isEmpty {
             settings.append(secondSection)
         }
-        
-        let noteBooksection = noteBookProperties()
-            settings.append(noteBooksection)
-        
-        
+        if FTFeatureConfigHelper.shared.isFeatureEnabled(.SupportsPassword) {
+            let noteBooksection = noteBookProperties()
+                settings.append(noteBooksection)
+        }
         // Second Section
         let thirdSection = otherProperties()
         settings.append(thirdSection)

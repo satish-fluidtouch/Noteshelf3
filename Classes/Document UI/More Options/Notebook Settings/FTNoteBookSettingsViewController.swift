@@ -35,25 +35,18 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
     }
     
     override func viewDidLoad() {
-        var firstSection: [FTNoteBookSettings] = [.password]
+        var firstSection : [FTNoteBookSettings] = [ .hideUiInPresentMode, .allowHyperLinks, .autoLock]
+        var secondSection : [FTNoteBookSettings] = []
 #if !targetEnvironment(macCatalyst)
-        firstSection.append(.addToSiri)
-        firstSection.append(.evernoteSync)
+        secondSection.append(.gestures)
 #endif
-        var secondSection : [FTNoteBookSettings] = [ .hideUiInPresentMode, .allowHyperLinks, .autoLock]
-        //        if UIDevice.current.userInterfaceIdiom == .pad {
-        //            secondSection.append(.stylus)
-        //        }
-        //   settings.append(firstSection)
+        secondSection.append(.noteShelfHelp)
+        if !FTFeatureConfigHelper.shared.isFeatureEnabled(.Allow_hyperlinks) {
+            firstSection = firstSection.filter{$0 != .allowHyperLinks}
+        }
         
-        var thirdSection : [FTNoteBookSettings] = []
-#if !targetEnvironment(macCatalyst)
-        thirdSection.append(.gestures)
-#endif
-        thirdSection.append(.noteShelfHelp)
-        
+        settings.append(firstSection)
         settings.append(secondSection)
-        settings.append(thirdSection)
         
         tableView?.register(UITableViewCell.self, forCellReuseIdentifier: "standardCell")
         self.tableView?.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)

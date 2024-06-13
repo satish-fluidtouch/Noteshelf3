@@ -69,7 +69,7 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                         }
                     }
 
-                    if shelfViewModel.canShowNewNoteNavOption {
+                    if shelfViewModel.canShowNewNoteNavOption, FTFeatureConfigHelper.shared.isFeatureEnabled(.NotebookCreation) {
                         ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing)  {
                             Button {
                                 showingPopover = true

@@ -10,9 +10,9 @@ import Foundation
 extension FTSidebarViewModel {
     func getContextualOptionsForSideBarType(_ type: FTSideBarItemType) -> [FTSidebarItemContextualOption] {
         var contextualOptions: [FTSidebarItemContextualOption] = []
-        let openInNewWindowSupportedTypes: [FTSideBarItemType] = [.home,.templates,.media,.bookmark,.audio,.starred,.unCategorized,.category]
-        let renameSupportedTypes: [FTSideBarItemType] = [.category,.tag]
-        let deleteSupportedTypes: [FTSideBarItemType] = [.trash,.category,.tag]
+        let openInNewWindowSupportedTypes: [FTSideBarItemType] = [.home,.templates,.media,.bookmark,.audio,.starred,.unCategorized]
+        let renameSupportedTypes: [FTSideBarItemType] = [.tag]
+        let deleteSupportedTypes: [FTSideBarItemType] = [.trash,.tag]
         if openInNewWindowSupportedTypes.contains(type) {
             contextualOptions.append(.openInNewWindow)
         }

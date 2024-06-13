@@ -149,7 +149,11 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
 #if targetEnvironment(macCatalyst)
         view.frame.size.height = 116 * 0.5
 #else
-        view.frame.size.height = 116
+        if !FTFeatureConfigHelper.shared.isFeatureEnabled(.Share) {
+            view.frame.size.height = 116 * 0.5
+        } else {
+            view.frame.size.height = 116
+        }
 #endif
         view.confiure(with: self.page)
         view.del = self

@@ -37,8 +37,10 @@ struct FTShelfNewNotePopoverView: View {
     }
     private var contentView: some View {
         VStack(spacing:16.0) {
-            FTNewNoteTopSectionView(viewModel: viewModel, delegate: delegate)
-                .padding(.top,10)
+            if FTFeatureConfigHelper.shared.isFeatureEnabled(.NotebookCreation) {
+                FTNewNoteTopSectionView(viewModel: viewModel, delegate: delegate)
+                    .padding(.top,10)
+            }
             LazyVGrid(columns: gridItemLayout(), spacing: 0.0, content: {
                 newNoteSection
             })

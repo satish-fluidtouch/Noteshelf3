@@ -17,6 +17,37 @@ protocol FTAccountActivityDelegate : AnyObject {
     func accountDidLogout(_ account: FTAccount, fromViewController viewController: UIViewController)
 }
 
+enum FTCloudBackOption {
+    case iCloud
+    case autoBackup
+    case backupTo
+    case backupFormat
+    case evernote
+    case exportData
+    case wifi
+    
+    var cellIdentifier: String {
+        var identifier = ""
+        switch self {
+        case .iCloud:
+            identifier = CellIdentifiers.iCloud.rawValue
+        case .autoBackup:
+            identifier = CellIdentifiers.backUp.rawValue
+        case .evernote:
+            identifier = CellIdentifiers.evernotePublish.rawValue
+        case .exportData:
+            identifier = CellIdentifiers.exportData.rawValue
+        case .wifi:
+            identifier = CellIdentifiers.backUpOnWifi.rawValue
+        case .backupTo:
+            identifier = CellIdentifiers.backUpOptions.rawValue
+        case .backupFormat:
+            identifier = CellIdentifiers.backUpFormatOptions.rawValue
+        }
+        return identifier
+    }
+}
+
 enum FTAutoBackUpSection: String {
     case autoBackUpNotebooks
     case backUpTo
@@ -40,7 +71,7 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
     @IBOutlet weak var tableView: UITableView?
 
     let autoBackUpNotes: String = FTAutoBackUpSection.autoBackUpNotebooks.localized()
-
+    var sections = [[FTCloudBackOption]]()
     private func updateBackupFooterView(_ footer: FTBackupFooterView) {
         footer.isHidden = !self.isAutoBackUpOn
         if isAutoBackUpOn {
@@ -64,6 +95,31 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
                 }
             }
         }
+    }
+    
+    override func viewIsAppearing(_ animated: Bool) {
+        super.viewIsAppearing(animated)
+        buildSections()
+        tableView?.reloadData()
+    }
+    
+    private func buildSections() {
+        sections = [[.iCloud]]
+        if FTFeatureConfigHelper.shared.isFeatureEnabled(.EvernoteSync) {
+            if isAutoBackUpEnabled() {
+                sections.append([.autoBackup, .backupTo, .backupFormat])
+            } else {
+                sections.append([.autoBackup])
+            }
+        }
+        if FTFeatureConfigHelper.shared.isFeatureEnabled(.EvernoteSync) && FTFeatureConfigHelper.shared.isFeatureEnabled(.Export)  {
+        #if targetEnvironment(macCatalyst)
+            sections.append([.exportData])
+        #else
+            sections.append([.evernote, .exportData])
+        #endif
+        }
+        sections.append([.wifi])
     }
     
     override func viewDidLoad() {
@@ -147,9 +203,13 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
             self.performSegue(withIdentifier: "showBackupOptionsSegue", sender: nil)
         } else {
             if let account = self.fetchLoggedInAccount() {
-                self.logout(account: account) { _ in
+                self.logout(account: account) {[weak self] _ in
+                    guard let self = self else {
+                        return
+                    }
                     FTCloudBackUpManager.shared.setEnableCloudBackUp(false)
                     self.isAutoBackUpOn = false
+                    self.buildSections()
                     self.tableView?.reloadData()
                 }
             }
@@ -158,25 +218,12 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
     
     // MARK: - UITableViewDelegate
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return sections.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var numRows = 0
-        if section == 0 {
-            numRows = 1
-        } else if section == 1 {
-            numRows = self.isAutoBackUpEnabled() ? 3 : 1
-        } else if section == 2 {
-#if targetEnvironment(macCatalyst)
-            numRows = 1;
-#else
-            numRows = 2
-#endif
-        } else if section == 3{
-            numRows = 1
-        }
-        return numRows
+        let section = sections[section]
+        return section.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -198,38 +245,35 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 1{
-            return backUpCellForIndexPath(indexPath)
-        }else{
-            let cellIdentifier = cellIdentifierForIndexpath(indexPath)
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FTSettingsBaseTableViewCell else {
-                fatalError("Programmer error - couldnot find FTSettingsBaseTableViewCell")
-            }
-            cell.labelTitle?.fontStyle = FTSettingFontStyle.leftOption.rawValue
-            if indexPath.section == 0{
-                cell.switch?.isOn = FTUserDefaults.defaults().bool(forKey: "iCloudOn")
-                cell.switch?.addTarget(self, action: #selector(FTAccountsViewController.toggleiCloudSwitch(_:)), for: .valueChanged)
-            }else if indexPath.section == 2 {
-                if cellIdentifier == CellIdentifiers.evernotePublish.rawValue {
-                    let accountInfoRequest = FTAccountInfoRequest.accountInfoRequestForType(.evernote);
-                    let isLoggedIn = accountInfoRequest.isLoggedIn()
-                    if !isLoggedIn {
-                        cell.accessoryImageView.isHidden = true
-                    } else {
-                        cell.accessoryImageView.isHidden = false
-                    }
-                }else{
-                    //Nothing to do for the local backup cell
-                }
-            }else if indexPath.section == 3{
-                if cellIdentifier == CellIdentifiers.backUpOnWifi.rawValue{
-                    let isbackupOverWifi = FTCloudBackUpManager.shared.isCloudBackupOverWifiOnly()
-                    cell.switch?.isOn = isbackupOverWifi
-                    cell.switch?.addTarget(self, action: #selector(FTAccountsViewController.toggleBackupOnWiFiOnly(_:)), for: .valueChanged)
-                }
-            }
-            return cell
+        let section = sections[indexPath.section]
+        let eachCell = section[indexPath.row]
+        let cellIdentifier = cellIdentifierForIndexpath(indexPath)
+        guard var cell = tableView.dequeueReusableCell(withIdentifier: eachCell.cellIdentifier, for: indexPath) as? FTSettingsBaseTableViewCell else {
+            fatalError("Programmer error - couldnot find FTSettingsBaseTableViewCell")
         }
+        cell.labelTitle?.fontStyle = FTSettingFontStyle.leftOption.rawValue
+        switch eachCell {
+        case .autoBackup, .backupFormat, .backupTo:
+            cell = backUpCellForIndexPath(indexPath)
+        case .iCloud:
+            cell.switch?.isOn = FTUserDefaults.defaults().bool(forKey: "iCloudOn")
+            cell.switch?.addTarget(self, action: #selector(FTAccountsViewController.toggleiCloudSwitch(_:)), for: .valueChanged)
+        case .evernote:
+            let accountInfoRequest = FTAccountInfoRequest.accountInfoRequestForType(.evernote);
+            let isLoggedIn = accountInfoRequest.isLoggedIn()
+            if !isLoggedIn {
+                cell.accessoryImageView.isHidden = true
+            } else {
+                cell.accessoryImageView.isHidden = false
+            }
+        case .wifi:
+            let isbackupOverWifi = FTCloudBackUpManager.shared.isCloudBackupOverWifiOnly()
+            cell.switch?.isOn = isbackupOverWifi
+            cell.switch?.addTarget(self, action: #selector(FTAccountsViewController.toggleBackupOnWiFiOnly(_:)), for: .valueChanged)
+        case .exportData:
+            break
+        }
+        return cell
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

@@ -27,7 +27,7 @@ struct FTShelfHomeView: FTShelfBaseView {
                              1. show description and top section in compact and ipad very first time
                              2. once a notebook is created, dont show top section in compact but show in ipad.
                              */
-                            if viewModel.mode == .normal, (viewModel.shouldShowGetStartedInfo || geometry.size.width > 450) {
+                            if viewModel.mode == .normal, (viewModel.shouldShowGetStartedInfo || geometry.size.width > 450), FTFeatureConfigHelper.shared.isFeatureEnabled(.NotebookCreation) {
                                 FTShelfTopSectionView()
                                     .frame(height: showMinHeight(geometrySize: geometry.size.width))
                                     .padding(.horizontal,gridHorizontalPadding)

@@ -19,6 +19,14 @@ struct FTSidebarTopSectionGridView: View {
     @AppStorage("isTemplatesNewOptionShown") private var isTemplatesNewOptionShown = false
 
     var body: some View {
+        #if EGURKUL_EDITION
+        configuredView
+        #else
+        defaultView
+        #endif
+    }
+    
+    var defaultView: some View {
         Grid(horizontalSpacing: 8,verticalSpacing: 8 ) {
             GridRow {
                 gridItemFor(sidebarItemForType(.home))
@@ -30,10 +38,24 @@ struct FTSidebarTopSectionGridView: View {
             }
             GridRow{
                 templateGridItem(sidebarItemForType(.templates))
-                    .gridCellColumns(2)
+                        .gridCellColumns(2)
             }
         }.macOnlyPlainButtonStyle()
     }
+    
+    var configuredView: some View {
+        Grid(horizontalSpacing: 8,verticalSpacing: 8 ) {
+            GridRow {
+                gridItemFor(sidebarItemForType(.home))
+                    .gridCellColumns(2)
+            }
+            GridRow {
+                gridItemFor(sidebarItemForType(.starred))
+                gridItemFor(sidebarItemForType(.trash))
+            }
+        }.macOnlyPlainButtonStyle()
+    }
+    
     private func sidebarItemForType(_ type: FTSideBarItemType) -> FTSideBarItem{
         viewModel.sidebarItemOfType(type)
     }

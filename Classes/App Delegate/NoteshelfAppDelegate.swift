@@ -41,6 +41,7 @@ let AppDelegate = UIApplication.shared.delegate as! NoteshelfAppDelegate
         
         FTIAPManager.shared.config();
         FTNoteshelfAIConfigHelper.configureAI();
+        FTFeatureConfigHelper.shared.configure()
         FTLanguageResourceManager.shared.activateOnDemandResourcesIfNeeded()
         if FTWhatsNewManger.shouldShowWhatsNew() {
             FTWhatsNewManger.start()

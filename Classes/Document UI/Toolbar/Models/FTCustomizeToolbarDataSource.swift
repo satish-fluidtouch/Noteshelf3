@@ -22,8 +22,10 @@ class FTCustomizeToolbarDataSource: NSObject {
         self.sections = [FTCurrentToolbarSection(),
                          FTBasicToolsSection(),
                          FTAddMenuToolsSection(),
-                         FTShortcutsToolsSection(),
-                         FTShareAndSaveToolsSection()]
+                         FTShortcutsToolsSection()]
+        if FTFeatureConfigHelper.shared.isFeatureEnabled(.Share) {
+            self.sections.append(FTShareAndSaveToolsSection())
+        }
     }
 
     func removeDisplayTool(_ tool: FTDeskCenterPanelTool, from section: FTToolbarSection) {

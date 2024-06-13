@@ -107,6 +107,7 @@ extension FTShelfViewModel {
 }
 private extension FTShelfViewModel {
     func contexualMenuOptionsInNormalModeForShelfItem(_ item: FTShelfItemViewModel) -> [[FTShelfItemContexualOption]] {
+        var contextMenuOptions = [[FTShelfItemContexualOption]]()
         if collection.isAllNotesShelfItemCollection {
             var section1: [FTShelfItemContexualOption] = [.openInNewWindow,.showEnclosingFolder]
             if !item.isNotDownloaded {
@@ -117,15 +118,26 @@ private extension FTShelfViewModel {
             if !item.isNotDownloaded {
                 section2.append(.tags)
             }
-            return [
-                section1,
-                section2,
-                [.duplicate,.move,.getInfo,.share],
-                [.trash]
-            ]
+            let section3: [FTShelfItemContexualOption] = [.duplicate,.move,.getInfo,.share]
+            let section4: [FTShelfItemContexualOption] = [.trash]
+            contextMenuOptions = [section1, section2,section3, section4]
         }else {
-            return item.longPressOptions
+            contextMenuOptions = item.longPressOptions
         }
+        if !FTFeatureConfigHelper.shared.isFeatureEnabled(.Supports_NBEditing) {
+            return filterContextMenuOptionsIfNeeded(options:contextMenuOptions)
+        } else {
+            return contextMenuOptions
+        }
+    }
+    
+    private func filterContextMenuOptionsIfNeeded(options: [[FTShelfItemContexualOption]]) -> [[FTShelfItemContexualOption]] {
+        let optionsToRemove :[FTShelfItemContexualOption] = [.delete, .share, .changeCover, .duplicate,.trash, .rename, .move]
+        let filteredArray = options.map { eachOptionsArray in
+            let filteredSubArray = eachOptionsArray.filter {!optionsToRemove.contains($0)}
+            return filteredSubArray
+        }
+        return filteredArray
     }
    
     func getShelfItemsForContexualMenuOperations() -> ([FTShelfItemProtocol], [FTShelfItemViewModel]) {

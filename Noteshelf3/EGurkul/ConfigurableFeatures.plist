@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>eGurkul</key>
+	<dict>
+		<key>Supports Password</key>
+		<false/>
+		<key>Supports NB Editing</key>
+		<false/>
+		<key>Notebook Creation</key>
+		<false/>
+		<key>Category Creation</key>
+		<false/>
+		<key>Import Document</key>
+		<false/>
+		<key>Scan Document </key>
+		<false/>
+		<key>Import from Apple Watch</key>
+		<false/>
+		<key>Duplicate</key>
+		<false/>
+		<key>Share</key>
+		<false/>
+		<key>Delete</key>
+		<false/>
+		<key>Change Cover</key>
+		<false/>
+		<key>Auto backup</key>
+		<false/>
+		<key>Templates</key>
+		<false/>
+		<key>Import Custom Templates</key>
+		<false/>
+		<key>Noteshelf AI</key>
+		<false/>
+		<key>Export</key>
+		<false/>
+		<key>Add to Siri</key>
+		<false/>
+		<key>Evernote Sync</key>
+		<false/>
+		<key>Allow hyperlinks</key>
+		<false/>
+		<key>Widgets</key>
+		<false/>
+		<key>Siri shortcuts</key>
+		<false/>
+	</dict>
+</dict>
+</plist>

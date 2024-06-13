@@ -30,7 +30,7 @@ struct FTShelfView: View,FTShelfBaseView {
                 ScrollViewReader { proxy in
                     ScrollView(.vertical) {
                         VStack(alignment: .center, spacing:0) {
-                            if viewModel.showNewNoteView , geometry.size.width > 450, viewModel.mode == .normal {
+                            if viewModel.showNewNoteView , geometry.size.width > 450, viewModel.mode == .normal, FTFeatureConfigHelper.shared.isFeatureEnabled(.NotebookCreation) {
                                 FTShelfTopSectionView()
                                     .frame(height: showMinHeight(geometrySize: geometry.size.width),alignment: .center)
                                     .padding(.horizontal,gridHorizontalPadding)

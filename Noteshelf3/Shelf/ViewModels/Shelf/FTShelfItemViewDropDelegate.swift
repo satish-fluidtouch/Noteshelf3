@@ -18,13 +18,18 @@ class FTShelfScrollViewDropDelegate: DropDelegate {
     }
     var dropProposal: DropProposal = DropProposal(operation: .move)
     func validateDrop(info: DropInfo) -> Bool {
+        if !FTFeatureConfigHelper.shared.isFeatureEnabled(.NotebookCreation) {
+            return false
+        }
         if info.hasItemsConforming(to: FTDragAndDropHelper.supportedTypesForDrop()) && (viewModel.supportsDrop) {
             viewModel.showDropOverlayView = true
         }
         return true
     }
     func performDrop(info: DropInfo) -> Bool {
-        print("inside performDrop of ScrollViewDropViewDelegate")
+        if !FTFeatureConfigHelper.shared.isFeatureEnabled(.NotebookCreation) {
+            return false
+        }
         let supportedUTTypes = FTDragAndDropHelper.supportedTypesForDrop()
         if viewModel?.showDropOverlayView ?? false {
             viewModel.showDropOverlayView = false
@@ -143,6 +148,9 @@ class FTShelfItemViewDropDelegate: NSObject, DropDelegate {
     }
     
     func validateDrop(info: DropInfo) -> Bool {
+        if !FTFeatureConfigHelper.shared.isFeatureEnabled(.NotebookCreation) {
+            return false
+        }
         if info.hasItemsConforming(to: FTDragAndDropHelper.supportedTypesForDrop()) && (viewModel.supportsDragAndDrop || viewModel.supportsDrop) {
             viewModel.showDropOverlayView = true
         }
@@ -150,7 +158,9 @@ class FTShelfItemViewDropDelegate: NSObject, DropDelegate {
     }
     
     func performDrop(info: DropInfo) -> Bool {
-
+        if !FTFeatureConfigHelper.shared.isFeatureEnabled(.NotebookCreation) {
+            return false
+        }
         if viewModel.showDropOverlayView {
             viewModel.showDropOverlayView = false
         }
