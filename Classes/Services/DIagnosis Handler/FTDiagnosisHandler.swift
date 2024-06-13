@@ -48,7 +48,8 @@ import MessageUI
         self.generateEvernoteSynLog(tempSyncFolderPath);
         self.generateWatchSyncDefaults(tempSyncFolderPath);
         self.generateAdditionalCustomFields(tempSyncFolderPath);
-        self.generateDocumentsDirectoryLog(tempSyncFolderPath)
+        // Masking it for now, needs to change iteration logic and enable it
+         self.generateDocumentsDirectoryLog(tempSyncFolderPath)
         #endif
         self.generateCloudBackLog(tempSyncFolderPath);
         self.generateAppInfoLog(tempSyncFolderPath);

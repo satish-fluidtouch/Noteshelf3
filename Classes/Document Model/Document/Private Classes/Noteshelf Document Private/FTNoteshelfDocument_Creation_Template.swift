@@ -150,14 +150,15 @@ extension FTNoteshelfDocument
                                         if let firstPage = tempDoc.pages().first, let toCopyPageItem = tempDoc.templateFolderItem()?.childFileItem(withName: firstPage.associatedPDFFileName) {
                                             let pageAnnotations = firstPage.annotations();
                                             let docName = FTUtils.getUUID().appending(".\(nsPDFExtension)");
+                                            
+                                            let tempPath = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true).first!
+                                            let tempFilePath = NSURL(fileURLWithPath: tempPath).appendingPathComponent(docName)!;
+                                            try? FileManager().removeItem(at: tempFilePath);
                                             //copy pdf file if needed
-                                            let pdfTemplateFileItem = FTPDFKitFileItemPDF.init(fileName: docName)!
-                                            pdfTemplateFileItem.securityDelegate = self;
-                                            self.templateFolderItem()!.addChildItem(pdfTemplateFileItem);
                                             
                                             FTCLSLog("NFC - Update page template from NSTemplate: \(self.addressString)");
                                             FileManager.coordinatedCopyAtURL(toCopyPageItem.fileItemURL,
-                                                                             toURL: pdfTemplateFileItem.fileItemURL,
+                                                                             toURL: tempFilePath,
                                                                              onCompletion:
                                                 { (success, error) in
                                                     if(nil != error) {
@@ -166,10 +167,15 @@ extension FTNoteshelfDocument
                                                         });
                                                     }
                                                     else {
+                                                        let pdfTemplateFileItem = FTFileItemPDFTemp(fileName: docName)
+                                                        pdfTemplateFileItem?.setSourceFileURL(tempFilePath);
+                                                        pdfTemplateFileItem?.securityDelegate = self;
+                                                        self.templateFolderItem()!.addChildItem(pdfTemplateFileItem);
+
                                                         if let values = firstPage.templateInfo.copy() as? FTTemplateInfo {
                                                             self.setTemplateValues(docName, values: values);
                                                             if let _password = values.password {
-                                                                pdfTemplateFileItem.documentPassword = _password
+                                                                pdfTemplateFileItem?.documentPassword = _password
                                                             }
                                                         }
                                                         page.associatedPDFFileName = docName;
@@ -181,7 +187,7 @@ extension FTNoteshelfDocument
                                                         (page as! FTNoteshelfPage).deepCopyAnnotations(pageAnnotations,
                                                                                                        insertFrom : 0,
                                                                                                        onCompletion:
-                                                            {
+                                                                                                        {_ in 
                                                                 self.saveDocument(completionHandler: { (success) in
                                                                     tempDoc.closeDocument(completionHandler : nil);
                                                                     onCompletion(nil,success);

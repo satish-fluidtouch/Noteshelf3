@@ -18,7 +18,7 @@ class FTGestureHelpViewController: UIViewController, UITableViewDataSource, FTCu
     if isDeviceSupportsApplePencil(), FTStylusPenApplePencil().isConnected {
         return [.showPageThumbnails, .showQuickAccessSideBar,.activeFocusMode,.fitPageToScreen,.undo,.redo]
     } else {
-        return [.showPageThumbnails, .showQuickAccessSideBar,. activeFocusMode, .undo, .redo]
+        return [.activeFocusMode,.undo,.redo]
     }
     }()
 

@@ -115,15 +115,23 @@ extension FTNoteshelfDocument
                                             viewController : UIViewController?,
                                         onCompletion:@escaping ((String?,NSError?) -> Void))
     {
+        weak var textDidChangeoBbserver: NSObjectProtocol?;
+        
         var password : String?
         let alertController = UIAlertController.init(title: NSLocalizedString("PasswordProtectedPDF", comment: "Password Protected PDF"), message: NSLocalizedString("EnterPassword", comment: "EnterPassword"), preferredStyle: UIAlertController.Style.alert)
         
         let cancelAction = UIAlertAction.init(title: NSLocalizedString("Cancel", comment: "Cancel"), style: UIAlertAction.Style.cancel, handler: { _ in
+            if let observer = textDidChangeoBbserver {
+                NotificationCenter.default.removeObserver(observer);
+            }
             onCompletion(password,FTDocumentCreateErrorCode.error(.cancelled))
         })
         alertController.addAction(cancelAction)
         
         let okAction = UIAlertAction.init(title: NSLocalizedString("OK", comment: "OK"), style: UIAlertAction.Style.default, handler: { [weak alertController,weak self] _ in
+            if let observer = textDidChangeoBbserver {
+                NotificationCenter.default.removeObserver(observer);
+            }
             if let weakAlertController = alertController {
                 password = weakAlertController.textFields?.first?.text;
                 if(FTNoteshelfDocument.decryptedDocumentAtURL(url, withPassword: password))
@@ -145,14 +153,17 @@ extension FTNoteshelfDocument
         })
         
         okAction.isEnabled = false
-        NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: alertController.textFields?.first, queue: OperationQueue.main) { _ in
-            if let textField = alertController.textFields?.first as? UITextField, let text = textField.text {
-                okAction.isEnabled =  !text.isEmpty
+        textDidChangeoBbserver = NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: alertController.textFields?.first, queue: OperationQueue.main) { [weak alertController, weak okAction]  _ in
+            if let textField = alertController?.textFields?.first as? UITextField
+                , let text = textField.text {
+                okAction?.isEnabled =  !text.isEmpty
             }
         }
         alertController.addAction(okAction)
         
-        alertController.addTextField(configurationHandler: nil);
+        alertController.addTextField { textField in
+            textField.isSecureTextEntry = true
+        };
         #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
         viewController?.present(alertController, animated: true, completion: nil);
         #endif

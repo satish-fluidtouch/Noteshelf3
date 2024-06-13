@@ -10,6 +10,9 @@ import UIKit
 
 #if targetEnvironment(macCatalyst)
 class FTNotebookToolbar: NSToolbar {
+    private weak var validateToolbarObserver: NSObjectProtocol?;
+    private weak var scrollModeObserver: NSObjectProtocol?;
+
     weak var toolbarActionDelegate: FTToolbarActionDelegate? {
         didSet {
             if let mode = self.toolbarActionDelegate?.toolbarCurrentDeskMode(self) {
@@ -31,13 +34,30 @@ class FTNotebookToolbar: NSToolbar {
         self.autosavesConfiguration = true;
         windowScene.titlebar?.titleVisibility = .hidden;
         self.selectedItemIdentifier = FTDeskCenterPanelTool.pen.toolbarIdentifier;
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: FTValidateToolBarNotificationName), object: nil, queue: .main) { [weak self] notification in
+        validateToolbarObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: FTValidateToolBarNotificationName), object: nil, queue: .main) { [weak self] notification in
             guard let strongSelf = self else {
                 return
             }
             if let mode = strongSelf.toolbarActionDelegate?.toolbarCurrentDeskMode(strongSelf) {
                 strongSelf.selectItem(with: mode)
             }
+        }
+        
+        scrollModeObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Notification.Name.pageLayoutWillChange.rawValue), object: nil, queue: .main) { [weak self] notification in
+            guard let strongSelf = self else {
+                return
+            }
+            
+            if let item = self?.toolbarItem(FTDeskCenterPanelTool.scrolling.toolbarIdentifier) {
+                let layout = UserDefaults.standard.pageLayoutType
+                item.image = UIImage(named: layout.oppositeToolIconName)
+            }
+        }
+    }
+    
+    deinit {
+        if let observer = self.validateToolbarObserver {
+            NotificationCenter.default.removeObserver(observer);
         }
     }
     

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FTCommon
 
 protocol FTIAPContainerDelegate: AnyObject {
     func purchase(product: SKProduct)
@@ -20,6 +21,7 @@ class FTIAPContainerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateBlurStyle()
         viewModel.delegate = self
     }
 
@@ -32,6 +34,23 @@ class FTIAPContainerViewController: UIViewController {
         track(EventName.premium_close_tap, screenName: ScreenName.iap)
         self.dismiss(animated: true)
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            updateBlurStyle()
+        }
+    }
+
+    private func updateBlurStyle() {
+        if FTCommonUtils.isWithinEarthDayRange() {
+            self.view.removeVisualEffectBlur()
+            self.view.addVisualEffectBlur(style: .regular, cornerRadius: 0, frameToBlur: .zero);
+            self.view.backgroundColor = UIColor.appColor(.createNotebookViewBG)
+            self.activityProgressHolderView.backgroundColor = .clear
+        }
+    }
+    
 }
 
 extension FTIAPContainerViewController {
@@ -50,6 +69,15 @@ extension FTIAPContainerViewController {
 extension FTIAPContainerViewController: FTIAPViewModelDelegate {
     func didfinishLoadingProducts() {
         self.isModalInPresentation = true
+
+        if FTCommonUtils.isWithinEarthDayRange()
+            , let ns3Product = viewModel.ns3PremiumProduct() {
+            let viewcontroller = FTIAPOfferCampaignViewController.instatiate(originalProduct: ns3Product, delegate: self)
+            self.addChild(viewcontroller)
+            viewcontroller.view.addFullConstraints(contentView)
+            return;
+        }
+        
         var viewcontroller: UIViewController?
         if FTDocumentMigration.isNS2AppInstalled(),
            let ns2Product = viewModel.ns3PremiumForNS2UserProduct(),

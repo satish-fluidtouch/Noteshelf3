@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FTCommon
 
 private extension UIScene {
     var clsLogTitle : String {
@@ -86,6 +87,7 @@ class SceneDelegate: FTSceneDelegate {
             shortcutItemToProcess = nil
         }
         FabricHelper.configure()
+        self.performWidgetActionIfRequired()
     }
     
     func sceneWillResignActive(_ scene: UIScene) {
@@ -157,6 +159,15 @@ class SceneDelegate: FTSceneDelegate {
         #if DEBUG
         print(#function,userActivity.userInfo?.description ?? "--")
         #endif
+    }
+    func performWidgetActionIfRequired() {
+        if let widgetActionType = FTWidgetActionController.shared.actionToExecute {
+                if let intentHandler = self.window?.rootViewController as? FTIntentHandlingProtocol {
+                    let handler = FTAppIntentHandler(with: intentHandler)
+                    handler.handleWidgetAction(for: widgetActionType)
+                }
+            FTWidgetActionController.shared.resetWidgetAction()
+        }
     }
 }
 

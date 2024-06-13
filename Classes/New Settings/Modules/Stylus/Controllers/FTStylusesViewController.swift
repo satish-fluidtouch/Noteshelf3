@@ -49,11 +49,12 @@ class FTStylusesViewController: UIViewController, UITableViewDataSource, UITable
     var selectedActionIndexPath: IndexPath!
     var showConnectOption = false;
 
-
+    private weak var pencilActionChangeObserver: NSObjectProtocol?;
+    
     // MARK: - UIViewController
     override func viewDidLoad() {
 
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: FTPencilActionChangedNotification), object: nil, queue: nil) { [weak self] _ in
+        self.pencilActionChangeObserver = NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: FTPencilActionChangedNotification), object: nil, queue: nil) { [weak self] _ in
             self?.tableView?.reloadData()
         }
         
@@ -80,10 +81,18 @@ class FTStylusesViewController: UIViewController, UITableViewDataSource, UITable
         self.tableView?.estimatedRowHeight = UITableView.automaticDimension
         if self.hideNavButtons {
             self.view.backgroundColor = UIColor.appColor(.popoverBgColor)
+            self.navigationController?.navigationBar.isHidden = false
             self.configureCustomNavigation(title: FTNewSettingsOptions.applePencil.rawValue.localized)
         } else {
             self.view.backgroundColor = UIColor.appColor(.formSheetBgColor)
+            self.navigationController?.navigationBar.isHidden = false
             self.configureNewNavigationBar(hideDoneButton: false, title:  FTNewSettingsOptions.applePencil.rawValue.localized)
+        }
+    }
+    
+    deinit {
+        if let observer = self.pencilActionChangeObserver {
+            NotificationCenter.default.removeObserver(observer);
         }
     }
     

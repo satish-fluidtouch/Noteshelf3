@@ -56,7 +56,7 @@ protocol FTWatchRecording : NSObjectProtocol {
     func dictionaryRepresentation() -> [String:Any];
     func updateMetadata(dictionary : [String:Any]);
     
-    var audioTitle : String { get };
+    var audioTitle : String { get set };
 }
 extension FTWatchRecording{
     func prepareToCopy(){

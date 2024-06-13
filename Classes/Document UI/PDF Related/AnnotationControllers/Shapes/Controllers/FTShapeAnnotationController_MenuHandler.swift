@@ -93,10 +93,7 @@ extension FTShapeAnnotationController {
         if let resizableView = resizableView {
             let rackData = FTRackData(type: .shape, userActivity: self.view.window?.windowScene?.userActivity)
             let editMode = FTPenColorSegment.savedSegment(for: .shape)
-            var contentSize = FTPenColorEditController.presetViewSize
-            if editMode == .grid {
-                contentSize = FTPenColorEditController.gridViewSize
-            }
+            let contentSize = editMode.contentSize
             let model = FTPenShortcutViewModel(rackData: rackData)
             let hostingVc = FTPenColorEditController(viewModel: model, delegate: self)
             self.penShortcutViewModel = model

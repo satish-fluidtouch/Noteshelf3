@@ -120,62 +120,124 @@ class FTNoteshelfDocumentProvider: NSObject {
         if FTUserDefaults.defaults().iCloudOn, let iCloudUrl = FTNSiCloudManager.shared().iCloudRootURL() {
             url = iCloudUrl
         }
-        let contents = FileManager.default.enumerator(at: url, includingPropertiesForKeys: nil, options: [.skipsPackageDescendants, .producesRelativePathURLs])
-        var relativePaths = [String]();
-        contents?.enumerated().forEach({ eachItem in
-            let item = eachItem.element;
-            if let pathURL = (item as? URL)?.relativePath {
-                relativePaths.append(pathURL);
+        var notebooksUrlPaths = [String]()
+        let shelfUrls = fetchShelfUrls(url: url)
+        shelfUrls.forEach({ eachUrl in
+            if eachUrl.pathExtension == FTFileExtension.shelf {
+                notebooksUrlPaths.append(eachUrl.relativePathWRTCollection())
+                notebooksUrlPaths.append(contentsOf: self.contentsOfURL(eachUrl))
             }
         })
-        return relativePaths
+        return notebooksUrlPaths
+    }
+
+    private func fetchShelfUrls(url: URL) -> [URL] {
+        var shelfUrls = [URL]()
+        if let urls = try? FileManager.default.contentsOfDirectory(at: url,
+                                                                   includingPropertiesForKeys: nil,
+                                                                   options: .skipsHiddenFiles) {
+            urls.forEach({ eachUrl in
+                if eachUrl.pathExtension == FTFileExtension.shelf {
+                    shelfUrls.append(eachUrl)
+                } else {
+                    let urls = fetchShelfUrls(url: eachUrl)
+                    if !urls.isEmpty {
+                        shelfUrls.append(contentsOf: urls)
+                    }
+                }
+            })
+        }
+        return shelfUrls
+    }
+    
+    private func contentsOfURL(_ url: URL) -> [String] {
+        let urls = try? FileManager.default.contentsOfDirectory(at: url,
+                                                                includingPropertiesForKeys: nil,
+                                                                options: .skipsHiddenFiles);
+        let filteredURLS = self.filterItemsMatchingExtensions(urls);
+        
+        var notebookUrlList: [String] = [String]()
+        filteredURLS.enumerated().forEach({ (_,eachURL) in
+            if(eachURL.pathExtension == FTFileExtension.group) {
+                let dirContents = self.contentsOfURL(eachURL);
+                if dirContents.isEmpty {
+                    notebookUrlList.append(eachURL.relativePathWRTCollection())
+                } else {
+                    notebookUrlList.append(eachURL.relativePathWRTCollection())
+                    notebookUrlList.append(contentsOf: dirContents);
+                }
+            }
+            else {
+                notebookUrlList.append(eachURL.relativePathWRTCollection());
+            }
+        });
+        return notebookUrlList
+    }
+    
+    private func filterItemsMatchingExtensions(_ items : [URL]?) -> [URL] {
+        let extToListen:[String] = [FTFileExtension.group, FTFileExtension.ns3]
+        var filteredURLS = [URL]();
+        if let items {
+            if(!extToListen.isEmpty) {
+                filteredURLS = items.filter({ (eachURL) -> Bool in
+                    if(extToListen.contains(eachURL.pathExtension)) {
+                        return true
+                    }
+                    return false
+                });
+            }
+        }
+        return filteredURLS
     }
 
     fileprivate static func documentProvider(_ onCompletion : @escaping ((FTNoteshelfDocumentProvider) -> Void)) {
+        FTCLSLog("Provider - Preparing Default Collections");
         let documentProvider = FTNoteshelfDocumentProvider();
         documentProvider.prepareSystemDefaultCollections {
-                documentProvider.localShelfCollectionRoot = FTShelfCollectionLocalRoot()
-                documentProvider.providerMode = .local;
-
-                #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
-                documentProvider.localWatchRecordingCollection = FTWatchRecordingCollection_Local()
-                #endif
-                FTNSiCloudManager.shared().updateiCloudStatus(FTNSiCloudManager.iCloudContainerID.ns3, withCompletionHandler: { available in
-
-                    // Early exit from the provider creation, when the cloud drive is off inside device settings and iCloud is still on inside the application.
-                    if(FTNSiCloudManager.shared().iCloudOn() && FTNSiCloudManager.shared().iCloudRootURL() == nil) {
-                        onCompletion(documentProvider);
-                        return
-                    }
-
-                    if available {
-                        let rootCloudShelfCollection = FTShelfCollectioniCloudRoot()
-                        let queryListener = FTCloudDocumentListener(rootURLs: FTNSiCloudManager.shared().cloudURLSToListen)
-                        documentProvider.cloudDocumentListener = queryListener
-                        if FTNSiCloudManager.shared().iCloudOn() {
-                            documentProvider.providerMode = .cloud;
-                        }
-
-                        documentProvider.cloudShelfCollectionRoot = rootCloudShelfCollection
-                        queryListener.addListener(rootCloudShelfCollection)
-
+            documentProvider.localShelfCollectionRoot = FTShelfCollectionLocalRoot()
+            documentProvider.providerMode = .local;
+            
 #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
-                        if let cloudURL = FTNSiCloudManager.shared().iCloudRootURL() {
-                            let cloudWatchCollection = FTWatchRecordingCollection_Cloud(cloudURL: cloudURL)
-                            documentProvider.cloudWatchRecordingCollection = cloudWatchCollection
-
-                            //Add Audio recordings Listener
-                            if let audioListener = documentProvider.cloudWatchRecordingCollection as? FTMetadataCachingProtocol {
-                                queryListener.addListener(audioListener)
-                            }
-                        }
+            documentProvider.localWatchRecordingCollection = FTWatchRecordingCollection_Local()
 #endif
-                        onCompletion(documentProvider);
+            FTCLSLog("Provider - Checking iCloud status");
+            FTNSiCloudManager.shared().updateiCloudStatus(nil, withCompletionHandler: { available in
+                FTCLSLog("Provider - Verified iCloud status \(available)");
+                // Early exit from the provider creation, when the cloud drive is off inside device settings and iCloud is still on inside the application.
+                if(FTNSiCloudManager.shared().iCloudOn() && FTNSiCloudManager.shared().iCloudRootURL() == nil) {
+                    FTCLSLog("Provider - Cloud on but url nil");
+                    onCompletion(documentProvider);
+                    return
+                }
+                
+                if available {
+                    let rootCloudShelfCollection = FTShelfCollectioniCloudRoot()
+                    let queryListener = FTCloudDocumentListener(rootURLs: FTNSiCloudManager.shared().cloudURLSToListen)
+                    documentProvider.cloudDocumentListener = queryListener
+                    if FTNSiCloudManager.shared().iCloudOn() {
+                        documentProvider.providerMode = .cloud;
                     }
-                    else {
-                        onCompletion(documentProvider);
+                    
+                    documentProvider.cloudShelfCollectionRoot = rootCloudShelfCollection
+                    queryListener.addListener(rootCloudShelfCollection)
+                    
+#if  !NS2_SIRI_APP && !NOTESHELF_ACTION
+                    if let cloudURL = FTNSiCloudManager.shared().iCloudRootURL() {
+                        let cloudWatchCollection = FTWatchRecordingCollection_Cloud(cloudURL: cloudURL)
+                        documentProvider.cloudWatchRecordingCollection = cloudWatchCollection
+                        
+                        //Add Audio recordings Listener
+                        if let audioListener = documentProvider.cloudWatchRecordingCollection as? FTMetadataCachingProtocol {
+                            queryListener.addListener(audioListener)
+                        }
                     }
-                })
+#endif
+                    onCompletion(documentProvider);
+                }
+                else {
+                    onCompletion(documentProvider);
+                }
+            })
         }
     }
 

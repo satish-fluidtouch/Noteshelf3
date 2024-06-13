@@ -38,6 +38,17 @@ public struct FTSelectedPaperVariantsAndTheme {
         self.size = size
         self.theme = selectedPaperTheme
     }
+
+    var thumbImagePrefix: String {
+        var imgName: String
+        let name = theme.displayName.localizedEnglish.lowercased()
+        if name == "plain" {
+            imgName = ""
+        } else {
+            imgName = "\(lineHeight.thumbImgPrefix)_\(name)"
+        }
+        return imgName
+    }
 }
 protocol FTPaperTemplatesVariantsDelegateNew: NSObject {
     func updatePaperVaraints(_ variantsAndTheme: FTSelectedPaperVariantsAndTheme)
@@ -56,6 +67,7 @@ class FTPaperTemplatesVariantsController: UIViewController {
     weak var templateVariantsDelegate: FTPaperTemplatesVariantsDelegateNew?
     var papervariantsDataModel: FTPaperTemplatesVariantsDataModel!
     private var firstValueSet = false
+    private var size: CGSize = .zero
 
     var selectedPaperVariants: FTSelectedPaperVariantsAndTheme! {
         didSet {
@@ -71,18 +83,32 @@ class FTPaperTemplatesVariantsController: UIViewController {
         super.viewDidLoad()
         configureUI()
     }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if self.size != self.view.frame.size {
+            self.size = self.view.frame.size
+            self.configureOrientaionSegmentedControl()
+        }
+    }
+
     private func configureUI() {
         self.configurTemplateColorsView()
         self.configureLineHeightView()
-        self.configureOrientaionSegmentedControl()
     }
     func updateOrientationSegmentVisibility(_ shouldHide: Bool){
         self.orientationSegmentedControl?.isHidden = shouldHide
         self.seperatorDotView?.isHidden = shouldHide
-        self.variantsViewWidthConstraint?.constant = shouldHide ? 328 : 448
+        var extraStackSpacing: CGFloat = 16.0
+        if self.traitCollection.isRegular {
+            extraStackSpacing = 0.0
+        }
+        self.variantsViewWidthConstraint?.constant = shouldHide ? (328 - extraStackSpacing) : (448 - extraStackSpacing)
         if shouldHide {
             self.orientationSegmentedControl?.selectedSegmentIndex = 0
-            self.selectedPaperVariants.orientation = .portrait
+            if self.selectedPaperVariants.size == .mobile {
+                self.selectedPaperVariants.orientation = .portrait
+            }
         }
     }
 
@@ -93,7 +119,8 @@ class FTPaperTemplatesVariantsController: UIViewController {
         orientationSegmentedControl?.setDividerImage(UIImage(), forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
         orientationSegmentedControl?.backgroundColor = UIColor.black.withAlphaComponent(0.04)
         orientationSegmentedControl?.clipsToBounds = true
-        updateOrientationSegmentVisibility(selectedPaperVariants.size == FTTemplateSize.mobile)
+        let shouldShow = self.view.frame.width > regularThreshold && selectedPaperVariants.size != FTTemplateSize.mobile
+        updateOrientationSegmentVisibility(!shouldShow)
     }
     @IBAction func templateOrientaionChanged(_ sender: UISegmentedControl) {
         let orientation: FTTemplateOrientation = sender.selectedSegmentIndex == 0 ? .portrait : .landscape
@@ -140,7 +167,7 @@ class FTPaperTemplatesVariantsController: UIViewController {
     private func configureLineHeightView(){
         self.setConstraintToLineHeightView()
         configureTemplateLineHeightMenu()
-        let iconName = self.icon(for: selectedPaperVariants.lineHeight) + "Big"
+        let iconName = selectedPaperVariants.lineHeight.iconPath + "Big"
         let lineHeightImage = UIImage(named: iconName, in: currentBundle, with: nil)
         self.lineHeightButton?.setImage(lineHeightImage, for: .normal)
         self.lineHeightButton?.layer.borderColor = UIColor.appColor(.black20).cgColor
@@ -155,9 +182,9 @@ class FTPaperTemplatesVariantsController: UIViewController {
     }
     private func configureTemplateLineHeightMenu() {
         var actions = [UIAction]()
-        for lineHeightModel in papervariantsDataModel.lineHeights.reversed() {
+        for lineHeightModel in papervariantsDataModel.lineHeights {
             let lineHeightTitle = lineHeightModel.lineHeight.displayTitle
-            let lineHeightImage = UIImage(named: self.icon(for: lineHeightModel.lineHeight), in: currentBundle, with: nil)
+            let lineHeightImage = UIImage(named: lineHeightModel.lineHeight.iconPath, in: currentBundle, with: nil)
             let isSelected =  lineHeightModel.lineHeight == selectedPaperVariants.lineHeight
             let state: UIMenuElement.State = isSelected ? .on : .off
             let action = UIAction(title: lineHeightTitle,image: lineHeightImage,state: state) {[weak self] action in
@@ -171,9 +198,10 @@ class FTPaperTemplatesVariantsController: UIViewController {
         }
         self.lineHeightButton?.menu = UIMenu(children:actions)
         self.lineHeightButton?.showsMenuAsPrimaryAction = true
+        self.lineHeightButton?.preferredMenuElementOrder = .fixed
     }
     private func updatelineHeightButtonWith(selectedLineHeight: FTTemplateLineHeight){
-        let iconNameForLineHeightbutton = self.icon(for: selectedLineHeight) + "Big"
+        let iconNameForLineHeightbutton = selectedLineHeight.iconPath + "Big"
         let lineHeightImage = UIImage(named: iconNameForLineHeightbutton, in: currentBundle, with: nil)
         self.lineHeightButton?.setImage(lineHeightImage, for: .normal)
     }
@@ -191,26 +219,16 @@ class FTPaperTemplatesVariantsController: UIViewController {
         }
         return menu
     }
-    private func icon(for lineHeight: FTTemplateLineHeight) -> String {
-        let iconPath: String
-        switch lineHeight {
-        case .extraNarrow:
-            iconPath = "lineHeightExtraNarrow"
-        case .narrow:
-            iconPath = "lineHeightNarrow"
-        case .standard:
-            iconPath = "lineHeightStandard"
-        case .wide:
-            iconPath = "lineHeightWide"
-        }
-        return iconPath
-    }
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         self.setConstraintToLineHeightView()
     }
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         self.setConstraintToLineHeightView()
-        self.updateOrientationSegmentVisibility(selectedPaperVariants.size == FTTemplateSize.mobile)
+        var shouldShow = self.view.frame.width > 550
+        if selectedPaperVariants.size == FTTemplateSize.mobile {
+            shouldShow = false
+        }
+        self.updateOrientationSegmentVisibility(!shouldShow)
     }
 }
 extension FTPaperTemplatesVariantsController: FTPaperTemplateCustomColorDelegate {

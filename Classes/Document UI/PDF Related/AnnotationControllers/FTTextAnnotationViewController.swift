@@ -54,6 +54,7 @@ class FTTextAnnotationViewController: UIViewController {
     private var knobHandlerImage: UIImageView!
     internal var interaction: UIEditMenuInteraction?
     internal var editMenuConfig: UIEditMenuConfiguration?
+    internal var _isFontSelectionInProgress = false
 
     // Don't make below viewmodel weak as this is needed for eyedropper delegate to be implemented here(since we are dismissing color edit controller)
     internal var penShortcutViewModel: FTPenShortcutViewModel?
@@ -178,6 +179,9 @@ class FTTextAnnotationViewController: UIViewController {
     
     weak var textSelectionDelegate: FTTextAnnotationDelegate?
     
+    private weak var updateAnnotationObserver: NSObjectProtocol?;
+    private weak var resignTextAnnotationObserver: NSObjectProtocol?;
+    
     required init(withAnnotation annotation: FTAnnotation,
                   delegate: FTAnnotationEditControllerDelegate?,
                   mode: FTAnnotationMode)
@@ -216,14 +220,14 @@ class FTTextAnnotationViewController: UIViewController {
         
         self.updateResizeMode();
         
-        NotificationCenter.default.addObserver(forName: Notification.Name.didUpdateAnnotationNotification,
+        self.updateAnnotationObserver = NotificationCenter.default.addObserver(forName: Notification.Name.didUpdateAnnotationNotification,
                                                object: annotation,
                                                queue: nil) { [weak self] (notification) in
             self?.refreshView();
         }
        
         #if targetEnvironment(macCatalyst)
-        NotificationCenter.default.addObserver(forName: Notification.Name.shouldResignTextfieldNotification,
+        self.resignTextAnnotationObserver = NotificationCenter.default.addObserver(forName: Notification.Name.shouldResignTextfieldNotification,
                                                object: nil,
                                                queue: nil) { [weak self] (notification) in
             self?.forceEndEditing = true
@@ -231,6 +235,14 @@ class FTTextAnnotationViewController: UIViewController {
         #endif
     }
 
+    deinit {
+        if let observer = self.updateAnnotationObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+        if let observer = self.updateAnnotationObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+    }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -296,6 +308,7 @@ class FTTextAnnotationViewController: UIViewController {
             self.setTextBackgroundColor(UIColor.clear)
             track("textmode_page_tapped", params: ["postit_color" : "clear"], screenName: FTScreenNames.textbox)
         }
+        FTCLSLog("IS REGULAR CLASS \(self.isRegularClass())")
         
         func updateTextConfig() {
             if let defaultFont = page?.parentDocument?.localMetadataCache?.defaultBodyFont {
@@ -430,7 +443,7 @@ class FTTextAnnotationViewController: UIViewController {
         #else
         shouldRemove = (self.isEmpty && !self.isFirstResponder && !transitionInProgress)
         #endif
-        if shouldRemove {
+        if shouldRemove && !_isFontSelectionInProgress {
             self.delegate?.annotationControllerDidRemoveAnnotation(self, annotation: self.annotation)
         }
         else {
@@ -743,7 +756,7 @@ extension FTTextAnnotationViewController : UITextViewDelegate {
         attr.applyDataDetectorAttributes()
         textView.attributedText = attr
         #if !targetEnvironment(macCatalyst)
-        if(!transitionInProgress) {
+        if(!transitionInProgress && !_isFontSelectionInProgress) {
             self.editMode = false
         }
         resizeTextViewAsNeeded()
@@ -963,6 +976,10 @@ extension FTTextAnnotationViewController: FTTextToolBarDelegate {
     
     func didSelectFontStyle(_ style: FTTextStyleItem) {
         self.textInputDidChangeStyle(style)
+    }
+    
+    func isFontSelectionInProgress(value: Bool) {
+        self._isFontSelectionInProgress = value
     }
     
     func didChangeBackgroundColor(_ color: UIColor) {

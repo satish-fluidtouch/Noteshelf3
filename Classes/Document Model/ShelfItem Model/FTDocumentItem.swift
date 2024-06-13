@@ -26,10 +26,25 @@ extension NSNotification.Name {
     var documentUUID: String?
     var tempFileModificationDate: Date?
 
-    weak var metadataItem: NSMetadataItem?;
+    private weak var finishDownloadNotificationObserver: NSObjectProtocol?;
+    
+    private var _displayTitle: String?;
+    var displayTitle: String {
+        return _displayTitle ?? self.URL.title;
+    }
+    
+    weak var metadataItem: NSMetadataItem? {
+        didSet {
+            _displayTitle = metadataItem?.URL()?.title;
+            _fileCreationDate = metadataItem?.creationDate;
+            _fileModificationDate = metadataItem?.modificationDate;
+        }
+    };
+    
+    private var _fileCreationDate: Date?
     var fileCreationDate: Date {
         if let metadata = metadataItem {
-            return metadata.creationDate
+            return self._fileCreationDate ?? metadata.creationDate
         }
         if FileManager().fileExists(atPath: self.URL.path) {
             return self.URL.fileCreationDate;
@@ -60,7 +75,7 @@ extension NSNotification.Name {
         URL = fileURL;
         super.init();
         // This is Mainly used to set the download status for the starred items.
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "FinishedDownload_\(self.URL.hashKey)"),
+        self.finishDownloadNotificationObserver = NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "FinishedDownload_\(self.URL.hashKey)"),
                                                object: nil,
                                                queue: nil,
                                                using:
@@ -253,30 +268,37 @@ extension NSNotification.Name {
     weak var shelfCollection: FTShelfItemCollection!
 
     deinit {
+        if let observer = self.finishDownloadNotificationObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
         #if DEBUG
         debugPrint("deinit :\(self.URL.path.removingPercentEncoding ?? ""))");
         #endif
     }
     
+    private var _fileModificationDate: Date?
     var fileModificationDate: Date {
         if let _date = self.tempFileModificationDate {
             return _date;
         }
-        if self.metadataItem != nil {
-            return self.metadataItem?.modificationDate ?? Date();
+        if let metadata = self.metadataItem {
+            return self._fileModificationDate ?? metadata.modificationDate
         }
         return self.URL.fileModificationDate
     }
     
     func updateShelfItemInfo(_ metadataItem : NSMetadataItem)
     {
+        guard let metaURL = metadataItem.URL() else {
+            return;
+        }
         self.metadataItem = metadataItem;
         if let tempTime = self.tempFileModificationDate,
             tempTime.compare(self.URL.fileModificationDate) == ComparisonResult.orderedAscending {
             self.tempFileModificationDate = nil;
         }
         
-        self.URL = metadataItem.URL();
+        self.URL = metaURL;
         
         self.updateIsDownloaded(metadataItem);
         self.updateIsDownloading(metadataItem);
@@ -364,14 +386,10 @@ private extension FTDocumentItem {
         }
         if let fileModDate = cache.getExtendedAttribute(for: .lastOpenDateKey)?.dateValue {
             if fileModDate.compare(date) == ComparisonResult.orderedAscending {
-                debugLog("fileModDate: income date is lastest :\(self.URL.relativePathWRTCollection())  - \(fileModDate) -\(date)")
                 _fileLastOpenedDate = date;
-                debugLog("fifileModDate: before update: \(cache.fileModificationDate)")
                 try? cache.updateLastOpenedDate(date)
-                debugLog("fifileModDate: after update: \(cache.fileModificationDate)")
             }
             else {
-                debugLog("fileModDate: cache date is lastest :\(self.URL.relativePathWRTCollection())  - \(fileModDate) -\(date)")
                 _fileLastOpenedDate = fileModDate;
             }
         }

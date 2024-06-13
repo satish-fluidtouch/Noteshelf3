@@ -16,7 +16,12 @@ import UIKit
     private var isLive = false
     private let slidingImage = UIImageView(image: UIImage(named: "infiniteSlider"))
 
+    private weak var sceneActiveNotificationObserver: NSObjectProtocol?;
+    
     deinit {
+        if let observer = self.sceneActiveNotificationObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
         NotificationCenter.default.removeObserver(self);
     }
 
@@ -33,12 +38,12 @@ import UIKit
         }
 
         if #available(iOS 13.0, *) {
-            NotificationCenter.default.addObserver(forName: UIScene.didActivateNotification,
+            self.sceneActiveNotificationObserver = NotificationCenter.default.addObserver(forName: UIScene.didActivateNotification,
                                                    object: self.window?.windowScene,
                                                    queue: nil,
                                                    using: notificationBlock)
         } else {
-            NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification,
+            self.sceneActiveNotificationObserver = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification,
                                                    object: nil,
                                                    queue: nil,
                                                    using: notificationBlock)

@@ -24,6 +24,7 @@ struct FTURLOptions {
 struct FTImportItemInfo {
     let collection: String
     let group: String
+    let notebook: String
 }
 
 @objcMembers class FTImportItem : NSObject
@@ -85,6 +86,8 @@ protocol FTIntentHandlingProtocol: UIUserActivityRestoring {
     func createNotebookWithScannedPhoto()
     func startNS2ToNS3Migration()
     func showPremiumUpgradeScreen()
+    func openPinnedBook(with docId: String)
+    func handleWidgetAction(type: FTWidgetActionType)
 }
 
 
@@ -93,6 +96,8 @@ final class FTAppIntentHandler {
     enum NS3LaunchIntent: String {
        case migration = "NS2Migration"
        case premiumUpgrade = "purchasePremium"
+        case pinnedWidget = "pinnedWidget"
+        case quickNote = "quickNote"
     }
 
     private let supportedPathExts = [nsBookExtension
@@ -139,7 +144,7 @@ final class FTAppIntentHandler {
                    return true
                 }
             #endif
-            DropboxClientsManager.handleRedirectURL(url, completion: { (result) in
+            DropboxClientsManager.handleRedirectURL(url, includeBackgroundClient: true, completion: { (result) in
                 switch result {
                 case .success:
                     NotificationCenter.default.post(name: .didCompleteDropBoxAuthetication, object: nil)
@@ -185,6 +190,13 @@ final class FTAppIntentHandler {
                         , queryitem.name == "intent" {
                 if queryitem.value == NS3LaunchIntent.migration.rawValue {
                     intentHandler?.startNS2ToNS3Migration()
+                } else if queryitem.value == NS3LaunchIntent.pinnedWidget.rawValue {
+                    if let docId = urlcomponents.queryItems?.first(where: {$0.name == "docId"})?.value, !docId.isEmpty
+                    {
+                        intentHandler?.openPinnedBook(with: docId)
+                    }
+                } else if queryitem.value == NS3LaunchIntent.quickNote.rawValue {
+                    intentHandler?.handleWidgetAction(type: FTNotebookCreateWidgetActionType.quickNote)
                 } else {
                     intentHandler?.showPremiumUpgradeScreen()
                 }
@@ -247,6 +259,10 @@ final class FTAppIntentHandler {
         case .scanDocument:
             intentHandler?.createNotebookWithScannedPhoto()
         }
+    }
+    
+    func handleWidgetAction(for type: FTWidgetActionType) {
+        intentHandler?.handleWidgetAction(type: type)
     }
 }
 

@@ -38,7 +38,7 @@ protocol FTStyleSelectionDelegate: NSObjectProtocol {
     func didHighLightSelectedStyle(attr: [NSAttributedString.Key : Any]?, scale: CGFloat)
 }
 
-protocol FTTextToolBarDelegate: FTRootControllerInfo {
+protocol FTTextToolBarDelegate: FTRootControllerInfo, FTFontSelectionDelegate {
     func didSelectTextToolbarOption(_ option: FTTextToolBarOption)
     func didSelectFontStyle(_ style: FTTextStyleItem)
     func didChangeBackgroundColor(_ color: UIColor)
@@ -53,6 +53,10 @@ protocol FTTextToolBarDelegate: FTRootControllerInfo {
     func didToggleStrikeThrough()
     func didSetDefaultStyle(_ info: FTDefaultTextStyleItem)
     func textInputViewCurrentTextView() -> FTTextView?
+}
+
+protocol FTFontSelectionDelegate {
+    func isFontSelectionInProgress(value: Bool)
 }
 
 class FTTextToolBarViewController: UIViewController {
@@ -143,42 +147,39 @@ class FTTextToolBarViewController: UIViewController {
 
 extension FTTextToolBarViewController {
     private func loadTextStyles() {
-        updateElementsInTextInputAccessoryView()
-         let textStyles = fetchStyles()
-        var showCount = textStyles.styles.count
-        if showCount >= 5 {
-            showCount = 5
-        }
-        if showCount < 2 {
-            showCount = 2
-        }
-        let styles = textStyles.styles.prefix(Int(showCount))
-        if styles.count > 0 {
-            textStyleView?.arrangedSubviews.forEach { $0.removeFromSuperview() }
-            for (idx, item) in styles.enumerated() {
-                let button = FTTextToolbarButton(type: .custom)
-                button.tag = idx
-                var attributeText = NSMutableAttributedString(string: item.textStyleShortName())
-                attributeText = attributeText.getFormattedAttributedStringFrom(style: item, defaultFont: 16, toPreviewDefault: true)
-                button.isPointerInteractionEnabled = true
-                button.addTarget(self, action:#selector(didSelectedStyle(_:)), for: .touchUpInside)
-
-                var config = UIButton.Configuration.plain()
-                config.attributedTitle = AttributedString(attributeText)
-                config.cornerStyle = .medium
-                config.titleAlignment = .leading
-                config.contentInsets.leading = .zero
-                config.contentInsets.trailing = .zero
-                let bgConfig = UIBackgroundConfiguration.listPlainCell()
-                config.background = bgConfig
-                button.configuration = config
-
-                textStyleView?.addArrangedSubview(button)
-                NSLayoutConstraint.activate([
-                    button.widthAnchor.constraint(equalToConstant: 45)
-                ])
+        if isRegular {
+            let textStyles = fetchStyles()
+            var showCount = textStyles.styles.count
+            if showCount >= 5 {
+                showCount = 5
             }
+            let styles = textStyles.styles.prefix(Int(showCount))
+            if let subviews = textStyleView?.arrangedSubviews, styles.count > 0, subviews.count == styles.count {
+                for (idx, item) in styles.enumerated() {
+                    if let button = subviews[idx] as? FTTextToolbarButton {//FTTextToolbarButton(type: .custom) {
+                        button.tag = idx
+                        var attributeText = NSMutableAttributedString(string: item.textStyleShortName())
+                        attributeText = attributeText.getFormattedAttributedStringFrom(style: item, defaultFont: 16, toPreviewDefault: true)
+                        button.isPointerInteractionEnabled = true
+                        button.addTarget(self, action:#selector(didSelectedStyle(_:)), for: .touchUpInside)
+                        
+                        var config = UIButton.Configuration.plain()
+                        config.attributedTitle = AttributedString(attributeText)
+                        config.cornerStyle = .medium
+                        config.titleAlignment = .leading
+                        config.contentInsets.leading = .zero
+                        config.contentInsets.trailing = .zero
+                        let bgConfig = UIBackgroundConfiguration.listPlainCell()
+                        config.background = bgConfig
+                        button.configuration = config
+                    }
+                    
+                }
+            }
+        } else {
+            updateElementsInTextInputAccessoryView()
         }
+
     }
     
     private func resetBackgroundColorForTextStyles() {
@@ -562,6 +563,16 @@ extension FTTextToolBarViewController: FTTextAnnotationDelegate {
     }
 }
 
+extension FTTextToolBarViewController: FTSystemFontPickerDelegate {
+    func didPickFontFromSystemFontPicker(selectedFontDescriptor: UIFontDescriptor, fontStyle: FTTextStyleItem) {
+        self.didSelectFontStyle(fontStyle)
+    }
+    
+    func isFontSelectionInProgress(value: Bool) {
+        self.toolBarDelegate?.isFontSelectionInProgress(value: value)
+    }
+}
+
 extension FTTextToolBarViewController: FTTextStyleCompactDelegate {
     
     func didSelectFontStyle(_ style: FTTextStyleItem) {
@@ -592,11 +603,13 @@ extension FTTextToolBarViewController {
             return;
         }
         self.previousTraitCollection = traitCollection;
-        switchMode()
-        self.updateToolBarSelectionForattributes(self.attributes, scale: self.scale)
-        if let textView = self.toolBarDelegate?.currentTextInputView() {
-            textView.inputView = nil
-            textView.reloadInputViews()
+        if UIApplication.shared.applicationState == .active {
+            switchMode()
+            self.updateToolBarSelectionForattributes(self.attributes, scale: self.scale)
+            if let textView = self.toolBarDelegate?.currentTextInputView() {
+                textView.inputView = nil
+                textView.reloadInputViews()
+            }
         }
     }
 }

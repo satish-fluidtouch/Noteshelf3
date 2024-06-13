@@ -15,7 +15,7 @@ protocol FTiCloudQueryObserverDelegate: AnyObject {
     func ftiCloudQueryObserver(_ query: FTiCloudQueryObserver, didRemovedItems results: [AnyObject]);
 }
 
-class FTiCloudQueryObserver: FTQueryListenerProtocol {
+class FTiCloudQueryObserver: NSObject,FTQueryListenerProtocol {
     fileprivate var rootURLs: [URL]
     fileprivate var extsToListen: [String]
     fileprivate var query: NSMetadataQuery?
@@ -47,7 +47,13 @@ class FTiCloudQueryObserver: FTQueryListenerProtocol {
         #if DEBUG
             //print("☁️ Query Started");
         #endif
+        FTCLSLog("Provider -Initial Gather Started");
         NotificationCenter.default.addObserver(self, selector: #selector(FTiCloudQueryObserver.processiCloudFilesForInitialGathering(_:)), name: NSNotification.Name.NSMetadataQueryDidFinishGathering, object: nil);
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didStartGathering(_:)), name: NSNotification.Name.NSMetadataQueryDidStartGathering, object: nil);
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.gatheringProgessNotified(_:)), name: NSNotification.Name.NSMetadataQueryGatheringProgress, object: nil);
+        
         self.query?.start();
     }
 
@@ -76,10 +82,29 @@ class FTiCloudQueryObserver: FTQueryListenerProtocol {
     }
 
     // MARK: - Notifications
+    @objc fileprivate func gatheringProgessNotified(_ notification: Notification) {
+        DispatchQueue.main.async {
+            self.scehduleUpdateListner();
+        }
+    }
+    
+    @objc fileprivate func didStartGathering(_ notification: Notification) {
+        DispatchQueue.main.async {
+            FTCLSLog("Provider - Gathering started");
+        }
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.NSMetadataQueryDidStartGathering, object: nil);
+    }
+
     @objc fileprivate func processiCloudFilesForInitialGathering(_ notification: Notification) {
+        DispatchQueue.main.async {
+            FTCLSLog("Provider -Initial Gather Ended");
+            self.cancelScehduledUpdateListener();
+        }
         self.disableUpdates();
 
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.NSMetadataQueryDidFinishGathering, object: nil);
+        
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.NSMetadataQueryGatheringProgress, object: nil);
 
         // The query reports all files found, every time.
         if(self.delegate != nil) {
@@ -125,17 +150,33 @@ class FTiCloudQueryObserver: FTQueryListenerProtocol {
 
         var predicateArray = [NSPredicate]();
         for eachExtension in self.extsToListen {
-            for url in self.rootURLs {
-                let pattern = "*.\(eachExtension)"
-                let  predicate = NSPredicate(format: "(%K CONTAINS %@) AND (%K Like %@)",
-                                             NSMetadataItemPathKey,
-                                             url.path,
-                                             NSMetadataItemFSNameKey, pattern)
-                predicateArray.append(predicate)
-            }
+            let pattern = "*.\(eachExtension)"
+            let  predicate = NSPredicate(format: "(%K Like %@)",
+                                         NSMetadataItemFSNameKey, pattern)
+            predicateArray.append(predicate)
         }
         query.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: predicateArray);
         return query;
     }
 
+}
+
+private extension FTiCloudQueryObserver {
+    func scehduleUpdateListner() {
+        self.cancelScehduledUpdateListener()
+        self.perform(#selector(self.functiontriggered), with: nil, afterDelay: 10)
+    }
+    
+    @objc func functiontriggered() {
+        self.query?.disableUpdates();
+        let items = self.query?.resultCount ?? 0;
+        self.query?.enableUpdates();
+        if items > 0 {
+            FTLogError("Gather Failed", attributes: ["items": items])
+        }
+    }
+    
+    func cancelScehduledUpdateListener() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.functiontriggered), object: nil);
+    }
 }

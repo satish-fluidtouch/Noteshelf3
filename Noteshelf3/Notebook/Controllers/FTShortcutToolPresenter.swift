@@ -32,6 +32,7 @@ private let offset: CGFloat = 8.0
     internal var animDuration: CGFloat = 0.3
     internal var shortcutZoomMode: FTZoomShortcutMode = .auto
     internal var toolbarOffset: CGFloat = FTToolbarConfig.Height.regular + offset
+    internal var activity: NSUserActivity?
 
     var shortcutView: UIView {
         return self.toolbarVc.view
@@ -42,7 +43,7 @@ private let offset: CGFloat = 8.0
     }
 
     var shortcutViewPlacement: FTShortcutPlacement {
-        let placement = FTShortcutPlacement.getSavedPlacement()
+        let placement = FTShortcutPlacement.getSavedPlacement(activity: self.activity)
         return placement
     }
 
@@ -56,6 +57,7 @@ private let offset: CGFloat = 8.0
         if !mode.canProceedToShowToolbar {
             return
         }
+        self.activity = viewController.view.window?.windowScene?.userActivity
         self.deskMode = mode
         self.parentVC = viewController
 
@@ -76,23 +78,24 @@ private let offset: CGFloat = 8.0
         self.updateMinOffsetIfNeeded()
         let reqCenter = self.shortcutViewCenter(for: shortcutViewPlacement)
         self.updateShortcutViewCenter(reqCenter)
-        let userActivity = viewController.view.window?.windowScene?.userActivity
+
         if mode != .deskModeFavorites {
-            let rackData = FTRackData(type: rackType, userActivity: userActivity)
+            let rackData = FTRackData(type: rackType, userActivity: self.activity)
             (toolbarVc as? FTToolTypeShortcutViewController)?.showShortcutViewWrto(rack: rackData)
             (toolbarVc as? FTToolTypeShortcutViewController)?.delegate = self
         } else {
-            (toolbarVc as? FTFavoriteShortcutViewController)?.addFavoritesView(userActivity: userActivity)
+            (toolbarVc as? FTFavoriteShortcutViewController)?.addFavoritesView(userActivity: self.activity)
         }
         self.configurePanGesture()
     }
 
-    func updatePositionOnScreenSizeChange() {
+    func updatePositionOnScreenSizeChange(forcibly: Bool = false) {
         let curSize = self.parentVC?.view.frame.size ?? .zero;
-        if(!curSize.equalTo(contentSize)) {
+        if(!curSize.equalTo(contentSize) || forcibly) {
             contentSize = curSize
             self.updateMinOffsetIfNeeded()
             self.configureShortcutView(with: screenMode)
+            self.removeSizeEditViewController()
             if let parent = self.parentVC as? FTPDFRenderViewController, let zoomVc = parent.zoomOverlayController {
                 self.handleZoomPanelFrameChange(zoomVc.view.frame, mode: zoomVc.shortcutModeZoom, completion: nil)
             }
@@ -283,6 +286,9 @@ private extension FTShortcutToolPresenter {
             self.toolbarOffset = FTToolbarConfig.Height.compact + offset + extraOffset
         } else {
             self.toolbarOffset = FTToolbarConfig.Height.regular + offset
+            if FTUserDefaults.defaults().showStatusBar {
+                self.toolbarOffset += FTToolBarConstants.statusBarOffset
+            }
         }
 #endif
     }

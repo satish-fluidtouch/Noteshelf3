@@ -40,6 +40,10 @@ extension FTPageViewController
             showPasteOptions = true
         }
 
+        if nil != self.lassoContentSelectionViewController {
+            showPasteOptions = false
+        }
+
         guard let contentView = self.contentHolderView, showPasteOptions else {
             return
         }
@@ -146,17 +150,22 @@ extension FTPageViewController
                                             screenScale: UIScreen.main.scale,
                                             withAnnotations: selectedAnnotations) {
             //Crop the image to the final rect and render the image.
-            UIGraphicsBeginImageContextWithOptions(integralRect.size, false, 0);
-            let context = UIGraphicsGetCurrentContext();
+            let ftcontext = FTImageContext.imageContext(integralRect.size, scale: 0);
+            let context = ftcontext?.cgContext;
             context?.translateBy(x: -integralRect.origin.x, y: -integralRect.origin.y);
             context?.scaleBy(x: scale, y: scale);
             img.draw(in: CGRect.init(origin: CGPoint.zero, size: img.size))
-            snapshot = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
+            snapshot = ftcontext?.uiImage()
         }
         
         rect = finalRect;
         return snapshot;
+    }
+
+    func resizeSavedClipFor(annotations: [FTAnnotation]) {
+        normalizeLassoView()
+        self.lassoInfo.selectedAnnotations = annotations;
+        initiateTransformSelection(isGrouped: true)
     }
 }
 
@@ -285,6 +294,18 @@ extension FTPageViewController: FTLassoSelectionViewDelegate {
         }
         else if(action == .takeScreenshot){
             supports = true;
+        } else if action == .group {
+            if selectedAnnotations.count > 1 {
+                if nil == selectedAnnotations.first(where: { $0.groupId != nil }) {
+                    supports = true
+                }
+            }
+        }  else if action == .ungroup {
+            if selectedAnnotations.count > 1 {
+                if nil != selectedAnnotations.first(where: { $0.groupId != nil }) {
+                    supports = true
+                }
+            }
         }
         else {
             supports = !selectedAnnotations.isEmpty;
@@ -315,6 +336,12 @@ extension FTPageViewController: FTLassoSelectionViewDelegate {
             self.lassoSelectionViewMoveToBackCommand(lassoSelectionView);
         case .openAI:
             self.startOpenAiForPage();
+        case .saveClip:
+            self.lassoSelectionViewCreateSnippetCommand(lassoSelectionView)
+        case .group:
+            self.lassoSelectionViewGroupCommand(lassoSelectionView);
+        case .ungroup:
+            self.lassoSelectionViewUngroupCommand(lassoSelectionView);
         }
     }
     #if targetEnvironment(macCatalyst)
@@ -322,6 +349,11 @@ extension FTPageViewController: FTLassoSelectionViewDelegate {
         self.paste(at: touchedPoint);
     }
     #endif
+
+    func initiateGroupedAnnotationEditing(annotations: [FTAnnotation]) {
+        self.lassoInfo.selectedAnnotations = annotations
+        initiateTransformSelection(isGrouped: true)
+    }
 }
 
 //MARK:- Lasso Actions -
@@ -400,10 +432,7 @@ private extension FTPageViewController  {
         }
         let rackData = FTRackData(type: .shape, userActivity: self.view.window?.windowScene?.userActivity)
         let editMode = FTPenColorSegment.savedSegment(for: .lasso)
-        var contentSize = FTPenColorEditController.presetViewSize
-        if editMode == .grid {
-            contentSize = FTPenColorEditController.gridViewSize
-        }
+        let contentSize = editMode.contentSize
         let model = FTPenShortcutViewModel(rackData: rackData)
         let hostingVc = FTPenColorEditController(viewModel: model, delegate: self)
         self.penShortcutViewModel = model
@@ -502,6 +531,109 @@ private extension FTPageViewController  {
         self.removeAnnotations(selectedAnnotations, refreshView: true);
         self.lassoSelectionView?.resignFirstResponder();
         self.lassoInfo.reset();
+    }
+
+    func lassoSelectionViewCreateSnippetCommand(_ lassoSelectionView: FTLassoSelectionView) {
+        let selectedAnnotations = self.lassoInfo.selectedAnnotations;
+        guard !selectedAnnotations.isEmpty else {
+            return
+        }
+        var boundingRect = CGRect.zero;
+
+        let storyboard = UIStoryboard.init(name: "FTDocumentEntity", bundle: nil)
+        guard let saveClipPreview = storyboard.instantiateViewController(withIdentifier: "FTSaveClipPreviewViewController") as? FTSaveClipPreviewViewController else {
+            fatalError("FTSaveClipPreviewViewController not found")
+        }
+        if let selectedImage = self.snapshotOf(annotations: selectedAnnotations, enclosedRect: &boundingRect) {
+            saveClipPreview.previewImage = selectedImage
+        }
+        saveClipPreview.delegate = self
+        self.parent?.ftPresentFormsheet(vcToPresent: saveClipPreview, hideNavBar: true)
+    }
+
+    func lassoSelectionViewGroupCommand(_ lassoSelectionView: FTLassoSelectionView) {
+        let selectedAnnotations = self.lassoInfo.selectedAnnotations;
+        guard !selectedAnnotations.isEmpty else {
+            return;
+        }
+        track("Group",screenName: FTScreenNames.lasso)
+        groupAnnotations(selectedAnnotations)
+    }
+
+    func lassoSelectionViewUngroupCommand(_ lassoSelectionView: FTLassoSelectionView) {
+        let selectedAnnotations = self.lassoInfo.selectedAnnotations;
+        guard !selectedAnnotations.isEmpty else {
+            return;
+        }
+        track("Ungroup",screenName: FTScreenNames.lasso)
+        ungroupAnnotations(selectedAnnotations)
+    }
+}
+
+extension FTPageViewController: FTSaveClipDelegate {
+    func didSelectCategory(name: String) {
+        pdfPage?.parentDocument?.saveDocument(completionHandler: { isSuccess in
+            guard isSuccess else {
+                return
+            }
+            performClipCreation()
+        })
+
+        func performClipCreation() {
+            let selectedAnnotations = self.lassoInfo.selectedAnnotations;
+            guard !selectedAnnotations.isEmpty else {
+                return;
+            }
+            var boundingRect = CGRect.zero
+
+            let tempDocURL = FTDocumentFactory.tempDocumentPath(FTUtils.getUUID());
+            let ftdocument = FTDocumentFactory.documentForItemAtURL(tempDocURL);
+
+            let totalBoundingRect: CGRect = selectedAnnotations.reduce(.null) { partialResult, annotation in
+                partialResult.union(annotation.boundingRect)
+            }
+
+            let pdfGenerator = PDFGenerator()
+            let pdfPath = pdfGenerator.createPDF(pageSize: totalBoundingRect.size)
+
+            let info = FTDocumentInputInfo();
+            info.isTemplate = false
+            info.inputFileURL = pdfPath
+            info.overlayStyle = .clearWhite
+            info.isNewBook = true;
+            ftdocument.createDocument(info) { (error, _) in
+                let doc = (ftdocument as? FTNoteshelfDocument)
+                doc?.openDocument(purpose: .write, completionHandler: { success, error in
+                    if let page = doc?.pages().first as? FTNoteshelfPage {
+                        let groupId = UUID().uuidString
+                        page.deepCopyAnnotations(selectedAnnotations, onCompletion: { copiedAnnotations in
+                            copiedAnnotations.forEach { annotation in
+                                annotation.groupId = groupId
+                                annotation.setOffset(CGPoint(x: -totalBoundingRect.origin.x, y: -totalBoundingRect.origin.y))
+                            }
+                            FTPDFExportView.snapshot(forPage: page, size: page.pdfPageRect.size, screenScale: 1, offscreenRenderer: nil, purpose: FTSnapshotPurposeThumbnail, windowHash: nil) { image, _ in
+                                doc?.saveAndCloseWithCompletionHandler({ success in
+                                    if let selectedImage = image {
+                                        _ = try? FTSavedClipsProvider.shared.saveFileFrom(url: tempDocURL, to: name, thumbnail: selectedImage)
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+            }
+        }
+    }
+}
+
+class PDFGenerator {
+    func createPDF(pageSize: CGSize) -> URL? {
+        let pdfPath = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first! + "/" + "SaveClip.pdf"
+
+        UIGraphicsBeginPDFContextToFile(pdfPath, CGRect(origin: .zero, size: pageSize), nil)
+        UIGraphicsBeginPDFPage()
+        UIGraphicsEndPDFContext()
+        return URL(filePath: pdfPath)
     }
 }
 
@@ -688,7 +820,7 @@ private extension FTPageViewController
             pbInfo[UIPasteboard.pdfAnnotationUTI()] = pbData;
             var rect = CGRect.null;
             if let img = self.snapshotOf(annotations: selectedAnnotations, enclosedRect: &rect) {
-                pbInfo[kUTTypePNG as String] = img;
+                pbInfo[UTType.png.identifier] = img;
             }
             pasteBoard.items = [pbInfo];
         }
@@ -727,13 +859,12 @@ private extension FTPageViewController
         var useAlternateApproach = viewMaxSize > maxScreenSize;
         
         if !useAlternateApproach {
-            UIGraphicsBeginImageContextWithOptions(visibleRect.size, true, 0);
+            let ftContext = FTImageContext.imageContext(visibleRect.size, scale: 0);
             var screenRect = contentHolderView.bounds;
             screenRect.origin.x -= visibleRect.origin.x;
             screenRect.origin.y -= visibleRect.origin.y;
             let success = contentHolderView.drawHierarchy(in: screenRect, afterScreenUpdates: true);
-            snapshot = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
+            snapshot = ftContext?.uiImage();
             useAlternateApproach = !success;
         }
         
@@ -749,9 +880,8 @@ private extension FTPageViewController
         lassoSelectionView.isHidden = false;
         return snapshot;
     }
-
     
-    func initiateTransformSelection()
+    func initiateTransformSelection(isGrouped: Bool = false)
     {
         let selectedAnnotations = self.lassoInfo.selectedAnnotations;
         guard !selectedAnnotations.isEmpty,
@@ -770,6 +900,7 @@ private extension FTPageViewController
         if let selectedImage = self.snapshotOf(annotations: selectedAnnotations, enclosedRect: &boundingRect) {
             let imageResizeViewController = FTLassoContentSelectionViewController(withImage: selectedImage, boundingRect: contentView.bounds);
             imageResizeViewController.delegate = self;
+            imageResizeViewController.isGrouped = isGrouped
             self.addChild(imageResizeViewController);
             contentView.addSubview(imageResizeViewController.view);
             var targetRect = imageResizeViewController.view.convert(boundingRect, from: contentView);
@@ -966,11 +1097,17 @@ private extension FTPageViewController
                 
                 let offset = CGPoint(x:antsViewOrigin.x-lastAnnotationBoundingRect.origin.x-offsetFromlastAnnotation.x,y: antsViewOrigin.y-lastAnnotationBoundingRect.origin.y-offsetFromlastAnnotation.y);
                 let hashKey = self.windowHash;
+                var groups = [String: String]()
                 pastedAnnotations.forEach { (annotation) in
                     annotation.setSelected(true, for: hashKey);
                     annotation.uuid = FTUtils.getUUID();
                     annotation.setOffset(offset);
                     annotation.associatedPage = self.pdfPage;
+                    if let gid = annotation.groupId {
+                        let newGid = groups[gid] ?? UUID().uuidString
+                        annotation.groupId = newGid
+                        groups[gid] = newGid
+                    }
                 }
                 self.lassoInfo.selectedAnnotations = pastedAnnotations;
                 self.addAnnotations(pastedAnnotations, refreshView: false);
@@ -1144,7 +1281,7 @@ extension FTPageViewController: FTLassoContentSelectionDelegate
         page.rotate(annotations: self.lassoInfo.selectedAnnotations,
                     angle: angle,
                     refPoint: convertedPoint,
-                    shouldRefresh: false)
+                    shouldRefresh: false, startRect: startRect, targetRect: targetRect)
 
         if let lassoWritingView = self.writingView as? FTLassoProtocol {
             lassoWritingView.finalizeSelection(byAddingAnnotations: nil);

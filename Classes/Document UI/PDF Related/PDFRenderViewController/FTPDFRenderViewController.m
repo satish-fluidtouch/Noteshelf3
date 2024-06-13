@@ -81,7 +81,7 @@
 @property (nonatomic,strong) FTCloudDocumentConflictScreen *conflictViewController;
 
 //Audio player
-@property (weak)FTAudioPlayerController *playerController;
+@property (readwrite,weak)FTAudioPlayerController *playerController;
 
 @property (weak) FTNS1MigrationInfoView *migrationInfoView;
 
@@ -125,7 +125,7 @@
         __block __weak FTPDFRenderViewController *weakSelf = self;
         [[NSNotificationCenter defaultCenter] addObserverForName:@"FTPressuePenActionChangedNotification"
                                                           object:nil
-                                                           queue:nil
+                                                           queue:[NSOperationQueue mainQueue]
                                                       usingBlock:^(NSNotification * _Nonnull note)
          {
             RKAccessoryButtonAction eventType = [[note.userInfo objectForKey:@"PressurePenAction"] integerValue];
@@ -273,6 +273,7 @@
 #if DEBUG
     printf("\ndealloc : FTPDFRrenderViewController\n");
 #endif
+    [self removeLayoutChangeObserver];
     [self.pdfDocument removeListner:self];
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     self.mainScrollView.scrollViewDelegate = nil;
@@ -394,7 +395,7 @@
     __block __weak FTPDFRenderViewController *weakSelf = self;
     [[NSNotificationCenter defaultCenter] addObserverForName:@"FTDocumentDidAddedPageIndices"
                                                       object:(id)self.pdfDocument
-                                                       queue:nil
+                                                       queue:[NSOperationQueue mainQueue]
                                                   usingBlock:^(NSNotification * _Nonnull note)
      {
         [weakSelf clearSearchOptionsInfo];
@@ -419,7 +420,7 @@
 
     [[NSNotificationCenter defaultCenter] addObserverForName:@"FTDocumentDidRemovePageIndices"
                                                       object:(id)self.pdfDocument
-                                                       queue:nil
+                                                       queue:[NSOperationQueue mainQueue]
                                                   usingBlock:^(NSNotification * _Nonnull note)
      {
         [weakSelf clearSearchOptionsInfo];
@@ -458,7 +459,7 @@
 
     [[NSNotificationCenter defaultCenter] addObserverForName:@"FTDocumentDidMovedPageIndices"
                                                       object:(id)self.pdfDocument
-                                                       queue:nil
+                                                       queue:[NSOperationQueue mainQueue]
                                                   usingBlock:^(NSNotification * _Nonnull note)
      {
         [weakSelf clearSearchOptionsInfo];
@@ -483,7 +484,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserverForName:FTPageDidChangePageTemplateNotification
                                                       object:nil
-                                                       queue:nil
+                                                       queue:[NSOperationQueue mainQueue]
                                                   usingBlock:^(NSNotification * _Nonnull note)
      {
         id<FTPageProtocol> currentPage = note.object;
@@ -615,7 +616,7 @@
         [self performSelector:@selector(performLayout) withObject:nil afterDelay:0.01];
     }
     [[self navigationController]setNavigationBarHidden:YES animated:NO];
-    [[self toolTypeContainerVc] updatePositionOnScreenSizeChange];
+    [[self toolTypeContainerVc] updatePositionOnScreenSizeChangeWithForcibly:FALSE];
 }
 
 -(void)performLayout
@@ -1174,6 +1175,7 @@
         self.previousVisiblePageIndex = self.currentlyVisiblePage.pageIndex;
         self.isPageScrollingByUser = true;
     }
+    FTCLSLog(@"Interaction: Main Scroll view will begin drag");
     NSArray<FTPageViewController*>* visiblePageControllers = [self visiblePageViewControllers];
     for(FTPageViewController *eachPageVC in visiblePageControllers) {
         [eachPageVC startAcceptingTouches:false];
@@ -1185,6 +1187,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if(![self.view.subviews containsObject:self.pageNumberLabel] && self.currentlyVisiblePage != nil) {
         [self addPageNumberLabelToView];
+        [self updatePageNumberLabelFrame];
     }else {
         [self setCurrentPageNoToPageNumberLabel];
     }
@@ -1215,12 +1218,14 @@
     [self saveChangesOnCompletion:completion
               shouldCloseDocument:shouldClose
                     waitUntilSave: false
+                       saveAction:FTNormalAction
           shouldGenerateThumbnail:generateThumbnail];
 }
 
 -(void)saveChangesOnCompletion:(void (^)(BOOL success) )completion
            shouldCloseDocument:(BOOL)shouldClose
                  waitUntilSave:(BOOL)waitUntilDone
+                    saveAction:(FTNotebookBackAction)backAction
        shouldGenerateThumbnail:(BOOL)generateThumbnail
 {
     [[self.pdfDocument localMetadataCache] saveMetadataCache];
@@ -1233,7 +1238,8 @@
     
     void (^blocktoExecute)(void) = ^{
         FTENPublishManager *evernotePublishManager = [FTENPublishManager shared];
-        if([evernotePublishManager isSyncEnabledForDocumentUUID:self.shelfItemManagedObject.documentUUID]) {
+        if([evernotePublishManager isSyncEnabledForDocumentUUID:self.shelfItemManagedObject.documentUUID]
+           && (backAction == FTNormalAction)) {
             [FTENPublishManager recordSyncLog:[NSString stringWithFormat:@"User is saving notebook: %@", self.shelfItemManagedObject.title]];
             
             [evernotePublishManager updateSyncRecordForShelfItemAtURL:self.shelfItemManagedObject.URL withDocumentUUID:[documentToSave documentUUID] andEnSyncEnabled:true];
@@ -1265,9 +1271,8 @@
             }
         }
         
-        BOOL shouldGenerateThumbnail = [documentToSave shouldGenerateCoverThumbnail];
+        BOOL shouldGenerateCover = (backAction != FTDeletePermanentlyAction && [documentToSave shouldGenerateCoverThumbnail]);
         UIBackgroundTaskIdentifier task = [self startBackgroundTask];
-        
         void(^continueSaving)(BOOL, UIImage*) = ^(BOOL coverPageUpdated, UIImage* coverImage){
             void (^onCompletionBlock)(BOOL) = ^(BOOL success){
                 if(coverPageUpdated) {
@@ -1299,7 +1304,7 @@
             }
         };
         
-        if(shouldGenerateThumbnail) {
+        if(shouldGenerateCover) {
             [self coverImage:documentToSave
                   background:!waitUntilDone
                 onCompletion:^(UIImage *image) {
@@ -1378,12 +1383,31 @@
     
     BOOL isRequiredLoader = YES;
     isRequiredLoader = NO;//[self.pdfDocument hasAnyUnsavedChanges] ? YES : NO;
-
+    
     NSString *fileName = self.shelfItemManagedObject.URL.lastPathComponent.stringByDeletingPathExtension;
     if(backAction == FTSaveAction && [title isEqualToString:fileName]) {
         backAction = FTNormalAction;
     }
     isRequiredLoader = (backAction == FTSaveAction);
+    
+    if(backAction != FTNormalAction) {
+        NSString *saveAction = @"Normal";
+        switch (backAction) {
+            case FTSaveAction:
+                saveAction = @"Rename";
+                break;
+            case FTDeletePermanentlyAction:
+                saveAction = @"Delete";
+                break;;
+            case FTMoveToTrashAction:
+                saveAction = @"Move to Trash";
+                break;
+            default:
+                saveAction = @"Normal";
+                break;
+        }
+        FTCLSLog([NSString stringWithFormat:@"Save Action: %@",saveAction]);
+    }
     
     if (isRequiredLoader) {
         loadingIndicator = [FTLoadingIndicatorViewController showOnMode:FTLoadingIndicatorStyleActivityIndicator from:[self loadingPresentController]
@@ -1409,13 +1433,16 @@
     // If the action is save and no rename to make then save and exit as in production
     //if the action is save and rename then wait till save complete , wait till rename and then exit
     
+    BOOL isDeleteOperation = (backAction == FTDeletePermanentlyAction || backAction == FTMoveToTrashAction);
     [self saveChangesOnCompletion:^(BOOL success) {
-        //***************************************************
-        // Core Spotlight registration
-        //***************************************************
-        FTDocumentItemSpotLightWrapper *object = [[FTDocumentItemSpotLightWrapper alloc] initWithDocumentItem:self.shelfItemManagedObject.documentItem];
-        [[FTSearchIndexManager sharedManager] updateSearchIndex:object completion:nil];
-        //***************************************************
+        if (!isDeleteOperation) {
+            //***************************************************
+            // Core Spotlight registration
+            //***************************************************
+            FTDocumentItemSpotLightWrapper *object = [[FTDocumentItemSpotLightWrapper alloc] initWithDocumentItem:self.shelfItemManagedObject.documentItem];
+            [[FTSearchIndexManager sharedManager] updateSearchIndex:object completion:nil];
+            //***************************************************
+        }
         
         void (^callBack)(void) = ^ {
             [self closeDocumentWithShelfItemManagedObject:self.shelfItemManagedObject animate:true onCompletion: ^{
@@ -1441,8 +1468,9 @@
         }
     }
               shouldCloseDocument:true
-                    waitUntilSave:isRequiredLoader
-          shouldGenerateThumbnail:YES];
+                    waitUntilSave:(isRequiredLoader || backAction == FTMoveToTrashAction)
+                       saveAction:backAction
+          shouldGenerateThumbnail:!isDeleteOperation];
 }
 
 #pragma mark - Button actions -
@@ -1654,6 +1682,14 @@
 
     [super switchMode:mode sourceView:sourceView];
     [self updateMigrationInfoView];
+}
+
+-(void)updateToolBarWith:(RKDeskMode)mode {
+    [self changeMode:mode];
+    self.previousDeskMode = self.currentDeskMode;
+    self.currentDeskMode = mode;
+    [self validateMenuItems];
+    [self endActiveEditingAnnotations];
 }
 
 -(void)openRackForMode:(RKDeskMode)mode sourceView:(UIView *)sourceView {
@@ -2008,13 +2044,12 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:FTAppDidEnterZoomMode object:nil];
         
         //Initiate zoom mode
-        //Make sure desk mode is pen or eraser
-        if (!(self.currentDeskMode == kDeskModePen
-              || self.currentDeskMode == kDeskModeMarker
-              || self.currentDeskMode == kDeskModeEraser
-              || self.currentDeskMode == kDeskModeShape
-              || self.currentDeskMode == kDeskModeFavorites)) {
-            [self switchMode:kDeskModePen];
+        if(!([self isZoomSupportedDeskMode: self.currentDeskMode])) {
+            if((self.currentDeskMode == kDeskModeClipboard) && ([self isZoomSupportedDeskMode: self.previousDeskMode])) {
+                [self switchMode:self.previousDeskMode];
+            } else {
+                [self switchMode:kDeskModePen];
+            }
         }
 
         [[self.pdfDocument localMetadataCache] setZoomModeEnabled:true];
@@ -2326,17 +2361,15 @@
             [self switchMode:kDeskModePen];
         }
             break;
-            
-        case kDeskModeClipboard:
+            // ideally lasso should be removed for all kinds of lasso operations.
+            // to solve added clips issue and to also if you add some strokes and enter image into edit mode the same issue will be there.
+        default:
         {
             NSArray *visibleControllers = [self visiblePageViewControllers];
             for(FTPageViewController *eachController in visibleControllers) {
                 [eachController normalizeLassoView];
             }
         }
-            break;
-            
-        default:
             break;
     }
     
@@ -2374,21 +2407,14 @@
                 onCompletion:(void (^ _Nullable)(BOOL))completion
 {
     NSInteger index = [self getNewPageInsertIndex];
-    FTLoadingIndicatorViewController *loading = [FTLoadingIndicatorViewController showOnMode:FTLoadingIndicatorStyleActivityIndicator
-                                                                                        from:self
-                                                                                    withText:NSLocalizedString(@"Importing", @"Importing")
-                                                                                    andDelay:0];
     FTImportItem *item = [[FTImportItem alloc] initWithItem:url];
     [self insertFileItem:item
                  atIndex:index
+              actionType: FTAudioActionTypeAddToNewPage
             onCompletion:^(BOOL success, NSError * _Nullable error)
      {
-        [loading hide:nil];
         if (!success) {
             [error showAlertFrom:self];
-        }
-        else {
-            [self showPageAtIndex:index forceReLayout:true];
         }
         if(completion) {
             completion(success);
@@ -2403,7 +2429,6 @@
         [self insertEmptyPageAtIndex:index];
     }
     else {
-        FTCLSLog(@"Page inserted by right pull");
         id<FTPageProtocol> newPage = [self.pdfDocument insertPageAbovePage:page];
         if(nil != newPage) {
             NSInteger index = newPage.pageIndex;
@@ -2412,16 +2437,17 @@
             });
         }
     }
+    FTNotebookEventTracker.trackFreePageAddedEvent;
 }
 
 -(void)insertEmptyPageBelow:(id<FTPageProtocol>)page {
-    FTCLSLog(@"Page inserted by right pull");
     id<FTPageProtocol> newPage = [self.pdfDocument insertPageBelowPage:page];
     if(nil != newPage) {
         NSInteger index = newPage.pageIndex;
         dispatch_async(dispatch_get_main_queue(), ^{
             [self showPageAtIndex:index forceReLayout:false];
         });
+        FTNotebookEventTracker.trackFreePageAddedEvent;
     }
 }
 
@@ -2458,6 +2484,7 @@
             [self showPageAtIndex:index forceReLayout:false];
         });
     }
+    FTNotebookEventTracker.trackFreePageAddedEvent;
 }
 
 #pragma mark - auxilary button -
@@ -2987,8 +3014,6 @@
         return;
     }
     
-    self.view.userInteractionEnabled = NO;
-
     FTPageViewController *firstPageController = [self firstPageController];
     if(nil == firstPageController) {
         return;
@@ -2997,7 +3022,6 @@
     id<FTPageProtocol> page =  firstPageController.pdfPage;
     
     FTAudioAnnotationInfo *info = [[FTAudioAnnotationInfo alloc] initWithPage:page];
-    CGFloat offSet = self.mainScrollView.contentOffset.y;
     CGRect frame = contentHolderView.frame;
     if (self.currentToolBarState != FTScreenModeShortCompact) {
         CGFloat kStartingOffset = 24;
@@ -3009,7 +3033,6 @@
     info.visibleRect = frame;
     info.scale = firstPageController.pageContentScale;
     [firstPageController addAnnotationWithInfo:info];
-    self.view.userInteractionEnabled = YES;
 }
 
 -(void)pageDidReleased:(NSNotification*)notification
@@ -3226,7 +3249,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserverForName:FTExternalDisplayDidConnectedNotification
                                                       object:nil
-                                                       queue:nil
+                                                       queue:[NSOperationQueue mainQueue]
                                                   usingBlock:^(NSNotification * _Nonnull note)
      {
         weakSelf.extDisplayID = [[FTWhiteboardDisplayManager shared] setPageWithPage:weakSelf.currentlyVisiblePage
@@ -3236,7 +3259,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserverForName:[FTWhiteboardDisplayManager didRecieveTouchOnPage]
                                                       object:nil
-                                                       queue:nil
+                                                       queue:[NSOperationQueue mainQueue]
                                                   usingBlock:^(NSNotification * _Nonnull note)
      {
         FTPageViewController *controller = (FTPageViewController*)note.object;
@@ -3605,10 +3628,7 @@
     self.playerController.recordingModel = recordingModel;
     self.playerController.annotation = [self audioAnnotationForModel:recordingModel];
     
-    CGRect tempFrame = self.playerController.view.frame;
-    tempFrame.origin.y = [self deskToolBarHeight] + 8.0;
-    tempFrame.size.width = CGRectGetWidth(self.view.frame);
-    self.playerController.view.frame = tempFrame;
+    [self updateAudioPlayerFrame];
 
     [self addChildViewController:self.playerController];
     [self setOverrideTraitCollection:self.traitCollection forChildViewController:self.playerController];
@@ -3619,8 +3639,6 @@
     }];
     
     [self.playerController resetControllerForState:state];
-    
-    
 }
 
 - (UITraitCollection *)overrideTraitCollectionForChildViewController:(UIViewController *)childViewController

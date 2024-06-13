@@ -9,6 +9,8 @@ import UIKit
 import FTCommon
 import FTStyles
 
+private let PRESENT_APPROACH = false;
+
 public protocol FTCoversInfoDelegate: FTCustomCoverInfoDelegate {
     func fetchCoversData() -> [FTCoverSectionModel]
     func fetchNoCoverTheme() -> FTThemeable?
@@ -122,10 +124,8 @@ public class FTCreateNotebookViewController: UIViewController {
         self.updatePasswordStatus()
         self.notebookTitleTextfield?.placeholder = "shelf.createNotebook.MyNotebook".localized
         self.notebookTitleTextfield?.delegate = self
-        Task {
-            if let themeWithVariants = newNotebookDetails?.selectedPaperWithVariants {
-                await setPaperTemplateWithVarinats(themeWithVariants)
-            }
+        if let themeWithVariants = newNotebookDetails?.selectedPaperWithVariants {
+            self.setPaperTemplateWithVarinats(themeWithVariants)
         }
     }
     private func setUpTitleView() {
@@ -289,17 +289,13 @@ public class FTCreateNotebookViewController: UIViewController {
         self.choosePaperView?.layoutIfNeeded()
         self.previewStackView?.layoutIfNeeded()
     }
-    private func setPaperTemplateWithVarinats(_ templateWithVariants: FTSelectedPaperVariantsAndTheme) async {
-        guard let paperTheme = (templateWithVariants.theme as? FTPaperThumbnailGenerator)    else {
+    private func setPaperTemplateWithVarinats(_ templateWithVariants: FTSelectedPaperVariantsAndTheme) {
+        guard let paperTheme = (templateWithVariants.theme as? FTPaperThumbnailGenerator) else {
             return
         }
-        //self.paperImageView?.tintColor = UIColor(hexString:templateWithVariants.templateColorModel.hex)
-        paperTheme.generateThumbnailFor(selectedVariantsAndTheme: templateWithVariants,forPreview:true, completionhandler: { thumbImage in
-            DispatchQueue.main.async {
-                self.paperImage = thumbImage?.resizedImageWithinRect(self.paperPreviewSizeBasedOnScrnSize(self.view.frame.size,orientaion: self.newNotebookDetails?.selectedPaperWithVariants.orientation))
-                self.paperImageView?.image = self.paperImage
-            }
-        })
+        let thumbImage = paperTheme.generateThumbnailFor(selectedVariantsAndTheme: templateWithVariants,forPreview:true)
+        self.paperImage = thumbImage?.resizedImageWithinRect(self.paperPreviewSizeBasedOnScrnSize(self.view.frame.size,orientaion: self.newNotebookDetails?.selectedPaperWithVariants.orientation))
+        self.paperImageView?.image = self.paperImage
     }
 
     private func setShadowToPaperPreview(){
@@ -430,14 +426,42 @@ public class FTCreateNotebookViewController: UIViewController {
                 createNotebookViewController.navigationItem.rightBarButtonItem = rightBar;
             }
 #else
-            createNotebookViewController.modalPresentationStyle = .custom
-            createNotebookViewController.transitioningDelegate = createNotebookViewController.customTransitionDelegate;
-            createNotebookViewController.view.frame = viewController.view.frame
-            viewController.present(createNotebookViewController, animated: true)
+            if(PRESENT_APPROACH) {
+                createNotebookViewController.modalPresentationStyle = .custom
+                createNotebookViewController.transitioningDelegate = createNotebookViewController.customTransitionDelegate;
+                createNotebookViewController.view.frame = viewController.view.frame
+                viewController.present(createNotebookViewController, animated: true)
+                return;
+            }
+            createNotebookViewController.view.frame = viewController.view.bounds
+            createNotebookViewController.view.addVisualEffectBlur(style: .light, cornerRadius: 0, frameToBlur: .zero);
+            viewController.add(createNotebookViewController);
+            viewController.view.addSubview(createNotebookViewController.view);
+            createNotebookViewController.view.addEqualConstraintsToView(toView: viewController.view);
+            viewController.view.layoutIfNeeded();
+            
+            createNotebookViewController.animateView(true, onCompletion: nil);
 #endif
         }
     }
     
+    public override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+#if targetEnvironment(macCatalyst)
+        super.dismiss(animated: flag, completion: completion);
+#else
+        guard !PRESENT_APPROACH else {
+            super.dismiss(animated: flag, completion: completion);
+            return
+        }
+        if !flag {
+            self.view.removeFromSuperview();
+            self.removeFromParent();
+            completion?();
+            return
+        }
+        self.animateView(false, onCompletion: completion);
+#endif
+    }
     @objc private func clearNotebookTitle(){
         self.notebookTitleTextfield?.text = ""
     }
@@ -633,3 +657,58 @@ extension FTCreateNotebookViewController: FTKeyCommandAction {
     }
 }
 #endif
+
+public extension FTCreateNotebookViewController {
+    func snapshotView() -> UIView? {
+        guard let image = self.view.asImage() else {
+            return nil;
+        }
+        let snapViewImg = UIImageView(image: image)
+        let snapView = UIView(frame: view.bounds);
+        snapView.addSubview(snapViewImg);
+        snapViewImg.frame = view.bounds
+        
+#if !targetEnvironment(macCatalyst)
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect);
+        
+        let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
+        let vibrancyView = UIVisualEffectView(effect: vibrancyEffect)
+        blurEffectView.contentView.addSubview(vibrancyView)
+
+        blurEffectView.backgroundColor = UIColor.clear
+        blurEffectView.isUserInteractionEnabled = false
+        blurEffectView.layer.masksToBounds = true
+        blurEffectView.frame = view.bounds
+
+        snapView.insertSubview(blurEffectView, at: 0);
+#endif
+        return snapView;
+    }
+}
+
+private extension FTCreateNotebookViewController {
+    func animateView(_ isPresenting: Bool, onCompletion: (()->())?) {
+        
+        let smallTransform = CGAffineTransform(scaleX: 0.7, y: 0.7);
+        let normalTransform = CGAffineTransform.identity;
+        
+        self.view.alpha = isPresenting ? 0 : 1;
+        self.view.transform = isPresenting ? smallTransform : normalTransform;
+
+        UIView.animate(withDuration: 0.4,
+                       delay: 0,
+                       usingSpringWithDamping: 0.9,
+                       initialSpringVelocity: 10,
+                       animations: {
+            self.view.alpha = isPresenting ? 1 : 0;
+            self.view.transform = isPresenting ? normalTransform : smallTransform;
+        }) { finished in
+            if !isPresenting {
+                self.view.removeFromSuperview();
+                self.removeFromParent();
+            }
+            onCompletion?();
+        };
+    }
+}

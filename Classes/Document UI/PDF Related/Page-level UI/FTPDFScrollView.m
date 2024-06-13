@@ -503,6 +503,9 @@ parentViewController:(FTPageViewController*)controller
     if(self.mode == FTRenderModeZoom) {
         return YES;
     }
+    else if(self.parentViewController.layoutType == FTPageLayoutVertical) {
+        return FALSE;
+    }
     else if(self.parentViewController.isInZoomMode && (gestureRecognizer == self.pinchGestureRecognizer || gestureRecognizer == self.pinchGestureReuiredToFail)) {
         return NO;
     }
@@ -540,6 +543,9 @@ parentViewController:(FTPageViewController*)controller
 
 -(void)unlockZoom
 {
+    if (self.mode == FTRenderModeDefault && self.parentViewController.layoutType == FTPageLayoutVertical) {
+        return;
+    }
     if([self allowsFreeGestureConditions]) {
         self.toucheGestureRecognizer.enabled = NO;
     }
@@ -570,6 +576,7 @@ parentViewController:(FTPageViewController*)controller
 
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view
 {
+    self.isZoomingInProgress = YES;
     [self.writingView willBeginZooming];
     [self.parentViewController endEditingActiveAnnotation:nil refreshView:TRUE];
     [[self controller] normalizeLassoView];
@@ -584,6 +591,7 @@ parentViewController:(FTPageViewController*)controller
 
 -(void)completedScrolling
 {
+    FTCLSLog(@"Interaction: Scrollview end drag");
     [(id)self.writingView performSelector:@selector(updateLowResolutionImageBackgroundView) withObject:nil afterDelay:0.001];
     [self.parentViewController startAcceptingTouches:YES];
     _isScrolling = NO;
@@ -688,6 +696,7 @@ parentViewController:(FTPageViewController*)controller
     }
     
     [self setNeedsLayout];
+    FTCLSLog(@"Interaction: Scrollview end Zoom");
     [self.parentViewController startAcceptingTouches:YES];
     
     if(shouldEnable || !_isScrolling) {
@@ -925,6 +934,11 @@ parentViewController:(FTPageViewController*)controller
 
 -(void)enablePanDetection
 {
+    if (self.mode == FTRenderModeDefault && self.parentViewController.layoutType == FTPageLayoutVertical) {
+        FTPageViewController *pageViewController = self.parentViewController;
+        [pageViewController.delegate enablePanDetection];
+        return;
+    }
     if([self allowsFreeGestureConditions]) {
         self.panGestureRecognizer.minimumNumberOfTouches = 1;
         self.panGesture.maxNumberOfTouches = 0;
@@ -1015,7 +1029,6 @@ CGPoint lastPoint1,lastPoint2;
                 if(!_isScrolling && !_isZoomingInProgress)
                 {
                     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(disablePinchDetection) object:nil];
-                    self.isZoomingInProgress = YES;
                     self.pinchGestureReuiredToFail.enabled = NO;
                     self.panGesture.enabled = NO;
                     FTCLSLog(@"PDF Page Zoomed");
@@ -1205,10 +1218,12 @@ CGPoint lastPoint1,lastPoint2;
 {
     switch (gesture.state) {
         case UIGestureRecognizerStateBegan:
+            FTCLSLog(@"Interaction: Scrollview begin drag");
             [self.parentViewController startAcceptingTouches:NO];
             break;
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled:
+            FTCLSLog(@"Interaction: Scrollview cancel pan gesture");
             [self.parentViewController startAcceptingTouches:YES];
             break;
         default:
@@ -1220,10 +1235,12 @@ CGPoint lastPoint1,lastPoint2;
 {
     switch (gesture.state) {
         case UIGestureRecognizerStateBegan:
+            FTCLSLog(@"Interaction: Scrollview will begin zoom");
             [self.parentViewController startAcceptingTouches:NO];
             break;
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled:
+            FTCLSLog(@"Interaction: Scrollview cancel zoom gesture");
             [self.parentViewController startAcceptingTouches:YES];
             break;
         default:

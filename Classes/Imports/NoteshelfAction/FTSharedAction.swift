@@ -14,6 +14,7 @@ class FTSharedAction: NSObject {
     var fileName:String = ""
     var fileURL:String = ""
     var collectionName: String?
+    var notebook: String?
     var groupName: String?
     var sourceURL:String = ""
     var documentUrlHash:String = ""
@@ -32,6 +33,7 @@ class FTSharedAction: NSObject {
         self.documentUrlHash = dictionary["documentUrlHash"] ?? ""
         self.collectionName = dictionary["collectionName"] ?? ""
         self.groupName = dictionary["groupName"] ?? ""
+        self.notebook = dictionary["notebook"] ?? ""
         if let status = dictionary["importStatus"] as NSString? {
             self.importStatus = FTImportStatus(rawValue: status.integerValue) ?? FTImportStatus.notStarted;
         }
@@ -47,6 +49,7 @@ class FTSharedAction: NSObject {
         dictAction["documentUrlHash"] = self.documentUrlHash
         dictAction["collectionName"] = self.collectionName
         dictAction["groupName"] = self.groupName
+        dictAction["notebook"] = self.notebook
         dictAction["importStatus"] = "\(self.importStatus.rawValue)"
         return dictAction
     }

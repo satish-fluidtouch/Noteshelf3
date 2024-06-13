@@ -93,10 +93,7 @@ extension FTToolTypeShortcutViewController: FTFavoriteColorEditDelegate {
         self.penShortcutViewModel = viewModel
         let flow = FTColorsFlowType.penType(rack.currentPenset.type)
         let editMode = FTPenColorSegment.savedSegment(for: flow)
-        var contentSize = FTPenColorEditController.presetViewSize
-        if editMode == .grid {
-            contentSize = FTPenColorEditController.gridViewSize
-        }
+        let contentSize = editMode.contentSize
         var arrowOffset: CGFloat = 0.0
         let step: CGFloat = 32.0
         self.view.transform = .identity
@@ -123,7 +120,7 @@ extension FTToolTypeShortcutViewController: FTFavoriteColorEditDelegate {
             }
         }
         rect.origin.x -=  arrowOffset
-        let placement = FTShortcutPlacement.getSavedPlacement()
+        let placement = FTShortcutPlacement.getSavedPlacement(activity: rack.userActivity)
         var arrowDirections: UIPopoverArrowDirection = .any
         if placement == .top {
             arrowDirections = [UIPopoverArrowDirection.up]
@@ -193,7 +190,7 @@ extension FTToolTypeShortcutViewController: FTShapeShortcutEditDelegate {
         self.view.transform = .identity
         var rect = self.view.bounds
         rect.origin.x -= arrowOffset
-        let placement = FTShortcutPlacement.getSavedPlacement()
+        let placement = FTShortcutPlacement.getSavedPlacement(activity: self.view.userActivity)
         var arrowDirections: UIPopoverArrowDirection = .any
         if placement == .top {
             arrowDirections = [UIPopoverArrowDirection.up]

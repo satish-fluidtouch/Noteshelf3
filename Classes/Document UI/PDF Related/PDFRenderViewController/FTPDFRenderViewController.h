@@ -59,6 +59,7 @@ typedef enum: NSInteger  {
 @class FTShortcutExecuter;
 @protocol FTFinderNotifier;
 @protocol FTUndoRedoDelegate;
+@class FTAudioPlayerController;
 
 #if !TARGET_OS_MACCATALYST
 @interface FTPDFRenderViewController : FTBaseRenderViewController <UIPopoverPresentationControllerDelegate,UINavigationControllerDelegate,PressurePenEngineDelegate,FTDeskToolbarDelegate,FTAudioListViewControllerDelegtes,FTApplePencilInteractionProtocol, FTPenRackSelectDelegate, FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {
@@ -81,6 +82,7 @@ FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {}
 @property (weak) id openCloseDocumentDelegate;
 @property (weak) id textToolbarDelegate;
 @property (weak,readonly) FTZoomOverlayViewController *zoomOverlayController;
+@property (weak) id<NSObject> pageLayoutDidChangeNotificationObserver;
 
 @property (nullable, strong) NSString *currentSceneID;
 @property (strong) FTDocumentOpenToken *openDocToken;
@@ -96,6 +98,7 @@ FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {}
 @property (strong,readonly) id<FTDocumentProtocol> pdfDocument;
 @property (strong) NSMutableArray<FTAnnotation*> *selectedAnnotations;
 @property (assign) BOOL showPageImmediately;
+@property (readonly,weak)FTAudioPlayerController *playerController;
 
 @property (strong) id<FTPageLayouter> pageLayoutHelper;
 
@@ -190,6 +193,8 @@ FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {}
 
 // eraser option action
 -(void)setToPreviousTool;
+-(void)switchMode:(RKDeskMode)mode;
+-(void)updateToolBarWith:(RKDeskMode)mode;
 
 -(void)minimizeFavToolBarIfNeeded;
 
@@ -207,7 +212,7 @@ FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {}
 
 -(CGFloat)zoomPanelOverlayheight;
 -(BOOL)isInZoomMode;
-
+-(BOOL)isZoomSupportedDeskMode: (RKDeskMode)mode;
 -(NSInteger)getNewPageInsertIndex;
 
 -(void)showPageAtIndex:(NSInteger)pdfPageIndex

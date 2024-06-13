@@ -74,9 +74,7 @@ struct FTFavoritePresetSectionView: View {
                         }
                     }
                 }
-                .padding(.zero)
             }
-            .padding(.horizontal, FTSpacing.large)
             .padding(.top, FTSpacing.large)
             .padding(.bottom, FTSpacing.extraLarge)
         }
@@ -86,7 +84,6 @@ struct FTFavoritePresetSectionView: View {
         .background(Color.appColor(.white60))
         .background(self.getNavlinkForSelectedItem())
         .cornerRadius(10.0)
-        .padding(.horizontal, FTSpacing.small)
         .padding(.bottom, FTSpacing.large)
         .onDrop(of: [.text], delegate: FTFavoriteColorDropOutDelegate(viewModel: self.viewModel))
     }
@@ -130,7 +127,7 @@ struct FTFavoritePresetSectionView: View {
 
     @ViewBuilder
     private func getNavlinkForSelectedItem() -> some View {
-        NavigationLink(destination: FTFavoriteColorGridView(colorMode: .presetEdit, showDeleteButton: true)
+        NavigationLink(destination: FTFavoritePenColorEditView()
             .environmentObject(viewModel),
                        isActive: $isAlreadySelected, label: {
             EmptyView()

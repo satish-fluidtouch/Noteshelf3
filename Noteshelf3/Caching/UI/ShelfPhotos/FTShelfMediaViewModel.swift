@@ -29,6 +29,7 @@ class FTShelfMedia: NSObject, Identifiable, ObservableObject {
     }
     
     func fetchImage() {
+        //TODO: Cache amar: introduce cachedocument lazy load
         if let documentID = document?.documentUUID {
             if let doc = FTDocumentCache.shared.cachedDocument(documentID)
                 , let fileItem = doc.resourceFileItem(imageURL.lastPathComponent) as? FTCachedImageFileItem {
@@ -41,7 +42,6 @@ class FTShelfMedia: NSObject, Identifiable, ObservableObject {
                             if let img = image {
                                 FTDocumentCache.shared.imageResourceCache.addImage(img, imageURL: fileItem.fileItemURL!);
                             }
-                            self.mediaImage = image;
                         }
                     }
                 }

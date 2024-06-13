@@ -11,6 +11,9 @@
 
 /// IMPORTATNT: This C function is being used only by Objective-C classes, there's another function in FTLogger.Swift with the same name and implementation in order to reduce the ObjC and Swift interference. Consider updating the Swift file as well while modifying this.
 void FTCLSLog(NSString *logString) {
+#if DEBUG
+    NSLog(@"CLS: %@", logString);
+#endif
     if([[NSUserDefaults standardUserDefaults] boolForKey:@"CLS_REPORTING_ENABLED_KEY"] == YES) {
         [[FIRCrashlytics crashlytics] log:logString];
         [[FTLogger userFlowLogger] log:logString];

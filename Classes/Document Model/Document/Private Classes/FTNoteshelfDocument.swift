@@ -5,8 +5,8 @@
 //  Created by Amar on 25/3/17.
 //  Copyright © 2017 Fluid Touch Pte Ltd. All rights reserved.
 //
-let APP_SUPPORTED_MAX_DOC_VERSION = Float(9);
-let DOC_VERSION : String = "9.0";
+let APP_SUPPORTED_MAX_DOC_VERSION = Float(10);
+let DOC_VERSION : String = "10.0";
 let DOCUMENTS_KEY : String = "documents";
 let DOCUMENT_TYPE = "document_type"
 let DOCUMENT_ID_KEY =  "document_ID";
@@ -104,7 +104,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
         #if DEBUG
         debugPrint("\(type(of: self)) is deallocated");
         #endif
-        NotificationCenter.default.removeObserver(self);
+        self.removeObservers();
         self.searchOperationQueue.cancelAllOperations();
         #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
         self.releaseRecognitionHelperIfNeeded()
@@ -655,10 +655,16 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     func saveDocument(completionHandler : ((Bool) -> Void)?)
     {
         if(self.openPurpose == .read) {
-            FTLogError("Doc Saved in Readonly: \(self.addressString) - \(self.URL.title)");
+            FTCLSLog("Doc Saved in Readonly: \(self.addressString) - \(self.URL.title)");
+            FTLogError("Doc Saved in Readonly");
             completionHandler?(true);
             return;
         }
+        if self.documentState.contains(.editingDisabled) {
+            FTCLSLog("Doc_Saved_Edit_Disabled: \(self.addressString) - \(self.URL.title)");
+            FTLogError("Doc_Saved_Edit_Disabled");
+        }
+        
         if(self.hasAnyUnsavedChanges) {
             (self.delegate as? FTNoteshelfDocumentDelegate)?.documentWillStartSaving(self);
         }
@@ -672,7 +678,14 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
             }
             if let cache = self.recognitionCache, let cachePlist = cache.visionRecognitionCachePlist() {
                 let mutableDict = NSMutableDictionary.init(dictionary: cachePlist.contentDictionary);
-                self.visionRecognitionInfoPlist()?.updateContent(mutableDict);
+                if let dict = self.visionRecognitionInfoPlist()?.contentDictionary as? NSDictionary {
+                    if mutableDict != dict {
+                        self.visionRecognitionInfoPlist()?.updateContent(mutableDict);
+                    }
+                }
+                else {
+                    self.visionRecognitionInfoPlist()?.updateContent(mutableDict);
+                }
             }
 
             //This was added in version 6.2, when we removed the bounding rect from the Segment level storage.
@@ -860,6 +873,10 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
         if(self.openPurpose == .read) {
             FTLogError("Doc writeContents in Readonly");
             return;
+        }
+        if self.documentState.contains(.editingDisabled) {
+            FTCLSLog("Doc_writeContents_Edit_Disabled: \(self.addressString) - \(self.URL.title)");
+            FTLogError("Doc_writeContents_Edit_Disabled:")
         }
         #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
         if(url.urlByDeleteingPrivate() != self.fileURL.urlByDeleteingPrivate()) {
@@ -1128,10 +1145,13 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
         }
     }
    
+    private weak var changePageNotificationObserver: NSObjectProtocol?;
+    private weak var memoryWarningNotificationObserver: NSObjectProtocol?;
+    
     //MARK:- Observer add/remove -
     fileprivate func addObservers()
     {
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.FTDidChangePageProperties, object: self, queue: nil) { [weak self] (_) in
+        self.changePageNotificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.FTDidChangePageProperties, object: self, queue: nil) { [weak self] (_) in
             if let documentInfoPlist = self?.documentInfoPlist() {
                 let pages = documentInfoPlist.pages;
                 documentInfoPlist.pages = pages;
@@ -1139,7 +1159,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
         }
         
         #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
-        NotificationCenter.default.addObserver(forName: UIApplication.didReceiveMemoryWarningNotification, object: nil, queue: nil) { [weak self] (_) in
+        self.memoryWarningNotificationObserver = NotificationCenter.default.addObserver(forName: UIApplication.didReceiveMemoryWarningNotification, object: nil, queue: nil) { [weak self] (_) in
             guard let weakSelfObject = self else {
                 return;
             }
@@ -1166,6 +1186,12 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     
     fileprivate func removeObservers()
     {
+        if let observer = self.changePageNotificationObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+        if let observer = self.memoryWarningNotificationObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
         NotificationCenter.default.removeObserver(self);
     }
     
@@ -1178,9 +1204,10 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
             dictionary.setObject(docUUID, forKey: DOCUMENT_ID_KEY as NSCopying);
             dictionary.write(to: propertyInfoPlist, atomically: true);
             
-            let uuidAttribute = FileAttributeKey.ExtendedAttribute(key: .documentUUIDKey, string: docUUID)
-            try? self.URL.setExtendedAttributes(attributes: [uuidAttribute])
-            
+            if FTDocumentPropertiesReader.USE_EXTENDED_ATTRIBUTE {
+                let uuidAttribute = FileAttributeKey.ExtendedAttribute(key: .documentUUIDKey, string: docUUID)
+                try? self.URL.setExtendedAttributes(attributes: [uuidAttribute])
+            }
             let annotationFolderPath = self.fileURL.appendingPathComponent(ANNOTATIONS_FOLDER_NAME);
             if(!FileManager().fileExists(atPath: annotationFolderPath.path)){
                 _ = try? FileManager().createDirectory(at: annotationFolderPath, withIntermediateDirectories: true, attributes: nil);

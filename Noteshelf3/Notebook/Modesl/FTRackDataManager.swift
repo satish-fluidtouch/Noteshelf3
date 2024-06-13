@@ -14,7 +14,8 @@ public class FTRackDataManager {
     private let rackPlistURL: URL
     static let shared = FTRackDataManager()
     private var info: FTRackInfoModel?
-    
+    private var defaultRackInfo: FTRackInfoModel?
+
     private init() {
         let documentURL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
         rackPlistURL = documentURL.appendingPathComponent(rackPlistName+".plist")
@@ -22,11 +23,19 @@ public class FTRackDataManager {
 
     func getRackData() -> FTRackInfoModel {
         guard let info else {
-            let rackInfo: FTRackInfoModel
+            var rackInfo: FTRackInfoModel
             do {
                 try migrateRackDataIfNecessary()
                 let migratedData = try Data(contentsOf: rackPlistURL)
                 rackInfo = try PropertyListDecoder().decode(FTRackInfoModel.self, from: migratedData)
+                if rackInfo.currentPresetColors.isEmpty && !rackInfo.defaultPresetColors.isEmpty {
+                    FTLogError("Stored Pen Color Empty");
+                    rackInfo.currentPresetColors = rackInfo.defaultPresetColors
+                }
+                if rackInfo.currentHighlighterPresetColors.isEmpty && !rackInfo.defaultHighlighterPresetColors.isEmpty {
+                    FTLogError("Stored Marker Color Empty");
+                    rackInfo.currentHighlighterPresetColors = rackInfo.defaultHighlighterPresetColors
+                }
             } catch {
                 rackInfo = getDefaultStockData()
             }
@@ -38,9 +47,15 @@ public class FTRackDataManager {
 
     // MARK: To fetch initial provided default data
      func getDefaultStockData() -> FTRackInfoModel {
+         if let info = self.defaultRackInfo {
+             return info;
+         }
+         
         do {
             let plistData = try Data(contentsOf: resourcePlistUrl)
-            return try PropertyListDecoder().decode(FTRackInfoModel.self, from: plistData)
+            let infoToReturn = try PropertyListDecoder().decode(FTRackInfoModel.self, from: plistData)
+            self.defaultRackInfo = infoToReturn;
+            return infoToReturn;
         } catch {
             fatalError("Programmer error, unable to fetch default rack data")
         }
@@ -48,12 +63,22 @@ public class FTRackDataManager {
 
     func saveRackData(_ rackData: FTRackInfoModel) {
         do {
+            guard !rackData.currentPresetColors.isEmpty || !rackData.currentHighlighterPresetColors.isEmpty else {
+#if DEBUG || BETA
+                fatalError("some problem while saving color data");
+#else
+                FTLogError("Rack Color Empty",attributes: ["Pen": rackData.currentPresetColors.isEmpty
+                                                           , "Marker" : rackData.currentHighlighterPresetColors.isEmpty]);
+                return
+#endif
+            }
             info = rackData
             let data = try PropertyListEncoder().encode(rackData)
             try data.write(to: self.rackPlistURL)
+            NotificationCenter.default.post(name: .rackDataSaved, object: nil)
         }
         catch {
-            print("Error saving rack data: \(error)")
+            FTLogError("PEN RACK SAVE FAILED: \(error)")
         }
     }
 }

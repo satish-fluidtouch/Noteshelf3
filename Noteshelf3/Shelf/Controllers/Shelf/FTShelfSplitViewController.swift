@@ -13,7 +13,6 @@ import FTTemplatesStore
 
 // TODO: (AK) Rename this later
 protocol FTShelfPresentable {
-    var prefersStatusBarHidden: Bool { get }
     var isInSearchMode: Bool { get }
     var isInGroupMode: Bool { get }
     var currentShelfViewModel: FTShelfViewModel? { get }
@@ -39,13 +38,15 @@ protocol FTShelfPresentable {
 //    func shelfItems(_ sortOrder: FTShelfSortOrder, parent: FTGroupItemProtocol?, searchKey: String?, onCompletion completionBlock: @escaping (([FTShelfItemProtocol]) -> Void))
     func didTapOnUpgradeNow()
     func presentIAPScreen()
+    func handleWidgetAction(for type: FTWidgetActionType)
 }
 
 class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
     var selectedTagItems = Dictionary<String, FTShelfTagsItem>();
 
     let shelfMenuDisplayInfo = FTShelfMenuOverlayInfo();
-    
+    private var currentOpenedDocument: FTDocumentProtocol?
+    private var currentDocumentToken: FTDocumentOpenToken?
     internal var shelfItemCollection: FTShelfItemCollection? {
         didSet {
             if let shelfItemCollection {
@@ -92,7 +93,6 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
         }
     }
 
-    var openingBookInProgress: Bool = false
     var cancellable = Set<AnyCancellable>()
     typealias ImportItems = [FTImportItem]
 
@@ -326,19 +326,72 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
 
     func importItemAndAutoScroll(_ item: FTImportItem, shouldOpen: Bool, completionHandler: ((FTShelfItemProtocol?, Bool) -> Void)?) {
         self.currentShelfViewModel?.removeObserversForShelfItems()
-        self.beginImporting(items: [item]) { [weak self] status, shelfItemsList in
-            if let item = shelfItemsList.first {
-                if status && shouldOpen {
-                    if let shelfItemProtocol = shelfItemsList.first {
-                        self?.currentShelfViewModel?.setcurrentActiveShelfItemUsing(shelfItemProtocol, isQuickCreated: false)
+        if let imporItemInfo = item.imporItemInfo, !(imporItemInfo.notebook.isEmpty ) {
+            // User has selected any notebook to import file
+            guard FTIAPManager.shared.premiumUser.canAddFewMoreBooks(count: 1) else {
+                FTIAPurchaseHelper.shared.showIAPAlert(on: self);
+                completionHandler?(nil, false)
+                return
+            }
+            FTNoteshelfDocumentProvider.shared.getShelfItemDetails(relativePath: imporItemInfo.notebook, igrnoreIfNotDownloaded: true) {[weak self] shelfItemColleciton, groupItem, _shelfItem in
+                guard let self = self, let _shelfItem else {
+                    completionHandler?(nil, false)
+                    return
+                }
+                if self.currentOpenedDocument == nil {
+                    self.currentOpenedDocument = FTDocumentFactory.documentForItemAtURL(_shelfItem.URL)
+                }
+                let controller = self.rootViewcontroller?.docuemntViewController
+                if self.currentOpenedDocument?.documentState == .closed {
+                    FTDocumentValidator.openNoteshelfDocument(for: _shelfItem, pin: nil, onViewController: controller ?? self) {[weak self] ftdocument, error, token in
+                        self?.currentOpenedDocument = ftdocument
+                        self?.currentDocumentToken = token
+                        startProcess()
+                    }
+                } else {
+                    startProcess()
+                }
+                func startProcess() {
+                    self.rootViewcontroller?.showCompleteImportProgressIfNeeded()
+                    _ =  self.startImportOfItem(item, document: currentOpenedDocument) { shelfItem, error in
+                        let status = self.rootViewcontroller?.updateSmartProgressStatus(openDoc: item.openOnImport) ?? .completed
+                        saveAndCloseDocumentIfNeeded(importStatus: status, shelfItem: shelfItem, success: error == nil)
+                     }
+                }
+                
+                func saveAndCloseDocumentIfNeeded(importStatus : FTImportProgressStatus, shelfItem: FTShelfItemProtocol?, success: Bool) {
+                    if importStatus == .completed, let currentOpenedDocument, let currentDocumentToken {
+                        FTNoteshelfDocumentManager.shared.saveAndClose(document: currentOpenedDocument, token: currentDocumentToken) { success in
+                            self.currentOpenedDocument = nil
+                            self.currentDocumentToken = nil
+                            completionHandler?(shelfItem, success)
+                        }
+                    } else {
+                        completionHandler?(shelfItem, success)
                     }
                 }
-                self?.currentShelfViewModel?.addObserversForShelfItems()
-                completionHandler?(item, status)
-            } else {
-                completionHandler?(nil, false)
+            }
+        } else {
+            self.rootViewcontroller?.showCompleteImportProgressIfNeeded()
+            self.beginImporting(items: [item], showProgress: false) { [weak self] status, shelfItemsList in
+                self?.rootViewcontroller?.updateSmartProgressStatus(openDoc: item.openOnImport)
+                if let item = shelfItemsList.first {
+                    if status && shouldOpen {
+                        if let shelfItemProtocol = shelfItemsList.first {
+                            self?.currentShelfViewModel?.setcurrentActiveShelfItemUsing(shelfItemProtocol, isQuickCreated: false)
+                        }
+                    }
+                    self?.currentShelfViewModel?.addObserversForShelfItems()
+                    completionHandler?(item, status)
+                } else {
+                    completionHandler?(nil, false)
+                }
             }
         }
+    }
+    
+    var rootViewcontroller : FTRootViewController? {
+        return self.parent as? FTRootViewController
     }
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -484,11 +537,9 @@ extension FTShelfSplitViewController {
         }
         else{
             self.view.isUserInteractionEnabled = false
-            self.openingBookInProgress = true
             FTDocumentPasswordValidate.validateShelfItem(shelfItem: shelfItem,
                                                          onviewController: self) { [weak self] (pin, success, cancelled) in
                 self?.view.isUserInteractionEnabled = true
-                self?.openingBookInProgress = false
                 NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
                 if(success) {
                     openDoc(pin)
@@ -517,7 +568,6 @@ extension FTShelfSplitViewController {
         FTCLSLog("Book: \(notebookName): Show")
         self.view.isUserInteractionEnabled = false
 
-        self.openingBookInProgress = true
         FTDocumentValidator.openNoteshelfDocument(for: shelfItem,
                                                   pin: pin,
                                                   onViewController: self)
@@ -525,7 +575,6 @@ extension FTShelfSplitViewController {
             guard let self else { return }
             if let inError = error {
                 self.view.isUserInteractionEnabled = true
-                self.openingBookInProgress = false
                 NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
                 if(inError.isConflictError) {
                     FTCLSLog("Book: \(notebookName): Conflict")
@@ -535,9 +584,11 @@ extension FTShelfSplitViewController {
                     }
                 }
                 else if(inError.isNotDownloadedError) {
+                    FTCLSLog("Book: \(notebookName): Not Downloaded")
                     self.downloadShelfItem(shelfItem)
                 }
                 else if inError.isNotExistError {
+                    FTCLSLog("Book: \(notebookName): Not Exits")
                     runInMainThread {
                         self.showAlertForError(inError as NSError)
                     }
@@ -552,13 +603,13 @@ extension FTShelfSplitViewController {
 
             guard let notebookToOpen = openedDocument, let doc = notebookToOpen as? FTNoteshelfDocument, error == nil else {
                 self.view.isUserInteractionEnabled = true
-                self.openingBookInProgress = false
                 NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
                 onCompletion?(nil, false)
                 return
             }
             let shouldInsertCover = doc.propertyInfoPlist()?.object(forKey: INSERTCOVER) as? Bool ?? false
             if shouldInsertCover {
+                FTCLSLog("Book: Inserting cover")
                 doc.insertCoverForPasswordProtectedBooks { success, error in
                     doc.propertyInfoPlist()?.setObject(false, forKey: INSERTCOVER)
                     processDocumentOpen()
@@ -570,7 +621,6 @@ extension FTShelfSplitViewController {
             func processDocumentOpen() {
                 func finalizeClose() {
                     self.view.isUserInteractionEnabled = true
-                    self.openingBookInProgress = false
                     if let curToken = token {
                         FTNoteshelfDocumentManager.shared.closeDocument(document: doc, token: curToken, onCompletion: nil)
                     }
@@ -620,11 +670,12 @@ extension FTShelfSplitViewController {
                 func switchToPDFViewer(docInfo: FTDocumentOpenInfo) {
                     docInfo.documentOpenToken = token ?? FTDocumentOpenToken()
                     guard let rootController = self.parent as? FTRootViewController else {
+                        self.view.isUserInteractionEnabled = true
                         onCompletion?(nil,false)
                         return
                     }
-
                     if let docContorller = rootController.docuemntViewController {
+                        FTCLSLog("Book: Other book UI")
                         docContorller.saveApplicationStateByClosingDocument(true, keepEditingOn: false) { canClose in
                             if canClose {
                                 openPDFViewer()
@@ -637,8 +688,9 @@ extension FTShelfSplitViewController {
                     }
 
                     func openPDFViewer() {
+                        FTCLSLog("Book: Launch Book UI")
                         rootController.switchToPDFViewer(docInfo, animate: shouldAnimate ,onCompletion: {
-                            self.openingBookInProgress = false
+                            FTCLSLog("Book: Launched UI")
                             self.view.isUserInteractionEnabled = true
                             NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
                             notebookToOpen.isJustCreatedWithQuickNote = isQuickCreate

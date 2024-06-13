@@ -67,6 +67,7 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
         if self.pdfDocument.isJustCreatedWithQuickNote == false {
             self.back(toShelfButtonAction: FTNormalAction, with: shelfItemManagedObject.title)
         } else {
+            self.normalizeAndEndEditingAnnotation(true);
             if self.pdfDocument.isDirty == false {
                 self.back(toShelfButtonAction: FTDeletePermanentlyAction, with: shelfItemManagedObject.title)
             } else {
@@ -157,6 +158,17 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
                 let pagesSet = NSSet(array: [page])
                 self.executer.execute(type: .tag(source: source, controller: self, pages: pagesSet))
             }
+        case .camera :
+            self.executer?.execute(type: .camera)
+        case .scrolling :
+            let oppLayout = UserDefaults.standard.pageLayoutType.oppositeLayout
+            self.executer?.execute(type: .scrolling(source: oppLayout))
+            let layout = UserDefaults.standard.pageLayoutType
+            let config = FTToastConfiguration(title: layout.toastTitle.localized)
+            FTToastHostController.showToast(from: self, toastConfig: config)
+            layout.trackLayout()
+        case .recentNotes:
+            self.executer.execute(type: .recentNotes(source: source))
         case .unsplash:
             self.executer.execute(type: .unsplash(source: source))
             
@@ -167,6 +179,8 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
             self.executer.execute(type: .emojis(source: source))
         case .stickers:
             self.executer.execute(type: .stickers(source: source))
+        case .savedClips:
+            self.executer.execute(type: .savedClips(source: source))
             
         case .zoomBox:
             self.zoomButtonAction()
@@ -223,6 +237,17 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
         }
     }
     
+    @objc func deskToolBarFrame() -> CGRect {
+#if !targetEnvironment(macCatalyst)
+        if let documentController = self.parent as? FTDocumentRenderViewController {
+            return documentController.deskToolBarFrame()
+        }
+        return CGRect.zero
+#else
+        return CGRect.zero
+#endif
+    }
+    
     @objc func deskToolBarHeight() -> CGFloat {
     #if !targetEnvironment(macCatalyst)
         if let documentController = self.parent as? FTDocumentRenderViewController {
@@ -266,7 +291,7 @@ extension FTPDFRenderViewController: UITextFieldDelegate {
 }
 extension FTPDFRenderViewController {
     @objc func getTopOffset() -> CGFloat {
-        let yPadding: CGFloat = 8.0
+        let yPadding: CGFloat = FTToolBarConstants.subtoolbarOffset
         var offset: CGFloat = 0.0
         if self.currentToolBarState() == .shortCompact {
             var extraHeight: CGFloat = 0.0
@@ -283,10 +308,10 @@ extension FTPDFRenderViewController {
 #if targetEnvironment(macCatalyst)
             offset = 0.0 + yPadding
 #else
-            offset = FTToolbarConfig.Height.regular + yPadding
+            offset = self.deskToolBarFrame().maxY + yPadding
 #endif
         } else {
-            offset = yPadding
+            offset = FTToolBarConstants.yOffset + FTToolBarConstants.statusBarOffset;
         }
         return offset
     }

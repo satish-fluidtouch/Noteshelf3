@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="biS-A9-cBe">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="biS-A9-cBe">
     <device id="ipad12_9" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -653,7 +653,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="48"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="34" translatesAutoresizingMaskIntoConstraints="NO" id="mNu-Xx-GjJ" userLabel="Leading Stack View">
-                                        <rect key="frame" x="8" y="4" width="161" height="40"/>
+                                        <rect key="frame" x="8" y="4" width="374" height="40"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zui-KA-2os">
                                                 <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
@@ -708,29 +708,69 @@
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Ovj-mc-re0">
-                                                <rect key="frame" x="74" y="0.0" width="87" height="40"/>
+                                                <rect key="frame" x="74" y="0.0" width="300" height="40"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="6P9-e9-rY9">
-                                                        <rect key="frame" x="0.0" y="0.0" width="44" height="40"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="244" height="40"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="ITu-4d-l1V" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="44" height="40"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="44" id="fzE-hs-kZ7"/>
-                                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="o1q-69-92U"/>
+                                                                    <constraint firstAttribute="width" constant="44" id="PCq-2I-vqj"/>
+                                                                    <constraint firstAttribute="width" priority="999" constant="44" id="fzE-hs-kZ7"/>
                                                                 </constraints>
+                                                                <color key="tintColor" name="black1"/>
+                                                                <state key="normal" title="Button"/>
+                                                                <buttonConfiguration key="configuration" style="plain" title="H1"/>
+                                                                <variation key="default">
+                                                                    <mask key="constraints">
+                                                                        <exclude reference="PCq-2I-vqj"/>
+                                                                    </mask>
+                                                                </variation>
+                                                                <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=regular">
+                                                                    <mask key="constraints">
+                                                                        <exclude reference="fzE-hs-kZ7"/>
+                                                                        <include reference="PCq-2I-vqj"/>
+                                                                    </mask>
+                                                                </variation>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="55J-x2-MTa" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
+                                                                <rect key="frame" x="50" y="0.0" width="44" height="40"/>
+                                                                <color key="tintColor" name="black1"/>
+                                                                <state key="normal" title="Button"/>
+                                                                <buttonConfiguration key="configuration" style="plain" title="H1"/>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="w3T-aH-yDh" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
+                                                                <rect key="frame" x="100" y="0.0" width="44" height="40"/>
+                                                                <color key="tintColor" name="black1"/>
+                                                                <state key="normal" title="Button"/>
+                                                                <buttonConfiguration key="configuration" style="plain" title="H1"/>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="Ida-nO-0AL" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
+                                                                <rect key="frame" x="150" y="0.0" width="44" height="40"/>
+                                                                <color key="tintColor" name="black1"/>
+                                                                <state key="normal" title="Button"/>
+                                                                <buttonConfiguration key="configuration" style="plain" title="H1"/>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="NKS-fQ-S6s" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
+                                                                <rect key="frame" x="200" y="0.0" width="44" height="40"/>
                                                                 <color key="tintColor" name="black1"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="plain" title="H1"/>
                                                             </button>
                                                         </subviews>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="Ida-nO-0AL" firstAttribute="width" secondItem="ITu-4d-l1V" secondAttribute="width" id="6mq-kV-2K9"/>
+                                                            <constraint firstItem="NKS-fQ-S6s" firstAttribute="width" secondItem="ITu-4d-l1V" secondAttribute="width" id="NGK-YQ-h2v"/>
+                                                            <constraint firstItem="55J-x2-MTa" firstAttribute="width" secondItem="ITu-4d-l1V" secondAttribute="width" id="cvO-Nn-qZf"/>
+                                                            <constraint firstItem="w3T-aH-yDh" firstAttribute="width" secondItem="ITu-4d-l1V" secondAttribute="width" id="nJa-VP-UYu"/>
+                                                        </constraints>
                                                     </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="lN7-SX-Ota" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
-                                                        <rect key="frame" x="60" y="0.0" width="27" height="40"/>
+                                                        <rect key="frame" x="260" y="6.5" width="40" height="27"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="CyQ-OG-Ime"/>
-                                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="40" id="tCA-XG-qIe"/>
+                                                            <constraint firstAttribute="width" priority="999" constant="40" id="tCA-XG-qIe"/>
                                                         </constraints>
                                                         <color key="tintColor" name="black1"/>
                                                         <state key="normal" title="Button"/>
@@ -1824,11 +1864,11 @@
             <objects>
                 <viewController storyboardIdentifier="FTDocumentPagesController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="G95-Xl-oqP" customClass="FTDocumentPagesController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JaL-Aq-xgP">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1181"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1189"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="EZM-8i-VEf">
-                                <rect key="frame" x="0.0" y="20" width="1024" height="1161"/>
+                                <rect key="frame" x="0.0" y="20" width="1024" height="1169"/>
                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="lHu-GQ-RgA" customClass="FTFinderCollectionViewFlowLayout" customModule="NS3_Beta" customModuleProvider="target">
                                     <size key="itemSize" width="128" height="128"/>
@@ -2024,13 +2064,13 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="No Internet Connection" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XHt-Hp-seg" userLabel="error text">
-                                                <rect key="frame" x="0.0" y="60" width="200" height="29.5"/>
+                                                <rect key="frame" x="0.0" y="60" width="200" height="23.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The Internet connection appears to be offline." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spT-0L-J93" userLabel="error desc">
-                                                <rect key="frame" x="0.0" y="89.5" width="200" height="30.5"/>
+                                                <rect key="frame" x="0.0" y="83.5" width="200" height="36.5"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                 <color key="textColor" systemColor="systemGray2Color"/>
@@ -2174,7 +2214,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray2Color">
-            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

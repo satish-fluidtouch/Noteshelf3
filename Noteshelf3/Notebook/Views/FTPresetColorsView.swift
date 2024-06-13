@@ -24,7 +24,7 @@ struct FTPresetColorsView: View {
                 UIPageControl.appearance().currentPageIndicatorTintColor = .label
                 UIPageControl.appearance().pageIndicatorTintColor = UIColor.label.withAlphaComponent(0.2)
                 self.viewModel.fetchCurrentColors()
-                self.viewModel.colorEditSegment = FTPenColorSegment.savedSegment(for: viewModel.colorsFlow)
+                self.viewModel.colorSelectSegment = FTPenColorSegment.savedSegment(for: viewModel.colorsFlow)
                 self.selectedPage = self.viewModel.requiredPresetPage()
             }
     }
@@ -64,12 +64,6 @@ struct FTPresetSectionView: View {
                     }
                     .onDrop(of: [.text],
                             delegate: FTColorDropInDelegate(item: presetColor, viewModel: viewModel))
-                    .onChange(of: viewModel.currentSelectedColor) { hex in
-                        if let index = self.viewModel.presetEditIndex {
-                            self.viewModel.updatePresetColor(hex: hex, index: index)
-                            self.viewModel.updateCurrentColors()
-                        }
-                    }
                     .onChange(of: viewModel.presetColors) { colors in
                         if nil != self.viewModel.presetEditIndex {
                             self.findSectionColors()
@@ -138,7 +132,7 @@ struct FTPresetSectionView: View {
 
     @ViewBuilder
     private func getNavlinkForSelectedItem() -> some View {
-        NavigationLink(destination: FTColorGridView(colorMode: .presetEdit, showDeleteButton: true)
+        NavigationLink(destination: FTPresetEditView()
             .environmentObject(viewModel),
                        isActive: $isAlreadySelected, label: {
             EmptyView()

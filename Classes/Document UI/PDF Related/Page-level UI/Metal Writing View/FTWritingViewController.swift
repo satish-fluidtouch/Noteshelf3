@@ -124,7 +124,8 @@ class FTWritingViewController: UIViewController,FTViewControllerSupportsScene {
 
     private weak var pageUpdatePropertyObserver: NSObjectProtocol?;
     private weak var pageReleasedObserver: NSObjectProtocol?;
-    
+    private weak var pageChangeObserver: NSObjectProtocol?;
+    private weak var zoomDidEndCurrentStrokeObserver: NSObjectProtocol?
     weak var pageToDisplay : FTPageProtocol? {
         didSet {
             if(oldValue?.uuid != self.pageToDisplay?.uuid) {
@@ -221,6 +222,7 @@ class FTWritingViewController: UIViewController,FTViewControllerSupportsScene {
             if(oldValue != self.isCurrentPage) {
                 if(self.isCurrentPage) {
                     if(self.mode != FTRenderModeDefault || !self.isInZoomMode()) {
+                        FTCLSLog("Interaction: Disabled: render")
                         self.pageContentDelegate?.setUserInteraction(enable: false);
                     }
                     if(self.mode == FTRenderModeDefault && !self.isInZoomMode()) {
@@ -230,7 +232,7 @@ class FTWritingViewController: UIViewController,FTViewControllerSupportsScene {
                         self.addOnScreenViewController();
                     }
                     if(self.mode == FTRenderModeDefault) {
-                        NotificationCenter.default.addObserver(forName: Notification.Name.FTZoomRenderViewDidEndCurrentStroke,
+                        self.zoomDidEndCurrentStrokeObserver = NotificationCenter.default.addObserver(forName: Notification.Name.FTZoomRenderViewDidEndCurrentStroke,
                                                                object: nil,
                                                                queue: nil)
                         { [weak self] (notification) in
@@ -251,7 +253,10 @@ class FTWritingViewController: UIViewController,FTViewControllerSupportsScene {
                 }
                 else {
                     self.removeOnScreenViewController();
-                    NotificationCenter.default.removeObserver(self, name: Notification.Name.FTZoomRenderViewDidEndCurrentStroke, object: nil);
+                    if let observer = self.zoomDidEndCurrentStrokeObserver {
+                        NotificationCenter.default.removeObserver(observer, name: Notification.Name.FTZoomRenderViewDidEndCurrentStroke, object: nil);
+                    }
+
                 }
             }
         }
@@ -289,6 +294,7 @@ extension FTWritingViewController :  FTWritingProtocol
     }
     
     func willBeginZooming() {
+        self.offscreenTileViewController?.renderTiles(inRect: self.visibleRect, properties: FTRenderingProperties());
         self.updateLowResolutionImageBackgroundView();
     }
     
@@ -334,6 +340,7 @@ extension FTWritingViewController :  FTWritingProtocol
         if(self.isCurrentPage &&
             self.mode == FTRenderModeDefault &&
             !self.isInZoomMode()) {
+            FTCLSLog("Interaction: Disabled: reset")
             self.pageContentDelegate?.setUserInteraction(enable: false);
         }
         self.offscreenTileViewController?.reloadTiles();
@@ -382,8 +389,7 @@ extension FTWritingViewController :  FTWritingProtocol
                 properties.cancelPrevious = true;
                 properties.renderImmediately = true;
                 properties.pageID = self.pageToDisplay?.uuid;
-                self.loadTiles(inRect: scrollView.visibleRect(),
-                               intents: [FTRendererIntent.onScreen], properties: properties);
+                self.loadTiles(inRect: scrollView.visibleRect(), properties: properties);
             }
         }
     }
@@ -442,7 +448,6 @@ private extension FTWritingViewController
 {
     func _reloadTiles(inRect: CGRect, intents:[FTRendererIntent], properties : FTRenderingProperties)
     {
-
         let rect = inRect.intersection(self.scrollView?.visibleRect() ?? inRect)
         if nil != self.pageToDisplay {
             if(self.mode == FTRenderModeDefault) {
@@ -597,6 +602,7 @@ private extension FTWritingViewController
     
     func updateCurrentPageProperties()
     {
+        FTCLSLog("Interaction: Enabled: update page properties")
         self.pageContentDelegate?.setUserInteraction(enable: true);
         
 //        if(self.mode == FTRenderModeDefault) {
@@ -619,7 +625,7 @@ private extension FTWritingViewController
                 }
             }
             
-            NotificationCenter.default.addObserver(forName: NSNotification.Name.FTPageDidChangePageTemplate,
+            self.pageChangeObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.FTPageDidChangePageTemplate,
                                                    object: page,
                                                    queue: nil) { [weak self] (_) in
                 if let selfObject = self, selfObject.isCurrentPage {
@@ -646,6 +652,9 @@ private extension FTWritingViewController
         if let _observer = self.pageReleasedObserver {
             NotificationCenter.default.removeObserver(_observer);
             self.pageReleasedObserver = nil;
+        }
+        if let observer = self.pageChangeObserver {
+            NotificationCenter.default.removeObserver(observer);
         }
     }
 

@@ -97,11 +97,21 @@ class FTDocumentRenderViewController: UIViewController {
         }
     }
     
+    private var keyValueObserver: NSKeyValueObservation?
     override func viewDidLoad() {
         super.viewDidLoad()
         self.addToolbar()
         self.navigationController?.navigationBar.isHidden = true
         self.showRenderingIndicator = true
+        
+        self.keyValueObserver = FTUserDefaults.defaults().observe(\.showStatusBar, options: [.new]) { [weak self] (userdefaults, change) in
+            UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseIn) {
+                self?.updateTopConstraint()
+                self?.documentViewController.didChangeStatusBarVisibility()
+            } completion: { _ in
+                
+            }
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -113,6 +123,23 @@ class FTDocumentRenderViewController: UIViewController {
             self.showRenderingIndicator = false
             loadingIndicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: NSLocalizedString("Loading", comment: "Loading..."), andDelay: 0.5);
         }
+        showWhatsnewForStatusBar()
+    }
+    
+    private func showWhatsnewForStatusBar() {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            let currentTimeInterval = Date().timeIntervalSinceReferenceDate
+            let oneWeekAgoTimeInterval = currentTimeInterval - (7 * 24 * 60 * 60)
+            if  (FTIAPurchaseHelper.shared.isPremiumUser
+                    && FTUserDefaults.appInstalledDate < oneWeekAgoTimeInterval
+                 && !FTUserDefaults.defaults().isStatusBarScreenViewed) || FTUserDefaults.defaults().statusBarwhatsNewSwitch {
+                FTStatusBarInfoViewController.present(on: self)
+                FTUserDefaults.defaults().isStatusBarScreenViewed = true
+                track("statusbar_popup_viewed",screenName: FTScreenNames.notebook)
+            } else {
+                FTUserDefaults.defaults().isStatusBarScreenViewed = true
+            }
+        }
     }
     
     private func updateUIWithMode(_ mode: FTScreenMode) {
@@ -121,22 +148,38 @@ class FTDocumentRenderViewController: UIViewController {
             options = .curveEaseIn
         }
         UIView.animate(withDuration: 0.3, delay: 0.0, options: options, animations: {
-            if mode == .focus {
-                self.toolbarTopConstraint?.constant = -200.0
-            } else {
-                self.toolbarTopConstraint?.constant = 0.0
-            }
-            self.view.layoutIfNeeded()
+            self.updateTopConstraint();
         })
     }
 
+    func didChangePageLayout() {
+        self.updateTopConstraint();
+    }
+    
+    private func updateTopConstraint() {
+        guard let mode = self.toolBarView?.screenMode else {
+            return
+        }
+        if mode == .focus {
+            self.toolbarTopConstraint?.constant = -200.0
+        } else {
+            if UserDefaults.standard.pageLayoutType == .vertical, mode != .shortCompact {
+                self.toolbarTopConstraint?.constant = FTToolBarConstants.statusBarOffset;
+            }
+            else {
+                self.toolbarTopConstraint?.constant = 0;
+            }
+        }
+        self.view.layoutIfNeeded()
+    }
+    
     func updateScreenModeIfNeeded(_ mode: FTScreenMode) {
-        self.updateUIWithMode(mode)
         self.toolBarView?.screenMode = mode
+        self.updateUIWithMode(mode)
         if mode == .shortCompact {
             var extraHeight: CGFloat = 0.0
             if UIDevice.current.isPhone() {
-                if let window = UIApplication.shared.keyWindow {
+                if let window = UIApplication.shared.keyWindow ?? self.view.window {
                     let topSafeAreaInset = window.safeAreaInsets.top
                     if topSafeAreaInset > 0 {
                         extraHeight = topSafeAreaInset
@@ -158,6 +201,13 @@ class FTDocumentRenderViewController: UIViewController {
         return toolBarView?.frame.height ?? 0
     }
 
+    func deskToolBarFrame() -> CGRect {
+        if self.toolBarView?.screenMode == .focus {
+            return self.deskToolbarController?.focusModeView?.frame ?? .zero
+        }
+        return self.toolBarView?.frame ?? .zero;
+    }
+    
     func currentToolBarState() -> FTScreenMode {
         return deskToolbarController?.screenMode ?? .normal
     }
@@ -180,11 +230,18 @@ class FTDocumentRenderViewController: UIViewController {
         if UIDevice.current.isPhone() {
             toHide = false
         }
+        if FTUserDefaults.defaults().showStatusBar {
+            toHide = false
+        }
         return toHide
     }
 
     override var prefersHomeIndicatorAutoHidden: Bool {
-        return self.prefersStatusBarHidden;
+        var toHide: Bool = true
+        if UIDevice.current.isPhone() {
+            toHide = false
+        }
+        return toHide
     }
 
     override func didMove(toParent parent: UIViewController?) {
@@ -218,8 +275,11 @@ class FTDocumentRenderViewController: UIViewController {
             (documentViewController.pdfDocument as? FTRecognitionHelper)?.visionRecognitionHelper?.startImageTextRecognition()
         }
     }
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
+        self.keyValueObserver?.invalidate();
+        self.keyValueObserver = nil;
 #if DEBUG
         debugPrint("deinit \(self.classForCoder)");
 #endif
@@ -338,6 +398,46 @@ extension FTDocumentRenderViewController: FTDocumentViewPresenter {
     func insertNewPage(fromItem url:URL, onCompletion:((_ completed:Bool) -> Void)?) {
         documentViewController.insertNewPage(fromItem: url, onCompletion: onCompletion);
     }
+    
+    func insertNewPageWith(type: FTPinndedWidgetActionType) {
+        if let doc = self.documentViewController.pdfDocument, let refPage = doc.pages().last, type.shouldAddNewPage() {
+            guard let insertedPage = doc.insertPageBelow(page: refPage) else {
+               return
+            }
+            doc.saveDocument { _ in
+                self.documentViewController.showPage(at: insertedPage.pageIndex(), forceReLayout: true, animate: false)
+                switch type {
+                case .pen:
+                    self.documentViewController.updateToolBar(with: RKDeskMode.deskModePen)
+                    break;
+                case .audio:
+                    FTNotebookUtils.checkIfAudioIsNotPlaying(forDocument: self.documentViewController.pdfDocument, alertMessage: "AudioRecoring_Progress_Message".localized, onViewController: self) { success in
+                        if success {
+                            self.documentViewController.audioButtonAction()
+                        }
+                    }
+                    break;
+                case .openAI:
+                    //                self.documentViewController.switch(RKDeskMode.des)
+                    self.documentViewController.firstPageController()?.startOpenAiForPage()
+                    break;
+                case .text:
+                    self.documentViewController.updateToolBar(with: RKDeskMode.deskModeText)
+                    let info = FTTextAnnotationInfo();
+                    info.localmetadataCache = insertedPage.parentDocument?.localMetadataCache;
+                    info.visibleRect = self.documentViewController.firstPageController()?.scrollView?.visibleRect() ?? self.view.frame
+                    info.atPoint = self.contentHolderView?.center ?? .zero;
+                    info.scale = self.documentViewController.contentScaleInNormalMode;
+                    self.documentViewController.firstPageController()?.addAnnotation(info: info)
+                    break;
+                case .bookOpen(_):
+                    break
+                }
+            }
+        }
+        track(type.eventName, params: ["tool": type.parameterName])
+    }
+    
     
     func addRecordingToPage(actionType: FTAudioActionType,
                             audio: FTAudioFileToImport,

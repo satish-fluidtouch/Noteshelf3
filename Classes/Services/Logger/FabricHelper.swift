@@ -10,6 +10,7 @@ import FirebaseCrashlytics
 import Foundation
 import FTDocumentFramework
 import FTCommon
+import TPInAppReceipt
 
 struct FabircKeys {
     //Boolean Values
@@ -76,6 +77,9 @@ class FabricHelper: NSObject {
         let deviceInfo = FTUbiquitousKeyValueStoreListner.shared().deviceIdsForFabric();
         if !deviceInfo.isEmpty {
             keys[FabircKeys.DeviceIDs] = deviceInfo;
+        }
+        if let receipt = try? InAppReceipt.localReceipt() {
+            keys["originalAppVersion"] = receipt.originalAppVersion
         }
         Crashlytics.crashlytics().setCustomValue(keys, forKey: "Startup Keys")
     }

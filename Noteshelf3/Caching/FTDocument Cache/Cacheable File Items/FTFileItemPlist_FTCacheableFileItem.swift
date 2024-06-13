@@ -41,6 +41,7 @@ extension FTFileItemPlist {
     }
     
     override func shouldCache(_ cachedFileURL: URL) -> Bool {
+        //TODO: Cache amar: make sure property list is saved only if it is modified or path is different.
         if fileName == PROPERTIES_PLIST {
             return true;
         }

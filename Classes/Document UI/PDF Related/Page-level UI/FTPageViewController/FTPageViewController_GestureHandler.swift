@@ -12,7 +12,7 @@ extension FTPageViewController {
     func configureGestures()
     {
         self.addGestures();
-        NotificationCenter.default.addObserver(forName: Notification.Name("FTDisableLongPressGestureNotification"),
+        self.disableLongPressNotificationObserver = NotificationCenter.default.addObserver(forName: Notification.Name("FTDisableLongPressGestureNotification"),
                                                object: nil,
                                                queue: nil)
         { [weak self] (notification) in
@@ -20,7 +20,7 @@ extension FTPageViewController {
             self?.longPressGestureRecognizer?.isEnabled = false;
         };
         
-        NotificationCenter.default.addObserver(forName: Notification.Name(FTPDFDisableGestures),
+        self.disableGestureNotificationObserver = NotificationCenter.default.addObserver(forName: Notification.Name(FTPDFDisableGestures),
                                                object: nil,
                                                queue: nil)
         { [weak self] (notification) in
@@ -29,7 +29,7 @@ extension FTPageViewController {
             self?.singleTapSelectionGestureRecognizer?.isEnabled = false;
         };
 
-        NotificationCenter.default.addObserver(forName: Notification.Name(FTPDFEnableGestures),
+        self.enableGestureNotificationObserver = NotificationCenter.default.addObserver(forName: Notification.Name(FTPDFEnableGestures),
                                                object: nil,
                                                queue: nil)
         { [weak self] (notification) in
@@ -112,17 +112,26 @@ extension FTPageViewController {
             || mode == .deskModeEraser
             || mode == .deskModeShape
             ) {
-            self.longPressGestureRecognizer?.allowedTouchTypes = [
-                NSNumber(value: UITouch.TouchType.direct.rawValue)
-            ];
+            var allowedTouchTypes: [NSNumber] = [NSNumber(value: UITouch.TouchType.direct.rawValue)];
+#if targetEnvironment(macCatalyst)
+            allowedTouchTypes.append(NSNumber(value: UITouch.TouchType.indirectPointer.rawValue))
+            allowedTouchTypes.append(NSNumber(value: UITouch.TouchType.indirect.rawValue))
+#endif
+            self.longPressGestureRecognizer?.allowedTouchTypes = allowedTouchTypes;
+            FTCLSLog("Interaction: Update gesture: \(mode.rawValue)")
             self.startAcceptingTouches(true);
         }
         else {
-            self.longPressGestureRecognizer?.allowedTouchTypes = [
+            var allowedTouchTypes: [NSNumber] = [
                 NSNumber(value: UITouch.TouchType.direct.rawValue),
                 NSNumber(value: UITouch.TouchType.pencil.rawValue),
                 NSNumber(value: UITouch.TouchType.indirect.rawValue)
             ];
+#if targetEnvironment(macCatalyst)
+            allowedTouchTypes.append(NSNumber(value: UITouch.TouchType.indirectPointer.rawValue))
+            allowedTouchTypes.append(NSNumber(value: UITouch.TouchType.indirect.rawValue))
+#endif
+            self.longPressGestureRecognizer?.allowedTouchTypes = allowedTouchTypes;
         }
     }
 
@@ -255,7 +264,6 @@ extension FTPageViewController {
     
     @IBAction func longPressDetected(_ gesture : UILongPressGestureRecognizer)
     {
-        var isAnnotationDetected = false
         if(gesture.state == .began) {
             self.activeAnnotationController?.annotationControllerLongPressDetected()
             let hitPoint = gesture.location(in: self.contentHolderView);
@@ -264,9 +272,11 @@ extension FTPageViewController {
                 self.editAnnotation(annotation,
                                     eventType: .longPress,
                                     at:hitPoint)
-                isAnnotationDetected = true
                 if annotation.isLocked {
                     return
+                }
+                if !UserDefaults.isApplePencilEnabled() {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: FTPDFEnableGestures), object: self.view.window);
                 }
             }
             self.activeAnnotationController?.annotationControllerLongPressDetected()
@@ -353,26 +363,23 @@ extension FTPageViewController : UIGestureRecognizerDelegate
                         if let activeController = self.delegate?.activeAnnotationController() {
                             let controller = self.delegate?.pageControllerFor(activeAnnotationController: activeController);
                             controller?.endEditingActiveAnnotation(activeController.annotation, refreshView: true)
+                        } else if let lassoController = self.lassoContentSelectionViewController {
+                            self.normalizeLassoView()
                         }
                         return false;
                     }
                 }
-                
-                if (self.delegate?.activeAnnotationController() as? FTShapeAnnotationController) != nil  {
-                    if nil != self.annotation(type: .singleTapSelection, atPoint: locationInView) {
-                        return true;
-                    }
-                }
-
+              
                 if let activeController = self.delegate?.activeAnnotationController() {
                     let controller = self.delegate?.pageControllerFor(activeAnnotationController: activeController);
-                    if self.presentedViewController?.children.count ?? 0 > 0 {
-                        if activeController.annotation.canCancelEndEditingAnnotaionWhenPopOverPresents() {
-                            return false
-                        }
-                    }
                     controller?.endEditingActiveAnnotation(activeController.annotation, refreshView: true)
-                    return false;
+                    if touch.type == .direct
+                        ,nil != self.annotation(type: .singleTapSelection, atPoint: locationInView) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
                 }
 
                 if !contentView.bounds.contains(locationInView) {
@@ -449,6 +456,11 @@ extension FTPageViewController : UIGestureRecognizerDelegate
                     valueToReturn = true
 
                 }
+                if nil != self.lassoSelectionView?.antsView ||
+                    nil != self.lassoContentSelectionViewController {
+                    self.normalizeLassoView()
+                    valueToReturn = false;
+                }
             }
             self.perform(#selector(self.hideQuickPageNavigator), with: nil, afterDelay: 0.1)
             return valueToReturn;
@@ -465,7 +477,7 @@ extension FTPageViewController : UIGestureRecognizerDelegate
 extension FTPageViewController {
     
     private func addObserverForQuickPageNavigator() {
-        NotificationCenter.default.addObserver(forName: .quickPageNavigatorShowNotification,
+        self.quickPageNavigationShowNotificationObserver = NotificationCenter.default.addObserver(forName: .quickPageNavigatorShowNotification,
                                                object: nil,
                                                queue: nil)
         { [weak self] (_) in

@@ -24,7 +24,7 @@ class FTDynamicTemplateInfo: NSObject {
     var horizontalLineColor: String!
     var verticalLineColor: String!
 
-    required init(_ templateInfoDict: NSDictionary,_ isLandscape: Bool, _ safeAreaInsets: UIEdgeInsets?, _ variants: FTPaperVariants,  _ generationType: FTGenrationType) {
+    required init(_ templateInfoDict: NSDictionary,_ isLandscape: Bool, _ variants: FTPaperVariants,  _ generationType: FTGenrationType) {
         super.init()
         self.isLandscape = isLandscape
         self.customVariants =  variants
@@ -65,7 +65,7 @@ class FTDynamicTemplateInfo: NSObject {
         if generationType == .preview {
           setPreviewSize()
         } else if codableInfo.width == 0 && codableInfo.height == 0 {
-          setTemplateSize(safeAreaInsets)
+          setTemplateSize()
 //            let screenType = UIDevice.deviceScreenType()
 //            if codableInfo.supportingDeviceType == FTSupportingDeviceType.iPad.rawValue {
 //                setTemplateSize(forIpad: true, deviceType: screenType, safeAreaInsets)
@@ -90,7 +90,7 @@ class FTDynamicTemplateInfo: NSObject {
         let lineColor = hexString + "-" + alpha
         return lineColor
     }
-    func setTemplateSize(_ safeAreaInsets: UIEdgeInsets?) {
+    func setTemplateSize() {
         let screenSize = !isLandscape ? customVariants.selectedDevice.dimension_port : customVariants.selectedDevice.dimension_land
         let measurements = screenSize.split(separator: "_")
         self.width = Int(measurements[0])
@@ -138,7 +138,7 @@ class FTDynamicTemplateInfo: NSObject {
                 self.height = 704
             }
         } else {
-            setTemplateSize(safeAreaInsets)
+            setTemplateSize()
         }
     }
 }

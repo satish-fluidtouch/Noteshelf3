@@ -16,6 +16,8 @@ class FTNotebookMoreOptionsCell: UITableViewCell {
     @IBOutlet fileprivate var lblText: UILabel?
     @IBOutlet fileprivate var lblDetails: UILabel?
     @IBOutlet fileprivate var lblSelectedValue: UILabel?
+    @IBOutlet fileprivate(set) var scrollingValueLbl: UILabel?
+    @IBOutlet fileprivate(set) var siriSubLbl: UILabel?
 
     @IBOutlet weak var onboardingDotView: UIView?
     var toggleTapped: ((_ currentValue: Bool, _ setting: FTNotebookMoreOption) -> Void)?
@@ -60,6 +62,11 @@ class FTNotebookMoreOptionsCell: UITableViewCell {
         self.layoutIfNeeded();
         imgViewIcon?.tintColor = .appColor(.accent)
     }
+    
+    func setValueForScrollDirection() {
+        let value = UserDefaults.standard.pageLayoutType.localizedTitle
+        scrollingValueLbl?.text = value
+    }
 
     func applySelectionStyleGray() {
         let backgroundView = UIView();
@@ -75,7 +82,13 @@ class FTNotebookMoreOptionsCell: UITableViewCell {
         lblDetails?.text = setting.localizedSubtitle
         let image = UIImage(icon: setting.imageIcon)
         imgViewIcon?.image = image
-        if setting.type == .disclosure {
+        if let toggleSetting = setting as? FTNotebookOptionToggle, setting.type == .toggleAccessory {
+            self.accessoryType = .none
+            let toggleSwitch = UISwitch(frame: CGRect.zero)
+            toggleSwitch.isOn = toggleSetting.isToggleTurnedOn
+            self.accessoryView = toggleSwitch
+            toggleSwitch.addTarget(self, action: #selector(switchvalueChanged(_:)), for: .valueChanged)
+        } else if setting.type == .disclosure {
             self.accessoryType = .disclosureIndicator
             self.accessoryView = nil
         } else {

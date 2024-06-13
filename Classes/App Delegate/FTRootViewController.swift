@@ -11,6 +11,7 @@ import FTCommon
 import SafariServices
 import FTDocumentFramework
 import FTNewNotebook
+import CoreSpotlight
 
 protocol FTOpenCloseDocumentProtocol : NSObjectProtocol {
     func openRecentItem(shelfItemManagedObject: FTDocumentItemWrapperObject, addToRecent: Bool)
@@ -21,14 +22,17 @@ protocol FTOpenCloseDocumentProtocol : NSObjectProtocol {
 private var currentRetryCount = 1
 private var maxRetryCount = 5
 
+// Variables or functions marked as internal are intended for file extensions convenience, not for outside access.
 class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewControllerSupportsScene {
 
     var addedObserverOnScene: Bool = false;
 
     weak var docuemntViewController : FTDocumentViewController?;
-    fileprivate var rootContentViewController: FTShelfPresentable?;
+    internal var rootContentViewController: FTShelfPresentable?;
     fileprivate var isFirstTime = true;
     fileprivate var isOpeningDocument = false;
+    internal var importSmartProgressView: FTSmartProgressView?
+    internal var importProgress: Progress?
 
     fileprivate var isImportInProgress = false
     fileprivate lazy var importItemsQueue = [FTImportItem]()
@@ -37,12 +41,11 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     fileprivate weak var pencilInteraction : NSObject?;
 
     private var importController : FTImportedDocViewController?
-    private weak var noteBookSplitController: FTNoteBookSplitViewController?
+    internal weak var noteBookSplitController: FTNoteBookSplitViewController?
     var contentView : UIView!;
 
-    override var preferredStatusBarStyle : UIStatusBarStyle {
-        return FTShelfThemeStyle.defaultTheme().preferredStatusBarStyle;
-    }
+    private var keyValueObserver: NSKeyValueObservation?;
+    private weak var themeNotificationObserver: NSObjectProtocol?;
 
     override func isAppearingThroughModelScale() {
          (self.rootContentViewController as? FTShelfSplitViewController)?.isAppearingThroughModelScale()
@@ -52,6 +55,8 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     override func viewDidLoad() {
         super.viewDidLoad()
         FTImportStorageManager.clearImportFilesIfNeeded();
+        FTDocumentsSpotlightIndexManager.shared.configure();
+        
         self.contentView = UIView.init(frame: self.view.bounds);
         self.contentView.backgroundColor = UIColor.clear;
 
@@ -59,6 +64,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         self.view.addSubview(self.contentView);
 
         if(self.isFirstTime) {
+            FTCLSLog("Launch Screen Added");
             let launchInstanceStoryboard = UIStoryboard(name: "Launch Screen", bundle: nil);
             let viewController = launchInstanceStoryboard.instantiateInitialViewController();
             self.addChild(viewController!);
@@ -76,13 +82,16 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         }
         FTUserDefaults.defaults().addObserver(self, forKeyPath: "iCloudOn", options: .new, context: nil);
 
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.FTShelfThemeDidChange, object: nil, queue: nil) { [weak self] _ in
+        self.themeNotificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.FTShelfThemeDidChange, object: nil, queue: nil) { [weak self] _ in
             runInMainThread {
                 self?.themeDidChange();
             }
         }
         if #available(iOS 12.1, *) {
             self.addPencilInteractionDelegate();
+        }
+        self.keyValueObserver = FTUserDefaults.defaults().observe(\.showStatusBar, options: [.new]) { [weak self] (userdefaults, change) in
+            self?.refreshStatusBarAppearnce();
         }
     }
 
@@ -102,6 +111,12 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                 self.pencilInteraction = nil;
             }
         }
+        if let _themeObserver = self.themeNotificationObserver {
+            NotificationCenter.default.removeObserver(_themeObserver);
+        }
+        
+        self.keyValueObserver?.invalidate();
+        self.keyValueObserver = nil
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -112,13 +127,14 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated);
         if FTWhatsNewManger.canShowWelcomeScreen(onViewController: self) {
-            FTGetstartedHostingViewcontroller.showWelcome(presenterController: self, onDismiss: {
+            FTWelcomeScreenViewController.showWelcome(presenterController: self, onDismiss: {
                 [weak self] in
                 self?.addShelfToolbar();
                 self?.updateProvider({
                 });
             });
             self.refreshStatusBarAppearnce();
+            track("Welcome_Viewed", screenName: FTScreenNames.welcomeScreen)
         }
         else {
             self.addShelfToolbar();
@@ -127,18 +143,18 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 
     override var prefersStatusBarHidden: Bool {
         if let splitVC = self.noteBookSplitController,
-           !(splitVC.isBeingDismissed || splitVC.isBeingPresented),
-           let docController = self.docuemntViewController {
-            return docController.prefersStatusBarHidden;
+           !(splitVC.isBeingDismissed || splitVC.isBeingPresented) {
+            return splitVC.prefersStatusBarHidden;
         }
-        else if let shelfVC = self.rootContentViewController {
-            return shelfVC.prefersStatusBarHidden;
+        else if self.presentedViewController is FTWelcomeScreenViewController {
+            return self.presentedViewController?.prefersStatusBarHidden ?? super.prefersStatusBarHidden
         }
         return super.prefersStatusBarHidden;
     }
 
     override var prefersHomeIndicatorAutoHidden: Bool {
-        if(self.prefersStatusBarHidden) {
+        if let splitVC = self.noteBookSplitController,
+           !(splitVC.isBeingDismissed || splitVC.isBeingPresented) {
             return true;
         }
         return super.prefersHomeIndicatorAutoHidden;
@@ -214,13 +230,29 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     }
 
     // MARK: - Provider update -
+    private weak var localAppActieObserver: NSObjectProtocol?
     fileprivate func updateProviderIfNeeded() {
         if(UserDefaults.standard.bool(forKey: WelcomeScreenViewed)
            || (!UserDefaults.standard.bool(forKey: WelcomeScreenViewed)
                && UserDefaults.standard.double(forKey: WelcomeScreenReminderTime) > 0)) {
+            if UIApplication.shared.applicationState != .active {
+                FTCLSLog("Update Provider - App is not active");
+                localAppActieObserver = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: OperationQueue.main, using: { _ in
+                    if let _observer = self.localAppActieObserver {
+                        NotificationCenter.default.removeObserver(_observer)
+                    }
+                    FTCLSLog("Update Provider - App active");
+                    self.updateProviderIfNeeded();
+                })
+                return;
+            }
+            FTCLSLog("Update Provider - Start");
+            self.scheduleLaunchWaitError()
             self.updateProvider({
-                    FTBetaAlertHandler.showiOS13BetaAlertIfNeeded(onViewController: self);
-                    FTOneDriveAlertHandler.showOneDriveAuthenticationAlertIfNeeded(self)
+                self.cancelLaunchWaitError()
+                FTCLSLog("Update Provider - End");
+                FTBetaAlertHandler.showiOS13BetaAlertIfNeeded(onViewController: self);
+                FTOneDriveAlertHandler.showOneDriveAuthenticationAlertIfNeeded(self)
             });
         }
     }
@@ -237,8 +269,22 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         FTNoteshelfDocumentProvider.shared.updateProviderIfRequired { isUpdated in
             if(isUpdated || nil == self.rootContentViewController) {
                 FTMobileCommunicationManager.shared.startWatchSession()
-                    let collectionName = self.lastSelectedCollectionName();
+                let collectionName = self.lastSelectedCollectionName();
+
+                let messageType = FTNSiCloudManager.shared().messageTypeToShow
+                var loader: FTLoadingIndicatorViewController?
+                if messageType == .kiCloudUserTurnedOnAction {
+                    self.view.isUserInteractionEnabled = false
+                    loader = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: "Moving".localized)
+                    showCollection()
+                } else {
+                    showCollection()
+                }
+                FTCLSLog("Fetching Collection");
+
+                func showCollection() {
                     self.shelfCollection(title: collectionName, pickDefault: false, onCompeltion: { collectionToShow in
+                        FTCLSLog("Collection Fetched");
                         NotificationCenter.default.post(name: .didChangeUnfiledCategoryLocation, object: nil);
                         if let isInNonCollectionMode = self.isInNonCollectionMode(),
                            isInNonCollectionMode {
@@ -254,9 +300,13 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                                            lastSelectedSideBarContentType: .home,
                                            lastSelectedTag: "")
                         }
-                        self.showIcloudMessage();
+                        self.showIcloudMessage(messageType: messageType, onCompletion: {
+                            loader?.hide();
+                            self.view.isUserInteractionEnabled = true
+                        });
                         onCompletion?(true);
                     });
+                }
             }
             else {
                 onCompletion?(false);
@@ -264,8 +314,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         }
     }
 
-    fileprivate func showIcloudMessage() {
-        let messageType = FTNSiCloudManager.shared().messageTypeToShow;
+    fileprivate func showIcloudMessage(messageType: FTiCloudActionType, onCompletion : (() -> Void)?) {
         weak var weakSelf = self;
         switch messageType {
         case .kiCloudStartUsingMessageAction:
@@ -306,6 +355,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 
                 let loadingIndicatorViewController = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: NSLocalizedString("Moving", comment: "Moving..."));
                 DispatchQueue.main.async {
+                    FTDocumentCache.shared.clearCachedItems()
                     FTNoteshelfDocumentProvider.shared.moveContentsFromCloudToLocal(onCompletion: { (_) in
                         FTURLReadThumbnailManager.sharedInstance.clearStoredThumbnailCache()
                         FTNoteshelfDocumentProvider.shared.refreshCurrentShelfCollection {
@@ -325,6 +375,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             controller.addAction(keepLocalAction);
 
             let deleteFromLocal = UIAlertAction.init(title: NSLocalizedString("DeleteALocalCopy",comment:"Delete on my iPad"), style: .destructive, handler: { (_) in
+                FTDocumentCache.shared.clearCachedItems()
                 FTURLReadThumbnailManager.sharedInstance.clearStoredThumbnailCache()
                 FTNoteshelfDocumentProvider.shared.resetProviderCache();
                 (weakSelf?.rootContentViewController as? FTShelfSplitViewController)?.updateSidebarCollections()
@@ -336,9 +387,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 
         case .kiCloudUserTurnedOnAction:
             //move from local to icloud
-            self.view.isUserInteractionEnabled = false;
-
-            let loadingIndicatorViewController = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: NSLocalizedString("Moving", comment: "Moving..."));
             DispatchQueue.main.async {
                 FTNoteshelfDocumentProvider.shared.moveContentsFromLocalToiCloud(onCompletion: { (_, error) in                    (error as NSError?)?.showAlert(from: self.view.window?.visibleViewController)
                     FTURLReadThumbnailManager.sharedInstance.clearStoredThumbnailCache()
@@ -347,8 +395,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                         weakSelf?.shelfCollection(title: nil, pickDefault: false, onCompeltion: { (collection) in
                             weakSelf?.rootContentViewController?.currentShelfViewModel?.collection = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection;
                             weakSelf?.refreshShelfCollection(setToDefault: true, animate: true) {
-                                loadingIndicatorViewController.hide();
-                                self.view.isUserInteractionEnabled = true;
+                                onCompletion?()
                             }
                         });
                     }
@@ -368,9 +415,16 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 
     fileprivate func maintainPreviousLaunchStateIfNeeded() {
         if self.isFirstTime {
+            FTCLSLog("Maintaining Previous State");
             self.isFirstTime = false;
             self.setupSafeModeIfNeeded()
-            if let document = self.lastOpenedDocument() {
+            if self.userActivity?.activityType == CSSearchableItemActionType,
+               let shelfItemUUID = self.userActivity?.userInfo?[CSSearchableItemActivityIdentifier] as? String {
+                FTCLSLog("Opening Book from spotlight");
+                self.openShelfItem(spotLightHash: shelfItemUUID);
+            }
+            else if let document = self.lastOpenedDocument() {
+                FTCLSLog("Opening last opened book");
                 self.showLastOpenedDocument(relativePath: document, animate: false);
             }
             else if let isInNonCollectionMode = self.isInNonCollectionMode(),
@@ -391,6 +445,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                                isInNonCollectionMode: Bool = false,
                                lastSelectedSideBarContentType sideBarContentType: FTSideBarItemType = .home,
                                lastSelectedTag: String = "") {
+        FTCLSLog("Shelf UI Created");
         // Upodating created notebok count here, assuming, by this time provider will be ready and the books count is updated.
         FTIAPManager.shared.premiumUser.updateNoOfBooks(nil)
         //Instantiate Shelf view controller
@@ -451,12 +506,23 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         let loadingIndicatorViewController = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: NSLocalizedString("Loading", comment: "Loading..."));
         runInMainThread(1.0) {
             loadingIndicatorViewController.hide() { [weak self] in
-                self?._updateProvider({ [weak self] isUpdated in
+                guard let self else { return }
+                self._updateProvider({ [weak self] isUpdated in
+                    guard let self else { return }
                     if(!isUpdated) {
                         runInMainThread {
                             if currentRetryCount < maxRetryCount {
                                 currentRetryCount += 1
-                                self?.showIcloudMessage();
+                                let messageType = FTNSiCloudManager.shared().messageTypeToShow
+                                var loader: FTLoadingIndicatorViewController?
+                                if messageType == .kiCloudUserTurnedOnAction {
+                                    self.view.isUserInteractionEnabled = false
+                                    loader = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: "Moving".localized)
+                                }
+                                self.showIcloudMessage(messageType: messageType, onCompletion: {
+                                    loader?.hide()
+                                    self.view.isUserInteractionEnabled = true
+                                })
                             } else {
                                 track("icloud_retry_exceed")
                                 fatalError("icloud_retry_exceed")
@@ -468,7 +534,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         }
     }
 
-    private func closeAnyActiveOpenedBook(completion: @escaping () -> Void) {
+    internal func closeAnyActiveOpenedBook(completion: @escaping () -> Void) {
 
         self.updateProvider { () -> Void in
 
@@ -498,8 +564,69 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             }
         };
     }
-
+   
     // MARK: - open Document from today widget
+    func openPinnedBook(with docId: String) {
+        self.prepareProviderIfNeeded {
+            FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
+                if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == docId}) as? FTDocumentItemProtocol {
+                    track("widget_smallnbk_book_tap")
+                    self.openPinnedBook(documentItem: shelfItem, onCompletion: nil)
+                } else {
+                    UIAlertController.showAlert(withTitle: "", message: NSLocalizedString("NotebookNotAvailable", comment: "NotebookNotAvailable"), from: self, withCompletionHandler: nil)
+                }
+            }
+        }
+    }
+    
+    func openPinnedBook(documentItem: FTDocumentItemProtocol, onCompletion: (() -> ())?) {
+        let relativePath = documentItem.URL.relativePathWRTCollection()
+        if(FTNoteshelfDocumentProvider.shared.isProviderReady) {
+            if let collection = documentItem.shelfCollection {
+                var groupItem : FTGroupItemProtocol?;
+                if let groupPath = relativePath.relativeGroupPathFromCollection() {
+                    let url = collection.URL.appendingPathComponent(groupPath);
+                    groupItem = collection.groupItemForURL(url);
+                }
+                let shelfItem = collection.documentItemWithName(title: relativePath.documentName(),
+                                                                inGroup: groupItem);
+                self.openDocumentAtRelativePath(relativePath, inShelfItem: shelfItem, animate: false, addToRecent: true, bipassPassword: true) {_,_ in
+                    onCompletion?()
+                }
+            }
+        }
+        else {
+            self.prepareProviderIfNeeded {
+                self.openDocumentAtRelativePath(relativePath, inShelfItem: nil,
+                                                animate: false,
+                                                addToRecent: true,
+                                                bipassPassword: true) {_,_ in
+                    onCompletion?()
+                };
+                
+            }
+        }
+    }
+    
+    func openAndperformActionInsidePinnedNotebook(_ type :FTPinndedWidgetActionType) {
+        self.prepareProviderIfNeeded {
+            FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
+                if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == type.docId}) as? FTDocumentItemProtocol {
+                    self.openPinnedBook(documentItem: shelfItem) {[weak self] in
+                        guard let self = self else {
+                            return
+                        }
+                        if let docVc = self.noteBookSplitController?.documentViewController {
+                            docVc.insertNewPageWith(type: type)
+                        }
+                    }
+                } else {
+                    UIAlertController.showAlert(withTitle: "", message: NSLocalizedString("NotebookNotAvailable", comment: "NotebookNotAvailable"), from: self, withCompletionHandler: nil)
+                }
+            }
+        }
+    }
+    
     func openDocumentForSelectedNotebook(_ path: URL, isSiriCreateIntent: Bool) {
         if let docController = self.docuemntViewController, !docController.canContinueToImportFiles() {
             let result = path.isPinEnabledForDocument()
@@ -607,7 +734,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             }
         }
     }
-
+  
     func showPremiumUpgradeScreen() {
         self.prepareProviderIfNeeded {
             self.closeAnyActiveOpenedBook {
@@ -902,72 +1029,25 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             completion?(nil,false)
             return;
         }
-        if isAudioFile(url.path) {
-            if isSupportedAudioFile(url.path) {
-                track("import_document", params: ["type" : url.lastPathComponent])
-                importAudioFile(fromURL: url) { (compltd) in
-                    completion?(nil,compltd)
-                }
-            } else {
-                let alertController = UIAlertController(title: "",
-                                                        message: NSLocalizedString("NotSupportedFormat", comment: "Note supported format"),
-                                                        preferredStyle: .alert);
-                let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Ok"), style: .cancel, handler: { _ in
-                    completion?(nil,false)
-                });
-                alertController.addAction(cancelAction);
-                self.present(alertController, animated: true, completion: nil);
-            }
-        }
-        else {
-            let message = url.lastPathComponent + "\n" + NSLocalizedString("InsertDocumentCurrentOrNew", comment: "Insert into...")
+        if isAudioFile(url.path), !isSupportedAudioFile(url.path) {
             let alertController = UIAlertController(title: "",
-                                                    message: message,
+                                                    message: NSLocalizedString("NotSupportedFormat", comment: "Note supported format"),
                                                     preferredStyle: .alert);
-            let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .cancel, handler: { _ in
-                item.removeFileItems();
-                completion?(nil,true)
+            let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Ok"), style: .cancel, handler: { _ in
+                completion?(nil,false)
             });
             alertController.addAction(cancelAction);
-
-            let insertHere = UIAlertAction(title: NSLocalizedString("InsertHere", comment: "Insert Here"), style: .default, handler: { _ in
-                docController?.insertNewPage(fromItem: url, onCompletion: { (complted) in
-                    completion?(nil,complted)
-                })
-            });
-            alertController.addAction(insertHere);
-
-            let createNew = UIAlertAction(title: NSLocalizedString("CreateNew", comment: "Create New"), style: .default, handler: { _ in
-                self.saveApplicationStateByClosingDocument(true, keepEditingOn: false, onCompletion: { success in
-                    if(success) {
-                        self.switchToShelf(docController?.documentItemObject, documentViewController: docController, animate: true, onCompletion: {
-                            self.openInFileForURL(url,completion: {
-                                if self.rootContentViewController != nil {
-                                    self.rootContentViewController?.importItemAndAutoScroll(item,
-                                                                                            shouldOpen: false,
-                                                                                            completionHandler: { (item, completed) in
-                                        completion?(item,completed)
-                                    })
-
-                                }
-                            })
-                        });
-                    } else {
-                        item.removeFileItems()
-                        completion?(nil,false)
-                    }
-                });
-            });
-            alertController.addAction(createNew);
-            if(Thread.current.isMainThread) {
-                self.noteBookSplitController?.present(alertController, animated: true, completion: nil);
-            }
-            else {
-                DispatchQueue.main.async {
-                    self.noteBookSplitController?.present(alertController, animated: true, completion: nil);
-                }
-            }
+            docController?.present(alertController, animated: true, completion: nil);
+            return
         }
+        self.showCompleteImportProgressIfNeeded()
+        docController?.insertNewPage(fromItem: url, onCompletion: { (complted) in
+            let status = self.updateSmartProgressStatus(openDoc: item.openOnImport)
+            if status == .completed {
+                NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
+            }
+            completion?(docController?.documentItemObject.shelfItemProtocol,complted)
+        })
     }
 
     fileprivate func importAudioFile(fromURL url: URL,
@@ -1118,8 +1198,9 @@ extension FTRootViewController
                                          shelfItem: shelfItem!,
                                          addToRecent: addToRecent,
                                          passcode: nil,
-                                         shouldAskforPasscode: true,
-                                         onCompletion: onCompletion);
+                                         shouldAskforPasscode: true) {docProtocol,success in
+                        onCompletion?(docProtocol, success)
+                    }
                 }
             } else {
                 finalizeBlock(indicatorView);
@@ -1169,6 +1250,7 @@ extension FTRootViewController {
     fileprivate func removeLaunchScreen(_ animated : Bool)
     {
         if let launchscreen = self.launchScreenController {
+            FTCLSLog("Update Provider - Launch Screen Removed");
             if(!animated) {
                 launchscreen.view.removeFromSuperview();
                 launchscreen.removeFromParent();
@@ -1257,7 +1339,7 @@ extension FTRootViewController {
                 return;
             }
             let importItem = self.importItemsQueue.removeFirst()
-            if let docController = self.docuemntViewController {
+            if let docController = self.docuemntViewController, let notebookUrl = self.docuemntViewController?.documentItemObject.URL.relativePathWRTCollection(), (notebookUrl == importItem.imporItemInfo?.notebook || importItem.shouldSwitchToRoot())  {
                 if !docController.canContinueToImportFiles() {
                     docController.showAlertAskingToEnterPwdToContinueOperation();
                     blockToComplete(nil)
@@ -1379,7 +1461,7 @@ extension FTRootViewController: FTOpenCloseDocumentProtocol {
 //MARK:- FTSceneBackgroundHandling
 extension FTRootViewController: FTSceneBackgroundHandling {
     func configureSceneNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(sceneDidBecomeActive(_:)), name: UIApplication.sceneDidBecomeActive, object: self.sceneToObserve)
+        NotificationCenter.default.addObserver(self, selector: #selector(sceneWillEnterForeground(_:)), name: UIApplication.sceneWillEnterForeground, object: self.sceneToObserve)
         NotificationCenter.default.addObserver(self, selector: #selector(sceneWillResignActive(_:)), name: UIApplication.sceneWillResignActive, object: self.sceneToObserve)
         self.configureForImportAction();
     }
@@ -1390,17 +1472,24 @@ extension FTRootViewController: FTSceneBackgroundHandling {
         }
         self.saveApplicationStateByClosingDocument(false, keepEditingOn: true, onCompletion: nil);
     }
+    
+    internal func sceneDidBecomeActive(_ notification: Notification) {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        self.presentImportsControllerifNeeded();
+    }
 
-    func sceneDidBecomeActive(_ notification: Notification) {
+    func sceneWillEnterForeground(_ notification: Notification) {
         if(!self.canProceedSceneNotification(notification)) {
             return;
         }
-
         FTAppConfigHelper.sharedAppConfig().updateAppConfig()
         if FTWhatsNewManger.canShowWelcomeScreen(onViewController: self) {
-            FTGetstartedHostingViewcontroller.showWelcome(presenterController: self, onDismiss: nil);
+            FTWelcomeScreenViewController.showWelcome(presenterController: self, onDismiss: nil);
             self.refreshStatusBarAppearnce();
         } else {
+            if self.showPremiumUpgradeAdScreenIfNeeded() {
+                return;
+            }
             var placeOfSlideShow: FTWhatsNewSlideShowPlace = .shelf
             if nil != self.docuemntViewController {
                 placeOfSlideShow = .notebook
@@ -1413,7 +1502,7 @@ extension FTRootViewController: FTSceneBackgroundHandling {
             else {
                 FTBetaAlertHandler.showiOS13BetaAlertIfNeeded(onViewController: self);
                 FTOneDriveAlertHandler.showOneDriveAuthenticationAlertIfNeeded(self)
-                self.presentImportsControllerifNeeded();
+                NotificationCenter.default.addObserver(self, selector: #selector(self.sceneDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil);
             }
         }
     }
@@ -1457,7 +1546,8 @@ extension FTRootViewController {
                                     animate : Bool = false,
                                     addToRecent : Bool = false,
                                     igrnoreIfNotDownloaded : Bool = false,
-                                    bipassPassword : Bool = true, onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?)
+                                    bipassPassword : Bool = true,
+                                    onCompletion: ((FTDocumentProtocol?, Bool) -> Void)? = nil)
     {
 
         if(false == FTNoteshelfDocumentProvider.shared.isProviderReady) {
@@ -1484,7 +1574,10 @@ extension FTRootViewController {
                                               inShelfItem: inShelfItem,
                                               addToRecent: addToRecent,
                                               igrnoreIfNotDownloaded: igrnoreIfNotDownloaded,
-                                              bipassPassword: bipassPassword, onCompletion: onCompletion);
+                                              bipassPassword: bipassPassword) {doc,success in
+                onCompletion?(doc, success)
+                
+            }
         }
     }
 
@@ -1531,23 +1624,6 @@ extension FTRootViewController {
         self.docuemntViewController?.startRecordingOnAudioNotebook()
     }
 
-    private func getTopOffset() -> CGFloat {
-        var topOffset: CGFloat = 0.0
-        if UIDevice().isIphone() || self.view.frame.width < FTToolbarConfig.compactModeThreshold {
-            var extraHeight: CGFloat = 0.0
-            if UIDevice.current.isPhone() {
-                if let window = UIApplication.shared.keyWindow {
-                    let topSafeAreaInset = window.safeAreaInsets.top
-                    if topSafeAreaInset > 0 {
-                        extraHeight = topSafeAreaInset
-                    }
-                }
-            }
-            topOffset = FTToolbarConfig.Height.compact + extraHeight
-        }
-        return topOffset
-    }
-
     func switchToPDFViewer(_ documentInfo : FTDocumentOpenInfo,
                            animate anim: Bool,
                            onCompletion : (() -> Void)?) {
@@ -1568,6 +1644,7 @@ extension FTRootViewController {
         DispatchQueue.main.async { [weak self] in
             let oldController = self?.noteBookSplitController;
 
+            FTCLSLog("Book: Preparing Note Split")
             if let splitscreen = self?.deskController(docInfo: documentInfo) {
                 self?.presentNotebookSplitController(splitscreen: splitscreen,
                                                      oldController: oldController,
@@ -1577,6 +1654,7 @@ extension FTRootViewController {
                         docitem.updateLastOpenedDate();
                         (document as? FTNoteshelfDocument)?.setLastOpenedDate(docitem.fileLastOpenedDate)
                     }
+                    FTCLSLog("Book: Note Split Presented")
                     blockToCall();
                 }
             }
@@ -1615,10 +1693,12 @@ private extension FTRootViewController {
         var controllerToPresent: UIViewController? = self;
         if let presentedController = self.presentedViewController,
            !presentedController.isBeingDismissed {
-            if presentedController.isMember(of: FTCreateNotebookViewController.classForCoder()),
-               let snapView = presentedController.view.snapshotView(afterScreenUpdates: false) {
-                self.contentView.addSubview(snapView);
-                snapshotViews.append(snapView);
+            if let createNBController = presentedController as? FTCreateNotebookViewController {
+                if let snapView = createNBController.snapshotView() {
+                    self.contentView.addSubview(snapView);
+                    snapshotViews.append(snapView);
+                }
+                FTCLSLog("Book: New NB Screen Snapshot")
                 presentedController.dismiss(animated: false)
             }
             else {
@@ -1634,7 +1714,12 @@ private extension FTRootViewController {
         splitscreen.transitioningDelegate = splitscreen.contentTransitionDelegate;
         splitscreen.modalPresentationStyle = .custom;
         #endif
+        FTCLSLog("Book: Presenting UI")
+        let createNotebookController = (self.rootContentViewController as? UIViewController)?.children.filter{$0 is FTCreateNotebookViewController};
         controllerToPresent?.present(splitscreen, animated: animate,completion: { [weak splitscreen] in
+            createNotebookController?.forEach { eachItem in
+                eachItem.dismiss(animated: false, completion: nil);
+            }
             snapshotViews.forEach { eachView in
                 eachView.removeFromSuperview();
             }
@@ -1715,5 +1800,117 @@ extension FTRootViewController: SFSafariViewControllerDelegate {
 
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
         self.retryiCloudUnavaialbility()
+    }
+}
+
+
+private var launchTracker: FTAppLaunchTracker?
+private class FTAppLaunchTracker: NSObject {
+    private weak var rootViewController: FTRootViewController?
+    let delayedLaunchKey = "DelayedLaunch";
+    var startTime: TimeInterval = Date.timeIntervalSinceReferenceDate;
+    
+    required init(rootViewController controller: FTRootViewController?) {
+        super.init()
+        if let _controller = controller {
+            self.rootViewController = _controller;
+            NotificationCenter.default.addObserver(self, selector: #selector(sceneWillEnterForeground(_:)), name: UIApplication.sceneWillEnterForeground, object: _controller.sceneToObserve)
+            NotificationCenter.default.addObserver(self, selector: #selector(sceneWillResignActive(_:)), name: UIApplication.sceneDidEnterBackground, object: _controller.sceneToObserve)
+        }
+    }
+    
+    @objc private func sceneWillEnterForeground(_  notification: Notification) {
+        self.scheduleLaunchWaitError();
+    }
+    
+    @objc private func sceneWillResignActive(_  notification: Notification) {
+        self.cancelLaunchWaitError(false);
+    }
+    
+    @objc func log5SecondWaitError() {
+        FTLogError("App Launch Failed - 5")
+    }
+    @objc func log10SecondWaitError() {
+        FTLogError("App Launch Failed - 10")
+    }
+    @objc func log20SecondWaitError() {
+        FTLogError("App Launch Failed - 20")
+    }
+    @objc func log60SecondWaitError() {
+        FTLogError("App Launch Failed - 60")
+        UserDefaults.standard.setValue(true, forKey: delayedLaunchKey)
+        self.rootViewController?.showAppLaunchDelayAlert();
+    }
+    
+    func scheduleLaunchWaitError() {
+        self.perform(#selector(self.log5SecondWaitError), with: nil, afterDelay: 5);
+        self.perform(#selector(self.log10SecondWaitError), with: nil, afterDelay: 10);
+        self.perform(#selector(self.log20SecondWaitError), with: nil, afterDelay: 20);
+        self.perform(#selector(self.log60SecondWaitError), with: nil, afterDelay: 60);
+    }
+    
+    func cancelLaunchWaitError(_ finalize: Bool = true) {
+        NSObject.cancelPreviousPerformRequests(withTarget: self);
+        if finalize {
+            self.logTimeTaken();
+        }
+    }
+    
+    func logTimeTaken() {
+        let time = Int(Date.timeIntervalSinceReferenceDate - self.startTime)
+        if time >= 60 {
+            FTLogError("App Launch Time", attributes: ["Time" : time])
+        }
+        else if UserDefaults.standard.bool(forKey: delayedLaunchKey) {
+            UserDefaults.standard.removeObject(forKey: delayedLaunchKey)
+            FTLogError("App Launch Recovered", attributes: ["Time" : time])
+        }
+    }
+}
+
+fileprivate extension FTRootViewController {
+    func scheduleLaunchWaitError() {
+        self.cancelLaunchWaitError();
+        launchTracker = FTAppLaunchTracker(rootViewController: self);
+        launchTracker?.scheduleLaunchWaitError();
+    }
+    
+    func cancelLaunchWaitError() {
+        launchTracker?.cancelLaunchWaitError();
+        launchTracker = nil;
+    }
+    
+    func showAppLaunchDelayAlert() {
+        guard FTUserDefaults.defaults().iCloudOn else {
+            return;
+        }
+        let alertContorller = UIAlertController(title: "applaunch.delay.msg".localized, message: nil, preferredStyle: .alert)
+        let closeAction = UIAlertAction(title: "Close".localized, style: .default);
+        let support = UIAlertAction(title: "LearnMore".localized, style: .default) { [weak self] _ in
+            guard let controller = self else {
+                return;
+            }
+            FTZenDeskManager.shared.showArticle("32015682831385", in: controller, completion: nil);
+        }
+        alertContorller.addAction(closeAction)
+        alertContorller.addAction(support)
+        self.present(alertContorller, animated: true);
+    }
+}
+
+private extension FTRootViewController {
+    func showPremiumUpgradeAdScreenIfNeeded() -> Bool {
+        if !FTIAPurchaseHelper.shared.isPremiumUser && FTCommonUtils.isWithinEarthDayRange() {
+            UserDefaults().appScreenLaunchCount += 1
+            if self.presentedViewController is FTIAPContainerViewController {
+                return true;
+            }
+            if UserDefaults().appScreenLaunchCount > 1, !UserDefaults().isEarthDayOffScreenViewed {
+                self.showPremiumUpgradeScreen()
+                UserDefaults().isEarthDayOffScreenViewed = true
+                return true;
+            }
+        }
+        return false
     }
 }

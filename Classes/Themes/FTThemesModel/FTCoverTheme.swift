@@ -67,9 +67,9 @@ class FTCoverTheme: FTTheme {
         return reqURL
     }()
 
-    override func preview() async -> UIImage? {
+    override func preview() -> UIImage? {
         if let url = self.thumbnailURL {
-            return UIImage.init(contentsOfFile: url.path)
+            return UIImage(contentsOfFile: url.path)
         }
         return nil
     }
@@ -127,7 +127,7 @@ class FTNoCoverTheme: FTCoverTheme {
         return true
     }
 
-    override func preview() async -> UIImage? {
+    override func preview() -> UIImage? {
         return self.themeThumbnail()
     }
 }

@@ -24,10 +24,16 @@ class FTGroupItem : NSObject,FTGroupItemProtocol, FTShelfItemSorting
         }
     }
 
-    private(set) lazy var indexPlistContent: FTSortingIndexPlistContent? = {
-        return FTSortingIndexPlistContent.init(parent: self)
-    }()
+    private var _indexPlistContent: FTSortingIndexPlistContent?
+    var indexPlistContent: FTSortingIndexPlistContent? {
+        if nil == _indexPlistContent {
+            _indexPlistContent = FTSortingIndexPlistContent.init(parent: self)
+        }
+        return _indexPlistContent;
+    };
+    
     lazy var indexCache: FTCustomSortingCache? = {
+        self.indexPlistContent?.handleSortIndexFileUpdates(nil);
         return FTCustomSortingCache(withContainer: self)
     }()
     
@@ -265,10 +271,10 @@ extension FTGroupItem: FTSortIndexContainerProtocol {
     //If supporting multiple levels of folder structure, this has to be changed accordingly
     func handleSortIndexFileUpdates(_ infoItem: Any?) {
         if let metadata = infoItem as? NSMetadataItem {
-            self.indexPlistContent?.handleSortIndexFileUpdates(metadata)
+            self._indexPlistContent?.handleSortIndexFileUpdates(metadata)
         }
         else {
-            self.indexPlistContent?.handleSortIndexFileUpdates(nil)
+            self._indexPlistContent?.handleSortIndexFileUpdates(nil)
         }
     }
 }

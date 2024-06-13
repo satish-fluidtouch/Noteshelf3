@@ -166,8 +166,9 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
             FTIAPurchaseHelper.shared.showIAPAlert(on: self);
             return;
         }
-        let loadingIndicatorView =  FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: NSLocalizedString("shelf.newNotebook.creating", comment: "Creating"));
+        let loadingIndicatorView =  FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: NSLocalizedString("shelf.newNotebook.creating", comment: "Creating"),andDelay: 0.3);
         if isQuickCreate {
+            FTNoteshelfDocumentProvider.shared.disableCloudUpdates()
             FTNotebookCreation().quickCreateNotebook(collection: collection, group: group) {[weak self] error, shelfItem in
                 loadingIndicatorView.hide()
                 if error != nil {
@@ -181,13 +182,16 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
                                                               pin: notebookDetails?.documentPin?.pin,
                                                               addToRecent: true,
                                                               isQuickCreate: true, createWithAudio: false,
-                                                              onCompletion: nil);
+                                                              onCompletion: { document, success in
+                            FTNoteshelfDocumentProvider.shared.enableCloudUpdates()
+                        });
                     }
-                    onCompletion(error,shelfItem)
                 }
+                onCompletion(error,shelfItem)
             }
         } else {
             if let notebookDetails = notebookDetails {
+                FTNoteshelfDocumentProvider.shared.disableCloudUpdates()
                 FTNotebookCreation().createNewNotebookInside(collection: collection, group: group, notebookDetails: notebookDetails,mode: mode) { [weak self] error, shelfItemProtocol in
                     loadingIndicatorView.hide()
                     if error != nil {
@@ -201,10 +205,12 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
                                                                   pin: notebookDetails.documentPin?.pin,
                                                                   addToRecent: true,
                                                                   isQuickCreate: false, createWithAudio: false,
-                                                                  onCompletion: nil);
+                                                                  onCompletion: { (_, _) in
+                                FTNoteshelfDocumentProvider.shared.enableCloudUpdates()
+                            });
                         }
-                        onCompletion(error,shelfItemProtocol)
                     }
+                    onCompletion(error,shelfItemProtocol)
                 }
             }
         }
@@ -537,10 +543,22 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
     //TODO: (AK) Discuss with RK
     func openNotebook(_ shelfItem: FTShelfItemProtocol, shelfItemDetails: FTCurrentShelfItem?, animate: Bool, isQuickCreate: Bool, pageIndex: Int?) {
         if let shelfCollection = shelfItem.shelfCollection ,!shelfCollection.isTrash  {
-            if !self.openingBookInProgress {
-                self.openNotebookAndAskPasswordIfNeeded(shelfItem, animate: animate, presentWithAnimation: false, pin: shelfItemDetails?.pin, addToRecent: true, isQuickCreate: isQuickCreate,createWithAudio: false, pageIndex: pageIndex, onCompletion: nil)
-            }else {
-                NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
+            let t1 = Date.timeIntervalSinceReferenceDate;
+            self.openNotebookAndAskPasswordIfNeeded(shelfItem
+                                                    , animate: animate
+                                                    , presentWithAnimation: false
+                                                    , pin: shelfItemDetails?.pin
+                                                    , addToRecent: true
+                                                    , isQuickCreate: isQuickCreate
+                                                    ,createWithAudio: false
+                                                    , pageIndex: pageIndex) { _, success in
+                if success {
+                    let timeTaken = Int(Date.timeIntervalSinceReferenceDate - t1);
+                    if timeTaken > 5 {
+                        FTLogError("Notebook Open Delayed", attributes: ["Time" : timeTaken])
+                    }
+                }
+                debugLog("Doc open in progress Complete: \(shelfItem.displayTitle)")
             }
         } else {
             UIAlertController.showAlert(withTitle: "", message: "trash.alert.cannotOpenNotebook".localized, from: self, withCompletionHandler: nil)
@@ -922,7 +940,7 @@ extension FTShelfSplitViewController {
                                         }
                                      })
                 } else {
-                    FTDocumentFactory.duplicateDocumentAt(doucmentItem, onCompletion: { (_, document) in
+                    FTDocumentFactory.duplicateDocumentAt(doucmentItem, onCompletion: { (_,coverImage, document) in
                         if let duplicatedDocument = document {
                             doucmentItem.shelfCollection.addShelfItemForDocument(duplicatedDocument.URL,
                                                                                  toTitle: doucmentItem.title,
@@ -1002,12 +1020,15 @@ extension FTShelfSplitViewController {
             }
         }
         else {
-            FTDocumentFactory.duplicateDocumentAt(eachItem) { (error, document) in
+            FTDocumentFactory.duplicateDocumentAt(eachItem) { (error,coverImage,document) in
                 if let doc = document {
                     toGroup?.shelfCollection.addShelfItemForDocument(doc.URL,
                         toTitle: eachItem.title,
                         toGroup: toGroup,
-                        onCompletion: { (_, _) in
+                        onCompletion: { (_, docItem) in
+                        if let item = docItem, let img = coverImage {
+                            FTURLReadThumbnailManager.sharedInstance.addImageToCache(image: img, url: item.URL)
+                        }
                             self.duplicateGroupItems(items: originalGroupItems, toGroup: toGroup) { error, group in
                                 //self.reloadSnapShot(with: false)
                                 onCompletion(error, group)
@@ -1462,21 +1483,34 @@ extension FTShelfSplitViewController {
                                                                                        from: self,
                                                                                        withText: NSLocalizedString("Creating", comment: "Creating..."))
             self.currentShelfViewModel?.removeObserversForShelfItems()
-            self.createNotebookWithAudioItem(nil, isiWatchDocument: false,
-                                             collection: self.shelfItemCollection,
-                                             groupItem: self.currentShelfViewModel?.groupItem) { [weak self](shelfItem, error) in
-                guard let `self` = self,available else { return }
-                loadingIndicatorViewController.hide();
-                if error == nil, let shelfItem {
-                    self.currentShelfViewModel?.addObserversForShelfItems()
-                    self.currentShelfViewModel?.setcurrentActiveShelfItemUsing(shelfItem, isQuickCreated: true)
-                    self.showNotebookAskPasswordIfNeeded(shelfItem, animate: true, pin: nil, addToRecent: false, isQuickCreate: false, createWithAudio: true) { _, success in
-                        //For mac, audio note will be added at FTBookSessionRootViewController level.
-                        #if !targetEnvironment(macCatalyst)
-                        if success, let rootController = self.parent as? FTRootViewController {
-                            rootController.startRecordingOnAudioNotebook()
+
+            if nil == self.shelfItemCollection {
+                FTNoteshelfDocumentProvider.shared.uncategorizedNotesCollection { collection in
+                    if let collection {
+                        createNotebookWithAudio(collection: collection)
+                    }
+                }
+            } else {
+                createNotebookWithAudio(collection: shelfItemCollection)
+            }
+
+            func createNotebookWithAudio(collection: FTShelfItemCollection?) {
+                self.createNotebookWithAudioItem(nil, isiWatchDocument: false,
+                                                 collection: collection,
+                                                 groupItem: self.currentShelfViewModel?.groupItem) { [weak self](shelfItem, error) in
+                    guard let `self` = self,available else { return }
+                    loadingIndicatorViewController.hide();
+                    if error == nil, let shelfItem {
+                        self.currentShelfViewModel?.addObserversForShelfItems()
+                        self.currentShelfViewModel?.setcurrentActiveShelfItemUsing(shelfItem, isQuickCreated: true)
+                        self.showNotebookAskPasswordIfNeeded(shelfItem, animate: true, pin: nil, addToRecent: false, isQuickCreate: false, createWithAudio: true) { _, success in
+                            //For mac, audio note will be added at FTBookSessionRootViewController level.
+#if !targetEnvironment(macCatalyst)
+                            if success, let rootController = self.parent as? FTRootViewController {
+                                rootController.startRecordingOnAudioNotebook()
+                            }
+#endif
                         }
-                        #endif
                     }
                 }
             }

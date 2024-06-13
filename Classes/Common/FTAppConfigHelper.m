@@ -23,7 +23,6 @@ NSString *const FTRemoteConfigNewValueKey = @"newValue";
 #if !TARGET_OS_MACCATALYST
 @property (strong,readwrite) FIRRemoteConfig *appRemoteConfig;
 #endif
-
 @end
 
 @implementation FTAppConfigHelper
@@ -44,7 +43,7 @@ NSString *const FTRemoteConfigNewValueKey = @"newValue";
 {
     #if !TARGET_OS_MACCATALYST
     self.appRemoteConfig = [FIRRemoteConfig remoteConfig];
-    NSDictionary *defaultValues = @{[self showiRateKey] : @(false),
+    NSDictionary *defaultValues = @{[self hideiRateKey] : @(false),
                                            [self downloadableThemesGUIDKey] : @"49518704-4c22-11e7-b114-b2f933d5fe66",
                                            [self themesMetadataVersionKey] : @(2.0),
                                            [self clipartFilterVersionKey] : @(1),
@@ -91,7 +90,7 @@ NSString *const FTRemoteConfigNewValueKey = @"newValue";
 #if DEBUG
     return  true;
 #endif
-    return [self.appRemoteConfig configValueForKey:[self showiRateKey]].boolValue;
+    return !([self.appRemoteConfig configValueForKey:[self hideiRateKey]].boolValue);
     #else
     return FALSE;
     #endif
@@ -100,11 +99,12 @@ NSString *const FTRemoteConfigNewValueKey = @"newValue";
 -(NSDictionary* _Nonnull)logFileInfo
 {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:@([self shouldShowiRate]) forKey:[self showiRateKey]];
+    [dict setObject:@(![self shouldShowiRate]) forKey:[self hideiRateKey]];
     return dict;
 }
 
--(NSString *)showiRateKey
+// By default iRate is enabled. in case we want to stop it add hideiRateKey in remote config and set it to true.
+-(NSString *)showiRateKey DEPRECATED_MSG_ATTRIBUTE("Use hideiRateKey instead")
 {
     /*
      DEBUG      :   dev_enable_irate_appversion
@@ -112,6 +112,17 @@ NSString *const FTRemoteConfigNewValueKey = @"newValue";
      RELEASE    :   prod_enable_irate_appversion
      */
     NSString *key = [NSString stringWithFormat:@"%@_enable_irate_%@",appEnviromentPrefix(),[appVersion() stringByReplacingOccurrencesOfString:@"." withString:@"_"]];
+    return key;
+}
+
+-(NSString *)hideiRateKey
+{
+    /*
+     DEBUG      :   dev_disable_irate_appversion
+     BETA      :   beta_disable_irate_appversion
+     RELEASE    :   prod_disable_irate_appversion
+     */
+    NSString *key = [NSString stringWithFormat:@"%@_disable_irate_%@",appEnviromentPrefix(),[appVersion() stringByReplacingOccurrencesOfString:@"." withString:@"_"]];
     return key;
 }
 

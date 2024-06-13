@@ -10,10 +10,10 @@ import UIKit
 
 import MobileCoreServices
 
- class FTImageAnnotationViewController: FTImageResizeViewController {
+class FTImageAnnotationViewController: FTImageResizeViewController {
     
     weak var delegate: FTAnnotationEditControllerDelegate?
-
+    
     private var scale : CGFloat = 1;
     
     private var _annotation: FTAnnotation?
@@ -27,9 +27,11 @@ import MobileCoreServices
         return true
     }
     
+    private weak var updateAnnotationObserver: NSObjectProtocol?
+    
     required init?(withAnnotation annotation: FTAnnotation,
-                  delegate: FTAnnotationEditControllerDelegate?,
-                  mode: FTAnnotationMode)
+                   delegate: FTAnnotationEditControllerDelegate?,
+                   mode: FTAnnotationMode)
     {
         guard let imgAnnotation = annotation as? FTImageAnnotation, let image = imgAnnotation.image else { return nil }
         super.init(withImage: image)
@@ -39,24 +41,30 @@ import MobileCoreServices
         self.photoMode = .normal
         self.view.autoresizingMask = [UIView.AutoresizingMask.init(rawValue: 0)];
         self.allowsEditing = imgAnnotation.allowsEditing
-        self.allowsResizing = imgAnnotation.allowsResize            
+        self.allowsResizing = imgAnnotation.allowsResize
         self.allowsLocking = imgAnnotation.allowsLocking
-
+        
         self.view.transform = imgAnnotation.imageTransformMatrix
         let contentScale = delegate?.contentScale() ?? CGFloat(1);
         let frame = CGRectScale(annotation.boundingRect, contentScale)
         self.updateContentFrame(frame)
-        #if targetEnvironment(macCatalyst)
+#if targetEnvironment(macCatalyst)
         let contextMenu = UIContextMenuInteraction.init(delegate: self)
         self.view.addInteraction(contextMenu)
-        #else
-//        showMenu(true)
-        #endif
+#else
+        //        showMenu(true)
+#endif
         
-        NotificationCenter.default.addObserver(forName: Notification.Name.didUpdateAnnotationNotification,
-                                               object: annotation,
-                                               queue: nil) { [weak self] (notification) in
+        self.updateAnnotationObserver = NotificationCenter.default.addObserver(forName: Notification.Name.didUpdateAnnotationNotification,
+                                                                              object: annotation,
+                                                                              queue: nil) { [weak self] (notification) in
             self?.refreshView();
+        }
+    }
+    
+    deinit {
+        if let observer = self.updateAnnotationObserver {
+            NotificationCenter.default.removeObserver(observer)
         }
     }
     
@@ -96,31 +104,31 @@ import MobileCoreServices
             self.delegate?.annotationControllerDidChange(self,undoableInfo: undoableInfo);
         }
     }
-     
-     private func updateClipAnnotation(with img: UIImage, clipUrlString: String) {
-         guard let annotation = self.annotation as? FTWebClipAnnotation else {
-             return;
-         }
-         let undoableInfo = annotation.undoInfo();
-         let rect: CGRect = self.contentFrame()
-         let scale: CGFloat = self.delegate?.contentScale() ?? 1;
-         let oneByZoom: CGFloat = 1/scale;
-         
-         annotation.version = FTImageAnnotation.defaultAnnotationVersion();
-         annotation.boundingRect = CGRectScale(rect, oneByZoom)
-         annotation.imageTransformMatrix = self.view.transform
-         annotation.image = img
-         annotation.clipString = clipUrlString
-         _annotation = annotation
-         
-         if(self.annotationMode == FTAnnotationMode.create) {
-             self.delegate?.annotationControllerDidAddAnnotation(self, annotation: self.annotation)
-             self.annotationMode = FTAnnotationMode.edit
-         }
-         else {
-             self.delegate?.annotationControllerDidChange(self,undoableInfo: undoableInfo);
-         }
-     }
+    
+    private func updateClipAnnotation(with img: UIImage, clipUrlString: String) {
+        guard let annotation = self.annotation as? FTWebClipAnnotation else {
+            return;
+        }
+        let undoableInfo = annotation.undoInfo();
+        let rect: CGRect = self.contentFrame()
+        let scale: CGFloat = self.delegate?.contentScale() ?? 1;
+        let oneByZoom: CGFloat = 1/scale;
+        
+        annotation.version = FTImageAnnotation.defaultAnnotationVersion();
+        annotation.boundingRect = CGRectScale(rect, oneByZoom)
+        annotation.imageTransformMatrix = self.view.transform
+        annotation.image = img
+        annotation.clipString = clipUrlString
+        _annotation = annotation
+        
+        if(self.annotationMode == FTAnnotationMode.create) {
+            self.delegate?.annotationControllerDidAddAnnotation(self, annotation: self.annotation)
+            self.annotationMode = FTAnnotationMode.edit
+        }
+        else {
+            self.delegate?.annotationControllerDidChange(self,undoableInfo: undoableInfo);
+        }
+    }
     
     override func deleteAnnotation() {
         // When we edit->delete->undo the annotation, refresh rect is not correct, hence updating rect.
@@ -130,7 +138,7 @@ import MobileCoreServices
         annotation.boundingRect = CGRectScale(rect, oneByZoom)
         self.delegate?.annotationControllerDidRemoveAnnotation(self, annotation: self.annotation)
     }
-
+    
     override func lockAnnotation() {
         self.annotation.isLocked = true
         endEditingAnnotation()
@@ -168,13 +176,13 @@ import MobileCoreServices
     override func moveAnnotationToBack() {
         self.delegate?.moveAnnotationToBack(self.annotation)
     }
-     
-     override func editWebClip() {
-         guard let topVC = self.view.window?.visibleViewController else { return }
-         guard let clipUrlStr = (annotation as? FTWebClipAnnotation)?.clipString else { return }
-         FTWebClipViewController.showWebClip(overViewController: topVC,defaultURLString: clipUrlStr, withDelegate: self)
-     }
-
+    
+    override func editWebClip() {
+        guard let topVC = self.view.window?.visibleViewController else { return }
+        guard let clipUrlStr = (annotation as? FTWebClipAnnotation)?.clipString else { return }
+        FTWebClipViewController.showWebClip(overViewController: topVC,defaultURLString: clipUrlStr, withDelegate: self)
+    }
+    
     //MARK: - display image editor
     override func displayEditImageView(_ image: UIImage?) {
         
@@ -188,8 +196,8 @@ import MobileCoreServices
             topController?.present(editImageController, animated: true)
         }
     }
-
-     private func reset() {
+    
+    private func reset() {
         if let superview = self.view.superview {
             let contentScale = delegate?.contentScale() ?? CGFloat(1);
             var frame = sourceImage.aspectFrame(withinScreenArea: superview.frame, zoomScale: contentScale)
@@ -199,7 +207,7 @@ import MobileCoreServices
         perform(#selector(showControlPoints(animate:)), with: false, afterDelay: 0.5)
     }
     
-
+    
     //MARK: - Gesture
     override func doubleTapGestureRecognized(_ gestureRecognizer: UIGestureRecognizer) {
         FTCLSLog("Image Edit Enter (tap): \(NSCoder.string(for: sourceImage.size))")
@@ -271,12 +279,12 @@ extension FTImageAnnotationViewController : FTAnnotationEditControllerInterface 
     {
         
     }
-
+    
     func updateViewToCurrentScale(fromScale : CGFloat) {
         if let del = self.delegate, del.contentScale() != fromScale {
             var currentFrame = self.contentFrame();
             currentFrame = CGRectScale(currentFrame, 1/fromScale);
-
+            
             let newFrame = CGRectScale(currentFrame, del.contentScale());
             self.updateContentFrame(newFrame);
         }
@@ -291,7 +299,7 @@ extension FTImageAnnotationViewController: FTWebClipControllerDelegate {
     func didCaptureScreenShot(screenShot: UIImage?, clipUrlString: String?) {
         if let img = screenShot {
             self.contentImageView?.image = img
-           updateClipAnnotation(with: img, clipUrlString: clipUrlString ?? webClipDefaultURL)
+            updateClipAnnotation(with: img, clipUrlString: clipUrlString ?? webClipDefaultURL)
         }
     }
 }

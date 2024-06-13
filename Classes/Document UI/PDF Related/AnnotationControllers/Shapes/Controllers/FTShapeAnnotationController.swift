@@ -62,6 +62,9 @@ class FTShapeAnnotationController: FTAnnotationEditController {
         return _renderer
     }
     
+    private weak var updateAnnotationObserver: NSObjectProtocol?;
+    private weak var replaceAnnoationObserver: NSObjectProtocol?
+    
     private(set) var shapeAnnotation: FTShapeAnnotation;
     private var initialUndoableInfo: FTUndoableInfo;
     // Don't make below viewmodel weak as this is needed for eyedropper delegate to be implemented here(since we are dismissing color edit controller)
@@ -86,12 +89,12 @@ class FTShapeAnnotationController: FTAnnotationEditController {
          if (shapeAnnotation.shape?.type() == .pentagon) {
             shapeAnnotation.updateShapeSides(sides: CGFloat(shapeAnnotation.shapeData.numberOfSides))
         }
-        NotificationCenter.default.addObserver(forName: Notification.Name.didUpdateAnnotationNotification,
+        self.updateAnnotationObserver = NotificationCenter.default.addObserver(forName: Notification.Name.didUpdateAnnotationNotification,
                                                object: annotation,
                                                queue: nil) { [weak self] (_) in
             self?.refreshView();
         }
-        NotificationCenter.default.addObserver(forName: Notification.Name.didReplaceAnnotationNotification,
+        self.replaceAnnoationObserver = NotificationCenter.default.addObserver(forName: Notification.Name.didReplaceAnnotationNotification,
                                                object: shapeAnnotation,
                                                queue: nil) { [weak self] (_) in
             self?.didReplaceShape();
@@ -140,6 +143,12 @@ class FTShapeAnnotationController: FTAnnotationEditController {
     
     deinit {
         resetDisplayLink()
+        if let observer = self.updateAnnotationObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+        if let observer = self.replaceAnnoationObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -711,10 +720,12 @@ private extension FTShapeAnnotationController {
             track("activeshape_rotated", screenName: FTScreenNames.shapes)
         }
         resetActions()
-        NSObject.cancelPreviousPerformRequests(withTarget: self,
-                                               selector: #selector(generateStrokeSegments),
-                                               object: nil)
-        self.perform(#selector(generateStrokeSegments), with: nil, afterDelay: 0.1);
+        if !shapeAnnotation.inLineEditing {
+            NSObject.cancelPreviousPerformRequests(withTarget: self,
+                                                   selector: #selector(generateStrokeSegments),
+                                                   object: nil)
+            self.perform(#selector(generateStrokeSegments), with: nil, afterDelay: 0.1);
+        }
         self.displayLink?.isPaused = true
         publishChanges(nil)
     }

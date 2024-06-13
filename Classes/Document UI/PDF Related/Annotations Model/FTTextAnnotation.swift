@@ -196,11 +196,6 @@ class FTTextAnnotation: FTAnnotation,FTImageRenderingProtocol {
     override func canSelectUnderLassoSelection() -> Bool {
         return FTRackPreferenceState.allowAnnotations().contains(annotationType)
     }
-    
-    override func canCancelEndEditingAnnotaionWhenPopOverPresents() -> Bool {
-        return true
-    }
-
 }
 
 //MARK:- Private
@@ -234,11 +229,10 @@ private extension FTTextAnnotation
             mutStr.endEditing();
             mutStr.applyScale(scaleTpApply, originalScaleToApply: CGFloat(self.transformScale)*scaleTpApply);
 
-            UIGraphicsBeginImageContextWithOptions(imageSize, false, 0);
-            guard let context = UIGraphicsGetCurrentContext() else {
-                UIGraphicsEndImageContext();
+            guard let ftcontext = FTImageContext.imageContext(imageSize) else {
                 return nil
             }
+            let context = ftcontext.cgContext;
             var inset = FTTextView.textContainerInset(self.version);
             inset = UIEdgeInsetsScale(inset, CGFloat(self.transformScale)*scaleTpApply);
 
@@ -251,9 +245,7 @@ private extension FTTextAnnotation
             let imageOffset = (drawingRect.width - imageSize.width)*0.5;
             context.translateBy(x: inset.left+imageOffset, y: inset.top);
             layouter.drawFlipped(in: context, bounds: CGRect(origin: CGPoint.zero, size: layouter.usedSize));
-
-            image =  UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
+            image = ftcontext.uiImage();
 
             if(self.rotationAngle != 0) {
                 image = image?.imageRotatedByRadians(self.rotationAngle);
@@ -418,6 +410,7 @@ extension FTTextAnnotation
 {
     override func deepCopyAnnotation(_ toPage: FTPageProtocol, onCompletion: @escaping (FTAnnotation?) -> Void) {
         let annotation = FTTextAnnotation.init(withPage : toPage)
+        annotation.groupId = self.groupId;
         annotation.boundingRect = self.boundingRect;
         annotation.isReadonly = self.isReadonly;
         annotation.version = self.version;

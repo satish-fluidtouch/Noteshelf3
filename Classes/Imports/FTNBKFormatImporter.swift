@@ -14,14 +14,16 @@ class FTNBKFormatImporter: NSObject,SSZipArchiveDelegate {
     fileprivate var importURL : URL!;
     fileprivate weak var collection : FTShelfItemCollection!;
     fileprivate weak var group : FTGroupItemProtocol?;
-    
+    fileprivate weak var shelfItem : FTShelfItemProtocol?;
+
     var deleteSourceFileOnCompletion = true;
     
-    convenience init(url : URL, collection : FTShelfItemCollection, group: FTGroupItemProtocol?) {
+    convenience init(url : URL, collection : FTShelfItemCollection, group: FTGroupItemProtocol?, shelfItem: FTShelfItemProtocol?) {
         self.init();
         self.importURL = url;
         self.collection = collection;
         self.group = group;
+        self.shelfItem = shelfItem;
     }
     
     func startImporting(onUpdate : ((CGFloat) -> Void)?,
@@ -40,7 +42,13 @@ class FTNBKFormatImporter: NSObject,SSZipArchiveDelegate {
                 onCompletion(error,nil);
             }
             else {
-                FTDocumentFactory.prepareForImportingAtURL(URL.init(fileURLWithPath: path!)) { (error, document) in
+                let filePath = URL(fileURLWithPath: path!);
+                let recoveryPath = filePath.appending(path: NOTEBOOK_RECOVERY_PLIST);
+                if FileManager.default.fileExists(atPath: recoveryPath.path(percentEncoded: false)) {
+                    try? FileManager.default.removeItem(at: recoveryPath)
+                }
+                
+                FTDocumentFactory.prepareForImportingAtURL(filePath) { (error, document) in
                     if(nil == error) {
                         let fileURL = document?.URL;
                         let title = fileURL!.deletingPathExtension().lastPathComponent;
@@ -48,12 +56,12 @@ class FTNBKFormatImporter: NSObject,SSZipArchiveDelegate {
                                                                 toTitle: title,
                                                                 toGroup: self.group,
                                                                 onCompletion: { (error, item) in
-                                                                    if(self.deleteSourceFileOnCompletion) {
-                                                                        try? FileManager().removeItem(at: self.importURL);
-                                                                    }
-                                                                    endBackgroundTask(task);
-                                                                    onCompletion(error,item);
-                                                                    FTCLSLog("Book Imported");
+                            if(self.deleteSourceFileOnCompletion) {
+                                try? FileManager().removeItem(at: self.importURL);
+                            }
+                            endBackgroundTask(task);
+                            onCompletion(error,item);
+                            FTCLSLog("Book Imported");
                         });
                     }
                     else {

@@ -91,6 +91,7 @@ final class FTAddMenuToolsSection: FTToolbarSection {
         .pixabay,
         .emojis,
         .stickers,
+        .savedClips
     ]
     
     var displayTools: [FTDeskCenterPanelTool] = []
@@ -108,7 +109,11 @@ final class FTShortcutsToolsSection: FTToolbarSection {
         .tag,
         .rotatePage,
         .duplicatePage,
-        .deletePage
+        .deletePage,
+        .scrolling,
+        .camera,
+        .recentNotes
+        
     ]
 
     var displayTools: [FTDeskCenterPanelTool] = []

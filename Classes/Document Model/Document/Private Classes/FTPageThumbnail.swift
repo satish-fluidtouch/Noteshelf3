@@ -15,6 +15,9 @@ class FTPageThumbnail : NSObject,FTPageThumbnailProtocol {
     fileprivate var pageUUID : String!;
     fileprivate weak var thumbnailGenerator: FTThumbnailGenerator?
     
+    private weak var thumbnailNotificationObserver:  NSObjectProtocol?;
+    private weak var memoryWarningNotificationObserver:  NSObjectProtocol?;
+    
     @objc var shouldGenerateThumbnail : Bool = false{
         didSet{
             if(oldValue != shouldGenerateThumbnail) {
@@ -27,6 +30,15 @@ class FTPageThumbnail : NSObject,FTPageThumbnailProtocol {
         }
     };
 
+    deinit {
+        if let observer = self.thumbnailNotificationObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+        if let observer = self.memoryWarningNotificationObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+    }
+
     required convenience init(page : FTPageProtocol, documentUUID: String, thumbnailGenerator: FTThumbnailGenerator?) {
         self.init();
         self.page = page;
@@ -35,13 +47,13 @@ class FTPageThumbnail : NSObject,FTPageThumbnailProtocol {
         self.thumbnailGenerator = thumbnailGenerator
         
         weak var weakSelf = self;
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "FTDidFinishGeneratingThumbnail"), object: self.page, queue: nil) { (notification) in
+        self.thumbnailNotificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "FTDidFinishGeneratingThumbnail"), object: self.page, queue: nil) { (notification) in
                 let image = notification.userInfo?["image"] as? UIImage
                 let date = notification.userInfo?["updatedDate"] as? Date
                 weakSelf?.updateThumbnail(image,updatedDate: date);
         }
         
-        NotificationCenter.default.addObserver(forName: UIApplication.didReceiveMemoryWarningNotification, object: nil, queue: nil) { _ in
+        self.memoryWarningNotificationObserver = NotificationCenter.default.addObserver(forName: UIApplication.didReceiveMemoryWarningNotification, object: nil, queue: nil) { _ in
             weakSelf?.thumbImage = nil;
         }
     }

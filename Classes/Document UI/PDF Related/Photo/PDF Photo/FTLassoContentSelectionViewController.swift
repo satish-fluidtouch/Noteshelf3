@@ -29,7 +29,7 @@ class FTLassoContentSelectionViewController: UIViewController {
     private var _initialFrame : CGRect?
     private weak var editorController : FTImageResizeViewController?
     weak var delegate : FTLassoContentSelectionDelegate?
-    
+    var isGrouped = false
     var initialFrame : CGRect {
         get{
             return _initialFrame!
@@ -77,6 +77,13 @@ class FTLassoContentSelectionViewController: UIViewController {
     
     func deleteAnnotation() {
         self.delegate?.deleteLassoSelectedAnnotation(controller: self)
+        trackGroupedClips(with: FTNotebookEventTracker.activeclip_delete_tap)
+    }
+    
+    func trackGroupedClips(with event: String) {
+        if isGrouped {
+            FTNotebookEventTracker.trackNotebookEvent(with: event)
+        }
     }
     
     // MARK: - Gesture

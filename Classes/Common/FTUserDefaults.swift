@@ -141,6 +141,7 @@ class FTUserDefaults : NSObject
     @objc class func registerDefaults(isFreshInstall freshInstall : Bool)
     {
         if freshInstall {
+            UserDefaults.standard.shelfDisplayStyle = FTShelfDisplayStyle.Icon.rawValue;
             UserDefaults.registerNotebookSettingDefaultsForFreshInstall()
             UserDefaults.standard.set(Date().timeIntervalSinceReferenceDate, forKey: APP_Installed_Key)
         } else {
@@ -265,7 +266,18 @@ class FTUserDefaults : NSObject
         }
         UserDefaults.standard.synchronize();
     }
-    
+
+    class var selectedClipCategory: String? {
+        get {
+            if let savedCategory = UserDefaults.standard.string(forKey: "selectedClipCategory") {
+                return savedCategory
+            }
+            return nil
+        } set {
+            UserDefaults.standard.setValue(newValue, forKey: "selectedClipCategory")
+        }
+    }
+
 }
 
 
@@ -540,6 +552,56 @@ extension UserDefaults {
         }
         set {
             self.set(newValue, forKey: "iCloudOn")
+            self.synchronize()
+        }
+    }
+    
+    var appScreenLaunchCount : Int {
+        get {
+            return self.integer(forKey: "appScreenLaunchCount");
+        }
+        set {
+            self.set(newValue, forKey: "appScreenLaunchCount");
+            self.synchronize()
+        }
+    }
+    
+    var isEarthDayOffScreenViewed : Bool {
+        get {
+            return self.bool(forKey: "isEarthDayOffScreenViewed");
+        }
+        set {
+            self.set(newValue, forKey: "isEarthDayOffScreenViewed");
+            self.synchronize()
+        }
+    }
+    
+    @objc dynamic var showStatusBar: Bool {
+        get {
+            return self.bool(forKey: "showStatusBar")
+        }
+        set {
+            self.set(newValue, forKey: "showStatusBar")
+            self.synchronize()
+        }
+    }
+    
+    @objc dynamic var statusBarwhatsNewSwitch: Bool {
+        get {
+            return self.bool(forKey: "statusBarwhatsNewSwitch")
+        }
+        set {
+            self.set(newValue, forKey: "statusBarwhatsNewSwitch")
+            self.synchronize()
+        }
+    }
+    
+    @objc dynamic var isStatusBarScreenViewed: Bool {
+        get {
+            return self.bool(forKey: "isStatusBarScreenViewed")
+        }
+        set {
+            self.set(newValue, forKey: "isStatusBarScreenViewed")
             self.synchronize()
         }
     }

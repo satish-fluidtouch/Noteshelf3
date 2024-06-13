@@ -12,11 +12,17 @@ import UIKit
 
 class FTShelfItemCollectionICloud: NSObject, FTShelfItemSorting, FTShelfItemSearching, FTUniqueNameProtocol, FTShelfItemDocumentStatusChangePublisher {
     
-    private(set) lazy var indexPlistContent: FTSortingIndexPlistContent? = {
-        return FTSortingIndexPlistContent.init(parent: self)
-    }()
+    private var _indexPlistContent: FTSortingIndexPlistContent?
+    var indexPlistContent: FTSortingIndexPlistContent? {
+        if nil == _indexPlistContent {
+            _indexPlistContent = FTSortingIndexPlistContent.init(parent: self)
+        }
+        return _indexPlistContent;
+    };
+
     lazy var indexCache: FTCustomSortingCache? = {
         if self.collectionType == .default || self.collectionType == .migrated {
+            self.indexPlistContent?.handleSortIndexFileUpdates(nil)
             return FTCustomSortingCache(withContainer: self)
         }
         return nil
@@ -543,8 +549,9 @@ extension FTShelfItemCollectionICloud {
         var addedItems = [AnyObject]();
         for eachItem in metadataItems {
             autoreleasepool {
-
-                let fileURL = eachItem.URL();
+                guard let fileURL = eachItem.URL() else {
+                    return;
+                }
                 //Check if the document reference is present in documentMetadataItemHashTable.If the reference is found, its already added to cache. We just need to update the document with this metadataItem
                 var shelfItem = self.hashTable.itemFromHashTable(eachItem) as? FTShelfItemProtocol;
                 if(shelfItem == nil) {
@@ -586,7 +593,9 @@ extension FTShelfItemCollectionICloud {
 
         for eachItem in metadataItems {
             autoreleasepool {
-                let fileURL = eachItem.URL();
+                guard let fileURL = eachItem.URL() else {
+                    return;
+                }
                 let shelfItem = self.hashTable.itemFromHashTable(eachItem) as? FTShelfItemProtocol;
                 
                 if(nil != shelfItem) {
@@ -614,7 +623,9 @@ extension FTShelfItemCollectionICloud {
 
         for eachItem in metadataItems {
             autoreleasepool {
-                let fileURL = eachItem.URL();
+                guard let fileURL = eachItem.URL() else {
+                    return;
+                }
                 #if DEBUG
 //                print("Updated :\(fileURL.path.removingPercentEncoding ?? "")");
                 #endif
@@ -853,8 +864,7 @@ extension FTShelfItemCollectionICloud {
     }
 
     fileprivate func isGroup(_ fileURL: Foundation.URL) -> Bool {
-        let fileItemURL = fileURL.urlByDeleteingPrivate();
-        if(fileItemURL.pathExtension == FTFileExtension.group) {
+        if(fileURL.pathExtension == FTFileExtension.group) {
             return true;
         }
         return false;
@@ -976,13 +986,12 @@ extension FTShelfItemCollectionICloud {
 //MARK:- Manual Sorting
 extension FTShelfItemCollectionICloud: FTSortIndexContainerProtocol {
     func handleSortIndexFileUpdates(_ infoItem: Any?) {
-        if let metadata = infoItem as? NSMetadataItem {
-            let fileURL = metadata.URL()
+        if let metadata = infoItem as? NSMetadataItem,let fileURL = metadata.URL() {
             if let groupItem = self.groupItemForURL(fileURL.deletingLastPathComponent()) {
                 (groupItem as? FTSortIndexContainerProtocol)?.handleSortIndexFileUpdates(metadata)
             }
             else {
-                self.indexPlistContent?.handleSortIndexFileUpdates(metadata)
+                self._indexPlistContent?.handleSortIndexFileUpdates(metadata)
             }
         }
     }

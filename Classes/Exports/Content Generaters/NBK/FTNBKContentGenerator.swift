@@ -77,8 +77,8 @@ class FTNBKContentGenerator: FTExportContentGenerator, SSZipArchiveDelegate {
     }
     
     private func generateNBKContent(forItem item: FTItemToExport,
-                                         atDestinationPath destinationPath: String,
-                                         onCompletion completion: @escaping InternalCompletionHandler)
+                                    atDestinationPath destinationPath: String,
+                                    onCompletion completion: @escaping InternalCompletionHandler)
     {
         // Removed below main thread, to avoid deadlock in macOS Ventura while trying to drag and drop.
 //        DispatchQueue.global().async {
@@ -86,48 +86,67 @@ class FTNBKContentGenerator: FTExportContentGenerator, SSZipArchiveDelegate {
         let coordinator = NSFileCoordinator(filePresenter: nil);
             var accessError: NSError?;
             coordinator.coordinate(readingItemAt: item.shelfItem.URL,
-                                   options: .withoutChanges,
+                                   options: .forUploading,
                                    error: &accessError, byAccessor: { (newURL) in
                 let filePath: NSString = newURL.path as NSString;
-                var error: NSError?;
-                let tempLoc: NSString = self.copyFileToTempLoc(filePath, error: &error)!;
-                
-                if nil != error {
-                    self.isProcessInProgress = false;
-                    // Removed below main thread, to avoid deadlock in macOS Ventura while trying to drag and drop.
-//                    DispatchQueue.main.async(execute: {
-                        completion(nil, error,false);
-                        endBackgroundTask(self.bgtask);
-//                    });
-                    return;
+                var fileCopyError: NSError?
+                var item: FTExportItem?;
+                do {
+                    _ = try? FileManager.default.removeItem(atPath: destinationPath);
+                    try FileManager().moveItem(atPath: newURL.path(percentEncoded: false), toPath: destinationPath)
+                    let itme1 = FTExportItem()
+                    itme1.fileName = self.preferedFileName;
+                    itme1.exportFileName = (itme1.fileName as NSString).appendingPathExtension(destinationPath.pathExtension);
+                    itme1.representedObject = destinationPath;
+                    item = itme1;
                 }
-                
-                try? FileManager().removeItem(atPath: destinationPath);
-                let success = self.createZipForPackageAtPath(tempLoc as String, zipFilePath: destinationPath as NSString);
+                catch {
+                    fileCopyError = error as NSError
+                }
                 self.progress.completedUnitCount += 1;
                 self.isProcessInProgress = false;
-                if success {
-                    // Removed below main thread, to avoid deadlock in macOS Ventura while trying to drag and drop.
-//                    DispatchQueue.main.async(execute: {
-                    let destPath = destinationPath;
-                        let item = FTExportItem();
-                        item.fileName = self.preferedFileName;
-                        let url = URL(fileURLWithPath: destPath as String);
-                        item.exportFileName = (item.fileName as NSString).appendingPathExtension(url.pathExtension);
-                        item.representedObject = destPath;
-                        completion(item, nil,false);
-                        endBackgroundTask(self.bgtask);
-//                    });
-                }
-                else
-                {
-                    let error = NSError.init(domain: "FTContentGenerator", code: 1003, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("Failedtocreatebackup", comment: "Failed to create backup file. Check remaining space on your device.")])
-                    // Removed below main thread, to avoid deadlock in macOS Ventura while trying to drag and drop.
-//                    DispatchQueue.main.async(execute: {
-                        completion(nil, error,false);
-                        endBackgroundTask(self.bgtask);
-//                    });
-                }
+                completion(item, fileCopyError, (nil == fileCopyError));
+                endBackgroundTask(self.bgtask);
+                
+//                var error: NSError?;
+//                let tempLoc: NSString = self.copyFileToTempLoc(filePath, error: &error)!;
+//                
+//                if nil != error {
+//                    self.isProcessInProgress = false;
+//                    // Removed below main thread, to avoid deadlock in macOS Ventura while trying to drag and drop.
+////                    DispatchQueue.main.async(execute: {
+//                        completion(nil, error,false);
+//                        endBackgroundTask(self.bgtask);
+////                    });
+//                    return;
+//                }
+//                
+//                try? FileManager().removeItem(atPath: destinationPath);
+//                let success = self.createZipForPackageAtPath(tempLoc as String, zipFilePath: destinationPath as NSString);
+//                self.progress.completedUnitCount += 1;
+//                self.isProcessInProgress = false;
+//                if success {
+//                    // Removed below main thread, to avoid deadlock in macOS Ventura while trying to drag and drop.
+////                    DispatchQueue.main.async(execute: {
+//                    let destPath = destinationPath;
+//                        let item = FTExportItem();
+//                        item.fileName = self.preferedFileName;
+//                        let url = URL(fileURLWithPath: destPath as String);
+//                        item.exportFileName = (item.fileName as NSString).appendingPathExtension(url.pathExtension);
+//                        item.representedObject = destPath;
+//                        completion(item, nil,false);
+//                        endBackgroundTask(self.bgtask);
+////                    });
+//                }
+//                else
+//                {
+//                    let error = NSError.init(domain: "FTContentGenerator", code: 1003, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("Failedtocreatebackup", comment: "Failed to create backup file. Check remaining space on your device.")])
+//                    // Removed below main thread, to avoid deadlock in macOS Ventura while trying to drag and drop.
+////                    DispatchQueue.main.async(execute: {
+//                        completion(nil, error,false);
+//                        endBackgroundTask(self.bgtask);
+////                    });
+//                }
             });
             
             if (nil != accessError) {

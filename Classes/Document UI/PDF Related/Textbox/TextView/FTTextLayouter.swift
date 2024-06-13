@@ -56,12 +56,11 @@ class FTTextLayouter {
         let textLayout = FTTextLayouter(attributedString: transformedString, constraints: CGSize(width: 500.0, height: Double.greatestFiniteMagnitude))
 
         let drawingBounds = CGRect(origin: .zero, size: textLayout.usedSize)
-        UIGraphicsBeginImageContextWithOptions(drawingBounds.size, false, 0.0)
-        if let ctx = UIGraphicsGetCurrentContext() {
-            textLayout.drawFlipped(in: ctx, bounds: drawingBounds)
+        guard let ftcontext = FTImageContext.imageContext(drawingBounds.size, scale: 0) else {
+            return nil;
         }
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+        textLayout.drawFlipped(in: ftcontext.cgContext, bounds: drawingBounds)
+        let image = ftcontext.uiImage();
         return image
     }
 

@@ -128,7 +128,11 @@ final class FTDocumentMigration {
                          let migratedURL = try FTNoteshelfDocumentProvider.shared.migrateNS2BookToNS3(url: fileURL, relativePath: url.relativePathWRTCollection(), isFavorite: isFavorite)
 
                          if let migratedURL, let documentPin, isPinEnabled {
-                             FTBiometricManager.keychainSetIsTouchIDEnabled(FTBiometricManager().isTouchIDEnabled(), withPin: documentPin, forKey: migratedURL.getExtendedAttribute(for: .documentUUIDKey)?.stringValue)
+                             let propertyInfoPlist = migratedURL.appendingPathComponent(METADATA_FOLDER_NAME).appendingPathComponent(PROPERTIES_PLIST);
+                             let dictionary = NSMutableDictionary(contentsOf: propertyInfoPlist) ?? NSMutableDictionary();
+                             if let docUUID = dictionary[DOCUMENT_ID_KEY] as? String {
+                                 FTBiometricManager.keychainSetIsTouchIDEnabled(FTBiometricManager().isTouchIDEnabled(), withPin: documentPin, forKey: docUUID)
+                             }
                          }
                          onCompletion?(migratedURL, nil)
                      } catch {

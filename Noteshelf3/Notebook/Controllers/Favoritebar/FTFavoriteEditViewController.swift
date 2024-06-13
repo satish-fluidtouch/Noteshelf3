@@ -38,7 +38,7 @@ class FTFavoriteEditViewController: UIViewController, FTPopoverPresentable {
         super.viewDidLoad()
         self.addPenSizeColorEditViews()
         self.configureSegmentControl()
-        let placement = FTShortcutPlacement.getSavedPlacement()
+        let placement = FTShortcutPlacement.getSavedPlacement(activity: self.activity)
         if placement.isHorizantalPlacement() {
             self.topConstraint?.constant = 16.0
         } else {
@@ -130,7 +130,7 @@ private extension FTFavoriteEditViewController {
 
     func addPenSizeColorEditViews() {
         // Size edit view
-        let sizeController = FTFavoriteSizeEditController(size: favorite.preciseSize, penType: favorite.type)
+        let sizeController = FTFavoriteSizeEditController(size: favorite.preciseSize, penType: favorite.type, activity: self.activity)
         sizeController.delegate = self
         self.add(sizeController)
         sizeController.view.translatesAutoresizingMaskIntoConstraints = false

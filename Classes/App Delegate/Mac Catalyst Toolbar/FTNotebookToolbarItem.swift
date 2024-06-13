@@ -38,6 +38,8 @@ class FTNotebookToolbarItem: NSToolbarItem {
 }
 
 class FTNotebookDefaultToolbarItem: FTNotebookToolbarItem {
+    private weak var validateTOolbarObserver: NSObjectProtocol?;
+    
     let toolType: FTNotebookToolbarItemType;
     required init(toolbarType: FTNotebookToolbarItemType) {
         toolType = toolbarType;
@@ -50,10 +52,20 @@ class FTNotebookDefaultToolbarItem: FTNotebookToolbarItem {
 
     override var buttonLabel: String {return toolType.localizedString}
     
+    deinit {
+        self.removeObserver();
+    }
+    
+    private func removeObserver() {
+        if let observer = self.validateTOolbarObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+    }
     override func validate() {
         super.validate()
         self.validateUndoRedo()
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: FTValidateToolBarNotificationName), object: nil, queue: .main) { [weak self] notification in
+        self.removeObserver();
+        self.validateTOolbarObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: FTValidateToolBarNotificationName), object: nil, queue: .main) { [weak self] notification in
             guard let strongSelf = self else {
                 return
             }
@@ -94,17 +106,17 @@ enum FTNotebookSidebarMenuType: Int {
         let displayTitle: String;
         switch self {
         case .showDocumentOnly:
-            displayTitle = NSLocalizedString("DocumentOnly", comment: "Document Only");
+            displayTitle = NSLocalizedString("finder.documentonly", comment: "Document Only");
         case .thumbnails:
-            displayTitle = NSLocalizedString("Thumbnail", comment: "Thumbnail");
+            displayTitle = "Pages".localized
         case .bookmarks:
-            displayTitle = NSLocalizedString("Bookmarks", comment: "Bookmarks");
+            displayTitle = "finder.bookmarks".localized
         case .mediaContent:
-            displayTitle = NSLocalizedString("MediaContent", comment: "Media Content");
+            displayTitle = "finder.tabbar.content".localized
         case .tableOfContents:
-            displayTitle = NSLocalizedString("TableOfContents", comment: "Table Of Contents");
+            displayTitle = "finder.outline".localized
         case .search:
-            displayTitle = NSLocalizedString("Search", comment: "Search");
+            displayTitle = "Search".localized
         }
         return displayTitle;
     }

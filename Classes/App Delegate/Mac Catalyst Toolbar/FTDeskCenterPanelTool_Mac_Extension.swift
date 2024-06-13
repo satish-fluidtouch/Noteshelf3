@@ -59,12 +59,16 @@ extension FTDeskCenterPanelTool {
             ,FTDeskCenterPanelTool.pixabay.toolbarIdentifier
             ,FTDeskCenterPanelTool.emojis.toolbarIdentifier
             ,FTDeskCenterPanelTool.stickers.toolbarIdentifier
+            ,FTDeskCenterPanelTool.savedClips.toolbarIdentifier
             ,FTDeskCenterPanelTool.page.toolbarIdentifier
             ,FTDeskCenterPanelTool.deletePage.toolbarIdentifier
             ,FTDeskCenterPanelTool.bookmark.toolbarIdentifier
             ,FTDeskCenterPanelTool.tag.toolbarIdentifier
             ,FTDeskCenterPanelTool.rotatePage.toolbarIdentifier
             ,FTDeskCenterPanelTool.duplicatePage.toolbarIdentifier
+            ,FTDeskCenterPanelTool.camera.toolbarIdentifier
+            ,FTDeskCenterPanelTool.scrolling.toolbarIdentifier
+            ,FTDeskCenterPanelTool.recentNotes.toolbarIdentifier
             ,FTDeskCenterPanelTool.savePageAsPhoto.toolbarIdentifier
             ,FTDeskCenterPanelTool.sharePageAsPng.toolbarIdentifier
             ,FTDeskCenterPanelTool.shareNotebookAsPDF.toolbarIdentifier
@@ -133,6 +137,7 @@ extension FTDeskCenterPanelTool {
         }
         return nil;
     }
+    
 }
 
 #endif

@@ -16,9 +16,15 @@ import FTCommon
 }
 
 extension FTPDFRenderViewController {
+    @objc func removeLayoutChangeObserver() {
+        if let observer = self.pageLayoutDidChangeNotificationObserver {
+            NotificationCenter.default.removeObserver(observer);
+        }
+    }
+    
     @objc func addObserverForPageLayoutChange()
     {
-        NotificationCenter.default.addObserver(forName: .pageLayoutDidChange,
+        self.pageLayoutDidChangeNotificationObserver = NotificationCenter.default.addObserver(forName: .pageLayoutDidChange,
                                                object: nil,
                                                queue: nil)
         { [weak self] (_) in
@@ -26,9 +32,26 @@ extension FTPDFRenderViewController {
                 return;
             }
             strongSelf.updatePageLayout();
+            strongSelf.didChangeStatusBarVisibility();
         }
     }
     
+    func didChangeStatusBarVisibility() {
+        self.updatePageNumberLabelFrame();
+        self.updateAudioPlayerFrame();
+        self.toolTypeContainerVc?.updatePositionOnScreenSizeChange(forcibly: true)
+    }
+    
+    @objc func updateAudioPlayerFrame() {
+        guard let player = self.playerController else {
+            return;
+        }
+        var tempFrame = player.view.frame;
+        tempFrame.origin.y = self.deskToolBarFrame().maxY + FTToolBarConstants.subtoolbarOffset;
+        tempFrame.size.width = self.view.frame.width
+        player.view.frame = tempFrame;
+    }
+
     @objc func updatePageLayout() {
         guard let docScrollView = self.mainScrollView else {
             fatalError("scrollview should be of type: FTDocumentScrollView");
@@ -291,6 +314,7 @@ extension FTPDFRenderViewController: FTPHPickerDelegate, FTImagePickerDelegate {
                 }
                 let img = phItem.image
                 let item = FTImportItem(item: img, onCompletion: nil)
+                FTNotebookEventTracker.trackFreePageAddedEvent()
                 self.beginImporting(items: [item])
             } else {
                 let images = phItems.map { $0.image }
@@ -301,6 +325,7 @@ extension FTPDFRenderViewController: FTPHPickerDelegate, FTImagePickerDelegate {
 
     public func didFinishPicking(image: UIImage, picker: UIImagePickerController) {
         self.photosCollectionViewController(self, didFinishPickingPhotos: [image], isCamera: true)
+        FTNotebookEventTracker.trackFreePageAddedEvent()
     }
 }
 

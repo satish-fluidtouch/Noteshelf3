@@ -38,6 +38,11 @@ import FTRenderKit
         self._currentPenSet = FTDefaultPenSet()
         super.init()
         self.fillExistingData()
+        NotificationCenter.default.addObserver(self, selector: #selector(handleRackDataSaved), name: .rackDataSaved, object: nil)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .rackDataSaved, object: nil)
     }
 
     var currentPresetColors: [String] {
@@ -71,24 +76,37 @@ import FTRenderKit
 }
 
 extension FTRackData {
+    //  This notification is introduced to fix the split mode presets colors refresh issue(when we chnage in one side, to have same set on other side)
+    @objc func handleRackDataSaved(notification: Notification) {
+        let rackDict = self.getExistingRackDictionary()
+        if self.type == .highlighter {
+            self.currentPresetColors = rackDict.currentHighlighterPresetColors
+        } else {
+            self.currentPresetColors = rackDict.currentPresetColors
+        }
+    }
+
     public func defaultColors(for type: FTPenType) -> [FTFavoriteColor] {
         let rackDict = FTRackDataManager.shared.getDefaultStockData()
         var colors: [FTFavoriteColor] = []
-        switch type {
-        case .caligraphy:
-            colors = rackDict.caligraphyPen.favouriteColors
-        case .pilotPen:
-            colors = rackDict.pilotPen.favouriteColors
-        case .pencil:
-            colors = rackDict.pencil.favouriteColors
-        case .pen:
-            colors = rackDict.pen.favouriteColors
-        case .highlighter:
-            colors = rackDict.highlighter.favouriteColors
-        case .flatHighlighter:
-            colors = rackDict.flatHighlighter.favouriteColors
-        default:
-            break
+        if self.type == .pen {
+            if type == .caligraphy {
+                colors = rackDict.caligraphyPen.favouriteColors
+            } else if type == .pilotPen {
+                colors = rackDict.pilotPen.favouriteColors
+            } else if type == .pencil {
+                colors = rackDict.pencil.favouriteColors
+            } else {
+                colors = rackDict.pen.favouriteColors
+            }
+        } else if self.type == .highlighter {
+            if type == .flatHighlighter {
+                colors = rackDict.flatHighlighter.favouriteColors
+            } else {
+                colors = rackDict.highlighter.favouriteColors
+            }
+        } else if self.type == .shape {
+            colors = rackDict.shapeInfo.favouriteColors
         }
         return colors
     }
@@ -165,6 +183,27 @@ extension FTRackData {
         } else if self.type == .shape {
             favColors = self.shapeInfo.favouriteColors
         }
+
+        // To fix split screen mini tool bar attribute selection change
+        guard self.type == .pen || self.type == .highlighter || self.type == .shape else {
+            return favColors
+        }
+
+        if type == self.currentPenset.type {
+            var alreadySelected = false
+            for i in 0..<favColors.count {
+                if !alreadySelected {
+                    favColors[i].isSelected = favColors[i].color == self.currentPenset.color
+                    alreadySelected = favColors[i].isSelected;
+                }
+                else {
+                    favColors[i].isSelected = false
+                }
+            }
+        }
+        else {
+            fatalError("pen type mismatch")
+        }
         return favColors
     }
 
@@ -189,6 +228,26 @@ extension FTRackData {
         }  else if self.type == .shape {
             favSizes = self.shapeInfo.favouriteSizes
         }
+
+        // To fix split screen mini tool bar attribute selection change
+        guard self.type == .pen || self.type == .highlighter || self.type == .shape else {
+            return favSizes
+        }
+        if type == self.currentPenset.type {
+            var alreadySelected = false
+            for i in 0..<favSizes.count {
+                if !alreadySelected {
+                    favSizes[i].isSelected = favSizes[i].size == self.currentPenset.preciseSize
+                    alreadySelected = favSizes[i].isSelected
+                }
+                else {
+                    favSizes[i].isSelected = false
+                }
+            }
+        } else {
+            fatalError("pen type mismatch")
+        }
+
         return favSizes
     }
 
@@ -501,4 +560,9 @@ private extension FTRackData {
         }
         return presenter
     }
+}
+
+// This notification is introduced to fix the split mode presets colors refresh issue(when we chnage in one side, to have same set on other side)
+extension Notification.Name {
+    static let rackDataSaved = Notification.Name("RackDataSavedNotification")
 }

@@ -60,6 +60,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
     case pixabay
     case emojis
     case stickers
+    case savedClips
 
     // Shortcuts
     case page
@@ -68,6 +69,9 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
     case rotatePage
     case duplicatePage
     case deletePage
+    case scrolling
+    case camera
+    case recentNotes
 
     // Share and Save
     case savePageAsPhoto
@@ -114,6 +118,8 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             name = "desk_tool_pixabay"
         case .emojis:
             name = "desk_tool_emojis"
+        case .savedClips:
+            name = "desk_tool_savedClips"
 
         case .page:
             name = "desk_tool_page"
@@ -127,13 +133,20 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             name = "desk_tool_duplicatePage"
         case .deletePage:
             name = "desk_tool_deletePage"
-
+        case .scrolling:
+            name = UserDefaults.standard.pageLayoutType.oppositeToolIconName
+        case .camera:
+            name = "desk_tool_camera"
+        case .recentNotes:
+            name = "desk_tool_recentNotes"
+            
         case .savePageAsPhoto:
             name = "desk_tool_saveAsPhoto"
         case .sharePageAsPng:
             name = "desk_tool_shareAsPNG"
         case .shareNotebookAsPDF:
             name = "desk_tool_shareAsPDF"
+        
         }
         return name
     }
@@ -217,6 +230,8 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             str = "Pixabay"
         case .emojis:
             str = "customizeToolbar.emojis".localized
+        case .savedClips:
+            str = "clip.savedClips".localized
 
             // Shortcuts
         case .page:
@@ -231,6 +246,12 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             str = "customizeToolbar.duplicatePage".localized
         case .deletePage:
             str = "customizeToolbar.deletePage".localized
+        case .camera:
+            str = "Camera".localized
+        case .scrolling:
+            str = "customizeToolbar.switchScrollingDirection".localized
+        case .recentNotes:
+            str = "customizeToolbar.recent.notes".localized
             
         case .savePageAsPhoto:
             str = "customizeToolbar.savePageAsPhoto".localized
@@ -284,6 +305,8 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             str = "Pixabay"
         case .emojis:
             str = "customizeToolbar.emojis".localizedEnglish
+        case .savedClips:
+            str = "clip.savedClips".localizedEnglish
 
             // Shortcuts
         case .page:
@@ -298,6 +321,12 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             str = "customizeToolbar.duplicatePage".localizedEnglish
         case .deletePage:
             str = "customizeToolbar.deletePage".localizedEnglish
+        case .camera:
+            str = "Camera".localizedEnglish
+        case .scrolling:
+            str = "customizeToolbar.switchScrollingDirection".localizedEnglish
+        case .recentNotes:
+            str = "customizeToolbar.recent.notes".localizedEnglish
 
         case .savePageAsPhoto:
             str = "customizeToolbar.savePageAsPhoto".localizedEnglish
@@ -315,6 +344,14 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             mode = .deskModeTool
         }
         return mode
+    }
+    
+    var toShowNewBadge: Bool {
+        var status = false
+        if self == .camera || self == .scrolling || self == .recentNotes {
+            status = true
+        }
+        return status
     }
 
     func isColorEditTool() -> Bool {

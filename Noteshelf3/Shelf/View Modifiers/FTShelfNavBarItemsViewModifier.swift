@@ -17,13 +17,14 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
+
     @State private var showingPopover:Bool = false
     @State private  var isAnyPopoverShown: Bool = false
     @State private var toolbarID: String = UUID().uuidString
 
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
-    var appState : AppState
-
+    @State private var shoulwReload = false;
+    
     private var popOverHeight: CGFloat {
         var height = horizontalSizeClass == .regular ? 435.0 : 500 // increase the height of 52.0 if apple watch added in the popover view
         if(NSUbiquitousKeyValueStore.default.isWatchPaired() && NSUbiquitousKeyValueStore.default.isWatchAppInstalled() ) {
@@ -43,8 +44,7 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
             .if(shelfViewModel.mode == .normal, transform: { view in
                 view.toolbar {
                     if enPublishError.hasError {
-                        ToolbarItem(id:"ENError" + toolbarID,
-                                    placement: ToolbarItemPlacement.navigationBarTrailing)  {
+                        ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing)  {
                             Button {
                                 self.shelfViewModel.delegate?.showEvernoteErrorInfoScreen()
                             } label: {
@@ -57,8 +57,7 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                     }
 
                     if backUpError.hasError {
-                        ToolbarItem(id:"Cloud Error" + toolbarID,
-                                    placement: ToolbarItemPlacement.navigationBarTrailing)  {
+                        ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing)  {
                             Button {
                                 self.shelfViewModel.delegate?.showDropboxErrorInfoScreen()
                             } label: {
@@ -71,8 +70,7 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                     }
 
                     if shelfViewModel.canShowNewNoteNavOption {
-                        ToolbarItem(id:"Add Menu" + toolbarID,
-                                    placement: ToolbarItemPlacement.navigationBarTrailing)  {
+                        ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing)  {
                             Button {
                                 showingPopover = true
                                 track(EventName.shelf_addmenu_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
@@ -94,8 +92,7 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                             }
                         }
                     }
-                    ToolbarItem(id:"Search" + toolbarID,
-                                placement: ToolbarItemPlacement.navigationBarTrailing)  {
+                    ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing)  {
                         Button {
                             if !shelfMenuOverlayInfo.isMenuShown {
                                 shelfViewModel.searchTapped()
@@ -109,68 +106,69 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                         }
                         .frame(width: 44,height: 44,alignment: .center)
                     }
-                    ToolbarItem(id:"Menu options" + toolbarID,
-                                placement: ToolbarItemPlacement.navigationBarTrailing)  {
+                    ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing)  {
                         FTShelfSelectAndSettingsView(viewModel: shelfViewModel)
                             .frame(width: 44,height: 44,alignment: .center)
                     }
                 }
+                .id(shoulwReload)
             })
-                .if(shelfViewModel.mode == .selection, transform: { view in
-                    view.toolbar {
-                        ToolbarItem(id:"Done" + toolbarID,
-                                    placement: ToolbarItemPlacement.navigationBarTrailing) {
-                            Button {
+            .if(shelfViewModel.mode == .selection, transform: { view in
+                view.toolbar {
+                    ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
+                        Button {
+                            withAnimation {
                                 shelfViewModel.mode = .normal
-                                shelfViewModel.finalizeShelfItemsEdit()
-                                shelfMenuOverlayInfo.isMenuShown = false
-                                if idiom == .phone {
-                                    shelfViewModel.compactDelegate?.didChangeSelectMode(shelfViewModel.mode)
-                                }
+                            }
+                            shelfViewModel.finalizeShelfItemsEdit()
+                            shelfMenuOverlayInfo.isMenuShown = false
+                            if idiom == .phone {
+                                shelfViewModel.compactDelegate?.didChangeSelectMode(shelfViewModel.mode)
+                            }
+                            // Track Event
+                            track(EventName.shelf_select_done_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
+                            
+                        } label: {
+                            Text(NSLocalizedString("done", comment: "Done"))
+                                .appFont(for: .regular, with: 17)
+                                .foregroundColor(Color.appColor(.accent))
+                        }
+                        .frame(height: 44)
+                    }
+                    ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
+                        if shelfViewModel.areAllItemsSelected {
+                            Button {
                                 // Track Event
-                                track(EventName.shelf_select_done_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
-
+                                track(EventName.shelf_select_selectnone_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
+                                shelfViewModel.deselectAllItems()
                             } label: {
-                                Text(NSLocalizedString("done", comment: "Done"))
+                                Text(NSLocalizedString("shelf.navBar.selectNone", comment: "Select None"))
+                                    .appFont(for: .regular, with: 17)
+                                    .foregroundColor(Color.appColor(.accent))
+                            }
+                            .frame(height: 44)
+                        } else {
+                            Button {
+                                // Track Event
+                                track(EventName.shelf_select_selectall_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
+                                shelfViewModel.selectAllItems()
+                            } label: {
+                                Text(NSLocalizedString("shelf.navBar.selectAll", comment: "Select All"))
                                     .appFont(for: .regular, with: 17)
                                     .foregroundColor(Color.appColor(.accent))
                             }
                             .frame(height: 44)
                         }
-                        ToolbarItem(id:"Select" + toolbarID,
-                                    placement: ToolbarItemPlacement.navigationBarLeading) {
-                            if shelfViewModel.areAllItemsSelected {
-                                Button {
-                                    // Track Event
-                                    track(EventName.shelf_select_selectnone_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
-                                    shelfViewModel.deselectAllItems()
-                                } label: {
-                                    Text(NSLocalizedString("shelf.navBar.selectNone", comment: "Select None"))
-                                        .appFont(for: .regular, with: 17)
-                                        .foregroundColor(Color.appColor(.accent))
-                                }
-                                .frame(height: 44)
-                            } else {
-                                Button {
-                                    // Track Event
-                                    track(EventName.shelf_select_selectall_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
-                                    shelfViewModel.selectAllItems()
-                                } label: {
-                                    Text(NSLocalizedString("shelf.navBar.selectAll", comment: "Select All"))
-                                        .appFont(for: .regular, with: 17)
-                                        .foregroundColor(Color.appColor(.accent))
-                                }
-                                .frame(height: 44)
-                            }
-                        }
                     }
-                })
-                .disabled(shelfViewModel.showDropOverlayView)
-                .onChange(of: horizontalSizeClass) { _ in
-                    toolbarID = UUID().uuidString
                 }
-                .onChange(of: verticalSizeClass) { _ in
-                    toolbarID = UUID().uuidString
-                }
+                .id(shoulwReload)
+            })
+            .disabled(shelfViewModel.showDropOverlayView)
+            .onChange(of: horizontalSizeClass) { _ in
+                shoulwReload.toggle()
+            }
+            .onChange(of: verticalSizeClass) { _ in
+                shoulwReload.toggle()
+            }
     }
 }
