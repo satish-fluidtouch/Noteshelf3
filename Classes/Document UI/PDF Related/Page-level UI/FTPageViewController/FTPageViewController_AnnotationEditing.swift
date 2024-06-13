@@ -13,7 +13,6 @@ import UIKit
     func endEditingActiveAnnotation(_ annotation : FTAnnotation?,refreshView : Bool)
     {
         guard let activeController = self.activeAnnotationController else { return };
-        self.delegate?.removePencilProMenuIfExist()
         if ((nil == annotation) || (annotation == activeController.annotation)) {
             var refreshArea = activeController.annotation.renderingRect;
             activeController.annotation.setSelected(false, for: self.windowHash);
@@ -47,7 +46,6 @@ import UIKit
     
     func addAnnotation(info : FTAnnotationInfo)
     {
-        self.delegate?.removePencilProMenuIfExist()
         self.endEditingActiveAnnotation(nil, refreshView: true);
         if let annotation = info.annotation() {
             annotation.associatedPage = self.pdfPage;

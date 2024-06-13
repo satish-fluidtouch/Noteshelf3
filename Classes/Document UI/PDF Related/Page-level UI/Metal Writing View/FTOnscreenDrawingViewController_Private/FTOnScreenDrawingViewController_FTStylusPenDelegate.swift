@@ -65,7 +65,6 @@ extension FTOnScreenWritingViewController : FTStylusPenDelegate
         self.cancelDelayedEnableGesture();
         self.perform(#selector(self.hideQuickPageNavigator), with: nil, afterDelay: 0.1)
         FTRefreshViewController.addObserversForHideNewPageOptions()
-        NotificationCenter.default.post(name: .stylusTouchesBegan, object: nil)
         let supportedModes: [RKDeskMode] = [.deskModePen,.deskModeMarker,.deskModeLaser,.deskModeEraser,.deskModeShape, .deskModeFavorites];
         guard supportedModes.contains(self.currentDrawingMode) else {
             return;

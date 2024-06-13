@@ -1191,7 +1191,6 @@
         [eachPageVC startAcceptingTouches:false];
     }
     [FTQuickPageNavigatorViewController showPageNavigatorOnController:self];
-    [self removePencilProMenuIfExist];
     //    [self scrollViewDidBeginScrolling];
 }
 

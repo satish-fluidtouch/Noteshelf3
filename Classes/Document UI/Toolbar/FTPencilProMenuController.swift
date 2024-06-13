@@ -66,6 +66,14 @@ class FTPencilProMenuController: UIViewController {
             NotificationCenter.default.removeObserver(observer)
         }
     }
+    
+    func isPointInside(_ point: CGPoint) -> Bool {
+        let newPoint = self.view.convert(point, to: self.view)
+        if let view = self.view as? FTPencilProMenuContainerView {
+            return view.isPointInside(point: newPoint, event: nil)
+        }
+        return false
+    }
 
     override func viewIsAppearing(_ animated: Bool) {
         super.viewIsAppearing(animated)
@@ -210,6 +218,21 @@ final class FTPencilProMenuContainerView: UIView {
             return collectionView
         }
         return nil
+    }
+    
+    func isPointInside(point: CGPoint, event: UIEvent?) -> Bool {
+        guard let collectionView = collectionView else {
+            return false
+        }
+        var value = false
+        collectionView.layoutIfNeeded()
+        for cell in collectionView.visibleCells {
+            if cell.frame.contains(point) {
+                value = true
+                break
+            }
+        }
+        return value
     }
 }
 

@@ -380,22 +380,24 @@ class TransparentTouchView: UIView {
     var hitTestLayer: CAShapeLayer?
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         let hitView = super.hitTest(point, with: event)
-        if let layer = hitTestLayer, self.isPointInside(point, lineWidth: layer.lineWidth) {
+        if let layer = hitTestLayer, self.isPointInside(point) {
             return hitView
         }
         return nil
     }
     
-    func isPointInside(_ point: CGPoint, lineWidth: CGFloat) -> Bool {
+    func isPointInside(_ newPoint: CGPoint) -> Bool {
+          let lineWidth = hitTestLayer?.lineWidth ?? 0
+          let convertedPoint = self.convert(newPoint, to: self)
           // Calculate the center point and radius
           let center = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
           let radius = min(bounds.width, bounds.height) / 2
           
           // Calculate the distance from the center
-          let distanceFromCenter = point.distance(to: center)
+          let distanceFromCenter = convertedPoint.distance(to: center)
           
           // Calculate the angle of the point relative to the center
-          let angle = atan2(point.y - center.y, point.x - center.x)
+          let angle = atan2(convertedPoint.y - center.y, convertedPoint.x - center.x)
           
           // Check if the point is within the stroke width range
           let isInRadiusRange = (distanceFromCenter >= radius - lineWidth / 2 && distanceFromCenter <= radius + lineWidth / 2)
