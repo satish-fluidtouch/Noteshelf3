@@ -32,20 +32,14 @@ class FTPencilProMenuController: UIViewController {
        return FTPencilProMenuLayer(strokeColor: .clear, lineWidth: 50)
     }()
     lazy var primaryMenuLayer: FTPencilProMenuLayer = {
-       return FTPencilProMenuLayer(strokeColor: UIColor.appColor(.pencilProMenuBgColor))
-    }()
-    lazy var primaryBorderLayer: FTPencilProBorderLayer = {
-       return FTPencilProBorderLayer(strokeColor: UIColor.appColor(.pencilProMenuBorderColor))
+       return FTPencilProMenuLayer(strokeColor: UIColor.appColor(.pencilProMenuBgColor), lineWidth: 40)
     }()
 
     lazy var secondaryMenuHitTestLayer: FTPencilProMenuLayer = {
        return FTPencilProMenuLayer(strokeColor: .clear, lineWidth: 50)
     }()
     lazy var secondaryMenuLayer: FTPencilProMenuLayer = {
-       return FTPencilProMenuLayer(strokeColor: UIColor.init(hexString: "#F2F2F2"))
-    }()
-    lazy var secondaryBorderLayer: FTPencilProBorderLayer = {
-       return FTPencilProBorderLayer(strokeColor: UIColor.init(hexString: "#E5E5E5"))
+        return FTPencilProMenuLayer(strokeColor: UIColor.appColor(.pencilProMenuBgColor), lineWidth: 40)
     }()
 
     override func viewDidLoad() {
@@ -75,6 +69,13 @@ class FTPencilProMenuController: UIViewController {
         }
     }
     
+    func showSecondaryMenuIfneeded() {
+        self.removeSecondaryMenuIfExist()
+        if let mode = self.delegate?.getCurrentDeskMode(), shouldShowSecondaryMenu(for: mode) {
+            self.addSecondaryMenu(with: mode, rect: self.view.bounds)
+        }
+    }
+
     func isPointInside(_ point: CGPoint) -> Bool {
         let newPoint = self.view.convert(point, to: self.view)
         if let view = self.view as? FTPencilProMenuContainerView {
@@ -131,10 +132,9 @@ private extension FTPencilProMenuController {
         let endAngle = self.getEndAngle(with: .pi)
         self.primaryMenuHitTestLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
         self.primaryMenuLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
-        self.primaryBorderLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
+        self.primaryMenuLayer.addShadow(offset: CGSize(width: 0, height: 10), radius: 20)
         self.view.layer.insertSublayer(primaryMenuHitTestLayer, at: 0)
-        self.view.layer.insertSublayer(primaryBorderLayer, above: primaryMenuHitTestLayer)
-        self.view.layer.insertSublayer(primaryMenuLayer, above: primaryBorderLayer)
+        self.view.layer.insertSublayer(primaryMenuLayer, above: primaryMenuHitTestLayer)
         (self.view as? FTPencilProMenuContainerView)?.primaryMenuHitTestLayer = primaryMenuHitTestLayer
     }
 }
@@ -236,7 +236,6 @@ private extension FTPencilProMenuController {
     func removeSecondaryMenuIfExist() {
         self.children.compactMap { $0 as? FTSliderHostingControllerProtocol }.forEach { $0.removeHost() }
         self.secondaryMenuLayer.removeFromSuperlayer()
-        self.secondaryBorderLayer.removeFromSuperlayer()
         self.secondaryMenuHitTestLayer.removeFromSuperlayer()
     }
 
@@ -246,13 +245,6 @@ private extension FTPencilProMenuController {
             status = true
         }
         return status
-    }
-
-    func showSecondaryMenuIfneeded() {
-        self.removeSecondaryMenuIfExist()
-        if let mode = self.delegate?.getCurrentDeskMode(), shouldShowSecondaryMenu(for: mode) {
-            self.addSecondaryMenu(with: mode, rect: self.view.bounds)
-        }
     }
 
     func addSecondaryMenu(with mode: RKDeskMode, rect: CGRect) {
@@ -303,11 +295,10 @@ private extension FTPencilProMenuController {
         let rect = self.view.bounds
         let center = CGPoint(x: rect.midX, y: rect.midY)
         self.secondaryMenuLayer.setPath(with: center, radius: FTPenSliderConstants.sliderRadius, startAngle: startAngle, endAngle: -endAngle)
-        self.secondaryBorderLayer.setPath(with: center, radius: FTPenSliderConstants.sliderRadius, startAngle: startAngle, endAngle: -endAngle)
+        self.secondaryMenuLayer.addShadow(offset: CGSize(width: 0, height: -10), radius: 20)
         self.secondaryMenuHitTestLayer.setPath(with: center, radius: FTPenSliderConstants.sliderRadius, startAngle: startAngle, endAngle: -endAngle)
         self.view.layer.insertSublayer(secondaryMenuHitTestLayer, above: primaryMenuLayer)
-        self.view.layer.insertSublayer(secondaryBorderLayer, above: secondaryMenuHitTestLayer)
-        self.view.layer.insertSublayer(secondaryMenuLayer, above: secondaryBorderLayer)
+        self.view.layer.insertSublayer(secondaryMenuLayer, above: secondaryMenuHitTestLayer)
         (self.view as? FTPencilProMenuContainerView)?.secondaryMenuHitTestLayer = secondaryMenuHitTestLayer
     }
 
@@ -413,9 +404,13 @@ class FTPencilProButton: UIButton {
         super.init(frame: frame)
         self.tintColor = UIColor.label
         self.backgroundColor = UIColor.appColor(.pencilProMenuBgColor)
-        self.layer.borderColor = UIColor.appColor(.pencilProMenuBorderColor).cgColor
-        self.layer.borderWidth = 1.0
         self.layer.cornerRadius = self.frame.height/2
+        
+        self.layer.shadowColor = UIColor.black.withAlphaComponent(0.16).cgColor
+        self.layer.shadowOpacity = 1
+        self.layer.shadowOffset = CGSize(width: 0, height: 10)
+        self.layer.shadowRadius = 20.0
+        self.layer.masksToBounds = false
     }
     
     required init?(coder: NSCoder) {

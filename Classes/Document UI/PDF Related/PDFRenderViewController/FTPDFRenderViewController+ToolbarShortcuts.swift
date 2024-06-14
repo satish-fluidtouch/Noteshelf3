@@ -72,6 +72,9 @@ extension FTPDFRenderViewController: FTShortcutContainerDelegate {
 #else // Mac
             self.switch(reqMode, sourceView: nil)
 #endif
+            if let pencilProMenuController = self.children.compactMap({ $0 as? FTPencilProMenuController}).first {
+                pencilProMenuController.showSecondaryMenuIfneeded()
+            }
         }
     }
 

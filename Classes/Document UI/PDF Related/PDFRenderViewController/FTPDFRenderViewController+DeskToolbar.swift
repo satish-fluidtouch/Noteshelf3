@@ -372,6 +372,9 @@ extension FTPDFRenderViewController: FTFavoriteSizeEditDelegate, FTFavoriteColor
     }
 
     func didChangeCurrentPresenterSet(_ presenterSet: FTPresenterSetProtocol) {
-
+        let rackData = FTRackData(type: .presenter, userActivity: self.view.window?.windowScene?.userActivity)
+        rackData.currentPenset = presenterSet
+        rackData.saveCurrentSelection()
+        self.validateMenuItems()
     }
 }

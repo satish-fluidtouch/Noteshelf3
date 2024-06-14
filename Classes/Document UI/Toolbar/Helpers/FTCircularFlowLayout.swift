@@ -139,3 +139,31 @@ class FTCircularFlowLayout: UICollectionViewLayout {
         return true
     }
 }
+
+final class FTPencilProMenuLayer: CAShapeLayer {
+    init(strokeColor: UIColor, lineWidth: CGFloat) {
+        super.init()
+        self.strokeColor = strokeColor.cgColor
+        self.fillColor = UIColor.clear.cgColor
+        self.lineWidth = lineWidth
+        self.lineCap = .round
+    }
+    
+    func setPath(with center: CGPoint, radius: CGFloat, startAngle: CGFloat, endAngle: CGFloat) {
+        let path = UIBezierPath()
+        path.addArc(withCenter: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
+        self.path = path.cgPath
+    }
+    
+    func addShadow(offset: CGSize, radius: CGFloat) {
+        self.shadowColor = UIColor.black.withAlphaComponent(0.16).cgColor
+        self.shadowOpacity = 1
+        self.shadowOffset = offset
+        self.shadowRadius = radius
+        self.masksToBounds = false
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}

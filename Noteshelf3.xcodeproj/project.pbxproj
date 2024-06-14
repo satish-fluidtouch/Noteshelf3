@@ -816,7 +816,6 @@
 		97EC28F329A748FC008CBD7D /* FTShelfSplitController+CreateNotebookDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC28F229A748FC008CBD7D /* FTShelfSplitController+CreateNotebookDelegates.swift */; };
 		97EC28F529A74B72008CBD7D /* FTPasswordHostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC28F429A74B72008CBD7D /* FTPasswordHostController.swift */; };
 		97F2F10A2AFB739600C30B73 /* FTPreviewShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A663C329966D08006F13C8 /* FTPreviewShape.swift */; };
-		97F4CAA32B5A55B400BFBF79 /* FTToolbarConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CCA90C29DC007B0010D619 /* FTToolbarConfig.swift */; };
 		97F5D06D2B15C8EC003ED67D /* FTPlanner2024DiaryCalendarTemplateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F5D06C2B15C8EB003ED67D /* FTPlanner2024DiaryCalendarTemplateFormat.swift */; };
 		97F5D0712B15C98A003ED67D /* FTPlanner2024DiaryiPadFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F5D06F2B15C98A003ED67D /* FTPlanner2024DiaryiPadFormat.swift */; };
 		97F5D0722B15C98A003ED67D /* FTPlanner2024DiaryFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F5D0702B15C98A003ED67D /* FTPlanner2024DiaryFormat.swift */; };
@@ -2051,7 +2050,7 @@
 		E76244102B7F38920045DA75 /* FTRootViewController_WidgetActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E762440F2B7F38920045DA75 /* FTRootViewController_WidgetActions.swift */; };
 		E76244122B7F3CA80045DA75 /* FTShelfSplitViewController+WidgetActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76244112B7F3CA80045DA75 /* FTShelfSplitViewController+WidgetActions.swift */; };
 		E7654DF02966A8AA00E0F7A7 /* FTGlobalSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7654DEF2966A8AA00E0F7A7 /* FTGlobalSettingsController.swift */; };
-		E76718102C072AFE00F452A2 /* FTPencilProMenuLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E767180F2C072AFE00F452A2 /* FTPencilProMenuLayer.swift */; };
+		E76718102C072AFE00F452A2 /* FTToolbarConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E767180F2C072AFE00F452A2 /* FTToolbarConfig.swift */; };
 		E76A08742BEB4C9900BCC7BA /* FTFavoritePenColorEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76A08732BEB4C9900BCC7BA /* FTFavoritePenColorEditView.swift */; };
 		E76AF9272B9AE0F500B65517 /* FTPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76AF9262B9AE0F500B65517 /* FTPlayerViewModel.swift */; };
 		E76CEDC22A93605C00E4E22F /* FTRecentSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76CEDC02A93605C00E4E22F /* FTRecentSectionHeader.xib */; };
@@ -2097,6 +2096,7 @@
 		E78DE6FE2B987DE0000DAA1B /* FTPublishAudioRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E59F7F7203BFBF300D18E64 /* FTPublishAudioRequest.swift */; };
 		E78DE7002B987F2D000DAA1B /* FileManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA84E602873108800DE801B /* FileManager+Extension.swift */; };
 		E78EEF5A28DC46990042DCE7 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78EEF5928DC46990042DCE7 /* UIView+Extension.swift */; };
+		E78F8BE62C1C501400817053 /* FTToolbarConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E767180F2C072AFE00F452A2 /* FTToolbarConfig.swift */; };
 		E79D21352B8F311A00712028 /* FTRecordingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79D21342B8F311A00712028 /* FTRecordingsView.swift */; };
 		E79D21382B8F31AA00712028 /* FTRecordingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79D21372B8F31AA00712028 /* FTRecordingsViewModel.swift */; };
 		E79D213A2B8F426000712028 /* FTPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79D21392B8F426000712028 /* FTPlayerView.swift */; };
@@ -2245,7 +2245,6 @@
 		E7C71A76288E795A00AF2598 /* EnvironmentValues+TrackValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C71A5F288E795900AF2598 /* EnvironmentValues+TrackValue.swift */; };
 		E7C71A77288E795A00AF2598 /* VerticalValueTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C71A61288E795900AF2598 /* VerticalValueTrack.swift */; };
 		E7C8FF2D2BA08E4400B4A6AE /* FTAudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C8FF2C2BA08E4300B4A6AE /* FTAudioService.swift */; };
-		E7CCA90D29DC007B0010D619 /* FTToolbarConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CCA90C29DC007B0010D619 /* FTToolbarConfig.swift */; };
 		E7CCFF642BA975E000DB59CE /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7CCFF632BA975E000DB59CE /* WidgetKit.framework */; };
 		E7CCFF662BA975E000DB59CE /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7CCFF652BA975E000DB59CE /* SwiftUI.framework */; };
 		E7CCFF692BA975E100DB59CE /* Noteshelf3_Watch_Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CCFF682BA975E100DB59CE /* Noteshelf3_Watch_Widget.swift */; };
@@ -4506,7 +4505,7 @@
 		E765250B27574F9600ABBAEC /* FTBackUpOptionsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTBackUpOptionsFooterView.swift; sourceTree = "<group>"; };
 		E765250D27574FB500ABBAEC /* FTBackUpOptionsFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTBackUpOptionsFooterView.xib; sourceTree = "<group>"; };
 		E7654DEF2966A8AA00E0F7A7 /* FTGlobalSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGlobalSettingsController.swift; sourceTree = "<group>"; };
-		E767180F2C072AFE00F452A2 /* FTPencilProMenuLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPencilProMenuLayer.swift; sourceTree = "<group>"; };
+		E767180F2C072AFE00F452A2 /* FTToolbarConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTToolbarConfig.swift; sourceTree = "<group>"; };
 		E76A08732BEB4C9900BCC7BA /* FTFavoritePenColorEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritePenColorEditView.swift; sourceTree = "<group>"; };
 		E76AF9262B9AE0F500B65517 /* FTPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPlayerViewModel.swift; sourceTree = "<group>"; };
 		E76CDDA727073E6600A8249D /* FTModernDiaryWeekTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTModernDiaryWeekTemplate.swift; sourceTree = "<group>"; };
@@ -4697,7 +4696,6 @@
 		E7C71A61288E795900AF2598 /* VerticalValueTrack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerticalValueTrack.swift; sourceTree = "<group>"; };
 		E7C8FF2C2BA08E4300B4A6AE /* FTAudioService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTAudioService.swift; sourceTree = "<group>"; };
 		E7C980C3251DE2F600AA37C9 /* FTShapeUtility+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTShapeUtility+extension.swift"; sourceTree = "<group>"; };
-		E7CCA90C29DC007B0010D619 /* FTToolbarConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTToolbarConfig.swift; sourceTree = "<group>"; };
 		E7CCFF622BA975E000DB59CE /* Noteshelf 3 Watch Widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Noteshelf 3 Watch Widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7CCFF632BA975E000DB59CE /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		E7CCFF652BA975E000DB59CE /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -11376,8 +11374,7 @@
 			isa = PBXGroup;
 			children = (
 				E7AF476D28EC53F4005F90E8 /* FTDeskModeHelper.swift */,
-				E7CCA90C29DC007B0010D619 /* FTToolbarConfig.swift */,
-				E767180F2C072AFE00F452A2 /* FTPencilProMenuLayer.swift */,
+				E767180F2C072AFE00F452A2 /* FTToolbarConfig.swift */,
 				E7F248662C074D4000D93D19 /* FTCircularFlowLayout.swift */,
 			);
 			path = Helpers;
@@ -13772,7 +13769,7 @@
 				E7D769A62C09B68A006589F4 /* FTPenSliderSizeShortcutView.swift in Sources */,
 				E7E3EC3B29A4882F004372B6 /* FTAddMenuItemCell.swift in Sources */,
 				BAF3918E2859ADF00067CA9F /* FTCustomTextSelectionRect.swift in Sources */,
-				E76718102C072AFE00F452A2 /* FTPencilProMenuLayer.swift in Sources */,
+				E76718102C072AFE00F452A2 /* FTToolbarConfig.swift in Sources */,
 				9715E03D2AEA9D2D00EC48D4 /* EvernoteUserStore+Extras.m in Sources */,
 				978771DF2A8DF1DB00ABE982 /* FTDiscoverWhatsNewView.swift in Sources */,
 				BAF3918F2859ADF00067CA9F /* FTQuickPageNavigatorViewController.swift in Sources */,
@@ -14170,7 +14167,6 @@
 				1438A3CA2A5C146100861C34 /* FTAppearanceViewHostingController.swift in Sources */,
 				095F04312ACE89C600205BF7 /* FTDigitalInkRecognitionTaskProcessor.swift in Sources */,
 				976F27372A16090800034D5A /* FTShelfView+Extensions.swift in Sources */,
-				E7CCA90D29DC007B0010D619 /* FTToolbarConfig.swift in Sources */,
 				BAF392CC2859ADF00067CA9F /* FTBookOpeningSpinner.swift in Sources */,
 				BAF392CD2859ADF00067CA9F /* FTThumbnailable.swift in Sources */,
 				BAF392CE2859ADF00067CA9F /* FTShelfItemCollectionICloud.swift in Sources */,
@@ -15087,7 +15083,7 @@
 				4209FE63295C5CA800ACC02E /* FTShelfItemsIndexInfo.swift in Sources */,
 				4209FE89295C60D400ACC02E /* FTNoteshelfDocument_Creation_Template.swift in Sources */,
 				4209FE79295C5FAB00ACC02E /* FTNotebookRecoverPlist.swift in Sources */,
-				97F4CAA32B5A55B400BFBF79 /* FTToolbarConfig.swift in Sources */,
+				E78F8BE62C1C501400817053 /* FTToolbarConfig.swift in Sources */,
 				ED3532602452E810002B18EE /* FTExtensionAtttachmentsHelper.swift in Sources */,
 				4209FE72295C5F4700ACC02E /* FTFTShelfCollectionMigration.swift in Sources */,
 				4209FEAC295C62A000ACC02E /* StoreTemplateFormat.swift in Sources */,
