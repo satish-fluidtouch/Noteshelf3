@@ -64,6 +64,7 @@ import PDFKit
     var zoomTargetOrigin: CGPoint {get set};
     func resetRotation()
     var isCover: Bool {get set}
+    var isReadOnly: Bool {get set}
     #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
     var recognitionInfo : FTRecognitionResult? {get set};
     var visionRecognitionInfo : FTVisionRecognitionResult? {get set};

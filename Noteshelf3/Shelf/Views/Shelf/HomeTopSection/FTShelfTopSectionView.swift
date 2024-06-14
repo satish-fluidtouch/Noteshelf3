@@ -28,11 +28,9 @@ struct FTShelfTopSectionView: View {
                                 getShelfDetailViewItem(.newNotebook,
                                                        shelfViewModel: shelfViewModel,
                                                        geometrySize: proxy.width)
-                                if FTFeatureConfigHelper.shared.isFeatureEnabled(.ImportDocument) {
-                                    getShelfDetailViewItem(.importFile,
+                                getShelfDetailViewItem(.importFile,
                                                            shelfViewModel: shelfViewModel,
                                                            geometrySize: proxy.width)
-                                }
                             }
                         }
                     }else{
@@ -44,11 +42,9 @@ struct FTShelfTopSectionView: View {
                                 getShelfDetailViewItem(.newNotebook,
                                                        shelfViewModel: shelfViewModel,
                                                        geometrySize: proxy.width)
-                                if FTFeatureConfigHelper.shared.isFeatureEnabled(.ImportDocument) {
-                                    getShelfDetailViewItem(.importFile,
+                                getShelfDetailViewItem(.importFile,
                                                            shelfViewModel: shelfViewModel,
                                                            geometrySize: proxy.width)
-                                }
                             }
                         }
                     }

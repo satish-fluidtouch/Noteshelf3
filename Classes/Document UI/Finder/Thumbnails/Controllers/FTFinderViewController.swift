@@ -260,6 +260,10 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
         }
         segmentControl?.populateSegments()
         segmentControl?.selectedSegmentIndex = 0
+        if !FTFeatureConfigHelper.shared.isFeatureEnabled(.Share) {
+            shareButton.isHidden = true
+        }
+        
     }
 
     private func updateContentInsets() {
@@ -512,7 +516,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
 
     private func configureMoreButton() {
         var actions = [UIMenuElement]()
-        let copyAction = FTMoreOption.copy.actionElment {[weak self] action in
+        let copyAction = FTMoreOption.copy.actionElment(isEnabled: !isReadOnly()) {[weak self] action in
             self?.didTapMoreOption(identifier: action.identifier.rawValue)
         }
         let bookMarkAction = FTMoreOption.bookMark.actionElment {[weak self] action in
@@ -521,10 +525,10 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
         let tagAction = FTMoreOption.tag.actionElment {[weak self] action in
             self?.didTapMoreOption(identifier: action.identifier.rawValue)
         }
-        let moveAction = FTMoreOption.move.actionElment {[weak self] action in
+        let moveAction = FTMoreOption.move.actionElment(isEnabled: !isReadOnly()) {[weak self] action in
             self?.didTapMoreOption(identifier: action.identifier.rawValue)
         }
-        let deleteAction = FTMoreOption.delete.actionElment {[weak self] action in
+        let deleteAction = FTMoreOption.delete.actionElment(isEnabled: !isReadOnly()) {[weak self] action in
             self?.didTapMoreOption(identifier: action.identifier.rawValue)
         }
         actions.append(UIMenu(identifier: UIMenu.Identifier( FTMoreOption.delete.rawValue), options: .displayInline, children: [deleteAction]))
@@ -639,8 +643,18 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     private func enableEditOptions() {
         shareButton.isEnabled = true
         moreButton.isEnabled = true
-        duplicateButton.isEnabled = true
+        duplicateButton.isEnabled = !isReadOnly()
         rotateButton.isEnabled = true
+    }
+    
+    internal func isReadOnly() -> Bool {
+        var value = false
+        self.selectedPages.forEach { eachPage in
+            if let page = eachPage as? FTNoteshelfPage, page.isReadOnly {
+                value = true
+            }
+        }
+        return value
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {

@@ -86,13 +86,16 @@ enum FTMoreOption: String {
         return title
     }
     
-    func actionElment(completion: @escaping (UIAction) -> Void) -> UIAction {
+    func actionElment(isEnabled: Bool = true, completion: @escaping (UIAction) -> Void) -> UIAction {
         let action = { (action: UIAction) in
             completion(action)
         }
         var attributes =  UIMenuElement.Attributes.standard
         if self == .delete {
             attributes = .destructive
+        }
+        if !isEnabled {
+            attributes = .disabled
         }
         return UIAction(title: self.title(), image: self.image(),identifier: UIAction.Identifier(self.rawValue), attributes: attributes, handler: action)
     }

@@ -35,6 +35,8 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
     private var searchLock = DispatchSemaphore(value: 1);
     var zoomTargetOrigin = CGPoint.zero;
     var isCover: Bool = false
+    var isReadOnly: Bool = true
+
     #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
     fileprivate var tileMapAnnotations = [FTTileMap]();
     #endif
@@ -503,7 +505,7 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
         }
         isBookmarked = (dict["isBookmarked"] as? NSNumber)?.boolValue ?? false;
         isCover = (dict["isCover"] as? NSNumber)?.boolValue ?? false;
-
+        isReadOnly = (dict["isReadOnly"] as? NSNumber)?.boolValue ?? false;
         if let _bookmarkTitle = dict["bookmarkTitle"] as? String {
             self.bookmarkTitle = _bookmarkTitle
         }
@@ -584,7 +586,7 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
         dictRep["uuid"] = self.uuid as AnyObject?;
         dictRep["isBookmarked"] = NSNumber.init(value: self.isBookmarked as Bool);
         dictRep["isCover"] = NSNumber.init(value: self.isCover as Bool);
-
+        dictRep["isReadOnly"] = NSNumber.init(value: self.isReadOnly as Bool);
         dictRep["bookmarkTitle"] = self.bookmarkTitle
         dictRep["bookmarkColor"] = self.bookmarkColor
         dictRep["rotationAngle"] = self.rotationAngle

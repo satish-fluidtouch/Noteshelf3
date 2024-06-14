@@ -17,6 +17,7 @@ private extension FTTemplateInfoKey {
     static let footerOption = "footerOption";
     static let password = "password";
     static let isCover = "isCover";
+    static let isReadOnly = "isReadOnly"
 }
 
 @objcMembers class FTTemplateInfo: NSObject {
