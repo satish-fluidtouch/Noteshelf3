@@ -10,7 +10,17 @@ import SwiftUI
 
 protocol FTShapeShortcutEditDelegate: AnyObject {
     func showShapeEditScreen(position: FavoriteShapePosition)
+    func showShapeEditScreen(position: FavoriteShapePosition, rect: CGRect)
     func didSelectFavoriteShape(_ shape: FTShapeType)
+}
+
+extension FTShapeShortcutEditDelegate {
+    func showShapeEditScreen(position: FavoriteShapePosition) {
+        debugLog(#function)
+    }
+    func showShapeEditScreen(position: FavoriteShapePosition, rect: CGRect) {
+        debugLog(#function)
+    }
 }
 
 class FTFavoriteShapeViewModel: ObservableObject {
@@ -24,6 +34,8 @@ class FTFavoriteShapeViewModel: ObservableObject {
 
     private weak var delegate: FTShapeShortcutEditDelegate?
     private var observer: NSKeyValueObservation?
+    var shapeSourceOrigin = CGPoint.zero
+    private var geometrySize: CGSize = .zero
 
     // MARK: Initialization
     init(rackData: FTRackData, delegate: FTShapeShortcutEditDelegate?) {
@@ -42,6 +54,10 @@ class FTFavoriteShapeViewModel: ObservableObject {
 
     func updateCurrentFavoriteShape(_ shape: FTShapeType) {
         self.currentFavoriteShape = shape
+    }
+
+    func updateGeometrySize(_ size: CGSize) {
+        self.geometrySize = size
     }
 
     func handleFavoriteShapeSelection(_ shape: FTShapeType, index: FavoriteShapePosition) {
@@ -122,9 +138,22 @@ extension FTFavoriteShapeViewModel {
         rackType.saveFavoriteShapeTypes(shapes: shapeTypes)
     }
 
-    func showShapeEditScreen(index: Int) {
+    func rectForColor(at index: Int, startAngle: Angle) -> CGRect {
+        let angle = Angle(degrees: startAngle.degrees + (Double(FTPenSliderConstants.spacingAngle) * Double(index)) - Double(FTPenSliderConstants.rotationAngle))
+        let x = FTPenSliderConstants.sliderRadius * cos(angle.radians) + geometrySize.width / 2 + shapeSourceOrigin.x
+        let y = FTPenSliderConstants.sliderRadius * sin(angle.radians) + geometrySize.height / 2 + shapeSourceOrigin.y
+        return CGRect(x: x - 40/2, y: y - 40/2, width: 40, height: 40)
+    }
+
+    func showShapeEditScreen(index: Int, mode: FTShortcutbarMode = .rectangle) {
        let position = FavoriteShapePosition.getPosition(index: index)
-        self.delegate?.showShapeEditScreen(position: position)
+        if mode == .rectangle {
+            self.delegate?.showShapeEditScreen(position: position)
+        } else {
+            let startAngle = FTPenSliderConstants.startAngle
+            let rect = self.rectForColor(at: index, startAngle: startAngle)
+            self.delegate?.showShapeEditScreen(position: position, rect: rect)
+        }
         self.shapeEditPosition = position
     }
 }

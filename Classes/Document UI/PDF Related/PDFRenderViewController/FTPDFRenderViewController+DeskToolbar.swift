@@ -321,13 +321,25 @@ extension FTPDFRenderViewController {
     }
 }
 
-extension FTPDFRenderViewController: FTFavoriteSizeEditDelegate, FTFavoriteColorEditDelegate, FTShapeShortcutEditDelegate, FTFavoriteColorNotifier, FTPresenterShortcutDelegate {
-    func showShapeEditScreen(position: FavoriteShapePosition) {
-        
+extension FTPDFRenderViewController: FTFavoriteSizeEditDelegate, FTFavoriteColorEditDelegate, FTShapeShortcutEditDelegate, FTFavoriteColorNotifier, FTPresenterShortcutDelegate, FTShapeSelectDelegate {
+    func didSelectShape(shape: FTShapeType) {
+        if let viewModel = self.shapeModel {
+            viewModel.updateCurrentFavoriteShape(shape)
+            viewModel.editFavoriteShape(with: viewModel.currentFavoriteShape)
+        }
+    }
+    
+    func saveFavoriteShapes() {
+        self.shapeModel?.saveFavoriteShapes()
+    }
+
+    func showShapeEditScreen(position: FavoriteShapePosition, rect: CGRect) {
+        let controller = FTShapesRackViewController.showPopOver(presentingController: self, sourceView: self.view as Any, sourceRect: rect, arrowDirections: .any) as? FTShapesRackViewController
+        controller?.shapeEditDelegate = self
     }
     
     func didSelectFavoriteShape(_ shape: FTShapeType) {
-        
+        self.shapeModel?.updateCurrentFavoriteShape(shape)
     }
     
     func showSizeEditScreen(position: FavoriteSizePosition, viewModel: FTFavoriteSizeViewModel) {

@@ -42,8 +42,8 @@ struct FTCurvedFavoriteShapesView: View {
                     
                     if self.canShowShapeView(favShape: shapeModel) {
                         FTFavoriteShapeView(isSelected: shapeModel.isSelected, shapeType: shapeModel.shape)
-                            .position(x: x, y: y)
                             .hoverEffect()
+                            .position(x: x, y: y)
                             .onTapGesture {
                                 self.handleTapAction(shapeModel: shapeModel, index: index)
                             }
@@ -53,9 +53,10 @@ struct FTCurvedFavoriteShapesView: View {
                     }
                 }
             }
-        }
-        .onAppear {
-             self.viewModel.fetchShapesData()
+            .onAppear {
+                self.viewModel.updateGeometrySize(geometry.size)
+                self.viewModel.fetchShapesData()
+            }
         }
     }
 
@@ -77,7 +78,7 @@ struct FTCurvedFavoriteShapesView: View {
 
     private func handleLongPressAction(shapeModel: FTPenShapeModel, index: Int) {
         self.handleShapeSelection(shapeModel: shapeModel, index: index)
-        self.viewModel.showShapeEditScreen(index: index)
+        self.viewModel.showShapeEditScreen(index: index, mode: .arc)
     }
 
     private func handleShapeSelection(shapeModel: FTPenShapeModel, index: Int) {

@@ -96,4 +96,12 @@ extension FTPDFRenderViewController: FTPencilProMenuDelegate {
     func getCurrentDeskMode() -> RKDeskMode {
         return self.currentDeskMode
     }
+    
+    func updateShapeModel(_ model: FTFavoriteShapeViewModel) {
+        self.shapeModel = model
+    }
+    
+    func updateColorModel(_ model: FTFavoriteColorViewModel) {
+        self.colorModel = model
+    }
 }

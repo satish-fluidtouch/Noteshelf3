@@ -14,6 +14,8 @@ protocol FTPencilProMenuDelegate: FTCenterPanelActionDelegate {
     func canPerformRedo() -> Bool
     func performRedo()
     func getCurrentDeskMode() -> RKDeskMode
+    func updateShapeModel(_ model: FTFavoriteShapeViewModel)
+    func updateColorModel(_ model: FTFavoriteColorViewModel)
 }
 
 class FTPencilProMenuController: UIViewController {
@@ -266,6 +268,7 @@ private extension FTPencilProMenuController {
       
         let convertedOrigin = self.view.convert(rect.origin, to: parent.view)
         _colorModel.colorSourceOrigin = convertedOrigin
+        self.delegate?.updateColorModel(_colorModel)
         let sizeModel =
         FTFavoriteSizeViewModel(rackData: rack, delegate: parent, scene: self.view?.window?.windowScene)
         
@@ -276,10 +279,12 @@ private extension FTPencilProMenuController {
             self.add(hostingVc, frame: rect)
         } else if rack.type == .shape {
             let _shapeModel = FTFavoriteShapeViewModel(rackData: rack, delegate: parent)
+            _shapeModel.shapeSourceOrigin = convertedOrigin
             let shortcutView = FTShapeCurvedShortcutView(shapeModel: _shapeModel, colorModel: _colorModel, sizeModel: sizeModel)
             let hostingVc = FTShapeCurvedShortcutHostingController(rootView: shortcutView)
             self.add(hostingVc, frame: rect)
             items = FTPenSliderConstants.shapeShortcutItems
+            self.delegate?.updateShapeModel(_shapeModel)
         } else if rack.type == .presenter {
             let shortcutView = FTPresenterSliderShortcutView(viewModel: FTPresenterShortcutViewModel(rackData: rack, delegate: parent))
             let hostingVc = FTPresenterSliderShortcutHostingController(rootView: shortcutView)

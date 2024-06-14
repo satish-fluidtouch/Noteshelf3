@@ -86,7 +86,7 @@ class FTFavoriteColorViewModel: ObservableObject {
         if mode == .arc {
             var startAngle = FTPenSliderConstants.startAngle
             if self.getRackType() == .shape {
-                startAngle = .degrees(Double(FTPenSliderConstants.shapeTypeShortcutItems * FTPenSliderConstants.spacingAngle))
+                startAngle += .degrees(Double(FTPenSliderConstants.shapeTypeShortcutItems * FTPenSliderConstants.spacingAngle))
             }
             let rect = self.rectForColor(at: position.rawValue, startAngle: startAngle)
             self.delegate?.showEditColorScreen(using: self.rackData, position: position, rect: rect)
