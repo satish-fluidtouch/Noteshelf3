@@ -28,6 +28,9 @@ class FTPencilProMenuController: UIViewController {
 
     weak var delegate: FTPencilProMenuDelegate?
 
+    lazy var primaryMenuHitTestLayer: FTPencilProMenuLayer = {
+       return FTPencilProMenuLayer(strokeColor: .clear, lineWidth: 50)
+    }()
     lazy var primaryMenuLayer: FTPencilProMenuLayer = {
        return FTPencilProMenuLayer(strokeColor: UIColor.appColor(.pencilProMenuBgColor))
     }()
@@ -126,10 +129,13 @@ private extension FTPencilProMenuController {
         let startAngle: CGFloat = .pi + .pi/15
         // TODO: Narayana - to be calculated end angle properly using start angle
         let endAngle = self.getEndAngle(with: .pi)
+        self.primaryMenuHitTestLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
         self.primaryMenuLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
         self.primaryBorderLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
-        self.view.layer.insertSublayer(primaryBorderLayer, at: 0)
+        self.view.layer.insertSublayer(primaryMenuHitTestLayer, at: 0)
+        self.view.layer.insertSublayer(primaryBorderLayer, above: primaryMenuHitTestLayer)
         self.view.layer.insertSublayer(primaryMenuLayer, above: primaryBorderLayer)
+        (self.view as? FTPencilProMenuContainerView)?.primaryMenuHitTestLayer = primaryMenuHitTestLayer
     }
 }
 
@@ -340,8 +346,9 @@ extension FTPencilProMenuController: FTCenterPanelCollectionViewDelegate {
 
 final class FTPencilProMenuContainerView: UIView {
     weak var collectionView: UICollectionView?
+    weak var primaryMenuHitTestLayer: CAShapeLayer?
     weak var secondaryMenuHitTestLayer: CAShapeLayer?
-    
+
     weak var undoBtn: FTPencilProUndoButton?
     weak var redoBtn: FTPencilProRedoButton?
     
@@ -367,27 +374,21 @@ final class FTPencilProMenuContainerView: UIView {
             return hitView
         }
         
-        if let layer = secondaryMenuHitTestLayer, self.isPointInside(point, lineWidth: layer.lineWidth) {
+        if let layer = primaryMenuHitTestLayer, self.isPointInside(point, lineWidth: layer.lineWidth, radius: 200) {
+            return collectionView
+        }
+        if let layer = secondaryMenuHitTestLayer, self.isPointInside(point, lineWidth: layer.lineWidth, radius: 250) {
             return hitView
         }
         return nil
     }
     
-    func isPointInside(_ point: CGPoint, lineWidth: CGFloat) -> Bool {
-          // Calculate the center point and radius
+    func isPointInside(_ point: CGPoint, lineWidth: CGFloat, radius: CGFloat) -> Bool {
           let center = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
-          let radius = min(bounds.width, bounds.height) / 2
-          
-          // Calculate the distance from the center
           let distanceFromCenter = point.distance(to: center)
-          
-          // Calculate the angle of the point relative to the center
           let angle = atan2(point.y - center.y, point.x - center.x)
-          
-          // Check if the point is within the stroke width range
           let isInRadiusRange = (distanceFromCenter >= radius - lineWidth / 2 && distanceFromCenter <= radius + lineWidth / 2)
           let isInAngleRange = (angle >= -CGFloat.pi && angle <= 0)
-          
           return isInRadiusRange && isInAngleRange
       }
 
