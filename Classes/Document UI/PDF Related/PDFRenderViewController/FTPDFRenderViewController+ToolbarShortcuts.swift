@@ -18,10 +18,7 @@ extension FTPDFRenderViewController {
     }
 
     private func addShortcutContainer(mode: RKDeskMode) {
-        if let vc = self.children.compactMap({ $0 as? FTPencilProMenuController}).first {
-            let anchorPoint = vc.view.frame.origin
-            showSecondaryMenuIfneeded(with: anchorPoint, mode: mode)
-        } else {
+        if !self.checkIfPencilProMenuExist() {
             let toolbarContainer = FTShortcutToolPresenter()
             if let toolbar = self.parent as? FTToolbarElements {
                 toolbarContainer.screenMode =  toolbar.isInFocusMode() ? .focus : .normal
@@ -49,16 +46,6 @@ extension FTPDFRenderViewController {
        if let controller = self.toolTypeContainerVc {
            controller.removeFromParent()
            self.toolTypeContainerVc = nil
-       }
-       
-       if self.penSliderViewcontroller != nil {
-           self.penSliderViewcontroller.view.removeFromSuperview()
-           self.penSliderViewcontroller.removeFromParent()
-           self.penSliderViewcontroller = nil
-           let views = self.view.subviews.filter {$0 is TransparentTouchView}
-           views.forEach { eachView in
-               eachView.removeFromSuperview()
-           }
        }
     }
 }

@@ -13,38 +13,129 @@ protocol FTPencilProMenuDelegate: FTCenterPanelActionDelegate {
     func performUndo()
     func canPerformRedo() -> Bool
     func performRedo()
+    func getCurrentDeskMode() -> RKDeskMode
 }
 
 class FTPencilProMenuController: UIViewController {
-    @IBOutlet private weak var collectionView: FTCenterPanelCollectionView!
+    @IBOutlet private weak var collectionView: FTCenterPanelCollectionView?
+    
     private var size = CGSize.zero
-    private weak var validateToolbarObserver: NSObjectProtocol?
-
     private let center = CGPoint(x: 250, y: 250)
     private let config = FTCircularLayoutConfig()
-    weak var delegate: FTPencilProMenuDelegate? {
-        didSet {
-            self.initiateUndoRedoIfNeeded()
-        }
-    }
     private var undoBtn: FTPencilProUndoButton?
     private var redoBtn: FTPencilProRedoButton?
-    
+    private weak var validateToolbarObserver: NSObjectProtocol?
+
+    weak var delegate: FTPencilProMenuDelegate?
+
+    lazy var primaryMenuLayer: FTPencilProMenuLayer = {
+       return FTPencilProMenuLayer(strokeColor: UIColor.appColor(.pencilProMenuBgColor))
+    }()
+    lazy var primaryBorderLayer: FTPencilProBorderLayer = {
+       return FTPencilProBorderLayer(strokeColor: UIColor.appColor(.pencilProMenuBorderColor))
+    }()
+
+    lazy var secondaryMenuHitTestLayer: FTPencilProMenuLayer = {
+       return FTPencilProMenuLayer(strokeColor: .clear, lineWidth: 50)
+    }()
+    lazy var secondaryMenuLayer: FTPencilProMenuLayer = {
+       return FTPencilProMenuLayer(strokeColor: UIColor.init(hexString: "#F2F2F2"))
+    }()
+    lazy var secondaryBorderLayer: FTPencilProBorderLayer = {
+       return FTPencilProBorderLayer(strokeColor: UIColor.init(hexString: "#E5E5E5"))
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         (self.view as? FTPencilProMenuContainerView)?.collectionView = collectionView
-        self.collectionView.mode = .circular
-        self.collectionView.centerPanelDelegate = self
-        self.collectionView.dataSourceItems = FTCurrentToolbarSection().displayTools
+        self.configureCollectionView()
+        self.addObservers()
+    }
+
+    override func viewIsAppearing(_ animated: Bool) {
+        super.viewIsAppearing(animated)
+        self.showSecondaryMenuIfneeded()
+        self.initiateUndoRedoIfNeeded()
+    }
+    
+    deinit {
+        if let observer = self.validateToolbarObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if self.size != self.view.frame.size {
+            self.size = self.view.frame.size
+            self.collectionView?.collectionViewLayout.invalidateLayout()
+        }
+    }
+    
+    func isPointInside(_ point: CGPoint) -> Bool {
+        let newPoint = self.view.convert(point, to: self.view)
+        if let view = self.view as? FTPencilProMenuContainerView {
+            return view.isPointInside(point: newPoint, event: nil)
+        }
+        return false
+    }
+}
+
+// Primary Menu
+private extension FTPencilProMenuController {
+    func configureCollectionView() {
+        self.collectionView?.mode = .circular
+        self.collectionView?.centerPanelDelegate = self
+        self.collectionView?.dataSourceItems = FTCurrentToolbarSection().displayTools
         let circularLayout = FTCircularFlowLayout(withCentre: center, config: config)
         let startAngle: CGFloat = .pi - .pi/30
         let endAngle = self.getEndAngle(with: startAngle)
         circularLayout.set(startAngle: startAngle, endAngle: endAngle)
-        self.collectionView.collectionViewLayout = circularLayout
-        self.collectionView.isScrollEnabled = false
+        self.collectionView?.collectionViewLayout = circularLayout
+        self.drawCollectionViewBackground()
+        self.collectionView?.isScrollEnabled = false
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
-        self.collectionView.addGestureRecognizer(panGestureRecognizer)
+        self.collectionView?.addGestureRecognizer(panGestureRecognizer)
+    }
+    
+    @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
+        guard let collectionView = self.collectionView else { return }
+        let translation = gesture.translation(in: collectionView)
+        if gesture.state == .changed {
+            let decelerationRate: CGFloat = 0.4
+            let adjustment = translation.x * decelerationRate
+            var proposedOffsetX = collectionView.contentOffset.x - adjustment
+            let contentWidth = collectionView.contentSize.width
+            let collectionViewWidth = collectionView.bounds.width
+            let minOffsetX: CGFloat = 0.0
+            let maxOffsetX = contentWidth - collectionViewWidth
+            if proposedOffsetX < minOffsetX {
+                proposedOffsetX = minOffsetX
+            } else if proposedOffsetX > maxOffsetX {
+                proposedOffsetX = maxOffsetX
+            }
+            let adjustedOffset = CGPoint(x: proposedOffsetX, y: collectionView.contentOffset.y)
+            if proposedOffsetX >= minOffsetX && proposedOffsetX <= maxOffsetX {
+                collectionView.setContentOffset(adjustedOffset, animated: false)
+                gesture.setTranslation(.zero, in: collectionView)
+            }
+        }
+    }
 
+    func drawCollectionViewBackground() {
+        let startAngle: CGFloat = .pi + .pi/15
+        // TODO: Narayana - to be calculated end angle properly using start angle
+        let endAngle = self.getEndAngle(with: .pi)
+        self.primaryMenuLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
+        self.primaryBorderLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
+        self.view.layer.insertSublayer(primaryBorderLayer, at: 0)
+        self.view.layer.insertSublayer(primaryMenuLayer, above: primaryBorderLayer)
+    }
+}
+
+// Undo Redo
+private extension FTPencilProMenuController {
+    func addObservers() {
         self.validateToolbarObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: FTValidateToolBarNotificationName), object: nil, queue: .main) { [weak self] notification in
             guard let strongSelf = self else {
                 return
@@ -63,104 +154,54 @@ class FTPencilProMenuController: UIViewController {
             }
         }
     }
-
-    deinit {
-        if let observer = self.validateToolbarObserver {
-            NotificationCenter.default.removeObserver(observer)
-        }
-    }
     
-    @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
-        guard let collectionView = self.collectionView else { return }
-        let translation = gesture.translation(in: collectionView)
-        if gesture.state == .changed {
-            let decelerationRate: CGFloat = 0.4
-            let adjustment = translation.x * decelerationRate
-            var proposedOffsetX = collectionView.contentOffset.x - adjustment
-            let contentWidth = collectionView.contentSize.width
-            let collectionViewWidth = collectionView.bounds.width
-            let minOffsetX: CGFloat = 0.0
-            let maxOffsetX = contentWidth - collectionViewWidth 
-            if proposedOffsetX < minOffsetX {
-                proposedOffsetX = minOffsetX
-            } else if proposedOffsetX > maxOffsetX {
-                proposedOffsetX = maxOffsetX
-            }
-            let adjustedOffset = CGPoint(x: proposedOffsetX, y: collectionView.contentOffset.y)
-            if proposedOffsetX >= minOffsetX && proposedOffsetX <= maxOffsetX {
-                collectionView.setContentOffset(adjustedOffset, animated: false)
-                gesture.setTranslation(.zero, in: collectionView)
-            }
-        }
-    }
-
-    func isPointInside(_ point: CGPoint) -> Bool {
-        let newPoint = self.view.convert(point, to: self.view)
-        if let view = self.view as? FTPencilProMenuContainerView {
-            return view.isPointInside(point: newPoint, event: nil)
-        }
-        return false
-    }
-
-    override func viewIsAppearing(_ animated: Bool) {
-        super.viewIsAppearing(animated)
-        self.drawCollectionViewBackground()
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        if self.size != self.view.frame.size {
-            self.size = self.view.frame.size
-            self.collectionView.collectionViewLayout.invalidateLayout()
-        }
-    }
-}
-
-private extension FTPencilProMenuController {
     func initiateUndoRedoIfNeeded() {
-        var toShow = false
-        if let canUndo = self.delegate?.canPerformUndo(), let canRedo = self.delegate?.canPerformRedo() {
-             toShow = canUndo || canRedo
+        guard let delegate = self.delegate else { return }
+        let canUndo = delegate.canPerformUndo()
+        let canRedo = delegate.canPerformRedo()
+
+        if canUndo || canRedo {
+            if nil ==  self.undoBtn {
+                self.addUndoButton()
+            }
+            self.undoBtn?.isEnabled = canUndo
         }
-        if toShow {
-            self.undoBtn?.removeFromSuperview()
-            self.addUndoButton()
-            let undoStatus = self.delegate?.canPerformUndo() ?? false
-            self.undoBtn?.isEnabled = undoStatus
-        }
-        if self.delegate?.canPerformRedo() ?? false {
-            self.redoBtn?.removeFromSuperview()
-            self.addRedoButton()
-            let redoStatus = self.delegate?.canPerformRedo() ?? false
-            self.redoBtn?.isEnabled = redoStatus
+
+        if canRedo {
+            if nil == self.redoBtn {
+                self.addRedoButton()
+            }
+            self.redoBtn?.isEnabled = canRedo
         }
     }
 
     func addUndoButton() {
         let radius: CGFloat = self.config.radius
         let angle: CGFloat = .pi - .pi/90
-        let xPosition = self.view.frame.origin.x + center.x + radius * cos(angle)
-        let yPosition = self.view.frame.origin.y + center.y + radius * sin(angle)
+        let xPosition = self.view.bounds.origin.x + center.x + radius * cos(angle)
+        let yPosition = self.view.bounds.origin.y + center.y + radius * sin(angle)
         let buttonSize = CGSize(width: 40, height: 40)
         let undoBtn = FTPencilProUndoButton(frame: CGRect(x: xPosition - buttonSize.width/2, y: yPosition - buttonSize.height/2, width: buttonSize.width, height: buttonSize.height))
         undoBtn.addTarget(self, action:  #selector(undo(_ :)), for: .touchUpInside)
-        self.parent?.view.addSubview(undoBtn)
+        self.view.addSubview(undoBtn)
         self.undoBtn = undoBtn
+        (self.view as? FTPencilProMenuContainerView)?.undoBtn = undoBtn
     }
     
     func addRedoButton() {
         let radius: CGFloat = self.config.radius
         var angle: CGFloat = .pi - .pi/90
-        if self.delegate?.canPerformUndo() ?? false {
+        if self.delegate?.canPerformRedo() ?? false {
             angle -= self.config.angleOfEachItem
         }
-        let xPosition = self.view.frame.origin.x + center.x + radius * cos(angle)
-        let yPosition = self.view.frame.origin.y + center.y + radius * sin(angle)
+        let xPosition = self.view.bounds.origin.x + center.x + radius * cos(angle)
+        let yPosition = self.view.bounds.origin.y + center.y + radius * sin(angle)
         let buttonSize = CGSize(width: 40, height: 40)
         let redoBtn = FTPencilProRedoButton(frame: CGRect(x: xPosition - buttonSize.width/2, y: yPosition - buttonSize.height/2, width: buttonSize.width, height: buttonSize.height))
         redoBtn.addTarget(self, action:  #selector(redo(_ :)), for: .touchUpInside)
-        self.parent?.view.addSubview(redoBtn)
+        self.view.addSubview(redoBtn)
         self.redoBtn = redoBtn
+        (self.view as? FTPencilProMenuContainerView)?.redoBtn = redoBtn
     }
     
     @objc func undo(_ sender: Any) {
@@ -172,26 +213,101 @@ private extension FTPencilProMenuController {
     }
 
     func getEndAngle(with startAngle: CGFloat) -> CGFloat {
+        guard let collectionView = self.collectionView else {
+            return .zero
+        }
         var itemsToShow = self.config.maxVisibleItemsCount
-        if self.collectionView.dataSourceItems.count < self.config.maxVisibleItemsCount {
-            itemsToShow = self.collectionView.dataSourceItems.count
+        if collectionView.dataSourceItems.count < self.config.maxVisibleItemsCount {
+            itemsToShow = collectionView.dataSourceItems.count
         }
         let endAngle = startAngle - (CGFloat(itemsToShow) * self.config.angleOfEachItem)
         return endAngle
     }
+}
 
-    func drawCollectionViewBackground() {
-        self.view.layoutIfNeeded()
-        let menuLayer = FTPencilProMenuLayer(strokeColor: UIColor.appColor(.pencilProMenuBgColor))
-        let startAngle: CGFloat = .pi + .pi/15
-        let endAngle = self.getEndAngle(with: .pi)
-        menuLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
-        let borderLayer = FTPencilProBorderLayer(strokeColor: UIColor.appColor(.pencilProMenuBorderColor))
-        borderLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
-        self.view.layer.insertSublayer(borderLayer, at: 0)
-        self.view.layer.insertSublayer(menuLayer, at: 1)
-        (self.view as? FTPencilProMenuContainerView)?.menuLayer = menuLayer
-        (self.view as? FTPencilProMenuContainerView)?.borderLayer = borderLayer
+// Secondary menu
+private extension FTPencilProMenuController {
+    func removeSecondaryMenuIfExist() {
+        self.children.compactMap { $0 as? FTSliderHostingControllerProtocol }.forEach { $0.removeHost() }
+        self.secondaryMenuLayer.removeFromSuperlayer()
+        self.secondaryBorderLayer.removeFromSuperlayer()
+        self.secondaryMenuHitTestLayer.removeFromSuperlayer()
+    }
+
+    func shouldShowSecondaryMenu(for mode: RKDeskMode) -> Bool {
+        var status = false
+        if mode == .deskModePen || mode == .deskModeMarker || mode == .deskModeShape || mode == .deskModeLaser {
+            status = true
+        }
+        return status
+    }
+
+    func showSecondaryMenuIfneeded() {
+        self.removeSecondaryMenuIfExist()
+        if let mode = self.delegate?.getCurrentDeskMode(), shouldShowSecondaryMenu(for: mode) {
+            self.addSecondaryMenu(with: mode, rect: self.view.bounds)
+        }
+    }
+
+    func addSecondaryMenu(with mode: RKDeskMode, rect: CGRect) {
+        guard let parent = self.parent as? FTPDFRenderViewController else {
+            return
+        }
+        var rackType = FTRackType.pen
+        if mode == .deskModeMarker {
+            rackType = .highlighter
+        } else if mode == .deskModeShape {
+            rackType = .shape
+        } else if mode == .deskModeLaser {
+            rackType = .presenter
+        }
+        let activity = self.view.window?.windowScene?.userActivity
+        let rack = FTRackData(type: rackType, userActivity: activity)
+        let _colorModel =
+        FTFavoriteColorViewModel(rackData: rack, delegate: parent, scene: self.view?.window?.windowScene)
+      
+        let convertedOrigin = self.view.convert(rect.origin, to: parent.view)
+        _colorModel.colorSourceOrigin = convertedOrigin
+        let sizeModel =
+        FTFavoriteSizeViewModel(rackData: rack, delegate: parent, scene: self.view?.window?.windowScene)
+        
+        var items = FTPenSliderConstants.penShortCutItems
+        if rack.type == .pen || rack.type == .highlighter {
+            let shortcutView = FTPenSliderShortcutView(colorModel: _colorModel, sizeModel: sizeModel)
+            let hostingVc = FTPenSliderShortcutHostingController(rootView: shortcutView)
+            self.add(hostingVc, frame: rect)
+        } else if rack.type == .shape {
+            let _shapeModel = FTFavoriteShapeViewModel(rackData: rack, delegate: parent)
+            let shortcutView = FTShapeCurvedShortcutView(shapeModel: _shapeModel, colorModel: _colorModel, sizeModel: sizeModel)
+            let hostingVc = FTShapeCurvedShortcutHostingController(rootView: shortcutView)
+            self.add(hostingVc, frame: rect)
+            items = FTPenSliderConstants.shapeShortcutItems
+        } else if rack.type == .presenter {
+            let shortcutView = FTPresenterSliderShortcutView(viewModel: FTPresenterShortcutViewModel(rackData: rack, delegate: parent))
+            let hostingVc = FTPresenterSliderShortcutHostingController(rootView: shortcutView)
+            self.add(hostingVc, frame: rect)
+            items = FTPenSliderConstants.presenterShortcutItems
+        }
+        self.drawSecondaryBg(items: items)
+    }
+
+    func drawSecondaryBg(items: Int) {
+        let startAngle: CGFloat =  .pi + .pi/12
+        let endAngle = self.getEndAngle(with: startAngle, with: items)
+        let rect = self.view.bounds
+        let center = CGPoint(x: rect.midX, y: rect.midY)
+        self.secondaryMenuLayer.setPath(with: center, radius: FTPenSliderConstants.sliderRadius, startAngle: startAngle, endAngle: -endAngle)
+        self.secondaryBorderLayer.setPath(with: center, radius: FTPenSliderConstants.sliderRadius, startAngle: startAngle, endAngle: -endAngle)
+        self.secondaryMenuHitTestLayer.setPath(with: center, radius: FTPenSliderConstants.sliderRadius, startAngle: startAngle, endAngle: -endAngle)
+        self.view.layer.insertSublayer(secondaryMenuHitTestLayer, above: primaryMenuLayer)
+        self.view.layer.insertSublayer(secondaryBorderLayer, above: secondaryMenuHitTestLayer)
+        self.view.layer.insertSublayer(secondaryMenuLayer, above: secondaryBorderLayer)
+        (self.view as? FTPencilProMenuContainerView)?.secondaryMenuHitTestLayer = secondaryMenuHitTestLayer
+    }
+
+    func getEndAngle(with startAngle: CGFloat, with items: Int) -> CGFloat {
+        let endAngle = 2 * .pi - (startAngle + (CGFloat(items - 1) * FTPenSliderConstants.spacingAngle.degreesToRadians) + 3.degreesToRadians)
+        return endAngle
     }
 }
 
@@ -206,6 +322,7 @@ extension FTPencilProMenuController: FTCenterPanelCollectionViewDelegate {
     
     func didTapCenterPanelButton(type: FTDeskCenterPanelTool, sender: UIView) {
         self.delegate?.didTapCenterPanelTool(type, source: sender)
+        self.showSecondaryMenuIfneeded()
     }
     
     func currentDeskMode() -> RKDeskMode? {
@@ -223,12 +340,15 @@ extension FTPencilProMenuController: FTCenterPanelCollectionViewDelegate {
 
 final class FTPencilProMenuContainerView: UIView {
     weak var collectionView: UICollectionView?
-    weak var menuLayer: CALayer?
-    weak var borderLayer: CALayer?
-
+    weak var secondaryMenuHitTestLayer: CAShapeLayer?
+    
+    weak var undoBtn: FTPencilProUndoButton?
+    weak var redoBtn: FTPencilProRedoButton?
+    
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let hitView = super.hitTest(point, with: event)
         guard let collectionView else {
-            return super.hitTest(point, with: event)
+            return hitView
         }
         let collectionViewPoint = self.convert(point, to: collectionView)
         collectionView.layoutIfNeeded()
@@ -238,15 +358,39 @@ final class FTPencilProMenuContainerView: UIView {
                 return cell.hitTest(cellPoint, with: event)
             }
         }
-        if let firstLayer = menuLayer, firstLayer.frame.contains(point) {
-            return collectionView
+        
+        if let undoBtn = self.undoBtn, undoBtn.frame.contains(point) {
+            return hitView
         }
-        if let secondLayer = borderLayer, secondLayer.frame.contains(point) {
-            return collectionView
+        
+        if let redoBtn = self.redoBtn, redoBtn.frame.contains(point) {
+            return hitView
+        }
+        
+        if let layer = secondaryMenuHitTestLayer, self.isPointInside(point, lineWidth: layer.lineWidth) {
+            return hitView
         }
         return nil
     }
     
+    func isPointInside(_ point: CGPoint, lineWidth: CGFloat) -> Bool {
+          // Calculate the center point and radius
+          let center = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
+          let radius = min(bounds.width, bounds.height) / 2
+          
+          // Calculate the distance from the center
+          let distanceFromCenter = point.distance(to: center)
+          
+          // Calculate the angle of the point relative to the center
+          let angle = atan2(point.y - center.y, point.x - center.x)
+          
+          // Check if the point is within the stroke width range
+          let isInRadiusRange = (distanceFromCenter >= radius - lineWidth / 2 && distanceFromCenter <= radius + lineWidth / 2)
+          let isInAngleRange = (angle >= -CGFloat.pi && angle <= 0)
+          
+          return isInRadiusRange && isInAngleRange
+      }
+
     func isPointInside(point: CGPoint, event: UIEvent?) -> Bool {
         guard let collectionView = collectionView else {
             return false
@@ -297,5 +441,11 @@ final class FTPencilProRedoButton: FTPencilProButton {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+private extension CGPath {
+    func contains(_ point: CGPoint) -> Bool {
+        return self.contains(point, using: .evenOdd, transform: .identity)
     }
 }

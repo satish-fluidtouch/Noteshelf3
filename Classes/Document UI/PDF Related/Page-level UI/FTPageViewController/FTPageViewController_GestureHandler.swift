@@ -313,16 +313,8 @@ extension FTPageViewController : UIGestureRecognizerDelegate
             lassoContentResizeView.isPointInside(locationInView) {
             valueToReturn = false;
         }
-        //TODO: Once NKR is done with refactoring this logic will be changed
         if let vc = self.delegate?.children.compactMap({ $0 as? FTPencilProMenuController}).first {
             if vc.isPointInside(locationInView) {
-                valueToReturn = false
-            } else {
-                self.delegate?.removePencilProMenuIfExist()
-            }
-        }
-        if let view = self.delegate?.view.subviews.compactMap({ $0 as? TransparentTouchView}).first {
-            if view.isPointInside(locationInView) {
                 valueToReturn = false
             } else {
                 self.delegate?.removePencilProMenuIfExist()

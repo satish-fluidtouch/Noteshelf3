@@ -93,6 +93,7 @@ class FTCircularFlowLayout: UICollectionViewLayout {
         }
         attributes.center = CGPoint(x: x, y: y)
         attributes.zIndex = cellCount - indexPath.item
+        
         return attributes
     }
 

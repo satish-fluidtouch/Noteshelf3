@@ -101,8 +101,6 @@ FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {}
 @property (strong) NSMutableArray<FTAnnotation*> *selectedAnnotations;
 @property (assign) BOOL showPageImmediately;
 @property (readonly,weak)FTAudioPlayerController *playerController;
-@property (weak)UIViewController *penSliderViewcontroller;
-
 @property (strong) id<FTPageLayouter> pageLayoutHelper;
 
 @property (strong) FTDocumentScrollView *mainScrollView;
