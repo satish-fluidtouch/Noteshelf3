@@ -41,6 +41,9 @@ class FTPencilProMenuController: UIViewController {
         let endAngle = self.getEndAngle(with: startAngle)
         circularLayout.set(startAngle: startAngle, endAngle: endAngle)
         self.collectionView.collectionViewLayout = circularLayout
+        self.collectionView.isScrollEnabled = false
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+        self.collectionView.addGestureRecognizer(panGestureRecognizer)
 
         self.validateToolbarObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: FTValidateToolBarNotificationName), object: nil, queue: .main) { [weak self] notification in
             guard let strongSelf = self else {
@@ -67,6 +70,30 @@ class FTPencilProMenuController: UIViewController {
         }
     }
     
+    @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
+        guard let collectionView = self.collectionView else { return }
+        let translation = gesture.translation(in: collectionView)
+        if gesture.state == .changed {
+            let decelerationRate: CGFloat = 0.4
+            let adjustment = translation.x * decelerationRate
+            var proposedOffsetX = collectionView.contentOffset.x - adjustment
+            let contentWidth = collectionView.contentSize.width
+            let collectionViewWidth = collectionView.bounds.width
+            let minOffsetX: CGFloat = 0.0
+            let maxOffsetX = contentWidth - collectionViewWidth 
+            if proposedOffsetX < minOffsetX {
+                proposedOffsetX = minOffsetX
+            } else if proposedOffsetX > maxOffsetX {
+                proposedOffsetX = maxOffsetX
+            }
+            let adjustedOffset = CGPoint(x: proposedOffsetX, y: collectionView.contentOffset.y)
+            if proposedOffsetX >= minOffsetX && proposedOffsetX <= maxOffsetX {
+                collectionView.setContentOffset(adjustedOffset, animated: false)
+                gesture.setTranslation(.zero, in: collectionView)
+            }
+        }
+    }
+
     func isPointInside(_ point: CGPoint) -> Bool {
         let newPoint = self.view.convert(point, to: self.view)
         if let view = self.view as? FTPencilProMenuContainerView {
