@@ -2742,6 +2742,10 @@
 		09995DCF20D26DF100F6DB8E /* FTShelfItemCollectionRecentPrivate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfItemCollectionRecentPrivate.swift; sourceTree = "<group>"; };
 		09995DD120D27F9300F6DB8E /* FTShelfItemCollectionRecentProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfItemCollectionRecentProtocol.swift; sourceTree = "<group>"; };
 		09995DD420D2896800F6DB8E /* FTRecentEntries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTRecentEntries.swift; sourceTree = "<group>"; };
+		099A2C992C1ACD26005B08D9 /* Noteshelf3 Intents ExtensionDebug Enterprise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf3 Intents ExtensionDebug Enterprise.entitlements"; sourceTree = "<group>"; };
+		099A2C9A2C1ACD27005B08D9 /* Noteshelf3 Intents Extension Enterprise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf3 Intents Extension Enterprise.entitlements"; sourceTree = "<group>"; };
+		099A2C9C2C1ACD5C005B08D9 /* Noteshelf3 WidgetsExtension Enterprise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf3 WidgetsExtension Enterprise.entitlements"; sourceTree = "<group>"; };
+		099A2C9D2C1ACD5C005B08D9 /* Noteshelf3 WidgetsExtensionDebug Enterprise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf3 WidgetsExtensionDebug Enterprise.entitlements"; sourceTree = "<group>"; };
 		099C91F52A8A1B3900C1FD07 /* FTdairyDatePickerViewController_Mac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTdairyDatePickerViewController_Mac.swift; sourceTree = "<group>"; };
 		099C91F72A8A386700C1FD07 /* FTDairyDateSelectionPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDairyDateSelectionPickerController.swift; sourceTree = "<group>"; };
 		099C920B2A8CC22800C1FD07 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/MyScriptLanguageLocalizable.strings; sourceTree = "<group>"; };
@@ -5741,6 +5745,18 @@
 				09995DCF20D26DF100F6DB8E /* FTShelfItemCollectionRecentPrivate.swift */,
 			);
 			path = Private;
+			sourceTree = "<group>";
+		};
+		099A2C9B2C1ACD3F005B08D9 /* Entitlements */ = {
+			isa = PBXGroup;
+			children = (
+				099A2C9C2C1ACD5C005B08D9 /* Noteshelf3 WidgetsExtension Enterprise.entitlements */,
+				099A2C9D2C1ACD5C005B08D9 /* Noteshelf3 WidgetsExtensionDebug Enterprise.entitlements */,
+				97C453282B70E40900251C73 /* Noteshelf3 WidgetsExtension.entitlements */,
+				84485C2B2B860256005A981D /* Noteshelf3 WidgetsExtensionBeta.entitlements */,
+				52C31F132B7F713C004BE21B /* Noteshelf3 WidgetsExtensionDebug.entitlements */,
+			);
+			name = Entitlements;
 			sourceTree = "<group>";
 		};
 		099F721F20526FC7004D3518 /* ThemeImages */ = {
@@ -8843,6 +8859,8 @@
 		84485C1A2B86003C005A981D /* Noteshelf3 Intents Extension */ = {
 			isa = PBXGroup;
 			children = (
+				099A2C9A2C1ACD27005B08D9 /* Noteshelf3 Intents Extension Enterprise.entitlements */,
+				099A2C992C1ACD26005B08D9 /* Noteshelf3 Intents ExtensionDebug Enterprise.entitlements */,
 				84485C212B86003D005A981D /* Noteshelf3 Intents Extension.entitlements */,
 				84485C292B8600A7005A981D /* Noteshelf3 Intents ExtensionBeta.entitlements */,
 				84485C2A2B8600A7005A981D /* Noteshelf3 Intents ExtensionDebug.entitlements */,
@@ -9240,9 +9258,7 @@
 		97C4531D2B70E40500251C73 /* Noteshelf3 Widgets */ = {
 			isa = PBXGroup;
 			children = (
-				52C31F132B7F713C004BE21B /* Noteshelf3 WidgetsExtensionDebug.entitlements */,
-				84485C2B2B860256005A981D /* Noteshelf3 WidgetsExtensionBeta.entitlements */,
-				97C453282B70E40900251C73 /* Noteshelf3 WidgetsExtension.entitlements */,
+				099A2C9B2C1ACD3F005B08D9 /* Entitlements */,
 				5206098A2B7CA03C00487CBC /* FTColorFetcher */,
 				97C453452B7371EB00251C73 /* Intents */,
 				97C4531E2B70E40500251C73 /* Noteshelf3_WidgetsBundle.swift */,
@@ -13051,6 +13067,7 @@
 				"${BUILT_PRODUCTS_DIR}/FirebaseCrashlytics/FirebaseCrashlytics.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseInstallations/FirebaseInstallations.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseRemoteConfig/FirebaseRemoteConfig.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseRemoteConfigInterop/FirebaseRemoteConfigInterop.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseSessions/FirebaseSessions.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseSharedSwift/FirebaseSharedSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
@@ -13084,6 +13101,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCrashlytics.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseInstallations.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseRemoteConfig.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseRemoteConfigInterop.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseSessions.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseSharedSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
@@ -13109,7 +13127,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ \"$PLATFORM_NAME\" = \"macosx\" ]]; then\n \"${SRCROOT}/MacCatalyst/Noteshelf-maccatalyst-frameworks.sh\"\nelse\n \"${PODS_ROOT}/Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3-frameworks.sh\"\nfi\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -15568,7 +15586,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0904BC622373F31400239DB8 /* Noteshelf-debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Dev";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = accent;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
@@ -15580,6 +15597,57 @@
 				DEFINES_MODULE = YES;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				ENABLE_MODULE_VERIFIER = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/ASN1Swift\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseABTesting\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCore\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCoreExtension\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCoreInternal\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCrashlytics\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseInstallations\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseRemoteConfig\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseRemoteConfigInterop\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseSessions\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseSharedSwift\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GTMSessionFetcher\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleDataTransport\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleToolboxForMac\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleUtilities\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleUtilitiesComponents\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/MSAL\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/MSGraphClientSDK\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/MSGraphMSALAuthProvider\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/PromisesObjC\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/PromisesSwift\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Reachability\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SSZipArchive\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/TPInAppReceipt\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/nanopb\"",
+					"\"${PODS_ROOT}/FirebaseAnalytics/Frameworks\"",
+					"\"${PODS_ROOT}/GoogleAppMeasurement/Frameworks\"",
+					"\"${PODS_ROOT}/MLKitCommon/Frameworks\"",
+					"\"${PODS_ROOT}/MLKitDigitalInkRecognition/Frameworks\"",
+					"\"${PODS_ROOT}/MLKitMDD/Frameworks\"",
+					"\"${PODS_ROOT}/ZendeskCommonUISDK\"",
+					"\"${PODS_ROOT}/ZendeskCoreSDK\"",
+					"\"${PODS_ROOT}/ZendeskMessagingAPISDK\"",
+					"\"${PODS_ROOT}/ZendeskMessagingSDK\"",
+					"\"${PODS_ROOT}/ZendeskSDKConfigurationsSDK\"",
+					"\"${PODS_ROOT}/ZendeskSupportProvidersSDK\"",
+					"\"${PODS_ROOT}/ZendeskSupportSDK\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/FirebaseAnalytics/AdIdSupport\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/GoogleAppMeasurement/AdIdSupport\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/GoogleAppMeasurement/WithoutAdIdSupport\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskCommonUISDK\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskCoreSDK\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingAPISDK\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingSDK\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskSDKConfigurationsSDK\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskSupportProvidersSDK\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskSupportSDK\"",
+					"\"$(PROJECT_DIR)/Third\\ Party\"/**",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -16001,7 +16069,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0904BC632373F31400239DB8 /* Noteshelf-release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Prod";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = accent;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
@@ -16031,6 +16098,57 @@
 				DEFINES_MODULE = YES;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				ENABLE_MODULE_VERIFIER = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/ASN1Swift\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseABTesting\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCore\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCoreExtension\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCoreInternal\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCrashlytics\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseInstallations\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseRemoteConfig\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseRemoteConfigInterop\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseSessions\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseSharedSwift\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GTMSessionFetcher\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleDataTransport\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleToolboxForMac\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleUtilities\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleUtilitiesComponents\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/MSAL\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/MSGraphClientSDK\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/MSGraphMSALAuthProvider\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/PromisesObjC\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/PromisesSwift\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Reachability\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SSZipArchive\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/TPInAppReceipt\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/nanopb\"",
+					"\"${PODS_ROOT}/FirebaseAnalytics/Frameworks\"",
+					"\"${PODS_ROOT}/GoogleAppMeasurement/Frameworks\"",
+					"\"${PODS_ROOT}/MLKitCommon/Frameworks\"",
+					"\"${PODS_ROOT}/MLKitDigitalInkRecognition/Frameworks\"",
+					"\"${PODS_ROOT}/MLKitMDD/Frameworks\"",
+					"\"${PODS_ROOT}/ZendeskCommonUISDK\"",
+					"\"${PODS_ROOT}/ZendeskCoreSDK\"",
+					"\"${PODS_ROOT}/ZendeskMessagingAPISDK\"",
+					"\"${PODS_ROOT}/ZendeskMessagingSDK\"",
+					"\"${PODS_ROOT}/ZendeskSDKConfigurationsSDK\"",
+					"\"${PODS_ROOT}/ZendeskSupportProvidersSDK\"",
+					"\"${PODS_ROOT}/ZendeskSupportSDK\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/FirebaseAnalytics/AdIdSupport\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/GoogleAppMeasurement/AdIdSupport\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/GoogleAppMeasurement/WithoutAdIdSupport\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskCommonUISDK\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskCoreSDK\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingAPISDK\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingSDK\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskSDKConfigurationsSDK\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskSupportProvidersSDK\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskSupportSDK\"",
+					"\"$(PROJECT_DIR)/Third\\ Party\"/**",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/App Delegate/Noteshelf_Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -16436,7 +16554,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Intents Extension/Noteshelf3 Intents ExtensionDebug.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Intents Extension/Noteshelf3 Intents ExtensionDebug Enterprise.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -16462,7 +16580,7 @@
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3-dev.intents";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3.enterprise-dev.intents";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = YES;
@@ -16535,7 +16653,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Intents Extension/Noteshelf3 Intents Extension.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Intents Extension/Noteshelf3 Intents Extension Enterprise.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -16558,7 +16676,7 @@
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.noteshelf3.intents;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.noteshelf3.enterprise.intents;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = YES;
@@ -16683,7 +16801,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Widgets/Noteshelf3 WidgetsExtensionBeta.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Widgets/Noteshelf3 WidgetsExtensionDebug Enterprise.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -16710,7 +16828,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_SWIFT_FLAGS = "-D NOTESHELF_WIDGET";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3-dev.widgets";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3.enterprise-dev.widgets";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = YES;
@@ -16787,7 +16905,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Widgets/Noteshelf3 WidgetsExtension.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Widgets/Noteshelf3 WidgetsExtension Enterprise.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -16810,7 +16928,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				OTHER_SWIFT_FLAGS = "-D NOTESHELF_WIDGET";
-				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.noteshelf3.widgets;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.noteshelf3.enterprise.widgets;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = YES;
@@ -17584,7 +17702,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0904BC622373F31400239DB8 /* Noteshelf-debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Dev";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = accent;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
@@ -17596,7 +17713,7 @@
 				ENABLE_MODULE_VERIFIER = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Third\\ Party/**",
+					"\"$(PROJECT_DIR)/Third\\ Party\"/**",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -17657,7 +17774,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0904BC632373F31400239DB8 /* Noteshelf-release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Prod";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = accent;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
@@ -17745,7 +17861,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BA50E027295981E000CDC0FD /* Noteshelf-beta.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = accent;
@@ -17758,7 +17873,7 @@
 				ENABLE_MODULE_VERIFIER = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Third\\ Party/**",
+					"\"$(PROJECT_DIR)/Third\\ Party\"/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/App Delegate/Noteshelf_Prefix.pch";
@@ -18454,7 +18569,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3.enterprise-dev..watchkitapp.watch-widget";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3.enterprise-dev.watchkitapp.watch-widget";
 				PRODUCT_NAME = "Noteshelf 3 Watch Widget";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
