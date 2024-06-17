@@ -134,7 +134,7 @@ private extension FTPencilProMenuController {
         let endAngle = self.getEndAngle(with: .pi)
         self.primaryMenuHitTestLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
         self.primaryMenuLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
-        self.primaryMenuLayer.addShadow(offset: CGSize(width: 0, height: 10), radius: 20)
+        self.primaryMenuLayer.addShadow(offset: CGSize(width: 0, height: 0), radius: 20)
         self.view.layer.insertSublayer(primaryMenuHitTestLayer, at: 0)
         self.view.layer.insertSublayer(primaryMenuLayer, above: primaryMenuHitTestLayer)
         (self.view as? FTPencilProMenuContainerView)?.primaryMenuHitTestLayer = primaryMenuHitTestLayer
@@ -300,7 +300,7 @@ private extension FTPencilProMenuController {
         let rect = self.view.bounds
         let center = CGPoint(x: rect.midX, y: rect.midY)
         self.secondaryMenuLayer.setPath(with: center, radius: FTPenSliderConstants.sliderRadius, startAngle: startAngle, endAngle: -endAngle)
-        self.secondaryMenuLayer.addShadow(offset: CGSize(width: 0, height: -10), radius: 20)
+        self.secondaryMenuLayer.addShadow(offset: CGSize(width: 0, height: 0), radius: 10)
         self.secondaryMenuHitTestLayer.setPath(with: center, radius: FTPenSliderConstants.sliderRadius, startAngle: startAngle, endAngle: -endAngle)
         self.view.layer.insertSublayer(secondaryMenuHitTestLayer, above: primaryMenuLayer)
         self.view.layer.insertSublayer(secondaryMenuLayer, above: secondaryMenuHitTestLayer)
