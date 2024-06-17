@@ -645,19 +645,19 @@
                                                                     <action selector="tickBtnAction:" destination="ieK-jl-NZ5" eventType="touchUpInside" id="oFw-SU-wOG"/>
                                                                 </connections>
                                                             </button>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mHT-YC-YmN">
-                                                                <rect key="frame" x="40" y="5" width="758" height="20.5"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MIw-Gl-m1c">
+                                                                <rect key="frame" x="40" y="2" width="52" height="26.5"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                         </subviews>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
-                                                            <constraint firstItem="mHT-YC-YmN" firstAttribute="centerY" secondItem="EFP-PO-PBG" secondAttribute="centerY" id="1HC-ZW-9X6"/>
-                                                            <constraint firstItem="mHT-YC-YmN" firstAttribute="leading" secondItem="EFP-PO-PBG" secondAttribute="trailing" constant="8" id="9An-qm-qkK"/>
+                                                            <constraint firstItem="MIw-Gl-m1c" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="8E8-Xh-Vic" secondAttribute="trailing" constant="-8" id="7sS-Zf-RjD"/>
+                                                            <constraint firstItem="MIw-Gl-m1c" firstAttribute="leading" secondItem="EFP-PO-PBG" secondAttribute="trailing" constant="8" id="LfW-wP-3tf"/>
+                                                            <constraint firstItem="MIw-Gl-m1c" firstAttribute="centerY" secondItem="8E8-Xh-Vic" secondAttribute="centerY" id="aMP-Kj-G2d"/>
                                                             <constraint firstItem="EFP-PO-PBG" firstAttribute="centerY" secondItem="8E8-Xh-Vic" secondAttribute="centerY" id="bZN-Lw-U6J"/>
-                                                            <constraint firstAttribute="trailing" secondItem="mHT-YC-YmN" secondAttribute="trailing" constant="8" id="mSL-CO-BgD"/>
                                                             <constraint firstAttribute="height" constant="30" id="nc3-u4-mKa"/>
                                                             <constraint firstItem="EFP-PO-PBG" firstAttribute="leading" secondItem="8E8-Xh-Vic" secondAttribute="leading" constant="10" id="vrO-Pt-sC6"/>
                                                         </constraints>
@@ -744,7 +744,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="0.92156862745098034" green="0.90980392156862744" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" name="formSheetBgColor"/>
                                 <constraints>
                                     <constraint firstItem="xg7-iV-itR" firstAttribute="top" secondItem="pLb-DN-Hyo" secondAttribute="bottom" constant="20" id="BMv-hI-lUz"/>
                                     <constraint firstItem="xg7-iV-itR" firstAttribute="leading" secondItem="n5x-QJ-gHF" secondAttribute="leading" id="Iue-zr-uqI"/>
@@ -772,7 +772,7 @@
                         <outlet property="bgView" destination="n5x-QJ-gHF" id="ZZN-An-G7Z"/>
                         <outlet property="cancelBtn" destination="HmH-Ya-BEh" id="2OV-nF-yL6"/>
                         <outlet property="descriptionLbl" destination="lYa-36-2co" id="aLb-px-R3J"/>
-                        <outlet property="privacyPolicy" destination="mHT-YC-YmN" id="QNP-NL-abR"/>
+                        <outlet property="privacyPolicy" destination="MIw-Gl-m1c" id="neg-wL-lvi"/>
                         <outlet property="saveBtn" destination="diM-WQ-4Ux" id="bdl-Ft-bet"/>
                         <outlet property="scrollView" destination="xg7-iV-itR" id="hwp-fl-Ra2"/>
                         <outlet property="tickBtn" destination="EFP-PO-PBG" id="xXl-a9-90s"/>
@@ -816,6 +816,9 @@
         </namedColor>
         <namedColor name="credits_progress_normal">
             <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="formSheetBgColor">
+            <color red="0.92156862745098034" green="0.90980392156862744" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="groupNotesCountTint">
             <color red="0.015686274509803921" green="0.33333333333333331" blue="0.81176470588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

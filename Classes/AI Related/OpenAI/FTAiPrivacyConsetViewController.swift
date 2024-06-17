@@ -84,42 +84,39 @@ class FTAiPrivacyConsetViewController: UIViewController {
         let attributedString = NSAttributedString(string: text, attributes: [
             .paragraphStyle: paragraphStyle,
             .font: UIFont.systemFont(ofSize: 17),
-            .foregroundColor: UIColor.black
+            .foregroundColor: UIColor.appColor(.black1)
         ])
         self.descriptionLbl.attributedText = attributedString
     }
     
-    private func setUpPrivacyPolicyText(){
-        let text = "noteshelf.ai.privacy.terms.acceptnace".localized
-        let privacyPolicyText = "iap.privacy".localized
-        let title = String(format: text, privacyPolicyText)
-        let attrbutedText = NSMutableAttributedString(string: title)
-        let clickableRange = (title as NSString).range(of: privacyPolicyText)
-        attrbutedText.addAttribute(.foregroundColor, value: UIColor.appColor(.blueDodger), range: clickableRange)
-        privacyPolicy.attributedText = attrbutedText
-        privacyPolicy.isUserInteractionEnabled = true
+    private func setUpPrivacyPolicyText() {
+        let tapHereLocalized = "iap.privacy".localized
+        let originalString = "noteshelf.ai.privacy.terms.acceptnace".localized
+        let range = (originalString as NSString).range(of: "%@")
+        let attributedString = NSMutableAttributedString(string: originalString)
+        let linkAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.appColor(.blueDodger),
+            .font: UIFont.systemFont(ofSize: 17)
+        ]
+        let normalAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.appColor(.black1),
+            .font: UIFont.systemFont(ofSize: 17)
+        ]
+        attributedString.addAttributes(linkAttributes, range: range)
+        attributedString.addAttributes(normalAttributes, range: NSRange(location: 0, length: originalString.count))
+        attributedString.replaceCharacters(in: range, with: tapHereLocalized)
+        attributedString.addAttributes(linkAttributes, range: NSRange(location: range.location, length: tapHereLocalized.count))
+        privacyPolicy.attributedText = attributedString
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
+        privacyPolicy.isUserInteractionEnabled = true
         privacyPolicy.addGestureRecognizer(tapGesture)
-        
     }
     
     @objc func labelTapped(_ recognizer: UITapGestureRecognizer) {
         let text = (privacyPolicy.attributedText?.string ?? "") as NSString
         let privacyPolicyText = "iap.privacy".localized
         let clickableRange = text.range(of: privacyPolicyText)
-        
-        let tapLocation = recognizer.location(in: privacyPolicy)
-        
-        let textStorage = NSTextStorage(attributedString: privacyPolicy.attributedText!)
-        let layoutManager = NSLayoutManager()
-        let textContainer = NSTextContainer(size: privacyPolicy.bounds.size)
-        textContainer.lineFragmentPadding = 0
-        
-        layoutManager.addTextContainer(textContainer)
-        textStorage.addLayoutManager(layoutManager)
-        
-        let characterIndex = layoutManager.characterIndex(for: tapLocation, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
-        if NSLocationInRange(characterIndex, clickableRange) {
+        if recognizer.detectTappedTextIn(label: privacyPolicy, inRange: clickableRange) {
             if let privacyURL = URL(string: "https://www.noteshelf.net/privacy.html") {
                 let safariController = SFSafariViewController(url: privacyURL);
                 safariController.modalPresentationStyle = .fullScreen
@@ -137,6 +134,45 @@ class FTAiPrivacyConsetViewController: UIViewController {
         self.tickBtn.layer.borderColor = status ? UIColor.appColor(.black20).cgColor : UIColor.clear.cgColor
         self.tickBtn.layer.borderWidth = status ? 1.5 : 0
         self.saveBtn.isEnabled =  status ? false : true
-        self.saveBtn.alpha = status ? 0.5 : 1
+        if UIScreen.main.traitCollection.userInterfaceStyle == .dark {
+            self.saveBtn.alpha = status ? 0.3 : 1
+        } else {
+            self.saveBtn.alpha = status ? 0.5 : 1
+        }             }
+}
+
+extension UITapGestureRecognizer {
+    func detectTappedTextIn(label: UILabel, inRange targetRange: NSRange) -> Bool {
+        // Create instances of NSLayoutManager, NSTextContainer and NSTextStorage
+        let layoutManager = NSLayoutManager()
+        let textContainer = NSTextContainer(size: CGSize.zero)
+        let textStorage = NSTextStorage(attributedString: label.attributedText!)
+
+        // Configure layoutManager and textStorage
+        layoutManager.addTextContainer(textContainer)
+        textStorage.addLayoutManager(layoutManager)
+
+        // Configure textContainer
+        textContainer.lineFragmentPadding = 0.0
+        textContainer.lineBreakMode = label.lineBreakMode
+        textContainer.maximumNumberOfLines = label.numberOfLines
+        let labelSize = label.bounds.size
+        textContainer.size = labelSize
+
+        // Find the tapped character location and compare it to the specified range
+        let locationOfTouchInLabel = self.location(in: label)
+        let textBoundingBox = layoutManager.usedRect(for: textContainer)
+        let textContainerOffset = CGPoint(
+            x: (labelSize.width - textBoundingBox.size.width) * 0.5 - textBoundingBox.origin.x,
+            y: (labelSize.height - textBoundingBox.size.height) * 0.5 - textBoundingBox.origin.y
+        )
+        let locationOfTouchInTextContainer = CGPoint(
+            x: locationOfTouchInLabel.x - textContainerOffset.x,
+            y: locationOfTouchInLabel.y - textContainerOffset.y
+        )
+        let indexOfCharacter = layoutManager.characterIndex(for: locationOfTouchInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+
+        return NSLocationInRange(indexOfCharacter, targetRange)
     }
+
 }
