@@ -15,7 +15,7 @@ struct FTPenSliderSizeShortcutView: View {
     @EnvironmentObject var viewModel: FTFavoriteSizeViewModel
 
     var body: some View {
-        GeometryReader {geometry in
+        GeometryReader { geometry in
             ZStack {
                 ForEach(0..<viewModel.favoritePenSizes.count, id: \.hashValue) { index in
                     let favSize = viewModel.favoritePenSizes[index]
@@ -35,6 +35,9 @@ struct FTPenSliderSizeShortcutView: View {
                             }
                     }
                 }
+            }
+            .onAppear {
+                self.viewModel.updateGeometrySize(geometry.size)
             }
         }
         .onAppear {
@@ -68,6 +71,6 @@ struct FTPenSliderSizeShortcutView: View {
 
     private func handleLongpressAction(sizeModel: FTPenSizeModel, index: Int) {
         self.handleSizeSelection(sizeModel: sizeModel, index: index)
-        self.viewModel.showSizeEditScreen(index: index)
+        self.viewModel.showSizeEditScreen(index: index, mode: .arc)
     }
 }

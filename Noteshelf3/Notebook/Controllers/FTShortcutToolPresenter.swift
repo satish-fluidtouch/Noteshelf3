@@ -17,7 +17,6 @@ protocol FTShortcutContainerDelegate: AnyObject {
 private let offset: CGFloat = 8.0
 @objcMembers class FTShortcutToolPresenter: NSObject {
     private var contentSize = CGSize.zero
-    private weak var pensizeEditVc: FTPenSizeEditController?
 
     var toolbarVc: UIViewController!
     var screenMode: FTScreenMode = .normal
@@ -95,7 +94,6 @@ private let offset: CGFloat = 8.0
             contentSize = curSize
             self.updateMinOffsetIfNeeded()
             self.configureShortcutView(with: screenMode)
-            self.removeSizeEditViewController()
             if let parent = self.parentVC as? FTPDFRenderViewController, let zoomVc = parent.zoomOverlayController {
                 self.handleZoomPanelFrameChange(zoomVc.view.frame, mode: zoomVc.shortcutModeZoom, completion: nil)
             }
@@ -147,6 +145,38 @@ private let offset: CGFloat = 8.0
         }
     }
 
+    func getPenSizeEditViewCenter(at position: FavoriteSizePosition) -> CGPoint {
+        let view = self.shortcutView
+        var center: CGPoint = .zero
+
+        if self.shortcutViewPlacement.isHorizantalPlacement() { // top or bottom
+            center.x = view.frame.midX
+            if self.shortcutViewPlacement == .top {
+                center.y = view.frame.maxY + FTPenSizeEditController.viewSize.height/2.0
+            } else {
+                center.y = view.frame.minY - FTPenSizeEditController.viewSize.height/2.0
+            }
+        } else { // other placements
+            let xOffset: CGFloat = 16.0
+            if self.shortcutViewPlacement.isLeftPlacement() {
+                center.x = view.frame.maxX + FTPenSizeEditController.viewSize.width/2.0 + xOffset
+            } else if self.shortcutViewPlacement.isRightPlacement() {
+                center.x = view.frame.minX - FTPenSizeEditController.viewSize.width/2.0 - xOffset
+            }
+            if self.rackType == .shape {
+                center.y = view.center.y + 125.0
+            } else {
+                let step: CGFloat = 36.0
+                center.y = view.center.y + step
+                if position == .second {
+                    center.y += step
+                } else if position == .third {
+                    center.y += (2 * step)
+                }
+            }
+        }
+        return center
+    }
     @objc func handleEndDragOfZoomPanel(_ frame: CGRect, mode: FTZoomShortcutMode) {
         self.handleZoomPanelFrameChange(frame, mode: mode) {
             self.updateMinOffsetIfNeeded()
@@ -237,39 +267,6 @@ private extension FTShortcutToolPresenter {
         return size
     }
 
-    func getPenSizeEditViewCenter(at position: FavoriteSizePosition) -> CGPoint {
-        let view = self.shortcutView
-        var center: CGPoint = .zero
-
-        if self.shortcutViewPlacement.isHorizantalPlacement() { // top or bottom
-            center.x = view.frame.midX
-            if self.shortcutViewPlacement == .top {
-                center.y = view.frame.maxY + FTPenSizeEditController.viewSize.height/2.0
-            } else {
-                center.y = view.frame.minY - FTPenSizeEditController.viewSize.height/2.0
-            }
-        } else { // other placements
-            let xOffset: CGFloat = 16.0
-            if self.shortcutViewPlacement.isLeftPlacement() {
-                center.x = view.frame.maxX + FTPenSizeEditController.viewSize.width/2.0 + xOffset
-            } else if self.shortcutViewPlacement.isRightPlacement() {
-                center.x = view.frame.minX - FTPenSizeEditController.viewSize.width/2.0 - xOffset
-            }
-            if self.rackType == .shape {
-                center.y = view.center.y + 125.0
-            } else {
-                let step: CGFloat = 36.0
-                center.y = view.center.y + step
-                if position == .second {
-                    center.y += step
-                } else if position == .third {
-                    center.y += (2 * step)
-                }
-            }
-        }
-        return center
-    }
-
     func updateMinOffsetIfNeeded() {
         guard let frame = self.parentVC?.view.frame else {
             return
@@ -302,7 +299,7 @@ private extension FTShortcutToolPresenter {
     }
 }
 
-extension FTShortcutToolPresenter: FTShorctcutActionDelegate,FTPenSizeEditControllerDelegate {
+extension FTShortcutToolPresenter: FTShorctcutActionDelegate {
     func didTapPresentationOption(_ option: FTPresenterModeOption) {
         self.delegate?.didTapPresentationOption(option)
     }
@@ -323,24 +320,14 @@ extension FTShortcutToolPresenter: FTShorctcutActionDelegate,FTPenSizeEditContro
     }
     
     func showSizeEditView(position: FavoriteSizePosition, viewModel: FTFavoriteSizeViewModel) {
-        self.removeSizeEditViewController()
-        let controller = FTPenSizeEditController(viewModel: viewModel, editPosition: position)
-        controller.delegate = self;
-        self.pensizeEditVc = controller
-        self.parentVC?.addChild(controller)
-        controller.view.backgroundColor = .clear
-        controller.view.frame.size = FTPenSizeEditController.viewSize
-        controller.view.center = self.getPenSizeEditViewCenter(at: position)
-        self.parentVC?.view.addSubview(controller.view)
-        controller.didMove(toParent: self.parentVC)
-    }
-
-    func removeSizeEditViewController() {
-        if let sizeEditVc = self.pensizeEditVc {
-            sizeEditVc.willMove(toParent: nil)
-            sizeEditVc.removeFromParent()
-            sizeEditVc.view.removeFromSuperview()
-        }
+        let hostingVc = FTPenSizeEditController(viewModel: viewModel, editPosition: position)
+        let center = self.getPenSizeEditViewCenter(at: position)
+        let size = FTPenSizeEditController.viewSize
+        let originX = center.x - size.width/2
+        let originY = center.y - size.height/2
+        hostingVc.ftPresentationDelegate.source = self.parentVC?.view
+        hostingVc.ftPresentationDelegate.sourceRect = CGRect(origin: CGPoint(x: originX, y: originY), size: size)
+        self.parentVC?.ftPresentController(vcToPresent: hostingVc, contentSize: size)
     }
 }
 

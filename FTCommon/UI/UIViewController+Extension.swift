@@ -56,6 +56,19 @@ extension UIViewController {
         self.present(navController, animated: animated, completion: completion)
     }
 
+    public func ftPresentController(vcToPresent: UIViewController, contentSize: CGSize, animated: Bool = false) {
+        let childPresentDelegate: FTChildPresentation
+        if let customPresentationDelegate = vcToPresent as? FTChildPresentable {
+            childPresentDelegate = customPresentationDelegate.ftPresentationDelegate
+            vcToPresent.modalPresentationStyle = .custom
+            vcToPresent.preferredContentSize = contentSize
+            vcToPresent.transitioningDelegate = childPresentDelegate
+            self.present(vcToPresent, animated: animated, completion: nil)
+        } else {
+            fatalError("viewController should conform to FTChildPresentable protocol")
+        }
+    }
+    
     public func add(_ child: UIViewController) {
         addChild(child)
         view.addSubview(child.view)
@@ -136,3 +149,57 @@ extension UIHostingController {
         return false
     }
 }
+
+class FTPopoverBackground: UIPopoverBackgroundView {
+    override class func arrowHeight() -> CGFloat {
+        0.0
+    }
+    
+    override var arrowOffset: CGFloat {
+        get {
+            return 0.0
+        }
+        set {
+        }
+    }
+    
+    override class var wantsDefaultContentAppearance: Bool {
+        return false
+    }
+    
+    override class func arrowBase() -> CGFloat {
+       return 0.0
+    }
+
+    override var arrowDirection: UIPopoverArrowDirection {
+        get { return .unknown }
+        set {}
+    }
+    
+    override class func contentViewInsets() -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = .clear
+        self.layer.shadowColor = UIColor.clear.cgColor;
+        self.layer.shadowOpacity = 0
+    }
+    
+    override func willMove(toWindow newWindow: UIWindow?) {
+        if nil != newWindow {
+            debugPrint("ente");
+        }
+    }
+    override func didMoveToWindow() {
+        
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+    }
+    }

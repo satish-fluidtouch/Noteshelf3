@@ -15,21 +15,11 @@ enum FTFavoriteSizeMode: String {
 }
 
 protocol FTFavoriteSelectDelegate: AnyObject {
-    func didChangeCurrentPenset(_ penset: FTPenSetProtocol, dismissSizeEditView: Bool)
+    func didChangeCurrentPenset(_ penset: FTPenSetProtocol)
 }
 
 protocol FTFavoriteColorEditDelegate: FTFavoriteSelectDelegate {
-    func showEditColorScreen(using rack: FTRackData, position: FavoriteColorPosition)
-    func showEditColorScreen(using rack: FTRackData, position: FavoriteColorPosition, rect: CGRect)
-}
-
-extension FTFavoriteColorEditDelegate {
-    func showEditColorScreen(using rack: FTRackData, position: FavoriteColorPosition) {
-
-    }
-    func showEditColorScreen(using rack: FTRackData, position: FavoriteColorPosition, rect: CGRect) {
-
-    }
+    func showEditColorScreen(using rack: FTRackData, rect: CGRect)
 }
 
 extension Notification.Name {
@@ -70,6 +60,13 @@ class FTFavoriteColorViewModel: ObservableObject {
         return CGRect(x: x - 40/2, y: y - 40/2, width: 40, height: 40)
     }
 
+    func rectForColor(at index: Int) -> CGRect {
+        let offset: CGFloat = 32.0
+        let x =  colorSourceOrigin.x + (CGFloat(index) * offset)
+        let y =  colorSourceOrigin.y
+        return CGRect(x: x, y: y, width: 40, height: 40)
+    }
+    
     // This is to show different display size for pencil and other pen types
     @objc func handlePenTypeVariantChange(_ notification: Notification) {
         if let rackData = notification.userInfo?["FTRackData"] as? FTRackData {
@@ -83,16 +80,17 @@ class FTFavoriteColorViewModel: ObservableObject {
     }
 
     func showEditColorScreen(at position: FavoriteColorPosition, mode: FTShortcutbarMode = .rectangle) {
+        let rect: CGRect
         if mode == .arc {
             var startAngle = FTPenSliderConstants.startAngle
             if self.getRackType() == .shape {
                 startAngle += .degrees(Double(FTPenSliderConstants.shapeTypeShortcutItems * FTPenSliderConstants.spacingAngle))
             }
-            let rect = self.rectForColor(at: position.rawValue, startAngle: startAngle)
-            self.delegate?.showEditColorScreen(using: self.rackData, position: position, rect: rect)
+            rect = self.rectForColor(at: position.rawValue, startAngle: startAngle)
         } else {
-            self.delegate?.showEditColorScreen(using: self.rackData, position: position)
+             rect = self.rectForColor(at: position.rawValue)
         }
+        self.delegate?.showEditColorScreen(using: self.rackData, rect: rect)
         self.colorEditPostion = position
     }
 
@@ -125,7 +123,7 @@ class FTFavoriteColorViewModel: ObservableObject {
             self.rackData.saveFavoriteColors(self.favoriteColors, type: self.currentPenset.type)
             if currentColor.isSelected {
                 self.currentPenset.color = currentColor.hex
-                self.delegate?.didChangeCurrentPenset(self.currentPenset, dismissSizeEditView: true)
+                self.delegate?.didChangeCurrentPenset(self.currentPenset)
             }
         }
     }
@@ -156,7 +154,7 @@ extension FTFavoriteColorViewModel {
             self.currentPenset.color = colorHex
             self.rackData.currentPenset = self.currentPenset
             self.rackData.saveFavoriteColors(self.favoriteColors, type: self.currentPenset.type)
-            self.delegate?.didChangeCurrentPenset(self.currentPenset, dismissSizeEditView: true)
+            self.delegate?.didChangeCurrentPenset(self.currentPenset)
         }
     }
 
@@ -174,6 +172,14 @@ extension FTFavoriteColorViewModel {
 
 protocol FTFavoriteSizeEditDelegate: FTFavoriteSelectDelegate {
     func showSizeEditScreen(position: FavoriteSizePosition, viewModel: FTFavoriteSizeViewModel)
+    func showSizeEditScreen(position: FavoriteSizePosition, viewModel: FTFavoriteSizeViewModel, rect: CGRect)
+}
+
+extension FTFavoriteSizeEditDelegate {
+    func showSizeEditScreen(position: FavoriteSizePosition, viewModel: FTFavoriteSizeViewModel) {
+    }
+    func showSizeEditScreen(position: FavoriteSizePosition, viewModel: FTFavoriteSizeViewModel, rect: CGRect) {
+    }
 }
 
 class FTFavoriteSizeViewModel: ObservableObject {
@@ -186,6 +192,10 @@ class FTFavoriteSizeViewModel: ObservableObject {
 
     private weak var delegate: FTFavoriteSizeEditDelegate?
     private weak var scene: UIWindowScene?
+    var sizeSourceOrigin = CGPoint.zero
+
+    private var geometrySize: CGSize = .zero
+
     // MARK: Initialization
     init(rackData: FTRackData, delegate: FTFavoriteSizeEditDelegate?, scene: UIWindowScene?) {
         self.rackData = rackData
@@ -208,8 +218,19 @@ class FTFavoriteSizeViewModel: ObservableObject {
         return self.rackData.type
     }
 
+    func updateGeometrySize(_ size: CGSize) {
+        self.geometrySize = size
+    }
+
     func getCurrentPlacement() -> FTShortcutPlacement {
         return FTShortcutPlacement.getSavedPlacement(activity: rackData.userActivity)
+    }
+        
+    func rectForSize(startAngle: Angle) -> CGRect {
+        let angle = Angle(degrees: startAngle.degrees + Double(FTPenSliderConstants.spacingAngle) - Double(FTPenSliderConstants.rotationAngle))
+        let x = FTPenSliderConstants.sliderRadius * cos(angle.radians) + geometrySize.width / 2 + sizeSourceOrigin.x
+        let y = FTPenSliderConstants.sliderRadius * sin(angle.radians) + geometrySize.height / 2 + sizeSourceOrigin.y
+        return CGRect(origin: CGPoint(x: x-40/2, y: y-40/2), size: FTPenSizeEditController.viewSize)
     }
 }
 
@@ -236,7 +257,7 @@ extension FTFavoriteSizeViewModel {
             }
             self.currentPenset.preciseSize = formattedSize
             self.rackData.currentPenset = self.currentPenset
-            self.delegate?.didChangeCurrentPenset(self.currentPenset, dismissSizeEditView: sizeMode == .sizeSelect)
+            self.delegate?.didChangeCurrentPenset(self.currentPenset)
         }
     }
 
@@ -255,10 +276,25 @@ extension FTFavoriteSizeViewModel {
         }
     }
 
-    func showSizeEditScreen(index: Int) {
+    func showSizeEditScreen(index: Int, mode: FTShortcutbarMode = .rectangle) {
         self.sizeEditPostion = FavoriteSizePosition.getPosition(index: index)
         if let pos = self.sizeEditPostion {
-            self.delegate?.showSizeEditScreen(position: pos, viewModel: self)
+            if mode == .rectangle {
+                self.delegate?.showSizeEditScreen(position: pos, viewModel: self)
+            } else {
+                let rackType = self.getRackType()
+                var startAngle: Angle = .zero
+                if rackType == .pen || rackType == .highlighter {
+                    startAngle =  .degrees(Double(FTPenSliderConstants.penShortcutColorItems * FTPenSliderConstants.spacingAngle)) + FTPenSliderConstants.startAngle
+                } else if rackType == .shape {
+                    startAngle = .degrees(Double((FTPenSliderConstants.shapeTypeShortcutItems + FTPenSliderConstants.shapeShortcutColorItems) * FTPenSliderConstants.spacingAngle)) + FTPenSliderConstants.startAngle
+                }
+                var rect = self.rectForSize(startAngle: startAngle)
+                if rackType == .shape {
+                    rect.origin.x -= 80
+                }
+                self.delegate?.showSizeEditScreen(position: pos, viewModel: self, rect: rect)
+            }
         }
     }
 

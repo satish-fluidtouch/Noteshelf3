@@ -271,6 +271,7 @@ private extension FTPencilProMenuController {
         self.delegate?.updateColorModel(_colorModel)
         let sizeModel =
         FTFavoriteSizeViewModel(rackData: rack, delegate: parent, scene: self.view?.window?.windowScene)
+        sizeModel.sizeSourceOrigin = convertedOrigin
         
         var items = FTPenSliderConstants.penShortCutItems
         if rack.type == .pen || rack.type == .highlighter {

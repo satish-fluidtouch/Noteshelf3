@@ -42,7 +42,7 @@ extension FTPDFRenderViewController {
     func validAnchorPointForPencilProMenu(with anchorPoint: CGPoint) -> CGPoint {
         var point = anchorPoint
         point.x = max(200, anchorPoint.x)
-        point.y = max(240, anchorPoint.y)
+        point.y = max(280, anchorPoint.y)
         
         let offset: CGFloat = 175
         if anchorPoint.x > self.view.frame.maxX - offset {
@@ -58,6 +58,9 @@ extension FTPDFRenderViewController {
     
     @objc func removePencilProMenuIfExist() {
         self.children.compactMap { $0 as? FTPencilProMenuController }.forEach { $0.remove() }
+        if let presentedVc = self.presentedViewController as? FTPenSizeEditController {
+            presentedVc.dismiss(animated: false)
+        }
     }
 }
 

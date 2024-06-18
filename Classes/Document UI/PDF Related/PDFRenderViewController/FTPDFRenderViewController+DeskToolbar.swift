@@ -342,11 +342,20 @@ extension FTPDFRenderViewController: FTFavoriteSizeEditDelegate, FTFavoriteColor
         self.shapeModel?.updateCurrentFavoriteShape(shape)
     }
     
-    func showSizeEditScreen(position: FavoriteSizePosition, viewModel: FTFavoriteSizeViewModel) {
-        
+    func showSizeEditScreen(position: FavoriteSizePosition, viewModel: FTFavoriteSizeViewModel, rect: CGRect) {
+        let hostingVc = FTPenSizeEditController(viewModel: viewModel, editPosition: position)
+        hostingVc.view.backgroundColor = .clear
+        hostingVc.ftPresentationDelegate.source = self.view
+        var validRect = rect
+        validRect.origin.y = rect.origin.y - 80.0
+        if rect.maxX > self.view.frame.maxX {
+            validRect.origin.x = self.view.frame.maxX - rect.width - 50.0
+        }
+        hostingVc.ftPresentationDelegate.sourceRect = validRect
+        self.ftPresentController(vcToPresent: hostingVc, contentSize: FTPenSizeEditController.viewSize)
     }
     
-    func showEditColorScreen(using rack: FTRackData, position: FavoriteColorPosition, rect: CGRect) {
+    func showEditColorScreen(using rack: FTRackData, rect: CGRect) {
         let viewModel = FTPenShortcutViewModel(rackData: rack)
         let hostingVc = FTPenColorEditController(viewModel: viewModel, delegate: self)
 //        self.penShortcutViewModel = viewModel
@@ -363,7 +372,7 @@ extension FTPDFRenderViewController: FTFavoriteSizeEditDelegate, FTFavoriteColor
         self.colorModel?.updateCurrentFavoriteColors()
     }
     
-    func didChangeCurrentPenset(_ penset: FTPenSetProtocol, dismissSizeEditView: Bool) {
+    func didChangeCurrentPenset(_ penset: FTPenSetProtocol) {
         var rackType = FTRackType.pen
         if self.currentDeskMode == .deskModeMarker {
             rackType = .highlighter
@@ -380,7 +389,7 @@ extension FTPDFRenderViewController: FTFavoriteSizeEditDelegate, FTFavoriteColor
     
     func didSelectColorFromEditScreen(_ penset: FTPenSetProtocol) {
         self.colorModel?.updateFavoriteColor(with: penset.color)
-        self.didChangeCurrentPenset(penset, dismissSizeEditView: false)
+        self.didChangeCurrentPenset(penset)
     }
 
     func didChangeCurrentPresenterSet(_ presenterSet: FTPresenterSetProtocol) {
