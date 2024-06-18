@@ -27,6 +27,7 @@ protocol FTSidebarViewDelegate: AnyObject {
     func didTapOnSidebarItem(_ item: FTSideBarItem)
     func didSidebarItemRenamed(_ item: FTSideBarItem)
     func emptyTrash(_ collection: FTShelfItemCollection, showConfirmationAlert: Bool, onCompletion: @escaping ((Bool) -> Void))
+    func didTapDownloadBooks()
 }
 struct FTSidebarView: View {
 
@@ -72,11 +73,18 @@ struct FTSidebarView: View {
                 .padding(.bottom,premiumUser.isPremiumUser ? 0 : 142)
             }
             .overlay(alignment: .bottom, content: {
-                if !premiumUser.isPremiumUser {
-                    FTPremiumBanner()
+                if FTFeatureConfigHelper.shared.isFeatureEnabled(.Supports_EDownload) {
+                    FTEDownloadConatainerView()
                         .environmentObject(viewModel)
-                        .frame(height:108)                    
+                        .frame(height:108)
                         .padding(.horizontal,12)
+                } else {
+                    if !premiumUser.isPremiumUser {
+                        FTPremiumBanner()
+                            .environmentObject(viewModel)
+                            .frame(height:108)
+                            .padding(.horizontal,12)
+                    }
                 }
             })
             

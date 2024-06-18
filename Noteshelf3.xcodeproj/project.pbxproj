@@ -2260,6 +2260,9 @@
 		E7E3EC4029A48C92004372B6 /* FTStickersListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E3EC3F29A48C92004372B6 /* FTStickersListCollectionViewCell.swift */; };
 		E7E3EC4229A4922A004372B6 /* FTStickers.plist in Resources */ = {isa = PBXBuildFile; fileRef = E7E3EC4129A4922A004372B6 /* FTStickers.plist */; };
 		E7ECA3C329C04CCC00703BB7 /* FTUnSplashModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1897DD4924BD60DF0016DFE2 /* FTUnSplashModel.swift */; };
+		E7ECD5492C21956B001BC803 /* SampleData.plist in Resources */ = {isa = PBXBuildFile; fileRef = E7ECD5482C21956B001BC803 /* SampleData.plist */; };
+		E7ECD54D2C21A90E001BC803 /* Sample.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E7ECD54C2C21A90E001BC803 /* Sample.pdf */; };
+		E7ECD54F2C21B1DD001BC803 /* FTEDownloadConatainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ECD54E2C21B1DD001BC803 /* FTEDownloadConatainerView.swift */; };
 		E7F094482BCF990000177BC5 /* FTCustomizeToolbarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F094442BCF990000177BC5 /* FTCustomizeToolbarCell.swift */; };
 		E7F094492BCF990000177BC5 /* FTCustomToolbarFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F094452BCF990000177BC5 /* FTCustomToolbarFooterView.swift */; };
 		E7F0944A2BCF990000177BC5 /* FTCustomizeToolbarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7F094462BCF990000177BC5 /* FTCustomizeToolbarCell.xib */; };
@@ -4703,6 +4706,9 @@
 		E7E3EC3D29A4897E004372B6 /* FTStickersListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStickersListTableViewCell.swift; sourceTree = "<group>"; };
 		E7E3EC3F29A48C92004372B6 /* FTStickersListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStickersListCollectionViewCell.swift; sourceTree = "<group>"; };
 		E7E3EC4129A4922A004372B6 /* FTStickers.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = FTStickers.plist; sourceTree = "<group>"; };
+		E7ECD5482C21956B001BC803 /* SampleData.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SampleData.plist; sourceTree = "<group>"; };
+		E7ECD54C2C21A90E001BC803 /* Sample.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Sample.pdf; sourceTree = "<group>"; };
+		E7ECD54E2C21B1DD001BC803 /* FTEDownloadConatainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTEDownloadConatainerView.swift; sourceTree = "<group>"; };
 		E7F094442BCF990000177BC5 /* FTCustomizeToolbarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTCustomizeToolbarCell.swift; sourceTree = "<group>"; };
 		E7F094452BCF990000177BC5 /* FTCustomToolbarFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTCustomToolbarFooterView.swift; sourceTree = "<group>"; };
 		E7F094462BCF990000177BC5 /* FTCustomizeToolbarCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FTCustomizeToolbarCell.xib; sourceTree = "<group>"; };
@@ -5737,6 +5743,7 @@
 				42A702FB293A158F00970A94 /* cover_line.png */,
 				423E8792295EF2DC002C082F /* cover_template.pdf */,
 				099F722020526FC7004D3518 /* default_paper_image.png */,
+				E7ECD54C2C21A90E001BC803 /* Sample.pdf */,
 				099F722120526FC7004D3518 /* default_cover_image.png */,
 			);
 			path = ThemeImages;
@@ -11012,6 +11019,8 @@
 			children = (
 				E748A73E2C18290500C4D208 /* ConfigurableFeatures.plist */,
 				E748A7402C182D9500C4D208 /* FTFeatureConfigHelper.swift */,
+				E7ECD5482C21956B001BC803 /* SampleData.plist */,
+				E7ECD54E2C21B1DD001BC803 /* FTEDownloadConatainerView.swift */,
 			);
 			path = EGurkul;
 			sourceTree = "<group>";
@@ -12640,6 +12649,7 @@
 				52B34DFC29E5684400360F10 /* Montserrat-Bold.otf in Resources */,
 				52B34DFD29E5684400360F10 /* Montserrat-Light.otf in Resources */,
 				52BBD52929E95D0E003088AE /* Hanuman-Bold.ttf in Resources */,
+				E7ECD54D2C21A90E001BC803 /* Sample.pdf in Resources */,
 				52BBD50129E95BCE003088AE /* Lora-Medium.ttf in Resources */,
 				52BBD50229E95BCE003088AE /* Lora-Regular.ttf in Resources */,
 				52BBD50329E95BCE003088AE /* Lora-Italic.ttf in Resources */,
@@ -12723,6 +12733,7 @@
 				3DAA68B029113A6100848434 /* FTColorCell.xib in Resources */,
 				BAF38FA02859ADF00067CA9F /* FTLoadingReusableView.xib in Resources */,
 				BAF38FA22859ADF00067CA9F /* FTLaserScene.sks in Resources */,
+				E7ECD5492C21956B001BC803 /* SampleData.plist in Resources */,
 				BAF38FA32859ADF00067CA9F /* BrushAssets_V5.xcassets in Resources */,
 				BAF38FA42859ADF00067CA9F /* FTZoomSettingsViewController.xib in Resources */,
 				BAF38FA52859ADF00067CA9F /* FTDroppingViewController.xib in Resources */,
@@ -14374,6 +14385,7 @@
 				BAF3937F2859ADF00067CA9F /* FTVerticalLayout.swift in Sources */,
 				9715E03B2AEA9D2C00EC48D4 /* EDAMNoteStoreClient+Utilities.m in Sources */,
 				BAF393802859ADF00067CA9F /* FTCoverTheme.swift in Sources */,
+				E7ECD54F2C21B1DD001BC803 /* FTEDownloadConatainerView.swift in Sources */,
 				BAF393812859ADF00067CA9F /* FTPlannerDiaryExtrasTemplateFormat.swift in Sources */,
 				BAF393822859ADF00067CA9F /* FTShelfCollectionSystem.swift in Sources */,
 				BAF393842859ADF00067CA9F /* FTPencilBrushBuilder_V3.swift in Sources */,

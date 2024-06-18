@@ -179,6 +179,10 @@ private extension FTTabViewController {
     }
 }
 extension FTTabViewController: FTSideMenuViewControllerDelegate {
+    func didTapDownloadBooks() {
+        
+    }
+    
     func didCurrentCollectionRenamed(_ collection: FTShelfItemCollection) {
 
     }

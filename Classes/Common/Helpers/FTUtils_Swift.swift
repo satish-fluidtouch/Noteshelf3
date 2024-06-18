@@ -63,6 +63,14 @@ extension FTUtils {
         return fileLoc
     }
     
+    class  func copyPDFFileToTempLoc(_ fileName: String, _ path: NSString, error: inout NSError?) -> String? {
+        let fileName = fileName
+        let fileLoc = FTUtils.tempZipLoc().appendingPathComponent(fileName.appending(".\(pdfExtension)"))
+        _ = try? FileManager.default.removeItem(atPath: fileLoc)
+        _ = try? FileManager.default.copyItem(atPath: path as String, toPath: fileLoc)
+        return fileLoc
+    }
+    
 #if !NOTESHELF_ACTION
     class func isAppInstalledFor(days: Double) -> Bool {
         let currentTimeInterval = Date().timeIntervalSinceReferenceDate

@@ -38,6 +38,7 @@ protocol FTSideMenuViewControllerDelegate: AnyObject {
     //settings
     func showSettings()
     func didTapOnUpgradeNow();
+    func didTapDownloadBooks()
 }
 
 extension FTSideMenuViewControllerDelegate {
@@ -199,6 +200,10 @@ extension FTSideMenuViewController: FTSidebarViewDelegate {
     func didTapOnUpgradeNow() {
         self.delegate?.didTapOnUpgradeNow()
         track(EventName.sidebar_premium_tap, screenName: ScreenName.sidebar)
+    }
+    
+    func didTapDownloadBooks() {
+        self.delegate?.didTapDownloadBooks()
     }
     
     func emptyTrash(_ collection: FTShelfItemCollection, showConfirmationAlert: Bool, onCompletion: @escaping ((Bool) -> Void)) {

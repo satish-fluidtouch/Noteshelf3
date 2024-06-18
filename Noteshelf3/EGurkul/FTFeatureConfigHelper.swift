@@ -34,7 +34,8 @@ enum FTDisabledFeature: String {
     case Widgets  = "Widgets"
     case Siri_shortcuts  = "Siri shortcuts"
     case SupportsPassword  = "Supports Password"
-    case SupportsUnfiled  = "Supports Unfiled"    
+    case SupportsUnfiled  = "Supports Unfiled"   
+    case Supports_EDownload  = "Supports EDownload"
 }
 
 class FTFeatureConfigHelper: NSObject {
@@ -51,6 +52,22 @@ class FTFeatureConfigHelper: NSObject {
            let data = try? Data(contentsOf: url),
            let config = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any] {
             featuresConfig = config
+        }
+    }
+    
+    func sampleUrls() -> [String]? {
+        guard let plistURL = Bundle.main.url(forResource: "SampleData", withExtension: "plist") else {
+            return nil
+        }
+        do {
+            let data = try Data(contentsOf: plistURL)
+            if let array = try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String] {
+                return array
+            } else {
+                return nil
+            }
+        } catch {
+            return nil
         }
     }
     

@@ -4,6 +4,8 @@
 <dict>
 	<key>eGurkul</key>
 	<dict>
+		<key>Supports EDownload</key>
+		<true/>
 		<key>Supports Unfiled</key>
 		<false/>
 		<key>Supports Password</key>

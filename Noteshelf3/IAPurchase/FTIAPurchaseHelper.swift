@@ -51,7 +51,7 @@ final class FTIAPurchaseHelper {
 
     var isPremiumUser: Bool {
         get {
-#if ENTERPRISE_EDITION
+#if ENTERPRISE_EDITION || EGURKUL_EDITION
             return true;
 #else
             var isPremierUser = UserDefaults.standard.bool(forKey: premiumUserStatus)

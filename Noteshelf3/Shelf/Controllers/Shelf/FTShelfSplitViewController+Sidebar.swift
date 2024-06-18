@@ -76,6 +76,72 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
         }
     }
     
+    func didTapDownloadBooks() {
+//        let url1 = Bundle.main.url(forResource: "cover_template", withExtension: "pdf")!;
+//        let url2 = Bundle.main.url(forResource: "Sample", withExtension: "pdf")!;
+//        let url3 = Bundle.main.url(forResource: "cover_template", withExtension: "pdf")!;
+//        let url4 = Bundle.main.url(forResource: "Sample", withExtension: "pdf")!;
+//        self.createNewCategoryAndImport(with: "My Notes", urls: [url1, url2, url3, url4])
+//        return
+        if let urls = FTFeatureConfigHelper.shared.sampleUrls() {
+            var fileUrlPaths = urls
+
+            var downloadedURLs = [URL]()
+            func startDownloading() {
+                if !fileUrlPaths.isEmpty, let path = fileUrlPaths.first {
+                    let fileUrl = URL(fileURLWithPath: path)
+                    let session = URLSession(configuration: .default)
+                    let request = URLRequest(url: fileUrl)
+                    let task = URLSession.shared.downloadTask(with: fileUrl) { responseUrl, response, error in
+                        guard let tempURL = responseUrl, error == nil else {
+                            return
+                        }
+                        fileUrlPaths.removeFirst()
+                        let tempDirURL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
+                        let destinationURL = tempDirURL.appendingPathComponent(fileUrl.lastPathComponent)
+                        try? FileManager.default.removeItem(at: destinationURL)
+                        do {
+                            try FileManager.default.moveItem(at: tempURL, to: destinationURL)
+                            downloadedURLs.append(destinationURL)
+                        } catch {
+                        }
+                        startDownloading()
+                    }
+                    task.resume()
+
+                } else {
+
+                }
+            }
+            startDownloading()
+        }
+    }
+    
+    private func createNewCategoryAndImport(with title: String, urls: [URL]) {
+        FTNoteshelfDocumentProvider.shared.shelfCollection(title: title) { shelf in
+            let blockToExecute : () -> () = { () in
+                var items = [FTImportItem]();
+                urls.forEach { (eachItem) in
+                    var error: NSError?
+                    let tempPath = FTUtils.copyPDFFileToTempLoc(FTUtils.getUUID(), eachItem.path as NSString, error: &error)
+                    let inputUrl = Foundation.URL(fileURLWithPath: tempPath!)
+                    let item = FTImportItem(item: inputUrl as AnyObject, onCompletion: nil);
+                    items.append(item);
+                }
+                self.beginImporting(items: items, completionHandler: nil);
+            }
+            self.shelfItemCollection = shelf
+            if self.shelfItemCollection == nil {
+                FTNoteshelfDocumentProvider.shared.createShelf(title) { error, shelf in
+                    self.shelfItemCollection = shelf
+                    blockToExecute()
+                }
+            } else {
+                blockToExecute()
+            }
+        }
+    }
+    
     func presentIAPScreen() {
         let reachability: Reachability = Reachability.forInternetConnection()
         let status: NetworkStatus = reachability.currentReachabilityStatus();
