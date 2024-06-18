@@ -24,10 +24,12 @@ class FTAiPrivacyConsetViewController: UIViewController {
     @IBOutlet weak private var scrollView: UIScrollView!
     
     weak var delegate : FTAiPrivacyConsetViewControllerProtocal?
+    private var isPrivacyAgreed = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUi()
+        self.scrollView.contentInset.bottom = 0.0
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -44,12 +46,13 @@ class FTAiPrivacyConsetViewController: UIViewController {
     
     @IBAction func tickBtnAction(_ sender: UIButton){
         if sender.tag == 0 {
-            setUptickBtn(status:false)
+            self.isPrivacyAgreed = true
             sender.tag = 1
         }else if sender.tag == 1{
-            setUptickBtn(status:true)
+            self.isPrivacyAgreed = false
             sender.tag = 0
         }
+        setUptickBtn()
     }
     
     @IBAction func cancelBtnAction(_ sender: UIButton){
@@ -68,7 +71,7 @@ class FTAiPrivacyConsetViewController: UIViewController {
         self.titleLbl.text = "noteshelf.ai.privacy.title".localized
         self.cancelBtn.setTitle("Cancel".localized, for: .normal)
         self.saveBtn.setTitle("SaveKey".localized, for: .normal)
-        setUptickBtn(status:true)
+        self.setUptickBtn()
         setUpParagraphText()
         setUpPrivacyPolicyText()
     }
@@ -126,19 +129,34 @@ class FTAiPrivacyConsetViewController: UIViewController {
         }
     }
     
-    private func setUptickBtn(status: Bool) {
-        let image : UIImage? = status ? nil : UIImage(named: "checkWhite")
-        self.tickBtn.setImage(image, for: .normal)
-        self.tickBtn.backgroundColor = status ? .clear : UIColor.appColor(.accent)
-        self.tickBtn.layer.cornerRadius = 11
-        self.tickBtn.layer.borderColor = status ? UIColor.appColor(.black20).cgColor : UIColor.clear.cgColor
-        self.tickBtn.layer.borderWidth = status ? 1.5 : 0
-        self.saveBtn.isEnabled =  status ? false : true
+    private func updateTickButton() {
         if UIScreen.main.traitCollection.userInterfaceStyle == .dark {
-            self.saveBtn.alpha = status ? 0.3 : 1
+            self.saveBtn.alpha = !self.isPrivacyAgreed ? 0.3 : 1
+            self.tickBtn.layer.borderColor = !self.isPrivacyAgreed ? UIColor.appColor(.black20).cgColor : UIColor.clear.cgColor
         } else {
-            self.saveBtn.alpha = status ? 0.5 : 1
-        }             }
+            self.saveBtn.alpha = !self.isPrivacyAgreed ? 0.5 : 1
+            self.tickBtn.layer.borderColor = !self.isPrivacyAgreed ? UIColor.appColor(.black20).cgColor : UIColor.clear.cgColor
+        }
+    }
+    
+    private func setUptickBtn() {
+        let image : UIImage? = !self.isPrivacyAgreed ? nil : UIImage(named: "checkWhite")
+        self.tickBtn.setImage(image, for: .normal)
+        self.tickBtn.backgroundColor = !self.isPrivacyAgreed ? .clear : UIColor.appColor(.accent)
+        self.tickBtn.layer.cornerRadius = 11
+        self.tickBtn.layer.borderColor = !self.isPrivacyAgreed ? UIColor.appColor(.black20).cgColor : UIColor.clear.cgColor
+        self.tickBtn.layer.borderWidth = !self.isPrivacyAgreed ? 1.5 : 0
+        self.saveBtn.isEnabled =  !self.isPrivacyAgreed ? false : true
+        self.updateTickButton()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            self.updateTickButton()
+        }
+
+    }
 }
 
 extension UITapGestureRecognizer {
