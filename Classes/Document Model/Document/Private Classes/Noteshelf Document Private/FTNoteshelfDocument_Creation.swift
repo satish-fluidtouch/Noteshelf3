@@ -211,7 +211,7 @@ extension FTNoteshelfDocument
                 page.associatedPDFPageIndex = i+1;
                 page.isCover = info.isCover
                 page.associatedPDFFileName = fileName;
-                
+                page.isReadOnly = info.isReadOnly
                 page.lineHeight = info.pageProperties.lineHeight;
                 page.bottomMargin = info.pageProperties.bottomMargin;
                 page.topMargin = info.pageProperties.topMargin;

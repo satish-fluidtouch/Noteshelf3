@@ -35,7 +35,7 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
     private var searchLock = DispatchSemaphore(value: 1);
     var zoomTargetOrigin = CGPoint.zero;
     var isCover: Bool = false
-    var isReadOnly: Bool = true
+    var isReadOnly: Bool = false
 
     #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
     fileprivate var tileMapAnnotations = [FTTileMap]();

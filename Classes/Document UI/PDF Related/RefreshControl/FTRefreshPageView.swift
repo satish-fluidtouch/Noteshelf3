@@ -14,6 +14,8 @@ protocol FTRefreshPageDelegate: NSObjectProtocol {
 class FTRefreshPageView: UIView {
     @IBOutlet private weak var contentView: UIView?
     @IBOutlet private weak var containerView: UIView?
+    @IBOutlet weak var importView: UIView!
+    @IBOutlet weak var changeTemplateView: UIView!
     @IBOutlet private weak var stackView: UIStackView?
     @IBOutlet weak var mainStackView: UIStackView!
     @IBOutlet private weak var addNewLbl: UILabel?
@@ -42,6 +44,9 @@ class FTRefreshPageView: UIView {
         contentView?.frame = bounds
         contentView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         applyBordersForView()
+        if !FTFeatureConfigHelper.shared.isFeatureEnabled(.ImportDocument) {
+            importView.isHidden = true
+        }
     }
     
     func swapPositions() {

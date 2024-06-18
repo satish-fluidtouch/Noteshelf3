@@ -19,11 +19,11 @@ struct FTSidebarTopSectionGridView: View {
     @AppStorage("isTemplatesNewOptionShown") private var isTemplatesNewOptionShown = false
 
     var body: some View {
-        #if EGURKUL_EDITION
-        configuredView
-        #else
-        defaultView
-        #endif
+        if FTFeatureConfigHelper.shared.isFeatureEnabled(.SupportsUnfiled) {
+            defaultView
+        } else {
+            configuredView
+        }
     }
     
     var defaultView: some View {

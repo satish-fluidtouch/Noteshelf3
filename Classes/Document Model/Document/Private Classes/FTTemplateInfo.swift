@@ -27,6 +27,7 @@ private extension FTTemplateInfoKey {
     var isImageTemplate: Bool = false;
     var renderAnnotations: Bool = true;
     var isCover: Bool = false
+    var isReadOnly: Bool = false
 
     var footerOption: FTPageFooterOption = FTPageFooterOption.show;
 
@@ -60,6 +61,7 @@ private extension FTTemplateInfoKey {
         self.isTemplate = info.isTemplate;
         self.footerOption = info.footerOption;
         self.isCover = info.isCover
+        self.isReadOnly = info.isReadOnly
     }
     
     convenience init(info : [String: AnyObject])

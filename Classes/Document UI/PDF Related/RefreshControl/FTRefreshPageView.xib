@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FTRefreshPageView" customModule="FTCommon" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FTRefreshPageView" customModule="NS3_Beta" customModuleProvider="target">
             <connections>
                 <outlet property="addNewLbl" destination="AQ6-vn-UcD" id="clK-Xo-T6f"/>
                 <outlet property="bottomConstraint" destination="Nz7-ml-RLE" id="QZ9-b9-sPO"/>
                 <outlet property="centerYConstraint" destination="DON-2g-bc2" id="FTU-tl-uz7"/>
+                <outlet property="changeTemplateView" destination="VtE-cx-9Hw" id="D0D-Ua-Qez"/>
                 <outlet property="containerView" destination="cxg-1r-2Rw" id="F99-lG-j9E"/>
                 <outlet property="contentView" destination="9KB-3L-ijK" id="ilO-8h-W8X"/>
+                <outlet property="importView" destination="J7M-sg-Pic" id="Yg2-md-n2S"/>
                 <outlet property="mainStackView" destination="O2u-uQ-aIo" id="2c7-Iy-cWH"/>
                 <outlet property="stackView" destination="pdd-It-3aR" id="ocu-5z-Bch"/>
             </connections>
@@ -35,7 +37,7 @@
                                     <rect key="frame" x="19" y="19.000000000000028" width="150" height="150"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="doc.fill.badge.plus" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="L1Q-FD-bkF">
-                                            <rect key="frame" x="47.333333333333343" y="48.333333333333286" width="50.666666666666657" height="58"/>
+                                            <rect key="frame" x="45.333333333333343" y="48.666666666666629" width="52.666666666666657" height="59.666666666666657"/>
                                             <color key="tintColor" name="black70"/>
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font" scale="default" weight="thin">
                                                 <fontDescription key="fontDescription" name="SFProText-Thin" family="SF Pro Text" pointSize="44"/>
@@ -129,7 +131,7 @@
                                     <rect key="frame" x="0.0" y="68.000000000000028" width="52" height="52"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="square.and.arrow.down" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="N9f-lT-Mvr">
-                                            <rect key="frame" x="11.333333333333313" y="9.9999999999999769" width="29.333333333333329" height="31"/>
+                                            <rect key="frame" x="11.333333333333313" y="7.6666666666666465" width="29.333333333333329" height="33.333333333333343"/>
                                             <color key="tintColor" name="black70"/>
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
                                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
@@ -158,7 +160,7 @@
                                     <rect key="frame" x="0.0" y="136.00000000000003" width="52" height="52"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ellipsis" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="0qo-qB-vZQ">
-                                            <rect key="frame" x="11.666666666666687" y="21.333333333333314" width="28.666666666666671" height="8.6666666666666643"/>
+                                            <rect key="frame" x="11.666666666666687" y="21.66666666666665" width="28.666666666666671" height="8.3333333333333357"/>
                                             <color key="tintColor" name="black70"/>
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
                                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
@@ -219,7 +221,7 @@
         <image name="doc.fill.badge.plus" catalog="system" width="120" height="128"/>
         <image name="doc.text" catalog="system" width="115" height="128"/>
         <image name="ellipsis" catalog="system" width="128" height="37"/>
-        <image name="square.and.arrow.down" catalog="system" width="121" height="128"/>
+        <image name="square.and.arrow.down" catalog="system" width="112" height="128"/>
         <namedColor name="black1">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

@@ -638,6 +638,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
         moreButton.isEnabled = false
         duplicateButton.isEnabled = false
         rotateButton.isEnabled = false
+        configureMoreButton()
     }
 
     private func enableEditOptions() {
@@ -645,13 +646,15 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
         moreButton.isEnabled = true
         duplicateButton.isEnabled = !isReadOnly()
         rotateButton.isEnabled = true
+        configureMoreButton()
     }
     
     internal func isReadOnly() -> Bool {
         var value = false
-        self.selectedPages.forEach { eachPage in
+        for eachPage in self.selectedPages {
             if let page = eachPage as? FTNoteshelfPage, page.isReadOnly {
                 value = true
+                break
             }
         }
         return value

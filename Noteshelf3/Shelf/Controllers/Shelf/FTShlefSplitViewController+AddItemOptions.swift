@@ -476,6 +476,7 @@ extension FTShelfSplitViewController {
         info.overlayStyle = .clearWhite
         info.coverTemplateImage = defaultCover.themeThumbnail()
         info.isNewBook = true;
+        info.isReadOnly = true
         ftdocument.createDocument(info) { (error, _) in
             progress.completedUnitCount += 1;
             if(error == nil) {

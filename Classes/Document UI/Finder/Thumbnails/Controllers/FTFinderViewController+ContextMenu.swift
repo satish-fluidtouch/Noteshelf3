@@ -32,7 +32,7 @@ extension FTFinderViewController {
                                     image: UIImage(systemName: "doc.on.doc", withConfiguration: configuration),
                                     identifier: nil,
                                     discoverabilityTitle: nil,
-                                    attributes: .standard,
+                                  attributes: isReadOnly() ? .disabled : .standard,
                                   state: .off) { [weak self] _ in
             self?.performContextMenuOperation(.copyPages, indexPath: indexPath)
         }
@@ -57,7 +57,7 @@ extension FTFinderViewController {
                                     image: UIImage(systemName: "plus.square.on.square", withConfiguration: configuration),
                                     identifier: nil,
                                     discoverabilityTitle: nil,
-                                    attributes: .standard,
+                                    attributes: isReadOnly() ? .disabled : .standard,
                                   state: .off) { [weak self] _ in
             self?.performContextMenuOperation(.duplicatePages, indexPath: indexPath)
         }
@@ -143,7 +143,7 @@ extension FTFinderViewController {
                                     image: UIImage(systemName: "folder", withConfiguration: configuration),
                                     identifier: nil,
                                     discoverabilityTitle: nil,
-                                    attributes: .standard,
+                                    attributes: isReadOnly() ? .disabled : .standard,
                                   state: .off) { [weak self] _ in
             self?.performContextMenuOperation(.movePages, indexPath: indexPath)
         }
@@ -161,14 +161,16 @@ extension FTFinderViewController {
                                   state: .off) { [weak self] _ in
             self?.performContextMenuOperation(.sharePages, indexPath: indexPath)
         }
-        staticActions.append(shareAction)
+        if FTFeatureConfigHelper.shared.isFeatureEnabled(.Share) {
+            staticActions.append(shareAction)
+        }
         
         //Delete
         let deleteAction = UIAction(title: NSLocalizedString("delete", comment: "Delete"),
                                     image: UIImage(systemName: "trash", withConfiguration: configuration),
                                     identifier: nil,
                                     discoverabilityTitle: nil,
-                                    attributes: .destructive,
+                                    attributes:  isReadOnly() ? .disabled : .destructive,
                                   state: .off) { [weak self] _ in
             self?.performContextMenuOperation(.deletePages, indexPath: indexPath)
         }

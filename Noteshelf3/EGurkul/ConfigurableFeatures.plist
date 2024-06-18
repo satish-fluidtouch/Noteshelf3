@@ -4,6 +4,8 @@
 <dict>
 	<key>eGurkul</key>
 	<dict>
+		<key>Supports Unfiled</key>
+		<false/>
 		<key>Supports Password</key>
 		<false/>
 		<key>Supports NB Editing</key>

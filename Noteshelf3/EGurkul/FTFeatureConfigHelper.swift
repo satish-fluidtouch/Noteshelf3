@@ -34,6 +34,7 @@ enum FTDisabledFeature: String {
     case Widgets  = "Widgets"
     case Siri_shortcuts  = "Siri shortcuts"
     case SupportsPassword  = "Supports Password"
+    case SupportsUnfiled  = "Supports Unfiled"    
 }
 
 class FTFeatureConfigHelper: NSObject {

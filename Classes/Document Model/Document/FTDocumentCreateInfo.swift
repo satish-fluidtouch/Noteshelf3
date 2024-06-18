@@ -35,6 +35,7 @@ class FTDocumentInputInfo: NSObject {
     var coverTemplateUrl:  URL?;
     var backgroundColor : UIColor?;
     var isCover = false
+    var isReadOnly = false
     #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
     var overlayStyle : FTCoverStyle = FTCoverStyle.clearWhite;
     

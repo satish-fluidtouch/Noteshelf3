@@ -92,7 +92,9 @@ extension FTMediaViewController {
 #if !targetEnvironment(macCatalyst)
         actions.append(openInNewWindowAction)
 #endif
-        actions.append(shareAction)
+        if FTFeatureConfigHelper.shared.isFeatureEnabled(.Share) {
+            actions.append(shareAction)
+        }
         return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: actions)
     }
 }

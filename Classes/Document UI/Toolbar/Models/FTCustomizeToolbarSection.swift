@@ -120,6 +120,12 @@ final class FTShortcutsToolsSection: FTToolbarSection {
 
     init() {
         self.displayTools = self.tools.subtract(arr: FTCurrentToolbarSection().tools)
+        if !FTFeatureConfigHelper.shared.isFeatureEnabled(.ScanDocument) {
+            self.displayTools = self.displayTools.filter{return $0 != .camera}
+        }
+        if !FTFeatureConfigHelper.shared.isFeatureEnabled(.Supports_NBEditing) {
+            self.displayTools = self.displayTools.filter{return ($0 != .duplicatePage && $0 != .deletePage)}
+        }
     }
 }
 
