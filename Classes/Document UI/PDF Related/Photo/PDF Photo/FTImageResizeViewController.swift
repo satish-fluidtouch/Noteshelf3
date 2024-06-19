@@ -117,7 +117,6 @@ class FTLineDashView : UIView
     @IBOutlet weak var angleIndicatorView  : FTLineDashView?;
     @IBOutlet weak var angleInfoView  : FTStyledLabel?;
     @IBOutlet weak var angleInfoHolderView : UIView?;
-    private var angleToSnap: CGFloat?
     fileprivate var minSizeToMaintain : CGFloat
     {
         if(photoMode == .transform) {
@@ -427,9 +426,9 @@ class FTLineDashView : UIView
     private func hideControlPoints(animate : Bool)
     {
         if(animate) {
-            UIView.beginAnimations(nil, context: nil);
-            self.hideControlPoints(animate: false);
-            UIView.commitAnimations();
+            UIView.animate(withDuration: CATransaction.animationDuration()) {
+                self.hideControlPoints(animate: false);
+            }
         }
         else {
             self.leftTopKnob?.isHidden = true;
@@ -455,9 +454,9 @@ class FTLineDashView : UIView
             return;
         }
         if(animate) {
-            UIView.beginAnimations(nil, context: nil);
-            self.showControlPoints(animate: false);
-            UIView.commitAnimations();
+            UIView.animate(withDuration: CATransaction.animationDuration()) {
+                self.showControlPoints(animate: false);
+            }
         }
         else {
             self.leftTopKnob?.isHidden = false;
@@ -515,6 +514,7 @@ extension FTImageResizeViewController {
             if(hitView == self.rotationKnob!) {
                 self.activeControlPoint = FTControlPoint.init(rawValue: hitView.tag)!;
                 self.lastPrevPointInRotation = currentTouch!.location(in: self.view.superview);
+                self.showAngleInfoView(true, animate: false)
             }
             else {
                 if photoMode == .normal {
@@ -560,28 +560,26 @@ extension FTImageResizeViewController {
         
         if(self.activeControlPoint != .none) {
             if(self.activeControlPoint == FTControlPoint.smoothRotate) {
-                let prevPoint1 = CGPoint.init(x: self.view.frame.midX, y: self.view.frame.midY);
-                let curPoint1 = CGPoint.init(x: self.view.frame.midX, y: self.view.frame.midY);
-                
-                let prevAngle = prevPoint1.angle(self.lastPrevPointInRotation);
-                let curAngle = curPoint1.angle(curPoint);
-                
-                let angleDifference = curAngle - prevAngle;
-                
-                if(abs(angleDifference*RADIANS_TO_DEGREE) > 5.0) {
+                let viewCenter = CGPoint.init(x: self.view.frame.midX, y: self.view.frame.midY);
+                let angleDiffInDegree = self.lastPrevPointInRotation.angleBetween(curPoint, center: viewCenter).radiansToDegrees.rounded();
+                guard abs(angleDiffInDegree) >= 1 else {
+                    return
+                }
+                if(abs(angleDiffInDegree) > 5.0) {
                     self.tapGesture?.isEnabled = false;
                 }
-                
-                if(isAngleNearToSnapArea(byAddingAngle: angleDifference)) {
+                let angleDifRadians = angleDiffInDegree * DEGREE_TO_RADIANS;
+                if(isAngleNearToSnapArea(byAddingAngle: angleDifRadians)) {
                     self.angleIndicatorView?.isHidden = false;
-                    angleToSnap = self.angleWRT360Degree(angleInRadians: self.currentViewAngle());
-                    if(self.snapToNear90IfNeeded(byAddingAngle: angleDifference)) {
+                    let info = self.currentViewAngle().snapToNear90IfNeeded(byAddingAngle: angleDifRadians)
+                    if info.isNearst90 {
+                        self.setRotationAngle(info.angle);
                         self.lastPrevPointInRotation = curPoint;
                     }
                 }
                 else {
                     self.angleIndicatorView?.isHidden = true;
-                    self.setRotationAngle(angleDifference);
+                    self.setRotationAngle(angleDifRadians);
                     self.lastPrevPointInRotation = curPoint;
                 }
                 self.showAngleInfoView(true, animate: true);
@@ -641,10 +639,6 @@ extension FTImageResizeViewController {
     fileprivate func finalizeonTouchEnd()
     {
         self.showAngleInfoView(false, animate: true);
-        if let angleToSnap, angleIndicatorView?.isHidden == false {
-            self.view.transform = CGAffineTransform(rotationAngle: angleToSnap * DEGREE_TO_RADIANS)
-            self.angleToSnap = nil
-        }
         self.angleIndicatorView?.isHidden = true;
         self.tapGesture?.isEnabled = self.allowsEditing;
         self.showControlPoints(animate: true)
@@ -666,7 +660,9 @@ extension FTImageResizeViewController
             let angle = rotateGesture.rotation;
             if(self.isAngleNearToSnapArea(byAddingAngle: angle)) {
                 self.angleIndicatorView?.isHidden = false;
-                if(self.snapToNear90IfNeeded(byAddingAngle: angle)) {
+                let info = self.currentViewAngle().snapToNear90IfNeeded(byAddingAngle: angle)
+                if info.isNearst90 {
+                    self.setRotationAngle(info.angle);
                     rotateGesture.rotation = 0;
                 }
             }
@@ -714,7 +710,6 @@ extension FTImageResizeViewController
     {
         FTCLSLog("Image: Tapped On Rotation knob")
         if(tapGesture.state == .recognized) {
-            angleToSnap = nil
             let nearestAngle = self.nearestNextSnapAngle(angleInRadians: self.currentViewAngle());
             let currentAngle = self.angleWRT360Degree(angleInRadians: self.currentViewAngle());
             self.setRotationAngle((nearestAngle-currentAngle)*(DEGREE_TO_RADIANS));
@@ -771,86 +766,24 @@ extension FTImageResizeViewController
 //MARK:- Angle Related -
 private extension FTImageResizeViewController
 {
-    func snapToNear90IfNeeded(byAddingAngle angleInRadians: CGFloat) -> Bool
-    {
-        let angle = self.angleWRT360Degree(angleInRadians: self.currentViewAngle());
-        let angleToConsider = self.angleWRT360Degree(angleInRadians: self.currentViewAngle()+angleInRadians);
-        
-        let previous90 = self.nearestPrevSnapAngle(angleInRadians: self.currentViewAngle());
-        let next90 = self.nearestNextSnapAngle(angleInRadians: self.currentViewAngle());
-        
-        if(abs(angleToConsider - previous90) <= THRESHOLD_ANGLE) {
-            let nearestAngle = previous90 - angle;
-            if(abs(nearestAngle) > 0.01)  {
-                self.setRotationAngle(nearestAngle*DEGREE_TO_RADIANS);
-                return true;
-            }
-        }
-        else if(abs(next90 - angleToConsider) <= THRESHOLD_ANGLE) {
-            let nearestAngle = next90 - angle;
-            if(abs(nearestAngle) > 0.01)  {
-                self.setRotationAngle(nearestAngle*DEGREE_TO_RADIANS);
-                return true;
-            }
-        }
-        return false;
-    }
-
     func isAngleNearToSnapArea(byAddingAngle angleInRadians: CGFloat) -> Bool
     {
-        let angle = self.angleWRT360Degree(angleInRadians: self.currentViewAngle()+angleInRadians);
-        let previous90 = self.nearestPrevSnapAngle(angleInRadians: self.currentViewAngle()+angleInRadians);
-        let next90 = self.nearestNextSnapAngle(angleInRadians: self.currentViewAngle()+angleInRadians);
-        
-        if(abs(angle - previous90) <= THRESHOLD_ANGLE) {
-            return true;
-        }
-        else if(abs(next90 - angle) <= THRESHOLD_ANGLE) {
-            return true;
-        }
-        return false;
+        return self.currentViewAngle().isAngleNearToSnapArea(byAddingAngle: angleInRadians);
     }
     
     func angleWRT360Degree(angleInRadians : CGFloat) -> CGFloat
     {
-        var angle = round(angleInRadians*RADIANS_TO_DEGREE);
-        if(abs(angle) < 0.01) {
-            angle = 0;
-        }
-        
-        let angleWrt360 = Int(abs(angle)/360);
-        if(angle < 0) {
-            angle = (CGFloat(angleWrt360)*360.0)+angle;
-        }
-        else {
-            angle -= (CGFloat(angleWrt360)*360);
-        }
-        
-        if(angle < 0) {
-            angle = 360.0 + angle;
-        }
-        
-        if(angle >= 360.0) {
-            angle = (angle - 360.0);
-        }
-        
-        return angle;
+        angleInRadians.angleWRT360Degree();
     }
     
     func nearestNextSnapAngle(angleInRadians : CGFloat) -> CGFloat
     {
-        let angle = self.angleWRT360Degree(angleInRadians: angleInRadians);
-        let angleQuotent = Int(angle/ANGLE_JUMP);
-        let newAngle = CGFloat(angleQuotent)*ANGLE_JUMP+ANGLE_JUMP;
-        return newAngle;
+        return angleInRadians.nearestNextSnapAngle();
     }
     
     func nearestPrevSnapAngle(angleInRadians : CGFloat) -> CGFloat
     {
-        let angle = self.angleWRT360Degree(angleInRadians: angleInRadians);
-        let angleQuotent = Int(angle/ANGLE_JUMP);
-        let previous90 = CGFloat(angleQuotent)*ANGLE_JUMP;
-        return previous90;
+        return angleInRadians.nearestPrevSnapAngle();
     }
     
     func showAngleInfoView(_ show : Bool,animate : Bool) {
@@ -869,6 +802,7 @@ private extension FTImageResizeViewController
                 }
             }
             else {
+                self.angleInfoHolderView?.alpha = 1.0
                 self.angleInfoHolderView?.isHidden = false;
             }
         }
@@ -1156,6 +1090,20 @@ extension CGPoint
         
         return angle;
     }
+    
+    func angleBetween(_ point:CGPoint, center: CGPoint) -> CGFloat {
+        let a = self.x - center.x
+        let b = self.y - center.y
+        
+        let c = point.x - center.x
+        let d = point.y - center.y
+        
+        let atanA = atan2(a, b)
+        let atanB = atan2(c, d)
+        
+        return atanA - atanB
+    }
+
 }
 
 //MARK: - FTImageResizeProtocol {

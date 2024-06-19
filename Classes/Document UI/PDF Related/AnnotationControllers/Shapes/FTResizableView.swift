@@ -91,7 +91,7 @@ class FTResizableView: UIView {
     
     func rotateHandleTapped() {
         let nearestAngle = self.nearestNextSnapAngle(angleInRadians: self.currentViewAngle())
-        let currentAngle = self.angleWRT360Degree(angleInRadians: self.currentViewAngle())
+        let currentAngle = self.currentViewAngle().angleWRT360Degree();
         let rotatedAngle = (nearestAngle-currentAngle)*(DEGREE_TO_RADIANS)
         self.delegate?.rotateShape(with: rotatedAngle)
     }
@@ -159,13 +159,7 @@ class FTResizableView: UIView {
     }
     
     func angleBetweenPoints(startPoint:CGPoint, endPoint:CGPoint)  -> CGFloat {
-        let a = startPoint.x - self.center.x
-        let b = startPoint.y - self.center.y
-        let c = endPoint.x - self.center.x
-        let d = endPoint.y - self.center.y
-        let atanA = atan2(a, b)
-        let atanB = atan2(c, d)
-        return atanA - atanB
+        return startPoint.angleBetween(endPoint, center: self.center)
     }
     
     func centerWithinBoundary(_ center: CGPoint) -> CGPoint {
@@ -189,7 +183,7 @@ class FTResizableView: UIView {
     }
     
     func updateDegreeLabel(angleInRadians : CGFloat) {
-        let angleInDegree = angleWRT360Degree(angleInRadians: angleInRadians)
+        let angleInDegree = angleInRadians.angleWRT360Degree()
         rotateDegree.text = "\(Int(angleInDegree))"
         print(angleInDegree)
     }
@@ -199,7 +193,7 @@ class FTResizableView: UIView {
     }
     
     func updateAngleInfo() {
-        let angle = self.angleWRT360Degree(angleInRadians: self.transform.angle)
+        let angle = self.transform.angle.angleWRT360Degree()
         angleInfoView.updateAngleLabel(with: Int(angle))
     }
 }
