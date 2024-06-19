@@ -21,8 +21,10 @@ class FTDeskToolView: UIView {
 
     var isSelected: Bool {
         didSet {
-            self.updateToolImageIfNeeded()
-            self.showBgIfNeeded()
+            if toolType.toolDisplayStyle == .style1 {
+                self.updateToolImageIfNeeded()
+                self.updateBackground()
+            }
         }
     }
 
@@ -50,26 +52,41 @@ class FTDeskToolView: UIView {
         self.addInteraction(pointerInteraction)
     }
 
-   private func updateToolImageIfNeeded() {
+    func updateToolImageIfNeeded() {
         if let selImgName = toolType.selectedIconName(), isSelected {
-            self.toolButton.setImage(named: selImgName, for: .normal);
+            self.toolButton.setImage(named: selImgName, for: .normal,renderMode: .alwaysOriginal);
         } else {
             self.toolButton.setImage(named: toolType.iconName(), for: .normal);
         }
-       
-}
+    }
 
-    private func showBgIfNeeded() {
+    func updateBackground(status: Bool) {
+        if status {
+            self.setBackGround()
+        } else {
+            self.clearBackground()
+        }
+    }
+    
+    private func setBackGround() {
+        self.bgButton.backgroundColor = self.toolType.displayBgColorStyle()
+        self.bgButton.addRequiredShadow()
+    }
+    
+    private func clearBackground() {
+        self.bgButton.backgroundColor = .clear
+        self.bgButton?.removeShadow()
+        self.bgButton.layer.cornerRadius = 0.0
+    }
+    
+    private func updateBackground() {
         if isSelected {
-            self.bgButton.backgroundColor = self.toolType.displayBgColorStyle()
-            self.bgButton.addRequiredShadow()
+            self.setBackGround()
             if let selImgName = self.toolType.selectedIconName() {
                 self.toolButton.setImage(named: selImgName, for: .normal, renderMode: .alwaysOriginal);
             }
         } else {
-            self.bgButton.backgroundColor = .clear
-            self.bgButton?.removeShadow()
-            self.bgButton.layer.cornerRadius = 0.0
+            self.clearBackground()
             if nil != self.toolType.selectedIconName() {
                 self.toolButton.setImage(named: self.toolType.iconName(), for: .normal);
             }
@@ -138,39 +155,24 @@ class FTDeskShortcutView: FTDeskToolView {
     
     override var isSelected: Bool {
         didSet {
-            if isSelected {
-                if self.toolType.isInstantActionTool() {
-                    UIView.animate(withDuration: 0.2, animations: {
-                            super.isSelected = true
-                    }) { _ in
-                        runInMainThread(0.2) {
-                            if self.toolType != .tag {
-                                self.isSelected = false
-                            }
-                            if self.toolType == .bookmark || self.toolType == .audio {
-                                self.isHighlighted = true
-                            }
-                        }
-                    }
-                } else {
-                    super.isSelected = true
-                }
-            } else {
-                super.isSelected = false
+            switch self.toolType.toolDisplayStyle {
+            case .style1:
+                super.isSelected = isSelected
+            case .style3,.style2:
+                self.currentStateTool = isSelected
             }
         }
     }
     
-    var isHighlighted: Bool = false {
+    var currentStateTool: Bool = false{
         didSet {
-            if self.toolType == .bookmark || self.toolType == .tag || self.toolType == .emojis || self.toolType == .audio {
-                if isHighlighted {
-                    let image = self.toolType.selectedIconName()
-                    self.toolButton.setImage(named:image, for: .normal, renderMode: .alwaysOriginal);
-                } else {
-                    super.isSelected = false
-                }
-            }
+            super.updateToolImageIfNeeded()
+        }
+    }
+        
+    var isPopoverTool: Bool = false{
+        didSet {
+            super.updateToolImageIfNeeded()
         }
     }
 }

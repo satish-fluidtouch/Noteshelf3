@@ -324,7 +324,7 @@ extension FTToolbarCenterPanelController: UICollectionViewDataSource, UICollecti
                 if let intStatus = self.delegate?.status(for: btnType) {
                     // Emoji, tag, audio, zoom
                     // Emoji, tag
-                    if btnType.toolDisplayStyle == .style4 {
+                    if btnType.toolDisplayStyle == .style3 {
                         reqCell.enableStatus = true
                         reqCell.updateBackground(status: true)
                     }
@@ -338,7 +338,7 @@ extension FTToolbarCenterPanelController: UICollectionViewDataSource, UICollecti
                 } else {
                     // status not availble
                     // popover
-                    if btnType.toolDisplayStyle == .style4 {
+                    if btnType.toolDisplayStyle == .style3 {
                         reqCell.enableStatus = true
                         reqCell.updateBackground(status: true)
                     } else {

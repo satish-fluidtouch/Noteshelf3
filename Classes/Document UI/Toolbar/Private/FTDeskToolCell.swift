@@ -100,23 +100,28 @@ class FTDeskShortcutCell: UICollectionViewCell {
         }
     }
 
-    func configureCell(type: FTDeskCenterPanelTool, isSelected: Bool) {
+    func configureCell(type: FTDeskCenterPanelTool, enabledStatus: Bool) {
         self.deskShortcutView?.toolType = type
-        if type != .bookmark && type != .tag && type != .audio && type != .emojis {
-            self.deskShortcutView?.isSelected = isSelected
-        } else {
-            self.deskShortcutView?.isHighlighted = isSelected
+        self.deskShortcutView?.isSelected = enabledStatus
+    }
+    
+    func updateBackground(status: Bool) {
+        self.deskShortcutView?.updateBackground(status: status)
+    }
+    
+    func setTransparentBackground(){
+        UIView.animate(withDuration: 0.2, animations: {
+            self.updateBackground(status: true)
+        }) { _ in
+            runInMainThread(0.2) {
+                self.updateBackground(status: false)
+            }
         }
     }
     
-    var isShortcutHighlighted: Bool = false {
+    var enableStatus: Bool = false {
         didSet {
-            self.deskShortcutView?.isHighlighted = isShortcutHighlighted
-        }
-    }
-    var isShortcutSelected: Bool = false {
-        didSet {
-            self.deskShortcutView?.isSelected = isShortcutSelected
+            self.deskShortcutView?.isSelected = enableStatus
         }
     }
 }
