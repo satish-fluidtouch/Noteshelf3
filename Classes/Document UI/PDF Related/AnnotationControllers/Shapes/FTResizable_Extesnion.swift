@@ -148,21 +148,75 @@ extension UIView {
     }
     
     func nearestNextSnapAngle(angleInRadians: CGFloat) -> CGFloat {
-        let angle = self.angleWRT360Degree(angleInRadians: angleInRadians)
-        let angleQuotent = Int(angle/ANGLE_JUMP)
-        let newAngle = CGFloat(angleQuotent)*ANGLE_JUMP+ANGLE_JUMP
-        return newAngle
+        return angleInRadians.nearestNextSnapAngle();
     }
 
     func nearestPrevSnapAngle(angleInRadians : CGFloat) -> CGFloat {
-        let angle = self.angleWRT360Degree(angleInRadians: angleInRadians)
+        return angleInRadians.nearestPrevSnapAngle();
+    }
+
+//    func angleWRT360Degree(angleInRadians : CGFloat) -> CGFloat {
+//        var angle = round(angleInRadians*RADIANS_TO_DEGREE)
+//        if(abs(angle) < 0.01) {
+//            angle = 0
+//        }
+//        let angleWrt360 = Int(abs(angle)/360)
+//        
+//        if(angle < 0) {
+//            angle = (CGFloat(angleWrt360)*360.0)+angle
+//        }
+//        else {
+//            angle -= (CGFloat(angleWrt360)*360)
+//        }
+//        
+//        if(angle < 0) {
+//            angle = 360.0 + angle
+//        }
+//        if(angle >= 360.0) {
+//            angle = (angle - 360.0)
+//        }
+//        return angle
+//    }
+    
+    func currentViewAngle() -> CGFloat {
+        return self.transform.angle
+    }
+
+    func setRotationAngle(_ angleInRadians: CGFloat) {
+        self.transform  = self.transform.rotated(by: angleInRadians)
+    }
+    
+    func isAngleNearToSnapArea(byAddingAngle angleInRadians: CGFloat) -> Bool {
+        return self.currentViewAngle().isAngleNearToSnapArea(byAddingAngle: angleInRadians);
+    }
+    
+    func snapToNear90IfNeeded(byAddingAngle angleInRadians: CGFloat) -> (isNearst90: Bool, angle: CGFloat)
+    {
+        let info = self.currentViewAngle().snapToNear90IfNeeded(byAddingAngle: angleInRadians);
+        return (info.isNearst90,info.angle);
+    }
+}
+
+extension CGFloat {
+    func nearestNextSnapAngle() -> CGFloat {
+        let angle = self.angleWRT360Degree()
+        let angleQuotent = Int(angle/ANGLE_JUMP)
+        var newAngle = CGFloat(angleQuotent)*ANGLE_JUMP+ANGLE_JUMP
+        if newAngle >= 360 {
+            newAngle = newAngle.truncatingRemainder(dividingBy: 360)
+        }
+        return newAngle
+    }
+
+    func nearestPrevSnapAngle() -> CGFloat {
+        let angle = self.angleWRT360Degree()
         let angleQuotent = Int(angle/ANGLE_JUMP)
         let previous90 = CGFloat(angleQuotent)*ANGLE_JUMP
         return previous90
     }
 
-    func angleWRT360Degree(angleInRadians : CGFloat) -> CGFloat {
-        var angle = round(angleInRadians*RADIANS_TO_DEGREE)
+    func angleWRT360Degree() -> CGFloat {
+        var angle = (self*RADIANS_TO_DEGREE).rounded()
         if(abs(angle) < 0.01) {
             angle = 0
         }
@@ -183,50 +237,46 @@ extension UIView {
         }
         return angle
     }
-    
-    func currentViewAngle() -> CGFloat {
-        return self.transform.angle
-    }
 
-    func setRotationAngle(_ angleInRadians: CGFloat) {
-        self.transform  = self.transform.rotated(by: angleInRadians)
-    }
-    
-    func isAngleNearToSnapArea(byAddingAngle angleInRadians: CGFloat) -> Bool {
-        let angle = self.angleWRT360Degree(angleInRadians: self.currentViewAngle()+angleInRadians)
-        let previous90 = self.nearestPrevSnapAngle(angleInRadians: self.currentViewAngle()+angleInRadians)
-        let next90 = self.nearestNextSnapAngle(angleInRadians: self.currentViewAngle()+angleInRadians)
-        
-        if(abs(angle - previous90) <= THRESHOLD_ANGLE) {
-            return true
-        }
-        else if(abs(next90 - angle) <= THRESHOLD_ANGLE) {
-            return true
-        }
-        return false
-    }
-    
-    func snapToNear90IfNeeded(byAddingAngle angleInRadians: CGFloat) -> (isNearst90: Bool, angle: CGFloat)
+    func snapToNear90IfNeeded(byAddingAngle angleInRadians: CGFloat) -> (angle: CGFloat,isNearst90:Bool)
     {
-        let angle = self.angleWRT360Degree(angleInRadians: self.currentViewAngle())
-        let angleToConsider = self.angleWRT360Degree(angleInRadians: self.currentViewAngle()+angleInRadians)
+        let angle = self.angleWRT360Degree();
+        let angleToConsider = (self+angleInRadians).angleWRT360Degree();
         
-        let previous90 = self.nearestPrevSnapAngle(angleInRadians: self.currentViewAngle())
-        let next90 = self.nearestNextSnapAngle(angleInRadians: self.currentViewAngle())
+        let previous90 = self.nearestPrevSnapAngle();
+        let next90 = self.nearestNextSnapAngle();
         
         var nearestAngle = angle
         if(abs(angleToConsider - previous90) <= THRESHOLD_ANGLE) {
-             nearestAngle = previous90 - angle
+            nearestAngle = previous90 - angle;
             if(abs(nearestAngle) > 0.01)  {
-                return (true, nearestAngle*DEGREE_TO_RADIANS)
+                return (nearestAngle.degreesToRadians,true);
             }
         }
         else if(abs(next90 - angleToConsider) <= THRESHOLD_ANGLE) {
-             nearestAngle = next90 - angle
+            nearestAngle = next90 - angle;
             if(abs(nearestAngle) > 0.01)  {
-                return (true, nearestAngle*DEGREE_TO_RADIANS)
+                return (nearestAngle.degreesToRadians,true);
             }
         }
-        return (false, nearestAngle)
+        return (nearestAngle.degreesToRadians,false);
     }
+
+    func isAngleNearToSnapArea(byAddingAngle angleInRadians: CGFloat) -> Bool
+    {
+        let angleAfterAdding = self+angleInRadians;
+        
+        let angle = angleAfterAdding.angleWRT360Degree();
+        let previous90 = angleAfterAdding.nearestPrevSnapAngle();
+        let next90 = angleAfterAdding.nearestNextSnapAngle();
+        
+        if(abs(angle - previous90) <= THRESHOLD_ANGLE) {
+            return true;
+        }
+        else if(abs(next90 - angle) <= THRESHOLD_ANGLE) {
+            return true;
+        }
+        return false;
+    }
+
 }
