@@ -23,6 +23,7 @@ class FTPageProperties:NSObject {
 class FTDocumentInputInfo: NSObject {
     var inputFileURL : URL?;
     var isTemplate : Bool  = false;
+    var isCustomTemplate : Bool  = false;
     var footerOption : FTPageFooterOption  = .hide;
 
     var insertAt : Int = 0;

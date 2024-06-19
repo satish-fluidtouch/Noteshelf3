@@ -240,6 +240,11 @@ extension FTNoteshelfDocument
                     pageRect = pageRect.applying(trasnform);
                     pageRect.origin = CGPoint.zero;
                     page.pdfPageRect = pageRect;
+                    if !info.isCover
+                        , info.isTemplate
+                        , nil == page.pageBackgroundColor {
+                        page.updateBackgroundColor(color: pdfPage.getBackgroundColor());
+                    }
                 }
                 if info.isCover  {
                     if i == 0 {
