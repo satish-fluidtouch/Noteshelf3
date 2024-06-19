@@ -11,13 +11,13 @@ import Reachability
 
 extension FTPageViewController {
     
-    @objc func startOpenAiForPage(showPrivacyScreen: Bool = false) {
+    @objc func startOpenAiForPage() {
         guard let connection = Reachability.forInternetConnection(),connection.currentReachabilityStatus() != NetworkStatus.NotReachable  else {
             FTOPenAIError.noInternetConnection.showAlert(from: self);
             return;
         }
         let status = UserDefaults.standard.bool(forKey: "shouldAiPolicyAccepte")
-        if status || showPrivacyScreen{
+        if status{
             showPrivacyConsent()
             return
         }
@@ -53,13 +53,12 @@ extension FTPageViewController {
         }
         self.generateOpenAIContentFor(annotations: annotationsToConsider
                                       ,pdfContent: pdfContent
-                                      ,isFullPage: isFullPage, showPrivacyScreen: showPrivacyScreen);
+                                      ,isFullPage: isFullPage);
     }
     
     @objc private func generateOpenAIContentFor(annotations : [FTAnnotation]
                                                 ,pdfContent: String
-                                                ,isFullPage: Bool
-                                                ,showPrivacyScreen: Bool = false) {
+                                                ,isFullPage: Bool) {
         var annotationsToConsider = [FTAnnotation]();
         
         let pageContent = FTPageContent();

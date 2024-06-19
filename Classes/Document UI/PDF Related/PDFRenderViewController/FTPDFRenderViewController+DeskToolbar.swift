@@ -203,8 +203,7 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
             self.executer.execute(type: .savePageAsPhoto)
             
         case .openAI:
-            let developerMode = FTUserDefaults.defaults().showAiPrivacyPopup
-            self.firstPageController()?.startOpenAiForPage(showPrivacyScreen: developerMode);
+            self.firstPageController()?.startOpenAiForPage();
         default:
             break
         }
