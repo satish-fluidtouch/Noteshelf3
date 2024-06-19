@@ -11,10 +11,7 @@ import FTCommon
 import TipKit
 
 protocol FTToolbarCenterPanelDelegate: AnyObject {
-    func isZoomModeEnabled() -> Bool
-    func isPageBookMarked() -> Bool
-    func isTagAdded() -> Bool
-    func isEmojiSelected() -> Bool
+    func status(for tool: FTDeskCenterPanelTool) -> NSNumber?
     func isAudioRecordedViewPresented() -> Bool
     func currentDeskMode() -> RKDeskMode?
     func maxCenterPanelItemsToShow() -> Int
@@ -194,7 +191,7 @@ private extension FTToolbarCenterPanelController {
     
     private func updateNavButtons(show: Bool) {
         self.leftNavBtn?.isHidden = !show
-        self.rightNavBtn?.isHidden = !show
+        self.rightNavBtn?.isHidden = !show   
     }
     
     private func addObservers() {
@@ -219,60 +216,9 @@ private extension FTToolbarCenterPanelController {
                 }
             }
         }
-        
-         NotificationCenter.default.addObserver(forName: .didChangeCurrentPageNotification
-                                                                         , object: nil, queue: nil) { [weak self] (_) in
-            runInMainThread {
-                guard let strongSelf = self  else {
-                    return
-                }
-                let bookmarkStatus = strongSelf.delegate?.isPageBookMarked() ?? false
-                strongSelf.updatePageBookmarkStatusIfNeeded(bookmarkStatus)
-                
-                let tagStatus = strongSelf.delegate?.isTagAdded() ?? false
-                strongSelf.updateTagStatusIfNeeded(tagStatus)
-            }
-        }
         NotificationCenter.default.addObserver(self, selector: #selector(self.centralPanelPopupDismissStatus(notification:)), name: .centralPanelPopUpDismiss, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(validateToolbar), name: NSNotification.Name(rawValue: FTValidateToolBarNotificationName), object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(addRecordedAudio), name: NSNotification.Name("FTAudioSessionAskedToAddPlayerNotification"), object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(removeRecordedAudio), name: NSNotification.Name("FTAudioSessionAskedToRemovePlayerNotification"), object: nil)
-    
     }
-    
-    @objc func addRecordedAudio(_ notification: Notification?) {
-        runInMainThread {
-            if let cell = self.fetchCell(for: .audio) as? FTDeskShortcutCell {
-                cell.isShortcutSelected = true
-            }
-        }
-    }
-    
-    @objc func removeRecordedAudio(_ notification: Notification?) {
-        runInMainThread {
-            if let cell = self.fetchCell(for: .audio) as? FTDeskShortcutCell {
-                cell.isShortcutSelected = false
-            }
-        }
-    }
-    
-    @objc func validateToolbar(_ notification: Notification?) {
-        if self.view.window == notification?.object as? UIWindow {
-            
-          if let index = self.dataSourceItems.firstIndex(where: { $0 == .emojis }) {
-            runInMainThread {
-              if let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? FTDeskShortcutCell {
-                if let status = self.delegate?.isEmojiSelected() {
-                  cell.isShortcutHighlighted = status
-                }
-              }
-            }
-          }
-        }
-      }
+
 
     @objc func centralPanelPopupDismissStatus(notification: Notification) {
         if let object = notification.object as? [String:Any] {
@@ -281,19 +227,12 @@ private extension FTToolbarCenterPanelController {
                window == sourceWindow,
                let source = object["sourceType"] as? FTToolbarPopoverScreen {
                 let tool = source.centerPanelTool
-                if let index = self.dataSourceItems.firstIndex(where: { $0 == tool }) {
-                    runInMainThread {
-                        if let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? FTDeskShortcutCell {
-                            cell.isShortcutSelected = false
-                            if tool == .tag {
-                                let tagStatus = self.delegate?.isTagAdded() ?? false
-                                cell.isShortcutHighlighted = tagStatus
-                            } else if tool == .emojis {
-                                let emojiStatus = self.delegate?.isEmojiSelected() ?? false
-                                cell.isShortcutHighlighted = emojiStatus
-                            }
-                        }
+                if let cell = self.fetchCell(for: tool) as? FTDeskShortcutCell {
+                    cell.enableStatus = false
+                    if let intStatus = self.delegate?.status(for: tool) {
+                        cell.enableStatus = intStatus.intValue == 1 ? true : false
                     }
+                      cell.updateBackground(status: false)
                 }
             }
         }
@@ -369,52 +308,52 @@ extension FTToolbarCenterPanelController: UICollectionViewDataSource, UICollecti
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let btnType = self.dataSourceItems[indexPath.row]
         let cell: UICollectionViewCell
-
+        
         if btnType.toolMode == .shortcut {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FTDeskShortcutCell", for: indexPath) as UICollectionViewCell
             var isSelected = false
-            if let isEnabled = self.delegate?.isZoomModeEnabled(), btnType == .zoomBox {
-                isSelected = isEnabled
+            if let intStatus = self.delegate?.status(for: btnType) {
+                isSelected = intStatus == 1 ? true : false
             }
-            if let isEnabled = self.delegate?.isPageBookMarked(), btnType == .bookmark {
-                isSelected = isEnabled
-            }
-            if let isEnabled = self.delegate?.isTagAdded(), btnType == .tag {
-                isSelected = isEnabled
-            }
-            if let isEnabled = self.delegate?.isEmojiSelected(), btnType == .emojis {
-                isSelected = isEnabled
-            }
-            if let isEnabled = self.delegate?.isAudioRecordedViewPresented(), btnType == .audio {
-                isSelected = isEnabled
-            }
-            (cell as? FTDeskShortcutCell)?.configureCell(type: btnType, isSelected: isSelected)
+            (cell as? FTDeskShortcutCell)?.configureCell(type: btnType, enabledStatus: isSelected)
             // Selection handle closure
             (cell as? FTDeskShortcutCell)?.deskShortcutTapHandler = {[weak self, weak cell] in
                 guard let self = self else { return }
-                if let _cell = cell as? FTDeskShortcutCell {
-                    if btnType == .bookmark {
-                        let status = self.delegate?.isPageBookMarked() ?? false
-                        _cell.isShortcutSelected = !status
-                    } else if btnType == .audio {
-                        if let status = self.delegate?.isAudioRecordedViewPresented() {
-                            _cell.isShortcutHighlighted = status
-                        }
-                    } 
-                    else {
-                        _cell.isShortcutSelected = true
+                guard let reqCell = cell as? FTDeskShortcutCell else { return }
+                self.delegate?.didTapCenterPanelButton(type: btnType, sender: reqCell);
+                if let intStatus = self.delegate?.status(for: btnType) {
+                    // Emoji, tag, audio, zoom
+                    // Emoji, tag
+                    if btnType.toolDisplayStyle == .style4 {
+                        reqCell.enableStatus = true
+                        reqCell.updateBackground(status: true)
                     }
-                    self.delegate?.didTapCenterPanelButton(type: btnType, sender: _cell);
-                    track(EventName.toolbar_tool_tap, params: [EventParameterKey.tool: btnType.localizedEnglish(), EventParameterKey.slot: indexPath.row + 1])
+                    
+                    let isSelected = intStatus == 1 ? true : false
+                    // bookmark, audio
+                    if btnType.toolDisplayStyle == .style2 {
+                        reqCell.enableStatus = isSelected
+                        reqCell.setTransparentBackground()
+                    }
+                } else {
+                    // status not availble
+                    // popover
+                    if btnType.toolDisplayStyle == .style4 {
+                        reqCell.enableStatus = true
+                        reqCell.updateBackground(status: true)
+                    } else {
+                        reqCell.setTransparentBackground()
+                    }
                 }
+                track(EventName.toolbar_tool_tap, params: [EventParameterKey.tool: btnType.localizedEnglish(), EventParameterKey.slot: indexPath.row + 1])
             }
         } else {
-              cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FTDeskToolCell", for: indexPath) as UICollectionViewCell
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FTDeskToolCell", for: indexPath) as UICollectionViewCell
             if let mode = self.delegate?.currentDeskMode() {
                 let selected = FTDeskModeHelper.isToSelectDeskTool(mode: mode, toolType: btnType)
                 (cell as? FTDeskToolCell)?.configureCell(type: btnType, isSelected: selected)
                 (cell as? FTDeskToolCell)?.delegate = self
-
+                
                 // Selection handle closure
                 (cell as? FTDeskToolCell)?.deskToolBtnTapHandler = {[weak self, weak cell] in
                     guard let self = self else { return }
@@ -529,15 +468,9 @@ extension FTToolbarCenterPanelController: FTDeskToolCellDelegate {
 }
 
 extension FTToolbarCenterPanelController  {
-    func updatePageBookmarkStatusIfNeeded(_ status: Bool) {
-        if let cell = self.fetchCell(for: .bookmark) as? FTDeskShortcutCell {
-            cell.isShortcutHighlighted = status
-        }
-    }
-    
-    func updateTagStatusIfNeeded(_ status: Bool) {
-        if let cell = self.fetchCell(for: .tag) as? FTDeskShortcutCell {
-            cell.isShortcutHighlighted = status
+    func updateCellStatus(for tool: FTDeskCenterPanelTool, status: Bool) {
+        if let cell = self.fetchCell(for: tool) as? FTDeskShortcutCell {
+            cell.enableStatus = status
         }
     }
 }

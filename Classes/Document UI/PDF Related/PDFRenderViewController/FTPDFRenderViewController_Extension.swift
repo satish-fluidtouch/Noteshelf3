@@ -1166,5 +1166,26 @@ extension FTPDFRenderViewController {
         value = self.playerController == nil ? false : true
         return value
     }
+    
+    @objc func status(for tool: FTDeskCenterPanelTool) -> NSNumber? {
+        var status: NSNumber?
+        if tool == .bookmark {
+            let intStatus: Int = self.currentlyVisiblePage()?.isBookmarked ?? false ? 1 : 0
+            status = NSNumber(integerLiteral: intStatus)
+        } else if tool == .emojis {
+            let intStatus: Int = self.emojiStatus() ? 1 : 0
+            status = NSNumber(integerLiteral: intStatus)
+        } else if tool == .tag {
+            let intStatus: Int = self.tagStatus() ? 1 : 0
+            status = NSNumber(integerLiteral: intStatus)
+        } else if tool == .audio {
+            let intStatus: Int = self.audioRecordedViewStatus() ? 1 : 0
+            status = NSNumber(integerLiteral: intStatus)
+        } else if tool == .zoomBox {
+            let intStatus: Int = self.isInZoomMode() ? 1 : 0
+            status = NSNumber(integerLiteral: intStatus)
+        }
+        return status
+    }
 }
     

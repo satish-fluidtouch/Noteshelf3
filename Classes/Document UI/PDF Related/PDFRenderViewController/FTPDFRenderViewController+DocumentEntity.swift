@@ -374,7 +374,7 @@ extension FTPDFRenderViewController: FTTagsViewControllerDelegate {
                         NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
                     }
                     let status = self.tagStatus()
-                    self.statusInformer?.updateTagStatus(status)
+                    self.statusInformer?.updateToolStatus(for: .tag, status: status)
                 }
             }
         }

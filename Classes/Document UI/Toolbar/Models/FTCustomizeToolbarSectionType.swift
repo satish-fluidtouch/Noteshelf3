@@ -38,6 +38,13 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
     case shortcut
 }
 
+@objc enum FTDeskCenterPanelToolDisplayStyle: Int {
+    case style1 // modeSelection
+    case style2 // instantAction
+    case style3 // selectedStateAction
+    case style4 // Popovers
+}
+
 @objc enum FTDeskCenterPanelTool: Int, CaseIterable {
     // Basic Tools
     case pen
@@ -149,6 +156,20 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             
         }
         return name
+    }
+    
+    var toolDisplayStyle: FTDeskCenterPanelToolDisplayStyle {
+        let style: FTDeskCenterPanelToolDisplayStyle
+        switch self {
+        case .pen,.highlighter,.eraser,.shapes,.textMode,.presenter,.lasso,.zoomBox,.hand,.favorites:
+            style = .style1
+        case .share,.openAI,.photo,.audio,.page,.bookmark,.rotatePage,.duplicatePage,.deletePage,.scrolling,.camera,.savePageAsPhoto,.sharePageAsPng,.shareNotebookAsPDF:
+            style = .style2
+        case .unsplash,.pixabay,.emojis,.stickers,.savedClips,.tag,.recentNotes:
+            style = .style4
+        }
+            
+        return style
     }
     
     func selectedIconName() -> String? {

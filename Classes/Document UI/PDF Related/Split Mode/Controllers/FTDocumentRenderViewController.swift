@@ -12,10 +12,8 @@ typealias FTDocumentViewController = UIViewController & FTDocumentViewPresenter;
 let textContainerTag: Int = 9001
 
 @objc protocol FTPageStatusInformer: NSObjectProtocol {
-    func isCurrentPageBookmarked() -> Bool
-    func updateBookmarkStatus(_ status: Bool)
-    func updateTagStatus(_ status: Bool)
-   // func updateEmojiStatus(_ Status: Bool)
+    func toolStatus(for tool: FTDeskCenterPanelTool) -> NSNumber?
+    func updateToolStatus(for tool: FTDeskCenterPanelTool, status: Bool)
 }
 
 @objc protocol FTDocumentViewPresenter : NSObjectProtocol {
@@ -308,17 +306,12 @@ private extension FTDocumentRenderViewController {
 }
 
 extension FTDocumentRenderViewController: FTPageStatusInformer {
-    
-    func updateTagStatus(_ status: Bool) {
-        self.deskToolbarController?.updateTagStatus(status)
+    func toolStatus(for tool: FTDeskCenterPanelTool) -> NSNumber? {
+        return self.documentViewController?.status(for: tool)
     }
     
-    func isCurrentPageBookmarked() -> Bool {
-        return self.documentViewController?.currentlyVisiblePage()?.isBookmarked ?? false
-    }
-    
-    func updateBookmarkStatus(_ status: Bool) {
-        self.deskToolbarController?.updatePageBookmarkStatus(status)
+    func updateToolStatus(for tool: FTDeskCenterPanelTool, status: Bool) {
+        self.deskToolbarController?.updateToolStatus(for: tool, status: status)
     }
 }
 
@@ -514,6 +507,10 @@ extension FTDocumentRenderViewController: FTOpenCloseDocumentProtocol {
 }
 
 extension FTDocumentRenderViewController: FTDeskToolbarDelegate, FTDeskPanelActionDelegate {
+    func status(for tool: FTDeskCenterPanelTool) -> NSNumber? {
+        return self.deskBarDelegate?.status(for: tool)
+    }
+    
     func getDeskToolBarHeight() -> CGFloat {
         return self.deskBarDelegate?.getDeskToolBarHeight() ?? 0.0
     }
@@ -521,19 +518,7 @@ extension FTDocumentRenderViewController: FTDeskToolbarDelegate, FTDeskPanelActi
     func isAudioRecordedViewPresented() -> Bool {
         return self.deskBarDelegate?.isAudioRecordedViewPresented() ?? false
     }
-    
-    func isEmojiSelected() -> Bool {
-        return self.deskBarDelegate?.isEmojiSelected() ?? false
-    }
-    
-    func isCurrentPageTagged() -> Bool {
-        return self.deskBarDelegate?.isCurrentPageTagged() ?? false
-    }
-    
-    func isBookmarkAddedForCurrentPage() -> Bool {
-        return self.deskBarDelegate?.isBookmarkAddedForCurrentPage() ?? false
-    }
-    
+        
     func currentDeskMode() -> RKDeskMode {
         return self.deskBarDelegate?.currentDeskMode() ?? .deskModePen
     }
@@ -544,10 +529,6 @@ extension FTDocumentRenderViewController: FTDeskToolbarDelegate, FTDeskPanelActi
 
     func shapesToolEnabled() -> Bool {
         return self.deskBarDelegate?.shapesToolEnabled() ?? false
-    }
-
-    func zoomModeEnabled() -> Bool {
-        return self.deskBarDelegate?.zoomModeEnabled() ?? false
     }
 
     func canUndo() -> Bool {

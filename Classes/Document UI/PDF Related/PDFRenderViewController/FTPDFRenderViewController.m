@@ -456,6 +456,9 @@
                 [weakSelf.zoomOverlayController refreshZoomTargetRectWithForcibly:TRUE];
             }
         }
+        
+        [self.statusInformer updateToolStatusFor:FTDeskCenterPanelToolBookmark status:self.isBookmarkAddedForCurrentPage];
+        [self.statusInformer updateToolStatusFor:FTDeskCenterPanelToolTag status:self.isCurrentPageTagged];
     }];
 
     [[NSNotificationCenter defaultCenter] addObserverForName:@"FTDocumentDidMovedPageIndices"
@@ -2348,6 +2351,7 @@
 -(void)validateMenuItems
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:FTValidateToolBarNotificationName object:self.view.window];
+    [self.statusInformer updateToolStatusFor:FTDeskCenterPanelToolEmojis status:self.emojiStatus];
 }
 
 #pragma mark - close opened racks -
@@ -2758,8 +2762,6 @@
     }];
     [self disablePanDetection];
 }
-
-#pragma mark - FTDeskToolbarDelegate -
 
 -(NSString*)applePencilMessageDefaultOption
 {
@@ -3628,6 +3630,7 @@
             }
         }
     }
+    [self.statusInformer updateToolStatusFor:FTDeskCenterPanelToolAudio status:YES];
 }
 
 -(void)removeAudioPlayer:(NSNotification*)notification
@@ -3640,6 +3643,7 @@
     if(model.representedObject.uuid == self.playerController.recordingModel.representedObject.uuid) {
         [self audioPlayerDidClose:self.playerController];
     }
+    [self.statusInformer updateToolStatusFor:FTDeskCenterPanelToolAudio status:NO];
 }
 
 -(void)createAudioPlayerForModel:(FTAudioRecordingModel*)recordingModel audioState:(AudioSessionState)state

@@ -1972,11 +1972,7 @@ extension FTFinderViewController {
                 shareClicked(withSelectedPages: itemSet)
             }
         case .deletePages:
-            self.handleDeletePages(withSelectedPages: itemSet, shouldShowAlert: false) { status in
-                if status {
-                    NotificationCenter.default.post(name: NSNotification.Name.didChangeCurrentPageNotification, object: nil)
-                }
-            }
+            self.handleDeletePages(withSelectedPages: itemSet, shouldShowAlert: false, onCompletion: nil)
         case .bookmark:
             if let selectedPage = pageItem as? FTPageProtocol, let trView = targetView {
                 FTBookmarkViewController.showBookmarkController(fromSourceView: trView, onController: self, pages: [selectedPage])
