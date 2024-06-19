@@ -36,6 +36,7 @@ enum FTDisabledFeature: String {
     case SupportsPassword  = "Supports Password"
     case SupportsUnfiled  = "Supports Unfiled"   
     case Supports_EDownload  = "Supports EDownload"
+    case Supports_Savetemplate  = "Supports Savetemplate"    
 }
 
 class FTFeatureConfigHelper: NSObject {

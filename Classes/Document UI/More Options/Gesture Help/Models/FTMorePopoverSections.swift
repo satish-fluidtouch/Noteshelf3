@@ -18,8 +18,10 @@ struct FTMorePopoverSections {
     private func pageProperties(_ page: FTPageProtocol) -> [FTNotebookMoreOption] {
         var section = [FTNotebookMoreOption]()
         section.append(FTNotebookOptionRotate(with: page.rotationAngle))
-        section.append(FTNotebookOptionChangeTemplate())
-        section.append(FTNotebookOptionSaveAsTemplate())
+        section.append(FTNotebookOptionChangeTemplate(with: page.isReadOnly))
+        if FTFeatureConfigHelper.shared.isFeatureEnabled(.Supports_Savetemplate) {
+            section.append(FTNotebookOptionSaveAsTemplate())
+        }
         return section
     }
 

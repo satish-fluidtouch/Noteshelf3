@@ -2263,6 +2263,7 @@
 		E7ECD5492C21956B001BC803 /* SampleData.plist in Resources */ = {isa = PBXBuildFile; fileRef = E7ECD5482C21956B001BC803 /* SampleData.plist */; };
 		E7ECD54D2C21A90E001BC803 /* Sample.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E7ECD54C2C21A90E001BC803 /* Sample.pdf */; };
 		E7ECD54F2C21B1DD001BC803 /* FTEDownloadConatainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ECD54E2C21B1DD001BC803 /* FTEDownloadConatainerView.swift */; };
+		E7ECD5512C22B8A4001BC803 /* FTPDFDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ECD5502C22B8A4001BC803 /* FTPDFDownloadOperation.swift */; };
 		E7F094482BCF990000177BC5 /* FTCustomizeToolbarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F094442BCF990000177BC5 /* FTCustomizeToolbarCell.swift */; };
 		E7F094492BCF990000177BC5 /* FTCustomToolbarFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F094452BCF990000177BC5 /* FTCustomToolbarFooterView.swift */; };
 		E7F0944A2BCF990000177BC5 /* FTCustomizeToolbarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7F094462BCF990000177BC5 /* FTCustomizeToolbarCell.xib */; };
@@ -4709,6 +4710,7 @@
 		E7ECD5482C21956B001BC803 /* SampleData.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SampleData.plist; sourceTree = "<group>"; };
 		E7ECD54C2C21A90E001BC803 /* Sample.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Sample.pdf; sourceTree = "<group>"; };
 		E7ECD54E2C21B1DD001BC803 /* FTEDownloadConatainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTEDownloadConatainerView.swift; sourceTree = "<group>"; };
+		E7ECD5502C22B8A4001BC803 /* FTPDFDownloadOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPDFDownloadOperation.swift; sourceTree = "<group>"; };
 		E7F094442BCF990000177BC5 /* FTCustomizeToolbarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTCustomizeToolbarCell.swift; sourceTree = "<group>"; };
 		E7F094452BCF990000177BC5 /* FTCustomToolbarFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTCustomToolbarFooterView.swift; sourceTree = "<group>"; };
 		E7F094462BCF990000177BC5 /* FTCustomizeToolbarCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FTCustomizeToolbarCell.xib; sourceTree = "<group>"; };
@@ -11021,6 +11023,7 @@
 				E748A7402C182D9500C4D208 /* FTFeatureConfigHelper.swift */,
 				E7ECD5482C21956B001BC803 /* SampleData.plist */,
 				E7ECD54E2C21B1DD001BC803 /* FTEDownloadConatainerView.swift */,
+				E7ECD5502C22B8A4001BC803 /* FTPDFDownloadOperation.swift */,
 			);
 			path = EGurkul;
 			sourceTree = "<group>";
@@ -13708,6 +13711,7 @@
 				BAF391602859ADF00067CA9F /* FTDocumentUUIDReader.swift in Sources */,
 				BAF391622859ADF00067CA9F /* FTSeparatorLineDrawHelper.swift in Sources */,
 				BAF391632859ADF00067CA9F /* NSMutableParagraphStyle+Extension.swift in Sources */,
+				E7ECD5512C22B8A4001BC803 /* FTPDFDownloadOperation.swift in Sources */,
 				BAF391652859ADF00067CA9F /* FTLanguageResourceManager.swift in Sources */,
 				97A8D9AE28DADEB9008853BF /* FTShelfItemsViewModel.swift in Sources */,
 				BAF391662859ADF00067CA9F /* FTUniqueNameProtocol.swift in Sources */,

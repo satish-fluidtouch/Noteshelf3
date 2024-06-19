@@ -103,6 +103,8 @@ class FTNotebookMoreOptionsCell: UITableViewCell {
             titleLabel.sizeToFit()
             self.accessoryView = titleLabel
         }
+        self.contentView.alpha = setting.isDisabled ? 0.5 : 1
+        self.isUserInteractionEnabled = setting.isDisabled ? false : true
     }
         
     @objc

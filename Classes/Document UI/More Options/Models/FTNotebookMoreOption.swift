@@ -23,6 +23,7 @@ protocol FTNotebookMoreOption {
     var imageIcon: FTIcon { get }
     var isViewed: Bool { get set }
     var eventName: String {get}
+    var isDisabled: Bool{get}
 }
 
 extension UserDefaults {
@@ -41,6 +42,10 @@ protocol FTNotebookOptionToggle: FTNotebookMoreOption {
 extension FTNotebookMoreOption {
     var localizedSubtitle: String? {
         return nil
+    }
+    
+    var isDisabled: Bool {
+        return false
     }
 }
 
@@ -70,6 +75,16 @@ class FTNotebookOptionChangeTemplate: FTNotebookMoreOption {
     }
     var identifier: String {
         return "changeTemplate"
+    }
+    
+    var isDisabled: Bool {
+        return _isDisabled
+    }
+    
+    private var _isDisabled: Bool = false
+    
+    init(with isDisabled: Bool) {
+        self._isDisabled = isDisabled
     }
 }
 

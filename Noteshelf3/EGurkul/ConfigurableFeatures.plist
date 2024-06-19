@@ -4,6 +4,8 @@
 <dict>
 	<key>eGurkul</key>
 	<dict>
+		<key>Supports Savetemplate</key>
+		<false/>
 		<key>Supports EDownload</key>
 		<true/>
 		<key>Supports Unfiled</key>
