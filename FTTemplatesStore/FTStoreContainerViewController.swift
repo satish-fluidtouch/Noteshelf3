@@ -15,7 +15,7 @@ let storeBundle = Bundle(for: FTStoreContainerViewController.self)
 public protocol FTStoreContainerDelegate: AnyObject {
     func generatePDFFile(withImages images : [UIImage]) async -> URL?
     func convertFileToPDF(filePath: String) async throws -> URL?
-    func createNotebookFor(url: URL, onCompletion: @escaping ((Error?) -> Void))
+    func createNotebookFor(url: URL, isCustom: Bool,onCompletion: @escaping ((Error?) -> Void))
     func createNotebookForTemplate(url: URL, isLandscape: Bool, isDark: Bool)
     func createNotebookForDairy(fileName: String, title: String, startDate: Date, endDate: Date, coverImage: UIImage, isLandScape: Bool)
     func storeController(_ controller: UIViewController,showIAPAlert feature: String?);
@@ -173,7 +173,7 @@ extension FTStoreContainerViewController {
             case .createNotebookForDairy(fileName: let fileName, title: let title, startDate: let startDate, endDate: let endDate, coverImage: let coverImage, isLandScape: let isLandScape):
                 self.delegate?.createNotebookForDairy(fileName: fileName, title: title, startDate: startDate, endDate: endDate, coverImage: coverImage, isLandScape: isLandScape)
             case .createNotebookFor(url: let url):
-                    self.delegate?.createNotebookFor(url: url, onCompletion: { [weak self] error in
+                    self.delegate?.createNotebookFor(url: url, isCustom: false,onCompletion: { [weak self] error in
                         self?.customTemplateImportManager.importConverterOutput.send(.createNootbookOutput(url: url, error: error))
                     })
             }
@@ -256,7 +256,7 @@ extension FTStoreContainerViewController: FTStoreCustomDelegate {
     
     public func customController(_ contmroller: UIViewController, didSelectTemplate info: FTTemplateInfo) {
         if let fileUrl = info.url {
-                self.delegate?.createNotebookFor(url: fileUrl, onCompletion: { [weak self] error in
+                self.delegate?.createNotebookFor(url: fileUrl, isCustom: true,onCompletion: { [weak self] error in
                     self?.customTemplateImportManager.importConverterOutput.send(.createNootbookOutput(url: fileUrl, error: error))
                 })
         }
