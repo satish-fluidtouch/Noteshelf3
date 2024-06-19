@@ -112,6 +112,7 @@ public enum AssetsColor: String, CaseIterable {
     case creationWidgetButtonBG
     case pinnedBookOptionBgColor
     case discount_percentage_color
+    case blueDodger
 
     // System
     case black1

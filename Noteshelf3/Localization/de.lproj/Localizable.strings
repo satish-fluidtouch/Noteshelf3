@@ -1249,6 +1249,9 @@
 "noteshelf.ai.credit.moreinfo" = "AI-Guthaben wird in %d Tagen zurückgesetzt";
 "noteshelf.ai.credit.nocredits" = "Keine Guthaben mehr";
 "noteshelf.ai.pressEnterToSend" = "Drücken Sie die Eingabetaste, um zu senden";
+"noteshelf.ai.privacy.description" = "Um eine der Noteshelf KI-Funktionen aufzurufen, müssen wir den Inhalt der aktuellen Seite an den Server unseres KI-Partners senden, um ihn zu verarbeiten. \nBitte seien Sie versichert, dass wir Ihre Privatsphäre respektieren und diese Daten nicht für andere Zwecke verwenden werden. Weitere Informationen darüber, wie wir Ihre Daten behandeln, finden Sie in unserer Datenschutzrichtlinie.";
+"noteshelf.ai.privacy.terms.acceptnace" = "Ich habe die %@ gelesen und stimme ihr zu.";
+"noteshelf.ai.privacy.title" = "Noteshelf KI Datenschutz Einwilligung";
 "numSelected" = "%ld Ausgewählt'";
 "objects" = "Objekte";
 "ok" = "Ok";
@@ -1682,4 +1685,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 28 May 2024 at 7:20 PM
+// Last Synced by Sameer Hussain on 4 June 2024 at 6:06 PM

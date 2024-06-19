@@ -141,6 +141,7 @@ class FTUserDefaults : NSObject
     @objc class func registerDefaults(isFreshInstall freshInstall : Bool)
     {
         if freshInstall {
+            UserDefaults.standard.set(true, forKey: "shouldAiPolicyAccepte")
             UserDefaults.standard.shelfDisplayStyle = FTShelfDisplayStyle.Icon.rawValue;
             UserDefaults.registerNotebookSettingDefaultsForFreshInstall()
             UserDefaults.standard.set(Date().timeIntervalSinceReferenceDate, forKey: APP_Installed_Key)
@@ -602,6 +603,16 @@ extension UserDefaults {
         }
         set {
             self.set(newValue, forKey: "isStatusBarScreenViewed")
+            self.synchronize()
+        }
+    }
+    
+    @objc dynamic var showAiPrivacyPopup: Bool {
+        get {
+            return self.bool(forKey: "shouldAiPolicyAccepte")
+        }
+        set {
+            self.set(newValue, forKey: "shouldAiPolicyAccepte")
             self.synchronize()
         }
     }
