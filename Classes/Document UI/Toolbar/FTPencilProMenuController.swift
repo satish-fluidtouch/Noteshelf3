@@ -74,7 +74,7 @@ class FTPencilProMenuController: UIViewController {
     func showSecondaryMenuIfneeded() {
         self.removeSecondaryMenuIfExist()
         if let mode = self.delegate?.getCurrentDeskMode(), shouldShowSecondaryMenu(for: mode) {
-            self.addSecondaryMenu(with: mode, rect: self.view.bounds)
+            self.addSecondaryMenu(with: mode)
         }
     }
 
@@ -243,58 +243,69 @@ private extension FTPencilProMenuController {
 
     func shouldShowSecondaryMenu(for mode: RKDeskMode) -> Bool {
         var status = false
-        if mode == .deskModePen || mode == .deskModeMarker || mode == .deskModeShape || mode == .deskModeLaser {
+        if mode == .deskModePen || mode == .deskModeMarker || mode == .deskModeShape || mode == .deskModeLaser || mode == .deskModeFavorites  {
             status = true
         }
         return status
     }
 
-    func addSecondaryMenu(with mode: RKDeskMode, rect: CGRect) {
-        guard let parent = self.parent as? FTPDFRenderViewController else {
-            return
+    func addSecondaryMenu(with mode: RKDeskMode) {
+        if mode == .deskModeFavorites {
+            self.addFavoritePro()
+        } else {
+            guard let parent = self.parent as? FTPDFRenderViewController else {
+                return
+            }
+            var rackType = FTRackType.pen
+            if mode == .deskModeMarker {
+                rackType = .highlighter
+            } else if mode == .deskModeShape {
+                rackType = .shape
+            } else if mode == .deskModeLaser {
+                rackType = .presenter
+            }
+            let activity = self.view.window?.windowScene?.userActivity
+            let rack = FTRackData(type: rackType, userActivity: activity)
+            let _colorModel =
+            FTFavoriteColorViewModel(rackData: rack, delegate: parent, scene: self.view?.window?.windowScene)
+            
+            let rect = self.view.bounds
+            let convertedOrigin = self.view.convert(rect.origin, to: parent.view)
+            _colorModel.colorSourceOrigin = convertedOrigin
+            self.delegate?.updateColorModel(_colorModel)
+            let sizeModel =
+            FTFavoriteSizeViewModel(rackData: rack, delegate: parent, scene: self.view?.window?.windowScene)
+            sizeModel.sizeSourceOrigin = convertedOrigin
+            
+            var items = FTPenSliderConstants.penShortCutItems
+            if rack.type == .pen || rack.type == .highlighter {
+                let shortcutView = FTPenSliderShortcutView(colorModel: _colorModel, sizeModel: sizeModel)
+                let hostingVc = FTPenSliderShortcutHostingController(rootView: shortcutView)
+                self.add(hostingVc, frame: rect)
+            } else if rack.type == .shape {
+                let _shapeModel = FTFavoriteShapeViewModel(rackData: rack, delegate: parent)
+                _shapeModel.shapeSourceOrigin = convertedOrigin
+                let shortcutView = FTShapeCurvedShortcutView(shapeModel: _shapeModel, colorModel: _colorModel, sizeModel: sizeModel)
+                let hostingVc = FTShapeCurvedShortcutHostingController(rootView: shortcutView)
+                self.add(hostingVc, frame: rect)
+                items = FTPenSliderConstants.shapeShortcutItems
+                self.delegate?.updateShapeModel(_shapeModel)
+            } else if rack.type == .presenter {
+                let shortcutView = FTPresenterSliderShortcutView(viewModel: FTPresenterShortcutViewModel(rackData: rack, delegate: parent))
+                let hostingVc = FTPresenterSliderShortcutHostingController(rootView: shortcutView)
+                self.add(hostingVc, frame: rect)
+                items = FTPenSliderConstants.presenterShortcutItems
+            }
+            self.drawSecondaryBg(items: items)
         }
-        var rackType = FTRackType.pen
-        if mode == .deskModeMarker {
-            rackType = .highlighter
-        } else if mode == .deskModeShape {
-            rackType = .shape
-        } else if mode == .deskModeLaser {
-            rackType = .presenter
-        }
-        let activity = self.view.window?.windowScene?.userActivity
-        let rack = FTRackData(type: rackType, userActivity: activity)
-        let _colorModel =
-        FTFavoriteColorViewModel(rackData: rack, delegate: parent, scene: self.view?.window?.windowScene)
-      
-        let convertedOrigin = self.view.convert(rect.origin, to: parent.view)
-        _colorModel.colorSourceOrigin = convertedOrigin
-        self.delegate?.updateColorModel(_colorModel)
-        let sizeModel =
-        FTFavoriteSizeViewModel(rackData: rack, delegate: parent, scene: self.view?.window?.windowScene)
-        sizeModel.sizeSourceOrigin = convertedOrigin
-        
-        var items = FTPenSliderConstants.penShortCutItems
-        if rack.type == .pen || rack.type == .highlighter {
-            let shortcutView = FTPenSliderShortcutView(colorModel: _colorModel, sizeModel: sizeModel)
-            let hostingVc = FTPenSliderShortcutHostingController(rootView: shortcutView)
-            self.add(hostingVc, frame: rect)
-        } else if rack.type == .shape {
-            let _shapeModel = FTFavoriteShapeViewModel(rackData: rack, delegate: parent)
-            _shapeModel.shapeSourceOrigin = convertedOrigin
-            let shortcutView = FTShapeCurvedShortcutView(shapeModel: _shapeModel, colorModel: _colorModel, sizeModel: sizeModel)
-            let hostingVc = FTShapeCurvedShortcutHostingController(rootView: shortcutView)
-            self.add(hostingVc, frame: rect)
-            items = FTPenSliderConstants.shapeShortcutItems
-            self.delegate?.updateShapeModel(_shapeModel)
-        } else if rack.type == .presenter {
-            let shortcutView = FTPresenterSliderShortcutView(viewModel: FTPresenterShortcutViewModel(rackData: rack, delegate: parent))
-            let hostingVc = FTPresenterSliderShortcutHostingController(rootView: shortcutView)
-            self.add(hostingVc, frame: rect)
-            items = FTPenSliderConstants.presenterShortcutItems
-        }
-        self.drawSecondaryBg(items: items)
     }
 
+    func addFavoritePro() {
+        if let favProVc = UIStoryboard(name: "FTDocumentView", bundle: nil).instantiateViewController(identifier: "FTFavoriteProViewController") as? FTFavoriteProViewController {
+            self.add(favProVc, frame: self.view.bounds)
+        }
+    }
+    
     func drawSecondaryBg(items: Int) {
         let startAngle: CGFloat =  .pi + .pi/12
         let endAngle = self.getEndAngle(with: startAngle, with: items)
