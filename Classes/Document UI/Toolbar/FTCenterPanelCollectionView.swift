@@ -12,7 +12,7 @@ protocol FTCenterPanelCollectionViewDelegate: FTToolbarCenterPanelDelegate {
     func getScreenMode() -> FTScreenMode
 }
 
-enum FTCenterPanelMode {
+enum FTCollectionViewMode {
     case toolbar
     case circular
 }
@@ -21,7 +21,7 @@ class FTCenterPanelCollectionView: UICollectionView {
     weak var centerPanelDelegate: FTCenterPanelCollectionViewDelegate?
     var dataSourceItems: [FTDeskCenterPanelTool] = []
    
-    var mode: FTCenterPanelMode = .toolbar
+    var mode: FTCollectionViewMode = .toolbar
     
     private var screenMode: FTScreenMode {
         return self.centerPanelDelegate?.getScreenMode() ?? .normal

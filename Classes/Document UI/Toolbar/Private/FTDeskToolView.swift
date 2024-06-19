@@ -17,7 +17,7 @@ class FTDeskToolView: UIView {
 
     var toolType: FTDeskCenterPanelTool = .pen
     var deskToolBtnTapHandler: (() -> Void)?
-    var mode: FTCenterPanelMode = .toolbar
+    var mode: FTCollectionViewMode = .toolbar
 
     var isSelected: Bool {
         didSet {
@@ -154,7 +154,7 @@ class FTDeskShortcutView: FTDeskToolView {
 }
 
 final class FTToolBgButton: UIButton {
-    func setBackground(for mode: FTCenterPanelMode = .toolbar) {
+    func setBackground(for mode: FTCollectionViewMode = .toolbar) {
         let bgBounds = self.bounds.insetBy(dx: 2.0, dy: 6.0)
         self.layer.masksToBounds = false
         self.layer.shadowOpacity = 0.0

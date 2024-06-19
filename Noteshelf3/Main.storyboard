@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1cp-Yb-NXA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1cp-Yb-NXA">
     <device id="retina6_72" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -328,7 +328,7 @@
                                 </connections>
                             </collectionView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uav-2e-iIa">
-                                <rect key="frame" x="98" y="333" width="234" height="166"/>
+                                <rect key="frame" x="98" y="336" width="234" height="160.33333333333337"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noTags" translatesAutoresizingMaskIntoConstraints="NO" id="e7S-et-bas">
                                         <rect key="frame" x="82" y="0.0" width="70" height="64"/>
@@ -339,7 +339,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tag your notes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f2F-1R-KsD" customClass="FTCustomLabel" customModule="FTCommon">
-                                        <rect key="frame" x="0.0" y="96" width="234" height="26"/>
+                                        <rect key="frame" x="0.0" y="96" width="234" height="20.333333333333329"/>
                                         <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="22"/>
                                         <color key="textColor" name="black1"/>
                                         <nil key="highlightedColor"/>
@@ -348,7 +348,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tag pages and notebooks for easier access." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0t0-jC-W0F" customClass="FTCustomLabel" customModule="FTCommon">
-                                        <rect key="frame" x="0.0" y="130" width="234" height="36"/>
+                                        <rect key="frame" x="0.0" y="124.33333333333331" width="234" height="36"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" name="black70"/>
                                         <nil key="highlightedColor"/>
@@ -591,7 +591,7 @@
                                 </connections>
                             </collectionView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Iwx-bj-aYR">
-                                <rect key="frame" x="88" y="357.33333333333331" width="254" height="166.66666666666669"/>
+                                <rect key="frame" x="88" y="360.33333333333331" width="254" height="160.33333333333331"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noBookmarks" translatesAutoresizingMaskIntoConstraints="NO" id="Ytt-NS-NiN">
                                         <rect key="frame" x="92" y="0.0" width="70" height="64"/>
@@ -602,7 +602,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bookmark your pages" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qdy-T5-5Jf" customClass="FTCustomLabel" customModule="FTCommon">
-                                        <rect key="frame" x="0.0" y="96" width="254" height="26.666666666666671"/>
+                                        <rect key="frame" x="0.0" y="96" width="254" height="20.333333333333329"/>
                                         <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="22"/>
                                         <color key="textColor" name="black1"/>
                                         <nil key="highlightedColor"/>
@@ -611,7 +611,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favorite pages and keep an overview of large notebooks and PDFs." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gyJ-Q2-lbQ" customClass="FTCustomLabel" customModule="FTCommon">
-                                        <rect key="frame" x="0.0" y="130.66666666666669" width="254" height="36"/>
+                                        <rect key="frame" x="0.0" y="124.33333333333337" width="254" height="36"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" name="black70"/>
                                         <nil key="highlightedColor"/>
@@ -785,7 +785,7 @@
                                             <constraint firstAttribute="width" constant="1" id="xJ3-mm-HeN"/>
                                         </constraints>
                                     </view>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="QsK-io-s5z">
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="QsK-io-s5z" customClass="FTFavoritebarCollectionView" customModule="NS3_Beta" customModuleProvider="target">
                                         <rect key="frame" x="50" y="-20" width="238" height="78"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="6" minimumInteritemSpacing="0.0" id="sFf-vX-6Gr">
@@ -887,10 +887,6 @@
                                                 </connections>
                                             </collectionViewCell>
                                         </cells>
-                                        <connections>
-                                            <outlet property="dataSource" destination="BVz-qb-JGz" id="pvT-My-1HF"/>
-                                            <outlet property="delegate" destination="BVz-qb-JGz" id="tcm-Dd-8jP"/>
-                                        </connections>
                                     </collectionView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

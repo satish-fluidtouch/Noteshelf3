@@ -2056,6 +2056,7 @@
 		E76CEDC22A93605C00E4E22F /* FTRecentSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76CEDC02A93605C00E4E22F /* FTRecentSectionHeader.xib */; };
 		E76CEDC32A93605C00E4E22F /* FTRecentSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76CEDC12A93605C00E4E22F /* FTRecentSectionHeader.swift */; };
 		E76EA45A2BBBDEBB009DD911 /* Noteshelf 3 Watch Widget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E7CCFF622BA975E000DB59CE /* Noteshelf 3 Watch Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E76EA75E2C22E82A0095AE04 /* FTFavoritebarCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76EA75D2C22E82A0095AE04 /* FTFavoritebarCollectionView.swift */; };
 		E77280032BE90E0F00A0760E /* FTHexFieldFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77280022BE90E0F00A0760E /* FTHexFieldFooterView.swift */; };
 		E77280052BE90F7700A0760E /* FTSpectrumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77280042BE90F7700A0760E /* FTSpectrumView.swift */; };
 		E772BBAA2BE4CDF9007D787A /* HuePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E772BBA02BE4CDF9007D787A /* HuePickerView.swift */; };
@@ -4512,6 +4513,7 @@
 		E76CDDA727073E6600A8249D /* FTModernDiaryWeekTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTModernDiaryWeekTemplate.swift; sourceTree = "<group>"; };
 		E76CEDC02A93605C00E4E22F /* FTRecentSectionHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FTRecentSectionHeader.xib; sourceTree = "<group>"; };
 		E76CEDC12A93605C00E4E22F /* FTRecentSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTRecentSectionHeader.swift; sourceTree = "<group>"; };
+		E76EA75D2C22E82A0095AE04 /* FTFavoritebarCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritebarCollectionView.swift; sourceTree = "<group>"; };
 		E7721A332681DFDC00EB2312 /* FTWhatsNewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWhatsNewHelper.swift; sourceTree = "<group>"; };
 		E77280022BE90E0F00A0760E /* FTHexFieldFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTHexFieldFooterView.swift; sourceTree = "<group>"; };
 		E77280042BE90F7700A0760E /* FTSpectrumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSpectrumView.swift; sourceTree = "<group>"; };
@@ -11006,6 +11008,7 @@
 				E75A6EAD2AFCAB770039D25D /* FTFavoritePresetColorsView.swift */,
 				E75A6EB12AFCC2820039D25D /* FTFavoriteColorGridView.swift */,
 				E76A08732BEB4C9900BCC7BA /* FTFavoritePenColorEditView.swift */,
+				E76EA75D2C22E82A0095AE04 /* FTFavoritebarCollectionView.swift */,
 			);
 			path = Favoritebar;
 			sourceTree = "<group>";
@@ -13929,6 +13932,7 @@
 				BAF392142859ADF00067CA9F /* FTPageViewController_FTPageContentDelegate.swift in Sources */,
 				BAF392172859ADF00067CA9F /* FTBrushBuilder_v3.swift in Sources */,
 				E772BBB12BE4CDF9007D787A /* ReplaceMe.swift in Sources */,
+				E76EA75E2C22E82A0095AE04 /* FTFavoritebarCollectionView.swift in Sources */,
 				4708DEC32A022B870009F071 /* FTThemesLibrary.swift in Sources */,
 				BAF392182859ADF00067CA9F /* FTPageNumberView.swift in Sources */,
 				BA111C382988E4CD001E854F /* NSAttributedString+Helper.swift in Sources */,
