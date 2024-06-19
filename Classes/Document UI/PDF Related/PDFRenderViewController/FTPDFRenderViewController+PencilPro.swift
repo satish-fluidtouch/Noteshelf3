@@ -61,6 +61,9 @@ extension FTPDFRenderViewController {
         if let presentedVc = self.presentedViewController as? FTPenSizeEditController {
             presentedVc.dismiss(animated: false)
         }
+        self.penShortcutViewModel = nil
+        self.colorModel = nil
+        self.shapeModel = nil
     }
 }
 

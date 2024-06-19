@@ -48,6 +48,7 @@
 @interface FTPDFRenderViewController() <UIScrollViewDelegate,MFMailComposeViewControllerDelegate,UIGestureRecognizerDelegate,UIPopoverPresentationControllerDelegate,UIDocumentInteractionControllerDelegate,FTActiveStickyIndicatorDelegate,FTNoteshelfDocumentDelegate>
 {
     BOOL savingInProgress;
+    
 }
 
 @property (weak,readwrite) FTZoomOverlayViewController *zoomOverlayController;

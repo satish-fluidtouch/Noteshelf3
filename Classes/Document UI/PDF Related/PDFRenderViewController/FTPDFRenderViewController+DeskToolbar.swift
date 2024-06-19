@@ -358,7 +358,7 @@ extension FTPDFRenderViewController: FTFavoriteSizeEditDelegate, FTFavoriteColor
     func showEditColorScreen(using rack: FTRackData, rect: CGRect) {
         let viewModel = FTPenShortcutViewModel(rackData: rack)
         let hostingVc = FTPenColorEditController(viewModel: viewModel, delegate: self)
-//        self.penShortcutViewModel = viewModel
+        self.penShortcutViewModel = viewModel
         let flow = FTColorsFlowType.penType(rack.currentPenset.type)
         let editMode = FTPenColorSegment.savedSegment(for: flow)
         let contentSize = editMode.contentSize
@@ -373,6 +373,22 @@ extension FTPDFRenderViewController: FTFavoriteSizeEditDelegate, FTFavoriteColor
     }
     
     func didChangeCurrentPenset(_ penset: FTPenSetProtocol) {
+        self.handleCurrentPensetChanges(penset: penset)
+    }
+    
+    func didSelectColorFromEditScreen(_ penset: FTPenSetProtocol) {
+        self.colorModel?.updateFavoriteColor(with: penset.color)
+        self.didChangeCurrentPenset(penset)
+    }
+
+    func didChangeCurrentPresenterSet(_ presenterSet: FTPresenterSetProtocol) {
+        let rackData = FTRackData(type: .presenter, userActivity: self.view.window?.windowScene?.userActivity)
+        rackData.currentPenset = presenterSet
+        rackData.saveCurrentSelection()
+        self.validateMenuItems()
+    }
+    
+    func handleCurrentPensetChanges(penset: FTPenSetProtocol) {
         var rackType = FTRackType.pen
         if self.currentDeskMode == .deskModeMarker {
             rackType = .highlighter
@@ -386,16 +402,24 @@ extension FTPDFRenderViewController: FTFavoriteSizeEditDelegate, FTFavoriteColor
             rackData.saveCurrentSelection()
             self.validateMenuItems()
     }
-    
-    func didSelectColorFromEditScreen(_ penset: FTPenSetProtocol) {
-        self.colorModel?.updateFavoriteColor(with: penset.color)
-        self.didChangeCurrentPenset(penset)
-    }
+}
 
-    func didChangeCurrentPresenterSet(_ presenterSet: FTPresenterSetProtocol) {
-        let rackData = FTRackData(type: .presenter, userActivity: self.view.window?.windowScene?.userActivity)
-        rackData.currentPenset = presenterSet
-        rackData.saveCurrentSelection()
-        self.validateMenuItems()
+extension FTPDFRenderViewController: FTColorEyeDropperPickerDelegate {
+    func colorPicker(picker: FTColorEyeDropperPickerController,didPickColor color:UIColor) {
+        if let shortcutVm = self.penShortcutViewModel {
+            self.colorModel?.updateFavoriteColor(with: color.hexString)
+            self.colorModel?.updateCurrentFavoriteColors()
+            shortcutVm.updateCurrentSelection(colorHex: color.hexString)
+            if let editIndex = shortcutVm.presetEditIndex {
+                shortcutVm.updatePresetColor(hex: color.hexString, index: editIndex)
+                NotificationCenter.default.post(name: .PresetColorUpdate, object: nil, userInfo: ["type": FTColorToastType.edit.rawValue])
+            } else {
+                shortcutVm.addSelectedColorToPresets()
+                NotificationCenter.default.post(name: .PresetColorUpdate, object: nil, userInfo: ["type": FTColorToastType.add.rawValue])
+            }
+            shortcutVm.updateCurrentColors()
+            self.handleCurrentPensetChanges(penset: shortcutVm.currentPenset)
+        }
+        self.penShortcutViewModel = nil
     }
 }

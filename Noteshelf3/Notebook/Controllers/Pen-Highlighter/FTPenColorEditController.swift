@@ -101,6 +101,8 @@ extension FTPenColorEditController: FTPenColorEditDelegate {
                     FTColorEyeDropperPickerController.showEyeDropperOn(presentingVc,delegate: shapeAnnDel)
                 } else if let textAnnDel = self.delegate as? FTTextAnnotationViewController {
                     FTColorEyeDropperPickerController.showEyeDropperOn(presentingVc,delegate: textAnnDel)
+                } else if let pdfRenderDel = self.delegate as? FTPDFRenderViewController {
+                    FTColorEyeDropperPickerController.showEyeDropperOn(presentingVc,delegate: pdfRenderDel)
                 }
             }
         }

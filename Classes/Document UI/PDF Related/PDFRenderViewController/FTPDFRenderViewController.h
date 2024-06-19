@@ -62,6 +62,7 @@ typedef enum: NSInteger  {
 @class FTAudioPlayerController;
 @class FTFavoriteColorViewModel;
 @class FTFavoriteShapeViewModel;
+@class FTPenShortcutViewModel;
 
 #if !TARGET_OS_MACCATALYST
 @interface FTPDFRenderViewController : FTBaseRenderViewController <UIPopoverPresentationControllerDelegate,UINavigationControllerDelegate,PressurePenEngineDelegate,FTDeskToolbarDelegate,FTAudioListViewControllerDelegtes,FTApplePencilInteractionProtocol, FTPenRackSelectDelegate, FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {
@@ -88,9 +89,9 @@ FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {}
 
 @property (nullable, strong) NSString *currentSceneID;
 @property (strong) FTDocumentOpenToken *openDocToken;
-// TODO: Narayana - To make these nil when pencil pro menu is removed 
 @property (nonatomic, weak) FTFavoriteColorViewModel *colorModel;
 @property (nonatomic, weak) FTFavoriteShapeViewModel *shapeModel;
+@property (nonatomic) FTPenShortcutViewModel *penShortcutViewModel;
 
 @property (assign,readonly) CGFloat contentScaleInNormalMode;
 @property (assign) BOOL insertingPhotoAsPage;
