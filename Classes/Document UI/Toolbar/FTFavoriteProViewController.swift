@@ -15,19 +15,14 @@ class FTFavoriteProViewController: UIViewController {
     private var manager = FTFavoritePensetManager(activity: nil)
     var activity: NSUserActivity?
 
-    private let config = FTCircularLayoutConfig(radius: 250, itemSize: CGSize(width: 28, height: 28))
-    private let center = CGPoint(x: 250, y: 250)
-
-    lazy var primaryMenuHitTestLayer: FTPencilProMenuLayer = {
-       return FTPencilProMenuLayer(strokeColor: .clear, lineWidth: 50)
-    }()
-    lazy var primaryMenuLayer: FTPencilProMenuLayer = {
-       return FTPencilProMenuLayer(strokeColor: UIColor.appColor(.pencilProMenuBgColor), lineWidth: 40)
-    }()
+    private let config = FTCircularLayoutConfig(angleOfEachItem: 10.degreesToRadians, radius: 250.0, itemSize: CGSize(width: 28, height: 28))
+    private var center = CGPoint.zero
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        (self.view as? FTFavoriteProContainerView)?.collectionView = collectionView
         self.manager = FTFavoritePensetManager(activity: activity)
+        self.center = CGPoint(x: FTPenSliderConstants.primaryMenuSize.width/2, y: FTPenSliderConstants.primaryMenuSize.height/2)
         self.configureCollectionView()
         self.favorites = self.manager.fetchFavorites()
     }
@@ -38,29 +33,16 @@ private extension FTFavoriteProViewController {
         self.collectionView.mode = .circular
         self.collectionView.isPagingEnabled = true
         self.collectionView.interactionDelegate = self
-        let circularLayout = FTCircularFlowLayout(withCentre: center, config: config)
-        let startAngle: CGFloat = .pi - .pi/30
-        let endAngle = self.getEndAngle(with: startAngle)
+        let circularLayout = FTCircularFlowLayout(withCentre: self.center, config: config)
+        let startAngle: CGFloat = .pi - .pi/16
+        let endAngle = self.getEndAngle(with: startAngle, with: 7)
         circularLayout.set(startAngle: startAngle, endAngle: endAngle)
         self.collectionView?.collectionViewLayout = circularLayout
-        self.drawCollectionViewBackground()
     }
     
-    func getEndAngle(with startAngle: CGFloat) -> CGFloat {
-        let endAngle = startAngle - (CGFloat(7) * self.config.angleOfEachItem)
+    func getEndAngle(with startAngle: CGFloat, with items: Int) -> CGFloat {
+        let endAngle = startAngle - (CGFloat(items) * self.config.angleOfEachItem)
         return endAngle
-    }
-
-    func drawCollectionViewBackground() {
-        let startAngle: CGFloat = .pi + .pi/15
-        // TODO: Narayana - to be calculated end angle properly using start angle
-        let endAngle = self.getEndAngle(with: .pi)
-        self.primaryMenuHitTestLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
-        self.primaryMenuLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
-        self.primaryMenuLayer.addShadow(offset: CGSize(width: 0, height: 0), radius: 20)
-        self.view.layer.insertSublayer(primaryMenuHitTestLayer, at: 0)
-        self.view.layer.insertSublayer(primaryMenuLayer, above: primaryMenuHitTestLayer)
-        (self.view as? FTPencilProMenuContainerView)?.primaryMenuHitTestLayer = primaryMenuHitTestLayer
     }
 }
 
@@ -124,4 +106,34 @@ extension FTFavoriteProViewController: FTFavoritebarDelegate {
 //        controller.ftPresentationDelegate.compactGrabFurther = false
 //        self.ftPresentPopover(vcToPresent: controller, contentSize: FTFavoriteEditViewController.contentSize, hideNavBar: true)
     }
+}
+
+class FTFavoriteProContainerView: UIView {
+    weak var collectionView: UICollectionView?
+    weak var hitTestLayer: CAShapeLayer?
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let hitView = super.hitTest(point, with: event)
+        guard let collectionView else {
+            return hitView
+        }
+        let collectionViewPoint = self.convert(point, to: collectionView)
+        collectionView.layoutIfNeeded()
+        for cell in collectionView.visibleCells {
+            if cell.frame.contains(collectionViewPoint) {
+                let cellPoint = collectionView.convert(collectionViewPoint, to: cell)
+                return cell.hitTest(cellPoint, with: event)
+            }
+        }
+        return collectionView
+    }
+    
+    func isPointInside(_ point: CGPoint, lineWidth: CGFloat, radius: CGFloat) -> Bool {
+          let center = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
+          let distanceFromCenter = point.distance(to: center)
+          let angle = atan2(point.y - center.y, point.x - center.x)
+          let isInRadiusRange = (distanceFromCenter >= radius - lineWidth / 2 && distanceFromCenter <= radius + lineWidth / 2)
+          let isInAngleRange = (angle >= -CGFloat.pi && angle <= 0)
+          return isInRadiusRange && isInAngleRange
+      }
 }

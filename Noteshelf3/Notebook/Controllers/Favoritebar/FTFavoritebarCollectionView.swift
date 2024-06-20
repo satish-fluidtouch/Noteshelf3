@@ -48,13 +48,15 @@ private extension FTFavoritebarCollectionView {
     }
     
     func handlePenTypeCellTransformation(cell: UICollectionViewCell) {
-        if let placement = self.interactionDelegate?.getSavedPlacement() {
-            cell.contentView.alpha = 0.0
-            cell.contentView.transform = .identity
-            if placement.isLeftPlacement() {
-                cell.contentView.transform = CGAffineTransform(rotationAngle: .pi)
+        if mode == .toolbar {
+            if let placement = self.interactionDelegate?.getSavedPlacement() {
+                cell.contentView.alpha = 0.0
+                cell.contentView.transform = .identity
+                if placement.isLeftPlacement() {
+                    cell.contentView.transform = CGAffineTransform(rotationAngle: .pi)
+                }
+                cell.contentView.alpha = 1.0
             }
-            cell.contentView.alpha = 1.0
         }
     }
     

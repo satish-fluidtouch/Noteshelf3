@@ -22,7 +22,7 @@ class FTPencilProMenuController: UIViewController {
     @IBOutlet private weak var collectionView: FTCenterPanelCollectionView?
     
     private var size = CGSize.zero
-    private let center = CGPoint(x: 250, y: 250)
+    private var center = CGPoint.zero
     private let config = FTCircularLayoutConfig()
     private var undoBtn: FTPencilProUndoButton?
     private var redoBtn: FTPencilProRedoButton?
@@ -47,6 +47,7 @@ class FTPencilProMenuController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         (self.view as? FTPencilProMenuContainerView)?.collectionView = collectionView
+        self.center = CGPoint(x: FTPenSliderConstants.primaryMenuSize.width/2, y: FTPenSliderConstants.primaryMenuSize.height/2)
         self.configureCollectionView()
         self.addObservers()
     }
@@ -93,7 +94,7 @@ private extension FTPencilProMenuController {
         self.collectionView?.mode = .circular
         self.collectionView?.centerPanelDelegate = self
         self.collectionView?.dataSourceItems = FTCurrentToolbarSection().displayTools
-        let circularLayout = FTCircularFlowLayout(withCentre: center, config: config)
+        let circularLayout = FTCircularFlowLayout(withCentre: self.center, config: config)
         let startAngle: CGFloat = .pi - .pi/30
         let endAngle = self.getEndAngle(with: startAngle)
         circularLayout.set(startAngle: startAngle, endAngle: endAngle)
@@ -130,8 +131,7 @@ private extension FTPencilProMenuController {
 
     func drawCollectionViewBackground() {
         let startAngle: CGFloat = .pi + .pi/15
-        // TODO: Narayana - to be calculated end angle properly using start angle
-        let endAngle = self.getEndAngle(with: .pi)
+        let endAngle = self.getEndAngle(with: startAngle) - .pi/15 // to add extra offset bg
         self.primaryMenuHitTestLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
         self.primaryMenuLayer.setPath(with: center, radius: self.config.radius, startAngle: startAngle, endAngle: -endAngle)
         self.primaryMenuLayer.addShadow(offset: CGSize(width: 0, height: 0), radius: 20)
@@ -239,6 +239,7 @@ private extension FTPencilProMenuController {
         self.children.compactMap { $0 as? FTSliderHostingControllerProtocol }.forEach { $0.removeHost() }
         self.secondaryMenuLayer.removeFromSuperlayer()
         self.secondaryMenuHitTestLayer.removeFromSuperlayer()
+        self.children.compactMap { $0 as? FTFavoriteProViewController }.forEach { $0.remove() }
     }
 
     func shouldShowSecondaryMenu(for mode: RKDeskMode) -> Bool {
@@ -250,7 +251,9 @@ private extension FTPencilProMenuController {
     }
 
     func addSecondaryMenu(with mode: RKDeskMode) {
+        var items = FTPenSliderConstants.penShortCutItems
         if mode == .deskModeFavorites {
+            items = 7
             self.addFavoritePro()
         } else {
             guard let parent = self.parent as? FTPDFRenderViewController else {
@@ -277,7 +280,6 @@ private extension FTPencilProMenuController {
             FTFavoriteSizeViewModel(rackData: rack, delegate: parent, scene: self.view?.window?.windowScene)
             sizeModel.sizeSourceOrigin = convertedOrigin
             
-            var items = FTPenSliderConstants.penShortCutItems
             if rack.type == .pen || rack.type == .highlighter {
                 let shortcutView = FTPenSliderShortcutView(colorModel: _colorModel, sizeModel: sizeModel)
                 let hostingVc = FTPenSliderShortcutHostingController(rootView: shortcutView)
@@ -296,12 +298,13 @@ private extension FTPencilProMenuController {
                 self.add(hostingVc, frame: rect)
                 items = FTPenSliderConstants.presenterShortcutItems
             }
-            self.drawSecondaryBg(items: items)
         }
+        self.drawSecondaryBg(items: items)
     }
 
     func addFavoritePro() {
         if let favProVc = UIStoryboard(name: "FTDocumentView", bundle: nil).instantiateViewController(identifier: "FTFavoriteProViewController") as? FTFavoriteProViewController {
+            favProVc.activity = self.view.userActivity
             self.add(favProVc, frame: self.view.bounds)
         }
     }
@@ -309,8 +312,6 @@ private extension FTPencilProMenuController {
     func drawSecondaryBg(items: Int) {
         let startAngle: CGFloat =  .pi + .pi/12
         let endAngle = self.getEndAngle(with: startAngle, with: items)
-        let rect = self.view.bounds
-        let center = CGPoint(x: rect.midX, y: rect.midY)
         self.secondaryMenuLayer.setPath(with: center, radius: FTPenSliderConstants.sliderRadius, startAngle: startAngle, endAngle: -endAngle)
         self.secondaryMenuLayer.addShadow(offset: CGSize(width: 0, height: 0), radius: 10)
         self.secondaryMenuHitTestLayer.setPath(with: center, radius: FTPenSliderConstants.sliderRadius, startAngle: startAngle, endAngle: -endAngle)
@@ -375,17 +376,21 @@ final class FTPencilProMenuContainerView: UIView {
         }
         
         if let undoBtn = self.undoBtn, undoBtn.frame.contains(point) {
-            return hitView
+            return undoBtn
         }
         
         if let redoBtn = self.redoBtn, redoBtn.frame.contains(point) {
-            return hitView
+            return redoBtn
         }
         
         if let layer = primaryMenuHitTestLayer, self.isPointInside(point, lineWidth: layer.lineWidth, radius: 200) {
             return collectionView
         }
         if let layer = secondaryMenuHitTestLayer, self.isPointInside(point, lineWidth: layer.lineWidth, radius: 250) {
+            // If we have favorite mode enabled - hittest to be informed to fav pro container
+            if let favProView = self.subviews.compactMap({ $0 as? FTFavoriteProContainerView }).first  {
+                return favProView.hitTest(point, with: event)
+            }
             return hitView
         }
         return nil

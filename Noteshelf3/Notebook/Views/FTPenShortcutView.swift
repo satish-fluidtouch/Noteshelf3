@@ -22,7 +22,7 @@ struct FTPenSliderConstants {
     static var highlighterShortcutColorItems : Int = 4
     static var shapeShortcutColorItems : Int = 4
     static var rotationAngle : Int = 180 - spacingAngle
-    static var primaryMenuSize = CGSize(width: 500, height: 500)
+    static var primaryMenuSize = CGSize(width: 600, height: 600)
 }
 
 enum FTShortcutbarMode {
