@@ -140,6 +140,9 @@ class FTRefreshViewController: UIViewController {
             addPageView?.swapPositions()
         }
         updateFrame()
+        if let scrollDirection {
+            addPageView?.configureView(position: scrollDirection)
+        }
     }
     
     @objc class func addObserversForHideNewPageOptions(){

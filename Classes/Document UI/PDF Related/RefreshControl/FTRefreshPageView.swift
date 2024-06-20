@@ -17,6 +17,7 @@ class FTRefreshPageView: UIView {
     @IBOutlet weak var importView: UIView!
     @IBOutlet weak var changeTemplateView: UIView!
     @IBOutlet private weak var stackView: UIStackView?
+    @IBOutlet weak var configuredStackView: UIStackView!
     @IBOutlet weak var mainStackView: UIStackView!
     @IBOutlet private weak var addNewLbl: UILabel?
     
@@ -47,6 +48,13 @@ class FTRefreshPageView: UIView {
         if !FTFeatureConfigHelper.shared.isFeatureEnabled(.ImportDocument) {
             importView.isHidden = true
         }
+        if !FTFeatureConfigHelper.shared.isFeatureEnabled(.ImportDocument) {
+            mainStackView.isHidden = true
+            configuredStackView.isHidden = false
+        } else {
+            mainStackView.isHidden = false
+            configuredStackView.isHidden = true
+        }
     }
     
     func swapPositions() {
@@ -55,6 +63,14 @@ class FTRefreshPageView: UIView {
             mainStackView.removeArrangedSubview(stackView)
             mainStackView.insertArrangedSubview(stackView, at: 0)
             mainStackView.insertArrangedSubview(containerView, at: 1)
+        }
+    }
+    
+    func configureView(position: FTRefreshPosition) {
+        if position == .left || position == .right {
+            configuredStackView.axis = .vertical
+        } else {
+            configuredStackView.axis = .horizontal
         }
     }
     
