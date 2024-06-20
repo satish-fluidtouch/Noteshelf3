@@ -123,6 +123,9 @@ private extension FTFavoriteEditViewController {
                 if let favBarVc = self.delegate as? FTFavoritebarViewController {
                     favBarVc.presetViewModel = presetVm
                     FTColorEyeDropperPickerController.showEyeDropperOn(presentingVc,delegate: favBarVc)
+                } else if let favProVc = self.delegate as? FTFavoriteProViewController {
+                    favProVc.presetViewModel = presetVm
+                    FTColorEyeDropperPickerController.showEyeDropperOn(presentingVc,delegate: favProVc)
                 }
             }
         }

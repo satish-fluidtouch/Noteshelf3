@@ -304,7 +304,7 @@ private extension FTPencilProMenuController {
 
     func addFavoritePro() {
         if let favProVc = UIStoryboard(name: "FTDocumentView", bundle: nil).instantiateViewController(identifier: "FTFavoriteProViewController") as? FTFavoriteProViewController {
-            favProVc.activity = self.view.userActivity
+            favProVc.activity = self.view.window?.userActivity
             self.add(favProVc, frame: self.view.bounds)
         }
     }

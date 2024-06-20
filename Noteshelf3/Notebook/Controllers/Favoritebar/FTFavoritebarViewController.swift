@@ -392,8 +392,10 @@ extension FTFavoritebarViewController: FTColorEyeDropperPickerDelegate {
             }
             if(index < self.favorites.count) {
                 self.favorites[index] = penset
+                self.manager.saveCurrentSelection(penSet: penset)
             } else if index == self.favorites.count {
                 self.favorites.append(penset)
+                self.manager.saveCurrentSelection(penSet: penset)
             }
             self.manager.saveFavorites(favorites)
         }
