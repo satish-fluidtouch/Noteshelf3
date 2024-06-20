@@ -36,7 +36,11 @@ extension UIViewController {
         navController.modalPresentationStyle = .custom
         navController.preferredContentSize = contentSize
         navController.transitioningDelegate = customPresentationDelegate
-        self.present(navController, animated: animated, completion: completion)
+        self.present(navController, animated: animated, completion: {
+            if let presentationVc = navController.presentationController as? FTPopoverPresentationController {
+                presentationVc.onDismissBlock = customPresentationDelegate.onDismissBlock
+            }
+        })
     }
 
     public func ftPresentFormsheet(vcToPresent: UIViewController,

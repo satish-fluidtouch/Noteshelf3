@@ -99,16 +99,6 @@ class FTMediaLibraryViewController: UIViewController, FTPopoverPresentable {
                 }
         }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        if sourceType == .centerPanel {
-            let source: FTToolbarPopoverScreen = mediaSource == .pixabay ? .pixabay : .unsplash
-            if let window = self.view.window {
-                NotificationCenter.default.post(name: .centralPanelPopUpDismiss, object: ["sourceType":source,"window":window])
-            }
-        }
-    }
-    
     deinit {
            #if DEBUG
                debugPrint("deinit \(self.classForCoder)");
@@ -538,7 +528,8 @@ extension FTMediaLibraryViewController: FTMediaLibraryDataSourceDelegate {
 
 
 extension FTMediaLibraryViewController {
-    static func showAddMenuPixaBayController(from controller: UIViewController, mediaType: MediaSource, source: Any) {
+    @discardableResult
+    static func showAddMenuPixaBayController(from controller: UIViewController, mediaType: MediaSource, source: Any) -> FTMediaLibraryViewController{
         let storyboard = UIStoryboard.init(name: "FTDocumentEntity", bundle: nil)
         guard let mediaLibraryVc = storyboard.instantiateViewController(withIdentifier: "FTMediaLibraryViewController") as? FTMediaLibraryViewController else {
             fatalError("Programmer error, FTMediaLibraryViewController not found")
@@ -549,5 +540,6 @@ extension FTMediaLibraryViewController {
         mediaLibraryVc.sourceType = .centerPanel
         mediaLibraryVc.ftPresentationDelegate.source = source as AnyObject
         controller.ftPresentPopover(vcToPresent: mediaLibraryVc, contentSize: AddMenuType.media.contentSize, hideNavBar: true)
+        return mediaLibraryVc
     }
 }

@@ -89,15 +89,6 @@ extension FTSidePanelShelfItemPickerDelegate {
       
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        if sourceType == .centerPanel {
-            if let window = self.view.window {
-                NotificationCenter.default.post(name: .centralPanelPopUpDismiss, object: ["sourceType":FTToolbarPopoverScreen.recents,"window":window])
-            }
-        }
-    }
-    
     func configureNavigation(title: String) {
         self.navigationItem.hidesBackButton = true
         let leftItem = UIBarButtonItem(image: UIImage.image(for: "chevron.backward", font: UIFont.appFont(for: .medium, with: 18)), style: .plain, target: self, action: #selector(buttonTapped(_ :)))

@@ -63,16 +63,7 @@ class FTEmojisViewController: UIViewController,  FTPopoverPresentable {
         self.setupSearchBarTypingAction()
         self.preferredContentSize = contentSize
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        if sourceType == .centerPanel {
-            if let window = self.view.window {
-                NotificationCenter.default.post(name: .centralPanelPopUpDismiss, object: ["sourceType":FTToolbarPopoverScreen.emoji,"window":window])
-            }
-        }
-    }
-    
+        
     @IBAction func tapOnBackButton(_ sender: UIButton) {
         guard let _ = navigationController?.popViewController(animated: true) else {
             // ll be executed during emoji edit and back tap
@@ -100,7 +91,7 @@ class FTEmojisViewController: UIViewController,  FTPopoverPresentable {
     //MARK:- Presentation
     class func showAsPopover(fromSourceView sourceView: Any,
                              overViewController viewController: UIViewController,
-                             withDelegate delegate: StickerSelectionDelegate, toHideBackBtn: Bool = false) {
+                             withDelegate delegate: StickerSelectionDelegate, toHideBackBtn: Bool = false) -> FTEmojisViewController  {
         let storyboard = UIStoryboard.init(name: "FTDocumentEntity", bundle: nil);
         guard let stickerSelectionViewController  = storyboard.instantiateViewController(withIdentifier: "FTEmojisViewController") as? FTEmojisViewController else {
             fatalError("Programmer error, Couldnot find FTEmojisViewController")
@@ -110,6 +101,7 @@ class FTEmojisViewController: UIViewController,  FTPopoverPresentable {
         stickerSelectionViewController.toHideBackBtn = toHideBackBtn
         stickerSelectionViewController.ftPresentationDelegate.source = sourceView as AnyObject
         viewController.ftPresentPopover(vcToPresent: stickerSelectionViewController, contentSize: stickerSelectionViewController.contentSize, hideNavBar: true)
+         return stickerSelectionViewController
      }
 }
 

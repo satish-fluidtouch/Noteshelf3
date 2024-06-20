@@ -36,14 +36,6 @@ class FTStickersViewController: UIHostingController<FTStickerCategoriesView>, FT
         super.viewDidAppear(animated)
         self.window = self.view.window
     }
-    
-    deinit {
-        if sourceType == .centerPanel{
-            if let window = self.window {
-                NotificationCenter.default.post(name: .centralPanelPopUpDismiss, object: ["sourceType":FTToolbarPopoverScreen.stickers,"window":window])
-            }
-        }
-    }
 }
 
 extension FTStickersViewController: UIDropInteractionDelegate {

@@ -79,12 +79,6 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
         self.window = self.view.window
     }
     
-    deinit {
-        if let window = self.window {
-            NotificationCenter.default.post(name: Notification.Name.rightPanelPopupDismiss, object:window)
-        }
-    }
-    
     private func fetchSize() -> CGSize {
         var height: CGFloat = 652.0
         if !UIDevice.isLandscapeOrientation {
@@ -106,7 +100,7 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
                              notebookShelfItem: FTShelfItemProtocol,
                              notebookDocument: FTDocumentProtocol,
                              page: FTPageProtocol,
-                             delegate: FTNotebookMoreOptionsDelegate) {
+                             delegate: FTNotebookMoreOptionsDelegate) -> FTNotebookMoreOptionsViewController {
         
         if let settingsNavController = UIStoryboard(name: "FTNotebookMoreOptions", bundle: nil).instantiateInitialViewController() as? UINavigationController, let settingsController = settingsNavController.viewControllers.first as? FTNotebookMoreOptionsViewController {
             
@@ -117,7 +111,9 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
             let size = settingsController.fetchSize()
             settingsController.ftPresentationDelegate.source = sourceView
             viewController.ftPresentPopover(vcToPresent: settingsController, contentSize: size)
+            return settingsController
         }
+        return FTNotebookMoreOptionsViewController()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -10,9 +10,7 @@ import UIKit
 import FTCommon
 
 extension Notification.Name {
-    static let rightPanelPopupDismiss = Notification.Name("rightPanelPopupDismiss")
     static let leftPanelPopupDismiss = Notification.Name(rawValue: "leftPanelPopupDismiss")
-    static let centralPanelPopUpDismiss = Notification.Name(rawValue: "centralPanelPopUpDismiss")
 }
 
 protocol FTDeskPanelActionDelegate: AnyObject {
@@ -129,6 +127,11 @@ protocol FTDeskPanelActionDelegate: AnyObject {
     
     func updateToolStatus(for tool : FTDeskCenterPanelTool , status : Bool){
         self.centerPanelVc?.updateCellStatus(for: tool, status: status)
+    }
+    
+    func rightPanelPopupDismissStatus(){
+        moreButton?.hideBg()
+        addButton?.hideBg()
     }
         
         func updateDeskToolbarDelegate(_ delegate:FTDeskToolbarDelegate, actionDelegate: FTDeskPanelActionDelegate) {
@@ -503,18 +506,7 @@ extension FTiOSDeskToolbarController: FTToolbarCenterPanelDelegate {
     
     extension FTiOSDeskToolbarController  {
         func popupDismissStatus(){
-            NotificationCenter.default.addObserver(self, selector: #selector(self.rightPanelPopupDismissStatus(notification:)), name:.rightPanelPopupDismiss, object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(self.leftPanelPopupDismissStatus(notification:)), name: .leftPanelPopupDismiss, object: nil)
-        }
-        
-        @objc func rightPanelPopupDismissStatus(notification: Notification) {
-            if let window = self.view.window,
-               let sourceWindow = notification.object as? UIWindow,
-               window == sourceWindow{
-                moreButton?.hideBg()
-                addButton?.hideBg()
-            }
-            
         }
         
         @objc func leftPanelPopupDismissStatus(notification: Notification) {

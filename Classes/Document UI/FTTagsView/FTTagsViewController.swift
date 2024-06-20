@@ -81,11 +81,6 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBar.isHidden = false
-        if sourceType == .centerPanel {
-            if let window = self.view.window {
-                NotificationCenter.default.post(name: .centralPanelPopUpDismiss, object: ["sourceType":FTToolbarPopoverScreen.tag,"window":window])
-            }
-        }
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -115,7 +110,7 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
             }
     }
 
-    static func showTagsController(fromSourceView sourceView:Any, onController controller:UIViewController, tags: [FTTagItemModel]){
+    static func showTagsController(fromSourceView sourceView:Any, onController controller:UIViewController, tags: [FTTagItemModel]) -> FTTagsViewController{
         let storyBoard = UIStoryboard.init(name: "FTDocumentEntity", bundle: nil)
         if let tagsController: FTTagsViewController = storyBoard.instantiateViewController(withIdentifier: "FTTagsViewController") as? FTTagsViewController {
             tagsController.tagsList = tags
@@ -126,7 +121,9 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
             tagsController.contextMenuTagDelegate = controller as? FTFinderContextMenuTagDelegate
             tagsController.ftPresentationDelegate.source = sourceView as AnyObject
             controller.ftPresentPopover(vcToPresent: tagsController, contentSize: CGSize(width: 320, height:360))
+            return tagsController
         }
+        return FTTagsViewController()
     }
 
     static func presentTagsController(onController controller:UIViewController, tags: [FTTagItemModel]){

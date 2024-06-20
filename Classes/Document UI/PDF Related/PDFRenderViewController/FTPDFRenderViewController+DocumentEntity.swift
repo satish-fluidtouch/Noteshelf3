@@ -214,7 +214,10 @@ extension FTPDFRenderViewController: FTImportingProtocol {
     
     @objc func addAnnotationButtonAction(source: UIView) {
         self.normalizeAndEndEditingAnnotation(true);
-        FTAddDocumentEntitiesViewController.showAsPopover(source: source, fromViewController: self, delegate: self)
+      let addDocVc =   FTAddDocumentEntitiesViewController.showAsPopover(source: source, fromViewController: self, delegate: self)
+        addDocVc.ftPresentationDelegate.onDismissBlock = {
+            self.statusInformer.updateRightPanelToolStatus()
+        }
     }
     
     @objc func showStickyScreen(sourceView:UIView) {
@@ -373,8 +376,6 @@ extension FTPDFRenderViewController: FTTagsViewControllerDelegate {
                         selectedShelfTagItems[page.uuid] = item;
                         NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
                     }
-                    let status = self.tagStatus()
-                    self.statusInformer?.updateToolStatus(for: .tag, status: status)
                 }
             }
         }

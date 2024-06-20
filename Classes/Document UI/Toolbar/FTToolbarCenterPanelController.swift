@@ -112,7 +112,7 @@ class FTToolbarCenterPanelController: UIViewController {
                 UserDefaults.standard.set(true, forKey: "showTipView")
             }
         }
-       
+
     }
 
     @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
@@ -216,28 +216,8 @@ private extension FTToolbarCenterPanelController {
                 }
             }
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(self.centralPanelPopupDismissStatus(notification:)), name: .centralPanelPopUpDismiss, object: nil)
     }
 
-
-    @objc func centralPanelPopupDismissStatus(notification: Notification) {
-        if let object = notification.object as? [String:Any] {
-            if let window = self.view.window,
-                let sourceWindow = object["window"] as? UIWindow,
-               window == sourceWindow,
-               let source = object["sourceType"] as? FTToolbarPopoverScreen {
-                let tool = source.centerPanelTool
-                if let cell = self.fetchCell(for: tool) as? FTDeskShortcutCell {
-                    cell.enableStatus = false
-                    if let intStatus = self.delegate?.status(for: tool) {
-                        cell.enableStatus = intStatus.intValue == 1 ? true : false
-                    }
-                      cell.updateBackground(status: false)
-                }
-            }
-        }
-    }
-    
     @IBAction func leftBtnTapped(_ sender: Any) {
         if self.collectionView.contentOffset.x > 0.0 {
             self.disableNavButtons()
@@ -309,6 +289,7 @@ extension FTToolbarCenterPanelController: UICollectionViewDataSource, UICollecti
         let btnType = self.dataSourceItems[indexPath.row]
         let cell: UICollectionViewCell
         
+
         if btnType.toolMode == .shortcut {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FTDeskShortcutCell", for: indexPath) as UICollectionViewCell
             var isSelected = false
@@ -471,6 +452,7 @@ extension FTToolbarCenterPanelController  {
     func updateCellStatus(for tool: FTDeskCenterPanelTool, status: Bool) {
         if let cell = self.fetchCell(for: tool) as? FTDeskShortcutCell {
             cell.enableStatus = status
+            cell.updateBackground(status: false)
         }
     }
 }

@@ -14,6 +14,7 @@ let textContainerTag: Int = 9001
 @objc protocol FTPageStatusInformer: NSObjectProtocol {
     func toolStatus(for tool: FTDeskCenterPanelTool) -> NSNumber?
     func updateToolStatus(for tool: FTDeskCenterPanelTool, status: Bool)
+    func updateRightPanelToolStatus()
 }
 
 @objc protocol FTDocumentViewPresenter : NSObjectProtocol {
@@ -306,6 +307,10 @@ private extension FTDocumentRenderViewController {
 }
 
 extension FTDocumentRenderViewController: FTPageStatusInformer {
+    func updateRightPanelToolStatus() {
+         self.deskToolbarController?.rightPanelPopupDismissStatus()
+    }
+    
     func toolStatus(for tool: FTDeskCenterPanelTool) -> NSNumber? {
         return self.documentViewController?.status(for: tool)
     }

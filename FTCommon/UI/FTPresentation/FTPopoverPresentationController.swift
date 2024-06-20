@@ -9,6 +9,7 @@ import UIKit
 
 public class FTPopoverPresentationController: UIPopoverPresentationController {
     private var prevTraitcollection : UITraitCollection?
+    public var onDismissBlock : (() -> Void)?;
 
     public override func presentationTransitionDidEnd(_ completed: Bool) {
         super.presentationTransitionDidEnd(completed)
@@ -16,6 +17,11 @@ public class FTPopoverPresentationController: UIPopoverPresentationController {
         self.prevTraitcollection = localtraitCollection;
     }
 
+    public override func dismissalTransitionWillBegin() {
+        self.onDismissBlock?()
+        super.dismissalTransitionWillBegin()
+    }
+    
     public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 

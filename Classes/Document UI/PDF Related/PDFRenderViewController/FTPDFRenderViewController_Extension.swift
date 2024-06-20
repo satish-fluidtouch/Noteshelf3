@@ -175,13 +175,15 @@ extension FTPDFRenderViewController {
         guard let sourceView = self.rightPanelSource(for: .more) else { return }
         source = sourceView
         #endif
-        FTNotebookMoreOptionsViewController.showAsPopover(fromSourceView: source,
+     let settingsVc =   FTNotebookMoreOptionsViewController.showAsPopover(fromSourceView: source,
                                                           overViewController: self,
                                                           notebookShelfItem: self.shelfItemManagedObject.documentItemProtocol,
                                                           notebookDocument: self.pdfDocument,
                                                           page: curPage,
                                                           delegate:self)
-
+        settingsVc.ftPresentationDelegate.onDismissBlock = {
+                              self.statusInformer.updateRightPanelToolStatus()
+                          }
     }
     
    @objc func didTapAudio() {

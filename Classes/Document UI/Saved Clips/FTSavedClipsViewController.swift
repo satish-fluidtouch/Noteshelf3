@@ -56,17 +56,6 @@ class FTSavedClipsViewController: UIViewController, FTPopoverPresentable {
         self.backButton.isHidden = self.toHideBackBtn
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        if sourceType == .centerPanel{
-            if let window = self.view.window {
-                NotificationCenter.default.post(name:.centralPanelPopUpDismiss, object: ["sourceType":FTToolbarPopoverScreen.savedClips,"window":window])
-            }
-        }
-    }
-    
-    
-
     private func setupCollectionView() {
         collectionView.dragInteractionEnabled = true
         collectionView.dataSource = self
@@ -347,7 +336,7 @@ extension FTSavedClipsViewController: UITextFieldDelegate {
 }
 
 extension FTSavedClipsViewController {
-    class func showSavedClipsController(from controller: UIViewController, source: Any, delegate: FTSavedClipdelegate?, toHideBackBtn: Bool = false) {
+    class func showSavedClipsController(from controller: UIViewController, source: Any, delegate: FTSavedClipdelegate?, toHideBackBtn: Bool = false) -> FTSavedClipsViewController {
         let storyboard = UIStoryboard.init(name: "FTDocumentEntity", bundle: nil)
         guard let savedClipsVc = storyboard.instantiateViewController(withIdentifier: "FTSavedClipsViewController") as? FTSavedClipsViewController else {
             fatalError("FTEmojisViewController not found")
@@ -358,5 +347,6 @@ extension FTSavedClipsViewController {
         savedClipsVc.view.backgroundColor = UIColor.appColor(.popoverBgColor)
         savedClipsVc.ftPresentationDelegate.source = source as AnyObject
         controller.ftPresentPopover(vcToPresent: savedClipsVc, contentSize: AddMenuType.media.contentSize, hideNavBar: true)
+        return savedClipsVc
     }
 }
