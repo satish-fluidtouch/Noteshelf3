@@ -133,6 +133,9 @@ class FTWhatsNewManger: NSObject {
     }
 
     class func canShowWelcomeScreen(onViewController : UIViewController) -> Bool {
+        if !FTFeatureConfigHelper.shared.isFeatureEnabled(.ShowOnboarding) {
+            return false
+        }
         let userDefaults = UserDefaults.standard;
         let nowInSeconds = Date().timeIntervalSince1970;
         let reminderTimeInSeconds = userDefaults.double(forKey: WelcomeScreenReminderTime);

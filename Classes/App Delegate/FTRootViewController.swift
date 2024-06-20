@@ -234,7 +234,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     fileprivate func updateProviderIfNeeded() {
         if(UserDefaults.standard.bool(forKey: WelcomeScreenViewed)
            || (!UserDefaults.standard.bool(forKey: WelcomeScreenViewed)
-               && UserDefaults.standard.double(forKey: WelcomeScreenReminderTime) > 0)) {
+               && UserDefaults.standard.double(forKey: WelcomeScreenReminderTime) > 0) || !FTFeatureConfigHelper.shared.isFeatureEnabled(.ShowOnboarding)) {
             if UIApplication.shared.applicationState != .active {
                 FTCLSLog("Update Provider - App is not active");
                 localAppActieObserver = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: OperationQueue.main, using: { _ in

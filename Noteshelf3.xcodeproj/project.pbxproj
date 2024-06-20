@@ -1050,7 +1050,7 @@
 		BAF38FFB2859ADF00067CA9F /* FTShelf.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09953EDD1F1F2C3E00753F70 /* FTShelf.storyboard */; };
 		BAF38FFE2859ADF00067CA9F /* AboutNoteshelf.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C805519B21F6FE4900710B52 /* AboutNoteshelf.storyboard */; };
 		BAF390002859ADF00067CA9F /* FTLassoScreenshotViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8438B59228C0B54004176BA /* FTLassoScreenshotViewController.xib */; };
-		BAF390022859ADF00067CA9F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09EC9DAF1BFADADE00128F15 /* Launch Screen.storyboard */; };
+		BAF390022859ADF00067CA9F /* Launch_Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09EC9DAF1BFADADE00128F15 /* Launch_Screen.storyboard */; };
 		BAF390032859ADF00067CA9F /* FTPenColorCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BFDC53D24F4F50E00D8025D /* FTPenColorCollectionViewCell.xib */; };
 		BAF390042859ADF00067CA9F /* FTImageResizeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 094E5E5020ADB094009171B6 /* FTImageResizeViewController.xib */; };
 		BAF390082859ADF00067CA9F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 092738821C7D7F620013A9D8 /* Settings.bundle */; };
@@ -2096,6 +2096,7 @@
 		E78DE6FE2B987DE0000DAA1B /* FTPublishAudioRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E59F7F7203BFBF300D18E64 /* FTPublishAudioRequest.swift */; };
 		E78DE7002B987F2D000DAA1B /* FileManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA84E602873108800DE801B /* FileManager+Extension.swift */; };
 		E78EEF5A28DC46990042DCE7 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78EEF5928DC46990042DCE7 /* UIView+Extension.swift */; };
+		E79148C72C2445920098FA12 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E79148C62C2445920098FA12 /* Launch Screen.storyboard */; };
 		E79D21352B8F311A00712028 /* FTRecordingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79D21342B8F311A00712028 /* FTRecordingsView.swift */; };
 		E79D21382B8F31AA00712028 /* FTRecordingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79D21372B8F31AA00712028 /* FTRecordingsViewModel.swift */; };
 		E79D213A2B8F426000712028 /* FTPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79D21392B8F426000712028 /* FTPlayerView.swift */; };
@@ -2949,7 +2950,7 @@
 		09E7736B1E71632900E086AB /* FTPDFFileGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPDFFileGenerator.swift; sourceTree = "<group>"; };
 		09E7736D1E71793F00E086AB /* FTPDFRenderViewController_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = FTPDFRenderViewController_Extension.swift; sourceTree = "<group>"; };
 		09EA322921E4C1B0000D18FE /* FTWritingViewController_Lasso.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWritingViewController_Lasso.swift; sourceTree = "<group>"; };
-		09EC9DAF1BFADADE00128F15 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		09EC9DAF1BFADADE00128F15 /* Launch_Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Launch_Screen.storyboard; sourceTree = "<group>"; };
 		09F37B24208F3372004676DF /* FTShelfItemCellProgressUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfItemCellProgressUpdate.swift; sourceTree = "<group>"; };
 		09F37B2B2090574A004676DF /* FTRoundProgressLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTRoundProgressLayer.m; sourceTree = "<group>"; };
 		09F37B2D2090574B004676DF /* FTRoundProgressLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTRoundProgressLayer.h; sourceTree = "<group>"; };
@@ -4553,6 +4554,7 @@
 		E78DE6E52B986E20000DAA1B /* Noteshelf3 WatchApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Noteshelf3 WatchApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		E78DE6E62B987077000DAA1B /* FTAudioActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAudioActivity.swift; sourceTree = "<group>"; };
 		E78EEF5928DC46990042DCE7 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		E79148C62C2445920098FA12 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		E7929BD9273CE55800BF7545 /* FTPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPasswordViewController.swift; sourceTree = "<group>"; };
 		E795D5472805924A002DA202 /* FTShapeParallelogram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShapeParallelogram.swift; sourceTree = "<group>"; };
 		E795D54928059BC4002DA202 /* FTShapeParallelogramResizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShapeParallelogramResizing.swift; sourceTree = "<group>"; };
@@ -8877,7 +8879,8 @@
 				52B34DF129E567E800360F10 /* Fonts */,
 				099F721F20526FC7004D3518 /* ThemeImages */,
 				09C284501EEABE5000FB0DC0 /* Noteshelf.xcdatamodeld */,
-				09EC9DAF1BFADADE00128F15 /* Launch Screen.storyboard */,
+				E79148C62C2445920098FA12 /* Launch Screen.storyboard */,
+				09EC9DAF1BFADADE00128F15 /* Launch_Screen.storyboard */,
 				8BA031A51A06115000891239 /* Localized Resources */,
 				092738821C7D7F620013A9D8 /* Settings.bundle */,
 			);
@@ -12824,7 +12827,7 @@
 				97907E8E2863026B0052ED98 /* Main.storyboard in Resources */,
 				BAF38FFE2859ADF00067CA9F /* AboutNoteshelf.storyboard in Resources */,
 				BAF390002859ADF00067CA9F /* FTLassoScreenshotViewController.xib in Resources */,
-				BAF390022859ADF00067CA9F /* Launch Screen.storyboard in Resources */,
+				BAF390022859ADF00067CA9F /* Launch_Screen.storyboard in Resources */,
 				BAF390032859ADF00067CA9F /* FTPenColorCollectionViewCell.xib in Resources */,
 				BAF390042859ADF00067CA9F /* FTImageResizeViewController.xib in Resources */,
 				BAF390082859ADF00067CA9F /* Settings.bundle in Resources */,
@@ -12842,6 +12845,7 @@
 				BAF3901B2859ADF00067CA9F /* WhatsNew.xcassets in Resources */,
 				BAF3901C2859ADF00067CA9F /* FTTargets.storyboard in Resources */,
 				BAF3901D2859ADF00067CA9F /* FTCloudDocumentConflictScreen.xib in Resources */,
+				E79148C72C2445920098FA12 /* Launch Screen.storyboard in Resources */,
 				3D663C4D28F9652A00024B3D /* FTRefreshPageView.xib in Resources */,
 				BAF3901E2859ADF00067CA9F /* FTBackupFooterView.xib in Resources */,
 				BAF390252859ADF00067CA9F /* FTTheme.storyboard in Resources */,

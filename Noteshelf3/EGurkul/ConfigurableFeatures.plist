@@ -4,6 +4,8 @@
 <dict>
 	<key>eGurkul</key>
 	<dict>
+		<key>Show Onboarding</key>
+		<false/>
 		<key>Supports Savetemplate</key>
 		<false/>
 		<key>Supports EDownload</key>

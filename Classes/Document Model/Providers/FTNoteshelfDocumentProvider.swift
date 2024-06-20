@@ -407,16 +407,20 @@ extension FTNoteshelfDocumentProvider {
             onCompletion(uncategorizedShelf)
             return
         }
-        //************************* One time category creation
-        FTNoteshelfDocumentProvider.shared.createShelf(uncategorizedShefItemCollectionTitle, onCompletion: { (error, collection) in
-            if(nil != error) {
-                onCompletion(nil)
-            }
-            else {
-                onCompletion(collection)
-            }
-        })
-        //*************************
+#if !NOTESHELF_ACTION
+       if FTFeatureConfigHelper.shared.isFeatureEnabled(.SupportsUnfiled) {
+            //************************* One time category creation
+            FTNoteshelfDocumentProvider.shared.createShelf(uncategorizedShefItemCollectionTitle, onCompletion: { (error, collection) in
+                if(nil != error) {
+                    onCompletion(nil)
+                }
+                else {
+                    onCompletion(collection)
+                }
+            })
+            //*************************
+        }
+#endif
     }
     
 #if !NS2_SIRI_APP && !NOTESHELF_ACTION

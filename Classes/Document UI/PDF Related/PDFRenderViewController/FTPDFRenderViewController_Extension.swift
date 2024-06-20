@@ -658,6 +658,10 @@ extension FTPDFRenderViewController: FTOpenCloseDocumentProtocol {
             }
         }
     }
+    
+    @objc func supportsDropInteraction() -> Bool {
+         return FTFeatureConfigHelper.shared.isFeatureEnabled(.ImportDocument)
+     }
 }
 
 extension FTPDFRenderViewController : FTScanDocumentServiceDelegate

@@ -231,7 +231,7 @@ extension FTShelfSplitViewController {
                                                                onCompletion: onCompletion)
                             progress.addChild(subProgress1, withPendingUnitCount: 1);
                         }
-                        if self.isInNonCollectionMode {
+                        if self.isInNonCollectionMode && FTFeatureConfigHelper.shared.isFeatureEnabled(.SupportsUnfiled) {
                             self.selectUnfiledCollection { unfiledShelfItemCollection in
                                 importFileInsideCollection(unfiledShelfItemCollection,group:nil)
                             }

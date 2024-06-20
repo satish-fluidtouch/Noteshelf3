@@ -46,7 +46,11 @@ extension FTAudioPlayerController {
         if isRegularClass() && isExpanded {
             actions.append(contentsOf: [jumpToPageAction, renameAction, goToRecordingAction, shareAction, deleteAction])
         } else {
-            actions.append(UIMenu(options: .displayInline, children: [speedAction,jumpToPageAction, renameAction, goToRecordingAction, shareAction, deleteAction]))
+            if FTFeatureConfigHelper.shared.isFeatureEnabled(.Share) {
+                actions.append(UIMenu(options: .displayInline, children: [speedAction,jumpToPageAction, renameAction, goToRecordingAction, shareAction, deleteAction]))
+            } else {
+                actions.append(UIMenu(options: .displayInline, children: [speedAction,jumpToPageAction, renameAction, goToRecordingAction, deleteAction]))
+            }
             actions.append(UIMenu(options: .displayInline, children: [closeAction]))
         }
         

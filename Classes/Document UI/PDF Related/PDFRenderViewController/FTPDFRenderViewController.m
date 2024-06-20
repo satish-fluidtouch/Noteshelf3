@@ -182,7 +182,9 @@
     CGRect scrollViewFrame = self.contentHolderView.bounds;
     FTDocumentScrollView *scrollView = [[FTDocumentScrollView alloc] initWithFrame:scrollViewFrame];
     scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-    [scrollView addInteraction:[[UIDropInteraction alloc] initWithDelegate:self]];
+    if (self.supportsDropInteraction) {
+        [scrollView addInteraction:[[UIDropInteraction alloc] initWithDelegate:self]];
+    }
 
     [self.contentHolderView addSubview:scrollView];
     self.mainScrollView = scrollView;
