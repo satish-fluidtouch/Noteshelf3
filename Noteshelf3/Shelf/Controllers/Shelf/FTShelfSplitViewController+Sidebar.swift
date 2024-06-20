@@ -301,7 +301,7 @@ extension FTShelfSplitViewController: FTStoreContainerDelegate {
         }
     }
 
-    func createNotebookFor(url: URL, onCompletion: @escaping ((Error?) -> Void)) {
+    func createNotebookFor(url: URL, isCustom: Bool,onCompletion: @escaping ((Error?) -> Void)) {
         if(!FTDeveloperOption.bookScaleAnim) {
             self.presentedViewController?.dismiss(animated: true)
         }
@@ -314,7 +314,12 @@ extension FTShelfSplitViewController: FTStoreContainerDelegate {
                     }
                     if let coll = collection {
                         let fileName = url.lastPathComponent.deletingPathExtension;
-                        _ = self.startImporting(url.path, title: fileName, isImageSource: false, isTemplate: true, collection: coll, groupItem: nil) { [weak self] (shelfItem, error) in
+                        _ = self.startImporting(url.path, title: fileName
+                                                , isImageSource: false
+                                                , isTemplate: true
+                                                ,isCustom: isCustom
+                                                , collection: coll
+                                                , groupItem: nil) { [weak self] (shelfItem, error) in
                             loadingIndicatorView.hide()
                             if let shelfItem, error == nil {
                                 if FTDeveloperOption.bookScaleAnim {

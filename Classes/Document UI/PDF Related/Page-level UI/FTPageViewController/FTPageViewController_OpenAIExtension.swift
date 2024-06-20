@@ -16,7 +16,11 @@ extension FTPageViewController {
             FTOPenAIError.noInternetConnection.showAlert(from: self);
             return;
         }
-        
+        let status = UserDefaults.standard.bool(forKey: "shouldAiPolicyAccepte")
+        if status{
+            showPrivacyConsent()
+            return
+        }
         guard let page = self.pdfPage else {
             return;
         }
@@ -138,6 +142,16 @@ extension FTPageViewController {
                                                     , delegate: self);
     }
     
+    func showPrivacyConsent() {
+        guard let privacyController = UIStoryboard.instantiateAIViewController(withIdentifier: "FTAiPrivacyConsetViewController") as? FTAiPrivacyConsetViewController else {
+            fatalError("ERROR!!!!");
+        }
+        privacyController.delegate = self
+        privacyController.modalPresentationStyle = .formSheet
+        privacyController.preferredContentSize = CGSize(width: 540, height: 620)
+        self.present(privacyController, animated: true)
+    }
+
     private func recognizedString() -> String? {
         guard let recognitionInfo = self.pdfPage?.recognitionInfo
                 ,let lastUpdated = self.pdfPage?.lastUpdated else {
@@ -405,5 +419,11 @@ extension FTPageProtocol {
             return txtAnnotation;
         }
         return nil;
+    }
+}
+
+extension FTPageViewController : FTAiPrivacyConsetViewControllerProtocal {
+    func showAiScreen() {
+        self.startOpenAiForPage()
     }
 }

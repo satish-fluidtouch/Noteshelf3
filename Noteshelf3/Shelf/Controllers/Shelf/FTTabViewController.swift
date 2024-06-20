@@ -354,7 +354,7 @@ extension FTTabViewController: FTStoreContainerDelegate {
         }
     }
 
-    func createNotebookFor(url: URL, onCompletion: @escaping ((Error?) -> Void)) {
+    func createNotebookFor(url: URL, isCustom: Bool,onCompletion: @escaping ((Error?) -> Void)) {
 
     }
 

@@ -452,6 +452,7 @@ extension FTShelfSplitViewController {
                         title : String,
                         isImageSource:Bool,
                         isTemplate: Bool = false,
+                        isCustom: Bool = false,
                         collection:FTShelfItemCollection?,
                         groupItem:FTGroupItemProtocol?,
                         onCompletion : ((FTShelfItemProtocol?,Error?) -> Void)?) -> Progress
@@ -471,6 +472,7 @@ extension FTShelfSplitViewController {
             controller = cont;
         }*/
         info.isTemplate = isTemplate
+        info.isCustomTemplate = isCustom
         info.rootViewController = self.rootViewcontroller?.docuemntViewController ?? self
         info.inputFileURL = URL.init(fileURLWithPath: filePath);
         info.overlayStyle = .clearWhite
