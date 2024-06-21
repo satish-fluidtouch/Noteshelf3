@@ -41,10 +41,10 @@ extension FTPDFRenderViewController {
     
     func validAnchorPointForPencilProMenu(with anchorPoint: CGPoint) -> CGPoint {
         var point = anchorPoint
-        point.x = max(200, anchorPoint.x)
-        point.y = max(280, anchorPoint.y)
+        point.x = max(150, anchorPoint.x)
+        point.y = max(180, anchorPoint.y)
         
-        let offset: CGFloat = 175
+        let offset: CGFloat = 250
         if anchorPoint.x > self.view.frame.maxX - offset {
             point.x = self.view.frame.maxX - offset
         }
