@@ -35,10 +35,14 @@ struct FTShelfHomeView: FTShelfBaseView {
                                     .environmentObject(viewModel)
                             }
                             if viewModel.showNoShelfItemsView {
-                                FTGetStartedPlaceHolderView(noResultsImageName: "noHomeItems",
-                                                            title: "home.getStarted.title".localized,
-                                                            description: "home.getStarted.descrption".localized, placeHolderType: .medium)
-                                .frame(minHeight: 350)
+                                HStack {
+                                    Spacer()
+                                    FTGetStartedPlaceHolderView(noResultsImageName: "noHomeItems",
+                                                                title: "home.getStarted.title".localized,
+                                                                description: "home.getStarted.descrption".localized, placeHolderType: .medium)
+                                    .frame(minHeight: 350)
+                                    Spacer()
+                                }
                             } else {
                                 homeShelfItemsViewForGeometrySize(geometry.size, scrollViewProxy: proxy)
                                 Spacer()
@@ -68,8 +72,10 @@ struct FTShelfHomeView: FTShelfBaseView {
             }
         })
         .overlay(alignment: .bottom, content: {
-            FTAdBannerView()
-                .padding(.bottom,8)
+            if FTFeatureConfigHelper.shared.isFeatureEnabled(.Import_Apple_Watch) {
+                FTAdBannerView()
+                    .padding(.bottom,8)
+            }
         })
         .detectOrientation($viewModel.orientation)
         .shelfNavBarItems()

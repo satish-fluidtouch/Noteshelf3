@@ -81,8 +81,10 @@ struct FTShelfView: View,FTShelfBaseView {
                 .onDrop(of: supportedDropTypes, delegate: FTShelfScrollViewDropDelegate(viewModel: viewModel))
             }
             .overlay(alignment: .bottom, content: {
-                FTAdBannerView()
-                    .padding(.bottom,8)
+                if FTFeatureConfigHelper.shared.isFeatureEnabled(.Import_Apple_Watch) {
+                    FTAdBannerView()
+                        .padding(.bottom,8)
+                }
             })
         }
     }
