@@ -314,7 +314,11 @@ private extension FTPencilProMenuController {
         let endAngle = self.getEndAngle(with: startAngle, with: items)
         self.secondaryMenuLayer.setPath(with: center, radius: FTPenSliderConstants.sliderRadius, startAngle: startAngle, endAngle: -endAngle)
         self.secondaryMenuLayer.addShadow(offset: CGSize(width: 0, height: 0), radius: 10)
-        self.secondaryMenuHitTestLayer.setPath(with: center, radius: FTPenSliderConstants.sliderRadius, startAngle: startAngle, endAngle: -endAngle)
+        if self.currentDeskMode() == .deskModeFavorites {
+            self.secondaryMenuHitTestLayer.setPath(with: center, radius: FTPenSliderConstants.sliderRadius, startAngle: .pi + .pi/36, endAngle: -endAngle)
+        } else {
+            self.secondaryMenuHitTestLayer.setPath(with: center, radius: FTPenSliderConstants.sliderRadius, startAngle: startAngle, endAngle: -endAngle)
+        }
         self.view.layer.insertSublayer(secondaryMenuHitTestLayer, above: primaryMenuLayer)
         self.view.layer.insertSublayer(secondaryMenuLayer, above: secondaryMenuHitTestLayer)
         (self.view as? FTPencilProMenuContainerView)?.secondaryMenuHitTestLayer = secondaryMenuHitTestLayer
@@ -355,8 +359,8 @@ extension FTPencilProMenuController: FTCenterPanelCollectionViewDelegate {
 
 final class FTPencilProMenuContainerView: UIView {
     weak var collectionView: UICollectionView?
-    weak var primaryMenuHitTestLayer: CAShapeLayer?
-    weak var secondaryMenuHitTestLayer: CAShapeLayer?
+    weak var primaryMenuHitTestLayer: FTPencilProMenuLayer?
+    weak var secondaryMenuHitTestLayer: FTPencilProMenuLayer?
 
     weak var undoBtn: FTPencilProUndoButton?
     weak var redoBtn: FTPencilProRedoButton?
@@ -383,38 +387,54 @@ final class FTPencilProMenuContainerView: UIView {
             return redoBtn
         }
         
-        if let layer = primaryMenuHitTestLayer, self.isPointInside(point, lineWidth: layer.lineWidth, radius: 200) {
-            return collectionView
-        }
-        if let layer = secondaryMenuHitTestLayer, self.isPointInside(point, lineWidth: layer.lineWidth, radius: 250) {
-            // If we have favorite mode enabled - hittest to be informed to fav pro container
-            if let favProView = self.subviews.compactMap({ $0 as? FTFavoriteProContainerView }).first  {
-                return favProView.hitTest(point, with: event)
+        if let layer = primaryMenuHitTestLayer, let path = layer.path {
+            let copyPath = path.copy(strokingWithWidth: layer.lineWidth, lineCap: .round, lineJoin: .miter, miterLimit: layer.miterLimit)
+            if copyPath.contains(point) {
+                return collectionView
             }
-            return hitView
+        }
+        
+        if let layer = secondaryMenuHitTestLayer, let path = layer.path {
+            let copyPath = path.copy(strokingWithWidth: layer.lineWidth, lineCap: .round, lineJoin: .miter, miterLimit: layer.miterLimit)
+            if copyPath.contains(point) {
+                if let favProView = self.subviews.compactMap({ $0 as? FTFavoriteProContainerView }).first  {
+                    return favProView.hitTest(point, with: event)
+                }
+                return hitView
+            }
         }
         return nil
     }
     
-    func isPointInside(_ point: CGPoint, lineWidth: CGFloat, radius: CGFloat) -> Bool {
-          let center = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
-          let distanceFromCenter = point.distance(to: center)
-          let angle = atan2(point.y - center.y, point.x - center.x)
-          let isInRadiusRange = (distanceFromCenter >= radius - lineWidth / 2 && distanceFromCenter <= radius + lineWidth / 2)
-          let isInAngleRange = (angle >= -CGFloat.pi && angle <= 0)
-          return isInRadiusRange && isInAngleRange
-      }
-
     func isPointInside(point: CGPoint, event: UIEvent?) -> Bool {
         guard let collectionView = collectionView else {
             return false
         }
         var value = false
-        collectionView.layoutIfNeeded()
         for cell in collectionView.visibleCells {
             if cell.frame.contains(point) {
                 value = true
-                break
+            }
+        }
+        
+        if let undoBtn = self.undoBtn, undoBtn.frame.contains(point) {
+            value = true
+        }
+        
+        if let redoBtn = self.redoBtn, redoBtn.frame.contains(point) {
+            value = true
+        }
+        
+        if let layer = primaryMenuHitTestLayer, let path = layer.path {
+            let copyPath = path.copy(strokingWithWidth: layer.lineWidth, lineCap: .round, lineJoin: .miter, miterLimit: layer.miterLimit)
+            if copyPath.contains(point) {
+                value = true
+            }
+        }
+        if let layer = secondaryMenuHitTestLayer, let path = layer.path {
+            let copyPath = path.copy(strokingWithWidth: layer.lineWidth, lineCap: .round, lineJoin: .miter, miterLimit: layer.miterLimit)
+            if copyPath.contains(point) {
+                value = true
             }
         }
         return value

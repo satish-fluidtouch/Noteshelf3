@@ -36,15 +36,13 @@ class FTFavoriteProViewController: UIViewController {
 private extension FTFavoriteProViewController {
     func addSizeDisplayButton() {
         let radius: CGFloat = self.config.radius
-        let angle: CGFloat = .pi + .pi/60
+        let angle: CGFloat = .pi + .pi/45
         let xPosition = self.view.bounds.origin.x + center.x + radius * cos(angle)
         let yPosition = self.view.bounds.origin.y + center.y + radius * sin(angle)
         let buttonSize = CGSize(width: 40, height: 40)
         let sizeBtn = FTSizeDisplayButton(frame: CGRect(x: xPosition - buttonSize.width/2, y: yPosition - buttonSize.height/2, width: buttonSize.width, height: buttonSize.height))
         sizeBtn.addTarget(self, action:  #selector(sizeBtnTapped(_ :)), for: .touchUpInside)
         self.sizeBtn = sizeBtn
-        let containerWidth = buttonSize.width + 2
-        let containerHeight = buttonSize.height + 2
         let containerFrame =  sizeBtn.frame.insetBy(dx: -1, dy: -1)
         let container = UIView(frame: containerFrame)
         container.backgroundColor = .clear
@@ -307,20 +305,14 @@ class FTFavoriteProContainerView: UIView {
                 return cell.hitTest(cellPoint, with: event)
             }
         }
-        if let sizeContainer = self.sizeContainer, sizeContainer.frame.contains(point) {
-            return sizeContainer.subviews.first // size button
+        if let sizeContainer = self.sizeContainer {
+            let convertedPoint = sizeContainer.convert(point, from: self)
+            if sizeContainer.bounds.contains(convertedPoint) {
+                return sizeContainer.subviews.first
+            }
         }
         return collectionView
     }
-    
-    func isPointInside(_ point: CGPoint, lineWidth: CGFloat, radius: CGFloat) -> Bool {
-          let center = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
-          let distanceFromCenter = point.distance(to: center)
-          let angle = atan2(point.y - center.y, point.x - center.x)
-          let isInRadiusRange = (distanceFromCenter >= radius - lineWidth / 2 && distanceFromCenter <= radius + lineWidth / 2)
-          let isInAngleRange = (angle >= -CGFloat.pi && angle <= 0)
-          return isInRadiusRange && isInAngleRange
-      }
 }
 
 class FTSizeDisplayButton: UIButton {
