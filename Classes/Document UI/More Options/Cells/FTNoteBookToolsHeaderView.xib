@@ -279,8 +279,8 @@
                                         <constraint firstAttribute="height" constant="24" id="vMm-EI-tAb"/>
                                     </constraints>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Zoom Box" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="veU-hd-YcV" customClass="FTCustomLabel" customModule="FTCommon">
-                                    <rect key="frame" x="50" y="18" width="79.5" height="20"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Zoom Box" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="veU-hd-YcV" customClass="FTCustomLabel" customModule="FTCommon">
+                                    <rect key="frame" x="50" y="18" width="320" height="20"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -307,6 +307,7 @@
                                 <constraint firstAttribute="trailing" secondItem="SsE-kp-nwI" secondAttribute="trailing" id="YeE-pW-Sfn"/>
                                 <constraint firstAttribute="bottom" secondItem="SsE-kp-nwI" secondAttribute="bottom" id="Yrl-j2-toX"/>
                                 <constraint firstItem="veU-hd-YcV" firstAttribute="leading" secondItem="xnq-bH-Kqj" secondAttribute="trailing" constant="12" id="ahU-Os-kaQ"/>
+                                <constraint firstAttribute="trailing" secondItem="veU-hd-YcV" secondAttribute="trailing" constant="12" id="exK-X6-S3c"/>
                                 <constraint firstItem="SsE-kp-nwI" firstAttribute="top" secondItem="zBD-gw-pQX" secondAttribute="top" id="fNX-dv-gfG"/>
                                 <constraint firstItem="xnq-bH-Kqj" firstAttribute="leading" secondItem="zBD-gw-pQX" secondAttribute="leading" constant="14" id="ndn-lF-Rrn"/>
                             </constraints>
