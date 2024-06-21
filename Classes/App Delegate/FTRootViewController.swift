@@ -1019,6 +1019,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                         }
                     });
                 } else {
+                    self.updateSmartProgressStatus(openDoc: item.openOnImport)
                     item.removeFileItems();
                     completion?(nil,false)
                 }
@@ -1029,25 +1030,94 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             completion?(nil,false)
             return;
         }
-        if isAudioFile(url.path), !isSupportedAudioFile(url.path) {
-            let alertController = UIAlertController(title: "",
-                                                    message: NSLocalizedString("NotSupportedFormat", comment: "Note supported format"),
-                                                    preferredStyle: .alert);
-            let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Ok"), style: .cancel, handler: { _ in
-                completion?(nil,false)
-            });
-            alertController.addAction(cancelAction);
-            docController?.present(alertController, animated: true, completion: nil);
-            return
-        }
-        self.showCompleteImportProgressIfNeeded()
-        docController?.insertNewPage(fromItem: url, onCompletion: { (complted) in
-            let status = self.updateSmartProgressStatus(openDoc: item.openOnImport)
-            if status == .completed {
-                NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
+        if item.imporItemInfo == nil {
+            if isAudioFile(url.path) {
+                if isSupportedAudioFile(url.path) {
+                    track("import_document", params: ["type" : url.lastPathComponent])
+                    importAudioFile(fromURL: url) { (compltd) in
+                        completion?(nil,compltd)
+                    }
+                } else {
+                    let alertController = UIAlertController(title: "",
+                                                            message: NSLocalizedString("NotSupportedFormat", comment: "Note supported format"),
+                                                            preferredStyle: .alert);
+                    let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Ok"), style: .cancel, handler: { _ in
+                        completion?(nil,false)
+                    });
+                    alertController.addAction(cancelAction);
+                    self.present(alertController, animated: true, completion: nil);
+                }
             }
-            completion?(docController?.documentItemObject.shelfItemProtocol,complted)
-        })
+            else {
+                let message = url.lastPathComponent + "\n" + NSLocalizedString("InsertDocumentCurrentOrNew", comment: "Insert into...")
+                let alertController = UIAlertController(title: "",
+                                                        message: message,
+                                                        preferredStyle: .alert);
+                let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .cancel, handler: { _ in
+                    item.removeFileItems();
+                    completion?(nil,true)
+                });
+                alertController.addAction(cancelAction);
+
+                let insertHere = UIAlertAction(title: NSLocalizedString("InsertHere", comment: "Insert Here"), style: .default, handler: { _ in
+                    docController?.insertNewPage(fromItem: url, onCompletion: { (complted) in
+                        completion?(nil,complted)
+                    })
+                });
+                alertController.addAction(insertHere);
+
+                let createNew = UIAlertAction(title: NSLocalizedString("CreateNew", comment: "Create New"), style: .default, handler: { _ in
+                    self.saveApplicationStateByClosingDocument(true, keepEditingOn: false, onCompletion: { success in
+                        if(success) {
+                            self.switchToShelf(docController?.documentItemObject, documentViewController: docController, animate: true, onCompletion: {
+                                self.openInFileForURL(url,completion: {
+                                    if self.rootContentViewController != nil {
+                                        self.rootContentViewController?.importItemAndAutoScroll(item,
+                                                                                                shouldOpen: false,
+                                                                                                completionHandler: { (item, completed) in
+                                            completion?(item,completed)
+                                        })
+
+                                    }
+                                })
+                            });
+                        } else {
+                            item.removeFileItems()
+                            completion?(nil,false)
+                        }
+                    });
+                });
+                alertController.addAction(createNew);
+                if(Thread.current.isMainThread) {
+                    self.noteBookSplitController?.present(alertController, animated: true, completion: nil);
+                }
+                else {
+                    DispatchQueue.main.async {
+                        self.noteBookSplitController?.present(alertController, animated: true, completion: nil);
+                    }
+                }
+            }
+        } else {
+            if isAudioFile(url.path), !isSupportedAudioFile(url.path) {
+                let alertController = UIAlertController(title: "",
+                                                        message: NSLocalizedString("NotSupportedFormat", comment: "Note supported format"),
+                                                        preferredStyle: .alert);
+                let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Ok"), style: .cancel, handler: { _ in
+                    completion?(nil,false)
+                });
+                alertController.addAction(cancelAction);
+                docController?.present(alertController, animated: true, completion: nil);
+                return
+            }
+            self.showCompleteImportProgressIfNeeded()
+            docController?.insertNewPage(fromItem: url, onCompletion: { (complted) in
+                let status = self.updateSmartProgressStatus(openDoc: item.openOnImport)
+                if status == .completed {
+                    NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
+                }
+                completion?(docController?.documentItemObject.shelfItemProtocol,complted)
+            })
+        }
     }
 
     fileprivate func importAudioFile(fromURL url: URL,
@@ -1339,7 +1409,7 @@ extension FTRootViewController {
                 return;
             }
             let importItem = self.importItemsQueue.removeFirst()
-            if let docController = self.docuemntViewController, let notebookUrl = self.docuemntViewController?.documentItemObject.URL.relativePathWRTCollection(), (notebookUrl == importItem.imporItemInfo?.notebook || importItem.shouldSwitchToRoot())  {
+            if let docController = self.docuemntViewController  {
                 if !docController.canContinueToImportFiles() {
                     docController.showAlertAskingToEnterPwdToContinueOperation();
                     blockToComplete(nil)

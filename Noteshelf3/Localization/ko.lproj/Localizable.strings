@@ -1249,6 +1249,9 @@
 "noteshelf.ai.credit.moreinfo" = "AI 크레딧은 %d일 후에 초기화됩니다";
 "noteshelf.ai.credit.nocredits" = "잔여 크레딧 없음";
 "noteshelf.ai.pressEnterToSend" = "엔터를 눌러서 전송하세요.";
+"noteshelf.ai.privacy.description" = "현재 페이지의 내용을 AI 파트너 서버로 전송하여 처리하기 위해 Noteshelf AI 기능 중 하나를 호출해야 합니다. \n개인정보를 존중하며 이 데이터를 다른 용도로 사용하지 않을 것을 안심하십시오. 귀하의 데이터 처리 방법에 대해 더 알아보려면 개인정보 처리 방침을 참조하십시오.";
+"noteshelf.ai.privacy.terms.acceptnace" = "나는 %@을 읽고 동의합니다.";
+"noteshelf.ai.privacy.title" = "노트셸프 AI 개인정보 동의";
 "numSelected" = "%ld 선택됨'";
 "objects" = "객체";
 "ok" = "괜찮아";
@@ -1682,4 +1685,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 28 May 2024 at 7:20 PM
+// Last Synced by Sameer Hussain on 4 June 2024 at 6:06 PM
