@@ -63,6 +63,8 @@ public class FTPaperTemplateViewController: UIViewController {
     private var customVC: UIViewController!
     private var storeTemplateInfo: FTTemplateInfo?
 
+    @IBOutlet weak var containerTopConstraintToView: NSLayoutConstraint!
+    @IBOutlet weak var containerTopConstraintToSegment: NSLayoutConstraint!
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.setUpStoreViewControllers()
@@ -71,6 +73,15 @@ public class FTPaperTemplateViewController: UIViewController {
         for i in 0..<segCount {
             let title = FTPaperTemplateSegment(rawValue: i)?.title() ?? ""
             self.paperTemplateSegment.setTitle(title, forSegmentAt: i)
+        }
+        if !FTFeatureConfigHelper.shared.isFeatureEnabled(.Templates) {
+            paperTemplateSegment.isHidden = true
+            containerTopConstraintToView.isActive = true
+            containerTopConstraintToSegment.isActive = false
+        } else {
+            paperTemplateSegment.isHidden = false
+            containerTopConstraintToView.isActive = false
+            containerTopConstraintToSegment.isActive = true
         }
     }
     private var currentSelectedThemeURL : URL?

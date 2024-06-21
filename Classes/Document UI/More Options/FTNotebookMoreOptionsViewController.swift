@@ -75,12 +75,15 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
     
     private func fetchSize() -> CGSize {
         var height: CGFloat = 652.0
-        if !UIDevice.isLandscapeOrientation {
-            height = 820
-        }
+//        if !UIDevice.isLandscapeOrientation {
+//            height = 820
+//        }
 #if targetEnvironment(macCatalyst)
         height -= 170.0
 #endif
+        if !FTFeatureConfigHelper.shared.isFeatureEnabled(.SupportsPassword) {
+            height -= 100
+        }
         return CGSize(width: defaultPopoverWidth, height: height)
     }
     

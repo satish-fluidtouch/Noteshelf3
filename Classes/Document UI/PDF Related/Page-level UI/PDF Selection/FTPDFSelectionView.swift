@@ -987,11 +987,13 @@ extension FTPDFSelectionView: UIGestureRecognizerDelegate {
         let strike = UIMenuItem(title: NSLocalizedString("Strikeout", comment: "Strikeout"), action: #selector(self.strikeOutSelection(_:)));
         items.append(strike);
 
-        let lookupAction = UIMenuItem(title: NSLocalizedString("LookUp", comment: "LookUp"), action: #selector(self.showDictionary(_:)));
-        items.append(lookupAction);
+        if FTFeatureConfigHelper.shared.isFeatureEnabled(.Share) {
+            let lookupAction = UIMenuItem(title: NSLocalizedString("LookUp", comment: "LookUp"), action: #selector(self.showDictionary(_:)));
+            items.append(lookupAction);
 
-        let copyAction = UIMenuItem(title: NSLocalizedString("Copy", comment: "Copy"), action: #selector(self.copyAction(_:)));
-        items.append(copyAction);
+            let copyAction = UIMenuItem(title: NSLocalizedString("Copy", comment: "Copy"), action: #selector(self.copyAction(_:)));
+            items.append(copyAction);
+        }
 
         if FTNoteshelfAI.supportsNoteshelfAI {
             let aiActionAction = UIMenuItem(title: "noteshelf.ai.noteshelfAI".aiLocalizedString, action: #selector(self.noteshelfAI(_:)));

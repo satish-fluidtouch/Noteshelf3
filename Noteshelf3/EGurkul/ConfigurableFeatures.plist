@@ -54,6 +54,10 @@
 		<false/>
 		<key>Siri shortcuts</key>
 		<false/>
+		<key>discoverView</key>
+		<false/>
+		<key>NoteshelfSupport</key>
+		<false/>
 	</dict>
 </dict>
 </plist>

@@ -652,12 +652,19 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     internal func isReadOnly() -> Bool {
         var value = false
         for eachPage in self.selectedPages {
-            if let page = eachPage as? FTNoteshelfPage, page.isReadOnly {
+            if isPageReadyOnly(eachPage) {
                 value = true
                 break
             }
         }
         return value
+    }
+    
+    internal func isPageReadyOnly(_ eachPage: Any) -> Bool {
+        if let page = eachPage as? FTNoteshelfPage, page.isReadOnly {
+            return true
+        }
+        return false
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {

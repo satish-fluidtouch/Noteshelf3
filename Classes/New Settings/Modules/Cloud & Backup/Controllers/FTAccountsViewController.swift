@@ -119,7 +119,9 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
             sections.append([.evernote, .exportData])
         #endif
         }
-        sections.append([.wifi])
+        if FTFeatureConfigHelper.shared.isFeatureEnabled(.Autobackup) {
+            sections.append([.wifi])
+        }
     }
     
     override func viewDidLoad() {

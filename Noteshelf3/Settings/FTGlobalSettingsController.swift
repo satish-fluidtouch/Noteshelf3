@@ -41,7 +41,9 @@ class FTGlobalSettingsController: UITableViewController {
         }
         let section2 : [FTGlobalSettingsOptions] = [.about, .noteshelfHelp]
         sections.append(section1)
-        sections.append(section2)
+        if FTFeatureConfigHelper.shared.isFeatureEnabled(.NoteshelfSupport) {
+            sections.append(section2)
+        }
         return sections;
     }();
 #endif

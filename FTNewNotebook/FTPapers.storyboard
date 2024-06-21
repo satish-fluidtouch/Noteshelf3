@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
     <device id="ipad11_0rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -16,14 +16,14 @@
             <objects>
                 <viewController storyboardIdentifier="FTPaperPickerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y6W-OH-hqX" customClass="FTPaperPickerViewController" customModule="FTNewNotebook" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1210"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Txh-1W-des">
-                                <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                                <rect key="frame" x="0.0" y="0.0" width="834" height="1210"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J76-te-iyn">
-                                        <rect key="frame" x="249" y="349.5" width="336" height="495"/>
+                                        <rect key="frame" x="249" y="357.5" width="336" height="495"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="samplePaperPreview" translatesAutoresizingMaskIntoConstraints="NO" id="Dk6-Er-VtB">
                                                 <rect key="frame" x="0.0" y="0.0" width="336" height="495"/>
@@ -76,7 +76,7 @@
                                         </variation>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="afC-cn-CsK">
-                                        <rect key="frame" x="249" y="856.5" width="336" height="36"/>
+                                        <rect key="frame" x="249" y="864.5" width="336" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="36" id="SO9-lz-7pr"/>
                                         </constraints>
@@ -138,7 +138,7 @@
                                 </variation>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r86-dK-GBn">
-                                <rect key="frame" x="0.0" y="854" width="834" height="340"/>
+                                <rect key="frame" x="0.0" y="870" width="834" height="340"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="340" id="k8h-5A-TTE"/>
                                 </constraints>
@@ -467,11 +467,11 @@
             <objects>
                 <viewController storyboardIdentifier="FTPapersViewController" id="ERt-XB-MZH" customClass="FTPapersViewController" customModule="FTNewNotebook" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4q5-tP-SbI">
-                        <rect key="frame" x="0.0" y="0.0" width="810" height="986"/>
+                        <rect key="frame" x="0.0" y="0.0" width="810" height="1002"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="B7m-jL-vNB">
-                                <rect key="frame" x="0.0" y="418.5" width="810" height="149"/>
+                                <rect key="frame" x="0.0" y="426.5" width="810" height="149"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="999" constant="149" id="e1N-bf-FSk">
@@ -674,7 +674,7 @@
             <objects>
                 <viewController storyboardIdentifier="FTPaperTemplateViewController" id="4Nl-w2-GLm" customClass="FTPaperTemplateViewController" customModule="FTNewNotebook" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HbK-g1-M7x">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1210"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="8OW-rT-8ed">
@@ -692,7 +692,7 @@
                                 </connections>
                             </segmentedControl>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jpX-QB-9IV">
-                                <rect key="frame" x="0.0" y="74" width="834" height="1100"/>
+                                <rect key="frame" x="0.0" y="24" width="834" height="1166"/>
                                 <color key="backgroundColor" name="panelBgColor"/>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0f6-KR-MmQ">
@@ -716,14 +716,20 @@
                             <constraint firstItem="zj0-TL-Yzk" firstAttribute="trailing" secondItem="jpX-QB-9IV" secondAttribute="trailing" id="rzQ-41-Zm4"/>
                             <constraint firstItem="8OW-rT-8ed" firstAttribute="top" secondItem="zj0-TL-Yzk" secondAttribute="top" constant="19" id="x3H-WF-Np8"/>
                             <constraint firstItem="jpX-QB-9IV" firstAttribute="leading" secondItem="zj0-TL-Yzk" secondAttribute="leading" id="xvt-72-Fsn"/>
+                            <constraint firstItem="jpX-QB-9IV" firstAttribute="top" secondItem="zj0-TL-Yzk" secondAttribute="top" id="zW3-td-RdB"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="0f6-KR-MmQ"/>
                             </mask>
+                            <mask key="constraints">
+                                <exclude reference="q46-3s-OAa"/>
+                            </mask>
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="containerTopConstraintToSegment" destination="q46-3s-OAa" id="ouE-e5-kJY"/>
+                        <outlet property="containerTopConstraintToView" destination="zW3-td-RdB" id="Lhf-ji-ytw"/>
                         <outlet property="containerView" destination="jpX-QB-9IV" id="9nu-Rd-5Hv"/>
                         <outlet property="paperTemplateSegment" destination="8OW-rT-8ed" id="oJf-ab-6jz"/>
                     </connections>
@@ -737,7 +743,7 @@
             <objects>
                 <viewController storyboardIdentifier="FTEssentialsPaperSegmentViewController" id="ioj-r0-V8J" customClass="FTEssentialsPaperSegmentViewController" customModule="FTNewNotebook" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ONL-HN-3nG">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1210"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T3h-mK-Jwi">
@@ -750,13 +756,13 @@
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jIO-Du-i1i">
-                                <rect key="frame" x="12" y="110" width="810" height="986"/>
+                                <rect key="frame" x="12" y="110" width="810" height="1002"/>
                                 <connections>
                                     <segue destination="ERt-XB-MZH" kind="embed" identifier="FTPapersVC" id="GbG-Xa-ojG"/>
                                 </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7m0-ef-cav">
-                                <rect key="frame" x="24" y="1106" width="786" height="44"/>
+                                <rect key="frame" x="24" y="1122" width="786" height="44"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Paper Size" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cjD-3n-0Mw" customClass="FTCustomLabel" customModule="FTCommon">
                                         <rect key="frame" x="16" y="12" width="81" height="20.5"/>

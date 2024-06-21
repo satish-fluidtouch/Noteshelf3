@@ -17,24 +17,21 @@ struct FTEDownloadConatainerView: View {
     var body: some View {
         ZStack {
             HStack(alignment: .center, spacing: 10) {
-                VStack(alignment: .leading, spacing: 4) {
-                    Button {
-                        viewModel.delegate?.didTapDownloadBooks();
-                    } label: {
-                        Text("Tap Here to download")
-                            .font(.appFont(for: .bold, with: 13))
-                            .foregroundColor(Color.white)
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 3)
-                            .frame(height: 28,alignment: .center)
-                            .background(Color.appColor(.accent))
-                            .cornerRadius(6)
-                            .shadow(color: .black.opacity(0.04), radius: 0.5, x: 0, y: 3)
-                            .shadow(color: .black.opacity(0.12), radius: 4, x: 0, y: 3)
-                    }
-                    .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: .slow))
+                Button {
+                    viewModel.delegate?.didTapDownloadBooks();
+                } label: {
+                    Text("Tap Here to download")
+                        .font(.appFont(for: .bold, with: 13))
+                        .foregroundColor(Color.white)
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 3)
+                        .frame(height: 40,alignment: .center)
+                        .background(Color.appColor(.accent))
+                        .cornerRadius(6)
+                        .shadow(color: .black.opacity(0.04), radius: 0.5, x: 0, y: 3)
+                        .shadow(color: .black.opacity(0.12), radius: 4, x: 0, y: 3)
                 }
-                Spacer()
+                .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: .slow))
             }
             .frame(maxWidth: .infinity)
             .padding(EdgeInsets(top: 16, leading: 20, bottom: 16, trailing: 4))

@@ -43,7 +43,7 @@ struct FTShelfHomeView: FTShelfBaseView {
                                 homeShelfItemsViewForGeometrySize(geometry.size, scrollViewProxy: proxy)
                                 Spacer()
                             }
-                            if viewModel.shelfDidLoad {
+                            if viewModel.shelfDidLoad && FTFeatureConfigHelper.shared.isFeatureEnabled(.discoverView) {
                                 FTDiscoverWhatsNewView(isExpanded: discoverExpandStaus)
                                     .environmentObject(viewModel)
                                     .macOnlyPlainButtonStyle()

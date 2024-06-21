@@ -38,6 +38,8 @@ enum FTDisabledFeature: String {
     case Supports_EDownload  = "Supports EDownload"
     case Supports_Savetemplate  = "Supports Savetemplate"   
     case ShowOnboarding  = "Show Onboarding"
+    case discoverView  = "discoverView"
+    case NoteshelfSupport  = "NoteshelfSupport"
 }
 
 class FTFeatureConfigHelper: NSObject {

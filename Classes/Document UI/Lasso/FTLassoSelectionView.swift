@@ -145,13 +145,15 @@ class FTLassoSelectionView: UIView {
                        ,resizeMenuItem
                        ,saveClip
                        ,colorMenuItem
-                       ,screenshotMenuItem
                        ,convertToText
                        ,moveToFront
                        ,moveToBack
         ]
         if FTNoteshelfAI.supportsNoteshelfAI {
             options.insert(openAI, at: 3);
+        }
+        if FTFeatureConfigHelper.shared.isFeatureEnabled(.Share) {
+            options.insert(screenshotMenuItem, at: 6)
         }
         
         theMenu.menuItems = options;

@@ -26,13 +26,13 @@ extension FTFinderViewController {
         var otherActions = [UIMenuElement]()
         var actions = [UIMenuElement]()
         let configuration = UIImage.SymbolConfiguration(font: UIFont.appFont(for: .regular, with: 15))
-        
+        let page = self.filteredPages[indexPath.item]
         //Copy
         let copyAction = UIAction(title: NSLocalizedString("Copy", comment: "Copy"),
                                     image: UIImage(systemName: "doc.on.doc", withConfiguration: configuration),
                                     identifier: nil,
                                     discoverabilityTitle: nil,
-                                  attributes: isReadOnly() ? .disabled : .standard,
+                                  attributes: isPageReadyOnly(page) ? .disabled : .standard,
                                   state: .off) { [weak self] _ in
             self?.performContextMenuOperation(.copyPages, indexPath: indexPath)
         }
@@ -57,7 +57,7 @@ extension FTFinderViewController {
                                     image: UIImage(systemName: "plus.square.on.square", withConfiguration: configuration),
                                     identifier: nil,
                                     discoverabilityTitle: nil,
-                                    attributes: isReadOnly() ? .disabled : .standard,
+                                    attributes: isPageReadyOnly(page) ? .disabled : .standard,
                                   state: .off) { [weak self] _ in
             self?.performContextMenuOperation(.duplicatePages, indexPath: indexPath)
         }
@@ -143,7 +143,7 @@ extension FTFinderViewController {
                                     image: UIImage(systemName: "folder", withConfiguration: configuration),
                                     identifier: nil,
                                     discoverabilityTitle: nil,
-                                    attributes: isReadOnly() ? .disabled : .standard,
+                                    attributes: isPageReadyOnly(page) ? .disabled : .standard,
                                   state: .off) { [weak self] _ in
             self?.performContextMenuOperation(.movePages, indexPath: indexPath)
         }
@@ -170,11 +170,11 @@ extension FTFinderViewController {
                                     image: UIImage(systemName: "trash", withConfiguration: configuration),
                                     identifier: nil,
                                     discoverabilityTitle: nil,
-                                    attributes:  isReadOnly() ? .disabled : .destructive,
+                                    attributes:  .destructive,
                                   state: .off) { [weak self] _ in
             self?.performContextMenuOperation(.deletePages, indexPath: indexPath)
         }
-        if self.presentedForToolbarMode == .readonly {
+        if self.presentedForToolbarMode == .readonly || isPageReadyOnly(page) {
             deleteAction.attributes = .disabled
         } else {
             deleteAction.attributes = .destructive

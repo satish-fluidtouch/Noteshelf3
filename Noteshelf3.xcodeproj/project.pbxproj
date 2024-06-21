@@ -2097,6 +2097,7 @@
 		E78DE7002B987F2D000DAA1B /* FileManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA84E602873108800DE801B /* FileManager+Extension.swift */; };
 		E78EEF5A28DC46990042DCE7 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78EEF5928DC46990042DCE7 /* UIView+Extension.swift */; };
 		E79148C72C2445920098FA12 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E79148C62C2445920098FA12 /* Launch Screen.storyboard */; };
+		E79148C92C2553D50098FA12 /* FTFeatureConfigHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E748A7402C182D9500C4D208 /* FTFeatureConfigHelper.swift */; };
 		E79D21352B8F311A00712028 /* FTRecordingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79D21342B8F311A00712028 /* FTRecordingsView.swift */; };
 		E79D21382B8F31AA00712028 /* FTRecordingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79D21372B8F31AA00712028 /* FTRecordingsViewModel.swift */; };
 		E79D213A2B8F426000712028 /* FTPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79D21392B8F426000712028 /* FTPlayerView.swift */; };
@@ -13278,6 +13279,7 @@
 				52550EB92A70FCAD00E7A1E7 /* FTNewNotebook.swift in Sources */,
 				473CD5302A8CA0F0007A01BB /* FTNetworkPathMonitor.swift in Sources */,
 				52550EAF2A70FCAD00E7A1E7 /* FTPaperTypeTableViewCell.swift in Sources */,
+				E79148C92C2553D50098FA12 /* FTFeatureConfigHelper.swift in Sources */,
 				52550E9D2A70FCAD00E7A1E7 /* FTPaperPickerViewController.swift in Sources */,
 				52550EA12A70FCAD00E7A1E7 /* FTCoversHeaderController.swift in Sources */,
 				52550E942A70FCAD00E7A1E7 /* FTCustomCoversViewModel.swift in Sources */,
