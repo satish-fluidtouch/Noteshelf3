@@ -19,4 +19,19 @@ struct Noteshelf3_WidgetsBundle: WidgetBundle {
     }
 }
 
+enum FTWidgetType {
+    case small
+    case medium
 
+    // Reference sizes from figma to make dynamic spacings, alignments
+    var size: CGSize {
+        let size: CGSize
+        switch self {
+        case .small:
+            size = CGSize(width: 155, height: 155)
+        case .medium:
+            size = CGSize(width: 342, height: 155)
+        }
+        return size
+    }
+}

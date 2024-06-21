@@ -78,8 +78,8 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" distribution="equalCentering" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ay3-WL-SeL" userLabel="Show whats new for status bar">
                                         <rect key="frame" x="0.0" y="168" width="374" height="36"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show whats new for status bar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uDV-Yu-f04" userLabel="Show status bar whats new">
-                                                <rect key="frame" x="0.0" y="7.9999999999999982" width="233.33333333333334" height="20.333333333333329"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show Ai Privacy Policy " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uDV-Yu-f04" userLabel="Show status bar whats new">
+                                                <rect key="frame" x="0.0" y="7.9999999999999982" width="175" height="20.333333333333329"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>

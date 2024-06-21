@@ -63,7 +63,8 @@ class FTNBKZipFileImporter: NSObject {
         DispatchQueue.main.async(execute: {
             let importer = FTNBKFormatImporter(url: url,
                                                collection: self.collection,
-                                               group: self.parentShelfItem);
+                                               group: self.parentShelfItem,
+                                               shelfItem: nil);
             importer.deleteSourceFileOnCompletion = deleteSourceFile;
             importer.startImporting(onUpdate: { (progressValue) in
                 progress.completedUnitCount = Int64(progressValue*100);

@@ -1160,6 +1160,10 @@
 "icloud.sync.issue.message" = "Unable to reach iCloud. Please make sure iCloud is turned on in settings.";
 "iconlabels" = "Icon Labels";
 "import" = "Import";
+"import.multiple.files" = "%@ files sent to Noteshelf";
+"import.notsupported.desc" = "This file type is not supported at this time.";
+"import.notsupported.title" = "Unable to Import File";
+"import.single.files" = "%@ file sent to Noteshelf";
 "importedFiles" = "Imported Files";
 "importedTo" = "Imported to";
 "insidenotebook.share.pageno" = "page %@";
@@ -1196,6 +1200,7 @@
 "moreInfo" = "More info...";
 "more_global" = "GLOBAL";
 "move" = "Move";
+"multiple.files" = "%@ files";
 "newnotebook" = "NEW NOTEBOOK";
 "newnotebook.create" = "Create";
 "newnotebook.exitalert.message" = "Would you like to continue?";
@@ -1244,6 +1249,9 @@
 "noteshelf.ai.credit.moreinfo" = "AI credits reset in %d days";
 "noteshelf.ai.credit.nocredits" = "No credits left";
 "noteshelf.ai.pressEnterToSend" = "Press enter to send";
+"noteshelf.ai.privacy.description" = "To invoke any of the Noteshelf AI functions, we need to send the contents of the current page to our AI partner’s server for processing. \nPlease rest assured that we respect your privacy and will not use this data for anything else. You can learn more about how we handle your data in our Privacy Policy.";
+"noteshelf.ai.privacy.terms.acceptnace" = "I have read and agree with the %@";
+"noteshelf.ai.privacy.title" = "Noteshelf AI Privacy Consent";
 "numSelected" = "%ld Selected";
 "objects" = "Objects";
 "ok" = "Ok";
@@ -1498,6 +1506,7 @@
 "sidebar.topSection.home" = "Home";
 "sidebar.topSection.starred" = "Starred";
 "sidebar.topSection.unfiled" = "Unfiled";
+"single.file" = "%@ file";
 "snippets.addtopage" = "Add to page";
 "speechbubbles" = "Speech Bubbles";
 "status_bar_info_footer" = "Enjoying Noteshelf? %@ to rate us on the App Store. It will help us more than you’d imagine. ";
@@ -1676,4 +1685,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 17 May 2024 at 4:53 PM
+// Last Synced by Sameer Hussain on 4 June 2024 at 6:06 PM

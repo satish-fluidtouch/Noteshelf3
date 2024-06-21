@@ -1160,6 +1160,10 @@
 "icloud.sync.issue.message" = "Verbindung zu iCloud nicht möglich. Stellen Sie sicher, dass iCloud in den Einstellungen eingeschaltet ist.";
 "iconlabels" = "Symbolbeschriftungen";
 "import" = "Import";
+"import.multiple.files" = "%@ Dateien an Noteshelf gesendet";
+"import.notsupported.desc" = "Dieser Dateityp wird derzeit nicht unterstützt.";
+"import.notsupported.title" = "Datei kann nicht importiert werden.";
+"import.single.files" = "%@ Datei an Noteshelf gesendet";
 "importedFiles" = "Importierte Dateien";
 "importedTo" = "Importiert zu";
 "insidenotebook.share.pageno" = "Seite %@";
@@ -1196,6 +1200,7 @@
 "moreInfo" = "Weitere Informationen...";
 "more_global" = "GLOBALE EINSTELLUNGEN";
 "move" = "Bewegen";
+"multiple.files" = "%@ Dateien";
 "newnotebook" = "NEUES NOTIZBUCH";
 "newnotebook.create" = "Erstellen";
 "newnotebook.exitalert.message" = "Möchtest du fortfahren?";
@@ -1244,6 +1249,9 @@
 "noteshelf.ai.credit.moreinfo" = "AI-Guthaben wird in %d Tagen zurückgesetzt";
 "noteshelf.ai.credit.nocredits" = "Keine Guthaben mehr";
 "noteshelf.ai.pressEnterToSend" = "Drücken Sie die Eingabetaste, um zu senden";
+"noteshelf.ai.privacy.description" = "Um eine der Noteshelf KI-Funktionen aufzurufen, müssen wir den Inhalt der aktuellen Seite an den Server unseres KI-Partners senden, um ihn zu verarbeiten. \nBitte seien Sie versichert, dass wir Ihre Privatsphäre respektieren und diese Daten nicht für andere Zwecke verwenden werden. Weitere Informationen darüber, wie wir Ihre Daten behandeln, finden Sie in unserer Datenschutzrichtlinie.";
+"noteshelf.ai.privacy.terms.acceptnace" = "Ich habe die %@ gelesen und stimme ihr zu.";
+"noteshelf.ai.privacy.title" = "Noteshelf KI Datenschutz Einwilligung";
 "numSelected" = "%ld Ausgewählt'";
 "objects" = "Objekte";
 "ok" = "Ok";
@@ -1498,6 +1506,7 @@
 "sidebar.topSection.home" = "Zuhause";
 "sidebar.topSection.starred" = "Hervorgehoben";
 "sidebar.topSection.unfiled" = "Ungeordnet";
+"single.file" = "%@ Datei";
 "snippets.addtopage" = "Zur Seite hinzufügen";
 "speechbubbles" = "Sprechblasen";
 "status_bar_info_footer" = "Genießen Sie Noteshelf? %@, um uns im App Store zu bewerten. Es wird uns mehr helfen, als Sie sich vorstellen können.";
@@ -1676,4 +1685,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 17 May 2024 at 4:53 PM
+// Last Synced by Sameer Hussain on 4 June 2024 at 6:06 PM

@@ -57,7 +57,6 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
             fatalError("Settings must be presented with FTDocumentProtocol object")
         }
         self.normalDeskToolBarSettingsOptions()
-       // self.navigationItem.title = "more".localized
         self.tblSettings?.tableFooterView = UIView(frame: .zero)
         self.addTableHeaderview()
         isSiriShortcutAvailable(for: self.notebookShelfItem) {[weak self] shortCut in
@@ -186,20 +185,6 @@ extension FTNotebookMoreOptionsViewController: UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return settings[section].count
     }
-
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        let setting = settings[indexPath.section][indexPath.row]
-//        if setting is FTCustomizeToolbarSetting {
-//            return 48
-//        } else if setting is FTNotebookAddToSiri,isSiriTextAdded {
-//                return 56
-//        }else if setting is FTNotebookEverNoteSetting {
-//            let verticalSpace: CGFloat = 2 * 12.0
-//            let textSize = setting.localizedTitle.sizeWithFont(.systemFont(ofSize: 17), constrainedToSize: CGSize(width: tableView.frame.width - 80.0, height: 32), lineBreakMode: .byTruncatingTail)
-//                return textSize.height + verticalSpace
-//        }
-//        return 47.0
-//    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 

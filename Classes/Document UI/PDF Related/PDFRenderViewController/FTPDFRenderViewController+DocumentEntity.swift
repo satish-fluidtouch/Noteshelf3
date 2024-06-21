@@ -614,6 +614,7 @@ extension FTPDFRenderViewController: FTPaperTemplateDelegate {
             do {
                 let generator = FTAutoTemplateGenerator.autoTemplateGenerator(theme:reqTheme,generationType :FTGenrationType.template)
                 let docInfo = try await generator.generate()
+                docInfo.isCustomTemplate = reqTheme.isCustom;
                 docInfo.rootViewController = self;
 
                 if self.isNewPageFromTemplate {

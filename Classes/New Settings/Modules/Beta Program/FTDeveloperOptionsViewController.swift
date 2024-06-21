@@ -89,7 +89,7 @@ class FTDeveloperOptionsViewController: UIViewController {
         enablePremiumMode?.isOn = FTIAPurchaseHelper.shared.isPremiumUser
         textToStrokeSnapToLineHeight?.isOn = FTDeveloperOption.textToStrokeWrapChar
         useQLThumbnail?.isOn = FTDeveloperOption.useQuickLookThumbnailing
-        whatsNewStatusSwitch.isOn = FTUserDefaults.defaults().statusBarwhatsNewSwitch
+        whatsNewStatusSwitch.isOn = FTUserDefaults.defaults().showAiPrivacyPopup
     }
     
     @IBAction func togglePremiumMode(_ swicth: UISwitch) {
@@ -103,7 +103,7 @@ class FTDeveloperOptionsViewController: UIViewController {
     }
 
     @IBAction func onWhatsNewToggleChanged(_ sender: UISwitch) {
-        FTUserDefaults.defaults().statusBarwhatsNewSwitch = sender.isOn
+        FTUserDefaults.defaults().showAiPrivacyPopup = sender.isOn
     }
     
     @IBAction func toggleOffScreenRender(swicth: UISwitch) {

@@ -1160,6 +1160,10 @@
 "icloud.sync.issue.message" = "Impossibile connettersi a iCloud. Assicurati che iCloud sia attivato nelle impostazioni.";
 "iconlabels" = "Etichette delle icone";
 "import" = "Importa";
+"import.multiple.files" = "%@ file inviati a Noteshelf";
+"import.notsupported.desc" = "Questo tipo di file non è supportato al momento.";
+"import.notsupported.title" = "Impossibile importare il file";
+"import.single.files" = "%@ file inviato a Noteshelf";
 "importedFiles" = "File importati";
 "importedTo" = "Importato a";
 "insidenotebook.share.pageno" = "pagina %@";
@@ -1196,6 +1200,7 @@
 "moreInfo" = "Ulteriori informazioni...";
 "more_global" = "IMPOSTAZIONI GLOBALI";
 "move" = "Sposta";
+"multiple.files" = "%@file";
 "newnotebook" = "NUOVO NOTEBOOK";
 "newnotebook.create" = "Creare";
 "newnotebook.exitalert.message" = "Vuoi continuare?";
@@ -1244,6 +1249,9 @@
 "noteshelf.ai.credit.moreinfo" = "I crediti dell'IA si azzerano tra %d giorni";
 "noteshelf.ai.credit.nocredits" = "Nessun credito rimasto";
 "noteshelf.ai.pressEnterToSend" = "Premi invio per inviare";
+"noteshelf.ai.privacy.description" = "Per invocare una qualsiasi delle funzioni AI di Noteshelf, dobbiamo inviare i contenuti della pagina corrente al server del nostro partner AI per l'elaborazione. \nSi prega di essere certi che rispettiamo la tua privacy e non utilizzeremo questi dati per altro scopo. Puoi saperne di più su come gestiamo i tuoi dati nella nostra Informativa sulla privacy.";
+"noteshelf.ai.privacy.terms.acceptnace" = "Ho letto e accetto la %@.";
+"noteshelf.ai.privacy.title" = "Consenso sulla privacy di Noteshelf AI";
 "numSelected" = "%ld Selezionato'";
 "objects" = "Oggetti";
 "ok" = "Ok";
@@ -1498,6 +1506,7 @@
 "sidebar.topSection.home" = "Casa";
 "sidebar.topSection.starred" = "Marcato";
 "sidebar.topSection.unfiled" = "Non classificato";
+"single.file" = "%@file";
 "snippets.addtopage" = "Aggiungi alla pagina";
 "speechbubbles" = "Bolle di testo";
 "status_bar_info_footer" = "Ti piace Noteshelf? %@ per valutarci sull'App Store. Ci aiuterà più di quanto potresti immaginare.";
@@ -1676,4 +1685,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 17 May 2024 at 4:53 PM
+// Last Synced by Sameer Hussain on 4 June 2024 at 6:06 PM

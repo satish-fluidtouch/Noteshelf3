@@ -10,7 +10,7 @@ import UIKit
 
 class FTMarchingAntsView: UIView {
     private var lineWidth: CGFloat = 2;
-    private var lineColor: UIColor = UIColor.appColor(.groupNotesCountTint);
+    private var lineColor: UIColor = UIColor.appColor(.blueDodger);
     var currentPath: CGPath?;
 
     var marchingAntsVisible = false {

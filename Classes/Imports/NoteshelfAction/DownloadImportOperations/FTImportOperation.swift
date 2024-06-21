@@ -67,7 +67,7 @@ class FTImportOperation: Operation {
                 NotificationCenter.default.post(name: NSNotification.Name.actionImportDidFinish, object: self.currentAction)
             }
         }
-        item.imporItemInfo = FTImportItemInfo(collection: newAction.collectionName ?? "", group: newAction.groupName ?? "")
+        item.imporItemInfo = FTImportItemInfo(collection: newAction.collectionName ?? "", group: newAction.groupName ?? "", notebook: newAction.notebook ?? "")
         item.openOnImport = false;
         importhandler.importItem(item);
     }

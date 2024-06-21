@@ -31,6 +31,8 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     internal var rootContentViewController: FTShelfPresentable?;
     fileprivate var isFirstTime = true;
     fileprivate var isOpeningDocument = false;
+    internal var importSmartProgressView: FTSmartProgressView?
+    internal var importProgress: Progress?
 
     fileprivate var isImportInProgress = false
     fileprivate lazy var importItemsQueue = [FTImportItem]()
@@ -1017,6 +1019,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                         }
                     });
                 } else {
+                    self.updateSmartProgressStatus(openDoc: item.openOnImport)
                     item.removeFileItems();
                     completion?(nil,false)
                 }
@@ -1027,13 +1030,75 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             completion?(nil,false)
             return;
         }
-        if isAudioFile(url.path) {
-            if isSupportedAudioFile(url.path) {
-                track("import_document", params: ["type" : url.lastPathComponent])
-                importAudioFile(fromURL: url) { (compltd) in
-                    completion?(nil,compltd)
+        if item.imporItemInfo == nil {
+            if isAudioFile(url.path) {
+                if isSupportedAudioFile(url.path) {
+                    track("import_document", params: ["type" : url.lastPathComponent])
+                    importAudioFile(fromURL: url) { (compltd) in
+                        completion?(nil,compltd)
+                    }
+                } else {
+                    let alertController = UIAlertController(title: "",
+                                                            message: NSLocalizedString("NotSupportedFormat", comment: "Note supported format"),
+                                                            preferredStyle: .alert);
+                    let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Ok"), style: .cancel, handler: { _ in
+                        completion?(nil,false)
+                    });
+                    alertController.addAction(cancelAction);
+                    self.present(alertController, animated: true, completion: nil);
                 }
-            } else {
+            }
+            else {
+                let message = url.lastPathComponent + "\n" + NSLocalizedString("InsertDocumentCurrentOrNew", comment: "Insert into...")
+                let alertController = UIAlertController(title: "",
+                                                        message: message,
+                                                        preferredStyle: .alert);
+                let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .cancel, handler: { _ in
+                    item.removeFileItems();
+                    completion?(nil,true)
+                });
+                alertController.addAction(cancelAction);
+
+                let insertHere = UIAlertAction(title: NSLocalizedString("InsertHere", comment: "Insert Here"), style: .default, handler: { _ in
+                    docController?.insertNewPage(fromItem: url, onCompletion: { (complted) in
+                        completion?(nil,complted)
+                    })
+                });
+                alertController.addAction(insertHere);
+
+                let createNew = UIAlertAction(title: NSLocalizedString("CreateNew", comment: "Create New"), style: .default, handler: { _ in
+                    self.saveApplicationStateByClosingDocument(true, keepEditingOn: false, onCompletion: { success in
+                        if(success) {
+                            self.switchToShelf(docController?.documentItemObject, documentViewController: docController, animate: true, onCompletion: {
+                                self.openInFileForURL(url,completion: {
+                                    if self.rootContentViewController != nil {
+                                        self.rootContentViewController?.importItemAndAutoScroll(item,
+                                                                                                shouldOpen: false,
+                                                                                                completionHandler: { (item, completed) in
+                                            completion?(item,completed)
+                                        })
+
+                                    }
+                                })
+                            });
+                        } else {
+                            item.removeFileItems()
+                            completion?(nil,false)
+                        }
+                    });
+                });
+                alertController.addAction(createNew);
+                if(Thread.current.isMainThread) {
+                    self.noteBookSplitController?.present(alertController, animated: true, completion: nil);
+                }
+                else {
+                    DispatchQueue.main.async {
+                        self.noteBookSplitController?.present(alertController, animated: true, completion: nil);
+                    }
+                }
+            }
+        } else {
+            if isAudioFile(url.path), !isSupportedAudioFile(url.path) {
                 let alertController = UIAlertController(title: "",
                                                         message: NSLocalizedString("NotSupportedFormat", comment: "Note supported format"),
                                                         preferredStyle: .alert);
@@ -1041,57 +1106,17 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                     completion?(nil,false)
                 });
                 alertController.addAction(cancelAction);
-                self.present(alertController, animated: true, completion: nil);
+                docController?.present(alertController, animated: true, completion: nil);
+                return
             }
-        }
-        else {
-            let message = url.lastPathComponent + "\n" + NSLocalizedString("InsertDocumentCurrentOrNew", comment: "Insert into...")
-            let alertController = UIAlertController(title: "",
-                                                    message: message,
-                                                    preferredStyle: .alert);
-            let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .cancel, handler: { _ in
-                item.removeFileItems();
-                completion?(nil,true)
-            });
-            alertController.addAction(cancelAction);
-
-            let insertHere = UIAlertAction(title: NSLocalizedString("InsertHere", comment: "Insert Here"), style: .default, handler: { _ in
-                docController?.insertNewPage(fromItem: url, onCompletion: { (complted) in
-                    completion?(nil,complted)
-                })
-            });
-            alertController.addAction(insertHere);
-
-            let createNew = UIAlertAction(title: NSLocalizedString("CreateNew", comment: "Create New"), style: .default, handler: { _ in
-                self.saveApplicationStateByClosingDocument(true, keepEditingOn: false, onCompletion: { success in
-                    if(success) {
-                        self.switchToShelf(docController?.documentItemObject, documentViewController: docController, animate: true, onCompletion: {
-                            self.openInFileForURL(url,completion: {
-                                if self.rootContentViewController != nil {
-                                    self.rootContentViewController?.importItemAndAutoScroll(item,
-                                                                                            shouldOpen: false,
-                                                                                            completionHandler: { (item, completed) in
-                                        completion?(item,completed)
-                                    })
-
-                                }
-                            })
-                        });
-                    } else {
-                        item.removeFileItems()
-                        completion?(nil,false)
-                    }
-                });
-            });
-            alertController.addAction(createNew);
-            if(Thread.current.isMainThread) {
-                self.noteBookSplitController?.present(alertController, animated: true, completion: nil);
-            }
-            else {
-                DispatchQueue.main.async {
-                    self.noteBookSplitController?.present(alertController, animated: true, completion: nil);
+            self.showCompleteImportProgressIfNeeded()
+            docController?.insertNewPage(fromItem: url, onCompletion: { (complted) in
+                let status = self.updateSmartProgressStatus(openDoc: item.openOnImport)
+                if status == .completed {
+                    NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
                 }
-            }
+                completion?(docController?.documentItemObject.shelfItemProtocol,complted)
+            })
         }
     }
 
@@ -1384,7 +1409,7 @@ extension FTRootViewController {
                 return;
             }
             let importItem = self.importItemsQueue.removeFirst()
-            if let docController = self.docuemntViewController {
+            if let docController = self.docuemntViewController  {
                 if !docController.canContinueToImportFiles() {
                     docController.showAlertAskingToEnterPwdToContinueOperation();
                     blockToComplete(nil)
@@ -1517,6 +1542,11 @@ extension FTRootViewController: FTSceneBackgroundHandling {
         }
         self.saveApplicationStateByClosingDocument(false, keepEditingOn: true, onCompletion: nil);
     }
+    
+    internal func sceneDidBecomeActive(_ notification: Notification) {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        self.presentImportsControllerifNeeded();
+    }
 
     func sceneWillEnterForeground(_ notification: Notification) {
         if(!self.canProceedSceneNotification(notification)) {
@@ -1542,7 +1572,7 @@ extension FTRootViewController: FTSceneBackgroundHandling {
             else {
                 FTBetaAlertHandler.showiOS13BetaAlertIfNeeded(onViewController: self);
                 FTOneDriveAlertHandler.showOneDriveAuthenticationAlertIfNeeded(self)
-                self.presentImportsControllerifNeeded();
+                NotificationCenter.default.addObserver(self, selector: #selector(self.sceneDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil);
             }
         }
     }
