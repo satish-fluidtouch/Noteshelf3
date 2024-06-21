@@ -17,7 +17,8 @@ class FTFavoriteProViewController: UIViewController {
 
     private let config = FTCircularLayoutConfig(angleOfEachItem: 10.degreesToRadians, radius: 250.0, itemSize: CGSize(width: 28, height: 28))
     private var center = CGPoint.zero
-
+    private var sizeBtn: FTSizeDisplayButton?
+    
     // Don't make below viewmodel weak as this is needed for eyedropper delegate to be implemented here(since we are dismissing edit controller)
     internal var presetViewModel: FTFavoritePresetsViewModel?
 
@@ -28,10 +29,36 @@ class FTFavoriteProViewController: UIViewController {
         self.center = CGPoint(x: FTPenSliderConstants.primaryMenuSize.width/2, y: FTPenSliderConstants.primaryMenuSize.height/2)
         self.configureCollectionView()
         self.favorites = self.manager.fetchFavorites()
+        self.addSizeDisplayButton()
     }
 }
 
 private extension FTFavoriteProViewController {
+    func addSizeDisplayButton() {
+        let radius: CGFloat = self.config.radius
+        let angle: CGFloat = .pi + .pi/60
+        let xPosition = self.view.bounds.origin.x + center.x + radius * cos(angle)
+        let yPosition = self.view.bounds.origin.y + center.y + radius * sin(angle)
+        let buttonSize = CGSize(width: 40, height: 40)
+        let sizeBtn = FTSizeDisplayButton(frame: CGRect(x: xPosition - buttonSize.width/2, y: yPosition - buttonSize.height/2, width: buttonSize.width, height: buttonSize.height))
+        sizeBtn.addTarget(self, action:  #selector(sizeBtnTapped(_ :)), for: .touchUpInside)
+        self.sizeBtn = sizeBtn
+        let containerWidth = buttonSize.width + 2
+        let containerHeight = buttonSize.height + 2
+        let containerFrame =  sizeBtn.frame.insetBy(dx: -1, dy: -1)
+        let container = UIView(frame: containerFrame)
+        container.backgroundColor = .clear
+        sizeBtn.center = CGPoint(x: container.bounds.midX, y: container.bounds.midY)
+        container.addSubview(sizeBtn)
+        container.layer.shadowColor = UIColor.black.withAlphaComponent(0.2).cgColor
+        container.layer.shadowOpacity = 1
+        container.layer.shadowOffset = CGSize(width: 0, height: 0)
+        container.layer.shadowRadius = 20.0
+        self.view.addSubview(container)
+        (self.view as? FTFavoriteProContainerView)?.sizeContainer = container
+        self.updateDisplay()
+    }
+
     func configureCollectionView() {
         self.collectionView.mode = .circular
         self.collectionView.interactionDelegate = self
@@ -69,6 +96,15 @@ private extension FTFavoriteProViewController {
         }
     }
 
+    @objc func sizeBtnTapped(_ sender : UIButton) {
+        let curPenset = self.fetchCurrentPenset()
+        let sizeEditVc = FTFavoriteSizeEditController(size: curPenset.preciseSize, penType: curPenset.type, displayMode: .favoriteEdit, activity: self.activity)
+        sizeEditVc.delegate = self
+        sizeEditVc.ftPresentationDelegate.source = sender
+        sizeEditVc.ftPresentationDelegate.sourceRect = sender.bounds
+        self.ftPresentPopover(vcToPresent: sizeEditVc, contentSize: CGSize(width: 340.0, height: 80.0), hideNavBar: true)
+    }
+    
     func getEndAngle(with startAngle: CGFloat, with items: Int) -> CGFloat {
         let endAngle = startAngle - (CGFloat(items) * self.config.angleOfEachItem)
         return endAngle
@@ -82,7 +118,7 @@ private extension FTFavoriteProViewController {
         let favTuple = self.manager.removeDuplicates(fromFavPenSets: self.favorites)
         self.favorites = favTuple.uniqueElements
         self.manager.saveFavorites(favorites)
-//        self.updateDisplay()
+        self.updateDisplay()
         if(favTuple.duplicateExists) {
             FTToastHostController.showToast(from: self, toastConfig: FTToastConfiguration(title: "AlreadyInFavorites".localized))
             self.reloadFavoritesData()
@@ -95,6 +131,13 @@ private extension FTFavoriteProViewController {
         self.collectionView.isScrollEnabled = true
         self.collectionView.isDisplayedEditPenRack = false
         self.collectionView.isAddingNewPenSet = false
+    }
+    
+    func updateDisplay() {
+        let currentPenset = self.fetchCurrentPenset()
+        let penType = currentPenset.type
+        let reqWidth = penType.getIndicatorSize(using: currentPenset.preciseSize).width
+        self.sizeBtn?.displaySize = reqWidth
     }
 }
 
@@ -109,7 +152,7 @@ extension FTFavoriteProViewController: FTFavoritebarDelegate {
     }
 
     func updateSizeDisplay()  {
-//        return self.updateDisplay()
+        self.updateDisplay()
     }
     
     func saveFavorites(_ favorites: [FTPenSetProtocol]) {
@@ -163,7 +206,7 @@ extension FTFavoriteProViewController: FTFavoriteEditDelegate {
                 self.favorites.append(penset)
             }
             self.manager.saveFavorites(favorites)
-//            self.updateDisplay()
+            self.updateDisplay()
         }
     }
 
@@ -183,7 +226,7 @@ extension FTFavoriteProViewController: FTFavoriteEditDelegate {
             self.collectionView.isAddingNewPenSet = false
             self.collectionView.isDisplayedEditPenRack = false
             self.collectionView.isScrollEnabled = true
-//            self.updateDisplay()
+            self.updateDisplay()
         }
     }
 
@@ -193,6 +236,22 @@ extension FTFavoriteProViewController: FTFavoriteEditDelegate {
 
     func currentFavoriteCount() -> Int {
         return self.favorites.count
+    }
+}
+
+extension FTFavoriteProViewController: FTFavoriteSizeUpdateDelegate {
+    func didChangeSize(_ size: CGFloat) {
+        let curPenset = self.fetchCurrentPenset()
+        if let size = FTPenSize(rawValue: Int(Float(size))) {
+            curPenset.size = size
+        }
+        curPenset.preciseSize = size
+        self.manager.saveCurrentSelection(penSet: curPenset)
+        self.updateDisplay()
+    }
+
+    func didDismissCurrentsizeEditScreen() {
+        self.reloadFavoritesData()
     }
 }
 
@@ -233,6 +292,7 @@ extension FTFavoriteProViewController: FTColorEyeDropperPickerDelegate {
 class FTFavoriteProContainerView: UIView {
     weak var collectionView: UICollectionView?
     weak var hitTestLayer: CAShapeLayer?
+    weak var sizeContainer: UIView?
     
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         let hitView = super.hitTest(point, with: event)
@@ -247,6 +307,9 @@ class FTFavoriteProContainerView: UIView {
                 return cell.hitTest(cellPoint, with: event)
             }
         }
+        if let sizeContainer = self.sizeContainer, sizeContainer.frame.contains(point) {
+            return sizeContainer.subviews.first // size button
+        }
         return collectionView
     }
     
@@ -258,4 +321,44 @@ class FTFavoriteProContainerView: UIView {
           let isInAngleRange = (angle >= -CGFloat.pi && angle <= 0)
           return isInRadiusRange && isInAngleRange
       }
+}
+
+class FTSizeDisplayButton: UIButton {
+    var displaySize: CGFloat = 2 {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.configure()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        self.configure()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.layer.cornerRadius = self.bounds.size.width / 2
+        self.clipsToBounds = true
+    }
+    
+    private func configure() {
+        self.backgroundColor = UIColor.appColor(.pencilProMenuBgColor)
+    }
+    
+    override func draw(_ rect: CGRect) {
+        guard let context = UIGraphicsGetCurrentContext() else { return }
+        let innerRect = CGRect(
+            x: (rect.width - displaySize) / 2,
+            y: (rect.height - displaySize) / 2,
+            width: displaySize,
+            height: displaySize
+        )
+        UIColor.label.setFill()
+        context.fillEllipse(in: innerRect)
+    }
 }
