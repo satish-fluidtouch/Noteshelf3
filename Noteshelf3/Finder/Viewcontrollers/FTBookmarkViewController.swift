@@ -131,7 +131,6 @@ extension FTBookmarkViewController : UICollectionViewDataSource, UICollectionVie
         currentBookmarkColor = colorHexString
         self.collectionView?.reloadData()
         saveBookmarkPage()
-        NotificationCenter.default.post(name: NSNotification.Name.didChangeCurrentPageNotification, object: nil)
         FTFinderEventTracker.trackFinderEvent(with: "bookmark_color_tap")
     }
     
@@ -142,7 +141,6 @@ extension FTBookmarkViewController : UICollectionViewDataSource, UICollectionVie
     @objc func buttonTapped(_ sender: UIButton) {
         self.dismiss(animated: true)
         self.delegate?.removeBookMark(for: pages)
-        NotificationCenter.default.post(name: NSNotification.Name.didChangeCurrentPageNotification, object: nil)
         FTFinderEventTracker.trackFinderEvent(with: "bookmark_remove_tap")
     }
 }

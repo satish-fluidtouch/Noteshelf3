@@ -12,7 +12,6 @@ import TipKit
 
 protocol FTToolbarCenterPanelDelegate: AnyObject {
     func status(for tool: FTDeskCenterPanelTool) -> NSNumber?
-    func isAudioRecordedViewPresented() -> Bool
     func currentDeskMode() -> RKDeskMode?
     func maxCenterPanelItemsToShow() -> Int
     func didTapCenterPanelButton(type: FTDeskCenterPanelTool, sender: UIView)

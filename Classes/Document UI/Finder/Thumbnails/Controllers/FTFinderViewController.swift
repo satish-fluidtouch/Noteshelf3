@@ -1692,7 +1692,8 @@ extension FTFinderViewController {
         return item
     }
 
-    private func handleDeletePages(withSelectedPages pages: NSSet, shouldShowAlert show: Bool, onCompletion: ((Bool) -> ())? = nil) {
+    @IBAction func deleteClicked(withSelectedPages pages: NSSet, shouldShowAlert show: Bool) {
+
         guard let doc = self.document as? FTDocumentProtocol else {
             return;
         }
@@ -1722,7 +1723,7 @@ extension FTFinderViewController {
                     if error == nil, let weakSelf = self,let doc = weakSelf.document {
                         weakSelf.deletePagesPermanantly(from: doc,
                                                         pages: pages,
-                                                        indexes: indexSet, onCompletion: onCompletion)
+                                                        indexes: indexSet)
                     }
                 }
             }))
@@ -1730,7 +1731,7 @@ extension FTFinderViewController {
                 if let weakSelf = self,let doc = weakSelf.document {
                     weakSelf.deletePagesPermanantly(from: doc,
                                                     pages: pages,
-                                                    indexes: indexSet, onCompletion: onCompletion)
+                                                    indexes: indexSet)
                 }
             }))
             alert.addAction(UIAlertAction(title: "Cancel".localized, style: UIAlertAction.Style.destructive, handler: nil))
@@ -1760,7 +1761,7 @@ extension FTFinderViewController {
                                 } else {
                                     weakSelf.movePagestoTrash(from: doc, pages: pages) { [weak self] (error, _) in
                                         if error == nil{
-                                            self?.deletePagesPermanantly(from: curDoc, pages: pages, indexes: indexSet, onCompletion: onCompletion)
+                                            self?.deletePagesPermanantly(from: curDoc, pages: pages, indexes: indexSet)
                                         }
                                     }
                                 }
@@ -1781,17 +1782,13 @@ extension FTFinderViewController {
                     } else {
                         weakSelf.movePagestoTrash(from: doc, pages: pages) { [weak self] (error, _) in
                             if error == nil,let curDoc = self?.document{
-                                self?.deletePagesPermanantly(from: curDoc, pages: pages, indexes: indexSet, onCompletion: onCompletion)
+                                self?.deletePagesPermanantly(from: curDoc, pages: pages, indexes: indexSet)
                             }
                         }
                     }
                 }
             }
         };
-    }
-    
-    @IBAction func deleteClicked(withSelectedPages pages: NSSet, shouldShowAlert show: Bool) {
-        self.handleDeletePages(withSelectedPages: pages, shouldShowAlert: show, onCompletion: nil)
     }
 
     func movePagestoTrash(from doc:FTDocumentProtocol,  pages: NSSet, completion: @escaping (Error?, FTShelfItemProtocol?) -> ()) {
@@ -1834,7 +1831,7 @@ extension FTFinderViewController {
         }
     }
 
-    func deletePagesPermanantly(from document: FTThumbnailableCollection, pages: NSSet, indexes: NSMutableIndexSet, onCompletion: ((Bool) -> ())? = nil) {
+    func deletePagesPermanantly(from document: FTThumbnailableCollection, pages: NSSet, indexes: NSMutableIndexSet) {
         DispatchQueue.main.async {
             self.document?.deletePages(Array(pages) as! [FTThumbnailable]);
             self.searchResultPages = nil
@@ -1842,7 +1839,6 @@ extension FTFinderViewController {
                 if let weakSelf = self {
                     weakSelf.delegate?.finderViewController(weakSelf, didSelectRemovePagesWithIndices: IndexSet(indexes))
                     weakSelf.deselectAll();
-                    onCompletion?(true)
                 }
             })
         }
@@ -1972,7 +1968,7 @@ extension FTFinderViewController {
                 shareClicked(withSelectedPages: itemSet)
             }
         case .deletePages:
-            self.handleDeletePages(withSelectedPages: itemSet, shouldShowAlert: false, onCompletion: nil)
+            self.deleteClicked(withSelectedPages: itemSet, shouldShowAlert: false)
         case .bookmark:
             if let selectedPage = pageItem as? FTPageProtocol, let trView = targetView {
                 FTBookmarkViewController.showBookmarkController(fromSourceView: trView, onController: self, pages: [selectedPage])

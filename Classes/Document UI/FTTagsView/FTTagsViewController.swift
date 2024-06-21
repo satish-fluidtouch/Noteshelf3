@@ -38,7 +38,7 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
     var sourceViewController: UIViewController?
     var tagsType: FTTagsType = .page
     var lastUsedTag = ""
-    var sourceType : FTSourceScreenType = .Others
+    
     deinit {
            #if DEBUG
                debugPrint("deinit \(self.classForCoder)");
@@ -115,7 +115,6 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
         if let tagsController: FTTagsViewController = storyBoard.instantiateViewController(withIdentifier: "FTTagsViewController") as? FTTagsViewController {
             tagsController.tagsList = tags
             tagsController.isPresenting = true
-            tagsController.sourceType = .centerPanel
             tagsController.sourceViewController = controller
             tagsController.delegate = controller as? FTTagsViewControllerDelegate
             tagsController.contextMenuTagDelegate = controller as? FTFinderContextMenuTagDelegate

@@ -51,7 +51,6 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
     var pinController: FTPasswordViewController?
     var siriShortcut: INVoiceShortcut?
     var isSiriTextAdded : Bool = false
-    private var window: UIWindow?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,10 +72,6 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
         tblSettings?.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         self.navigationController?.navigationBar.isHidden = true
         self.preferredContentSize = self.fetchSize()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        self.window = self.view.window
     }
     
     private func fetchSize() -> CGSize {

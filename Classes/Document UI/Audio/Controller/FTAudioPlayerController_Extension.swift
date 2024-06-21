@@ -105,8 +105,8 @@ extension FTAudioPlayerController {
         case .close:
             self.stopPlayOrRecording()
             self.delegate.audioPlayerDidClose?(self)
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: FTAudioSessionAskedToRemovePlayerNotification),
-                                            object: nil)
+       //     NotificationCenter.default.post(name: NSNotification.Name(rawValue: FTAudioSessionAskedToRemovePlayerNotification),
+         //                                   object: nil)
         case .speed:
             self.applyRate()
             self.updateSpeedIcon(button)

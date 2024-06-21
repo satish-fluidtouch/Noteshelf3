@@ -69,7 +69,6 @@ extension FTSidePanelShelfItemPickerDelegate {
     @IBOutlet weak private var tvLeading : NSLayoutConstraint!
     @IBOutlet weak private var tvTrailing : NSLayoutConstraint!
     var currentIndex = 0
-    var sourceType : FTSourceScreenType = .Others
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()

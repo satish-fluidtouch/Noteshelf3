@@ -39,6 +39,8 @@ extension UIViewController {
         self.present(navController, animated: animated, completion: {
             if let presentationVc = navController.presentationController as? FTPopoverPresentationController {
                 presentationVc.onDismissBlock = customPresentationDelegate.onDismissBlock
+                customPresentationDelegate.onDismissBlock = nil;
+                
             }
         })
     }

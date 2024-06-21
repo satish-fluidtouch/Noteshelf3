@@ -12,12 +12,10 @@ import FTCommon
 
 class FTStickersViewController: UIHostingController<FTStickerCategoriesView>, FTPopoverPresentable {
     var ftPresentationDelegate = FTPopoverPresentation()
-    var sourceType : FTSourceScreenType = .Others
+    
     override init(rootView: FTStickerCategoriesView) {
         super.init(rootView: rootView)
     }
-    
-    private var window: UIWindow?
     
     @MainActor
     dynamic required init?(coder aDecoder: NSCoder) {
@@ -32,10 +30,6 @@ class FTStickersViewController: UIHostingController<FTStickerCategoriesView>, FT
         self.view.addInteraction(dropInteraction)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.window = self.view.window
-    }
 }
 
 extension FTStickersViewController: UIDropInteractionDelegate {

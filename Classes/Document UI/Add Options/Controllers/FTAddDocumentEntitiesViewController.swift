@@ -58,8 +58,6 @@ class FTAddDocumentEntitiesViewController: UIViewController, FTPopoverPresentabl
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet private weak var segmentedControl: UISegmentedControl!
     
-    private var window: UIWindow?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.titleLabel.text = "Add".localized
@@ -67,10 +65,6 @@ class FTAddDocumentEntitiesViewController: UIViewController, FTPopoverPresentabl
         self.updateSegmentControlUI()
         self.removeRequiredChildren()
         self.addRequiredViewController()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        self.window = self.view.window
     }
     
     private func addRequiredViewController() {

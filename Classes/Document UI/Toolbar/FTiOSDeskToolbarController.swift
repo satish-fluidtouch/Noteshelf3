@@ -9,10 +9,6 @@
 import UIKit
 import FTCommon
 
-extension Notification.Name {
-    static let leftPanelPopupDismiss = Notification.Name(rawValue: "leftPanelPopupDismiss")
-}
-
 protocol FTDeskPanelActionDelegate: AnyObject {
     func didTapLeftPanelTool(_ buttonType: FTDeskLeftPanelTool, source:UIView)
     func didTapCenterPanelTool(_ buttonType: FTDeskCenterPanelTool, source:UIView)
@@ -23,7 +19,6 @@ protocol FTDeskPanelActionDelegate: AnyObject {
     func currentDeskMode() -> RKDeskMode
     func lastSelectedPenMode() -> RKDeskMode
     func shapesToolEnabled() -> Bool
-    func isAudioRecordedViewPresented() -> Bool
     func getDeskToolBarHeight() -> CGFloat
     func status(for tool: FTDeskCenterPanelTool) -> NSNumber?
     
@@ -80,7 +75,6 @@ protocol FTDeskPanelActionDelegate: AnyObject {
         self.view.isHidden = true
 #endif
         self.handleObservers()
-        self.popupDismissStatus()
     }
     
     override func viewDidLayoutSubviews() {
@@ -132,6 +126,10 @@ protocol FTDeskPanelActionDelegate: AnyObject {
     func rightPanelPopupDismissStatus(){
         moreButton?.hideBg()
         addButton?.hideBg()
+    }
+    
+    func leftPanelPopupDismissStatus(){
+        backButton?.hideBg()
     }
     
     func updateDeskToolbarDelegate(_ delegate:FTDeskToolbarDelegate, actionDelegate: FTDeskPanelActionDelegate) {
@@ -429,11 +427,6 @@ extension FTiOSDeskToolbarController: FTToolbarCenterPanelDelegate {
         return self.delegate?.getDeskToolBarHeight() ?? 0.0
     }
     
-    func isAudioRecordedViewPresented() -> Bool {
-        return self.delegate?.isAudioRecordedViewPresented() ?? false
-    }
-    
-    
     func didTapCenterPanelButton(type: FTDeskCenterPanelTool, sender: UIView) {
         self.actionDelegate?.didTapCenterPanelTool(type, source: sender)
     }
@@ -501,21 +494,6 @@ final class FTToolBarButton: FTBaseButton {
         subviewsToRemove.forEach { $0.removeFromSuperview() }
     }
     
-    
-}
-
-extension FTiOSDeskToolbarController  {
-    func popupDismissStatus(){
-        NotificationCenter.default.addObserver(self, selector: #selector(self.leftPanelPopupDismissStatus(notification:)), name: .leftPanelPopupDismiss, object: nil)
-    }
-    
-    @objc func leftPanelPopupDismissStatus(notification: Notification) {
-        if let window = self.view.window,
-           let sourceWindow = notification.object as? UIWindow,
-           window == sourceWindow{
-            backButton?.hideBg()
-        }
-    }
 }
 
 

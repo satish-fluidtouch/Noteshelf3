@@ -60,7 +60,7 @@ class FTMediaLibraryViewController: UIViewController, FTPopoverPresentable {
     
     var recentMediaArray: [FTMediaLibraryModel]?
     var isUnSplashItemsSorted = false
-    var sourceType : FTSourceScreenType = .Others
+  
     var mediaSource: MediaSource = .pixabay {
         didSet {
             localProvider.mediaType = mediaSource
@@ -537,7 +537,6 @@ extension FTMediaLibraryViewController {
         mediaLibraryVc.delegate = controller as? FTMediaLibrarySelectionDelegate
         mediaLibraryVc.mediaSource = mediaType
         mediaLibraryVc.shouldHideBackButton = true
-        mediaLibraryVc.sourceType = .centerPanel
         mediaLibraryVc.ftPresentationDelegate.source = source as AnyObject
         controller.ftPresentPopover(vcToPresent: mediaLibraryVc, contentSize: AddMenuType.media.contentSize, hideNavBar: true)
         return mediaLibraryVc

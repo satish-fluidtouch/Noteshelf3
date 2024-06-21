@@ -518,6 +518,14 @@
             }
         }
     }];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:FTDidChangePagePropertiesNotification
+                                                      object:nil
+                                                       queue:[NSOperationQueue mainQueue]
+                                                  usingBlock:^(NSNotification * _Nonnull note) {
+        [self.statusInformer updateToolStatusFor:FTDeskCenterPanelToolBookmark status:[self isBookmarkAddedForCurrentPage]];
+    }];
 }
 -(void)removeObservers
 {
@@ -2986,10 +2994,6 @@
 
 -(BOOL)isEmojiSelected {
     return self.emojiStatus;
-}
-
--(BOOL) isAudioRecordedViewPresented {
-    return self.audioRecordedViewStatus;
 }
 
 -(CGFloat) getDeskToolBarHeight {

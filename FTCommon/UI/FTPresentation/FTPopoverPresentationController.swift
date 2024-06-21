@@ -19,6 +19,7 @@ public class FTPopoverPresentationController: UIPopoverPresentationController {
 
     public override func dismissalTransitionWillBegin() {
         self.onDismissBlock?()
+        self.onDismissBlock = nil;
         super.dismissalTransitionWillBegin()
     }
     

@@ -32,13 +32,6 @@ class FTQuickNoteSaveViewController: UIViewController, FTCustomPresentable {
         self.configureUIComponents()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        if let window = self.view.window {
-            NotificationCenter.default.post(name: .leftPanelPopupDismiss, object:window)
-        }
-    }
-    
     private func configureUIComponents() {
         self.headerLabel.text = NSLocalizedString("quickNoteSave.saveQuickNote", comment: "save quick note")
         self.headerLabel.addCharacterSpacing(kernValue: -0.41)

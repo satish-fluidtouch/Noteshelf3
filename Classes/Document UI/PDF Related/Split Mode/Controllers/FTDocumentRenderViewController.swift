@@ -15,6 +15,7 @@ let textContainerTag: Int = 9001
     func toolStatus(for tool: FTDeskCenterPanelTool) -> NSNumber?
     func updateToolStatus(for tool: FTDeskCenterPanelTool, status: Bool)
     func updateRightPanelToolStatus()
+    func updateLeftPanelToolStatus()
 }
 
 @objc protocol FTDocumentViewPresenter : NSObjectProtocol {
@@ -307,6 +308,10 @@ private extension FTDocumentRenderViewController {
 }
 
 extension FTDocumentRenderViewController: FTPageStatusInformer {
+    func updateLeftPanelToolStatus() {
+        self.deskToolbarController?.leftPanelPopupDismissStatus()
+    }
+    
     func updateRightPanelToolStatus() {
          self.deskToolbarController?.rightPanelPopupDismissStatus()
     }
@@ -519,11 +524,7 @@ extension FTDocumentRenderViewController: FTDeskToolbarDelegate, FTDeskPanelActi
     func getDeskToolBarHeight() -> CGFloat {
         return self.deskBarDelegate?.getDeskToolBarHeight() ?? 0.0
     }
-    
-    func isAudioRecordedViewPresented() -> Bool {
-        return self.deskBarDelegate?.isAudioRecordedViewPresented() ?? false
-    }
-        
+
     func currentDeskMode() -> RKDeskMode {
         return self.deskBarDelegate?.currentDeskMode() ?? .deskModePen
     }

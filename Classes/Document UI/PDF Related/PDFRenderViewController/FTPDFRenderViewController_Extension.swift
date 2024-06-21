@@ -798,6 +798,9 @@ extension FTPDFRenderViewController {
                 self.present(quickNoteSaveController, animated: true);
                 #else
                 quickNoteSaveController.customTransitioningDelegate.sourceView = sourceView
+                quickNoteSaveController.customTransitioningDelegate.onDismissBlock = {
+                    self.statusInformer.updateLeftPanelToolStatus()
+                }
                 self.ftPresentModally(quickNoteSaveController, contentSize: CGSize(width: 300, height: 240), animated: true, completion: nil)
                 #endif
             }
@@ -1158,15 +1161,11 @@ extension FTPDFRenderViewController {
     }
     
     @objc func emojiStatus() -> Bool {
-        var value = false
-        value = self.activeStickyIndicatorView == nil ? false : true
-        return value
+        return self.activeStickyIndicatorView == nil ? false : true
     }
     
     @objc func audioRecordedViewStatus() -> Bool {
-        var value = false
-        value = self.playerController == nil ? false : true
-        return value
+      return self.playerController == nil ? false : true
     }
     
     @objc func status(for tool: FTDeskCenterPanelTool) -> NSNumber? {
