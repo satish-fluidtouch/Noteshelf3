@@ -669,9 +669,14 @@ private extension FTShapeAnnotationController {
     func processShapeRotate(curPoint: CGPoint, prevPoint: CGPoint) {
         let location = curPoint
         let angle = angleBetweenPoints(startPoint: lastPrevPointInRotation, endPoint: location)
+        let roudedAngle = angle.radiansToDegrees.rounded();
+        guard abs(roudedAngle) >= 1 else {
+            return;
+        }
+        let roundedAngleInRadians = roudedAngle.degreesToRadians;
         if let resizableView = self.resizableView {
-            if(resizableView.isAngleNearToSnapArea(byAddingAngle: angle)) {
-                let snapAttrs = resizableView.snapToNear90IfNeeded(byAddingAngle: angle)
+            if(resizableView.isAngleNearToSnapArea(byAddingAngle: roundedAngleInRadians)) {
+                let snapAttrs = resizableView.snapToNear90IfNeeded(byAddingAngle: roundedAngleInRadians)
                 if(snapAttrs.isNearst90) {
                     angleSnappingView?.isHidden = false
                     self.performShapeRotation(with: snapAttrs.angle)
@@ -680,7 +685,7 @@ private extension FTShapeAnnotationController {
             }
             else {
                 angleSnappingView?.isHidden = true
-                self.performShapeRotation(with: angle)
+                self.performShapeRotation(with: roundedAngleInRadians)
                 lastPrevPointInRotation = location
             }
         }
@@ -973,13 +978,7 @@ extension FTShapeAnnotationController {
     
     func angleBetweenPoints(startPoint:CGPoint, endPoint:CGPoint) -> CGFloat {
         let newCenter = resizableView?.center ?? .zero
-        let a = startPoint.x - newCenter.x
-        let b = startPoint.y - newCenter.y
-        let c = endPoint.x - newCenter.x
-        let d = endPoint.y - newCenter.y
-        let atanA = atan2(a, b)
-        let atanB = atan2(c, d)
-        return atanA - atanB
+        return startPoint.angleBetween(endPoint, center: newCenter);
     }
     
     func updateResizableView(curPoint: CGPoint, prevPoint: CGPoint) {

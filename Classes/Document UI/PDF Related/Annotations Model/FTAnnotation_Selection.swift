@@ -18,13 +18,10 @@ extension FTAnnotation {
 
 extension FTStroke {
     override func allowsSingleTapSelection(atPoint: CGPoint, mode: RKDeskMode) -> Bool {
-        guard self.intersectsPath(atPoint.pathWith1Px, withScale: 1.0, withOffset: CGPoint.zero) else {
+        guard nil != self.groupId, self.intersectsPath(atPoint.pathWith1Px, withScale: 1.0, withOffset: CGPoint.zero) else {
             return false
         }
-        if self.groupId != nil {
-            return true
-        }
-        return false
+        return true
     }
 }
 
