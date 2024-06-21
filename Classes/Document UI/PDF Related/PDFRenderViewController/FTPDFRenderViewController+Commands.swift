@@ -232,7 +232,7 @@ extension FTPDFRenderViewController: FTShortcutActions {
             let tags = FTCacheTagsProcessor.shared.commonTagsFor(pages: pages)
             let tagItems = FTTagsProvider.shared.getAllTagItemsFor(tags)
            let tagsVc =  FTTagsViewController.showTagsController(fromSourceView: source, onController: controller, tags: tagItems)
-            tagsVc.ftPresentationDelegate.onDismissBlock = {
+            tagsVc?.ftPresentationDelegate.onDismissBlock = {
                 self.statusInformer.updateToolStatus(for: .tag, status: self.tagStatus())
             }
         }

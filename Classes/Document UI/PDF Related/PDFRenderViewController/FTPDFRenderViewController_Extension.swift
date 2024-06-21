@@ -181,7 +181,7 @@ extension FTPDFRenderViewController {
                                                           notebookDocument: self.pdfDocument,
                                                           page: curPage,
                                                           delegate:self)
-        settingsVc.ftPresentationDelegate.onDismissBlock = {
+        settingsVc?.ftPresentationDelegate.onDismissBlock = {
                               self.statusInformer.updateRightPanelToolStatus()
                           }
     }

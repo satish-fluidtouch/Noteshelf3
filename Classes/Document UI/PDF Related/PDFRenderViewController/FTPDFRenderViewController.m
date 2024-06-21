@@ -518,13 +518,18 @@
             }
         }
     }];
-    
-    
+
     [[NSNotificationCenter defaultCenter] addObserverForName:FTDidChangePagePropertiesNotification
                                                       object:nil
                                                        queue:[NSOperationQueue mainQueue]
                                                   usingBlock:^(NSNotification * _Nonnull note) {
-        [self.statusInformer updateToolStatusFor:FTDeskCenterPanelToolBookmark status:[self isBookmarkAddedForCurrentPage]];
+        NSDictionary *userInfo = note.userInfo;
+        if (userInfo) {
+            NSString *bookmark = userInfo[@"type"];
+            if ([bookmark isEqualToString:@"bookmark"]) {
+                [self.statusInformer updateToolStatusFor:FTDeskCenterPanelToolBookmark status:[self isBookmarkAddedForCurrentPage]];
+            }
+        }
     }];
 }
 -(void)removeObservers
