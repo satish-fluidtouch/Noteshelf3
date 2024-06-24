@@ -19,8 +19,9 @@ protocol FTDeskPanelActionDelegate: AnyObject {
     func currentDeskMode() -> RKDeskMode
     func lastSelectedPenMode() -> RKDeskMode
     func shapesToolEnabled() -> Bool
-    func zoomModeEnabled() -> Bool
-
+    func getDeskToolBarHeight() -> CGFloat
+    func status(for tool: FTDeskCenterPanelTool) -> NSNumber?
+    
     @objc optional func canUndo() -> Bool
     @objc optional func undo()
     @objc optional func canRedo() -> Bool
@@ -31,43 +32,43 @@ protocol FTDeskPanelActionDelegate: AnyObject {
 @objcMembers class FTiOSDeskToolbarController: UIViewController {
     @IBOutlet private weak var contentView: UIView?
     @IBOutlet private weak var contentTopConstraint: NSLayoutConstraint?
-
+    
     private(set)var focusModeView: FTFocusModeView?;
     
     //Left Panel
     @IBOutlet private weak var leftPanelBlurView: FTToolbarVisualEffectView?
     @IBOutlet private weak var leftPanel: UIStackView?
-    @IBOutlet weak var backButton: UIButton?
-    @IBOutlet weak var finderButton: FTFinderButton?
-    @IBOutlet weak var undoButton : UIButton?
-    @IBOutlet weak var redoButton: UIButton?
-
+    @IBOutlet weak var backButton: FTToolBarButton?
+    @IBOutlet weak var finderButton: FTToolBarButton?
+    @IBOutlet weak var undoButton : FTToolBarButton?
+    @IBOutlet weak var redoButton: FTToolBarButton?
+    
     //Center Panel
     @IBOutlet private weak var centerPanelContainer: UIView?
     @IBOutlet private weak var centerPanelTopConstraint: NSLayoutConstraint?
     @IBOutlet private weak var centerPanelContainerWidthConstraint: NSLayoutConstraint?
-
+    
     //Right Panel
     @IBOutlet private weak var rightPanelBlurView: FTToolbarVisualEffectView?
     @IBOutlet private weak var rightPanel: UIStackView?
-    @IBOutlet weak var addButton: UIButton?
+    @IBOutlet weak var addButton: FTToolBarButton?
     @IBOutlet weak var shareButton: UIButton?
     @IBOutlet weak var fullScreenModeButton: UIButton!
-    @IBOutlet weak var moreButton: UIButton?
+    @IBOutlet weak var moreButton: FTToolBarButton?
     @IBOutlet weak var dividerLine: UIView?
-
+    
     private var currentSize = CGSize.zero
     private var centerPanelVc: FTToolbarCenterPanelController?
-
+    
     weak var delegate: FTDeskToolbarDelegate?
     weak var actionDelegate: FTDeskPanelActionDelegate?
-
+    
     private(set) var screenMode = FTScreenMode.none {
         didSet {
             self.updatePanels()
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 #if targetEnvironment(macCatalyst)
@@ -75,7 +76,7 @@ protocol FTDeskPanelActionDelegate: AnyObject {
 #endif
         self.handleObservers()
     }
-
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let currentFrameSize = self.view.frame.size
@@ -97,7 +98,7 @@ protocol FTDeskPanelActionDelegate: AnyObject {
 #endif
         }
     }
-
+    
     deinit {
         if let observer = self.validateToolbarObserver {
             NotificationCenter.default.removeObserver(observer);
@@ -110,19 +111,33 @@ protocol FTDeskPanelActionDelegate: AnyObject {
         }
         NotificationCenter.default.removeObserver(self)
     }
-
+    
     class func viewController(_ delegate : FTDeskToolbarDelegate) -> FTiOSDeskToolbarController {
         let viewController = FTiOSDeskToolbarController.init(nibName: "FTiOSDeskToolbarController", bundle : nil)
         viewController.delegate = delegate
         return viewController
     }
-
+    
+    
+    func updateToolStatus(for tool : FTDeskCenterPanelTool , status : Bool){
+        self.centerPanelVc?.updateCellStatus(for: tool, status: status)
+    }
+    
+    func rightPanelPopupDismissStatus(){
+        moreButton?.hideBg()
+        addButton?.hideBg()
+    }
+    
+    func leftPanelPopupDismissStatus(){
+        backButton?.hideBg()
+    }
+    
     func updateDeskToolbarDelegate(_ delegate:FTDeskToolbarDelegate, actionDelegate: FTDeskPanelActionDelegate) {
         self.delegate = delegate
         self.actionDelegate = actionDelegate
         self.centerPanelVc?.updateActionDelegate(self)
     }
-
+    
     func visualEffectView(for type: FTDeskPanel) -> FTToolbarVisualEffectView? {
         let view: FTToolbarVisualEffectView?
         if type == .left {
@@ -134,7 +149,7 @@ protocol FTDeskPanelActionDelegate: AnyObject {
         }
         return view
     }
-
+    
     private weak var validateToolbarObserver: NSObjectProtocol?;
     private weak var toggleToolbarObserver: NSObjectProtocol?;
     private weak var validateFinderButtonObserver: NSObjectProtocol?;
@@ -147,7 +162,7 @@ protocol FTDeskPanelActionDelegate: AnyObject {
                 strongSelf.validateUndoButton()
             }
         }
-
+        
         self.toggleToolbarObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: FTToggleToolbarModeNotificationName), object: nil, queue: .main) { [weak self] notification in
             guard let strongSelf = self else {
                 return
@@ -186,17 +201,17 @@ protocol FTDeskPanelActionDelegate: AnyObject {
             self.centerPanelContainerWidthConstraint?.constant = 600.0
             self.centerPanelTopConstraint?.constant = 0.0
         }
-
+        
         if let parent = self.parent as? FTDocumentRenderViewController {
             parent.updateScreenModeIfNeeded(self.screenMode)
         }
-
+        
         if self.screenMode != .focus {
             self.view.layoutIfNeeded()
             self.centerPanelVc?.updateScreenMode(self.screenMode)
         }
     }
-
+    
     private func updateScreenModeIfNeeded(_ mode: FTScreenMode) {
         if mode == .focus {
             if self.screenMode != .focus {
@@ -215,7 +230,7 @@ protocol FTDeskPanelActionDelegate: AnyObject {
             }
         }
     }
-
+    
     //MARK:- Undo/Redo Handler
     private func canUndo() -> Bool {
         var _canUndo = false
@@ -253,9 +268,9 @@ protocol FTDeskPanelActionDelegate: AnyObject {
     private func validateFinderButton() {
         if let splitViewController = self.noteBookSplitViewController() {
             if splitViewController.isFinderVisible() {
-                self.finderButton?.showFinderBg()
+                self.finderButton?.showBg()
             } else {
-                self.finderButton?.hideFinderBg()
+                self.finderButton?.hideBg()
             }
         }
     }
@@ -276,7 +291,7 @@ protocol FTDeskPanelActionDelegate: AnyObject {
             controller.delegate = self
         }
     }
-
+    
     func getCenterPanelSourceView(for type: FTDeskCenterPanelTool) -> UIView? {
         var reqview = self.centerPanelContainer
         if let source = self.centerPanelVc?.getSourceView(for: type) {
@@ -284,7 +299,7 @@ protocol FTDeskPanelActionDelegate: AnyObject {
         }
         return reqview
     }
-
+    
     private func performUndoIfNeeded() {
         if(self.canUndo()) {
             if(self.delegate?.responds(to: #selector(FTDeskToolbarDelegate.undo)) != nil) {
@@ -292,7 +307,7 @@ protocol FTDeskPanelActionDelegate: AnyObject {
             }
         }
     }
-
+    
     private func performRedoIfNeeded() {
         if (self.canRedo()) {
             if (self.delegate?.responds(to: #selector(FTDeskToolbarDelegate.redo)) != nil) {
@@ -300,24 +315,40 @@ protocol FTDeskPanelActionDelegate: AnyObject {
             }
         }
     }
+    
 }
 
 private extension FTiOSDeskToolbarController {
     //MARK:- Actions -
     @IBAction private func leftPanelButtonTapped(_ sender : UIButton) {
         if(sender == self.undoButton) {
+            self.undoButton?.showBg()
+            runInMainThread(0.1) {
+                self.undoButton?.hideBg()
+            }
             self.performUndoIfNeeded()
             FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_undo_tap)
         } else if (sender == self.redoButton) {
+            self.redoButton?.showBg()
+            runInMainThread(0.1) {
+                self.redoButton?.hideBg()
+            }
             self.performRedoIfNeeded()
             FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.toolbar_redo_tap)
         } else {
-            if let button = FTDeskLeftPanelTool.init(rawValue: sender.tag) {
-                self.actionDelegate?.didTapLeftPanelTool(button, source: sender)
+            if let button = FTDeskLeftPanelTool(rawValue: sender.tag) {
+                if button == .back {
+                    self.backButton?.showBg(isInstanse:true)
+                    runInMainThread(0.1) {
+                        self.actionDelegate?.didTapLeftPanelTool(button, source: sender)
+                    }
+                }else {
+                    self.actionDelegate?.didTapLeftPanelTool(button, source: sender)
+                }
             }
         }
     }
-
+    
     @IBAction private func rightPanelButtonTapped(_ sender: UIButton) {
         if sender == self.fullScreenModeButton {
             self.updateScreenModeIfNeeded(.focus)
@@ -328,8 +359,22 @@ private extension FTiOSDeskToolbarController {
         } else {
             if let button = FTDeskRightPanelTool.init(rawValue: sender.tag) {
                 self.actionDelegate?.didTapRightPanelTool(button, source: sender, mode: .normal)
+                if button == .add {
+                    self.addButton?.showBg()
+                } else if button == .more {
+                    self.moreButton?.showBg()
+                }
             }
+            
         }
+    }
+    
+    func addBgView(button: UIButton) {
+        let view =  UIView()
+        view.addFullConstraints(button,top:6.0,bottom: 6.0, left:2.0,right: 2.0)
+        view.backgroundColor = UIColor.appColor(.accentBg)
+        view.layer.cornerRadius = 7.0
+        button.addSubview(view)
     }
 }
 
@@ -340,19 +385,19 @@ extension FTiOSDeskToolbarController {
             if let focusModeView = self.focusModeView {
                 focusModeView.removeFromSuperview()
             }
-
+            
             let focusView = FTFocusModeView()
             self.focusModeView = focusView
             focusView.styleView()
             let focusViewOrigin = CGPoint(x: parent.view.frame.width + focusView.size.width, y: focusView.topOffset)
             focusView.frame.origin = focusViewOrigin
-
+            
             let focusBtn = UIButton(type: .system)
             focusBtn.tintColor = .label
             focusBtn.addFullConstraints(focusView.contentView) // Focus view is UIVisualeffectview type, can't be added directly to any.
             focusBtn.setImage(UIImage(named: "desk_tool_expand"), for: .normal)
             focusBtn.addTarget(self, action: #selector(focusViewTapped), for: .touchUpInside)
-
+            
             UIView.animate(withDuration: toAnimate ? 0.3 : 0.0) {
                 parent.view.addSubview(focusView)
                 parent.view.bringSubviewToFront(focusView)
@@ -360,7 +405,7 @@ extension FTiOSDeskToolbarController {
             }
         }
     }
-
+    
     @objc private func focusViewTapped() {
         if let focusModeView = self.focusModeView {
             self.updateScreenModeIfNeeded(.normal)
@@ -374,21 +419,23 @@ extension FTiOSDeskToolbarController {
 }
 
 extension FTiOSDeskToolbarController: FTToolbarCenterPanelDelegate {
+    func status(for tool: FTDeskCenterPanelTool) -> NSNumber? {
+        return self.delegate?.status(for: tool)
+    }
+    
+    func getHeightforToolBar() -> CGFloat {
+        return self.delegate?.getDeskToolBarHeight() ?? 0.0
+    }
+    
     func didTapCenterPanelButton(type: FTDeskCenterPanelTool, sender: UIView) {
         self.actionDelegate?.didTapCenterPanelTool(type, source: sender)
     }
-
-    func isZoomModeEnabled() -> Bool {
-        if let isEnabled = self.delegate?.zoomModeEnabled() {
-            return isEnabled
-        }
-        return false
-    }
-
+    
+    
     func currentDeskMode() -> RKDeskMode? {
         return self.delegate?.currentDeskMode()
     }
-
+    
     func maxCenterPanelItemsToShow() -> Int {
         let itemCount: Int
         if self.screenMode == .shortCompact {
@@ -400,7 +447,7 @@ extension FTiOSDeskToolbarController: FTToolbarCenterPanelDelegate {
             let rightPanelWidth: CGFloat = self.rightPanel?.frame.width ?? 0.0
             let minSpaceBtwPanels: CGFloat = 2 * 70.0 // Including arrows
             let margin: CGFloat = 2 * 8.0
-
+            
             let maxAvailableSpace = self.view.frame.width - leftPanelWidth - rightPanelWidth - minSpaceBtwPanels - margin
             let countMax = Int(maxAvailableSpace/FTToolbarConfig.CenterPanel.DeskToolSize.regular.height)
             itemCount = countMax > 9 ? 9 : countMax
@@ -408,38 +455,45 @@ extension FTiOSDeskToolbarController: FTToolbarCenterPanelDelegate {
         return itemCount
     }
 }
-
-final class FTFinderButton: FTBaseButton {
+@IBDesignable
+final class FTToolBarButton: FTBaseButton {
+    
+    @IBInspectable var selectedBg : UIColor = UIColor.appColor(.white100)
+    
     override func awakeFromNib() {
         self.removeFinderBg()
         self.addFinderBg()
-        hideFinderBg()
+        hideBg()
     }
-
-    func hideFinderBg() {
-        let bgBtn = self.subviews.first { $0 is FTToolBgButton }
+    
+    func hideBg() {
+        let bgBtn = self.viewWithTag(1)
         bgBtn?.isHidden = true
     }
-
-    func showFinderBg() {
-        let bgBtn = self.subviews.first { $0 is FTToolBgButton }
+    
+    func showBg(isInstanse : Bool = false) {
+        let bgBtn = self.viewWithTag(1)
         bgBtn?.isHidden = false
     }
-
+    
     private func addFinderBg() {
         let finderBgBtn = FTToolBgButton()
+        finderBgBtn.tag = 1
         finderBgBtn.layer.zPosition = -1
         finderBgBtn.isUserInteractionEnabled = false
         finderBgBtn.addFullConstraints(self, top: 6.0, bottom: 6.0, left: 2.0, right: 2.0)
         finderBgBtn.layoutIfNeeded()
-        finderBgBtn.backgroundColor = .appColor(.white100)
+        finderBgBtn.backgroundColor = selectedBg
         finderBgBtn.addRequiredShadow()
         self.sendSubviewToBack(finderBgBtn)
-        self.hideFinderBg()
+        self.hideBg()
     }
-
+    
     private func removeFinderBg() {
         let subviewsToRemove = self.subviews.filter { $0 is FTToolBgButton }
         subviewsToRemove.forEach { $0.removeFromSuperview() }
     }
+    
 }
+
+

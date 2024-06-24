@@ -107,7 +107,7 @@ class FTLayouterFactory: NSObject {
 
 extension UserDefaults
 {
-    @objc dynamic var pageLayoutType: FTPageLayout {
+    @objc dynamic var  pageLayoutType: FTPageLayout {
         get {
             if let layoutType = FTPageLayout(rawValue: integer(forKey: "pageLayoutType")) {
                 return layoutType

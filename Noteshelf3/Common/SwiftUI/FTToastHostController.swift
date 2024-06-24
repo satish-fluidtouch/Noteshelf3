@@ -48,11 +48,11 @@ class FTToastHostController: FTToastBaseHostController<FTToastView> {
         self.view.backgroundColor = .clear
     }
 
-    class func showToast(from controller: UIViewController, toastConfig: FTToastConfiguration) {
+    class func showToast(from controller: UIViewController, toastConfig: FTToastConfiguration,centerY: CGFloat = 50) {
         let toastInfo = FTToastHostController.getIfToastExists(over: controller, for: FTToastTag.generalToastTag)
         if let window = UIApplication.shared.keyWindow, !toastInfo.toastExist {
             let hostingVc = FTToastHostController(toastConfig: toastConfig)
-            hostingVc.view.center.y = -50.0
+            hostingVc.view.center.y = centerY + centerY/2
             hostingVc.view.center.x = window.frame.width/2.0
             hostingVc.view.tag = FTToastTag.generalToastTag.rawValue
             window.addSubview(hostingVc.view)
@@ -62,7 +62,8 @@ class FTToastHostController: FTToastBaseHostController<FTToastView> {
             UIView.animate(withDuration: toastConfig.animationTime) {
                 hostingVc.view.alpha = 1.0
 #if !targetEnvironment(macCatalyst)
-                hostingVc.view.center.y = toastConfig.getToastSize().height/2.0 + 24.0
+         //       hostingVc.view.center.y = toastConfig.getToastSize().height/2.0 + 24.0
+                hostingVc.view.center.y = centerY + toastConfig.getToastSize().height/2.0 + 8.0
 #else
                 hostingVc.view.center.y = toastConfig.getToastSize().height/2.0 + 44.0
 #endif
@@ -132,7 +133,6 @@ private extension UIView {
         runInMainThread(delay) {
             UIView.animate(withDuration: 0.3) {
                 self.alpha = 0.0
-                self.center.y = -50.0
             } completion: { _  in
                 self.removeFromSuperview()
             }

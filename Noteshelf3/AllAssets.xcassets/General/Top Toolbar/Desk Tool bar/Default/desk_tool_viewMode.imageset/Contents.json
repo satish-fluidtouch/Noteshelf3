@@ -1,16 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "desk_tool_viewMode_iphone.pdf",
-      "idiom" : "iphone"
-    },
-    {
-      "filename" : "desk_tool_viewMode_ipad.pdf",
-      "idiom" : "ipad"
-    },
-    {
-      "filename" : "desk_tool_viewMode_mac.pdf",
-      "idiom" : "mac"
+      "filename" : "Group 10.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

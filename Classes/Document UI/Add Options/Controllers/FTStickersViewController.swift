@@ -12,7 +12,7 @@ import FTCommon
 
 class FTStickersViewController: UIHostingController<FTStickerCategoriesView>, FTPopoverPresentable {
     var ftPresentationDelegate = FTPopoverPresentation()
-
+    
     override init(rootView: FTStickerCategoriesView) {
         super.init(rootView: rootView)
     }
@@ -29,6 +29,7 @@ class FTStickersViewController: UIHostingController<FTStickerCategoriesView>, FT
         let dropInteraction = UIDropInteraction(delegate: self)
         self.view.addInteraction(dropInteraction)
     }
+    
 }
 
 extension FTStickersViewController: UIDropInteractionDelegate {

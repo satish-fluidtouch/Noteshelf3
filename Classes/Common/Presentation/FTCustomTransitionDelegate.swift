@@ -23,6 +23,8 @@ class FTCustomTransitionDelegate: NSObject, UIViewControllerTransitioningDelegat
     private var shouldStartWithFullScreen = false
     private weak var presented : UIViewController?
     private weak var source : UIViewController?
+    public var onDismissBlock : (() -> Void)?;
+
 
     init(with style: FTModalPresentationStyle, supportsFullScreen: Bool = true, shouldStartWithFullScreen: Bool = false, overCurrentContext: Bool = false) {
         self.presentationStyle = style

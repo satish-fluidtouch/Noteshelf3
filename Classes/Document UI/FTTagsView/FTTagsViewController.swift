@@ -38,6 +38,7 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
     var sourceViewController: UIViewController?
     var tagsType: FTTagsType = .page
     var lastUsedTag = ""
+    
     deinit {
            #if DEBUG
                debugPrint("deinit \(self.classForCoder)");
@@ -109,7 +110,7 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
             }
     }
 
-    static func showTagsController(fromSourceView sourceView:Any, onController controller:UIViewController, tags: [FTTagItemModel]){
+    static func showTagsController(fromSourceView sourceView:Any, onController controller:UIViewController, tags: [FTTagItemModel]) -> FTTagsViewController? {
         let storyBoard = UIStoryboard.init(name: "FTDocumentEntity", bundle: nil)
         if let tagsController: FTTagsViewController = storyBoard.instantiateViewController(withIdentifier: "FTTagsViewController") as? FTTagsViewController {
             tagsController.tagsList = tags
@@ -119,7 +120,9 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
             tagsController.contextMenuTagDelegate = controller as? FTFinderContextMenuTagDelegate
             tagsController.ftPresentationDelegate.source = sourceView as AnyObject
             controller.ftPresentPopover(vcToPresent: tagsController, contentSize: CGSize(width: 320, height:360))
+            return tagsController
         }
+        return nil
     }
 
     static func presentTagsController(onController controller:UIViewController, tags: [FTTagItemModel]){

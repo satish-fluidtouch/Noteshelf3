@@ -69,7 +69,7 @@ extension FTSidePanelShelfItemPickerDelegate {
     @IBOutlet weak private var tvLeading : NSLayoutConstraint!
     @IBOutlet weak private var tvTrailing : NSLayoutConstraint!
     var currentIndex = 0
-
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.navigationController?.isNavigationBarHidden = false
@@ -80,7 +80,7 @@ extension FTSidePanelShelfItemPickerDelegate {
         if self.mode == .recentNotes {
             self.configureNavigation(title:"customizeToolbar.recent.notes".localized)
             self.navigationItem.leftBarButtonItem?.isHidden = true
-            self.view.backgroundColor = UIColor.appColor(.popoverBgColor)
+            self.view.backgroundColor = .clear
             
         }else {
             self.configureNavigation(title: collection?.displayTitle ?? "")
@@ -118,7 +118,7 @@ extension FTSidePanelShelfItemPickerDelegate {
             
         }
     }
-
+    
     func setUpcellForRecentNotes(cell:FTShelfItemTableViewCell,index:IndexPath){
         if  self.mode == .recentNotes {
             if self.items.count > 1 {
@@ -143,6 +143,7 @@ extension FTSidePanelShelfItemPickerDelegate {
                 cell.accessoryButton?.isHidden = false
                 cell.accessoryWidthConstraint?.constant = 32.0
                 cell.accessoryButton?.setImage(UIImage(named: "desk_tool_open_recents"), for: .normal)
+                cell.accessoryButton?.imageView?.tintColor = UIColor.appColor(.accent)
                 cell.accessoryButton?.tag = index.row
                 cell.accessoryButton?.isUserInteractionEnabled = true
                 cell.accessoryButton?.addTarget(self, action:#selector(self.tappedOnRecentNotes), for: .touchUpInside)

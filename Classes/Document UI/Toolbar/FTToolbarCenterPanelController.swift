@@ -11,69 +11,58 @@ import FTCommon
 import TipKit
 
 protocol FTToolbarCenterPanelDelegate: AnyObject {
-    func isZoomModeEnabled() -> Bool
+    func status(for tool: FTDeskCenterPanelTool) -> NSNumber?
     func currentDeskMode() -> RKDeskMode?
     func maxCenterPanelItemsToShow() -> Int
     func didTapCenterPanelButton(type: FTDeskCenterPanelTool, sender: UIView)
+    func getHeightforToolBar() -> CGFloat
 }
 
-@available (iOS 17.0, *)
-struct NewFeatures: Tip{
-    var title : Text {
-        Text("tipeview.shortcut.title".localized)
-            .foregroundStyle(.white)
-            
-    }
-    var message: Text?{
-        Text("tipeview.shortcut.message".localized)
-            .foregroundStyle(Color(uiColor: UIColor.white.withAlphaComponent(0.7) ))
-    }
+enum FTToolbarPopoverScreen {
+    case stickers
+    case savedClips
+    case pixabay
+    case unsplash
+    case recents
+    case openAi
+    case tag
+    case emoji
+    case sharePageAsPng
     
-    var image : Image? {
-        Image(uiImage: UIImage(named: "desk_tool_bulb") ?? UIImage())
+    var centerPanelTool: FTDeskCenterPanelTool {
+        let tool: FTDeskCenterPanelTool
+        switch self {
+        case .stickers:
+            tool = .stickers
+        case .savedClips:
+            tool = .savedClips
+        case .pixabay:
+            tool = .pixabay
+        case .unsplash:
+            tool = .unsplash
+        case .recents:
+            tool = .recentNotes
+        case .openAi:
+            tool = .openAI
+        case .tag:
+            tool = .tag
+        case .emoji:
+            tool = .emojis
+        case .sharePageAsPng:
+            tool = .sharePageAsPng
+        }
+        return tool
     }
-    
 }
-@available (iOS 17.0, *)
-struct CustomTiPView : TipViewStyle {
-  @State var size: CGSize = .zero
-  func makeBody(configuration: Configuration) -> some View {
-    HStack(alignment: .top, spacing: 12) {
-      VStack {
-        configuration.image?
-          .resizable()
-          .frame(width: 32, height: 32)
-          .aspectRatio(contentMode: .fit)
-          .padding(.top,2)
-        Spacer()
-          .frame(maxHeight: self.size.height)
-      }
-      VStack(alignment: .leading) {
-        configuration.title
-              .font(.system(size:17,weight: .bold))
-          .fixedSize(horizontal: false, vertical: true)
-        configuration.message?
-          .font(.subheadline)
-          .fixedSize(horizontal: false, vertical: true)
-      }
-    }
-    .padding(.horizontal, 16)
-    .padding(.vertical, 12)
-    .background(
-      GeometryReader { geometry in
-        Color.clear
-          .onAppear {
-            self.size = geometry.size
-          }
-      })
-  }
+
+enum FTSourceScreenType {
+ case centerPanel
+ case Others
 }
-    
+
 class FTToolbarCenterPanelController: UIViewController {
-    private weak var customToolbarObserver: NSObjectProtocol?;
-
     @IBOutlet private weak var containerView: FTToolbarVisualEffectView?
-    @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet private weak var leftNavBtn: UIButton?
     @IBOutlet private weak var rightNavBtn: UIButton?
     @IBOutlet private weak var leftSpacer: UIView?
@@ -110,7 +99,6 @@ class FTToolbarCenterPanelController: UIViewController {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         longPressGesture.minimumPressDuration = 0.6
         self.view.addGestureRecognizer(longPressGesture)
-        addObserverForScrollDirection()
         
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -123,7 +111,7 @@ class FTToolbarCenterPanelController: UIViewController {
                 UserDefaults.standard.set(true, forKey: "showTipView")
             }
         }
-       
+
     }
 
     @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
@@ -135,9 +123,6 @@ class FTToolbarCenterPanelController: UIViewController {
     }
 
     deinit {
-        if let observer = self.customToolbarObserver {
-            NotificationCenter.default.removeObserver(observer);
-        }
         NotificationCenter.default.removeObserver(self)
     }
 
@@ -188,21 +173,36 @@ class FTToolbarCenterPanelController: UIViewController {
 }
 
 private extension FTToolbarCenterPanelController {
+    private func fetchCell(for tool: FTDeskCenterPanelTool) -> UICollectionViewCell? {
+        var cell: UICollectionViewCell?
+        if let index = self.dataSourceItems.firstIndex(where: { $0 == tool }) {
+            cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? FTDeskShortcutCell
+        }
+        return cell
+    }
+    
     private func updateSpacersIfNeeded(show: Bool) {
         if self.screenMode != .shortCompact {
             self.leftSpacer?.isHidden = !show
             self.rightSpacer?.isHidden = !show
         }
     }
-
+    
     private func updateNavButtons(show: Bool) {
         self.leftNavBtn?.isHidden = !show
-        self.rightNavBtn?.isHidden = !show
+        self.rightNavBtn?.isHidden = !show   
     }
     
     private func addObservers() {
-        self.customToolbarObserver = NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: notifyToolbarCustomization)
-                                               , object: nil, queue: nil) { [weak self] (_) in
+        NotificationCenter.default.addObserver(forName: .pageLayoutWillChange,
+                                                 object: nil,
+                                                 queue: nil)
+          { [weak self] (_) in
+              self?.collectionView.reloadData()
+         }
+
+         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: notifyToolbarCustomization)
+                                                                            , object: nil, queue: nil) { [weak self] (_) in
             runInMainThread {
                 guard let strongSelf = self else {
                     return
@@ -287,31 +287,53 @@ extension FTToolbarCenterPanelController: UICollectionViewDataSource, UICollecti
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let btnType = self.dataSourceItems[indexPath.row]
         let cell: UICollectionViewCell
+        
 
         if btnType.toolMode == .shortcut {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FTDeskShortcutCell", for: indexPath) as UICollectionViewCell
             var isSelected = false
-            if let isEnabled = self.delegate?.isZoomModeEnabled(), btnType == .zoomBox {
-                isSelected = isEnabled
+            if let intStatus = self.delegate?.status(for: btnType) {
+                isSelected = intStatus == 1 ? true : false
             }
-            (cell as? FTDeskShortcutCell)?.configureCell(type: btnType, isSelected: isSelected)
-
+            (cell as? FTDeskShortcutCell)?.configureCell(type: btnType, enabledStatus: isSelected)
             // Selection handle closure
             (cell as? FTDeskShortcutCell)?.deskShortcutTapHandler = {[weak self, weak cell] in
                 guard let self = self else { return }
-                if let _cell = cell as? FTDeskShortcutCell {
-                    _cell.isShortcutSelected = true;
-                    self.delegate?.didTapCenterPanelButton(type: btnType, sender: _cell);
-                    track(EventName.toolbar_tool_tap, params: [EventParameterKey.tool: btnType.localizedEnglish(), EventParameterKey.slot: indexPath.row + 1])
+                guard let reqCell = cell as? FTDeskShortcutCell else { return }
+                self.delegate?.didTapCenterPanelButton(type: btnType, sender: reqCell);
+                if let intStatus = self.delegate?.status(for: btnType) {
+                    // Emoji, tag, audio, zoom
+                    // Emoji, tag
+                    if btnType.toolDisplayStyle == .style3 {
+                        reqCell.enableStatus = true
+                        reqCell.updateBackground(status: true)
+                    }
+                    
+                    let isSelected = intStatus == 1 ? true : false
+                    // bookmark, audio
+                    if btnType.toolDisplayStyle == .style2 {
+                        reqCell.enableStatus = isSelected
+                        reqCell.setTransparentBackground()
+                    }
+                } else {
+                    // status not availble
+                    // popover
+                    if btnType.toolDisplayStyle == .style3 {
+                        reqCell.enableStatus = true
+                        reqCell.updateBackground(status: true)
+                    } else {
+                        reqCell.setTransparentBackground()
+                    }
                 }
+                track(EventName.toolbar_tool_tap, params: [EventParameterKey.tool: btnType.localizedEnglish(), EventParameterKey.slot: indexPath.row + 1])
             }
         } else {
-              cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FTDeskToolCell", for: indexPath) as UICollectionViewCell
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FTDeskToolCell", for: indexPath) as UICollectionViewCell
             if let mode = self.delegate?.currentDeskMode() {
                 let selected = FTDeskModeHelper.isToSelectDeskTool(mode: mode, toolType: btnType)
                 (cell as? FTDeskToolCell)?.configureCell(type: btnType, isSelected: selected)
                 (cell as? FTDeskToolCell)?.delegate = self
-
+                
                 // Selection handle closure
                 (cell as? FTDeskToolCell)?.deskToolBtnTapHandler = {[weak self, weak cell] in
                     guard let self = self else { return }
@@ -425,35 +447,12 @@ extension FTToolbarCenterPanelController: FTDeskToolCellDelegate {
     }
 }
 
-extension FTToolbarCenterPanelController {
-    func addObserverForScrollDirection() {
-        NotificationCenter.default.addObserver(forName: .pageLayoutWillChange,
-                                                 object: nil,
-                                                 queue: nil)
-          { [weak self] (_) in
-              self?.collectionView.reloadData()
-         }
-    }
-    
-    func setUpTipForNewFeatures() {
-        if #available(iOS 17.0, *) {
-            let newFeautres = NewFeatures()
-            Task { @MainActor in
-                for await shouldDisplay in newFeautres.shouldDisplayUpdates {
-                    if shouldDisplay {
-                        let controller = TipUIPopoverViewController(newFeautres, sourceItem: self.collectionView)
-                        controller.view.backgroundColor = UIColor.init(hexString: "#474747")
-                        controller.viewStyle = CustomTiPView()
-                        present(controller, animated: true)
-                    } else if presentedViewController is TipUIPopoverViewController {
-                        dismiss(animated: true)
-                    }
-                }
-            }
-        } else {
-            debugPrint("Using Lower versions then Ios 17")
+extension FTToolbarCenterPanelController  {
+    func updateCellStatus(for tool: FTDeskCenterPanelTool, status: Bool) {
+        if let cell = self.fetchCell(for: tool) as? FTDeskShortcutCell {
+            cell.enableStatus = status
+            cell.updateBackground(status: false)
         }
-        
     }
-    
 }
+

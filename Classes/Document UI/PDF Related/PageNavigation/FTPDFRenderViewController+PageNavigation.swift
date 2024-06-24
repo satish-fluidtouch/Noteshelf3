@@ -74,12 +74,12 @@ extension FTPDFRenderViewController {
     
     @objc func triggerPageChangeNotification() {
         var sessionID = ""
-        if #available(iOS 13.0, *) {
-            if let sessionIdentifier = self.view.window?.windowScene?.session.persistentIdentifier {
-                sessionID = sessionIdentifier
-            }
+        if let sessionIdentifier = self.view.window?.windowScene?.session.persistentIdentifier {
+            sessionID = sessionIdentifier
         }
         NotificationCenter.default.post(name: NSNotification.Name.didChangeCurrentPageNotification, object: sessionID)
+        self.statusInformer.updateToolStatus(for: .bookmark, status:self.currentlyVisiblePage()?.isBookmarked ?? false)
+        self.statusInformer.updateToolStatus(for: .tag, status:self.tagStatus())
     }
     
     @objc private func resetPageSwipingCounter() {

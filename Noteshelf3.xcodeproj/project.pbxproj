@@ -454,6 +454,7 @@
 		520DA2CA2A306C05003A6F22 /* FTBookmarkColorFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520DA2C92A306C05003A6F22 /* FTBookmarkColorFooter.swift */; };
 		5219823B2B7B9BC1004ABDCC /* PinnedIntentDefinition.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 521982392B7B9BB5004ABDCC /* PinnedIntentDefinition.intentdefinition */; };
 		5219823D2B7B9BC7004ABDCC /* PinnedIntentDefinition.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 521982392B7B9BB5004ABDCC /* PinnedIntentDefinition.intentdefinition */; };
+		521D91162C073C5D0059FC08 /* FTToolbarCenterPanelController+TipUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D91152C073C5D0059FC08 /* FTToolbarCenterPanelController+TipUI.swift */; };
 		5238E7CE2A0B6E5900F8F171 /* FTNoteBookSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5238E7CD2A0B6E5900F8F171 /* FTNoteBookSettingsViewController.swift */; };
 		5238E7D22A0B705000F8F171 /* FTNoteBookSettingsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5238E7D12A0B705000F8F171 /* FTNoteBookSettingsHelper.swift */; };
 		5238E7D42A0B712900F8F171 /* FTNoteBookSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5238E7D32A0B712900F8F171 /* FTNoteBookSettings.storyboard */; };
@@ -3432,6 +3433,7 @@
 		520DA2C92A306C05003A6F22 /* FTBookmarkColorFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTBookmarkColorFooter.swift; sourceTree = "<group>"; };
 		521982152B7B99D6004ABDCC /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		521982392B7B9BB5004ABDCC /* PinnedIntentDefinition.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = PinnedIntentDefinition.intentdefinition; sourceTree = "<group>"; };
+		521D91152C073C5D0059FC08 /* FTToolbarCenterPanelController+TipUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTToolbarCenterPanelController+TipUI.swift"; sourceTree = "<group>"; };
 		5238E7CD2A0B6E5900F8F171 /* FTNoteBookSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNoteBookSettingsViewController.swift; sourceTree = "<group>"; };
 		5238E7D12A0B705000F8F171 /* FTNoteBookSettingsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNoteBookSettingsHelper.swift; sourceTree = "<group>"; };
 		5238E7D32A0B712900F8F171 /* FTNoteBookSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FTNoteBookSettings.storyboard; sourceTree = "<group>"; };
@@ -7410,6 +7412,7 @@
 				E7AAD7B128D9B8D30071607C /* Models */,
 				C85F2A6022E725710018FF17 /* FTiOSDeskToolbarController.swift */,
 				E7AAD7AF28D9A77D0071607C /* FTToolbarCenterPanelController.swift */,
+				521D91152C073C5D0059FC08 /* FTToolbarCenterPanelController+TipUI.swift */,
 				E7B423F728DD9872008415D2 /* FTCustomizeToolbarController.swift */,
 				09F81DC3291544ED0040E023 /* FTToolbarView.swift */,
 			);
@@ -14799,6 +14802,7 @@
 				BAF394D72859ADF10067CA9F /* FTNoBandCoverStyle.swift in Sources */,
 				BAF394DA2859ADF10067CA9F /* FTZoomOverlyaerViewController_ZoomPanelDelegate.swift in Sources */,
 				BAF394DD2859ADF10067CA9F /* FTZoomAreaView.swift in Sources */,
+				521D91162C073C5D0059FC08 /* FTToolbarCenterPanelController+TipUI.swift in Sources */,
 				BAF394DE2859ADF10067CA9F /* FTOneDriveFileItem.swift in Sources */,
 				BAF394DF2859ADF10067CA9F /* FTTextAnnotationViewController_MenuHandler.swift in Sources */,
 				BAF394E02859ADF10067CA9F /* FTRecentEntries.swift in Sources */,

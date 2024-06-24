@@ -23,7 +23,7 @@ public class FTPopoverPresentation: NSObject, UIViewControllerTransitioningDeleg
     public var compactGrabFurther = true
     private weak var presented: UIViewController?
     private weak var sourceVc: UIViewController?
-
+    public var onDismissBlock : (() -> Void)?;
     override public init() {
         super.init()
     }

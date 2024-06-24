@@ -11,6 +11,13 @@ import UIKit
 typealias FTDocumentViewController = UIViewController & FTDocumentViewPresenter;
 let textContainerTag: Int = 9001
 
+@objc protocol FTPageStatusInformer: NSObjectProtocol {
+    func toolStatus(for tool: FTDeskCenterPanelTool) -> NSNumber?
+    func updateToolStatus(for tool: FTDeskCenterPanelTool, status: Bool)
+    func updateRightPanelToolStatus()
+    func updateLeftPanelToolStatus()
+}
+
 @objc protocol FTDocumentViewPresenter : NSObjectProtocol {
     func configureDocumentView(_ info : FTDocumentOpenInfo);
     var relativePath : String? {get};
@@ -259,6 +266,7 @@ class FTDocumentRenderViewController: UIViewController {
         documentViewController.shelfItemManagedObject = FTDocumentItemWrapperObject(documentItem:info.shelfItem)
         documentViewController.openCloseDocumentDelegate = self
         documentViewController.textToolbarDelegate = self
+        documentViewController.statusInformer = self
         self.addChild(documentViewController)
         documentViewController.view.frame = _contentView.bounds;
         _contentView.addSubview(documentViewController.view);
@@ -296,6 +304,24 @@ private extension FTDocumentRenderViewController {
             self.view.bringSubviewToFront(toolBarView)
             self.deskToolbarController = toolbarVc
         }
+    }
+}
+
+extension FTDocumentRenderViewController: FTPageStatusInformer {
+    func updateLeftPanelToolStatus() {
+        self.deskToolbarController?.leftPanelPopupDismissStatus()
+    }
+    
+    func updateRightPanelToolStatus() {
+         self.deskToolbarController?.rightPanelPopupDismissStatus()
+    }
+    
+    func toolStatus(for tool: FTDeskCenterPanelTool) -> NSNumber? {
+        return self.documentViewController?.status(for: tool)
+    }
+    
+    func updateToolStatus(for tool: FTDeskCenterPanelTool, status: Bool) {
+        self.deskToolbarController?.updateToolStatus(for: tool, status: status)
     }
 }
 
@@ -491,6 +517,14 @@ extension FTDocumentRenderViewController: FTOpenCloseDocumentProtocol {
 }
 
 extension FTDocumentRenderViewController: FTDeskToolbarDelegate, FTDeskPanelActionDelegate {
+    func status(for tool: FTDeskCenterPanelTool) -> NSNumber? {
+        return self.deskBarDelegate?.status(for: tool)
+    }
+    
+    func getDeskToolBarHeight() -> CGFloat {
+        return self.deskBarDelegate?.getDeskToolBarHeight() ?? 0.0
+    }
+
     func currentDeskMode() -> RKDeskMode {
         return self.deskBarDelegate?.currentDeskMode() ?? .deskModePen
     }
@@ -501,10 +535,6 @@ extension FTDocumentRenderViewController: FTDeskToolbarDelegate, FTDeskPanelActi
 
     func shapesToolEnabled() -> Bool {
         return self.deskBarDelegate?.shapesToolEnabled() ?? false
-    }
-
-    func zoomModeEnabled() -> Bool {
-        return self.deskBarDelegate?.zoomModeEnabled() ?? false
     }
 
     func canUndo() -> Bool {

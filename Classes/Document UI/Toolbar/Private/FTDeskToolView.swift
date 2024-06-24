@@ -8,6 +8,7 @@
 
 import UIKit
 import FTCommon
+import Foundation
 
 class FTDeskToolView: UIView {
     @IBOutlet private weak var contentView: UIView!
@@ -20,8 +21,10 @@ class FTDeskToolView: UIView {
 
     var isSelected: Bool {
         didSet {
-            self.updateToolImageIfNeeded()
-            self.showBgIfNeeded()
+            if toolType.toolDisplayStyle == .style1 {
+                self.updateToolImageIfNeeded()
+                self.updateBackground()
+            }
         }
     }
 
@@ -49,25 +52,41 @@ class FTDeskToolView: UIView {
         self.addInteraction(pointerInteraction)
     }
 
-   private func updateToolImageIfNeeded() {
+    func updateToolImageIfNeeded() {
         if let selImgName = toolType.selectedIconName(), isSelected {
-            self.toolButton.setImage(named: selImgName, for: .normal);
+            self.toolButton.setImage(named: selImgName, for: .normal,renderMode: .alwaysOriginal);
         } else {
             self.toolButton.setImage(named: toolType.iconName(), for: .normal);
         }
     }
 
-    private func showBgIfNeeded() {
+    func updateBackground(status: Bool) {
+        if status {
+            self.setBackGround()
+        } else {
+            self.clearBackground()
+        }
+    }
+    
+    private func setBackGround() {
+        self.bgButton.backgroundColor = self.toolType.displayBgColorStyle()
+        self.bgButton.addRequiredShadow()
+    }
+    
+    private func clearBackground() {
+        self.bgButton.backgroundColor = .clear
+        self.bgButton?.removeShadow()
+        self.bgButton.layer.cornerRadius = 0.0
+    }
+    
+    private func updateBackground() {
         if isSelected {
-            self.bgButton.backgroundColor = UIColor.appColor(.white100)
-            self.bgButton.addRequiredShadow()
+            self.setBackGround()
             if let selImgName = self.toolType.selectedIconName() {
                 self.toolButton.setImage(named: selImgName, for: .normal, renderMode: .alwaysOriginal);
             }
         } else {
-            self.bgButton.backgroundColor = .clear
-            self.bgButton?.removeShadow()
-            self.bgButton.layer.cornerRadius = 0.0
+            self.clearBackground()
             if nil != self.toolType.selectedIconName() {
                 self.toolButton.setImage(named: self.toolType.iconName(), for: .normal);
             }
@@ -133,22 +152,27 @@ class FTDeskShortcutView: FTDeskToolView {
             self.isSelected = false
         }
     }
-
+    
     override var isSelected: Bool {
         didSet {
-            if isSelected {
-                UIView.animate(withDuration: 0.3, animations: {
-                    super.isSelected = true
-                }) { _ in
-                    if self.toolType != .zoomBox {
-                        runInMainThread(0.5) {
-                            super.isSelected = false
-                        }
-                    }
-                }
-            } else {
-                super.isSelected = false
+            switch self.toolType.toolDisplayStyle {
+            case .style1:
+                super.isSelected = isSelected
+            case .style3,.style2:
+                self.currentStateTool = isSelected
             }
+        }
+    }
+    
+    var currentStateTool: Bool = false{
+        didSet {
+            super.updateToolImageIfNeeded()
+        }
+    }
+        
+    var isPopoverTool: Bool = false{
+        didSet {
+            super.updateToolImageIfNeeded()
         }
     }
 }

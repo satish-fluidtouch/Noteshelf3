@@ -231,7 +231,10 @@ extension FTPDFRenderViewController: FTShortcutActions {
         if self.pdfDocument is FTThumbnailableCollection {
             let tags = FTCacheTagsProcessor.shared.commonTagsFor(pages: pages)
             let tagItems = FTTagsProvider.shared.getAllTagItemsFor(tags)
-            FTTagsViewController.showTagsController(fromSourceView: source, onController: controller, tags: tagItems)
+           let tagsVc =  FTTagsViewController.showTagsController(fromSourceView: source, onController: controller, tags: tagItems)
+            tagsVc?.ftPresentationDelegate.onDismissBlock = {
+                self.statusInformer.updateToolStatus(for: .tag, status: self.tagStatus())
+            }
         }
     }
     
@@ -250,6 +253,9 @@ extension FTPDFRenderViewController: FTShortcutActions {
                   shelfItemsViewController.collection = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection;
                   shelfItemsViewController.ftPresentationDelegate.source = source as AnyObject
                   shelfItemsViewController.mode = .recentNotes
+                  shelfItemsViewController.ftPresentationDelegate.onDismissBlock = {
+                      self.statusInformer.updateToolStatus(for: .recentNotes, status: false)
+                  }
                   self.ftPresentPopover(vcToPresent: shelfItemsViewController, contentSize: CGSize(width: 375, height:470), hideNavBar: true)
         }
     }
@@ -265,19 +271,31 @@ extension FTPDFRenderViewController: FTShortcutActions {
         self.audioButtonAction()
     } 
     func unsplashAction(source: Any) {
-        FTMediaLibraryViewController.showAddMenuPixaBayController(from: self, mediaType: .unSplash, source: source)
+        let mediaLibraryVc = FTMediaLibraryViewController.showAddMenuPixaBayController(from: self, mediaType: .unSplash, source: source)
+        mediaLibraryVc.ftPresentationDelegate.onDismissBlock = {
+            self.statusInformer.updateToolStatus(for: .unsplash, status: false)
+        }
     }
 
     func pixabayAction(source: Any) {
-        FTMediaLibraryViewController.showAddMenuPixaBayController(from: self, mediaType: .pixabay, source: source)
+        let mediaLibraryVc = FTMediaLibraryViewController.showAddMenuPixaBayController(from: self, mediaType: .pixabay, source: source)
+        mediaLibraryVc.ftPresentationDelegate.onDismissBlock = {
+            self.statusInformer.updateToolStatus(for: .pixabay, status: false)
+        }
     }
 
     func emojiAction(source: Any) {
-        FTEmojisViewController.showAsPopover(fromSourceView: source, overViewController: self, withDelegate: self, toHideBackBtn: true)
+       let emojiVc =  FTEmojisViewController.showAsPopover(fromSourceView: source, overViewController: self, withDelegate: self, toHideBackBtn: true)
+        emojiVc.ftPresentationDelegate.onDismissBlock = {
+            self.statusInformer.updateToolStatus(for: .emojis, status: self.emojiStatus())
+        }
     }
 
     func savedClipsAction(source: Any) {
-        FTSavedClipsViewController.showSavedClipsController(from: self, source: source, delegate: self, toHideBackBtn: true)
+       let savedclips = FTSavedClipsViewController.showSavedClipsController(from: self, source: source, delegate: self, toHideBackBtn: true)
+        savedclips.ftPresentationDelegate.onDismissBlock = {
+            self.statusInformer.updateToolStatus(for: .savedClips, status: false)
+        }
     }
     
     func stickersAction(source: Any) {
@@ -289,6 +307,9 @@ extension FTPDFRenderViewController: FTShortcutActions {
         let navVc = UINavigationController(rootViewController: stickerVc)
         navVc.isNavigationBarHidden = true
         stickerVc.ftPresentationDelegate.source = source as AnyObject
+        stickerVc.ftPresentationDelegate.onDismissBlock = {
+            self.statusInformer.updateToolStatus(for: .stickers, status: false)
+        }
         self.ftPresentPopover(vcToPresent: navVc, contentSize: CGSize(width: 320.0, height: 544.0), hideNavBar: true)
     }
 

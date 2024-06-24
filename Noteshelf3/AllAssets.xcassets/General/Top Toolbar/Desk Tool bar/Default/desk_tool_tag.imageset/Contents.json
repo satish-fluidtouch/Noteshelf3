@@ -3,6 +3,10 @@
     {
       "filename" : "desk_tool_tag.pdf",
       "idiom" : "universal"
+    },
+    {
+      "filename" : "desk_tool_tag_mac.pdf",
+      "idiom" : "mac"
     }
   ],
   "info" : {

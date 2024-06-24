@@ -93,7 +93,7 @@ class FTAddDocumentEntitiesViewController: UIViewController, FTPopoverPresentabl
 
     class func showAsPopover(source: Any,
                              fromViewController viewController: UIViewController,
-                             delegate: FTAddDocumentEntitiesViewControllerDelegate) {
+                             delegate: FTAddDocumentEntitiesViewControllerDelegate) ->  FTAddDocumentEntitiesViewController {
         let storyboard = UIStoryboard.init(name: "FTDocumentEntity", bundle: nil)
         guard let addDocumentEntitiesViewController = storyboard.instantiateViewController(withIdentifier: "FTAddDocumentEntitiesViewController") as? FTAddDocumentEntitiesViewController else {
             fatalError("Document Entities Viewcontroller not found")
@@ -103,6 +103,7 @@ class FTAddDocumentEntitiesViewController: UIViewController, FTPopoverPresentabl
         addDocumentEntitiesViewController.view.backgroundColor = UIColor.clear
         addDocumentEntitiesViewController.ftPresentationDelegate.source = source as AnyObject
         viewController.ftPresentPopover(vcToPresent: navigationVC, contentSize: CGSize(width: 320, height: 384), hideNavBar: true)
+        return addDocumentEntitiesViewController
     }
 }
 

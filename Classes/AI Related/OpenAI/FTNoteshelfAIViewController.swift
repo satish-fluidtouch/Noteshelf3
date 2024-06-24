@@ -223,7 +223,7 @@ class FTNoteshelfAIViewController: UIViewController {
             self.addCredtisFooter();
         }
     }
-
+    
     deinit{
         FTOpenAI.shared.cancelCurrentExecution();
         self.premiumCancellableEvent?.cancel();

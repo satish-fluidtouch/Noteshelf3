@@ -26,7 +26,7 @@ class FTQuickNoteSaveViewController: UIViewController, FTCustomPresentable {
     weak var delegate: FTQuickNoteSaveDelegate!
     
     var customTransitioningDelegate: FTCustomTransitionDelegate = FTCustomTransitionDelegate(with: .interaction, supportsFullScreen: false)
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureUIComponents()

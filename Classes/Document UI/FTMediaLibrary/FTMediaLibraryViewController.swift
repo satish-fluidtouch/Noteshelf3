@@ -60,6 +60,7 @@ class FTMediaLibraryViewController: UIViewController, FTPopoverPresentable {
     
     var recentMediaArray: [FTMediaLibraryModel]?
     var isUnSplashItemsSorted = false
+  
     var mediaSource: MediaSource = .pixabay {
         didSet {
             localProvider.mediaType = mediaSource
@@ -97,6 +98,7 @@ class FTMediaLibraryViewController: UIViewController, FTPopoverPresentable {
                 segmentedControl?.scrollView.frame = frame
                 }
         }
+    
     deinit {
            #if DEBUG
                debugPrint("deinit \(self.classForCoder)");
@@ -526,7 +528,8 @@ extension FTMediaLibraryViewController: FTMediaLibraryDataSourceDelegate {
 
 
 extension FTMediaLibraryViewController {
-    static func showAddMenuPixaBayController(from controller: UIViewController, mediaType: MediaSource, source: Any) {
+    @discardableResult
+    static func showAddMenuPixaBayController(from controller: UIViewController, mediaType: MediaSource, source: Any) -> FTMediaLibraryViewController{
         let storyboard = UIStoryboard.init(name: "FTDocumentEntity", bundle: nil)
         guard let mediaLibraryVc = storyboard.instantiateViewController(withIdentifier: "FTMediaLibraryViewController") as? FTMediaLibraryViewController else {
             fatalError("Programmer error, FTMediaLibraryViewController not found")
@@ -536,5 +539,6 @@ extension FTMediaLibraryViewController {
         mediaLibraryVc.shouldHideBackButton = true
         mediaLibraryVc.ftPresentationDelegate.source = source as AnyObject
         controller.ftPresentPopover(vcToPresent: mediaLibraryVc, contentSize: AddMenuType.media.contentSize, hideNavBar: true)
+        return mediaLibraryVc
     }
 }

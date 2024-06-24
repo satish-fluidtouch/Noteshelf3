@@ -58,7 +58,12 @@ extension UIViewController {
             navController.modalPresentationStyle = .custom;
             navController.preferredContentSize = customContentSize
             navController.transitioningDelegate = customTransitioningDelegate;
-            self.present(navController, animated: animated, completion: completion);
+            self.present(navController, animated: animated, completion: {
+                if let presentationVc = navController.presentationController as? FTPopoverPresentationController {
+                    presentationVc.onDismissBlock = customTransitioningDelegate.onDismissBlock
+                    customTransitioningDelegate.onDismissBlock = nil;
+                }
+            })
         }
     }
 

@@ -299,6 +299,7 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+   
     
     self.laserStrokeStorage = [[FTLaserStrokeStorage alloc] initWithParentView:self.view];
     
@@ -455,6 +456,9 @@
                 [weakSelf.zoomOverlayController refreshZoomTargetRectWithForcibly:TRUE];
             }
         }
+        
+        [self.statusInformer updateToolStatusFor:FTDeskCenterPanelToolBookmark status:self.isBookmarkAddedForCurrentPage];
+        [self.statusInformer updateToolStatusFor:FTDeskCenterPanelToolTag status:self.isCurrentPageTagged];
     }];
 
     [[NSNotificationCenter defaultCenter] addObserverForName:@"FTDocumentDidMovedPageIndices"
@@ -511,6 +515,19 @@
                     FTPageViewController *controller = [weakSelf.eachPageViewArray objectAtIndex:pageIndex];
                     [weakSelf.zoomOverlayController setCurrentPage:zoomedPage pageController:controller];
                 }
+            }
+        }
+    }];
+
+    [[NSNotificationCenter defaultCenter] addObserverForName:FTDidChangePagePropertiesNotification
+                                                      object:nil
+                                                       queue:[NSOperationQueue mainQueue]
+                                                  usingBlock:^(NSNotification * _Nonnull note) {
+        NSDictionary *userInfo = note.userInfo;
+        if (userInfo) {
+            NSString *bookmark = userInfo[@"type"];
+            if ([bookmark isEqualToString:@"bookmark"]) {
+                [self.statusInformer updateToolStatusFor:FTDeskCenterPanelToolBookmark status:[self isBookmarkAddedForCurrentPage]];
             }
         }
     }];
@@ -1156,6 +1173,7 @@
         [self handlePageChange];
     }
     [self scrollViewScrollComplete];
+    
 }
 
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
@@ -2346,6 +2364,7 @@
 -(void)validateMenuItems
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:FTValidateToolBarNotificationName object:self.view.window];
+    [self.statusInformer updateToolStatusFor:FTDeskCenterPanelToolEmojis status:self.emojiStatus];
 }
 
 #pragma mark - close opened racks -
@@ -2757,8 +2776,6 @@
     [self disablePanDetection];
 }
 
-#pragma mark - FTDeskToolbarDelegate -
-
 -(NSString*)applePencilMessageDefaultOption
 {
     switch(UIPencilInteraction.preferredTapAction) {
@@ -2970,6 +2987,22 @@
 -(BOOL)zoomModeEnabled
 {
     return self.isInZoomMode;
+}
+
+-(BOOL)isBookmarkAddedForCurrentPage {
+    return self.currentlyVisiblePage.isBookmarked;
+}
+
+-(BOOL)isCurrentPageTagged {
+    return self.tagStatus;
+}
+
+-(BOOL)isEmojiSelected {
+    return self.emojiStatus;
+}
+
+-(CGFloat) getDeskToolBarHeight {
+    return self.deskToolBarHeight;
 }
 
 #pragma mark - Audio -
@@ -3606,6 +3639,7 @@
             }
         }
     }
+    [self.statusInformer updateToolStatusFor:FTDeskCenterPanelToolAudio status:YES];
 }
 
 -(void)removeAudioPlayer:(NSNotification*)notification
@@ -3618,6 +3652,7 @@
     if(model.representedObject.uuid == self.playerController.recordingModel.representedObject.uuid) {
         [self audioPlayerDidClose:self.playerController];
     }
+    [self.statusInformer updateToolStatusFor:FTDeskCenterPanelToolAudio status:NO];
 }
 
 -(void)createAudioPlayerForModel:(FTAudioRecordingModel*)recordingModel audioState:(AudioSessionState)state

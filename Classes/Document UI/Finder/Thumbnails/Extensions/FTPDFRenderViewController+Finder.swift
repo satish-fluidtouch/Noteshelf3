@@ -114,6 +114,9 @@ extension FTPDFRenderViewController: FTFinderThumbnailsActionDelegate {
 
     func finderViewController(bookMark page: FTThumbnailable) {
         self.executer.execute(type: .bookmark(page: page))
+        if (page as? FTNoteshelfPage)?.uuid == self.currentlyVisiblePage()?.uuid {
+            self.statusInformer.updateToolStatus(for: .bookmark, status:page.isBookmarked)
+        }
     }
 
     func finderViewController(didSelectDuplicate pages: [FTThumbnailable], onCompletion: (()->())?) {

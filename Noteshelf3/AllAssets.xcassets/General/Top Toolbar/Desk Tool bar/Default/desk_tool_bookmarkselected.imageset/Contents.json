@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "icons.pdf",
+      "filename" : "sidebar-and-popover-icons.pdf",
       "idiom" : "universal"
     },
     {
@@ -11,12 +11,15 @@
           "value" : "dark"
         }
       ],
-      "filename" : "icons-2.pdf",
+      "filename" : "sidebar-and-popover-icons-1.pdf",
       "idiom" : "universal"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
   }
 }

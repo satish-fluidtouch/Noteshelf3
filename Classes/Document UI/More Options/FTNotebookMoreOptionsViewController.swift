@@ -51,6 +51,7 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
     var pinController: FTPasswordViewController?
     var siriShortcut: INVoiceShortcut?
     var isSiriTextAdded : Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         guard notebookShelfItem != nil, page != nil, notebookDocument != nil else {
@@ -93,7 +94,7 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
                              notebookShelfItem: FTShelfItemProtocol,
                              notebookDocument: FTDocumentProtocol,
                              page: FTPageProtocol,
-                             delegate: FTNotebookMoreOptionsDelegate) {
+                             delegate: FTNotebookMoreOptionsDelegate) -> FTNotebookMoreOptionsViewController? {
         
         if let settingsNavController = UIStoryboard(name: "FTNotebookMoreOptions", bundle: nil).instantiateInitialViewController() as? UINavigationController, let settingsController = settingsNavController.viewControllers.first as? FTNotebookMoreOptionsViewController {
             
@@ -104,7 +105,9 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
             let size = settingsController.fetchSize()
             settingsController.ftPresentationDelegate.source = sourceView
             viewController.ftPresentPopover(vcToPresent: settingsController, contentSize: size)
+            return settingsController
         }
+        return nil
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

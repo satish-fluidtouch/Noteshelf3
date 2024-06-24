@@ -269,7 +269,7 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
     var isBookmarked : Bool = false{
         didSet{
             if(!self.isInitializationInprogress) {
-                NotificationCenter.default.post(name: NSNotification.Name.FTDidChangePageProperties, object: self.parentDocument as? FTNoteshelfDocument);
+                NotificationCenter.default.post(name: NSNotification.Name.FTDidChangePageProperties, object: self.parentDocument as? FTNoteshelfDocument,userInfo: ["type":"bookmark"]);
             }
         }
     };
